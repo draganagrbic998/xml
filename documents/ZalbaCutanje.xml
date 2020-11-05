@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zalba_cutanje mesto="" datum="">
+    <naslov>ЖАЛБА КАДА ОРГАН ВЛАСТИ <underline>НИЈЕ ПОСТУПИО/ није поступио у целости/
+        ПО ЗАХТЕВУ</underline> ТРАЖИОЦА У ЗАКОНСКОМ  РОКУ  (ЋУТАЊЕ УПРАВЕ)</naslov>
+    <bold>ЖАЛБА КАДА ОРГАН ВЛАСТИ НИЈЕ ПОСТУПИО/ није поступио у целости/ ПО ЗАХТЕВУ
+        ТРАЖИОЦА У ЗАКОНСКОМ  РОКУ  (ЋУТАЊЕ УПРАВЕ)</bold>
+    <adresa_za_postu>
+        <grad>Beograd</grad>
+        <ulica>Bulevar kralja Aleksandra</ulica>
+        <broj>15</broj>
+    </adresa_za_postu>
+    <paragraf>
+        У складу са чланом 22. Закона о слободном приступу информацијама од јавног значаја подносим:
+    </paragraf>
+    <naslov>
+        <h1>ЖАЛБУ</h1>
+        <h2>против</h2>
+    </naslov>
+    <naziv_organa_vlasti></naziv_organa_vlasti>
+    <pomoc>(навести назив органа)</pomoc>
+    <razlog>
+        због тога што орган власти
+        <opcije>
+            <opcija zaokruzeno="">није поступио</opcija>
+            <opcija zaokruzeno="">није поступио у целости</opcija>
+            <opcija zaokruzeno="">у законском року</opcija>
+        </opcije>
+        <pomoc>(подвући  због чега се изјављује жалба)</pomoc>
+    </razlog>
+    <paragraf>
+        по мом захтеву  за слободан приступ информацијама од јавног значаја који сам поднео  том органу  дана
+        <godina></godina>
+        године, а којим сам тражио/ла да ми се у складу са Законом о слободном приступу информацијама 
+        од јавног значаја омогући увид- копија документа који садржи информације  о /у вези са :
+    </paragraf>
+    <podaci_o_zahtevu></podaci_o_zahtevu>
+    <pomoc>(навести податке о захтеву и информацији/ама)</pomoc>
+    <paragraf>
+        На основу изнетог, предлажем да Повереник уважи моју жалбу и омогући ми приступ траженој/им  информацији/ма.
+    </paragraf>
+    <paragraf>
+        Као доказ , уз жалбу достављам копију захтева са доказом о предаји органу власти.
+    </paragraf>
+    <paragraf>
+        <bold>Напомена:</bold> Код жалбе  због непоступању по захтеву у целости, треба приложити и добијени одговор органа власти.
+    </paragraf>
+    <podaci_o_podnosiocu>
+        <ime_prezime>
+            <ime></ime>
+            <prezime></prezime>
+        </ime_prezime> 
+        <potpis></potpis>
+        <adresa>
+            <grad post_broj=""></grad>
+            <ulica></ulica>
+            <broj></broj>
+        </adresa>
+        <drugi_podaci>
+            <email></email>
+            <broj_telefona></broj_telefona>
+        </drugi_podaci>
+    </podaci_o_podnosiocu>
+</zalba_cutanje>
