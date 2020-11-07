@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zalba_odbijanje datum="" mesto="">
+    <opis_narusenog_prava></opis_narusenog_prava>
+    <podaci_zahteva>
+        <opis_trazene_informacije></opis_trazene_informacije>
+        <broj></broj>
+        <datum_podnosenja></datum_podnosenja>
+    </podaci_zahteva>
+    <podaci_resenja>
+        <broj></broj>
+        <datum_donosenja></datum_donosenja>
+    </podaci_resenja>
+    <organ_vlasti>
+        <naziv></naziv>
+        <sediste></sediste>
+    </organ_vlasti>
+    <zalilac>
+        <ime></ime>
+        <prezime></prezime>
+        <adresa>
+            <mesto post_broj=""></mesto>
+            <ulica></ulica>
+            <broj></broj>
+        </adresa>
+        <kontakt>
+            <telefon></telefon>
+            <email></email>
+        </kontakt>
+    </zalilac>
+</zalba_odbijanje>

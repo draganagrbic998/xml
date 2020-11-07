@@ -1,57 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<zahtev mesto="" datum="">
-    <naslov>
-        <h1>ЗАХТЕВ</h1>
-        <h2>за приступ информацији од јавног значаја</h2>
-    </naslov>
-    <sadrzaj>
-        На основу члана 15. ст. 1. Закона о слободном приступу информацијама од јавног значаја („Службени гласник РС“, бр. 120/04, 54/07, 104/09 и 36/10), од горе наведеног органа захтевам:*
-        <izbori>
-            <izbor odabran="">обавештење да ли поседује тражену информацију;</izbor>
-            <izbor odabran="">увид у документ који садржи тражену информацију;</izbor>
-            <izbor odabran="">копију документа који садржи тражену информацију;</izbor>
-            <izbor odabran="">достављање копије документа који садржи тражену информацију:**
-                <izbor odabran="">поштом</izbor>
-                <izbor odabran="">електронском поштом</izbor>
-                <izbor odabran="">факсом</izbor>
-                <izbor odabran="">на други начин:***
-                    <tekstualni_opis></tekstualni_opis>
-                </izbor>
-            </izbor>
-        </izbori>
-        <cilj_zahteva>
-            Овај захтев се односи на следеће информације:
-            <tekstualni_opis></tekstualni_opis>
-            <pomoc>(навести што прецизнији опис информације која се тражи као и друге податке који олакшавају проналажење тражене информације)</pomoc>
-        </cilj_zahteva>
-    </sadrzaj>
-    <fusnote>
-        <fusnota broj="1">У кућици означити која законска права на приступ информацијама желите да остварите.</fusnota>
-        <fusnota broj="2">У кућици означити начин достављања копије докумената.</fusnota>
-        <fusnota broj="3">Када захтевате други начин достављања обавезно уписати који начин достављања захтевате.</fusnota>
-    </fusnote>
-    <podaci_organa>
+
+<zahtev tip_zahteva="" broj="" datum="">
+    <opis_trazene_informacije>
+    </opis_trazene_informacije>
+       
+    <organ_vlasti>
         <naziv></naziv>
+        <sediste></sediste>
+    </organ_vlasti>
+    
+    <trazilac>
+        <ime></ime>
+        <prezime></prezime>
         <adresa>
+            <mesto post_broj=""></mesto>
             <ulica></ulica>
             <broj></broj>
-            <grad post_broj=""></grad>
         </adresa>
-    </podaci_organa>
-    <podaci_trazioca>
-        <ime_prezime>
-            <ime></ime>
-            <prezime></prezime>
-        </ime_prezime>
-        <adresa>
-            <ulica></ulica>
-            <broj></broj>
-            <grad post_broj=""></grad>
-        </adresa>
-        <kontakt>
-            <telefon></telefon>
-            <email></email>
-        </kontakt>
-        <potpis></potpis>
-    </podaci_trazioca>
+    </trazilac>
 </zahtev>
