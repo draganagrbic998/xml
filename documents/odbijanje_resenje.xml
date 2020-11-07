@@ -6,6 +6,7 @@
         <sediste></sediste>
     </organ_vlasti>
     <trazilac>
+        <naziv></naziv>
         <ime></ime>
         <prezime></prezime>
         <adresa>
@@ -19,7 +20,5 @@
         <datum></datum>
         <opis_trazene_informacije></opis_trazene_informacije>
     </podaci_zahteva>
-    <podaci_resenja>
-        <obrazlozenje></obrazlozenje>
-    </podaci_resenja>
+    <obrazlozenje></obrazlozenje>
 </odbijanje_resenje>
