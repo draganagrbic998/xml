@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odbijanje_resenje broj="" datum="" mesto="" tip_odbijanja="">
+    <organ_vlasti>
+        <naziv></naziv>
+        <sediste></sediste>
+    </organ_vlasti>
+    <trazilac>
+        <ime></ime>
+        <prezime></prezime>
+        <adresa>
+            <mesto post_broj=""></mesto>
+            <ulica></ulica>
+            <broj></broj>
+        </adresa>
+    </trazilac>
+    <podaci_zahteva>
+        <broj></broj>
+        <datum></datum>
+        <opis_trazene_informacije></opis_trazene_informacije>
+    </podaci_zahteva>
+    <podaci_resenja>
+        <obrazlozenje></obrazlozenje>
+    </podaci_resenja>
+</odbijanje_resenje>
