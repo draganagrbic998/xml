@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<obavestenje broj="" datum="" dostava="">
+<obavestenje broj="" datum="" mesto="">
     <opis_trazene_informacije>
     </opis_trazene_informacije>
     
@@ -33,7 +33,9 @@
     </uvid>
     
     <kopija>
-        <troskovi></troskovi>
+        <broj_racuna></broj_racuna>
+        <poziv_na_broj></poziv_na_broj>
+        <iznos></iznos>
     </kopija>
     
 </obavestenje>
