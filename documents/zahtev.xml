@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<zahtev tip_zahteva="" broj="" datum="">
+<zahtev tip_zahteva="" broj="" datum="" mesto="">
     <opis_trazene_informacije>
     </opis_trazene_informacije>
        
@@ -18,4 +18,9 @@
             <broj></broj>
         </adresa>
     </trazilac>
+    
+    <dostava nacin_dostave=""></dostava>
+    
+    
+    
 </zahtev>
