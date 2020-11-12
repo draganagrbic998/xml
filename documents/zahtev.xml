@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<zahtev tip_zahteva="" broj="" datum="" mesto="">
-    <opis_trazene_informacije>
-    </opis_trazene_informacije>
-       
+<zahtev broj="" datum="" mesto="" tip_zahteva="">
+          
     <organ_vlasti>
         <naziv></naziv>
         <sediste></sediste>
     </organ_vlasti>
     
     <trazilac>
+        <naziv></naziv>
         <ime></ime>
         <prezime></prezime>
         <adresa>
@@ -17,10 +16,16 @@
             <ulica></ulica>
             <broj></broj>
         </adresa>
+        <kontakt>
+            <telefon></telefon>
+            <email></email>
+        </kontakt>
     </trazilac>
     
-    <dostava nacin_dostave=""></dostava>
-    
-    
+    <podaci_zahteva>
+        <opis_trazene_informacije>
+        </opis_trazene_informacije>
+        <dostava tip_dostave=""></dostava>
+    </podaci_zahteva>
     
 </zahtev>

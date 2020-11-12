@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<resenje broj="" datum="" mesto="">
+    <zalilac>
+        <naziv></naziv>
+        <ime></ime>
+        <prezime></prezime>
+        <adresa>
+            <mesto post_broj=""></mesto>
+            <ulica></ulica>
+            <broj></broj>
+        </adresa>
+    </zalilac>
+    <organ_vlasti>
+        <naziv></naziv>
+        <sediste></sediste>
+    </organ_vlasti>
+    <zahtev>
+        <broj></broj>
+        <datum></datum>
+        <opis_trazene_informacije></opis_trazene_informacije>
+    </zahtev>
+    <odgovor_odbijanje>
+        <broj></broj>
+        <datum></datum>
+        <obrazlozenje></obrazlozenje>
+    </odgovor_odbijanje>
+    <zalba>
+        <broj></broj>
+        <datum></datum>
+        <obrazlozenje></obrazlozenje>
+    </zalba>
+    <odbrana>
+        <datum></datum>
+        <obrazlozenje></obrazlozenje>
+    </odbrana>
+    <dispozitiva status=""> 
+        <clan broj="1"></clan>
+        <clan broj="2"></clan>
+    </dispozitiva>
+    <obrazlozenje></obrazlozenje>
+</resenje>

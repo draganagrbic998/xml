@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<odbijanje_resenje broj="" datum="" mesto="" tip_odbijanja="">
+<odbijanje broj="" datum="" mesto="">
+    <zahtev>
+        <broj></broj>
+        <datum></datum>
+        <opis_trazene_informacije></opis_trazene_informacije>
+    </zahtev>
     <organ_vlasti>
         <naziv></naziv>
         <sediste></sediste>
@@ -15,10 +20,5 @@
             <broj></broj>
         </adresa>
     </trazilac>
-    <podaci_zahteva>
-        <broj></broj>
-        <datum></datum>
-        <opis_trazene_informacije></opis_trazene_informacije>
-    </podaci_zahteva>
     <obrazlozenje></obrazlozenje>
-</odbijanje_resenje>
+</odbijanje>

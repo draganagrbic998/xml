@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<obavestenje broj="" datum="" mesto="">
-    <opis_trazene_informacije>
-    </opis_trazene_informacije>
+<odgovor broj="" datum="" mesto="">
+    
+    <zahtev>
+        <broj></broj>
+        <datum></datum>
+        <opis_trazene_informacije></opis_trazene_informacije>
+    </zahtev>
     
     <organ_vlasti>
         <naziv></naziv>
@@ -10,6 +14,7 @@
     </organ_vlasti>
     
     <trazilac>
+        <naziv></naziv>
         <ime></ime>
         <prezime></prezime>
         <adresa>
@@ -18,6 +23,8 @@
             <broj></broj>
         </adresa>
     </trazilac>
+    
+    <obrazlozenje></obrazlozenje>
     
     <uvid>
         <datum>
@@ -35,7 +42,8 @@
     <kopija>
         <broj_racuna></broj_racuna>
         <poziv_na_broj></poziv_na_broj>
+        <model></model>
         <iznos></iznos>
     </kopija>
     
-</obavestenje>
+</odgovor>
