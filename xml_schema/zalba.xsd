@@ -2,6 +2,7 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
     targetNamespace="https://github.com/draganagrbic998/xml/zalba_odbijanje"
     xmlns:odbijanje="https://github.com/draganagrbic998/xml/odbijanje"
+    xmlns:odgovor="https://github.com/draganagrbic998/xml/odgovor"
     xmlns:organ_vlasti="https://github.com/draganagrbic998/xml/organ_vlasti"
     xmlns:osoba="https://github.com/draganagrbic998/xml/osoba"
     xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev"
@@ -12,14 +13,19 @@
     <xs:import namespace="https://github.com/draganagrbic998/xml/zahtev" schemaLocation="zahtev.xsd"/>
     <xs:import namespace="https://github.com/draganagrbic998/xml/odbijanje"
         schemaLocation="odbijanje.xsd"/>
+    <xs:import namespace="https://github.com/draganagrbic998/xml/odgovor"
+        schemaLocation="odgovor.xsd"/>
     <xs:element name="Zalba_odbijanje">
         <xs:complexType>
             <xs:sequence>
                 <xs:element ref="osoba:Osoba"/>
                 <xs:element ref="organ_vlasti:Organ_vlasti"/>
                 <xs:element ref="zahtev:Zahtev"/>
-                <xs:element ref="odbijanje:Odbijanje"/>
                 <xs:element name="obrazlozenje" type="xs:string"/>
+                <xs:choice minOccurs="0">
+                    <xs:element ref="odbijanje:Odbijanje"/>
+                    <xs:element ref="odgovor:Odgovor"/>
+                </xs:choice>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
