@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+    <xs:element name="Adresa">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="mesto" type="xs:string"/>
+                <xs:element name="postanski_broj" type="xs:int"/>
+                <xs:element name="ulica" type="xs:string"/>
+                <xs:element name="broj" type="xs:int"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Kontakt">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="telefon" type="xs:string"/>
+                <xs:element name="email" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

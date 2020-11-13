@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="https://github.com/draganagrbic998/xml/osoba"
+    xmlns:osoba="https://github.com/draganagrbic998/xml/osoba"
+    xmlns:osnova="https://github.com/draganagrbic998/xml/osnova">
+    <xs:import namespace="https://github.com/draganagrbic998/xml/osnova" schemaLocation="osnova.xsd"/>
+    <xs:element name="Osoba">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="ime"/>
+                <xs:element name="prezime"/>
+                <xs:element name="jmbg"/>
+                <xs:element name="datum_rodjenja"/>
+                <xs:element ref="osnova:Adresa"/>
+                <xs:element ref="osnova:Kontakt"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
