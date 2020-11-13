@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="https://github.com/draganagrbic998/xml/zahtev"
+    xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev"
+    xmlns:osoba="https://github.com/draganagrbic998/xml/osoba"
+    xmlns:organ_vlasti="https://github.com/draganagrbic998/xml/organ_vlasti">
+    <xs:import namespace="https://github.com/draganagrbic998/xml/osoba" schemaLocation="osoba.xsd"/>
+    <xs:import namespace="https://github.com/draganagrbic998/xml/organ_vlasti"
+        schemaLocation="organ_vlasti.xsd"/>
+    <xs:element name="Zahtev">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="osoba:Osoba"/>
+                <xs:element name="newElement"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

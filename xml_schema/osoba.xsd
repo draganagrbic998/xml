@@ -11,8 +11,8 @@
                 <xs:element name="prezime"/>
                 <xs:element name="jmbg"/>
                 <xs:element name="datum_rodjenja"/>
-                <xs:element ref="osnova:Adresa"/>
-                <xs:element ref="osnova:Kontakt"/>
+                <xs:element name="adresa" type="osnova:TAdresa"/>
+                <xs:element name="kontakt" type="osnova:TKontakt"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
