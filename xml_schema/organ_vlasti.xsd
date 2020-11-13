@@ -4,7 +4,7 @@
     xmlns:organ_vlasti="https://github.com/draganagrbic998/xml/organ_vlasti"
     xmlns:osnova="https://github.com/draganagrbic998/xml/osnova">
     <xs:import namespace="https://github.com/draganagrbic998/xml/osnova" schemaLocation="osnova.xsd"/>
-    <xs:element name="OrganVlasti">
+    <xs:element name="Organ_vlasti">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="naziv" type="xs:string"/>
