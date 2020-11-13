@@ -15,7 +15,7 @@
         schemaLocation="odbijanje.xsd"/>
     <xs:import namespace="https://github.com/draganagrbic998/xml/odgovor"
         schemaLocation="odgovor.xsd"/>
-    <xs:element name="Zalba_odbijanje">
+    <xs:element name="Zalba">
         <xs:complexType>
             <xs:sequence>
                 <xs:element ref="osoba:Osoba"/>
