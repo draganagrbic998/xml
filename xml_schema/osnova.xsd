@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="https://github.com/draganagrbic998/xml/osnova"
+    xmlns:osnova="https://github.com/draganagrbic998/xml/osnova">
     <xs:element name="Adresa">
         <xs:complexType>
             <xs:sequence>
