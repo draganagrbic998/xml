@@ -1,4 +1,4 @@
-package rs.ac.uns.ftn.examples.dom;
+package rs.ac.uns.ftn.examples.model;
 
 public class Korisnik {
 	
@@ -10,6 +10,11 @@ public class Korisnik {
 	
 	public Korisnik() {
 		super();
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("Email: %s, lozinka: %s, ime: %s, prezime: %s, adresa: %s", this.email, this.lozinka, this.ime, this.prezime, this.adresa);
 	}
 
 	public String getEmail() {

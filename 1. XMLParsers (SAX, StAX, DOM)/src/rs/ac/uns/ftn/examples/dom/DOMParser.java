@@ -28,6 +28,7 @@ public class DOMParser implements ErrorHandler {
 
 	private static DocumentBuilderFactory factory;
 	private Document document;
+	private ZahtevParser zahtevParser = new ZahtevParser();
 
 	static {
 		factory = DocumentBuilderFactory.newInstance();
@@ -58,27 +59,23 @@ public class DOMParser implements ErrorHandler {
 			return;
 
 		if (node instanceof Document) {
-			System.out.println("START_DOCUMENT");
 			Document doc = (Document) node;
 			printNode(doc.getDocumentElement());
+			this.zahtevParser.parseZahtev(doc.getDocumentElement());
 			
 		} else if (node instanceof Element) {
 			
 			Element element = (Element) node;
-			System.out.print("START_ELEMENT: " + element.getTagName());
 			NamedNodeMap attributes = element.getAttributes();
 
 			if (attributes.getLength() > 0) {
-				System.out.print(", ATTRIBUTES: ");
 				for (int i = 0; i < attributes.getLength(); i++) {
 					Node attribute = attributes.item(i);
 					printNode(attribute);
-					if (i < attributes.getLength()-1)
-	        			System.out.print(", ");
+					if (i < attributes.getLength()-1) {}
 				}
 			}
 			
-			System.out.println();
 			
 			NodeList children = element.getChildNodes();
 			if (children != null) {
@@ -91,34 +88,26 @@ public class DOMParser implements ErrorHandler {
 
 		else if (node instanceof Attr) {
 			Attr attr = (Attr) node;
-			System.out.print(attr.getName() + "=" + attr.getValue());
 		}
 		
 		else if (node instanceof Text) {
 			Text text = (Text) node;
-			if (text.getTextContent().trim().length() > 0)
-				System.out.println("CHARACTERS: " + text.getTextContent().trim());
+			if (text.getTextContent().trim().length() > 0) {}
 			
 		}
 		
 		else if (node instanceof CDATASection) {
-			System.out.println("CDATA: " + node.getNodeValue());
 		}
 		
 		else if (node instanceof Comment) {
-			System.out.println("COMMENT: " + node.getNodeValue());
 		}
 		
 		else if (node instanceof ProcessingInstruction) {
-			System.out.print("PROCESSING INSTRUCTION: ");
 			ProcessingInstruction instruction = (ProcessingInstruction) node;
-			System.out.print("data: " + instruction.getData());
-			System.out.println(", target: " + instruction.getTarget());
 		}
 		
 		else if (node instanceof Entity) {
 			Entity entity = (Entity) node;
-			System.out.println("ENTITY: " + entity.getNotationName());
 		}
 	}
 	

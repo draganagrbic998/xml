@@ -1,4 +1,4 @@
-package rs.ac.uns.ftn.examples.dom;
+package rs.ac.uns.ftn.examples.model;
 
 public enum TipPrava {
 	

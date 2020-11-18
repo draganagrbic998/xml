@@ -1,4 +1,4 @@
-package rs.ac.uns.ftn.examples.dom;
+package rs.ac.uns.ftn.examples.model;
 
 public class OrganVlasti {
 	
@@ -7,6 +7,11 @@ public class OrganVlasti {
 	
 	public OrganVlasti() {
 		super();
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("Naziv: %s, adresa: %s", this.naziv, this.adresa);
 	}
 
 	public String getNaziv() {

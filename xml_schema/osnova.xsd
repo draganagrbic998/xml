@@ -10,12 +10,6 @@
             <xs:element name="broj" type="xs:int"/>
         </xs:sequence>
     </xs:complexType>
-    <xs:complexType name="TKontakt">
-        <xs:sequence>
-            <xs:element name="telefon" type="xs:string"/>
-            <xs:element name="email" type="xs:string"/>
-        </xs:sequence>
-    </xs:complexType>
     <xs:simpleType name="TModel">
         <xs:restriction base="xs:positiveInteger">
             <xs:minInclusive value="10"/>

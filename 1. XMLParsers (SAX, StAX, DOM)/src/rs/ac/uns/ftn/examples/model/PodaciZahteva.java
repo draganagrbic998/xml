@@ -1,4 +1,4 @@
-package rs.ac.uns.ftn.examples.dom;
+package rs.ac.uns.ftn.examples.model;
 
 public class PodaciZahteva {
 	
@@ -8,6 +8,11 @@ public class PodaciZahteva {
 	
 	public PodaciZahteva() {
 		super();
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("Tip prava: %s, tip dostave: %s, opis dostave: %s", this.tip_prava, this.tip_dostave, this.opis_dostave);
 	}
 
 	public TipPrava getTip_prava() {
