@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="https://github.com/draganagrbic998/xml/zahtev"
+    xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev"
+    xmlns:osoba="https://github.com/draganagrbic998/xml/osoba"
+    xmlns:organ_vlasti="https://github.com/draganagrbic998/xml/organ_vlasti">
+    <xs:import namespace="https://github.com/draganagrbic998/xml/osoba" schemaLocation="osoba.xsd"/>
+    <xs:import namespace="https://github.com/draganagrbic998/xml/organ_vlasti"
+        schemaLocation="organ_vlasti.xsd"/>
+    <xs:element name="Zahtev">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="osoba:Korisnik" minOccurs="1"/>
+                <xs:element ref="organ_vlasti:Organ_vlasti"/>
+                <xs:element name="podaci_zahteva">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="tip_prava">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="uvid"/>
+                                        <xs:enumeration value="kopija"/>
+                                        <xs:enumeration value="dostava"/>
+                                        <xs:enumeration value="obavestenje"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element minOccurs="0" name="tip_dostave">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="posta"/>
+                                        <xs:enumeration value="faks"/>
+                                        <xs:enumeration value="email"/>
+                                        <xs:enumeration value="ostalo"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element minOccurs="0" name="opis_dostave" type="xs:string"/>
+                            <xs:element name="opis_trazene_informacije" type="xs:string"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="broj" type="xs:int"/>
+            <xs:attribute name="datum" type="xs:date"/>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

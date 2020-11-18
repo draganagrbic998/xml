@@ -25,6 +25,8 @@
                     <xs:element ref="odgovor:Odgovor"/>
                 </xs:choice>
             </xs:sequence>
+            <xs:attribute name="id" type="xs:int"/>
+            <xs:attribute name="datum" type="xs:date"/>
         </xs:complexType>
     </xs:element>
 </xs:schema>
