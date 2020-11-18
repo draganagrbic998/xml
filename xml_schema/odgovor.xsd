@@ -14,8 +14,6 @@
     <xs:element name="Odgovor">
         <xs:complexType>
             <xs:sequence>
-                <xs:element ref="organ_vlasti:Organ_vlasti"/>
-                <xs:element ref="osoba:Osoba"/>
                 <xs:element ref="zahtev:Zahtev"/>
                 <xs:element name="podaci_odgovora">
                     <xs:complexType>

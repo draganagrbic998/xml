@@ -18,8 +18,6 @@
     <xs:element name="Zalba">
         <xs:complexType>
             <xs:sequence>
-                <xs:element ref="osoba:Osoba"/>
-                <xs:element ref="organ_vlasti:Organ_vlasti"/>
                 <xs:element ref="zahtev:Zahtev"/>
                 <xs:element name="obrazlozenje" type="xs:string"/>
                 <xs:choice minOccurs="0">

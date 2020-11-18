@@ -10,7 +10,7 @@
     <xs:element name="Zahtev">
         <xs:complexType>
             <xs:sequence>
-                <xs:element ref="osoba:Osoba" minOccurs="1"/>
+                <xs:element ref="osoba:Korisnik" minOccurs="1"/>
                 <xs:element ref="organ_vlasti:Organ_vlasti"/>
                 <xs:element name="podaci_zahteva">
                     <xs:complexType>
@@ -35,6 +35,7 @@
                                     </xs:restriction>
                                 </xs:simpleType>
                             </xs:element>
+                            <xs:element minOccurs="0" name="opis_dostave" type="xs:string"/>
                             <xs:element name="opis_trazene_informacije" type="xs:string"/>
                         </xs:sequence>
                     </xs:complexType>

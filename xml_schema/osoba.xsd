@@ -4,13 +4,13 @@
     xmlns:osoba="https://github.com/draganagrbic998/xml/osoba"
     xmlns:osnova="https://github.com/draganagrbic998/xml/osnova">
     <xs:import namespace="https://github.com/draganagrbic998/xml/osnova" schemaLocation="osnova.xsd"/>
-    <xs:element name="Osoba">
+    <xs:element name="Korisnik">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="ime"/>
-                <xs:element name="prezime"/>
-                <xs:element name="jmbg"/>
-                <xs:element name="datum_rodjenja"/>
+                <xs:element name="email" type="xs:string"/>
+                <xs:element name="lozinka" type="xs:string"/>
+                <xs:element name="ime" type="xs:string"/>
+                <xs:element name="prezime" type="xs:string"/>
                 <xs:element name="adresa" type="osnova:TAdresa"/>
                 <xs:element name="kontakt" type="osnova:TKontakt"/>
             </xs:sequence>
