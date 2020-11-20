@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
-    targetNamespace="https://github.com/draganagrbic998/xml/obavestenje"
-    xmlns:obavestenje="https://github.com/draganagrbic998/xml/obavestenje"
+    targetNamespace="https://github.com/draganagrbic998/xml/odluka"
+    xmlns:korisnik="https://github.com/draganagrbic998/xml/korisnik"
+    xmlns:odluka="https://github.com/draganagrbic998/xml/odluka"
     xmlns:osnova="https://github.com/draganagrbic998/xml/osnova"
     xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev">
+    <xs:import namespace="https://github.com/draganagrbic998/xml/korisnik"
+        schemaLocation="korisnik.xsd"/>
     <xs:import namespace="https://github.com/draganagrbic998/xml/zahtev" schemaLocation="zahtev.xsd"/>
     <xs:import namespace="https://github.com/draganagrbic998/xml/osnova" schemaLocation="osnova.xsd"/>
-    <xs:element name="Obavestenje">
+    <xs:element name="Odluka">
         <xs:complexType>
             <xs:sequence>
+                <xs:element ref="korisnik:Korisnik"/>
                 <xs:element ref="zahtev:Zahtev"/>
-                <xs:element name="Podaci_obavestenja">
+                <xs:element name="Podaci_odluke">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="Odgovor" type="xs:string"/>
-                            <xs:element name="Uvid">
+                            <xs:element minOccurs="1" name="Odgovor" type="xs:string"/>
+                            <xs:element minOccurs="0" name="Uvid">
                                 <xs:complexType>
                                     <xs:sequence>
                                         <xs:element name="Vreme">
@@ -26,15 +30,15 @@
                                             </xs:complexType>
                                         </xs:element>
                                         <xs:element name="Adresa" type="osnova:TAdresa"/>
-                                        <xs:element name="Kancelarija" type="xs:string"/>
+                                        <xs:element name="Kancelarija" type="xs:positiveInteger"/>
                                     </xs:sequence>
                                 </xs:complexType>
                             </xs:element>
-                            <xs:element name="Kopija">
+                            <xs:element minOccurs="0" name="Kopija">
                                 <xs:complexType>
                                     <xs:sequence>
                                         <xs:element name="Iznos" type="xs:positiveInteger"/>
-                                        <xs:element name="Broj_racuna" type="osnova:TBroj_racuna"/>
+                                        <xs:element name="Racun" type="osnova:TBroj_racuna"/>
                                         <xs:element name="Poziv_na_broj"
                                             type="osnova:TPoziv_na_broj"/>
                                         <xs:element name="Model" type="osnova:TModel"/>
@@ -45,8 +49,17 @@
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
-            <xs:attribute name="broj" type="xs:positiveInteger"/>
-            <xs:attribute name="datum" type="xs:date"/>
+            <xs:attribute name="broj" type="xs:positiveInteger" use="required"/>
+            <xs:attribute name="tip_odluke" use="required">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="zakljucak"/>
+                        <xs:enumeration value="obavestenje"/>
+                        <xs:enumeration value="resenje"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+            <xs:attribute name="datum" type="xs:date" use="required"/>
         </xs:complexType>
     </xs:element>
 </xs:schema>
