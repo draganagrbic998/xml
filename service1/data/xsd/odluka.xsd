@@ -17,18 +17,12 @@
                 <xs:element name="Podaci_odluke">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element minOccurs="1" name="Odgovor" type="xs:string"/>
+                            <xs:element name="Odgovor" type="xs:string"/>
                             <xs:element minOccurs="0" name="Uvid">
                                 <xs:complexType>
                                     <xs:sequence>
-                                        <xs:element name="Vreme">
-                                            <xs:complexType>
-                                                <xs:sequence>
-                                                  <xs:element name="Od" type="xs:date"/>
-                                                  <xs:element name="Do" type="xs:date"/>
-                                                </xs:sequence>
-                                            </xs:complexType>
-                                        </xs:element>
+                                        <xs:element name="Od" type="xs:date"/>
+                                        <xs:element name="Do" type="xs:date"/>
                                         <xs:element name="Adresa" type="osnova:TAdresa"/>
                                         <xs:element name="Kancelarija" type="xs:positiveInteger"/>
                                     </xs:sequence>
@@ -49,7 +43,6 @@
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
-            <xs:attribute name="broj" type="xs:positiveInteger" use="required"/>
             <xs:attribute name="tip_odluke" use="required">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
@@ -59,6 +52,7 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:attribute>
+            <xs:attribute name="broj" type="xs:positiveInteger" use="required"/>
             <xs:attribute name="datum" type="xs:date" use="required"/>
         </xs:complexType>
     </xs:element>
