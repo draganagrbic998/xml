@@ -11,8 +11,8 @@
     <xs:element name="Zahtev">
         <xs:complexType>
             <xs:sequence>
-                <xs:element ref="organ_vlasti:Organ_vlasti"/>
                 <xs:element ref="korisnik:Korisnik"/>
+                <xs:element ref="organ_vlasti:Organ_vlasti"/>
                 <xs:element name="Podaci_zahteva">
                     <xs:complexType>
                         <xs:sequence>

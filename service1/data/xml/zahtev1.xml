@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zahtev:Zahtev xmlns:korisnik="https://github.com/draganagrbic998/xml/korisnik"
+ xmlns:osnova="https://github.com/draganagrbic998/xml/osnova"
+ xmlns:organ_vlasti="https://github.com/draganagrbic998/xml/organ_vlasti"
+ xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="https://github.com/draganagrbic998/xml/zahtev file:/C:/Users/Dragana/Desktop/projekti/xml/service1/data/xsd/zahtev.xsd" tip_zahteva="obavestenje" broj="489691616" datum="2021-10-30">
+    <korisnik:Korisnik>
+        <korisnik:Uloga>Gradjanin</korisnik:Uloga>
+        <korisnik:Email>IDDJ10JUEeqR</korisnik:Email>
+        <korisnik:Lozinka>IA1</korisnik:Lozinka>
+        <korisnik:Ime>vD79dS3QjbyiIQGy</korisnik:Ime>
+        <korisnik:Prezime>KYr_onj</korisnik:Prezime>
+        <korisnik:Adresa>
+            <osnova:Mesto>hG4_XqM</osnova:Mesto>
+            <osnova:Postanski_broj>1446331934</osnova:Postanski_broj>
+            <osnova:Ulica>N</osnova:Ulica>
+            <osnova:Broj>1445941685</osnova:Broj>
+        </korisnik:Adresa>
+        <korisnik:Potpis>78739087</korisnik:Potpis>
+    </korisnik:Korisnik>
+    <organ_vlasti:Organ_vlasti>
+        <organ_vlasti:Naziv>FdgvIcOo82mL</organ_vlasti:Naziv>
+        <organ_vlasti:Adresa>
+            <osnova:Mesto>r1fcez1X7ArdH._sTs.dF</osnova:Mesto>
+            <osnova:Postanski_broj>1314709666</osnova:Postanski_broj>
+            <osnova:Ulica>mnAeKF1e2hgOwBzw</osnova:Ulica>
+            <osnova:Broj>1471226530</osnova:Broj>
+        </organ_vlasti:Adresa>
+    </organ_vlasti:Organ_vlasti>
+    <zahtev:Podaci_zahteva>
+        <zahtev:Trazena_informacija>fjtaKDA</zahtev:Trazena_informacija>
+        <zahtev:Tip_dostave>email</zahtev:Tip_dostave>
+        <zahtev:Opis_dostave>ZNWIabtArPyA1AZcbu</zahtev:Opis_dostave>
+    </zahtev:Podaci_zahteva>
+</zahtev:Zahtev>

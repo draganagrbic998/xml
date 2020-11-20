@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zalba:Zalba xmlns:odluka="https://github.com/draganagrbic998/xml/odluka"
+ xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev"
+ xmlns:zalba="https://github.com/draganagrbic998/zalba"
+ xmlns:korisnik="https://github.com/draganagrbic998/xml/korisnik"
+ xmlns:osnova="https://github.com/draganagrbic998/xml/osnova"
+ xmlns:organ_vlasti="https://github.com/draganagrbic998/xml/organ_vlasti"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="https://github.com/draganagrbic998/zalba file:/C:/Users/Dragana/Desktop/projekti/xml/service1/data/xsd/zalba.xsd" tip_zalbe="nije postupio" broj="2072588760" datum="2021-08-20Z">
+    <zahtev:Zahtev tip_zahteva="dostava" broj="1394880036" datum="2020-11-24">
+        <korisnik:Korisnik>
+            <korisnik:Uloga>Gradjanin</korisnik:Uloga>
+            <korisnik:Email>Ye7</korisnik:Email>
+            <korisnik:Lozinka>l10HUdrO.</korisnik:Lozinka>
+            <korisnik:Ime>dKeqyQfV5P3.9XwGfB58R2N</korisnik:Ime>
+            <korisnik:Prezime>GOSNUQR1mVWzC</korisnik:Prezime>
+            <korisnik:Adresa>
+                <osnova:Mesto>oY.XdmoNyIH_QQdQU6FLqoo0fkY6T</osnova:Mesto>
+                <osnova:Postanski_broj>1446486422</osnova:Postanski_broj>
+                <osnova:Ulica>aEJbcN</osnova:Ulica>
+                <osnova:Broj>1114979081</osnova:Broj>
+            </korisnik:Adresa>
+            <korisnik:Potpis>798882797069877487676589887276657089788680888984</korisnik:Potpis>
+        </korisnik:Korisnik>
+        <organ_vlasti:Organ_vlasti>
+            <organ_vlasti:Naziv>tWvxMP6ybXqSoEmsTFV0</organ_vlasti:Naziv>
+            <organ_vlasti:Adresa>
+                <osnova:Mesto>wuTigflvBB</osnova:Mesto>
+                <osnova:Postanski_broj>89050063</osnova:Postanski_broj>
+                <osnova:Ulica>Q</osnova:Ulica>
+                <osnova:Broj>1862082694</osnova:Broj>
+            </organ_vlasti:Adresa>
+        </organ_vlasti:Organ_vlasti>
+        <zahtev:Podaci_zahteva>
+            <zahtev:Trazena_informacija>usE</zahtev:Trazena_informacija>
+            <zahtev:Tip_dostave>ostalo</zahtev:Tip_dostave>
+            <zahtev:Opis_dostave>wmin</zahtev:Opis_dostave>
+        </zahtev:Podaci_zahteva>
+    </zahtev:Zahtev>
+    <zalba:Podaci_zalbe>
+        <zalba:Obrazlozenje>bNM</zalba:Obrazlozenje>
+    </zalba:Podaci_zalbe>
+</zalba:Zalba>

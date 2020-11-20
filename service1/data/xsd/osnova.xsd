@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="https://github.com/draganagrbic998/xml/osnova"
+    xmlns:osnova="https://github.com/draganagrbic998/xml/osnova">
+    <xs:complexType name="TAdresa">
+        <xs:sequence>
+            <xs:element name="Mesto" type="xs:string"/>
+            <xs:element name="Postanski_broj" type="xs:positiveInteger"/>
+            <xs:element name="Ulica" type="xs:string"/>
+            <xs:element name="Broj" type="xs:positiveInteger"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="TBroj_racuna">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\d{3}-\d{1,13}-\d{2}"/>
+            <xs:minLength value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TPoziv_na_broj">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="20"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TModel">
+        <xs:restriction base="xs:positiveInteger">
+            <xs:maxInclusive value="99"/>
+            <xs:minInclusive value="10"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

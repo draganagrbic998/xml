@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="https://github.com/draganagrbic998/xml/organ_vlasti"
+    xmlns:organ_vlasti="https://github.com/draganagrbic998/xml/organ_vlasti"
+    xmlns:osnova="https://github.com/draganagrbic998/xml/osnova">
+    <xs:import namespace="https://github.com/draganagrbic998/xml/osnova" schemaLocation="osnova.xsd"/>
+    <xs:element name="Organ_vlasti">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Naziv" type="xs:string"/>
+                <xs:element name="Adresa" type="osnova:TAdresa"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
