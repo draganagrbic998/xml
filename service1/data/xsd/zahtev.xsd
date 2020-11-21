@@ -17,7 +17,7 @@
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name="Trazena_informacija" type="xs:string"/>
-                            <xs:element name="Tip_dostave">
+                            <xs:element minOccurs="1" name="Tip_dostave">
                                 <xs:simpleType>
                                     <xs:restriction base="xs:string">
                                         <xs:enumeration value="email"/>
@@ -27,7 +27,7 @@
                                     </xs:restriction>
                                 </xs:simpleType>
                             </xs:element>
-                            <xs:element name="Opis_dostave" type="xs:string"/>
+                            <xs:element minOccurs="1" name="Opis_dostave" type="xs:string"/>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>

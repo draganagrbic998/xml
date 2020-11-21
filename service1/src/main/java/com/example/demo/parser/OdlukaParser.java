@@ -31,8 +31,8 @@ public class OdlukaParser implements Parser<Odluka> {
 
 	@Override
 	public Odluka parse(Element element) throws ParseException {
-		NamedNodeMap attributes = element.getAttributes();
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		NamedNodeMap attributes = element.getAttributes();
 		String broj = attributes.getNamedItem("broj").getNodeValue();
 		Date datum = format.parse(attributes.getNamedItem("datum").getNodeValue());
 		TipOdluke tip = TipOdluke.valueOf(attributes.getNamedItem("tip_odluke").getNodeValue());
@@ -52,7 +52,6 @@ public class OdlukaParser implements Parser<Odluka> {
 		odluka.setAttributeNS(Constants.XMLNS_NAMESPACE, "xmlns:korisnik", "https://github.com/draganagrbic998/xml/korisnik ../xsd/korisnik.xsd");
 		odluka.setAttributeNS(Constants.XMLNS_NAMESPACE, "xmlns:zahtev", "https://github.com/draganagrbic998/xml/zahtev ../xsd/zahtev.xsd");
 		odluka.setAttributeNS(Constants.XMLNS_NAMESPACE, "xmlns:odluka", "https://github.com/draganagrbic998/xml/odluka ../xsd/odluka.xsd");
-
 		odluka.setAttribute("broj", type.getBroj());
 		odluka.setAttribute("datum", format.format(type.getDatum()));
 		odluka.setAttribute("tip_odluke", type.getTip() + "");

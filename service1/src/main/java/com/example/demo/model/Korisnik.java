@@ -2,7 +2,7 @@ package com.example.demo.model;
 
 public class Korisnik {
 
-	private String id;	//jel ovde mogu da stavim malo long???
+	private String id;	
 	private Uloga uloga;
 	private String email;
 	private String lozinka;

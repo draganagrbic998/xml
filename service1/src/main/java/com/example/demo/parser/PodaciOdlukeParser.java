@@ -42,7 +42,6 @@ public class PodaciOdlukeParser implements Parser<PodaciOdluke> {
 		Element podaciOdluke = document.createElement(namespace + ":Podaci_odluke");
 		Element odgovor = document.createElement(namespace + ":Odgovor");
 		odgovor.setTextContent(type.getOdgovor());
-		podaciOdluke.appendChild(odgovor);
 		if (type.getUvid() != null) {
 			Element uvid = this.uvidParser.parse(namespace, type.getUvid(), document);
 			podaciOdluke.appendChild(uvid);
@@ -51,6 +50,7 @@ public class PodaciOdlukeParser implements Parser<PodaciOdluke> {
 			Element kopija = this.kopijaParser.parse(namespace, type.getKopija(), document);
 			podaciOdluke.appendChild(kopija);
 		}
+		podaciOdluke.appendChild(odgovor);
 		return podaciOdluke;
 	}
 

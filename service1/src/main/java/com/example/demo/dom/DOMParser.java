@@ -27,7 +27,6 @@ public class DOMParser {
 	
 	@Autowired
 	private DOMErrorHandler errorHandler;
-
 	private DocumentBuilderFactory builderFactory;
 	private TransformerFactory transformerFactory;
 	

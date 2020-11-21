@@ -31,8 +31,8 @@ public class ZahtevParser implements Parser<Zahtev> {
 
 	@Override
 	public Zahtev parse(Element element) throws ParseException {
-		NamedNodeMap attributes = element.getAttributes();
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		NamedNodeMap attributes = element.getAttributes();
 		String broj = attributes.getNamedItem("broj").getNodeValue();
 		Date datum = format.parse(attributes.getNamedItem("datum").getNodeValue());
 		TipZahteva tip = TipZahteva.valueOf(attributes.getNamedItem("tip_zahteva").getNodeValue());

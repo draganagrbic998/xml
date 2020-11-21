@@ -49,6 +49,7 @@ public class KorisnikParser implements Parser<Korisnik> {
 		prezime.setTextContent(type.getPrezime());
 		Element adresa = this.adresaParser.parse(namespace, type.getAdresa(), document);
 		Element potpis = document.createElement(namespace + ":Potpis");
+		potpis.setTextContent(type.getPotpis());
 		korisnik.appendChild(email);
 		korisnik.appendChild(lozinka);
 		korisnik.appendChild(ime);

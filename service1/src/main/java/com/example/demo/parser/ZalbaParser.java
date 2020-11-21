@@ -28,8 +28,8 @@ public class ZalbaParser implements Parser<Zalba> {
 	
 	@Override
 	public Zalba parse(Element element) throws ParseException {
-		NamedNodeMap attributes = element.getAttributes();
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		NamedNodeMap attributes = element.getAttributes();
 		String broj = attributes.getNamedItem("broj").getNodeValue();
 		Date datum = format.parse(attributes.getNamedItem("datum").getNodeValue());
 		TipZalbe tip = TipZalbe.valueOf(attributes.getNamedItem("tip_zalbe").getNodeValue());
@@ -54,7 +54,6 @@ public class ZalbaParser implements Parser<Zalba> {
 		zalba.setAttributeNS(Constants.XMLNS_NAMESPACE, "xmlns:zahtev", "https://github.com/draganagrbic998/xml/zahtev ../xsd/zahtev.xsd");
 		zalba.setAttributeNS(Constants.XMLNS_NAMESPACE, "xmlns:odluka", "https://github.com/draganagrbic998/xml/odluka ../xsd/odluka.xsd");
 		zalba.setAttributeNS(Constants.XMLNS_NAMESPACE, "xmlns:zalba", "https://github.com/draganagrbic998/xml/zalba ../xsd/zalba.xsd");
-
 		zalba.setAttribute("broj", type.getBroj());
 		zalba.setAttribute("datum", format.format(type.getDatum()));
 		zalba.setAttribute("tip_zalbe", type.getTip() + "");

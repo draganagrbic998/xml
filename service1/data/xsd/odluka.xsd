@@ -17,7 +17,7 @@
                 <xs:element name="Podaci_odluke">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="Odgovor" type="xs:string"/>
+                            <xs:element minOccurs="1" name="Odgovor" type="xs:string"/>
                             <xs:element minOccurs="0" name="Uvid">
                                 <xs:complexType>
                                     <xs:sequence>

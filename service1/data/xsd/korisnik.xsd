@@ -18,11 +18,11 @@
             <xs:attribute name="uloga" use="required">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
-                        <xs:enumeration value="GRADJANIN"/>
-                        <xs:enumeration value="SLUZBENIK"/>
-                        <xs:enumeration value="POVERENIK"/>
-                        <xs:enumeration value="RUKOVODILAC"/>
-                        <xs:enumeration value="ZAMENIK_POREVENIKA"/>
+                        <xs:enumeration value="gradjanin"/>
+                        <xs:enumeration value="sluzbenik"/>
+                        <xs:enumeration value="poverenik"/>
+                        <xs:enumeration value="rukovodilac"/>
+                        <xs:enumeration value="zamenik_poverenika"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:attribute>
