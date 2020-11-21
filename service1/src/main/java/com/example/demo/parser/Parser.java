@@ -1,9 +1,13 @@
 package com.example.demo.parser;
 
-import org.w3c.dom.Node;
+import java.text.ParseException;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 public interface Parser<T> {
 
-	public T parse(Node node);
+	public T parse(Element element) throws ParseException;
+	public Element parse(String namespace, T type, Document document);
 	
 }

@@ -10,6 +10,20 @@ public class PodaciZahteva {
 		super();
 	}
 
+	public PodaciZahteva(String trazenaInformacija, TipDostave tipDostave, String opisDostave) {
+		super();
+		this.trazenaInformacija = trazenaInformacija;
+		this.tipDostave = tipDostave;
+		this.opisDostave = opisDostave;
+	}
+	
+	@Override
+	public String toString() {
+		String suma = "PODACI PODATAKA ZAHTEVA:\n";
+		suma += String.format("trazena informacija: %s, tip dostave: %s, opis dostave: %s\n", this.trazenaInformacija, this.tipDostave, this.opisDostave);
+		return suma;
+	}
+
 	public String getTrazenaInformacija() {
 		return trazenaInformacija;
 	}

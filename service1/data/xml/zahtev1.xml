@@ -4,33 +4,32 @@
  xmlns:organ_vlasti="https://github.com/draganagrbic998/xml/organ_vlasti"
  xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="https://github.com/draganagrbic998/xml/zahtev file:/C:/Users/Dragana/Desktop/projekti/xml/schema/zahtev.xsd" tip_zahteva="uvid" broj="599785028" datum="2021-09-05">
+ xsi:schemaLocation="https://github.com/draganagrbic998/xml/zahtev file:/C:/Users/Dragana/Desktop/projekti/xml/schema/zahtev.xsd" tip_zahteva="obavestenje" broj="567062569" datum="2022-03-13">
     <organ_vlasti:Organ_vlasti>
-        <organ_vlasti:Naziv>fnuaYBs9hNrP</organ_vlasti:Naziv>
+        <organ_vlasti:Naziv>wh</organ_vlasti:Naziv>
         <organ_vlasti:Adresa>
-            <osnova:Mesto>QpWSIYd-SqIZgHApjb</osnova:Mesto>
-            <osnova:Postanski_broj>1594071194</osnova:Postanski_broj>
-            <osnova:Ulica>FdhJNndi-LldU</osnova:Ulica>
-            <osnova:Broj>291108630</osnova:Broj>
+            <osnova:Mesto>iv86V._hW</osnova:Mesto>
+            <osnova:Postanski_broj>1855443815</osnova:Postanski_broj>
+            <osnova:Ulica>gfdRHi-f.Wbe</osnova:Ulica>
+            <osnova:Broj>1065347118</osnova:Broj>
         </organ_vlasti:Adresa>
     </organ_vlasti:Organ_vlasti>
-    <korisnik:Korisnik>
-        <korisnik:Uloga>Sluzbenik</korisnik:Uloga>
-        <korisnik:Email>BtqqUSz2a4-bLNzNCu</korisnik:Email>
-        <korisnik:Lozinka>CR</korisnik:Lozinka>
-        <korisnik:Ime>bX2.</korisnik:Ime>
-        <korisnik:Prezime>eKyhOCS6E9THwqCiE3IKgvoCPZY</korisnik:Prezime>
+    <korisnik:Korisnik id="1995285968" uloga="sluzbenik">
+        <korisnik:Email>SiZXOUXMZaPHTCA9</korisnik:Email>
+        <korisnik:Lozinka>QmETDHkVhoHyLuyjnZahR.Y</korisnik:Lozinka>
+        <korisnik:Ime>Vj45hvYzSOkyMl</korisnik:Ime>
+        <korisnik:Prezime>MYbPWxX9QSubQ-URl</korisnik:Prezime>
         <korisnik:Adresa>
-            <osnova:Mesto>OeRBA8Ff_F11fh88lSTRJNbs</osnova:Mesto>
-            <osnova:Postanski_broj>1804894744</osnova:Postanski_broj>
-            <osnova:Ulica>jNDgul_a.VJE</osnova:Ulica>
-            <osnova:Broj>1627816109</osnova:Broj>
+            <osnova:Mesto>lgxm0SII3Vd137OJrQQ</osnova:Mesto>
+            <osnova:Postanski_broj>1941675365</osnova:Postanski_broj>
+            <osnova:Ulica>npZ0-Z1dL1</osnova:Ulica>
+            <osnova:Broj>621111169</osnova:Broj>
         </korisnik:Adresa>
-        <korisnik:Potpis>ZGVmYXVsdA==</korisnik:Potpis>
+        <korisnik:Potpis>8872848590697376708065688966788378727671</korisnik:Potpis>
     </korisnik:Korisnik>
     <zahtev:Podaci_zahteva>
-        <zahtev:Trazena_informacija>ITfDM0AWeyHiWKG4XdUVm.BPZ.C1W1</zahtev:Trazena_informacija>
+        <zahtev:Trazena_informacija>Xfple</zahtev:Trazena_informacija>
         <zahtev:Tip_dostave>faks</zahtev:Tip_dostave>
-        <zahtev:Opis_dostave>iz7E1Fv7WgozoWD-tX1SP8ewBz_FJt</zahtev:Opis_dostave>
+        <zahtev:Opis_dostave>Hmklen4L</zahtev:Opis_dostave>
     </zahtev:Podaci_zahteva>
 </zahtev:Zahtev>

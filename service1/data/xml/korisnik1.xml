@@ -2,17 +2,16 @@
 <korisnik:Korisnik xmlns:osnova="https://github.com/draganagrbic998/xml/osnova"
  xmlns:korisnik="https://github.com/draganagrbic998/xml/korisnik"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="https://github.com/draganagrbic998/xml/korisnik file:/C:/Users/Dragana/Desktop/projekti/xml/schema/korisnik.xsd">
-    <korisnik:Uloga>Gradjanin</korisnik:Uloga>
-    <korisnik:Email>unmb1Fv1VtPXci2NoQ3hvrToA</korisnik:Email>
-    <korisnik:Lozinka>NFmRCh7kHF5TH9eqBYAmRvR4cj-j1</korisnik:Lozinka>
-    <korisnik:Ime>YQ0</korisnik:Ime>
-    <korisnik:Prezime>jdTm7H4WDBorNwtglXfY9WyqzFoAs</korisnik:Prezime>
+ xsi:schemaLocation="https://github.com/draganagrbic998/xml/korisnik file:/C:/Users/Dragana/Desktop/projekti/xml/schema/korisnik.xsd" id="1273751782" uloga="poverenik">
+    <korisnik:Email>Wm9SdRqfaC2</korisnik:Email>
+    <korisnik:Lozinka>zFRGpvSiiKV</korisnik:Lozinka>
+    <korisnik:Ime>sI0hkQTNF1SlTC7VU4R</korisnik:Ime>
+    <korisnik:Prezime>gcEnJvh.L</korisnik:Prezime>
     <korisnik:Adresa>
-        <osnova:Mesto>zD</osnova:Mesto>
-        <osnova:Postanski_broj>1262222508</osnova:Postanski_broj>
-        <osnova:Ulica>VXOBJMYaak1fiQfF1Tg5IDTiTa70A</osnova:Ulica>
-        <osnova:Broj>1625558202</osnova:Broj>
+        <osnova:Mesto>L3IpPh0OFlG</osnova:Mesto>
+        <osnova:Postanski_broj>673623465</osnova:Postanski_broj>
+        <osnova:Ulica>GgQTXEwQB8f</osnova:Ulica>
+        <osnova:Broj>944940659</osnova:Broj>
     </korisnik:Adresa>
-    <korisnik:Potpis>9072657389788369797267657971888888788475</korisnik:Potpis>
+    <korisnik:Potpis>797375687684797272897582719077727189767880838172697188828279806886728787777671667276757690708185727869708768898971827780</korisnik:Potpis>
 </korisnik:Korisnik>

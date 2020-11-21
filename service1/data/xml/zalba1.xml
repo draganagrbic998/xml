@@ -2,40 +2,39 @@
 <zalba:Zalba xmlns:korisnik="https://github.com/draganagrbic998/xml/korisnik"
  xmlns:organ_vlasti="https://github.com/draganagrbic998/xml/organ_vlasti"
  xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev"
- xmlns:osnova="https://github.com/draganagrbic998/xml/osnova"
  xmlns:odluka="https://github.com/draganagrbic998/xml/odluka"
+ xmlns:osnova="https://github.com/draganagrbic998/xml/osnova"
  xmlns:zalba="https://github.com/draganagrbic998/zalba"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="https://github.com/draganagrbic998/zalba file:/C:/Users/Dragana/Desktop/projekti/xml/schema/zalba.xsd" tip_zalbe="nije postupio u celosti" broj="1818720157" datum="2022-05-11">
-    <zahtev:Zahtev tip_zahteva="dostava" broj="732402160" datum="2022-09-30">
+ xsi:schemaLocation="https://github.com/draganagrbic998/zalba file:/C:/Users/Dragana/Desktop/projekti/xml/schema/zalba.xsd" tip_zalbe="nije_postupio" broj="1744124839" datum="2021-11-08">
+    <zahtev:Zahtev tip_zahteva="dostava" broj="2047285955" datum="2021-05-20Z">
         <organ_vlasti:Organ_vlasti>
-            <organ_vlasti:Naziv>NUd94d78Akn_YKxf</organ_vlasti:Naziv>
+            <organ_vlasti:Naziv>R0Ezp0RRiogc_rSRN5NnZzsfFEBAPU</organ_vlasti:Naziv>
             <organ_vlasti:Adresa>
-                <osnova:Mesto>yOqNVCEe</osnova:Mesto>
-                <osnova:Postanski_broj>2085134400</osnova:Postanski_broj>
-                <osnova:Ulica>g3tg9JuT3S6fm</osnova:Ulica>
-                <osnova:Broj>1146537471</osnova:Broj>
+                <osnova:Mesto>SpyD-GZgyDIv</osnova:Mesto>
+                <osnova:Postanski_broj>1416802838</osnova:Postanski_broj>
+                <osnova:Ulica>zCdKEohjkQeDt9ZR1MN8FGaJkJND6E</osnova:Ulica>
+                <osnova:Broj>2074214815</osnova:Broj>
             </organ_vlasti:Adresa>
         </organ_vlasti:Organ_vlasti>
-        <korisnik:Korisnik>
-            <korisnik:Uloga>Gradjanin</korisnik:Uloga>
-            <korisnik:Email>VCJTBtpjs</korisnik:Email>
-            <korisnik:Lozinka>LeTOwkM3O-EUbexFi.8b</korisnik:Lozinka>
-            <korisnik:Ime>j-2dhlXVo</korisnik:Ime>
-            <korisnik:Prezime>osptQXtPrLqq3FJ</korisnik:Prezime>
+        <korisnik:Korisnik id="1664941588" uloga="poverenik">
+            <korisnik:Email>S3T9PmFzJt8omYNg8_RG</korisnik:Email>
+            <korisnik:Lozinka>gesiuoll4Y0vXFP4IKpOpgGZv2X</korisnik:Lozinka>
+            <korisnik:Ime>eVOg</korisnik:Ime>
+            <korisnik:Prezime>PfHLzQG2HKWA1zNhxMJHFw</korisnik:Prezime>
             <korisnik:Adresa>
-                <osnova:Mesto>ZwSRIieyAIq2vSCBciIEY</osnova:Mesto>
-                <osnova:Postanski_broj>2004386076</osnova:Postanski_broj>
-                <osnova:Ulica>RF4bd-v3Y6IZnWBf</osnova:Ulica>
-                <osnova:Broj>678642701</osnova:Broj>
+                <osnova:Mesto>Tlrwg5p_gvbZnPGwbMf6HGC2xqZjEz</osnova:Mesto>
+                <osnova:Postanski_broj>759096540</osnova:Postanski_broj>
+                <osnova:Ulica>JBGxTdKxlBtSx9Oy</osnova:Ulica>
+                <osnova:Broj>846675843</osnova:Broj>
             </korisnik:Adresa>
-            <korisnik:Potpis>78656673787067817267868383707286907787908983738690707885678577747369847976857187</korisnik:Potpis>
+            <korisnik:Potpis>836975816574797080757383669072797365707588706686687567807970687981677176737281897974687970878487776875817772769079829088</korisnik:Potpis>
         </korisnik:Korisnik>
         <zahtev:Podaci_zahteva>
-            <zahtev:Trazena_informacija>ErWEAZyA3</zahtev:Trazena_informacija>
-            <zahtev:Tip_dostave>posta</zahtev:Tip_dostave>
-            <zahtev:Opis_dostave>Q-I-0dhGb9wLlb</zahtev:Opis_dostave>
+            <zahtev:Trazena_informacija>cLPmgsUkxsJyh_6gbmhA345x.DYAC6</zahtev:Trazena_informacija>
+            <zahtev:Tip_dostave>faks</zahtev:Tip_dostave>
+            <zahtev:Opis_dostave>DJL</zahtev:Opis_dostave>
         </zahtev:Podaci_zahteva>
     </zahtev:Zahtev>
-    <zalba:Obrazlozenje>ywqFuwR0</zalba:Obrazlozenje>
+    <zalba:Obrazlozenje>eRVU14C7-jsyoHz2</zalba:Obrazlozenje>
 </zalba:Zalba>

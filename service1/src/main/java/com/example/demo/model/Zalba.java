@@ -1,10 +1,11 @@
 package com.example.demo.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Zalba {
 
-	private long broj;
+	private String broj;
 	private TipZalbe tip;
 	private Date datum;
 	private Zahtev zahtev;
@@ -14,12 +15,34 @@ public class Zalba {
 	public Zalba() {
 		super();
 	}
+	
+	public Zalba(String broj, TipZalbe tip, Date datum, Zahtev zahtev, Odluka odluka, String obrazlozenje) {
+		super();
+		this.broj = broj;
+		this.tip = tip;
+		this.datum = datum;
+		this.zahtev = zahtev;
+		this.odluka = odluka;
+		this.obrazlozenje = obrazlozenje;
+	}
+	
+	@Override
+	public String toString() {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		String suma = "PODACI ZALBE:\n";
+		suma += String.format("broj: %s, tip: %s, datum: %s, obrazlozenje: %s\n", this.broj, this.tip, format.format(this.datum), this.obrazlozenje);
+		suma += this.zahtev.toString();
+		if (this.odluka != null) {
+			suma += this.odluka.toString();
+		}
+		return suma;
+	}
 
-	public long getBroj() {
+	public String getBroj() {
 		return broj;
 	}
 
-	public void setBroj(long broj) {
+	public void setBroj(String broj) {
 		this.broj = broj;
 	}
 

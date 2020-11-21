@@ -16,10 +16,10 @@
             <xs:attribute name="tip_zalbe" use="required">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
-                        <xs:enumeration value="nije postupio"/>
-                        <xs:enumeration value="nije postupio u zakonskom roku"/>
-                        <xs:enumeration value="nije postupio u celosti"/>
-                        <xs:enumeration value="odbijen/odbacen"/>
+                        <xs:enumeration value="nije_postupio"/>
+                        <xs:enumeration value="nije_postupio_u_zakonskom_roku"/>
+                        <xs:enumeration value="nije_postupio_u_celosti"/>
+                        <xs:enumeration value="odbijen_odbacen"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:attribute>

@@ -7,15 +7,6 @@
     <xs:element name="Korisnik">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="Uloga">
-                    <xs:simpleType>
-                        <xs:restriction base="xs:string">
-                            <xs:enumeration value="Gradjanin"/>
-                            <xs:enumeration value="Sluzbenik"/>
-                            <xs:enumeration value="Poverenik"/>
-                        </xs:restriction>
-                    </xs:simpleType>
-                </xs:element>
                 <xs:element name="Email" type="xs:string"/>
                 <xs:element name="Lozinka" type="xs:string"/>
                 <xs:element name="Ime" type="xs:string"/>
@@ -23,7 +14,18 @@
                 <xs:element name="Adresa" type="osnova:TAdresa"/>
                 <xs:element name="Potpis" type="xs:base64Binary"/>
             </xs:sequence>
-            <xs:attribute name="id" type="xs:positiveInteger"/>
+            <xs:attribute name="id" type="xs:positiveInteger" use="required"/>
+            <xs:attribute name="uloga" use="required">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="GRADJANIN"/>
+                        <xs:enumeration value="SLUZBENIK"/>
+                        <xs:enumeration value="POVERENIK"/>
+                        <xs:enumeration value="RUKOVODILAC"/>
+                        <xs:enumeration value="ZAMENIK_POREVENIKA"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
         </xs:complexType>
     </xs:element>
 </xs:schema>

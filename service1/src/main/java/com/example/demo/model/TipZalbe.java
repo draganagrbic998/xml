@@ -2,6 +2,6 @@ package com.example.demo.model;
 
 public enum TipZalbe {
 	
-	NIJE_POSTUPIO, NIJE_POSTUPIO_U_ZAKONSKOM_ROKU, NIJE_POSTUPIO_U_CELOSTI, ODBIJEN_ODBACEN;
+	nije_postupio, nije_postupio_u_zakonskom_roku, nije_postupio_u_celosti, odbijen_odbacen;
 
 }

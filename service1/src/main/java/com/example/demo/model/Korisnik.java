@@ -2,7 +2,7 @@ package com.example.demo.model;
 
 public class Korisnik {
 
-	private long id;	//jel ovde mogu da stavim malo long???
+	private String id;	//jel ovde mogu da stavim malo long???
 	private Uloga uloga;
 	private String email;
 	private String lozinka;
@@ -15,11 +15,32 @@ public class Korisnik {
 		super();
 	}
 
-	public long getId() {
+	public Korisnik(String id, Uloga uloga, String email, String lozinka, String ime, String prezime, Adresa adresa,
+			String potpis) {
+		super();
+		this.id = id;
+		this.uloga = uloga;
+		this.email = email;
+		this.lozinka = lozinka;
+		this.ime = ime;
+		this.prezime = prezime;
+		this.adresa = adresa;
+		this.potpis = potpis;
+	}
+	
+	@Override
+	public String toString() {
+		String suma = "PODACI KORISNIKA:\n";
+		suma += String.format("id: %s, uloga: %s, email: %s, lozinka: %s, ime: %s, prezime: %s, potpis: %s\n", this.id, this.uloga, this.email, this.lozinka, this.ime, this.prezime, this.potpis);
+		suma += this.adresa.toString();
+		return suma;
+	}
+
+	public String getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

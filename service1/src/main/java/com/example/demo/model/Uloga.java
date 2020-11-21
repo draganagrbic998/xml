@@ -2,6 +2,6 @@ package com.example.demo.model;
 
 public enum Uloga {
 	
-	GRADJANIN, SLUZBENIK, RUKOVODILAC, POVERENIK, ZAMENIK_POVERENIKA;
+	gradjanin, sluzbenik, rukovodilac, poverenik, zamenik_poverenika;
 
 }
