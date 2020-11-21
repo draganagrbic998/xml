@@ -1,4 +1,4 @@
-# xml
+# Projekat iz predmeta XML i WEB servisi
 
 Članovi tima:
 1. Dragana Grbić SW22/2017
