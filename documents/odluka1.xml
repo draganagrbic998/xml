@@ -1,54 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<odluka:Odluka xmlns:organ_vlasti="https://github.com/draganagrbic998/xml/organ_vlasti"
- xmlns:osnova="https://github.com/draganagrbic998/xml/osnova"
+<odluka:Odluka xmlns:osnova="https://github.com/draganagrbic998/xml/osnova"
  xmlns:korisnik="https://github.com/draganagrbic998/xml/korisnik"
- xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev"
  xmlns:odluka="https://github.com/draganagrbic998/xml/odluka"
+ xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev"
+ xmlns:organ_vlasti="https://github.com/draganagrbic998/xml/organ_vlasti"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="https://github.com/draganagrbic998/xml/odluka file:/C:/Users/Dragana/Desktop/projekti/xml/schema/odluka.xsd" tip_odluke="obavestenje" broj="1409864704" datum="2021-12-01Z">
-    <korisnik:Korisnik id="2142264504" uloga="poverenik">
-        <korisnik:Email>hDNEZtWv0k</korisnik:Email>
-        <korisnik:Lozinka>PLweYt1uuRTlAvYl</korisnik:Lozinka>
-        <korisnik:Ime>WjkK1V-HKlDg0eL3J</korisnik:Ime>
-        <korisnik:Prezime>qAFRQ_3OfeaNP9oWsc-9dQZy</korisnik:Prezime>
-        <korisnik:Adresa>
-            <osnova:Mesto>OHbWc4XGZeo16FzpY</osnova:Mesto>
-            <osnova:Postanski_broj>828633622</osnova:Postanski_broj>
-            <osnova:Ulica>CjPHitK</osnova:Ulica>
-            <osnova:Broj>897494869</osnova:Broj>
-        </korisnik:Adresa>
-        <korisnik:Potpis>707481727384897589738477858985836573767277738572707371727785837877697768</korisnik:Potpis>
+ xsi:schemaLocation="https://github.com/draganagrbic998/xml/odluka file:/C:/Users/Dragana/Desktop/projekti/xml/schema/odluka.xsd" tip_odluke="obavestenje" broj="1669715002" datum="2021-04-30Z">
+    <korisnik:Korisnik>
+        <korisnik:uloga>poverenik</korisnik:uloga>
+        <korisnik:email>rIJHHyOwJM</korisnik:email>
+        <korisnik:lozinka>jB60-BlkXaz86D</korisnik:lozinka>
+        <korisnik:ime>yIo</korisnik:ime>
+        <korisnik:prezime>kctIndTXvr9DHHzuyx2EWYZ</korisnik:prezime>
+        <osnova:Adresa>
+            <osnova:mesto>z1X</osnova:mesto>
+            <osnova:postanski_broj>1263801015</osnova:postanski_broj>
+            <osnova:ulica>F0EFJ_hTmiftm5Jh9ysdsJF26o7Ah7</osnova:ulica>
+            <osnova:broj>1040857051</osnova:broj>
+        </osnova:Adresa>
+        <korisnik:potpis>877674897568797889886668868867658767768577856980</korisnik:potpis>
     </korisnik:Korisnik>
-    <zahtev:Zahtev tip_zahteva="uvid" broj="20399353" datum="2021-09-07">
-        <organ_vlasti:Organ_vlasti>
-            <organ_vlasti:Naziv>XzEORlwRnEkN</organ_vlasti:Naziv>
-            <organ_vlasti:Adresa>
-                <osnova:Mesto>AiN.IAADiS0zLYe9</osnova:Mesto>
-                <osnova:Postanski_broj>920937011</osnova:Postanski_broj>
-                <osnova:Ulica>dkqFgk5tA1sSKu</osnova:Ulica>
-                <osnova:Broj>619951070</osnova:Broj>
-            </organ_vlasti:Adresa>
-        </organ_vlasti:Organ_vlasti>
-        <korisnik:Korisnik id="1738439248" uloga="zamenik_poverenika">
-            <korisnik:Email>eVw3R4D-3mc</korisnik:Email>
-            <korisnik:Lozinka>ik7HGTVKwru5q3f7yfoZ</korisnik:Lozinka>
-            <korisnik:Ime>hRawO6u5QDub</korisnik:Ime>
-            <korisnik:Prezime>AaC3J4iVptQ.RUu9q1LvjUg17urK</korisnik:Prezime>
-            <korisnik:Adresa>
-                <osnova:Mesto>EX9j4gfnVQS</osnova:Mesto>
-                <osnova:Postanski_broj>1491795832</osnova:Postanski_broj>
-                <osnova:Ulica>Yt5PrM2d_hen1rIdB</osnova:Ulica>
-                <osnova:Broj>1400081108</osnova:Broj>
-            </korisnik:Adresa>
-            <korisnik:Potpis>6677897586848684</korisnik:Potpis>
+    <zahtev:Zahtev tip_zahteva="dostava" broj="285237498" datum="2021-05-11">
+        <korisnik:Korisnik>
+            <korisnik:uloga>rukovodilac</korisnik:uloga>
+            <korisnik:email>HoU0e2LiqXDXWOn3EDVTA.u-HKJ</korisnik:email>
+            <korisnik:lozinka>qMDocHO9oDS51U</korisnik:lozinka>
+            <korisnik:ime>Q_0KRCpcFwqOqbxF_MqH10VuQQZM</korisnik:ime>
+            <korisnik:prezime>qPHdVRAVcwaiSijL15</korisnik:prezime>
+            <osnova:Adresa>
+                <osnova:mesto>bElhGZxs</osnova:mesto>
+                <osnova:postanski_broj>156897622</osnova:postanski_broj>
+                <osnova:ulica>G7H0boL6</osnova:ulica>
+                <osnova:broj>1923653502</osnova:broj>
+            </osnova:Adresa>
+            <korisnik:potpis>89688572877375828989867185866980</korisnik:potpis>
         </korisnik:Korisnik>
+        <organ_vlasti:Organ_vlasti>
+            <organ_vlasti:naziv>nFu.Mf9dp</organ_vlasti:naziv>
+            <osnova:Adresa>
+                <osnova:mesto>ew2G9s4LDf.</osnova:mesto>
+                <osnova:postanski_broj>885280962</osnova:postanski_broj>
+                <osnova:ulica>SexwcQILj3ibRoBK</osnova:ulica>
+                <osnova:broj>1357847326</osnova:broj>
+            </osnova:Adresa>
+        </organ_vlasti:Organ_vlasti>
         <zahtev:Podaci_zahteva>
-            <zahtev:Trazena_informacija>Kcp</zahtev:Trazena_informacija>
-            <zahtev:Tip_dostave>email</zahtev:Tip_dostave>
-            <zahtev:Opis_dostave>GN-U.k.</zahtev:Opis_dostave>
+            <zahtev:Trazena_informacija>zO</zahtev:Trazena_informacija>
+            <zahtev:Tip_dostave>posta</zahtev:Tip_dostave>
+            <zahtev:Opis_dostave>Zfn</zahtev:Opis_dostave>
         </zahtev:Podaci_zahteva>
     </zahtev:Zahtev>
     <odluka:Podaci_odluke>
-        <odluka:Odgovor>sP5bW1nQK6tTgJR</odluka:Odgovor>
+        <odluka:odgovor>cSD3eRTX5j.92uRhb_jC4zvIUgKZ9</odluka:odgovor>
     </odluka:Podaci_odluke>
 </odluka:Odluka>

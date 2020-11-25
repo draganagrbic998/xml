@@ -11,7 +11,7 @@
             <xs:sequence>
                 <xs:element ref="zahtev:Zahtev"/>
                 <xs:element minOccurs="0" ref="odluka:Odluka"/>
-                <xs:element name="Obrazlozenje" type="xs:string"/>
+                <xs:element name="obrazlozenje" type="xs:string"/>
             </xs:sequence>
             <xs:attribute name="tip_zalbe" use="required">
                 <xs:simpleType>

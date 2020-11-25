@@ -39,14 +39,14 @@ public class ZalbaParser implements Parser<Zalba> {
 		if (odlukaNode.getLength() > 0) {
 			odluka = this.odlukaParser.parse((Element) odlukaNode.item(0));
 		}
-		String obrazlozenje = element.getElementsByTagName("zalba:Obrazlozenje").item(0).getTextContent();
+		String obrazlozenje = element.getElementsByTagName("zalba:obrazlozenje").item(0).getTextContent();
 		return new Zalba(broj, tip, datum, zahtev, odluka, obrazlozenje);
 	}
 
 	@Override
-	public Element parse(String namespace, Zalba type, Document document) {
+	public Element parse(Zalba type, Document document) {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		Element zalba = document.createElement(namespace + ":Zalba");
+		Element zalba = document.createElement("zalba:Zalba");
 		zalba.setAttributeNS(Constants.XSI_NAMESPACE, "xsi:schemaLocation", "https://github.com/draganagrbic998/xml/odluka ../xsd/odluka.xsd");
 		zalba.setAttributeNS(Constants.XMLNS_NAMESPACE, "xmlns:organ_vlasti", "https://github.com/draganagrbic998/xml/organ_vlasti ../xsd/organ_vlasti.xsd");
 		zalba.setAttributeNS(Constants.XMLNS_NAMESPACE, "xmlns:osnova", "https://github.com/draganagrbic998/xml/osnova ../xsd/osnova.xsd");
@@ -57,12 +57,12 @@ public class ZalbaParser implements Parser<Zalba> {
 		zalba.setAttribute("broj", type.getBroj());
 		zalba.setAttribute("datum", format.format(type.getDatum()));
 		zalba.setAttribute("tip_zalbe", type.getTip() + "");
-		Element zahtev = this.zahtevParser.parse("zahtev", type.getZahtev(), document);
+		Element zahtev = this.zahtevParser.parse(type.getZahtev(), document);
 		if (type.getOdluka() != null) {
 			Element odluka = document.createElement("odluka:Odluka");
 			zalba.appendChild(odluka);
 		}
-		Element obrazlozenje = document.createElement(namespace + ":Obrazlozenje");
+		Element obrazlozenje = document.createElement("zalba:obrazlozenje");
 		obrazlozenje.setTextContent(type.getObrazlozenje());
 		zalba.appendChild(zahtev);
 		zalba.appendChild(obrazlozenje);

@@ -8,6 +8,6 @@ import org.w3c.dom.Element;
 public interface Parser<T> {
 
 	public T parse(Element element) throws ParseException;
-	public Element parse(String namespace, T type, Document document);
+	public Element parse(T type, Document document);
 	
 }

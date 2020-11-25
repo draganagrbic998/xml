@@ -2,39 +2,40 @@
 <zalba:Zalba xmlns:korisnik="https://github.com/draganagrbic998/xml/korisnik"
  xmlns:organ_vlasti="https://github.com/draganagrbic998/xml/organ_vlasti"
  xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev"
- xmlns:odluka="https://github.com/draganagrbic998/xml/odluka"
  xmlns:osnova="https://github.com/draganagrbic998/xml/osnova"
+ xmlns:odluka="https://github.com/draganagrbic998/xml/odluka"
  xmlns:zalba="https://github.com/draganagrbic998/zalba"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="https://github.com/draganagrbic998/zalba file:/C:/Users/Dragana/Desktop/projekti/xml/schema/zalba.xsd" tip_zalbe="nije postupio" broj="1744124839" datum="2021-11-08">
-    <zahtev:Zahtev tip_zahteva="dostava" broj="2047285955" datum="2021-05-20Z">
-        <organ_vlasti:Organ_vlasti>
-            <organ_vlasti:Naziv>R0Ezp0RRiogc_rSRN5NnZzsfFEBAPU</organ_vlasti:Naziv>
-            <organ_vlasti:Adresa>
-                <osnova:Mesto>SpyD-GZgyDIv</osnova:Mesto>
-                <osnova:Postanski_broj>1416802838</osnova:Postanski_broj>
-                <osnova:Ulica>zCdKEohjkQeDt9ZR1MN8FGaJkJND6E</osnova:Ulica>
-                <osnova:Broj>2074214815</osnova:Broj>
-            </organ_vlasti:Adresa>
-        </organ_vlasti:Organ_vlasti>
-        <korisnik:Korisnik id="1664941588" uloga="poverenik">
-            <korisnik:Email>S3T9PmFzJt8omYNg8_RG</korisnik:Email>
-            <korisnik:Lozinka>gesiuoll4Y0vXFP4IKpOpgGZv2X</korisnik:Lozinka>
-            <korisnik:Ime>eVOg</korisnik:Ime>
-            <korisnik:Prezime>PfHLzQG2HKWA1zNhxMJHFw</korisnik:Prezime>
-            <korisnik:Adresa>
-                <osnova:Mesto>Tlrwg5p_gvbZnPGwbMf6HGC2xqZjEz</osnova:Mesto>
-                <osnova:Postanski_broj>759096540</osnova:Postanski_broj>
-                <osnova:Ulica>JBGxTdKxlBtSx9Oy</osnova:Ulica>
-                <osnova:Broj>846675843</osnova:Broj>
-            </korisnik:Adresa>
-            <korisnik:Potpis>836975816574797080757383669072797365707588706686687567807970687981677176737281897974687970878487776875817772769079829088</korisnik:Potpis>
+ xsi:schemaLocation="https://github.com/draganagrbic998/zalba file:/C:/Users/Dragana/Desktop/projekti/xml/schema/zalba.xsd" tip_zalbe="odbijen_odbacen" broj="126694458" datum="2022-07-11">
+    <zahtev:Zahtev tip_zahteva="obavestenje" broj="1753830586" datum="2021-05-11">
+        <korisnik:Korisnik>
+            <korisnik:uloga>sluzbenik</korisnik:uloga>
+            <korisnik:email>P</korisnik:email>
+            <korisnik:lozinka>qVMFjB8CygBrf7xGO</korisnik:lozinka>
+            <korisnik:ime>Zse8op</korisnik:ime>
+            <korisnik:prezime>LbXxuZCNlI2sS6K5XdMwmjt1JyC</korisnik:prezime>
+            <osnova:Adresa>
+                <osnova:mesto>xNfqkAnh</osnova:mesto>
+                <osnova:postanski_broj>455580243</osnova:postanski_broj>
+                <osnova:ulica>j1</osnova:ulica>
+                <osnova:broj>1637619849</osnova:broj>
+            </osnova:Adresa>
+            <korisnik:potpis>86798785897479868367807573898875707275706975827575738584</korisnik:potpis>
         </korisnik:Korisnik>
+        <organ_vlasti:Organ_vlasti>
+            <organ_vlasti:naziv>X_MI</organ_vlasti:naziv>
+            <osnova:Adresa>
+                <osnova:mesto>TboAX4xoZrUsEAU4nEZm0Uw-.HR</osnova:mesto>
+                <osnova:postanski_broj>1103155620</osnova:postanski_broj>
+                <osnova:ulica>SnJT</osnova:ulica>
+                <osnova:broj>1889936536</osnova:broj>
+            </osnova:Adresa>
+        </organ_vlasti:Organ_vlasti>
         <zahtev:Podaci_zahteva>
-            <zahtev:Trazena_informacija>cLPmgsUkxsJyh_6gbmhA345x.DYAC6</zahtev:Trazena_informacija>
-            <zahtev:Tip_dostave>faks</zahtev:Tip_dostave>
-            <zahtev:Opis_dostave>DJL</zahtev:Opis_dostave>
+            <zahtev:Trazena_informacija>aMiNwS3lRbRm6D.ru.j.udaS</zahtev:Trazena_informacija>
+            <zahtev:Tip_dostave>ostalo</zahtev:Tip_dostave>
+            <zahtev:Opis_dostave>TKIG3Kd61mLcf</zahtev:Opis_dostave>
         </zahtev:Podaci_zahteva>
     </zahtev:Zahtev>
-    <zalba:Obrazlozenje>eRVU14C7-jsyoHz2</zalba:Obrazlozenje>
+    <zalba:obrazlozenje>qo37UDKW78DQ</zalba:obrazlozenje>
 </zalba:Zalba>

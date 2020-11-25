@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<organ_vlasti:Organ_vlasti xmlns:osnova="https://github.com/draganagrbic998/xml/osnova"
- xmlns:organ_vlasti="https://github.com/draganagrbic998/xml/organ_vlasti"
+<organ_vlasti:Organ_vlasti xmlns:organ_vlasti="https://github.com/draganagrbic998/xml/organ_vlasti"
+ xmlns:osnova="https://github.com/draganagrbic998/xml/osnova"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
  xsi:schemaLocation="https://github.com/draganagrbic998/xml/organ_vlasti file:/C:/Users/Dragana/Desktop/projekti/xml/schema/organ_vlasti.xsd">
-    <organ_vlasti:Naziv>qk</organ_vlasti:Naziv>
-    <organ_vlasti:Adresa>
-        <osnova:Mesto>NbEUj10y</osnova:Mesto>
-        <osnova:Postanski_broj>311110769</osnova:Postanski_broj>
-        <osnova:Ulica>JRj-zvK1FdNkfCxsyqGb4N4ni</osnova:Ulica>
-        <osnova:Broj>1831334479</osnova:Broj>
-    </organ_vlasti:Adresa>
+    <organ_vlasti:naziv>K7s5czVUFW</organ_vlasti:naziv>
+    <osnova:Adresa>
+        <osnova:mesto>rQctvTC1WAm</osnova:mesto>
+        <osnova:postanski_broj>325927337</osnova:postanski_broj>
+        <osnova:ulica>_aNjKTuYx</osnova:ulica>
+        <osnova:broj>1096443707</osnova:broj>
+    </osnova:Adresa>
 </organ_vlasti:Organ_vlasti>

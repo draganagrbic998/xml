@@ -23,7 +23,7 @@ public class PodaciOdlukeParser implements Parser<PodaciOdluke> {
 
 	@Override
 	public PodaciOdluke parse(Element element) throws ParseException  {
-		String odgovor = element.getElementsByTagName("odluka:Odgovor").item(0).getTextContent();
+		String odgovor = element.getElementsByTagName("odluka:odgovor").item(0).getTextContent();
 		Uvid uvid = null;
 		NodeList uvidNode = element.getElementsByTagName("odluka:Uvid");
 		if (uvidNode.getLength() > 0) {
@@ -38,16 +38,16 @@ public class PodaciOdlukeParser implements Parser<PodaciOdluke> {
 	}
 
 	@Override
-	public Element parse(String namespace, PodaciOdluke type, Document document) {
-		Element podaciOdluke = document.createElement(namespace + ":Podaci_odluke");
-		Element odgovor = document.createElement(namespace + ":Odgovor");
+	public Element parse(PodaciOdluke type, Document document) {
+		Element podaciOdluke = document.createElement("odluka:Podaci_odluke");
+		Element odgovor = document.createElement("odluka:odgovor");
 		odgovor.setTextContent(type.getOdgovor());
 		if (type.getUvid() != null) {
-			Element uvid = this.uvidParser.parse(namespace, type.getUvid(), document);
+			Element uvid = this.uvidParser.parse(type.getUvid(), document);
 			podaciOdluke.appendChild(uvid);
 		}
 		if (type.getKopija() != null) {
-			Element kopija = this.kopijaParser.parse(namespace, type.getKopija(), document);
+			Element kopija = this.kopijaParser.parse(type.getKopija(), document);
 			podaciOdluke.appendChild(kopija);
 		}
 		podaciOdluke.appendChild(odgovor);

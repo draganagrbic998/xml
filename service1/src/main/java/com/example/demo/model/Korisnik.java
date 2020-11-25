@@ -1,24 +1,45 @@
 package com.example.demo.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(propOrder = { "uloga", "email", "lozinka", "ime", "prezime", "adresa", "potpis" })
+@XmlRootElement(name = "Korisnik", namespace = "https://github.com/draganagrbic998/xml/korisnik")
 public class Korisnik {
 
-	private String id;	
+	@XmlElement(namespace = "https://github.com/draganagrbic998/xml/korisnik", required = true)
 	private Uloga uloga;
+	
+	@XmlElement(namespace = "https://github.com/draganagrbic998/xml/korisnik", required = true)
 	private String email;
+	
+	@XmlElement(namespace = "https://github.com/draganagrbic998/xml/korisnik", required = true)
 	private String lozinka;
+	
+	@XmlElement(namespace = "https://github.com/draganagrbic998/xml/korisnik", required = true)
 	private String ime;
+	
+	@XmlElement(namespace = "https://github.com/draganagrbic998/xml/korisnik", required = true)
 	private String prezime;
+	
+	@XmlElement(namespace = "https://github.com/draganagrbic998/xml/osnova", required = true)
 	private Adresa adresa;
+	
+	@XmlElement(namespace = "https://github.com/draganagrbic998/xml/korisnik", required = true)
 	private String potpis;
 	
 	public Korisnik() {
 		super();
+		System.out.println("Korisnik created...");
 	}
 
-	public Korisnik(String id, Uloga uloga, String email, String lozinka, String ime, String prezime, Adresa adresa,
+	public Korisnik(Uloga uloga, String email, String lozinka, String ime, String prezime, Adresa adresa,
 			String potpis) {
 		super();
-		this.id = id;
 		this.uloga = uloga;
 		this.email = email;
 		this.lozinka = lozinka;
@@ -31,17 +52,9 @@ public class Korisnik {
 	@Override
 	public String toString() {
 		String suma = "PODACI KORISNIKA:\n";
-		suma += String.format("id: %s, uloga: %s, email: %s, lozinka: %s, ime: %s, prezime: %s, potpis: %s\n", this.id, this.uloga, this.email, this.lozinka, this.ime, this.prezime, this.potpis);
-		suma += this.adresa.toString();
+		suma += String.format("uloga: %s, email: %s, lozinka: %s, ime: %s, prezime: %s, potpis: %s\n", this.uloga, this.email, this.lozinka, this.ime, this.prezime, this.potpis);
+		//suma += this.adresa.toString();
 		return suma;
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
 	}
 
 	public Uloga getUloga() {

@@ -43,9 +43,9 @@ public class OdlukaParser implements Parser<Odluka> {
 	}
 
 	@Override
-	public Element parse(String namespace, Odluka type, Document document) {
+	public Element parse(Odluka type, Document document) {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		Element odluka = document.createElement(namespace + ":Odluka");
+		Element odluka = document.createElement("odluka:Odluka");
 		odluka.setAttributeNS(Constants.XSI_NAMESPACE, "xsi:schemaLocation", "https://github.com/draganagrbic998/xml/odluka ../xsd/odluka.xsd");
 		odluka.setAttributeNS(Constants.XMLNS_NAMESPACE, "xmlns:organ_vlasti", "https://github.com/draganagrbic998/xml/organ_vlasti ../xsd/organ_vlasti.xsd");
 		odluka.setAttributeNS(Constants.XMLNS_NAMESPACE, "xmlns:osnova", "https://github.com/draganagrbic998/xml/osnova ../xsd/osnova.xsd");
@@ -55,9 +55,9 @@ public class OdlukaParser implements Parser<Odluka> {
 		odluka.setAttribute("broj", type.getBroj());
 		odluka.setAttribute("datum", format.format(type.getDatum()));
 		odluka.setAttribute("tip_odluke", type.getTip() + "");
-		Element sluzbenik = this.korisnikParser.parse("korisnik", type.getSluzbenik(), document);
-		Element zahtev = this.zahtevParser.parse("zahtev", type.getZahtev(), document);
-		Element podaciOdluke = this.podaciOdlukeParser.parse(namespace, type.getPodaci(), document);
+		Element sluzbenik = this.korisnikParser.parse(type.getSluzbenik(), document);
+		Element zahtev = this.zahtevParser.parse(type.getZahtev(), document);
+		Element podaciOdluke = this.podaciOdlukeParser.parse(type.getPodaci(), document);
 		odluka.appendChild(sluzbenik);
 		odluka.appendChild(zahtev);
 		odluka.appendChild(podaciOdluke);

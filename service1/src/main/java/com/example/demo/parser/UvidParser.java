@@ -21,23 +21,23 @@ public class UvidParser implements Parser<Uvid> {
 	@Override
 	public Uvid parse(Element element) throws ParseException {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		Date uvidOd = format.parse(element.getElementsByTagName("odluka:Od").item(0).getTextContent());
-		Date uvidDo = format.parse(element.getElementsByTagName("odluka:Do").item(0).getTextContent());
-		Adresa adresa = this.adresaParser.parse((Element) element.getElementsByTagName("odluka:Adresa").item(0));
-		String kancelarija = element.getElementsByTagName("odluka:Kancelarija").item(0).getTextContent();
+		Date uvidOd = format.parse(element.getElementsByTagName("odluka:uvid_od").item(0).getTextContent());
+		Date uvidDo = format.parse(element.getElementsByTagName("odluka:uvid_do").item(0).getTextContent());
+		Adresa adresa = this.adresaParser.parse((Element) element.getElementsByTagName("osnova:Adresa").item(0));
+		String kancelarija = element.getElementsByTagName("odluka:kancelarija").item(0).getTextContent();
 		return new Uvid(uvidOd, uvidDo, adresa, kancelarija);
 	}
 
 	@Override
-	public Element parse(String namespace, Uvid type, Document document) {
+	public Element parse(Uvid type, Document document) {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		Element uvid = document.createElement(namespace + ":Uvid");
-		Element uvidOd = document.createElement(namespace + ":Od");
+		Element uvid = document.createElement("odluka:Uvid");
+		Element uvidOd = document.createElement("odluka:uvid_od");
 		uvidOd.setTextContent(format.format(type.getUvidOd()));
-		Element uvidDo = document.createElement(namespace + ":Do");
+		Element uvidDo = document.createElement("odluka:uvid_do");
 		uvidDo.setTextContent(format.format(type.getUvidDo()));
-		Element adresa = this.adresaParser.parse(namespace, type.getAdresa(), document);
-		Element kancelarija = document.createElement(namespace + ":Kancelarija");
+		Element adresa = this.adresaParser.parse(type.getAdresa(), document);
+		Element kancelarija = document.createElement("odluka:kancelarija");
 		kancelarija.setTextContent(type.getKancelarija());
 		uvid.appendChild(uvidOd);
 		uvid.appendChild(uvidDo);

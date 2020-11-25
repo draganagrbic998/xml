@@ -1,14 +1,31 @@
 package com.example.demo.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(propOrder = { "mesto", "postanski_broj", "ulica", "broj" })
+@XmlRootElement(name = "Adresa", namespace = "https://github.com/draganagrbic998/xml/osnova")
 public class Adresa {
 	
+	@XmlElement(namespace = "https://github.com/draganagrbic998/xml/osnova", required = true)
 	private String mesto;
+	
+	@XmlElement(name = "postanski_broj", namespace = "https://github.com/draganagrbic998/xml/osnova", required = true)
 	private String postanskiBroj;
+	
+	@XmlElement(namespace = "https://github.com/draganagrbic998/xml/osnova", required = true)
 	private String ulica;
+	
+	@XmlElement(namespace = "https://github.com/draganagrbic998/xml/osnova", required = true)
 	private String broj;
 	
 	public Adresa() {
 		super();
+		System.out.println("Adresa created...");
 	}
 
 	public Adresa(String mesto, String postanskiBroj, String ulica, String broj) {

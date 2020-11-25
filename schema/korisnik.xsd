@@ -7,25 +7,24 @@
     <xs:element name="Korisnik">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="Email" type="xs:string"/>
-                <xs:element name="Lozinka" type="xs:string"/>
-                <xs:element name="Ime" type="xs:string"/>
-                <xs:element name="Prezime" type="xs:string"/>
-                <xs:element name="Adresa" type="osnova:TAdresa"/>
-                <xs:element name="Potpis" type="xs:base64Binary"/>
+                <xs:element name="uloga">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:enumeration value="gradjanin"/>
+                            <xs:enumeration value="sluzbenik"/>
+                            <xs:enumeration value="poverenik"/>
+                            <xs:enumeration value="rukovodilac"/>
+                            <xs:enumeration value="zamenik_poverenika"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="email" type="xs:string"/>
+                <xs:element name="lozinka" type="xs:string"/>
+                <xs:element name="ime" type="xs:string"/>
+                <xs:element name="prezime" type="xs:string"/>
+                <xs:element ref="osnova:Adresa"/>
+                <xs:element name="potpis" type="xs:base64Binary"/>
             </xs:sequence>
-            <xs:attribute name="id" type="xs:positiveInteger" use="required"/>
-            <xs:attribute name="uloga" use="required">
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:enumeration value="gradjanin"/>
-                        <xs:enumeration value="sluzbenik"/>
-                        <xs:enumeration value="poverenik"/>
-                        <xs:enumeration value="rukovodilac"/>
-                        <xs:enumeration value="zamenik_poverenika"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:attribute>
         </xs:complexType>
     </xs:element>
 </xs:schema>

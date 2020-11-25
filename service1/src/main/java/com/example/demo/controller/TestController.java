@@ -1,8 +1,12 @@
 package com.example.demo.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
@@ -16,6 +20,7 @@ import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
 import com.example.demo.dom.DOMParser;
+import com.example.demo.model.Adresa;
 import com.example.demo.model.Korisnik;
 import com.example.demo.model.Odluka;
 import com.example.demo.model.OrganVlasti;
@@ -54,7 +59,7 @@ public class TestController {
 		Document document = this.domParser.buildDocumentFromFile("data/xml/organ_vlasti1.xml");
 		OrganVlasti organVlasti = this.organVlastiParser.parse(document.getDocumentElement());
 		document.removeChild(document.getDocumentElement());
-		Element organVlastiElement = this.organVlastiParser.parse("organ_vlasti", organVlasti, document);
+		Element organVlastiElement = this.organVlastiParser.parse(organVlasti, document);
 		document.appendChild(organVlastiElement);
 		this.domParser.transformDocument(document, System.out);
 	}
@@ -64,9 +69,20 @@ public class TestController {
 		Document document = this.domParser.buildDocumentFromFile("data/xml/korisnik1.xml");
 		Korisnik korisnik = this.korisnikParser.parse(document.getDocumentElement());
 		document.removeChild(document.getDocumentElement());
-		Element korisnikElement = this.korisnikParser.parse("korisnik", korisnik, document);
+		Element korisnikElement = this.korisnikParser.parse(korisnik, document);
 		document.appendChild(korisnikElement);
 		this.domParser.transformDocument(document, System.out);
+	}
+	
+	@GetMapping(value = "/test_korisnik_jaxb")
+	public void testKorisnikJaxb() throws JAXBException {
+		JAXBContext context = JAXBContext.newInstance(Korisnik.class);
+		Unmarshaller unmarshaller = context.createUnmarshaller();		
+		Korisnik korisnik = (Korisnik) unmarshaller.unmarshal(new File("data/xml/korisnik1.xml"));
+		JAXBContext context2 = JAXBContext.newInstance(Adresa.class);
+		Unmarshaller unmarshaller2 = context2.createUnmarshaller();
+		Adresa adresa = (Adresa) unmarshaller2.unmarshal(new File("data/xml/korisnik1.xml"));
+		System.out.println(korisnik);
 	}
 	
 	@GetMapping(value = "/test_zahtev")
@@ -74,7 +90,7 @@ public class TestController {
 		Document document = this.domParser.buildDocumentFromFile("data/xml/zahtev1.xml");
 		Zahtev zahtev = this.zahtevParser.parse(document.getDocumentElement());
 		document.removeChild(document.getDocumentElement());
-		Element zahtevElement = this.zahtevParser.parse("zahtev", zahtev, document);
+		Element zahtevElement = this.zahtevParser.parse(zahtev, document);
 		document.appendChild(zahtevElement);
 		this.domParser.transformDocument(document, System.out);
 	}
@@ -84,7 +100,7 @@ public class TestController {
 		Document document = this.domParser.buildDocumentFromFile("data/xml/odluka1.xml");
 		Odluka odluka = this.odlukaParser.parse(document.getDocumentElement());
 		document.removeChild(document.getDocumentElement());
-		Element odlukaElement = this.odlukaParser.parse("odluka", odluka, document);
+		Element odlukaElement = this.odlukaParser.parse(odluka, document);
 		document.appendChild(odlukaElement);
 		this.domParser.transformDocument(document, System.out);
 	}
@@ -94,7 +110,7 @@ public class TestController {
 		Document document = this.domParser.buildDocumentFromFile("data/xml/zalba1.xml");
 		Zalba zalba = this.zalbaParser.parse(document.getDocumentElement());
 		document.removeChild(document.getDocumentElement());
-		Element zalbaElement = this.zalbaParser.parse("zalba", zalba, document);
+		Element zalbaElement = this.zalbaParser.parse(zalba, document);
 		document.appendChild(zalbaElement);
 		this.domParser.transformDocument(document, System.out);
 	}

@@ -28,7 +28,7 @@ public class ZahtevParser implements Parser<Zahtev> {
 	
 	@Autowired
 	private PodaciZahtevaParser podaciZahtevaParser;
-
+	
 	@Override
 	public Zahtev parse(Element element) throws ParseException {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -38,14 +38,14 @@ public class ZahtevParser implements Parser<Zahtev> {
 		TipZahteva tip = TipZahteva.valueOf(attributes.getNamedItem("tip_zahteva").getNodeValue());
 		OrganVlasti organVlasti = this.organVlastiParser.parse((Element) element.getElementsByTagName("organ_vlasti:Organ_vlasti").item(0));
 		Korisnik gradjanin = this.korisnikParser.parse((Element) element.getElementsByTagName("korisnik:Korisnik").item(0));
-		PodaciZahteva podaciZahteva = this.podaciZahtevaParser.parse((Element) element.getElementsByTagName("zahtev:Podaci_zahteva").item(0));
+		PodaciZahteva podaciZahteva = this.podaciZahtevaParser.parse((Element) element.getElementsByTagName("korisnik:Korisnik").item(0));
 		return new Zahtev(broj, tip, datum, organVlasti, gradjanin, podaciZahteva);
 	}
 
 	@Override
-	public Element parse(String namespace, Zahtev type, Document document) {
+	public Element parse(Zahtev type, Document document) {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		Element zahtev = document.createElement(namespace + ":Zahtev");
+		Element zahtev = document.createElement("zahtev:Zahtev");
 		zahtev.setAttributeNS(Constants.XSI_NAMESPACE, "xsi:schemaLocation", "https://github.com/draganagrbic998/xml/odluka ../xsd/odluka.xsd");
 		zahtev.setAttributeNS(Constants.XMLNS_NAMESPACE, "xmlns:organ_vlasti", "https://github.com/draganagrbic998/xml/organ_vlasti ../xsd/organ_vlasti.xsd");
 		zahtev.setAttributeNS(Constants.XMLNS_NAMESPACE, "xmlns:osnova", "https://github.com/draganagrbic998/xml/osnova ../xsd/osnova.xsd");
@@ -54,9 +54,9 @@ public class ZahtevParser implements Parser<Zahtev> {
 		zahtev.setAttribute("broj", type.getBroj());
 		zahtev.setAttribute("datum", format.format(type.getDatum()));
 		zahtev.setAttribute("tip_zahteva", type.getTipZahteva() + "");
-		Element organVlasti = this.organVlastiParser.parse("organ_vlasti", type.getOrganVlasti(), document);
-		Element gradjanin = this.korisnikParser.parse("korisnik", type.getGradjanin(), document);
-		Element podaciZahteva = this.podaciZahtevaParser.parse(namespace, type.getPodaci(), document);
+		Element organVlasti = this.organVlastiParser.parse(type.getOrganVlasti(), document);
+		Element gradjanin = this.korisnikParser.parse(type.getGradjanin(), document);
+		Element podaciZahteva = this.podaciZahtevaParser.parse(type.getPodaci(), document);
 		zahtev.appendChild(organVlasti);
 		zahtev.appendChild(gradjanin);
 		zahtev.appendChild(podaciZahteva);
