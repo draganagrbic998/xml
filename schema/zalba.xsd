@@ -1,28 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
-    targetNamespace="https://github.com/draganagrbic998/zalba"
+    targetNamespace="https://github.com/draganagrbic998/xml/zalba"
     xmlns:odluka="https://github.com/draganagrbic998/xml/odluka"
     xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev"
-    xmlns:zalba="https://github.com/draganagrbic998/zalba">
+    xmlns:zalba="https://github.com/draganagrbic998/xml/zalba"
+    xmlns:obavestenje="https://github.com/draganagrbic998/xml/obavestenje"
+    xmlns:odbijanje="https://github.com/draganagrbic998/xml/odbijanje">
     <xs:import namespace="https://github.com/draganagrbic998/xml/zahtev" schemaLocation="zahtev.xsd"/>
-    <xs:import namespace="https://github.com/draganagrbic998/xml/odluka" schemaLocation="odluka.xsd"/>
+    <xs:import namespace="https://github.com/draganagrbic998/xml/obavestenje"
+        schemaLocation="obavestenje.xsd"/>
+    <xs:import namespace="https://github.com/draganagrbic998/xml/odbijanje"
+        schemaLocation="odbijanje.xsd"/>
     <xs:element name="Zalba">
         <xs:complexType>
             <xs:sequence>
-                <xs:element ref="zahtev:Zahtev"/>
-                <xs:element minOccurs="0" ref="odluka:Odluka"/>
                 <xs:element name="obrazlozenje" type="xs:string"/>
+                <xs:choice>
+                    <xs:element ref="zahtev:Zahtev"/>
+                    <xs:element ref="obavestenje:Obavestenje"/>
+                    <xs:element ref="odbijanje:Odbijanje"/>
+                </xs:choice>
             </xs:sequence>
-            <xs:attribute name="tip_zalbe" use="required">
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:enumeration value="nije_postupio"/>
-                        <xs:enumeration value="nije_postupio_u_zakonskom_roku"/>
-                        <xs:enumeration value="nije_postupio_u_celosti"/>
-                        <xs:enumeration value="odbijen_odbacen"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:attribute>
             <xs:attribute name="broj" type="xs:positiveInteger" use="required"/>
             <xs:attribute name="datum" type="xs:date" use="required"/>
         </xs:complexType>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="https://github.com/draganagrbic998/xml/odbijanje"
+    xmlns:korisnik="https://github.com/draganagrbic998/xml/korisnik"
+    xmlns:odbijanje="https://github.com/draganagrbic998/xml/odbijanje"
+    xmlns:osnova="https://github.com/draganagrbic998/xml/osnova"
+    xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev">
+    <xs:import namespace="https://github.com/draganagrbic998/xml/korisnik"
+        schemaLocation="korisnik.xsd"/>
+    <xs:import namespace="https://github.com/draganagrbic998/xml/zahtev" schemaLocation="zahtev.xsd"/>
+    <xs:element name="Odbijanje">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="korisnik:Korisnik"/>
+                <xs:element ref="zahtev:Zahtev"/>
+                <xs:element name="Obrazlozenje" type="xs:string"/>
+            </xs:sequence>
+            <xs:attribute name="broj" type="xs:positiveInteger"/>
+            <xs:attribute name="datum" type="xs:date"/>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
