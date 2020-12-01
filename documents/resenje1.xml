@@ -22,7 +22,7 @@
         <korisnik:potpis>86798785897479868367807573898875707275706975827575738584</korisnik:potpis>
 	</korisnik:Korisnik>
 	<zalba:Zalba broj="126694458" datum="2022-07-11">
-    <zalba:obrazlozenje>qo37UDKW78DQ</zalba:obrazlozenje>
+    	<zalba:obrazlozenje>qo37UDKW78DQ</zalba:obrazlozenje>
     	<zahtev:Zahtev tip_zahteva="obavestenje" broj="1753830586" datum="2021-05-11">
         	<korisnik:Korisnik>
             	<korisnik:uloga>sluzbenik</korisnik:uloga>
@@ -54,18 +54,20 @@
         	</zahtev:Podaci_zahteva>
     	</zahtev:Zahtev>
 	</zalba:Zalba>
-	<resenje:Odbrana>
-		<resenje:Datum_prijema>2022-05-11</resenje:Datum_prijema>
-		<resenje:Odgovor>odgovorcic neki tamo lepi</resenje:Odgovor>
-	</resenje:Odbrana>
-	<resenje:Dispozitiva>
-		<resenje:Clan_dispozitive>opgwajgpowagpoaw</resenje:Clan_dispozitive>
-		<resenje:Clan_dispozitive>fwaokgpoawkgaw</resenje:Clan_dispozitive>
-		<resenje:Clan_dispozitive>fopawkfwaopf</resenje:Clan_dispozitive>
-	</resenje:Dispozitiva>
-	<resenje:Obrazlozenje>
-		<resenje:Deo_obrazlozenja>fwagawgawghwahgawga</resenje:Deo_obrazlozenja>
-		<resenje:Deo_obrazlozenja>adawgawhrhedwafaeby</resenje:Deo_obrazlozenja>
-		<resenje:Deo_obrazlozenja>dawfwaggwahwahwahaw</resenje:Deo_obrazlozenja>
-	</resenje:Obrazlozenje>
+	<resenje:Podaci_resenja>
+		<resenje:Odbrana>
+			<resenje:Datum_prijema>2022-05-11</resenje:Datum_prijema>
+			<resenje:Odgovor>odgovorcic neki tamo lepi</resenje:Odgovor>
+		</resenje:Odbrana>
+		<resenje:Dispozitiva>
+			<resenje:Clan_dispozitive>opgwajgpowagpoaw</resenje:Clan_dispozitive>
+			<resenje:Clan_dispozitive>fwaokgpoawkgaw</resenje:Clan_dispozitive>
+			<resenje:Clan_dispozitive>fopawkfwaopf</resenje:Clan_dispozitive>
+		</resenje:Dispozitiva>
+		<resenje:Obrazlozenje>
+			<resenje:Deo_obrazlozenja>fwagawgawghwahgawga</resenje:Deo_obrazlozenja>
+			<resenje:Deo_obrazlozenja>adawgawhrhedwafaeby</resenje:Deo_obrazlozenja>
+			<resenje:Deo_obrazlozenja>dawfwaggwahwahwahaw</resenje:Deo_obrazlozenja>
+		</resenje:Obrazlozenje>
+	</resenje:Podaci_resenja>
 </resenje:Resenje>

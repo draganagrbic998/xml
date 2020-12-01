@@ -12,31 +12,33 @@
             <xs:sequence>
                 <xs:element ref="korisnik:Korisnik"/>
                 <xs:element ref="zalba:Zalba"/>
-                <xs:element name="Podaci_resenja>
+                <xs:element name="Podaci_resenja">
 	                <xs:complexType>
-	                	<xs:element name="Odbrana">
-    	           	    	<xs:complexType>
-        	                	<xs:sequence>
-            	        	        <xs:element name="Datum_prijema" type="xs:date"/>
-                		            <xs:element name="Odgovor" type="xs:string"/>
-                	    	    </xs:sequence>
-	        	            </xs:complexType>
-    		            </xs:element>
-    	    	        <xs:element name="Dispozitiva">
-	            	        <xs:complexType>
-                	    	    <xs:sequence>
-                    		        <xs:element name="Clan_dispozitive" maxOccurs="unbounded"
-                	        	        type="xs:string"/>
-	        	                </xs:sequence>
-    		                </xs:complexType>
-    	    	        </xs:element>
-	            	    <xs:element name="Obrazlozenje">
-                		    <xs:complexType>
-                	    	    <xs:sequence>
-            	            	    <xs:element name="Deo_obrazlozenja" maxOccurs="unbounded" type="xs:string"/>
-	    	                    </xs:sequence>
-    		                </xs:complexType>
-	        	        </xs:element>
+						<xs:sequence>
+		                	<xs:element name="Odbrana">
+    		           	    	<xs:complexType>
+        		                	<xs:sequence>
+            		        	        <xs:element name="Datum_prijema" type="xs:date"/>
+                			            <xs:element name="Odgovor" type="xs:string"/>
+                		    	    </xs:sequence>
+	        	        	    </xs:complexType>
+	    		            </xs:element>
+    		    	        <xs:element name="Dispozitiva">
+	    	        	        <xs:complexType>
+            	    	    	    <xs:sequence>
+                	    		        <xs:element name="Clan_dispozitive" maxOccurs="unbounded"
+                		        	        type="xs:string"/>
+	        	        	        </xs:sequence>
+    		                	</xs:complexType>
+	    	    	        </xs:element>
+		            	    <xs:element name="Obrazlozenje">
+        	        		    <xs:complexType>
+            	    	    	    <xs:sequence>
+            		            	    <xs:element name="Deo_obrazlozenja" maxOccurs="unbounded" type="xs:string"/>
+	    	        	            </xs:sequence>
+	    		            	</xs:complexType>
+		        	        </xs:element>
+	        	        </xs:sequence>
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
