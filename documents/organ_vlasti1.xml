@@ -2,7 +2,7 @@
 <organ_vlasti:Organ_vlasti xmlns:organ_vlasti="https://github.com/draganagrbic998/xml/organ_vlasti"
  xmlns:osnova="https://github.com/draganagrbic998/xml/osnova"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="https://github.com/draganagrbic998/xml/organ_vlasti file:/C:/Users/Dragana/Desktop/projekti/xml/schema/organ_vlasti.xsd">
+ xsi:schemaLocation="https://github.com/draganagrbic998/xml/organ_vlasti file:/C:/Users/petar/Desktop/projekti/schema/organ_vlasti.xsd">
     <organ_vlasti:naziv>K7s5czVUFW</organ_vlasti:naziv>
     <osnova:Adresa>
         <osnova:mesto>rQctvTC1WAm</osnova:mesto>

@@ -9,11 +9,11 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import com.example.demo.model.Kopija;
-import com.example.demo.model.PodaciOdavestenja;
+import com.example.demo.model.PodaciObavestenja;
 import com.example.demo.model.Uvid;
 
 @Component
-public class PodaciObavestenjaParser implements Parser<PodaciOdavestenja> {
+public class PodaciObavestenjaParser implements Parser<PodaciObavestenja> {
 	
 	@Autowired
 	private UvidParser uvidParser;
@@ -22,22 +22,18 @@ public class PodaciObavestenjaParser implements Parser<PodaciOdavestenja> {
 	private KopijaParser kopijaParser;
 
 	@Override
-	public PodaciOdavestenja parse(Element element) throws ParseException  {
+	public PodaciObavestenja parse(Element element) throws ParseException  {
 		Uvid uvid = null;
 		NodeList uvidNode = element.getElementsByTagName("obavestenje:Uvid");
-		if (uvidNode.getLength() > 0) {
-			uvid = this.uvidParser.parse((Element) uvidNode.item(0));
-		}
+		uvid = this.uvidParser.parse((Element) uvidNode.item(0));
 		Kopija kopija = null;
 		NodeList kopijaNode = element.getElementsByTagName("obavestenje:Kopija");
-		if (kopijaNode.getLength() > 0) {
-			kopija = this.kopijaParser.parse((Element) kopijaNode.item(0));
-		}
-		return new PodaciOdavestenja(uvid, kopija);
+		kopija = this.kopijaParser.parse((Element) kopijaNode.item(0));
+		return new PodaciObavestenja(uvid, kopija);
 	}
 
 	@Override
-	public Element parse(PodaciOdavestenja type, Document document) {
+	public Element parse(PodaciObavestenja type, Document document) {
 		Element podaciOdluke = document.createElement("obavestenje:Podaci_odluke");
 		Element odgovor = document.createElement("obavestenje:odgovor");
 		if (type.getUvid() != null) {

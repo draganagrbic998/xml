@@ -3,10 +3,10 @@
  xmlns:organ_vlasti="https://github.com/draganagrbic998/xml/organ_vlasti"
  xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev"
  xmlns:osnova="https://github.com/draganagrbic998/xml/osnova"
- xmlns:odluka="https://github.com/draganagrbic998/xml/odluka"
- xmlns:zalba="https://github.com/draganagrbic998/zalba"
+ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="https://github.com/draganagrbic998/zalba file:/C:/Users/Dragana/Desktop/projekti/xml/schema/zalba.xsd" tip_zalbe="odbijen_odbacen" broj="126694458" datum="2022-07-11">
+ xsi:schemaLocation="https://github.com/draganagrbic998/xml/zalba file:/C:/Users/petar/Desktop/projekti/schema/zalba.xsd" broj="126694458" datum="2022-07-11">
+    <zalba:obrazlozenje>qo37UDKW78DQ</zalba:obrazlozenje>
     <zahtev:Zahtev tip_zahteva="obavestenje" broj="1753830586" datum="2021-05-11">
         <korisnik:Korisnik>
             <korisnik:uloga>sluzbenik</korisnik:uloga>
@@ -37,5 +37,4 @@
             <zahtev:Opis_dostave>TKIG3Kd61mLcf</zahtev:Opis_dostave>
         </zahtev:Podaci_zahteva>
     </zahtev:Zahtev>
-    <zalba:obrazlozenje>qo37UDKW78DQ</zalba:obrazlozenje>
 </zalba:Zalba>

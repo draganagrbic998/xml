@@ -25,12 +25,14 @@ import com.example.demo.model.Korisnik;
 import com.example.demo.model.Obavestenje;
 import com.example.demo.model.Odbijanje;
 import com.example.demo.model.OrganVlasti;
+import com.example.demo.model.Resenje;
 import com.example.demo.model.Zahtev;
 import com.example.demo.model.Zalba;
 import com.example.demo.parser.KorisnikParser;
 import com.example.demo.parser.ObavestenjeParser;
 import com.example.demo.parser.OdbijanjeParser;
 import com.example.demo.parser.OrganVlastiParser;
+import com.example.demo.parser.ResenjeParser;
 import com.example.demo.parser.ZahtevParser;
 import com.example.demo.parser.ZalbaParser;
 
@@ -58,6 +60,9 @@ public class TestController {
 	
 	@Autowired
 	private ZalbaParser zalbaParser;
+	
+	@Autowired
+	private ResenjeParser resenjeParser;
 	
 	@GetMapping(value = "/test_organ_vlasti")
 	public void testOrganVlasti() throws ParserConfigurationException, SAXException, IOException, TransformerException {
@@ -129,5 +134,14 @@ public class TestController {
 		document.appendChild(zalbaElement);
 		this.domParser.transformDocument(document, System.out);
 	}
-	
+
+	@GetMapping(value = "/test_resenje")
+	public void testResenje() throws ParserConfigurationException, SAXException, IOException, ParseException, TransformerException {
+		Document document = this.domParser.buildDocumentFromFile("data/xml/resenje1.xml");
+		Resenje resenje = this.resenjeParser.parse(document.getDocumentElement());
+		document.removeChild(document.getDocumentElement());
+		Element resenjeElement = this.resenjeParser.parse(resenje, document);
+		document.appendChild(resenjeElement);
+		this.domParser.transformDocument(document, System.out);
+	}
 }

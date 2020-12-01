@@ -6,35 +6,34 @@ import java.util.Date;
 public class Resenje {
 
 	private String broj;
-	private TipZalbe tip;
 	private Date datum;
-	private Zahtev zahtev;
-	private Obavestenje odluka;
-	private String obrazlozenje;
+	private TipResenja tip;
+	private Korisnik poverenik;
+	private Zalba zalba;
+	private PodaciResenja podaci;
 	
 	public Resenje() {
 		super();
 	}
 	
-	public Resenje(String broj, TipZalbe tip, Date datum, Zahtev zahtev, Obavestenje odluka, String obrazlozenje) {
+	public Resenje(String broj, Date datum, TipResenja tip, Korisnik poverenik, Zalba zalba, PodaciResenja podaci) {
 		super();
 		this.broj = broj;
-		this.tip = tip;
 		this.datum = datum;
-		this.zahtev = zahtev;
-		this.odluka = odluka;
-		this.obrazlozenje = obrazlozenje;
+		this.tip = tip;
+		this.poverenik = poverenik;
+		this.zalba = zalba;
+		this.podaci = podaci;
 	}
 	
 	@Override
 	public String toString() {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		String suma = "PODACI ZALBE:\n";
-		suma += String.format("broj: %s, tip: %s, datum: %s, obrazlozenje: %s\n", this.broj, this.tip, format.format(this.datum), this.obrazlozenje);
-		suma += this.zahtev.toString();
-		if (this.odluka != null) {
-			suma += this.odluka.toString();
-		}
+		String suma = "PODACI RESENJA:\n";
+		suma += String.format("broj: %s, tip: %s, datum: %s\n", this.broj, this.tip, format.format(this.datum));
+		suma += this.poverenik.toString();
+		suma += this.zalba.toString();
+		suma += this.podaci.toString();
 		return suma;
 	}
 
@@ -46,11 +45,11 @@ public class Resenje {
 		this.broj = broj;
 	}
 
-	public TipZalbe getTip() {
+	public TipResenja getTip() {
 		return tip;
 	}
 
-	public void setTip(TipZalbe tip) {
+	public void setTip(TipResenja tip) {
 		this.tip = tip;
 	}
 
@@ -62,28 +61,29 @@ public class Resenje {
 		this.datum = datum;
 	}
 
-	public Zahtev getZahtev() {
-		return zahtev;
+	public Korisnik getPoverenik() {
+		return poverenik;
 	}
 
-	public void setZahtev(Zahtev zahtev) {
-		this.zahtev = zahtev;
+	public void setPoverenik(Korisnik poverenik) {
+		this.poverenik = poverenik;
 	}
 
-	public Obavestenje getOdluka() {
-		return odluka;
+	public Zalba getZalba() {
+		return zalba;
 	}
 
-	public void setOdluka(Obavestenje odluka) {
-		this.odluka = odluka;
+	public void setZalba(Zalba zalba) {
+		this.zalba = zalba;
 	}
 
-	public String getObrazlozenje() {
-		return obrazlozenje;
+	public PodaciResenja getPodaci() {
+		return podaci;
 	}
 
-	public void setObrazlozenje(String obrazlozenje) {
-		this.obrazlozenje = obrazlozenje;
+	public void setPodaci(PodaciResenja podaci) {
+		this.podaci = podaci;
 	}
+
 	
 }

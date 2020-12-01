@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<odluka:Odluka xmlns:osnova="https://github.com/draganagrbic998/xml/osnova"
+<obavestenje:Obavestenje xmlns:osnova="https://github.com/draganagrbic998/xml/osnova"
  xmlns:korisnik="https://github.com/draganagrbic998/xml/korisnik"
- xmlns:odluka="https://github.com/draganagrbic998/xml/odluka"
+ xmlns:obavestenje="https://github.com/draganagrbic998/xml/obavestenje"
  xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev"
  xmlns:organ_vlasti="https://github.com/draganagrbic998/xml/organ_vlasti"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="https://github.com/draganagrbic998/xml/odluka file:/C:/Users/Dragana/Desktop/projekti/xml/schema/odluka.xsd" tip_odluke="obavestenje" broj="1669715002" datum="2021-04-30Z">
+ xsi:schemaLocation="https://github.com/draganagrbic998/xml/obavestenje file:/C:/Users/petar/Desktop/projekti/schema/obavestenje.xsd" broj="1669715002" datum="2021-04-30Z">
     <korisnik:Korisnik>
         <korisnik:uloga>poverenik</korisnik:uloga>
         <korisnik:email>rIJHHyOwJM</korisnik:email>
@@ -50,7 +50,27 @@
             <zahtev:Opis_dostave>Zfn</zahtev:Opis_dostave>
         </zahtev:Podaci_zahteva>
     </zahtev:Zahtev>
-    <odluka:Podaci_odluke>
-        <odluka:odgovor>cSD3eRTX5j.92uRhb_jC4zvIUgKZ9</odluka:odgovor>
-    </odluka:Podaci_odluke>
-</odluka:Odluka>
+    <obavestenje:Podaci_obavestenja>
+    	<obavestenje:Uvid>
+    		<osnova:Adresa>
+    			<osnova:mesto>osnova:mesto</osnova:mesto>
+    			<osnova:postanski_broj>1</osnova:postanski_broj>
+    			<osnova:ulica>osnova:ulica</osnova:ulica>
+    			<osnova:broj>1</osnova:broj>
+    		</osnova:Adresa>
+    		<obavestenje:kancelarija>
+    			kancelarija neka
+    		</obavestenje:kancelarija>
+    		<obavestenje:uvid_od>2001-01-01</obavestenje:uvid_od>
+    		<obavestenje:uvid_do>2001-01-01</obavestenje:uvid_do>
+    	</obavestenje:Uvid>
+    	<obavestenje:Kopija>
+    		<obavestenje:iznos>1000</obavestenje:iznos>
+    		<obavestenje:racun>111-111111-11</obavestenje:racun>
+    		<obavestenje:poziv_na_broj>
+    			123
+    		</obavestenje:poziv_na_broj>
+    		<obavestenje:model>10</obavestenje:model>
+    	</obavestenje:Kopija>
+    </obavestenje:Podaci_obavestenja>
+</obavestenje:Obavestenje>

@@ -13,7 +13,7 @@ import org.w3c.dom.NamedNodeMap;
 import com.example.demo.dom.Constants;
 import com.example.demo.model.Korisnik;
 import com.example.demo.model.Obavestenje;
-import com.example.demo.model.PodaciOdavestenja;
+import com.example.demo.model.PodaciObavestenja;
 import com.example.demo.model.Zahtev;
 
 @Component
@@ -36,7 +36,7 @@ public class ObavestenjeParser implements Parser<Obavestenje> {
 		Date datum = format.parse(attributes.getNamedItem("datum").getNodeValue());
 		Korisnik sluzbenik = this.korisnikParser.parse((Element) element.getElementsByTagName("korisnik:Korisnik").item(0));
 		Zahtev zahtev = this.zahtevParser.parse((Element) element.getElementsByTagName("zahtev:Zahtev").item(0));
-		PodaciOdavestenja podaciOdluke = this.podaciObavestenjaParser.parse((Element) element.getElementsByTagName("obavestenje:Podaci_obavestenja").item(0));
+		PodaciObavestenja podaciOdluke = this.podaciObavestenjaParser.parse((Element) element.getElementsByTagName("obavestenje:Podaci_obavestenja").item(0));
 		return new Obavestenje(broj, datum, sluzbenik, zahtev, podaciOdluke);
 	}
 

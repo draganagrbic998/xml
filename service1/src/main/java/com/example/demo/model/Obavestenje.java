@@ -9,13 +9,13 @@ public class Obavestenje {
 	private Date datum;
 	private Korisnik sluzbenik;
 	private Zahtev zahtev;
-	private PodaciOdavestenja podaci;
+	private PodaciObavestenja podaci;
 	
 	public Obavestenje() {
 		super();
 	}
 
-	public Obavestenje(String broj, Date datum, Korisnik sluzbenik, Zahtev zahtev, PodaciOdavestenja podaci) {
+	public Obavestenje(String broj, Date datum, Korisnik sluzbenik, Zahtev zahtev, PodaciObavestenja podaci) {
 		this.broj = broj;
 		this.datum = datum;
 		this.sluzbenik = sluzbenik;
@@ -66,11 +66,11 @@ public class Obavestenje {
 		this.zahtev = zahtev;
 	}
 
-	public PodaciOdavestenja getPodaci() {
+	public PodaciObavestenja getPodaci() {
 		return podaci;
 	}
 
-	public void setPodaci(PodaciOdavestenja podaci) {
+	public void setPodaci(PodaciObavestenja podaci) {
 		this.podaci = podaci;
 	}
 

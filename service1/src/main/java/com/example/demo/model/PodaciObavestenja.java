@@ -1,29 +1,25 @@
 package com.example.demo.model;
 
-public class PodaciOdavestenja {
+public class PodaciObavestenja {
 
 	private Uvid uvid;
 	private Kopija kopija;
-	
-	public PodaciOdavestenja() {
+
+	public PodaciObavestenja() {
 		super();
 	}
 
-	public PodaciOdavestenja(Uvid uvid, Kopija kopija) {
+	public PodaciObavestenja(Uvid uvid, Kopija kopija) {
 		super();
 		this.uvid = uvid;
 		this.kopija = kopija;
 	}
-	
+
 	@Override
 	public String toString() {
 		String suma = "PODACI PODATAKA OBAVESTENJA:\n";
-		if (this.uvid != null) {
-			suma += this.uvid.toString();
-		}
-		if (this.kopija != null) {
-			suma += this.kopija.toString();
-		}
+		suma += this.uvid.toString();
+		suma += this.kopija.toString();
 		return suma;
 	}
 
@@ -42,5 +38,5 @@ public class PodaciOdavestenja {
 	public void setKopija(Kopija kopija) {
 		this.kopija = kopija;
 	}
-	
+
 }
