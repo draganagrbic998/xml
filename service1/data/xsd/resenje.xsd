@@ -1,2 +1,51 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"> </xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="https://github.com/draganagrbic998/xml/resenje"
+    xmlns="https://github.com/draganagrbic998/xml/resenje"
+    xmlns:korisnik="https://github.com/draganagrbic998/xml/korisnik"
+    xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
+    <xs:import namespace="https://github.com/draganagrbic998/xml/zalba" schemaLocation="zalba.xsd"/>
+    <xs:import namespace="https://github.com/draganagrbic998/xml/korisnik"
+        schemaLocation="korisnik.xsd"/>
+    <xs:element name="Resenje">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="korisnik:Korisnik"/>
+                <xs:element ref="zalba:Zalba"/>
+                <xs:element name="Odbrana">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="Datum_prijema" type="xs:date"/>
+                            <xs:element name="Odgovor" type="xs:string"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Dispozitiva">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="Clan_dispozitive" maxOccurs="unbounded">
+                                <xs:complexType/>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Obrazlozenje">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="Deo_obrazlozenja" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="tip_resenja">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="odobren"/>
+                        <xs:enumeration value="odbijen"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+            <xs:attribute name="broj" type="xs:positiveInteger"/>
+            <xs:attribute name="datum" type="xs:date"/>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

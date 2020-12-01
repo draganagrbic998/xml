@@ -4,7 +4,7 @@
  xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev"
  xmlns:osnova="https://github.com/draganagrbic998/xml/osnova"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="https://github.com/draganagrbic998/xml/zahtev file:/C:/Users/Dragana/Desktop/projekti/xml/schema/zahtev.xsd" tip_zahteva="dostava" broj="1462369912" datum="2021-02-08">
+ xsi:schemaLocation="https://github.com/draganagrbic998/xml/zahtev file:/C:/Users/petar/Desktop/projekti/schema/zahtev.xsd" tip_zahteva="dostava" broj="1462369912" datum="2021-02-08">
     <korisnik:Korisnik>
         <korisnik:uloga>sluzbenik</korisnik:uloga>
         <korisnik:email>oZxpKj2ZC4AWNFeaDSYlD8FIQ</korisnik:email>

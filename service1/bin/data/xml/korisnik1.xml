@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<korisnik:Korisnik xmlns:osnova="https://github.com/draganagrbic998/xml/osnova"
+ xmlns:korisnik="https://github.com/draganagrbic998/xml/korisnik"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="https://github.com/draganagrbic998/xml/korisnik file:/C:/Users/Dragana/Desktop/projekti/xml/schema/korisnik.xsd">
+    <korisnik:uloga>gradjanin</korisnik:uloga>
+    <korisnik:email>zwipvlkqDc3EOWvQjPmg</korisnik:email>
+    <korisnik:lozinka>DcxGIZG</korisnik:lozinka>
+    <korisnik:ime>xiief8Tim2.aRsP8QZt2</korisnik:ime>
+    <korisnik:prezime>xRM3UDop.9XoO</korisnik:prezime>
+    <osnova:Adresa>
+        <osnova:mesto>xZvYBPzsPsBgG2cYO.6Mc</osnova:mesto>
+        <osnova:postanski_broj>79859973</osnova:postanski_broj>
+        <osnova:ulica>PNOUU.sXMvG-6StByaCBnS</osnova:ulica>
+        <osnova:broj>1262034094</osnova:broj>
+    </osnova:Adresa>
+    <korisnik:potpis>71667989807069677480787084796988</korisnik:potpis>
+</korisnik:Korisnik>

@@ -12,8 +12,8 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.NodeList;
 
 import com.example.demo.dom.Constants;
-import com.example.demo.model.Odluka;
-import com.example.demo.model.TipZalbe;
+import com.example.demo.model.Obavestenje;
+import com.example.demo.model.Odbijanje;
 import com.example.demo.model.Zahtev;
 import com.example.demo.model.Zalba;
 
@@ -24,7 +24,10 @@ public class ZalbaParser implements Parser<Zalba> {
 	private ZahtevParser zahtevParser;
 	
 	@Autowired
-	private OdlukaParser odlukaParser;
+	private ObavestenjeParser obavestenjeParser;
+	
+	@Autowired
+	private OdbijanjeParser odbijanjeParser;
 	
 	@Override
 	public Zalba parse(Element element) throws ParseException {
@@ -32,15 +35,28 @@ public class ZalbaParser implements Parser<Zalba> {
 		NamedNodeMap attributes = element.getAttributes();
 		String broj = attributes.getNamedItem("broj").getNodeValue();
 		Date datum = format.parse(attributes.getNamedItem("datum").getNodeValue());
-		TipZalbe tip = TipZalbe.valueOf(attributes.getNamedItem("tip_zalbe").getNodeValue());
-		Zahtev zahtev = this.zahtevParser.parse((Element) element.getElementsByTagName("zahtev:Zahtev").item(0));
-		Odluka odluka = null;
-		NodeList odlukaNode = element.getElementsByTagName("odluka:Odluka");
-		if (odlukaNode.getLength() > 0) {
-			odluka = this.odlukaParser.parse((Element) odlukaNode.item(0));
+		Zahtev zahtev = null;
+		zahtev = this.zahtevParser.parse((Element) element.getElementsByTagName("zahtev:Zahtev").item(0));
+		
+		Obavestenje obavestenje = null;
+		Odbijanje odbijanje = null;
+		
+		if (zahtev == null) {
+			NodeList obavestenjeNode = element.getElementsByTagName("obavestenje:Obavestenje");
+			if (obavestenjeNode.getLength() > 0) {
+				obavestenje = this.obavestenjeParser.parse((Element) obavestenjeNode.item(0));
+			}
+			
+			if (obavestenje == null) {
+				NodeList odbijanjeNode = element.getElementsByTagName("odbijanje:Odbijanje");
+				if (odbijanjeNode.getLength() > 0) {
+					odbijanje = this.odbijanjeParser.parse((Element) odbijanjeNode.item(0));
+				}
+			}
 		}
+		
 		String obrazlozenje = element.getElementsByTagName("zalba:obrazlozenje").item(0).getTextContent();
-		return new Zalba(broj, tip, datum, zahtev, odluka, obrazlozenje);
+		return new Zalba(broj, datum, zahtev, obavestenje, odbijanje, obrazlozenje);
 	}
 
 	@Override
@@ -52,19 +68,29 @@ public class ZalbaParser implements Parser<Zalba> {
 		zalba.setAttributeNS(Constants.XMLNS_NAMESPACE, "xmlns:osnova", "https://github.com/draganagrbic998/xml/osnova ../xsd/osnova.xsd");
 		zalba.setAttributeNS(Constants.XMLNS_NAMESPACE, "xmlns:korisnik", "https://github.com/draganagrbic998/xml/korisnik ../xsd/korisnik.xsd");
 		zalba.setAttributeNS(Constants.XMLNS_NAMESPACE, "xmlns:zahtev", "https://github.com/draganagrbic998/xml/zahtev ../xsd/zahtev.xsd");
-		zalba.setAttributeNS(Constants.XMLNS_NAMESPACE, "xmlns:odluka", "https://github.com/draganagrbic998/xml/odluka ../xsd/odluka.xsd");
 		zalba.setAttributeNS(Constants.XMLNS_NAMESPACE, "xmlns:zalba", "https://github.com/draganagrbic998/xml/zalba ../xsd/zalba.xsd");
 		zalba.setAttribute("broj", type.getBroj());
 		zalba.setAttribute("datum", format.format(type.getDatum()));
-		zalba.setAttribute("tip_zalbe", type.getTip() + "");
-		Element zahtev = this.zahtevParser.parse(type.getZahtev(), document);
-		if (type.getOdluka() != null) {
-			Element odluka = document.createElement("odluka:Odluka");
-			zalba.appendChild(odluka);
+		
+		if (type.getZahtev() != null) {
+			Element zahtev = this.zahtevParser.parse(type.getZahtev(), document);
+			zalba.appendChild(zahtev);
 		}
+	
+		if (type.getObavestenje() != null) {
+			zalba.setAttributeNS(Constants.XMLNS_NAMESPACE, "xmlns:obavestenje", "https://github.com/draganagrbic998/xml/obavestenje ../xsd/obavestenje.xsd");
+			Element obavestenje = document.createElement("obavestenje:Obavestenje");
+			zalba.appendChild(obavestenje);
+		}
+		
+		if (type.getOdbijanje() != null) {
+			zalba.setAttributeNS(Constants.XMLNS_NAMESPACE, "xmlns:odbijanje", "https://github.com/draganagrbic998/xml/odbijanje ../xsd/odbijanje.xsd");
+			Element odbijanje = document.createElement("odbijanje:Odbijanje");
+			zalba.appendChild(odbijanje);
+		}
+		
 		Element obrazlozenje = document.createElement("zalba:obrazlozenje");
 		obrazlozenje.setTextContent(type.getObrazlozenje());
-		zalba.appendChild(zahtev);
 		zalba.appendChild(obrazlozenje);
 		return zalba;
 	}

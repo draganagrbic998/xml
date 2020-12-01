@@ -38,7 +38,7 @@ public class ZahtevParser implements Parser<Zahtev> {
 		TipZahteva tip = TipZahteva.valueOf(attributes.getNamedItem("tip_zahteva").getNodeValue());
 		OrganVlasti organVlasti = this.organVlastiParser.parse((Element) element.getElementsByTagName("organ_vlasti:Organ_vlasti").item(0));
 		Korisnik gradjanin = this.korisnikParser.parse((Element) element.getElementsByTagName("korisnik:Korisnik").item(0));
-		PodaciZahteva podaciZahteva = this.podaciZahtevaParser.parse((Element) element.getElementsByTagName("korisnik:Korisnik").item(0));
+		PodaciZahteva podaciZahteva = this.podaciZahtevaParser.parse((Element) element.getElementsByTagName("zahtev:Podaci_zahteva").item(0));
 		return new Zahtev(broj, tip, datum, organVlasti, gradjanin, podaciZahteva);
 	}
 

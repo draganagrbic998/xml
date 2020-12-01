@@ -9,11 +9,11 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import com.example.demo.model.Kopija;
-import com.example.demo.model.PodaciOdluke;
+import com.example.demo.model.PodaciOdavestenja;
 import com.example.demo.model.Uvid;
 
 @Component
-public class PodaciOdlukeParser implements Parser<PodaciOdluke> {
+public class PodaciObavestenjaParser implements Parser<PodaciOdavestenja> {
 	
 	@Autowired
 	private UvidParser uvidParser;
@@ -22,26 +22,24 @@ public class PodaciOdlukeParser implements Parser<PodaciOdluke> {
 	private KopijaParser kopijaParser;
 
 	@Override
-	public PodaciOdluke parse(Element element) throws ParseException  {
-		String odgovor = element.getElementsByTagName("odluka:odgovor").item(0).getTextContent();
+	public PodaciOdavestenja parse(Element element) throws ParseException  {
 		Uvid uvid = null;
-		NodeList uvidNode = element.getElementsByTagName("odluka:Uvid");
+		NodeList uvidNode = element.getElementsByTagName("obavestenje:Uvid");
 		if (uvidNode.getLength() > 0) {
 			uvid = this.uvidParser.parse((Element) uvidNode.item(0));
 		}
 		Kopija kopija = null;
-		NodeList kopijaNode = element.getElementsByTagName("odluka:Kopija");
+		NodeList kopijaNode = element.getElementsByTagName("obavestenje:Kopija");
 		if (kopijaNode.getLength() > 0) {
 			kopija = this.kopijaParser.parse((Element) kopijaNode.item(0));
 		}
-		return new PodaciOdluke(odgovor, uvid, kopija);
+		return new PodaciOdavestenja(uvid, kopija);
 	}
 
 	@Override
-	public Element parse(PodaciOdluke type, Document document) {
-		Element podaciOdluke = document.createElement("odluka:Podaci_odluke");
-		Element odgovor = document.createElement("odluka:odgovor");
-		odgovor.setTextContent(type.getOdgovor());
+	public Element parse(PodaciOdavestenja type, Document document) {
+		Element podaciOdluke = document.createElement("obavestenje:Podaci_odluke");
+		Element odgovor = document.createElement("obavestenje:odgovor");
 		if (type.getUvid() != null) {
 			Element uvid = this.uvidParser.parse(type.getUvid(), document);
 			podaciOdluke.appendChild(uvid);

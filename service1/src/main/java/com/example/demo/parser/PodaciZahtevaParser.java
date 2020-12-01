@@ -12,20 +12,20 @@ public class PodaciZahtevaParser implements Parser<PodaciZahteva> {
 
 	@Override
 	public PodaciZahteva parse(Element element) {
-		String trazenaInformacija = element.getElementsByTagName("zahtev:trazena_informacija").item(0).getTextContent();
-		TipDostave tipDostave = TipDostave.valueOf(element.getElementsByTagName("zahtev:tip_dostave").item(0).getTextContent());
-		String opisDostave = element.getElementsByTagName("zahtev:opis_dostave").item(0).getTextContent();
+		String trazenaInformacija = element.getElementsByTagName("zahtev:Trazena_informacija").item(0).getTextContent();
+		TipDostave tipDostave = TipDostave.valueOf(element.getElementsByTagName("zahtev:Tip_dostave").item(0).getTextContent());
+		String opisDostave = element.getElementsByTagName("zahtev:Opis_dostave").item(0).getTextContent();
 		return new PodaciZahteva(trazenaInformacija, tipDostave, opisDostave);
 	}
 
 	@Override
 	public Element parse(PodaciZahteva type, Document document) {
 		Element podaciZahteva = document.createElement("zahtev:Podaci_zahteva");
-		Element trazenaInformacija = document.createElement("zahtev:trazena_informacija");
+		Element trazenaInformacija = document.createElement("zahtev:Trazena_informacija");
 		trazenaInformacija.setTextContent(type.getTrazenaInformacija());
-		Element tipDostave = document.createElement("zahtev:tip_dostave");
+		Element tipDostave = document.createElement("zahtev:Tip_dostave");
 		tipDostave.setTextContent(type.getTipDostave() + "");
-		Element opisDostave = document.createElement("zahtev:opis_dostave");
+		Element opisDostave = document.createElement("zahtev:Opis_dostave");
 		opisDostave.setTextContent(type.getOpisDostave());
 		podaciZahteva.appendChild(trazenaInformacija);
 		podaciZahteva.appendChild(tipDostave);

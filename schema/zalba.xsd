@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
     targetNamespace="https://github.com/draganagrbic998/xml/zalba"
-    xmlns:odluka="https://github.com/draganagrbic998/xml/odluka"
     xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev"
-    xmlns:zalba="https://github.com/draganagrbic998/xml/zalba"
     xmlns:obavestenje="https://github.com/draganagrbic998/xml/obavestenje"
-    xmlns:odbijanje="https://github.com/draganagrbic998/xml/odbijanje">
+    xmlns:odbijanje="https://github.com/draganagrbic998/xml/odbijanje"
+    xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
     <xs:import namespace="https://github.com/draganagrbic998/xml/zahtev" schemaLocation="zahtev.xsd"/>
     <xs:import namespace="https://github.com/draganagrbic998/xml/obavestenje"
         schemaLocation="obavestenje.xsd"/>

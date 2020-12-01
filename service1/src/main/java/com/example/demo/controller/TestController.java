@@ -22,12 +22,14 @@ import org.xml.sax.SAXException;
 import com.example.demo.dom.DOMParser;
 import com.example.demo.model.Adresa;
 import com.example.demo.model.Korisnik;
-import com.example.demo.model.Odluka;
+import com.example.demo.model.Obavestenje;
+import com.example.demo.model.Odbijanje;
 import com.example.demo.model.OrganVlasti;
 import com.example.demo.model.Zahtev;
 import com.example.demo.model.Zalba;
 import com.example.demo.parser.KorisnikParser;
-import com.example.demo.parser.OdlukaParser;
+import com.example.demo.parser.ObavestenjeParser;
+import com.example.demo.parser.OdbijanjeParser;
 import com.example.demo.parser.OrganVlastiParser;
 import com.example.demo.parser.ZahtevParser;
 import com.example.demo.parser.ZalbaParser;
@@ -49,7 +51,10 @@ public class TestController {
 	private ZahtevParser zahtevParser;
 	
 	@Autowired
-	private OdlukaParser odlukaParser;
+	private ObavestenjeParser obavestenjeParser;
+	
+	@Autowired
+	private OdbijanjeParser odbijanjeParser;
 	
 	@Autowired
 	private ZalbaParser zalbaParser;
@@ -95,12 +100,22 @@ public class TestController {
 		this.domParser.transformDocument(document, System.out);
 	}
 	
-	@GetMapping(value = "/test_odluka")
-	public void testOdluka() throws ParserConfigurationException, SAXException, IOException, ParseException, TransformerException {
-		Document document = this.domParser.buildDocumentFromFile("data/xml/odluka1.xml");
-		Odluka odluka = this.odlukaParser.parse(document.getDocumentElement());
+	@GetMapping(value = "/test_obavestenje")
+	public void testObavestenje() throws ParserConfigurationException, SAXException, IOException, ParseException, TransformerException {
+		Document document = this.domParser.buildDocumentFromFile("data/xml/obavestenje1.xml");
+		Obavestenje obavestenje = this.obavestenjeParser.parse(document.getDocumentElement());
 		document.removeChild(document.getDocumentElement());
-		Element odlukaElement = this.odlukaParser.parse(odluka, document);
+		Element odlukaElement = this.obavestenjeParser.parse(obavestenje, document);
+		document.appendChild(odlukaElement);
+		this.domParser.transformDocument(document, System.out);
+	}
+	
+	@GetMapping(value = "/test_odbijanje")
+	public void testOdbijanje() throws ParserConfigurationException, SAXException, IOException, ParseException, TransformerException {
+		Document document = this.domParser.buildDocumentFromFile("data/xml/odbijanje1.xml");
+		Odbijanje odbijanje = this.odbijanjeParser.parse(document.getDocumentElement());
+		document.removeChild(document.getDocumentElement());
+		Element odlukaElement = this.odbijanjeParser.parse(odbijanje, document);
 		document.appendChild(odlukaElement);
 		this.domParser.transformDocument(document, System.out);
 	}

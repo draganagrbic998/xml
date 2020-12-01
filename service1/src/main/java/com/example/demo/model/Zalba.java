@@ -6,34 +6,41 @@ import java.util.Date;
 public class Zalba {
 
 	private String broj;
-	private TipZalbe tip;
 	private Date datum;
 	private Zahtev zahtev;
-	private Odluka odluka;
+	private Obavestenje obavestenje;
+	private Odbijanje odbijanje;
 	private String obrazlozenje;
-	
+
 	public Zalba() {
 		super();
 	}
-	
-	public Zalba(String broj, TipZalbe tip, Date datum, Zahtev zahtev, Odluka odluka, String obrazlozenje) {
+
+	public Zalba(String broj, Date datum, Zahtev zahtev, Obavestenje obavestenje, Odbijanje odbijanje,
+			String obrazlozenje) {
 		super();
 		this.broj = broj;
-		this.tip = tip;
 		this.datum = datum;
 		this.zahtev = zahtev;
-		this.odluka = odluka;
+		this.obavestenje = obavestenje;
+		this.odbijanje = odbijanje;
 		this.obrazlozenje = obrazlozenje;
 	}
-	
+
 	@Override
 	public String toString() {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		String suma = "PODACI ZALBE:\n";
-		suma += String.format("broj: %s, tip: %s, datum: %s, obrazlozenje: %s\n", this.broj, this.tip, format.format(this.datum), this.obrazlozenje);
-		suma += this.zahtev.toString();
-		if (this.odluka != null) {
-			suma += this.odluka.toString();
+		suma += String.format("broj: %s, datum: %s, obrazlozenje: %s\n", this.broj, format.format(this.datum),
+				this.obrazlozenje);
+		if (this.zahtev != null) {
+			suma += this.zahtev.toString();
+		}
+		if (this.obavestenje != null) {
+			suma += this.obavestenje.toString();
+		}
+		if (this.odbijanje != null) {
+			suma += this.odbijanje.toString();
 		}
 		return suma;
 	}
@@ -44,14 +51,6 @@ public class Zalba {
 
 	public void setBroj(String broj) {
 		this.broj = broj;
-	}
-
-	public TipZalbe getTip() {
-		return tip;
-	}
-
-	public void setTip(TipZalbe tip) {
-		this.tip = tip;
 	}
 
 	public Date getDatum() {
@@ -70,12 +69,20 @@ public class Zalba {
 		this.zahtev = zahtev;
 	}
 
-	public Odluka getOdluka() {
-		return odluka;
+	public Obavestenje getObavestenje() {
+		return obavestenje;
 	}
 
-	public void setOdluka(Odluka odluka) {
-		this.odluka = odluka;
+	public void setObavestenje(Obavestenje obavestenje) {
+		this.obavestenje = obavestenje;
+	}
+
+	public Odbijanje getOdbijanje() {
+		return odbijanje;
+	}
+
+	public void setOdbijanje(Odbijanje odbijanje) {
+		this.odbijanje = odbijanje;
 	}
 
 	public String getObrazlozenje() {
@@ -85,5 +92,5 @@ public class Zalba {
 	public void setObrazlozenje(String obrazlozenje) {
 		this.obrazlozenje = obrazlozenje;
 	}
-	
+
 }
