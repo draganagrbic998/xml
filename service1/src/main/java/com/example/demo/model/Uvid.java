@@ -3,12 +3,28 @@ package com.example.demo.model;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+
+@XmlRootElement(name = "Uvid", namespace = "https://github.com/draganagrbic998/xml/obavestenje")
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(propOrder = { "adresa", "kancelarija", "uvidOd", "uvidDo"})
 public class Uvid {
 	
-	private Date uvidOd;
-	private Date uvidDo;
+	@XmlElement(name = "Adresa", namespace = "https://github.com/draganagrbic998/xml/osnova", required = true)
 	private Adresa adresa;
+
+	@XmlElement(name = "kancelarija", namespace = "https://github.com/draganagrbic998/xml/obavestenje", required = true)
 	private String kancelarija;
+	
+	@XmlElement(name = "uvid_od", namespace = "https://github.com/draganagrbic998/xml/obavestenje", required = true)
+	private Date uvidOd;
+
+	@XmlElement(name = "uvid_do", namespace = "https://github.com/draganagrbic998/xml/obavestenje", required = true)
+	private Date uvidDo;
 	
 	public Uvid() {
 		super();

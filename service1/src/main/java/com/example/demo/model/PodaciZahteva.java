@@ -1,9 +1,23 @@
 package com.example.demo.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+
+@XmlRootElement(name = "Podaci_zahteva", namespace = "https://github.com/draganagrbic998/xml/zahtev")
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(propOrder = { "trazenaInformacija", "tipDostave", "opisDostave" })
 public class PodaciZahteva {
 	
+	@XmlElement(name = "Trazena_informacija", namespace = "https://github.com/draganagrbic998/xml/zahtev", required = true)
 	private String trazenaInformacija;
+	
+	@XmlElement(name = "Tip_dostave", namespace = "https://github.com/draganagrbic998/xml/zahtev", required = true)
 	private TipDostave tipDostave;
+	
+	@XmlElement(name = "Opis_dostave", namespace = "https://github.com/draganagrbic998/xml/zahtev", required = true)
 	private String opisDostave;
 	
 	public PodaciZahteva() {

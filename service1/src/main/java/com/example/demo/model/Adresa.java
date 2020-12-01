@@ -6,9 +6,9 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder = { "mesto", "postanski_broj", "ulica", "broj" })
 @XmlRootElement(name = "Adresa", namespace = "https://github.com/draganagrbic998/xml/osnova")
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(propOrder = { "mesto", "postanskiBroj", "ulica", "broj" })
 public class Adresa {
 	
 	@XmlElement(namespace = "https://github.com/draganagrbic998/xml/osnova", required = true)

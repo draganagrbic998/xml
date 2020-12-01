@@ -1,8 +1,20 @@
 package com.example.demo.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+
+@XmlRootElement(name = "Podaci_obavestenja", namespace = "https://github.com/draganagrbic998/xml/obavestenje")
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(propOrder = { "uvid", "kopija" })
 public class PodaciObavestenja {
 
+	@XmlElement(name = "Uvid", namespace = "https://github.com/draganagrbic998/xml/obavestenje", required = true)
 	private Uvid uvid;
+	
+	@XmlElement(name = "Kopija", namespace = "https://github.com/draganagrbic998/xml/obavestenje", required = true)
 	private Kopija kopija;
 
 	public PodaciObavestenja() {

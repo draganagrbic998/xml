@@ -3,13 +3,34 @@ package com.example.demo.model;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+
+@XmlRootElement(name = "Zahtev", namespace = "https://github.com/draganagrbic998/xml/zahtev")
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(propOrder = { "gradjanin", "organVlasti", "podaci" })
 public class Zahtev {
-	
-	private String broj;
+
+	@XmlAttribute(name = "tip_zahteva", required = true)
 	private TipZahteva tipZahteva;
+	
+	@XmlAttribute(name = "broj", required = true)
+	private String broj;
+	
+	@XmlAttribute(name = "datum", required = true)
 	private Date datum;
-	private OrganVlasti organVlasti;
+	
+	@XmlElement(name = "Korisnik", namespace = "https://github.com/draganagrbic998/xml/korisnik", required = true)
 	private Korisnik gradjanin;
+	
+	@XmlElement(name = "Organ_vlasti", namespace = "https://github.com/draganagrbic998/xml/organ_vlasti", required = true)
+	private OrganVlasti organVlasti;
+	
+	@XmlElement(name = "Podaci_zahteva", namespace = "https://github.com/draganagrbic998/xml/zahtev", required = true)
 	private PodaciZahteva podaci;
 	
 	public Zahtev() {

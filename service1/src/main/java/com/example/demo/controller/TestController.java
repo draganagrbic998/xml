@@ -6,6 +6,7 @@ import java.text.ParseException;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -20,7 +21,6 @@ import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
 import com.example.demo.dom.DOMParser;
-import com.example.demo.model.Adresa;
 import com.example.demo.model.Korisnik;
 import com.example.demo.model.Obavestenje;
 import com.example.demo.model.Odbijanje;
@@ -36,9 +36,13 @@ import com.example.demo.parser.ResenjeParser;
 import com.example.demo.parser.ZahtevParser;
 import com.example.demo.parser.ZalbaParser;
 
+import jaxb.NSPrefixMapper;
+
 @RestController
 @RequestMapping(value = "/test", produces = MediaType.APPLICATION_JSON_VALUE)
 public class TestController {
+	
+	static String LOKACIJA_SEMA = "file:/C:/Users/petar/Desktop/projekti/schema/";
 	
 	@Autowired
 	private DOMParser domParser;
@@ -63,7 +67,7 @@ public class TestController {
 	
 	@Autowired
 	private ResenjeParser resenjeParser;
-	
+		
 	@GetMapping(value = "/test_organ_vlasti")
 	public void testOrganVlasti() throws ParserConfigurationException, SAXException, IOException, TransformerException {
 		Document document = this.domParser.buildDocumentFromFile("data/xml/organ_vlasti1.xml");
@@ -74,6 +78,18 @@ public class TestController {
 		this.domParser.transformDocument(document, System.out);
 	}
 
+	@GetMapping(value = "/test_organ_vlasti_jaxb")
+	public void testOrganVlastiJaxb() throws JAXBException {
+		JAXBContext context = JAXBContext.newInstance(OrganVlasti.class);
+		Unmarshaller unmarshaller = context.createUnmarshaller();	
+		OrganVlasti organVlasti = (OrganVlasti) unmarshaller.unmarshal(new File("data/xml/organ_vlasti1.xml"));
+		Marshaller marshaller = context.createMarshaller();
+		marshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper", new NSPrefixMapper());
+		marshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION, "https://github.com/draganagrbic998/xml/organ_vlasti " + LOKACIJA_SEMA + "organ_vlasti.xsd");
+		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+		marshaller.marshal(organVlasti, System.out);
+	}
+	
 	@GetMapping(value = "/test_korisnik")
 	public void testKorisnik() throws ParserConfigurationException, SAXException, IOException, TransformerException {
 		Document document = this.domParser.buildDocumentFromFile("data/xml/korisnik1.xml");
@@ -89,10 +105,11 @@ public class TestController {
 		JAXBContext context = JAXBContext.newInstance(Korisnik.class);
 		Unmarshaller unmarshaller = context.createUnmarshaller();		
 		Korisnik korisnik = (Korisnik) unmarshaller.unmarshal(new File("data/xml/korisnik1.xml"));
-		JAXBContext context2 = JAXBContext.newInstance(Adresa.class);
-		Unmarshaller unmarshaller2 = context2.createUnmarshaller();
-		Adresa adresa = (Adresa) unmarshaller2.unmarshal(new File("data/xml/korisnik1.xml"));
-		System.out.println(korisnik);
+		Marshaller marshaller = context.createMarshaller();
+		marshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper", new NSPrefixMapper());
+		marshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION, "https://github.com/draganagrbic998/xml/korisnik " + LOKACIJA_SEMA + "korisnik.xsd");
+		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+		marshaller.marshal(korisnik, System.out);
 	}
 	
 	@GetMapping(value = "/test_zahtev")
@@ -105,6 +122,18 @@ public class TestController {
 		this.domParser.transformDocument(document, System.out);
 	}
 	
+	@GetMapping(value = "/test_zahtev_jaxb")
+	public void testZahtevJaxb() throws JAXBException {
+		JAXBContext context = JAXBContext.newInstance(Zahtev.class);
+		Unmarshaller unmarshaller = context.createUnmarshaller();		
+		Zahtev zahtev = (Zahtev) unmarshaller.unmarshal(new File("data/xml/zahtev1.xml"));
+		Marshaller marshaller = context.createMarshaller();
+		marshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper", new NSPrefixMapper());
+		marshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION, "https://github.com/draganagrbic998/xml/zahtev " + LOKACIJA_SEMA + "zahtev.xsd");
+		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+		marshaller.marshal(zahtev, System.out);
+	}
+	
 	@GetMapping(value = "/test_obavestenje")
 	public void testObavestenje() throws ParserConfigurationException, SAXException, IOException, ParseException, TransformerException {
 		Document document = this.domParser.buildDocumentFromFile("data/xml/obavestenje1.xml");
@@ -113,6 +142,18 @@ public class TestController {
 		Element odlukaElement = this.obavestenjeParser.parse(obavestenje, document);
 		document.appendChild(odlukaElement);
 		this.domParser.transformDocument(document, System.out);
+	}
+	
+	@GetMapping(value = "/test_obavestenje_jaxb")
+	public void testObavestenjeJaxb() throws JAXBException {
+		JAXBContext context = JAXBContext.newInstance(Obavestenje.class);
+		Unmarshaller unmarshaller = context.createUnmarshaller();		
+		Obavestenje obavestenje = (Obavestenje) unmarshaller.unmarshal(new File("data/xml/obavestenje1.xml"));
+		Marshaller marshaller = context.createMarshaller();
+		marshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper", new NSPrefixMapper());
+		marshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION, "https://github.com/draganagrbic998/xml/obavestenje " + LOKACIJA_SEMA + "obavestenje.xsd");
+		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+		marshaller.marshal(obavestenje, System.out);
 	}
 	
 	@GetMapping(value = "/test_odbijanje")
@@ -125,6 +166,18 @@ public class TestController {
 		this.domParser.transformDocument(document, System.out);
 	}
 	
+	@GetMapping(value = "/test_odbijanje_jaxb")
+	public void testOdbijanjeJaxb() throws JAXBException {
+		JAXBContext context = JAXBContext.newInstance(Odbijanje.class);
+		Unmarshaller unmarshaller = context.createUnmarshaller();		
+		Odbijanje odbijanje = (Odbijanje) unmarshaller.unmarshal(new File("data/xml/odbijanje1.xml"));
+		Marshaller marshaller = context.createMarshaller();
+		marshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper", new NSPrefixMapper());
+		marshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION, "https://github.com/draganagrbic998/xml/odbijanje " + LOKACIJA_SEMA + "odbijanje.xsd");
+		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+		marshaller.marshal(odbijanje, System.out);
+	}
+	
 	@GetMapping(value = "/test_zalba")
 	public void testZalba() throws ParserConfigurationException, SAXException, IOException, ParseException, TransformerException {
 		Document document = this.domParser.buildDocumentFromFile("data/xml/zalba1.xml");
@@ -135,6 +188,18 @@ public class TestController {
 		this.domParser.transformDocument(document, System.out);
 	}
 
+	@GetMapping(value = "/test_zalba_jaxb")
+	public void testZalbaJaxb() throws JAXBException {
+		JAXBContext context = JAXBContext.newInstance(Zalba.class);
+		Unmarshaller unmarshaller = context.createUnmarshaller();		
+		Zalba zalba = (Zalba) unmarshaller.unmarshal(new File("data/xml/zalba1.xml"));
+		Marshaller marshaller = context.createMarshaller();
+		marshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper", new NSPrefixMapper());
+		marshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION, "https://github.com/draganagrbic998/xml/zalba " + LOKACIJA_SEMA + "zalba.xsd");
+		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+		marshaller.marshal(zalba, System.out);
+	}
+	
 	@GetMapping(value = "/test_resenje")
 	public void testResenje() throws ParserConfigurationException, SAXException, IOException, ParseException, TransformerException {
 		Document document = this.domParser.buildDocumentFromFile("data/xml/resenje1.xml");
@@ -143,5 +208,17 @@ public class TestController {
 		Element resenjeElement = this.resenjeParser.parse(resenje, document);
 		document.appendChild(resenjeElement);
 		this.domParser.transformDocument(document, System.out);
+	}
+	
+	@GetMapping(value = "/test_resenje_jaxb")
+	public void testResenjeJaxb() throws JAXBException {
+		JAXBContext context = JAXBContext.newInstance(Resenje.class);
+		Unmarshaller unmarshaller = context.createUnmarshaller();		
+		Resenje resenje = (Resenje) unmarshaller.unmarshal(new File("data/xml/resenje1.xml"));
+		Marshaller marshaller = context.createMarshaller();
+		marshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper", new NSPrefixMapper());
+		marshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION, "https://github.com/draganagrbic998/xml/resenje " + LOKACIJA_SEMA + "resenje.xsd");
+		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+		marshaller.marshal(resenje, System.out);
 	}
 }

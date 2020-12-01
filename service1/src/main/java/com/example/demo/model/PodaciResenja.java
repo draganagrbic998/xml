@@ -2,10 +2,27 @@ package com.example.demo.model;
 
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+
+@XmlRootElement(name = "Podaci_resenja", namespace = "https://github.com/draganagrbic998/xml/resenje")
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(propOrder = { "odbrana", "dispozitiva", "obrazlozenje" })
 public class PodaciResenja {
 
+	@XmlElement(name = "Odbrana", namespace = "https://github.com/draganagrbic998/xml/resenje", required = true)
 	private Odbrana odbrana;
+
+	@XmlElementWrapper(name="Dispozitiva", namespace = "https://github.com/draganagrbic998/xml/resenje", required = true)
+	@XmlElement(name = "Clan_dispozitive", namespace = "https://github.com/draganagrbic998/xml/resenje", required = true)
 	private List<String> dispozitiva;
+	
+	@XmlElementWrapper(name="Obrazlozenje", namespace = "https://github.com/draganagrbic998/xml/resenje", required = true)
+	@XmlElement(name = "Deo_obrazlozenja", namespace = "https://github.com/draganagrbic998/xml/resenje", required = true)
 	private List<String> obrazlozenje;
 	
 	public PodaciResenja() {

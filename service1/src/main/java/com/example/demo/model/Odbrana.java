@@ -3,9 +3,21 @@ package com.example.demo.model;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+
+@XmlRootElement(name = "Odbrana", namespace = "https://github.com/draganagrbic998/xml/resenje")
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(propOrder = { "datumPrijema", "odgovor" })
 public class Odbrana {
 
+	@XmlElement(name = "Datum_prijema", namespace = "https://github.com/draganagrbic998/xml/resenje", required = true)
 	private Date datumPrijema;
+	
+	@XmlElement(name = "Odgovor", namespace = "https://github.com/draganagrbic998/xml/resenje", required = true)
 	private String odgovor;
 
 	public Odbrana() {

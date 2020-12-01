@@ -1,10 +1,26 @@
 package com.example.demo.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+
+@XmlRootElement(name = "Kopija", namespace = "https://github.com/draganagrbic998/xml/obavestenje")
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(propOrder = { "iznos", "brojRacuna", "pozivNaBroj", "model"})
 public class Kopija {
 
+	@XmlElement(name = "iznos", namespace = "https://github.com/draganagrbic998/xml/obavestenje", required = true)
 	private String iznos;
+	
+	@XmlElement(name = "racun", namespace = "https://github.com/draganagrbic998/xml/obavestenje", required = true)
 	private String brojRacuna;
+	
+	@XmlElement(name = "poziv_na_broj", namespace = "https://github.com/draganagrbic998/xml/obavestenje", required = true)
 	private String pozivNaBroj;
+	
+	@XmlElement(name = "model", namespace = "https://github.com/draganagrbic998/xml/obavestenje", required = true)
 	private String model;
 	
 	public Kopija() {

@@ -3,12 +3,31 @@ package com.example.demo.model;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+
+@XmlRootElement(name = "Odbijanje", namespace = "https://github.com/draganagrbic998/xml/odbijanje")
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(propOrder = { "sluzbenik", "zahtev", "obrazlozenje" })
 public class Odbijanje {
 	
+	@XmlAttribute(name = "broj", required = true)
 	private String broj;
+	
+	@XmlAttribute(name = "datum", required = true)
 	private Date datum;
+	
+	@XmlElement(name = "Korisnik", namespace = "https://github.com/draganagrbic998/xml/korisnik", required = true)
 	private Korisnik sluzbenik;
+	
+	@XmlElement(name = "Zahtev", namespace = "https://github.com/draganagrbic998/xml/zahtev", required = true)
 	private Zahtev zahtev;
+	
+	@XmlElement(name = "Obrazlozenje", namespace = "https://github.com/draganagrbic998/xml/odbijanje", required = true)
 	private String obrazlozenje;
 	
 	public Odbijanje() {

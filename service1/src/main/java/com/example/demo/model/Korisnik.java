@@ -6,9 +6,9 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+@XmlRootElement(name = "Korisnik", namespace = "https://github.com/draganagrbic998/xml/korisnik")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = { "uloga", "email", "lozinka", "ime", "prezime", "adresa", "potpis" })
-@XmlRootElement(name = "Korisnik", namespace = "https://github.com/draganagrbic998/xml/korisnik")
 public class Korisnik {
 
 	@XmlElement(namespace = "https://github.com/draganagrbic998/xml/korisnik", required = true)
@@ -26,7 +26,7 @@ public class Korisnik {
 	@XmlElement(namespace = "https://github.com/draganagrbic998/xml/korisnik", required = true)
 	private String prezime;
 	
-	@XmlElement(namespace = "https://github.com/draganagrbic998/xml/osnova", required = true)
+	@XmlElement(name = "Adresa", namespace = "https://github.com/draganagrbic998/xml/osnova", required = true)
 	private Adresa adresa;
 	
 	@XmlElement(namespace = "https://github.com/draganagrbic998/xml/korisnik", required = true)
@@ -53,7 +53,7 @@ public class Korisnik {
 	public String toString() {
 		String suma = "PODACI KORISNIKA:\n";
 		suma += String.format("uloga: %s, email: %s, lozinka: %s, ime: %s, prezime: %s, potpis: %s\n", this.uloga, this.email, this.lozinka, this.ime, this.prezime, this.potpis);
-		//suma += this.adresa.toString();
+		suma += this.adresa.toString();
 		return suma;
 	}
 
