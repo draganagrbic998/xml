@@ -8,6 +8,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import jaxb.DateAdapter;
 
 @XmlRootElement(name = "Odbrana", namespace = "https://github.com/draganagrbic998/xml/resenje")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -15,6 +18,7 @@ import javax.xml.bind.annotation.XmlType;
 public class Odbrana {
 
 	@XmlElement(name = "Datum_prijema", namespace = "https://github.com/draganagrbic998/xml/resenje", required = true)
+	@XmlJavaTypeAdapter(DateAdapter.class)
 	private Date datumPrijema;
 	
 	@XmlElement(name = "Odgovor", namespace = "https://github.com/draganagrbic998/xml/resenje", required = true)

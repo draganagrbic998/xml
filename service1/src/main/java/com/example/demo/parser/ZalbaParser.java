@@ -33,8 +33,8 @@ public class ZalbaParser implements Parser<Zalba> {
 	public Zalba parse(Element element) throws ParseException {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		NamedNodeMap attributes = element.getAttributes();
-		String broj = attributes.getNamedItem("broj").getNodeValue();
-		Date datum = format.parse(attributes.getNamedItem("datum").getNodeValue());
+		String broj = attributes.getNamedItem("zalba:broj").getNodeValue();
+		Date datum = format.parse(attributes.getNamedItem("zalba:datum").getNodeValue());
 		Zahtev zahtev = null;
 		zahtev = this.zahtevParser.parse((Element) element.getElementsByTagName("zahtev:Zahtev").item(0));
 		
@@ -62,15 +62,15 @@ public class ZalbaParser implements Parser<Zalba> {
 	@Override
 	public Element parse(Zalba type, Document document) {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		Element zalba = document.createElement("zalba:Zalba");
-		zalba.setAttributeNS(Constants.XSI_NAMESPACE, "xsi:schemaLocation", "https://github.com/draganagrbic998/xml/odluka ../xsd/odluka.xsd");
-		zalba.setAttributeNS(Constants.XMLNS_NAMESPACE, "xmlns:organ_vlasti", "https://github.com/draganagrbic998/xml/organ_vlasti ../xsd/organ_vlasti.xsd");
-		zalba.setAttributeNS(Constants.XMLNS_NAMESPACE, "xmlns:osnova", "https://github.com/draganagrbic998/xml/osnova ../xsd/osnova.xsd");
-		zalba.setAttributeNS(Constants.XMLNS_NAMESPACE, "xmlns:korisnik", "https://github.com/draganagrbic998/xml/korisnik ../xsd/korisnik.xsd");
-		zalba.setAttributeNS(Constants.XMLNS_NAMESPACE, "xmlns:zahtev", "https://github.com/draganagrbic998/xml/zahtev ../xsd/zahtev.xsd");
+		Element zalba = document.createElementNS("https://github.com/draganagrbic998/xml/zalba", "zalba:Zalba");
+		zalba.setAttributeNS(Constants.XSI_NAMESPACE, "xsi:schemaLocation", "https://github.com/draganagrbic998/xml/zalba ../xsd/zalba.xsd");
 		zalba.setAttributeNS(Constants.XMLNS_NAMESPACE, "xmlns:zalba", "https://github.com/draganagrbic998/xml/zalba ../xsd/zalba.xsd");
-		zalba.setAttribute("broj", type.getBroj());
-		zalba.setAttribute("datum", format.format(type.getDatum()));
+		zalba.setAttributeNS("https://github.com/draganagrbic998/xml/zalba", "zalba:broj", type.getBroj());
+		zalba.setAttributeNS("https://github.com/draganagrbic998/xml/zalba", "zalba:datum", format.format(type.getDatum()));
+		
+		Element obrazlozenje = document.createElementNS("https://github.com/draganagrbic998/xml/zalba", "zalba:obrazlozenje");
+		obrazlozenje.setTextContent(type.getObrazlozenje());
+		zalba.appendChild(obrazlozenje);
 		
 		if (type.getZahtev() != null) {
 			Element zahtev = this.zahtevParser.parse(type.getZahtev(), document);
@@ -78,20 +78,15 @@ public class ZalbaParser implements Parser<Zalba> {
 		}
 	
 		if (type.getObavestenje() != null) {
-			zalba.setAttributeNS(Constants.XMLNS_NAMESPACE, "xmlns:obavestenje", "https://github.com/draganagrbic998/xml/obavestenje ../xsd/obavestenje.xsd");
 			Element obavestenje = document.createElement("obavestenje:Obavestenje");
 			zalba.appendChild(obavestenje);
 		}
 		
 		if (type.getOdbijanje() != null) {
-			zalba.setAttributeNS(Constants.XMLNS_NAMESPACE, "xmlns:odbijanje", "https://github.com/draganagrbic998/xml/odbijanje ../xsd/odbijanje.xsd");
 			Element odbijanje = document.createElement("odbijanje:Odbijanje");
 			zalba.appendChild(odbijanje);
 		}
 		
-		Element obrazlozenje = document.createElement("zalba:obrazlozenje");
-		obrazlozenje.setTextContent(type.getObrazlozenje());
-		zalba.appendChild(obrazlozenje);
 		return zalba;
 	}
 	

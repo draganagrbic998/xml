@@ -9,19 +9,23 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import jaxb.DateAdapter;
 
 @XmlRootElement(name = "Resenje", namespace = "https://github.com/draganagrbic998/xml/resenje")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = { "poverenik", "zalba", "podaci" })
 public class Resenje {
 
-	@XmlAttribute(name = "tip_resenja", required = true)
+	@XmlAttribute(name = "tip_resenja", namespace = "https://github.com/draganagrbic998/xml/resenje", required = true)
 	private TipResenja tip;
 	
-	@XmlAttribute(name = "broj", required = true)
+	@XmlAttribute(name = "broj", namespace = "https://github.com/draganagrbic998/xml/resenje", required = true)
 	private String broj;
 	
-	@XmlAttribute(name = "datum", required = true)
+	@XmlAttribute(name = "datum", namespace = "https://github.com/draganagrbic998/xml/resenje", required = true)
+	@XmlJavaTypeAdapter(DateAdapter.class)
 	private Date datum;
 	
 	@XmlElement(name = "Korisnik", namespace = "https://github.com/draganagrbic998/xml/korisnik", required = true)

@@ -24,11 +24,10 @@ public class OrganVlastiParser implements Parser<OrganVlasti> {
 
 	@Override
 	public Element parse(OrganVlasti type, Document document) {
-		Element organVlasti = document.createElement("organ_vlasti:Organ_vlasti");
+		Element organVlasti = document.createElementNS("https://github.com/draganagrbic998/xml/organ_vlasti", "organ_vlasti:Organ_vlasti");
 		organVlasti.setAttributeNS(Constants.XSI_NAMESPACE, "xsi:schemaLocation", "https://github.com/draganagrbic998/xml/organ_vlasti ../xsd/organ_vlasti.xsd");
-		organVlasti.setAttributeNS(Constants.XMLNS_NAMESPACE, "xmlns:osnova", "https://github.com/draganagrbic998/xml/osnova ../xsd/osnova.xsd");
 		organVlasti.setAttributeNS(Constants.XMLNS_NAMESPACE, "xmlns:organ_vlasti", "https://github.com/draganagrbic998/xml/organ_vlasti ../xsd/organ_vlasti.xsd");
-		Element naziv = document.createElement("organ_vlasti:naziv");
+		Element naziv = document.createElementNS("https://github.com/draganagrbic998/xml/organ_vlasti", "organ_vlasti:naziv");
 		naziv.setTextContent(type.getNaziv());
 		Element adresa = this.adresaParser.parse(type.getAdresa(), document);
 		organVlasti.appendChild(naziv);

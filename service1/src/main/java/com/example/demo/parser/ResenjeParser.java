@@ -34,9 +34,9 @@ public class ResenjeParser implements Parser<Resenje> {
 	public Resenje parse(Element element) throws ParseException {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		NamedNodeMap attributes = element.getAttributes();
-		String broj = attributes.getNamedItem("broj").getNodeValue();
-		Date datum = format.parse(attributes.getNamedItem("datum").getNodeValue());
-		TipResenja tip = TipResenja.valueOf(attributes.getNamedItem("tip_resenja").getNodeValue());
+		String broj = attributes.getNamedItem("resenje:broj").getNodeValue();
+		Date datum = format.parse(attributes.getNamedItem("resenje:datum").getNodeValue());
+		TipResenja tip = TipResenja.valueOf(attributes.getNamedItem("resenje:tip_resenja").getNodeValue());
 
 		Korisnik korisnik = this.korisnikParser
 				.parse((Element) element.getElementsByTagName("korisnik:Korisnik").item(0));
@@ -68,22 +68,13 @@ public class ResenjeParser implements Parser<Resenje> {
 	@Override
 	public Element parse(Resenje resenje, Document document) {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		Element novoResenje = document.createElement("resenje:Resenje");
+		Element novoResenje = document.createElementNS("https://github.com/draganagrbic998/xml/resenje", "resenje:Resenje");
 		novoResenje.setAttributeNS(Constants.XSI_NAMESPACE, "xsi:schemaLocation",
 				"https://github.com/draganagrbic998/xml/resenje ../xsd/resenje.xsd");
-		novoResenje.setAttributeNS(Constants.XMLNS_NAMESPACE, "xmlns:korisnik",
-				"https://github.com/draganagrbic998/xml/korisnik ../xsd/korisnik.xsd");
-		novoResenje.setAttributeNS(Constants.XMLNS_NAMESPACE, "xmlns:organ_vlasti",
-				"https://github.com/draganagrbic998/xml/organ_vlasti ../xsd/organ_vlasti.xsd");
-		novoResenje.setAttributeNS(Constants.XMLNS_NAMESPACE, "xmlns:zahtev",
-				"https://github.com/draganagrbic998/xml/zahtev ../xsd/zahtev.xsd");
-		novoResenje.setAttributeNS(Constants.XMLNS_NAMESPACE, "xmlns:osnova",
-				"https://github.com/draganagrbic998/xml/osnova ../xsd/osnova.xsd");
-		novoResenje.setAttributeNS(Constants.XMLNS_NAMESPACE, "xmlns:zalba",
-				"https://github.com/draganagrbic998/xml/zalba ../xsd/zalba.xsd");
-		novoResenje.setAttribute("broj", resenje.getBroj());
-		novoResenje.setAttribute("datum", format.format(resenje.getDatum()));
-		novoResenje.setAttribute("tip_resenja", resenje.getTip() + "");
+		novoResenje.setAttributeNS(Constants.XMLNS_NAMESPACE, "xmlns:resenje", "https://github.com/draganagrbic998/xml/resenje ../xsd/resenje.xsd");
+		novoResenje.setAttributeNS("https://github.com/draganagrbic998/xml/resenje", "resenje:broj", resenje.getBroj());
+		novoResenje.setAttributeNS("https://github.com/draganagrbic998/xml/resenje", "resenje:datum", format.format(resenje.getDatum()));
+		novoResenje.setAttributeNS("https://github.com/draganagrbic998/xml/resenje", "resenje:tip_resenja", resenje.getTip() + "");
 
 		Element korisnik = this.korisnikParser.parse(resenje.getPoverenik(), document);
 		novoResenje.appendChild(korisnik);
@@ -91,33 +82,33 @@ public class ResenjeParser implements Parser<Resenje> {
 		Element zalba = this.zalbaParser.parse(resenje.getZalba(), document);
 		novoResenje.appendChild(zalba);
 
-		Element datumPrijema = document.createElement("resenje:Datum_prijema");
+		Element datumPrijema = document.createElementNS("https://github.com/draganagrbic998/xml/resenje", "resenje:Datum_prijema");
 		datumPrijema.setTextContent(format.format(resenje.getPodaci().getOdbrana().getDatumPrijema()));
-		Element odgovor = document.createElement("resenje:Odgovor");
+		Element odgovor = document.createElementNS("https://github.com/draganagrbic998/xml/resenje", "resenje:Odgovor");
 		odgovor.setTextContent(resenje.getPodaci().getOdbrana().getOdgovor());
 
-		Element podaciResenja = document.createElement("resenje:Podaci_resenja");
+		Element podaciResenja = document.createElementNS("https://github.com/draganagrbic998/xml/resenje", "resenje:Podaci_resenja");
 
-		Element odbrana = document.createElement("resenje:Odbrana");
+		Element odbrana = document.createElementNS("https://github.com/draganagrbic998/xml/resenje", "resenje:Odbrana");
 		odbrana.appendChild(datumPrijema);
 		odbrana.appendChild(odgovor);
 
 		podaciResenja.appendChild(odbrana);
 
-		Element dispozitiva = document.createElement("resenje:Dispozitiva");
+		Element dispozitiva = document.createElementNS("https://github.com/draganagrbic998/xml/resenje", "resenje:Dispozitiva");
 
 		for (String d : resenje.getPodaci().getDispozitiva()) {
-			Element clanDispozitive = document.createElement("resenje:Clan_dispozitive");
+			Element clanDispozitive = document.createElementNS("https://github.com/draganagrbic998/xml/resenje", "resenje:Clan_dispozitive");
 			clanDispozitive.setTextContent(d);
 			dispozitiva.appendChild(clanDispozitive);
 		}
 
 		podaciResenja.appendChild(dispozitiva);
 
-		Element obrazlozenje = document.createElement("resenje:Obrazlozenje");
+		Element obrazlozenje = document.createElementNS("https://github.com/draganagrbic998/xml/resenje", "resenje:Obrazlozenje");
 
 		for (String o : resenje.getPodaci().getObrazlozenje()) {
-			Element deoObrazlozenja = document.createElement("resenje:Deo_obrazlozenja");
+			Element deoObrazlozenja = document.createElementNS("https://github.com/draganagrbic998/xml/resenje", "resenje:Deo_obrazlozenja");
 			deoObrazlozenja.setTextContent(o);
 			obrazlozenje.appendChild(deoObrazlozenja);
 		}

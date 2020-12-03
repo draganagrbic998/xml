@@ -9,16 +9,20 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import jaxb.DateAdapter;
 
 @XmlRootElement(name = "Zalba", namespace = "https://github.com/draganagrbic998/xml/zalba")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = { "obrazlozenje", "zahtev", "obavestenje", "odbijanje" })
 public class Zalba {
 
-	@XmlAttribute(name = "broj", required = true)
+	@XmlAttribute(name = "broj", namespace = "https://github.com/draganagrbic998/xml/zalba", required = true)
 	private String broj;
 	
-	@XmlAttribute(name = "datum", required = true)
+	@XmlAttribute(name = "datum", namespace = "https://github.com/draganagrbic998/xml/zalba", required = true)
+	@XmlJavaTypeAdapter(DateAdapter.class)
 	private Date datum;
 	
 	@XmlElement(name = "obrazlozenje", namespace = "https://github.com/draganagrbic998/xml/zalba", required = false)

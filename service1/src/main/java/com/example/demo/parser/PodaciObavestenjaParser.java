@@ -14,15 +14,15 @@ import com.example.demo.model.Uvid;
 
 @Component
 public class PodaciObavestenjaParser implements Parser<PodaciObavestenja> {
-	
+
 	@Autowired
 	private UvidParser uvidParser;
-	
+
 	@Autowired
 	private KopijaParser kopijaParser;
 
 	@Override
-	public PodaciObavestenja parse(Element element) throws ParseException  {
+	public PodaciObavestenja parse(Element element) throws ParseException {
 		Uvid uvid = null;
 		NodeList uvidNode = element.getElementsByTagName("obavestenje:Uvid");
 		uvid = this.uvidParser.parse((Element) uvidNode.item(0));
@@ -34,18 +34,13 @@ public class PodaciObavestenjaParser implements Parser<PodaciObavestenja> {
 
 	@Override
 	public Element parse(PodaciObavestenja type, Document document) {
-		Element podaciOdluke = document.createElement("obavestenje:Podaci_odluke");
-		Element odgovor = document.createElement("obavestenje:odgovor");
-		if (type.getUvid() != null) {
-			Element uvid = this.uvidParser.parse(type.getUvid(), document);
-			podaciOdluke.appendChild(uvid);
-		}
-		if (type.getKopija() != null) {
-			Element kopija = this.kopijaParser.parse(type.getKopija(), document);
-			podaciOdluke.appendChild(kopija);
-		}
-		podaciOdluke.appendChild(odgovor);
-		return podaciOdluke;
+		Element podaciObavestenja = document.createElementNS("https://github.com/draganagrbic998/xml/obavestenje",
+				"obavestenje:Podaci_obavestenja");
+		Element uvid = this.uvidParser.parse(type.getUvid(), document);
+		podaciObavestenja.appendChild(uvid);
+		Element kopija = this.kopijaParser.parse(type.getKopija(), document);
+		podaciObavestenja.appendChild(kopija);
+		return podaciObavestenja;
 	}
 
 }

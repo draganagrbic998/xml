@@ -20,12 +20,12 @@ public class PodaciZahtevaParser implements Parser<PodaciZahteva> {
 
 	@Override
 	public Element parse(PodaciZahteva type, Document document) {
-		Element podaciZahteva = document.createElement("zahtev:Podaci_zahteva");
-		Element trazenaInformacija = document.createElement("zahtev:Trazena_informacija");
+		Element podaciZahteva = document.createElementNS("https://github.com/draganagrbic998/xml/zahtev", "zahtev:Podaci_zahteva");
+		Element trazenaInformacija = document.createElementNS("https://github.com/draganagrbic998/xml/zahtev", "zahtev:Trazena_informacija");
 		trazenaInformacija.setTextContent(type.getTrazenaInformacija());
-		Element tipDostave = document.createElement("zahtev:Tip_dostave");
+		Element tipDostave = document.createElementNS("https://github.com/draganagrbic998/xml/zahtev", "zahtev:Tip_dostave");
 		tipDostave.setTextContent(type.getTipDostave() + "");
-		Element opisDostave = document.createElement("zahtev:Opis_dostave");
+		Element opisDostave = document.createElementNS("https://github.com/draganagrbic998/xml/zahtev", "zahtev:Opis_dostave");
 		opisDostave.setTextContent(type.getOpisDostave());
 		podaciZahteva.appendChild(trazenaInformacija);
 		podaciZahteva.appendChild(tipDostave);

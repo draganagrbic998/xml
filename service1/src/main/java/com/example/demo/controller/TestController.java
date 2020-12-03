@@ -4,12 +4,17 @@ import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 
+import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -42,7 +47,7 @@ import jaxb.NSPrefixMapper;
 @RequestMapping(value = "/test", produces = MediaType.APPLICATION_JSON_VALUE)
 public class TestController {
 	
-	static String LOKACIJA_SEMA = "file:/C:/Users/petar/Desktop/projekti/schema/";
+	private static String LOKACIJA_SEMA = "data/xsd/";//"file:/C:/Users/petar/Desktop/projekti/schema/";
 	
 	@Autowired
 	private DOMParser domParser;
@@ -75,6 +80,19 @@ public class TestController {
 		document.removeChild(document.getDocumentElement());
 		Element organVlastiElement = this.organVlastiParser.parse(organVlasti, document);
 		document.appendChild(organVlastiElement);
+		
+		Schema schema = null;
+		try {
+		  String language = XMLConstants.W3C_XML_SCHEMA_NS_URI;
+		  SchemaFactory factory = SchemaFactory.newInstance(language);
+		  schema = factory.newSchema(new File(LOKACIJA_SEMA + "organ_vlasti.xsd"));
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
+		
+		Validator validator = schema.newValidator();
+		validator.validate(new DOMSource(document));
+		
 		this.domParser.transformDocument(document, System.out);
 	}
 
@@ -87,6 +105,17 @@ public class TestController {
 		marshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper", new NSPrefixMapper());
 		marshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION, "https://github.com/draganagrbic998/xml/organ_vlasti " + LOKACIJA_SEMA + "organ_vlasti.xsd");
 		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+		
+		Schema schema = null;
+		try {
+		  String language = XMLConstants.W3C_XML_SCHEMA_NS_URI;
+		  SchemaFactory factory = SchemaFactory.newInstance(language);
+		  schema = factory.newSchema(new File(LOKACIJA_SEMA + "organ_vlasti.xsd"));
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
+		marshaller.setSchema(schema);
+		
 		marshaller.marshal(organVlasti, System.out);
 	}
 	
@@ -97,6 +126,19 @@ public class TestController {
 		document.removeChild(document.getDocumentElement());
 		Element korisnikElement = this.korisnikParser.parse(korisnik, document);
 		document.appendChild(korisnikElement);
+		
+		Schema schema = null;
+		try {
+		  String language = XMLConstants.W3C_XML_SCHEMA_NS_URI;
+		  SchemaFactory factory = SchemaFactory.newInstance(language);
+		  schema = factory.newSchema(new File(LOKACIJA_SEMA + "korisnik.xsd"));
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
+		
+		Validator validator = schema.newValidator();
+		validator.validate(new DOMSource(document));
+		
 		this.domParser.transformDocument(document, System.out);
 	}
 	
@@ -109,6 +151,17 @@ public class TestController {
 		marshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper", new NSPrefixMapper());
 		marshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION, "https://github.com/draganagrbic998/xml/korisnik " + LOKACIJA_SEMA + "korisnik.xsd");
 		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+		
+		Schema schema = null;
+		try {
+		  String language = XMLConstants.W3C_XML_SCHEMA_NS_URI;
+		  SchemaFactory factory = SchemaFactory.newInstance(language);
+		  schema = factory.newSchema(new File(LOKACIJA_SEMA + "korisnik.xsd"));
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
+		marshaller.setSchema(schema);
+		
 		marshaller.marshal(korisnik, System.out);
 	}
 	
@@ -119,6 +172,19 @@ public class TestController {
 		document.removeChild(document.getDocumentElement());
 		Element zahtevElement = this.zahtevParser.parse(zahtev, document);
 		document.appendChild(zahtevElement);
+		
+		Schema schema = null;
+		try {
+		  String language = XMLConstants.W3C_XML_SCHEMA_NS_URI;
+		  SchemaFactory factory = SchemaFactory.newInstance(language);
+		  schema = factory.newSchema(new File(LOKACIJA_SEMA + "zahtev.xsd"));
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
+		
+		Validator validator = schema.newValidator();
+		validator.validate(new DOMSource(document));
+
 		this.domParser.transformDocument(document, System.out);
 	}
 	
@@ -131,6 +197,17 @@ public class TestController {
 		marshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper", new NSPrefixMapper());
 		marshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION, "https://github.com/draganagrbic998/xml/zahtev " + LOKACIJA_SEMA + "zahtev.xsd");
 		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+		
+		Schema schema = null;
+		try {
+		  String language = XMLConstants.W3C_XML_SCHEMA_NS_URI;
+		  SchemaFactory factory = SchemaFactory.newInstance(language);
+		  schema = factory.newSchema(new File(LOKACIJA_SEMA + "zahtev.xsd"));
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
+		marshaller.setSchema(schema);
+		
 		marshaller.marshal(zahtev, System.out);
 	}
 	
@@ -141,6 +218,19 @@ public class TestController {
 		document.removeChild(document.getDocumentElement());
 		Element odlukaElement = this.obavestenjeParser.parse(obavestenje, document);
 		document.appendChild(odlukaElement);
+		
+		Schema schema = null;
+		try {
+		  String language = XMLConstants.W3C_XML_SCHEMA_NS_URI;
+		  SchemaFactory factory = SchemaFactory.newInstance(language);
+		  schema = factory.newSchema(new File(LOKACIJA_SEMA + "obavestenje.xsd"));
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
+		
+		Validator validator = schema.newValidator();
+		validator.validate(new DOMSource(document));
+		
 		this.domParser.transformDocument(document, System.out);
 	}
 	
@@ -153,6 +243,17 @@ public class TestController {
 		marshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper", new NSPrefixMapper());
 		marshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION, "https://github.com/draganagrbic998/xml/obavestenje " + LOKACIJA_SEMA + "obavestenje.xsd");
 		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+		
+		Schema schema = null;
+		try {
+		  String language = XMLConstants.W3C_XML_SCHEMA_NS_URI;
+		  SchemaFactory factory = SchemaFactory.newInstance(language);
+		  schema = factory.newSchema(new File(LOKACIJA_SEMA + "obavestenje.xsd"));
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
+		marshaller.setSchema(schema);
+		
 		marshaller.marshal(obavestenje, System.out);
 	}
 	
@@ -163,6 +264,19 @@ public class TestController {
 		document.removeChild(document.getDocumentElement());
 		Element odlukaElement = this.odbijanjeParser.parse(odbijanje, document);
 		document.appendChild(odlukaElement);
+		
+		Schema schema = null;
+		try {
+		  String language = XMLConstants.W3C_XML_SCHEMA_NS_URI;
+		  SchemaFactory factory = SchemaFactory.newInstance(language);
+		  schema = factory.newSchema(new File(LOKACIJA_SEMA + "odbijanje.xsd"));
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
+		
+		Validator validator = schema.newValidator();
+		validator.validate(new DOMSource(document));
+		
 		this.domParser.transformDocument(document, System.out);
 	}
 	
@@ -175,6 +289,17 @@ public class TestController {
 		marshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper", new NSPrefixMapper());
 		marshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION, "https://github.com/draganagrbic998/xml/odbijanje " + LOKACIJA_SEMA + "odbijanje.xsd");
 		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+		
+		Schema schema = null;
+		try {
+		  String language = XMLConstants.W3C_XML_SCHEMA_NS_URI;
+		  SchemaFactory factory = SchemaFactory.newInstance(language);
+		  schema = factory.newSchema(new File(LOKACIJA_SEMA + "odbijanje.xsd"));
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
+		marshaller.setSchema(schema);
+		
 		marshaller.marshal(odbijanje, System.out);
 	}
 	
@@ -185,6 +310,19 @@ public class TestController {
 		document.removeChild(document.getDocumentElement());
 		Element zalbaElement = this.zalbaParser.parse(zalba, document);
 		document.appendChild(zalbaElement);
+		
+		Schema schema = null;
+		try {
+		  String language = XMLConstants.W3C_XML_SCHEMA_NS_URI;
+		  SchemaFactory factory = SchemaFactory.newInstance(language);
+		  schema = factory.newSchema(new File(LOKACIJA_SEMA + "zalba.xsd"));
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
+		
+		Validator validator = schema.newValidator();
+		validator.validate(new DOMSource(document));
+		
 		this.domParser.transformDocument(document, System.out);
 	}
 
@@ -197,6 +335,17 @@ public class TestController {
 		marshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper", new NSPrefixMapper());
 		marshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION, "https://github.com/draganagrbic998/xml/zalba " + LOKACIJA_SEMA + "zalba.xsd");
 		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+
+		Schema schema = null;
+		try {
+		  String language = XMLConstants.W3C_XML_SCHEMA_NS_URI;
+		  SchemaFactory factory = SchemaFactory.newInstance(language);
+		  schema = factory.newSchema(new File(LOKACIJA_SEMA + "zalba.xsd"));
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
+		marshaller.setSchema(schema);
+		
 		marshaller.marshal(zalba, System.out);
 	}
 	
@@ -207,6 +356,19 @@ public class TestController {
 		document.removeChild(document.getDocumentElement());
 		Element resenjeElement = this.resenjeParser.parse(resenje, document);
 		document.appendChild(resenjeElement);
+		
+		Schema schema = null;
+		try {
+		  String language = XMLConstants.W3C_XML_SCHEMA_NS_URI;
+		  SchemaFactory factory = SchemaFactory.newInstance(language);
+		  schema = factory.newSchema(new File(LOKACIJA_SEMA + "resenje.xsd"));
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
+		
+		Validator validator = schema.newValidator();
+		validator.validate(new DOMSource(document));
+		
 		this.domParser.transformDocument(document, System.out);
 	}
 	
@@ -216,6 +378,17 @@ public class TestController {
 		Unmarshaller unmarshaller = context.createUnmarshaller();		
 		Resenje resenje = (Resenje) unmarshaller.unmarshal(new File("data/xml/resenje1.xml"));
 		Marshaller marshaller = context.createMarshaller();
+		
+		Schema schema = null;
+		try {
+		  String language = XMLConstants.W3C_XML_SCHEMA_NS_URI;
+		  SchemaFactory factory = SchemaFactory.newInstance(language);
+		  schema = factory.newSchema(new File(LOKACIJA_SEMA + "resenje.xsd"));
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
+		marshaller.setSchema(schema);
+		
 		marshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper", new NSPrefixMapper());
 		marshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION, "https://github.com/draganagrbic998/xml/resenje " + LOKACIJA_SEMA + "resenje.xsd");
 		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);

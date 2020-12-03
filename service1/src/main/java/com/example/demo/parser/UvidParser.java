@@ -31,18 +31,18 @@ public class UvidParser implements Parser<Uvid> {
 	@Override
 	public Element parse(Uvid type, Document document) {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		Element uvid = document.createElement("obavestenje:Uvid");
-		Element uvidOd = document.createElement("obavestenje:uvid_od");
+		Element uvid = document.createElementNS("https://github.com/draganagrbic998/xml/obavestenje", "obavestenje:Uvid");
+		Element uvidOd = document.createElementNS("https://github.com/draganagrbic998/xml/obavestenje", "obavestenje:uvid_od");
 		uvidOd.setTextContent(format.format(type.getUvidOd()));
-		Element uvidDo = document.createElement("obavestenje:uvid_do");
+		Element uvidDo = document.createElementNS("https://github.com/draganagrbic998/xml/obavestenje", "obavestenje:uvid_do");
 		uvidDo.setTextContent(format.format(type.getUvidDo()));
 		Element adresa = this.adresaParser.parse(type.getAdresa(), document);
-		Element kancelarija = document.createElement("obavestenje:kancelarija");
+		Element kancelarija = document.createElementNS("https://github.com/draganagrbic998/xml/obavestenje", "obavestenje:kancelarija");
 		kancelarija.setTextContent(type.getKancelarija());
-		uvid.appendChild(uvidOd);
-		uvid.appendChild(uvidDo);
 		uvid.appendChild(adresa);
 		uvid.appendChild(kancelarija);
+		uvid.appendChild(uvidOd);
+		uvid.appendChild(uvidDo);
 		return uvid;
 	}
 	

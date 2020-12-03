@@ -9,19 +9,23 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import jaxb.DateAdapter;
 
 @XmlRootElement(name = "Zahtev", namespace = "https://github.com/draganagrbic998/xml/zahtev")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = { "gradjanin", "organVlasti", "podaci" })
 public class Zahtev {
 
-	@XmlAttribute(name = "tip_zahteva", required = true)
+	@XmlAttribute(name = "tip_zahteva", namespace = "https://github.com/draganagrbic998/xml/zahtev", required = true)
 	private TipZahteva tipZahteva;
 	
-	@XmlAttribute(name = "broj", required = true)
+	@XmlAttribute(name = "broj", namespace = "https://github.com/draganagrbic998/xml/zahtev", required = true)
 	private String broj;
 	
-	@XmlAttribute(name = "datum", required = true)
+	@XmlAttribute(name = "datum", namespace = "https://github.com/draganagrbic998/xml/zahtev", required = true)
+	@XmlJavaTypeAdapter(DateAdapter.class)
 	private Date datum;
 	
 	@XmlElement(name = "Korisnik", namespace = "https://github.com/draganagrbic998/xml/korisnik", required = true)

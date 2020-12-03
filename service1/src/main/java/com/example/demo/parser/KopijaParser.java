@@ -20,14 +20,14 @@ public class KopijaParser implements Parser<Kopija> {
 
 	@Override
 	public Element parse(Kopija type, Document document) {
-		Element kopija = document.createElement("obavestenje:Kopija");
-		Element iznos = document.createElement("obavestenje:iznos");
+		Element kopija = document.createElementNS("https://github.com/draganagrbic998/xml/obavestenje", "obavestenje:Kopija");
+		Element iznos = document.createElementNS("https://github.com/draganagrbic998/xml/obavestenje", "obavestenje:iznos");
 		iznos.setTextContent(type.getIznos());
-		Element brojRacuna = document.createElement("obavestenje:racun");
+		Element brojRacuna = document.createElementNS("https://github.com/draganagrbic998/xml/obavestenje", "obavestenje:racun");
 		brojRacuna.setTextContent(type.getBrojRacuna());
-		Element pozivNaBroj = document.createElement("obavestenje:poziv_na_broj");
+		Element pozivNaBroj = document.createElementNS("https://github.com/draganagrbic998/xml/obavestenje", "obavestenje:poziv_na_broj");
 		pozivNaBroj.setTextContent(type.getPozivNaBroj());
-		Element model = document.createElement("obavestenje:model");
+		Element model = document.createElementNS("https://github.com/draganagrbic998/xml/obavestenje", "obavestenje:model");
 		model.setTextContent(type.getModel());
 		kopija.appendChild(iznos);
 		kopija.appendChild(brojRacuna);

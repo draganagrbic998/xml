@@ -8,6 +8,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import jaxb.DateAdapter;
 
 @XmlRootElement(name = "Uvid", namespace = "https://github.com/draganagrbic998/xml/obavestenje")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -21,9 +24,11 @@ public class Uvid {
 	private String kancelarija;
 	
 	@XmlElement(name = "uvid_od", namespace = "https://github.com/draganagrbic998/xml/obavestenje", required = true)
+	@XmlJavaTypeAdapter(DateAdapter.class)
 	private Date uvidOd;
 
 	@XmlElement(name = "uvid_do", namespace = "https://github.com/draganagrbic998/xml/obavestenje", required = true)
+	@XmlJavaTypeAdapter(DateAdapter.class)
 	private Date uvidDo;
 	
 	public Uvid() {

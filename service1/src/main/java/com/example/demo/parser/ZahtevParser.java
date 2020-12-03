@@ -33,9 +33,9 @@ public class ZahtevParser implements Parser<Zahtev> {
 	public Zahtev parse(Element element) throws ParseException {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		NamedNodeMap attributes = element.getAttributes();
-		String broj = attributes.getNamedItem("broj").getNodeValue();
-		Date datum = format.parse(attributes.getNamedItem("datum").getNodeValue());
-		TipZahteva tip = TipZahteva.valueOf(attributes.getNamedItem("tip_zahteva").getNodeValue());
+		String broj = attributes.getNamedItem("zahtev:broj").getNodeValue();
+		Date datum = format.parse(attributes.getNamedItem("zahtev:datum").getNodeValue());
+		TipZahteva tip = TipZahteva.valueOf(attributes.getNamedItem("zahtev:tip_zahteva").getNodeValue());
 		OrganVlasti organVlasti = this.organVlastiParser.parse((Element) element.getElementsByTagName("organ_vlasti:Organ_vlasti").item(0));
 		Korisnik gradjanin = this.korisnikParser.parse((Element) element.getElementsByTagName("korisnik:Korisnik").item(0));
 		PodaciZahteva podaciZahteva = this.podaciZahtevaParser.parse((Element) element.getElementsByTagName("zahtev:Podaci_zahteva").item(0));
@@ -45,20 +45,17 @@ public class ZahtevParser implements Parser<Zahtev> {
 	@Override
 	public Element parse(Zahtev type, Document document) {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		Element zahtev = document.createElement("zahtev:Zahtev");
-		zahtev.setAttributeNS(Constants.XSI_NAMESPACE, "xsi:schemaLocation", "https://github.com/draganagrbic998/xml/odluka ../xsd/odluka.xsd");
-		zahtev.setAttributeNS(Constants.XMLNS_NAMESPACE, "xmlns:organ_vlasti", "https://github.com/draganagrbic998/xml/organ_vlasti ../xsd/organ_vlasti.xsd");
-		zahtev.setAttributeNS(Constants.XMLNS_NAMESPACE, "xmlns:osnova", "https://github.com/draganagrbic998/xml/osnova ../xsd/osnova.xsd");
-		zahtev.setAttributeNS(Constants.XMLNS_NAMESPACE, "xmlns:korisnik", "https://github.com/draganagrbic998/xml/korisnik ../xsd/korisnik.xsd");
+		Element zahtev = document.createElementNS("https://github.com/draganagrbic998/xml/zahtev", "zahtev:Zahtev");
+		zahtev.setAttributeNS(Constants.XSI_NAMESPACE, "xsi:schemaLocation", "https://github.com/draganagrbic998/xml/zahtev ../xsd/zahtev.xsd");
 		zahtev.setAttributeNS(Constants.XMLNS_NAMESPACE, "xmlns:zahtev", "https://github.com/draganagrbic998/xml/zahtev ../xsd/zahtev.xsd");
-		zahtev.setAttribute("broj", type.getBroj());
-		zahtev.setAttribute("datum", format.format(type.getDatum()));
-		zahtev.setAttribute("tip_zahteva", type.getTipZahteva() + "");
+		zahtev.setAttributeNS("https://github.com/draganagrbic998/xml/zahtev", "zahtev:tip_zahteva", type.getTipZahteva() + "");
+		zahtev.setAttributeNS("https://github.com/draganagrbic998/xml/zahtev", "zahtev:broj", type.getBroj());
+		zahtev.setAttributeNS("https://github.com/draganagrbic998/xml/zahtev", "zahtev:datum", format.format(type.getDatum()));
 		Element organVlasti = this.organVlastiParser.parse(type.getOrganVlasti(), document);
 		Element gradjanin = this.korisnikParser.parse(type.getGradjanin(), document);
 		Element podaciZahteva = this.podaciZahtevaParser.parse(type.getPodaci(), document);
-		zahtev.appendChild(organVlasti);
 		zahtev.appendChild(gradjanin);
+		zahtev.appendChild(organVlasti);
 		zahtev.appendChild(podaciZahteva);
 		return zahtev;
 	}

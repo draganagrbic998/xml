@@ -30,22 +30,21 @@ public class KorisnikParser implements Parser<Korisnik> {
 
 	@Override
 	public Element parse(Korisnik type, Document document) {
-		Element korisnik = document.createElement("korisnik:Korisnik");
+		Element korisnik = document.createElementNS("https://github.com/draganagrbic998/xml/korisnik", "korisnik:Korisnik");
 		korisnik.setAttributeNS(Constants.XSI_NAMESPACE, "xsi:schemaLocation", "https://github.com/draganagrbic998/xml/korisnik ../xsd/korisnik.xsd");
-		korisnik.setAttributeNS(Constants.XMLNS_NAMESPACE, "xmlns:osnova", "https://github.com/draganagrbic998/xml/osnova ../xsd/osnova.xsd");
 		korisnik.setAttributeNS(Constants.XMLNS_NAMESPACE, "xmlns:korisnik", "https://github.com/draganagrbic998/xml/korisnik ../xsd/korisnik.xsd");
-		Element uloga = document.createElement("korisnik:uloga");
+		Element uloga = document.createElementNS("https://github.com/draganagrbic998/xml/korisnik", "korisnik:uloga");
 		uloga.setTextContent(type.getUloga() + "");
-		Element email = document.createElement("korisnik:email");
+		Element email = document.createElementNS("https://github.com/draganagrbic998/xml/korisnik", "korisnik:email");
 		email.setTextContent(type.getEmail());
-		Element lozinka = document.createElement("korisnik:lozinka");
+		Element lozinka = document.createElementNS("https://github.com/draganagrbic998/xml/korisnik", "korisnik:lozinka");
 		lozinka.setTextContent(type.getLozinka());
-		Element ime = document.createElement("korisnik:ime");
+		Element ime = document.createElementNS("https://github.com/draganagrbic998/xml/korisnik", "korisnik:ime");
 		ime.setTextContent(type.getIme());
-		Element prezime = document.createElement("korisnik:prezime");
+		Element prezime = document.createElementNS("https://github.com/draganagrbic998/xml/korisnik", "korisnik:prezime");
 		prezime.setTextContent(type.getPrezime());
 		Element adresa = this.adresaParser.parse(type.getAdresa(), document);
-		Element potpis = document.createElement("korisnik:potpis");
+		Element potpis = document.createElementNS("https://github.com/draganagrbic998/xml/korisnik", "korisnik:potpis");
 		potpis.setTextContent(type.getPotpis());
 		korisnik.appendChild(uloga);
 		korisnik.appendChild(email);
