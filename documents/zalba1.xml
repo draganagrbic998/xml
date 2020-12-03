@@ -5,9 +5,9 @@
  xmlns:osnova="https://github.com/draganagrbic998/xml/osnova"
  xmlns:zalba="https://github.com/draganagrbic998/xml/zalba"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="https://github.com/draganagrbic998/xml/zalba file:/C:/Users/petar/Desktop/projekti/schema/zalba.xsd" broj="126694458" datum="2022-07-11">
+ xsi:schemaLocation="https://github.com/draganagrbic998/xml/zalba file:/C:/Users/petar/Desktop/projekti/schema/zalba.xsd" zalba:broj="126694458" zalba:datum="2022-07-11">
     <zalba:obrazlozenje>qo37UDKW78DQ</zalba:obrazlozenje>
-    <zahtev:Zahtev tip_zahteva="obavestenje" broj="1753830586" datum="2021-05-11">
+    <zahtev:Zahtev zahtev:tip_zahteva="obavestenje" zahtev:broj="1753830586" zahtev:datum="2021-05-11">
         <korisnik:Korisnik>
             <korisnik:uloga>sluzbenik</korisnik:uloga>
             <korisnik:email>P</korisnik:email>

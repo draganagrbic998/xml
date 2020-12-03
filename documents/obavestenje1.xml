@@ -5,7 +5,7 @@
  xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev"
  xmlns:organ_vlasti="https://github.com/draganagrbic998/xml/organ_vlasti"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="https://github.com/draganagrbic998/xml/obavestenje file:/C:/Users/petar/Desktop/projekti/schema/obavestenje.xsd" broj="1669715002" datum="2021-04-30Z">
+ xsi:schemaLocation="https://github.com/draganagrbic998/xml/obavestenje file:/C:/Users/petar/Desktop/projekti/schema/obavestenje.xsd" obavestenje:broj="1669715002" obavestenje:datum="2021-04-30Z">
     <korisnik:Korisnik>
         <korisnik:uloga>poverenik</korisnik:uloga>
         <korisnik:email>rIJHHyOwJM</korisnik:email>
@@ -20,7 +20,7 @@
         </osnova:Adresa>
         <korisnik:potpis>877674897568797889886668868867658767768577856980</korisnik:potpis>
     </korisnik:Korisnik>
-    <zahtev:Zahtev tip_zahteva="dostava" broj="285237498" datum="2021-05-11">
+    <zahtev:Zahtev zahtev:tip_zahteva="dostava" zahtev:broj="285237498" zahtev:datum="2021-05-11">
         <korisnik:Korisnik>
             <korisnik:uloga>rukovodilac</korisnik:uloga>
             <korisnik:email>HoU0e2LiqXDXWOn3EDVTA.u-HKJ</korisnik:email>
