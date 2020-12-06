@@ -4,27 +4,65 @@
     xmlns:korisnik="https://github.com/draganagrbic998/xml/korisnik"
     xmlns:osnova="https://github.com/draganagrbic998/xml/osnova">
     <xs:import namespace="https://github.com/draganagrbic998/xml/osnova" schemaLocation="osnova.xsd"/>
-    <xs:element name="Korisnik">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="uloga">
-                    <xs:simpleType>
-                        <xs:restriction base="xs:string">
-                            <xs:enumeration value="gradjanin"/>
-                            <xs:enumeration value="sluzbenik"/>
-                            <xs:enumeration value="poverenik"/>
-                            <xs:enumeration value="rukovodilac"/>
-                            <xs:enumeration value="zamenik_poverenika"/>
-                        </xs:restriction>
-                    </xs:simpleType>
-                </xs:element>
-                <xs:element name="email" type="xs:string"/>
-                <xs:element name="lozinka" type="xs:string"/>
-                <xs:element name="ime" type="xs:string"/>
-                <xs:element name="prezime" type="xs:string"/>
-                <xs:element ref="osnova:Adresa"/>
-                <xs:element name="potpis" type="xs:base64Binary"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
+    <xs:complexType name="TOsoba">
+        <xs:sequence>
+            <xs:element name="ime">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:minLength value="1"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="prezime">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:minLength value="1"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element ref="osnova:Adresa"/>
+            <xs:element name="potpis" type="xs:base64Binary"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TKorisnik">
+        <xs:complexContent>
+            <xs:extension base="korisnik:TOsoba">
+                <xs:sequence>
+                    <xs:element name="jmbg">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:positiveInteger">
+                                <xs:totalDigits value="13"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="uloga">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:enumeration value="gradjanin"/>
+                                <xs:enumeration value="sluzbenik"/>
+                                <xs:enumeration value="poverenik"/>
+                                <xs:enumeration value="rukovodilac"/>
+                                <xs:enumeration value="zamenik_poverenika"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="email">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:minLength value="1"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="lozinka">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:minLength value="1"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="Korisnik" type="korisnik:TOsoba"/>
 </xs:schema>

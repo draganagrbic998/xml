@@ -6,21 +6,23 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlRootElement(name = "Kopija", namespace = "https://github.com/draganagrbic998/xml/obavestenje")
+import com.example.demo.common.Namespaces;
+
+@XmlRootElement(name = "Kopija", namespace = Namespaces.ODLUKA)
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = { "iznos", "brojRacuna", "pozivNaBroj", "model"})
 public class Kopija {
 
-	@XmlElement(name = "iznos", namespace = "https://github.com/draganagrbic998/xml/obavestenje", required = true)
+	@XmlElement(namespace = Namespaces.ODLUKA, required = true)
 	private String iznos;
 	
-	@XmlElement(name = "racun", namespace = "https://github.com/draganagrbic998/xml/obavestenje", required = true)
+	@XmlElement(namespace = Namespaces.ODLUKA, required = true, name = "racun")
 	private String brojRacuna;
 	
-	@XmlElement(name = "poziv_na_broj", namespace = "https://github.com/draganagrbic998/xml/obavestenje", required = true)
+	@XmlElement(namespace = Namespaces.ODLUKA, required = true, name = "poziv_na_broj")
 	private String pozivNaBroj;
 	
-	@XmlElement(name = "model", namespace = "https://github.com/draganagrbic998/xml/obavestenje", required = true)
+	@XmlElement(namespace = Namespaces.ODLUKA, required = true)
 	private String model;
 	
 	public Kopija() {
@@ -33,13 +35,6 @@ public class Kopija {
 		this.brojRacuna = brojRacuna;
 		this.pozivNaBroj = pozivNaBroj;
 		this.model = model;
-	}
-	
-	@Override
-	public String toString() {
-		String suma = "PODACI KOPIJE:\n";
-		suma += String.format("iznos: %s, racun: %s, poziv na broj: %s, model: %s\n", this.iznos, this.brojRacuna, this.pozivNaBroj, this.model);
-		return suma;
 	}
 
 	public String getIznos() {

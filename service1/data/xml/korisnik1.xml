@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<korisnik:Korisnik xmlns:osnova="https://github.com/draganagrbic998/xml/osnova"
- xmlns:korisnik="https://github.com/draganagrbic998/xml/korisnik"
+<korisnik:Korisnik xmlns:korisnik="https://github.com/draganagrbic998/xml/korisnik"
+ xmlns:osnova="https://github.com/draganagrbic998/xml/osnova"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="https://github.com/draganagrbic998/xml/korisnik file:/C:/Users/petar/Desktop/projekti/schema/korisnik.xsd">
-    <korisnik:uloga>gradjanin</korisnik:uloga>
-    <korisnik:email>zwipvlkqDc3EOWvQjPmg</korisnik:email>
-    <korisnik:lozinka>DcxGIZG</korisnik:lozinka>
-    <korisnik:ime>xiief8Tim2.aRsP8QZt2</korisnik:ime>
-    <korisnik:prezime>xRM3UDop.9XoO</korisnik:prezime>
+ xsi:schemaLocation="https://github.com/draganagrbic998/xml/korisnik ../xsd/korisnik.xsd" xsi:type="korisnik:TKorisnik">
+    <korisnik:ime>cQngnNAs.I</korisnik:ime>
+    <korisnik:prezime>p8NM3yN</korisnik:prezime>
     <osnova:Adresa>
-        <osnova:mesto>xZvYBPzsPsBgG2cYO.6Mc</osnova:mesto>
-        <osnova:postanski_broj>79859973</osnova:postanski_broj>
-        <osnova:ulica>PNOUU.sXMvG-6StByaCBnS</osnova:ulica>
-        <osnova:broj>1262034094</osnova:broj>
+        <osnova:mesto>UNJRH4psKteP8xHyuI4CA</osnova:mesto>
+        <osnova:postanski_broj>432584704</osnova:postanski_broj>
+        <osnova:ulica>zn-</osnova:ulica>
+        <osnova:broj>2005793351</osnova:broj>
     </osnova:Adresa>
-    <korisnik:potpis>71667989807069677480787084796988</korisnik:potpis>
+    <korisnik:potpis>686879857187787477756584696876756582658483697172658080768671677174807471</korisnik:potpis>
+    <korisnik:jmbg>1231231231231</korisnik:jmbg>
+    <korisnik:uloga>gradjanin</korisnik:uloga>
+    <korisnik:email>asd@gmail.com</korisnik:email>
+    <korisnik:lozinka>asdasdasd</korisnik:lozinka>
 </korisnik:Korisnik>

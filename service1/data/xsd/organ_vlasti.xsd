@@ -7,7 +7,13 @@
     <xs:element name="Organ_vlasti">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="naziv" type="xs:string"/>
+                <xs:element name="naziv">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:minLength value="1"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
                 <xs:element ref="osnova:Adresa"/>
             </xs:sequence>
         </xs:complexType>

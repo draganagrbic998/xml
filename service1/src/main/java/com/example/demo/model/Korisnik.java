@@ -2,44 +2,62 @@ package com.example.demo.model;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlRootElement(name = "Korisnik", namespace = "https://github.com/draganagrbic998/xml/korisnik")
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder = { "uloga", "email", "lozinka", "ime", "prezime", "adresa", "potpis" })
-public class Korisnik {
+import com.example.demo.common.Namespaces;
+import com.example.demo.model.enums.Uloga;
 
-	@XmlElement(namespace = "https://github.com/draganagrbic998/xml/korisnik", required = true)
+@XmlRootElement(name = "Korisnik", namespace = Namespaces.KORISNIK)
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(propOrder = { "ime", "prezime", "adresa", "potpis", "jmbg", "uloga", "email", "lozinka" })
+public class Korisnik {
+	
+	@XmlAttribute(namespace = Namespaces.XSI, required = true)
+	private String type;
+
+	@XmlElement(namespace = Namespaces.KORISNIK, required = true)
+	private String jmbg;
+	
+	@XmlElement(namespace = Namespaces.KORISNIK, required = true)
 	private Uloga uloga;
 	
-	@XmlElement(namespace = "https://github.com/draganagrbic998/xml/korisnik", required = true)
+	@XmlElement(namespace = Namespaces.KORISNIK, required = true)
 	private String email;
 	
-	@XmlElement(namespace = "https://github.com/draganagrbic998/xml/korisnik", required = true)
+	@XmlElement(namespace = Namespaces.KORISNIK, required = true)
 	private String lozinka;
 	
-	@XmlElement(namespace = "https://github.com/draganagrbic998/xml/korisnik", required = true)
+	@XmlElement(namespace = Namespaces.KORISNIK, required = true)
 	private String ime;
 	
-	@XmlElement(namespace = "https://github.com/draganagrbic998/xml/korisnik", required = true)
+	@XmlElement(namespace = Namespaces.KORISNIK, required = true)
 	private String prezime;
 	
-	@XmlElement(name = "Adresa", namespace = "https://github.com/draganagrbic998/xml/osnova", required = true)
+	@XmlElement(namespace = Namespaces.OSNOVA, required = true, name = "Adresa")
 	private Adresa adresa;
 	
-	@XmlElement(namespace = "https://github.com/draganagrbic998/xml/korisnik", required = true)
+	@XmlElement(namespace = Namespaces.KORISNIK, required = true)
 	private String potpis;
 	
 	public Korisnik() {
 		super();
-		System.out.println("Korisnik created...");
 	}
 
-	public Korisnik(Uloga uloga, String email, String lozinka, String ime, String prezime, Adresa adresa,
+	public Korisnik(String ime, String prezime, Adresa adresa, String potpis) {
+		super();
+		this.ime = ime;
+		this.prezime = prezime;
+		this.adresa = adresa;
+		this.potpis = potpis;
+	}
+
+	public Korisnik(String jmbg, Uloga uloga, String email, String lozinka, String ime, String prezime, Adresa adresa,
 			String potpis) {
 		super();
+		this.jmbg = jmbg;
 		this.uloga = uloga;
 		this.email = email;
 		this.lozinka = lozinka;
@@ -48,13 +66,21 @@ public class Korisnik {
 		this.adresa = adresa;
 		this.potpis = potpis;
 	}
-	
-	@Override
-	public String toString() {
-		String suma = "PODACI KORISNIKA:\n";
-		suma += String.format("uloga: %s, email: %s, lozinka: %s, ime: %s, prezime: %s, potpis: %s\n", this.uloga, this.email, this.lozinka, this.ime, this.prezime, this.potpis);
-		suma += this.adresa.toString();
-		return suma;
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getJmbg() {
+		return jmbg;
+	}
+
+	public void setJmbg(String jmbg) {
+		this.jmbg = jmbg;
 	}
 
 	public Uloga getUloga() {

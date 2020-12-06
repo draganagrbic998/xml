@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zahtev:Zahtev xmlns:korisnik="https://github.com/draganagrbic998/xml/korisnik"
+ xmlns:osnova="https://github.com/draganagrbic998/xml/osnova"
+ xmlns:organ_vlasti="https://github.com/draganagrbic998/xml/organ_vlasti"
+ xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="https://github.com/draganagrbic998/xml/zahtev ../xsd/zahtev.xsd" xsi:type="zahtev:TZahtev_uvid">
+    <osnova:broj>450-05-9348/2066-28</osnova:broj>
+    <osnova:datum>2020-12-06Z</osnova:datum>
+    <korisnik:Korisnik>
+        <korisnik:ime>SGm8Kykfa</korisnik:ime>
+        <korisnik:prezime>cHmTPw_BxaWFV</korisnik:prezime>
+        <osnova:Adresa>
+            <osnova:mesto>icRg4n1TV-r0WzsH_KfP.AQ7</osnova:mesto>
+            <osnova:postanski_broj>1087691812</osnova:postanski_broj>
+            <osnova:ulica>TtOQWSPlNGqpkjereMxTE2</osnova:ulica>
+            <osnova:broj>603017415</osnova:broj>
+        </osnova:Adresa>
+        <korisnik:potpis>6779737979768588717565756679727389728367</korisnik:potpis>
+    </korisnik:Korisnik>
+    <organ_vlasti:Organ_vlasti>
+        <organ_vlasti:naziv>w.iSOAcnXnfBk2_y3-X5</organ_vlasti:naziv>
+        <osnova:Adresa>
+            <osnova:mesto>qlnG0tYEJBHcwGg1jK</osnova:mesto>
+            <osnova:postanski_broj>294533429</osnova:postanski_broj>
+            <osnova:ulica>MO52._iRWSxNbW0</osnova:ulica>
+            <osnova:broj>626158048</osnova:broj>
+        </osnova:Adresa>
+    </organ_vlasti:Organ_vlasti>
+    <zahtev:trazena_informacija>U</zahtev:trazena_informacija>
+    <zahtev:tip_obavestenja>posedovanje</zahtev:tip_obavestenja>
+</zahtev:Zahtev>

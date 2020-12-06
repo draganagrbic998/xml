@@ -1,76 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<obavestenje:Obavestenje xmlns:osnova="https://github.com/draganagrbic998/xml/osnova"
- xmlns:korisnik="https://github.com/draganagrbic998/xml/korisnik"
- xmlns:obavestenje="https://github.com/draganagrbic998/xml/obavestenje"
- xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev"
+<odluka:Odluka xmlns:korisnik="https://github.com/draganagrbic998/xml/korisnik"
  xmlns:organ_vlasti="https://github.com/draganagrbic998/xml/organ_vlasti"
+ xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev"
+ xmlns:osnova="https://github.com/draganagrbic998/xml/osnova"
+ xmlns:odluka="https://github.com/draganagrbic998/xml/odluka"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="https://github.com/draganagrbic998/xml/obavestenje file:/C:/Users/petar/Desktop/projekti/schema/obavestenje.xsd" obavestenje:broj="1669715002" obavestenje:datum="2021-04-30Z">
-    <korisnik:Korisnik>
-        <korisnik:uloga>poverenik</korisnik:uloga>
-        <korisnik:email>rIJHHyOwJM</korisnik:email>
-        <korisnik:lozinka>jB60-BlkXaz86D</korisnik:lozinka>
-        <korisnik:ime>yIo</korisnik:ime>
-        <korisnik:prezime>kctIndTXvr9DHHzuyx2EWYZ</korisnik:prezime>
-        <osnova:Adresa>
-            <osnova:mesto>z1X</osnova:mesto>
-            <osnova:postanski_broj>1263801015</osnova:postanski_broj>
-            <osnova:ulica>F0EFJ_hTmiftm5Jh9ysdsJF26o7Ah7</osnova:ulica>
-            <osnova:broj>1040857051</osnova:broj>
-        </osnova:Adresa>
-        <korisnik:potpis>877674897568797889886668868867658767768577856980</korisnik:potpis>
-    </korisnik:Korisnik>
-    <zahtev:Zahtev zahtev:tip_zahteva="dostava" zahtev:broj="285237498" zahtev:datum="2021-05-11">
+ xsi:schemaLocation="https://github.com/draganagrbic998/xml/odluka ../xsd/odluka.xsd" xsi:type="odluka:TObavestenje">
+    <osnova:broj>004-84-0600/7866-69</osnova:broj>
+    <osnova:datum>2022-09-19</osnova:datum>
+    <zahtev:Zahtev xsi:type="zahtev:TZahtev_dostava">
+        <osnova:broj>544-46-4819/5088-79</osnova:broj>
+        <osnova:datum>2021-05-27Z</osnova:datum>
         <korisnik:Korisnik>
-            <korisnik:uloga>rukovodilac</korisnik:uloga>
-            <korisnik:email>HoU0e2LiqXDXWOn3EDVTA.u-HKJ</korisnik:email>
-            <korisnik:lozinka>qMDocHO9oDS51U</korisnik:lozinka>
-            <korisnik:ime>Q_0KRCpcFwqOqbxF_MqH10VuQQZM</korisnik:ime>
-            <korisnik:prezime>qPHdVRAVcwaiSijL15</korisnik:prezime>
+            <korisnik:ime>Cghs4TOzXyC</korisnik:ime>
+            <korisnik:prezime>NL6cqRR8</korisnik:prezime>
             <osnova:Adresa>
-                <osnova:mesto>bElhGZxs</osnova:mesto>
-                <osnova:postanski_broj>156897622</osnova:postanski_broj>
-                <osnova:ulica>G7H0boL6</osnova:ulica>
-                <osnova:broj>1923653502</osnova:broj>
+                <osnova:mesto>Q509KcCmYKbzUGVVnEoO</osnova:mesto>
+                <osnova:postanski_broj>668834726</osnova:postanski_broj>
+                <osnova:ulica>t4-cElHfGZ0xQ-3Poq7JTbKBM.f</osnova:ulica>
+                <osnova:broj>654106534</osnova:broj>
             </osnova:Adresa>
-            <korisnik:potpis>89688572877375828989867185866980</korisnik:potpis>
+            <korisnik:potpis>837480668384678074657865778777728572787575866777</korisnik:potpis>
         </korisnik:Korisnik>
         <organ_vlasti:Organ_vlasti>
-            <organ_vlasti:naziv>nFu.Mf9dp</organ_vlasti:naziv>
+            <organ_vlasti:naziv>gNyajVik45pTbBc2dZj</organ_vlasti:naziv>
             <osnova:Adresa>
-                <osnova:mesto>ew2G9s4LDf.</osnova:mesto>
-                <osnova:postanski_broj>885280962</osnova:postanski_broj>
-                <osnova:ulica>SexwcQILj3ibRoBK</osnova:ulica>
-                <osnova:broj>1357847326</osnova:broj>
+                <osnova:mesto>q9uwLW</osnova:mesto>
+                <osnova:postanski_broj>1077604140</osnova:postanski_broj>
+                <osnova:ulica>BcgBWg33e</osnova:ulica>
+                <osnova:broj>1205893659</osnova:broj>
             </osnova:Adresa>
         </organ_vlasti:Organ_vlasti>
-        <zahtev:Podaci_zahteva>
-            <zahtev:Trazena_informacija>zO</zahtev:Trazena_informacija>
-            <zahtev:Tip_dostave>posta</zahtev:Tip_dostave>
-            <zahtev:Opis_dostave>Zfn</zahtev:Opis_dostave>
-        </zahtev:Podaci_zahteva>
+        <zahtev:trazena_informacija>ZrFKmh</zahtev:trazena_informacija>
+        <zahtev:tip_dostave>ostalo</zahtev:tip_dostave>
+        <zahtev:opis_dostave>OepB3S_c</zahtev:opis_dostave>
     </zahtev:Zahtev>
-    <obavestenje:Podaci_obavestenja>
-    	<obavestenje:Uvid>
-    		<osnova:Adresa>
-    			<osnova:mesto>osnova:mesto</osnova:mesto>
-    			<osnova:postanski_broj>1</osnova:postanski_broj>
-    			<osnova:ulica>osnova:ulica</osnova:ulica>
-    			<osnova:broj>1</osnova:broj>
-    		</osnova:Adresa>
-    		<obavestenje:kancelarija>
-    			kancelarija neka
-    		</obavestenje:kancelarija>
-    		<obavestenje:uvid_od>2001-01-01</obavestenje:uvid_od>
-    		<obavestenje:uvid_do>2001-01-01</obavestenje:uvid_do>
-    	</obavestenje:Uvid>
-    	<obavestenje:Kopija>
-    		<obavestenje:iznos>1000</obavestenje:iznos>
-    		<obavestenje:racun>111-111111-11</obavestenje:racun>
-    		<obavestenje:poziv_na_broj>
-    			123
-    		</obavestenje:poziv_na_broj>
-    		<obavestenje:model>10</obavestenje:model>
-    	</obavestenje:Kopija>
-    </obavestenje:Podaci_obavestenja>
-</obavestenje:Obavestenje>
+    <odluka:potpis_sluzbenika>83827178</odluka:potpis_sluzbenika>
+    <odluka:Uvid>
+        <osnova:Adresa>
+            <osnova:mesto>FkyJyP_6ZwqtcAIW.jaghmC2IC</osnova:mesto>
+            <osnova:postanski_broj>800738280</osnova:postanski_broj>
+            <osnova:ulica>gPP7jme20.va4a</osnova:ulica>
+            <osnova:broj>288477739</osnova:broj>
+        </osnova:Adresa>
+        <odluka:kancelarija>nJTS41UVl</odluka:kancelarija>
+        <odluka:uvid_od>2022-05-17</odluka:uvid_od>
+        <odluka:uvid_do>2022-05-12</odluka:uvid_do>
+    </odluka:Uvid>
+    <odluka:Kopija>
+        <odluka:iznos>1437795404</odluka:iznos>
+        <odluka:racun>499-04457055784-11</odluka:racun>
+        <odluka:poziv_na_broj>sl8</odluka:poziv_na_broj>
+        <odluka:model>40</odluka:model>
+    </odluka:Kopija>
+</odluka:Odluka>

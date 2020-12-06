@@ -1,49 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="qualified"
-    targetNamespace="https://github.com/draganagrbic998/xml/zahtev"
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    attributeFormDefault="qualified" targetNamespace="https://github.com/draganagrbic998/xml/zahtev"
     xmlns:korisnik="https://github.com/draganagrbic998/xml/korisnik"
     xmlns:organ_vlasti="https://github.com/draganagrbic998/xml/organ_vlasti"
-    xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev">
+    xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev"
+    xmlns:osnova="https://github.com/draganagrbic998/xml/osnova">
     <xs:import namespace="https://github.com/draganagrbic998/xml/organ_vlasti"
         schemaLocation="organ_vlasti.xsd"/>
     <xs:import namespace="https://github.com/draganagrbic998/xml/korisnik"
         schemaLocation="korisnik.xsd"/>
-    <xs:element name="Zahtev">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element ref="korisnik:Korisnik"/>
-                <xs:element ref="organ_vlasti:Organ_vlasti"/>
-                <xs:element name="Podaci_zahteva">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="Trazena_informacija" type="xs:string"/>
-                            <xs:element minOccurs="1" name="Tip_dostave">
-                                <xs:simpleType>
-                                    <xs:restriction base="xs:string">
-                                        <xs:enumeration value="email"/>
-                                        <xs:enumeration value="posta"/>
-                                        <xs:enumeration value="faks"/>
-                                        <xs:enumeration value="ostalo"/>
-                                    </xs:restriction>
-                                </xs:simpleType>
-                            </xs:element>
-                            <xs:element minOccurs="1" name="Opis_dostave" type="xs:string"/>
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
-            </xs:sequence>
-            <xs:attribute name="tip_zahteva" use="required">
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:enumeration value="obavestenje"/>
-                        <xs:enumeration value="uvid"/>
-                        <xs:enumeration value="kopija"/>
-                        <xs:enumeration value="dostava"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:attribute>
-            <xs:attribute name="broj" type="xs:positiveInteger" use="required"/>
-            <xs:attribute name="datum" type="xs:date" use="required"/>
-        </xs:complexType>
-    </xs:element>
+    <xs:import namespace="https://github.com/draganagrbic998/xml/osnova" schemaLocation="osnova.xsd"/>
+    <xs:complexType name="TZahtev" abstract="true">
+        <xs:complexContent>
+            <xs:extension base="osnova:TDokument">
+                <xs:sequence>
+                    <xs:element ref="korisnik:Korisnik"/>
+                    <xs:element ref="organ_vlasti:Organ_vlasti"/>
+                    <xs:element name="trazena_informacija">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:minLength value="1"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TZahtev_uvid">
+        <xs:complexContent>
+            <xs:extension base="zahtev:TZahtev">
+                <xs:sequence>
+                    <xs:element name="tip_obavestenja">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:enumeration value="posedovanje"/>
+                                <xs:enumeration value="uvid"/>
+                                <xs:enumeration value="kopija"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TZahtev_dostava">
+        <xs:complexContent>
+            <xs:extension base="zahtev:TZahtev">
+                <xs:sequence>
+                    <xs:element name="tip_dostave">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:enumeration value="email"/>
+                                <xs:enumeration value="posta"/>
+                                <xs:enumeration value="faks"/>
+                                <xs:enumeration value="ostalo"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="opis_dostave" type="xs:string"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="Zahtev" type="zahtev:TZahtev"/>
 </xs:schema>

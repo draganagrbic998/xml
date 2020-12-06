@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zalba:Zalba xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev"
+ xmlns:obavestenje="https://github.com/draganagrbic998/xml/obavestenje"
+ xmlns:odbijanje="https://github.com/draganagrbic998/xml/odbijanje"
+ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba"
+ xmlns:korisnik="https://github.com/draganagrbic998/xml/korisnik"
+ xmlns:osnova="https://github.com/draganagrbic998/xml/osnova"
+ xmlns:odluka="https://github.com/draganagrbic998/xml/odluka"
+ xmlns:organ_vlasti="https://github.com/draganagrbic998/xml/organ_vlasti"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="https://github.com/draganagrbic998/xml/zalba ../xsd/zalba.xsd" xsi:type="zalba:TZalba_cutanje">
+    <osnova:broj>181-80-1009/9206-08</osnova:broj>
+    <osnova:datum>2021-08-21</osnova:datum>
+    <zahtev:Zahtev xsi:type="zahtev:TZahtev_dostava">
+        <osnova:broj>114-54-1249/3515-24</osnova:broj>
+        <osnova:datum>2021-08-14</osnova:datum>
+        <korisnik:Korisnik>
+            <korisnik:ime>wSeP7Cs</korisnik:ime>
+            <korisnik:prezime>a0MRfPyupN-6hnTY-gfG1B</korisnik:prezime>
+            <osnova:Adresa>
+                <osnova:mesto>i3Nc</osnova:mesto>
+                <osnova:postanski_broj>1141317984</osnova:postanski_broj>
+                <osnova:ulica>gQWk2R</osnova:ulica>
+                <osnova:broj>1898731074</osnova:broj>
+            </osnova:Adresa>
+            <korisnik:potpis>ZGVmYXVsdA==</korisnik:potpis>
+        </korisnik:Korisnik>
+        <organ_vlasti:Organ_vlasti>
+            <organ_vlasti:naziv>XhwKZdPNI.XYW</organ_vlasti:naziv>
+            <osnova:Adresa>
+                <osnova:mesto>YNBEEq</osnova:mesto>
+                <osnova:postanski_broj>246006477</osnova:postanski_broj>
+                <osnova:ulica>v</osnova:ulica>
+                <osnova:broj>802407832</osnova:broj>
+            </osnova:Adresa>
+        </organ_vlasti:Organ_vlasti>
+        <zahtev:trazena_informacija>Xt6sj7Zt.-Ejh1vCjlasQ2QImJX</zahtev:trazena_informacija>
+        <zahtev:tip_dostave>ostalo</zahtev:tip_dostave>
+        <zahtev:opis_dostave>yEN_gR</zahtev:opis_dostave>
+    </zahtev:Zahtev>
+    <zalba:tip_cutanja>nije_postupio_u_zakonskom_roku</zalba:tip_cutanja>
+</zalba:Zalba>

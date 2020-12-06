@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odluka:Odluka xmlns:osnova="https://github.com/draganagrbic998/xml/osnova"
+ xmlns:korisnik="https://github.com/draganagrbic998/xml/korisnik"
+ xmlns:organ_vlasti="https://github.com/draganagrbic998/xml/organ_vlasti"
+ xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev"
+ xmlns:odluka="https://github.com/draganagrbic998/xml/odluka"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="https://github.com/draganagrbic998/xml/odluka ../xsd/odluka.xsd" xsi:type="odluka:TOdgovor">
+    <osnova:broj>121-78-8625/3264-22</osnova:broj>
+    <osnova:datum>2021-11-24Z</osnova:datum>
+    <zahtev:Zahtev xsi:type="zahtev:TZahtev_uvid">
+        <osnova:broj>237-42-5334/4592-15</osnova:broj>
+        <osnova:datum>2022-11-07</osnova:datum>
+        <korisnik:Korisnik>
+            <korisnik:ime>Q</korisnik:ime>
+            <korisnik:prezime>l9KPG_</korisnik:prezime>
+            <osnova:Adresa>
+                <osnova:mesto>On</osnova:mesto>
+                <osnova:postanski_broj>521407983</osnova:postanski_broj>
+                <osnova:ulica>H-x1orTgo2QZAOye-X</osnova:ulica>
+                <osnova:broj>1113881516</osnova:broj>
+            </osnova:Adresa>
+            <korisnik:potpis>ZGVmYXVsdA==</korisnik:potpis>
+        </korisnik:Korisnik>
+        <organ_vlasti:Organ_vlasti>
+            <organ_vlasti:naziv>uw8hnbE93h5</organ_vlasti:naziv>
+            <osnova:Adresa>
+                <osnova:mesto>FJLb9FdWxS</osnova:mesto>
+                <osnova:postanski_broj>1931650220</osnova:postanski_broj>
+                <osnova:ulica>VI4LuR3PAqCo5</osnova:ulica>
+                <osnova:broj>515024513</osnova:broj>
+            </osnova:Adresa>
+        </organ_vlasti:Organ_vlasti>
+        <zahtev:trazena_informacija>lQZc4TMJ_</zahtev:trazena_informacija>
+        <zahtev:tip_obavestenja>kopija</zahtev:tip_obavestenja>
+    </zahtev:Zahtev>
+    <odluka:potpis_sluzbenika>7784776766878265697588778779726684758288</odluka:potpis_sluzbenika>
+    <odluka:Pasusi>
+        <odluka:pasus>AwdAMpd</odluka:pasus>
+        <odluka:pasus>cbyJ</odluka:pasus>
+    </odluka:Pasusi>
+</odluka:Odluka>

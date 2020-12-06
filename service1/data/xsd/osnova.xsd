@@ -5,11 +5,36 @@
     <xs:element name="Adresa">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="mesto" type="xs:string"/>
+                <xs:element name="mesto">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:minLength value="1"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
                 <xs:element name="postanski_broj" type="xs:positiveInteger"/>
-                <xs:element name="ulica" type="xs:string"/>
+                <xs:element name="ulica">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:minLength value="1"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
                 <xs:element name="broj" type="xs:positiveInteger"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
+    <xs:complexType abstract="true" name="TDokument">
+        <xs:sequence>
+            <xs:element name="broj">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:minLength value="1"/>
+                        <xs:pattern value="\d{3}-\d{2}-\d{4}/\d{4}-\d{2}"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="datum" type="xs:date"/>
+        </xs:sequence>
+    </xs:complexType>
 </xs:schema>

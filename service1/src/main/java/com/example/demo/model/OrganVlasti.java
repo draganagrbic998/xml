@@ -6,15 +6,17 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlRootElement(name = "Organ_vlasti", namespace = "https://github.com/draganagrbic998/xml/organ_vlasti")
+import com.example.demo.common.Namespaces;
+
+@XmlRootElement(name = "Organ_vlasti", namespace = Namespaces.ORGAN_VLASTI)
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = { "naziv", "adresa" })
 public class OrganVlasti {
 	
-	@XmlElement(namespace = "https://github.com/draganagrbic998/xml/organ_vlasti", required = true)
+	@XmlElement(namespace = Namespaces.ORGAN_VLASTI, required = true)
 	private String naziv;
 	
-	@XmlElement(name = "Adresa", namespace = "https://github.com/draganagrbic998/xml/osnova", required = true)
+	@XmlElement(namespace = Namespaces.OSNOVA, required = true, name = "Adresa")
 	private Adresa adresa;
 	
 	public OrganVlasti() {
@@ -25,14 +27,6 @@ public class OrganVlasti {
 		super();
 		this.naziv = naziv;
 		this.adresa = adresa;
-	}
-
-	@Override
-	public String toString() {
-		String suma = "PODACI ORGANA VLASTI:\n";
-		suma += String.format("naziv: %s\n", this.naziv);
-		suma += this.adresa.toString();
-		return suma;
 	}
 
 	public String getNaziv() {
