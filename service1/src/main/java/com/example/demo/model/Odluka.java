@@ -18,7 +18,7 @@ import com.example.demo.parser.JAXBDateAdapter;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = { "broj", "datum", "zahtev", "potpisSluzbenika" })
 @XmlSeeAlso({Obavestenje.class, Odgovor.class, Odbijanje.class})
-public class Odluka {
+public class Odluka implements DocumentEntity {
 	
 	@XmlElement(namespace = Namespaces.OSNOVA, required = true)
 	private String broj;
@@ -75,6 +75,16 @@ public class Odluka {
 
 	public void setPotpisSluzbenika(String potpisSluzbenika) {
 		this.potpisSluzbenika = potpisSluzbenika;
+	}
+	
+	@Override
+	public String getDocumentBroj() {
+		return this.broj;
+	}
+	
+	@Override
+	public void setDocumentBroj(String broj) {
+		this.broj = broj;
 	}
 	
 }

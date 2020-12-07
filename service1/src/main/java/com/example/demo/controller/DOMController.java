@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
 
@@ -25,6 +27,7 @@ import com.example.demo.dom.Parser;
 import com.example.demo.dom.ResenjeParser;
 import com.example.demo.dom.ZahtevParser;
 import com.example.demo.dom.ZalbaParser;
+import com.example.demo.model.DocumentEntity;
 import com.example.demo.parser.DOMParser;
 import com.example.demo.parser.SchemaValidator;
 
@@ -43,11 +46,18 @@ public class DOMController {
 		Document document = this.domParser.buildDocumentFromFile(testFile);
 	    schema.newValidator().validate(new DOMSource(document));
 		T type = parser.parse(document.getDocumentElement());
+		if (type instanceof DocumentEntity) {
+			DocumentEntity documentType = (DocumentEntity) type;
+			System.out.println("Broj ucitanog dokumenta je: " + documentType.getDocumentBroj());
+			documentType.setDocumentBroj("0" + documentType.getDocumentBroj().substring(1));
+			System.out.println("Broj izmenjenog dokumenta je: " + documentType.getDocumentBroj());
+		}
 		Element typeElement = parser.parse(type, document);
 		document.removeChild(document.getDocumentElement());
 		document.appendChild(typeElement);
 		schema.newValidator().validate(new DOMSource(document));		
 		this.domParser.transformDocument(document, System.out);
+		//this.domParser.transformDocument(document, new FileOutputStream(new File(testFile.replace(".xml", "_dom.xml"))));
 	}
 		
 	@GetMapping(value = "/test_organ_vlasti")
@@ -61,27 +71,27 @@ public class DOMController {
 	}
 	
 	@GetMapping(value = "/test_zahtev_uvid")
-	public void testZahtevObavestenje() throws ParserConfigurationException, SAXException, IOException, ParseException, TransformerException {
+	public void testZahtevUvid() throws ParserConfigurationException, SAXException, IOException, ParseException, TransformerException {
 		this.testParser(this.zahtevParser, TestFiles.ZAHTEV_UVID);
 	}
 	
 	@GetMapping(value = "/test_zahtev_dostava")
-	public void testZahtevOdgovor() throws ParserConfigurationException, SAXException, IOException, ParseException, TransformerException {
+	public void testZahtevDostava() throws ParserConfigurationException, SAXException, IOException, ParseException, TransformerException {
 		this.testParser(this.zahtevParser, TestFiles.ZAHTEV_DOSTAVA);
 	}
 	
 	@GetMapping(value = "/test_obavestenje")
-	public void testOdlukaObavestenje() throws ParserConfigurationException, SAXException, IOException, ParseException, TransformerException {
+	public void testObavestenje() throws ParserConfigurationException, SAXException, IOException, ParseException, TransformerException {
 		this.testParser(this.odlukaParser, TestFiles.OBAVESTENJE);
 	}
 	
 	@GetMapping(value = "/test_odgovor")
-	public void testOdlukaOdgovor() throws ParserConfigurationException, SAXException, IOException, ParseException, TransformerException {
+	public void testOdgovor() throws ParserConfigurationException, SAXException, IOException, ParseException, TransformerException {
 		this.testParser(this.odlukaParser, TestFiles.ODGOVOR);
 	}
 	
 	@GetMapping(value = "/test_odbijanje")
-	public void testOdlukaOdbijanje() throws ParserConfigurationException, SAXException, IOException, ParseException, TransformerException {
+	public void testOdbijanje() throws ParserConfigurationException, SAXException, IOException, ParseException, TransformerException {
 		this.testParser(this.odlukaParser, TestFiles.ODBIJANJE);
 	}
 		

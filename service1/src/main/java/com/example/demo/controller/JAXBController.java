@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
 
@@ -21,6 +23,7 @@ import org.xml.sax.SAXException;
 
 import com.example.demo.common.Schemas;
 import com.example.demo.common.TestFiles;
+import com.example.demo.model.DocumentEntity;
 import com.example.demo.model.Korisnik;
 import com.example.demo.model.Odluka;
 import com.example.demo.model.OrganVlasti;
@@ -35,16 +38,23 @@ public class JAXBController {
 	@Autowired
 	private SchemaValidator schemaValidator;
 	
-	public void testParser(Class<?> className, String schemaFile, String testFile) throws JAXBException, SAXException {
+	public void testParser(Class<?> className, String schemaFile, String testFile) throws JAXBException, SAXException, FileNotFoundException {
 		Schema schema = this.schemaValidator.generateSchema(schemaFile);
 		JAXBContext context = JAXBContext.newInstance(className);
 		Unmarshaller unmarshaller = context.createUnmarshaller();
 		unmarshaller.setSchema(schema);
 		Object obj = unmarshaller.unmarshal(new File(testFile));		
+		if (obj instanceof DocumentEntity) {
+			DocumentEntity documentType = (DocumentEntity) obj;
+			System.out.println("Broj ucitanog dokumenta je: " + documentType.getDocumentBroj());
+			documentType.setDocumentBroj("0" + documentType.getDocumentBroj().substring(1));
+			System.out.println("Broj izmenjenog dokumenta je: " + documentType.getDocumentBroj());
+		}
 		Marshaller marshaller = context.createMarshaller();
 		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 		marshaller.setSchema(schema);
 		marshaller.marshal(obj, System.out);
+		//marshaller.marshal(obj, new FileOutputStream(new File(testFile.replace(".xml", "_jaxb.xml"))));
 	}
 
 	@GetMapping(value = "/test_organ_vlasti")
@@ -58,27 +68,27 @@ public class JAXBController {
 	}
 	
 	@GetMapping(value = "/test_zahtev_uvid")
-	public void testZahtevObavestenje() throws ParserConfigurationException, SAXException, IOException, ParseException, TransformerException, JAXBException {
+	public void testZahtevUvid() throws ParserConfigurationException, SAXException, IOException, ParseException, TransformerException, JAXBException {
 		this.testParser(Zahtev.class, Schemas.ZAHTEV, TestFiles.ZAHTEV_UVID);
 	}
 	
 	@GetMapping(value = "/test_zahtev_dostava")
-	public void testZahtevOdgovor() throws ParserConfigurationException, SAXException, IOException, ParseException, TransformerException, JAXBException {
+	public void testZahtevDostava() throws ParserConfigurationException, SAXException, IOException, ParseException, TransformerException, JAXBException {
 		this.testParser(Zahtev.class, Schemas.ZAHTEV, TestFiles.ZAHTEV_DOSTAVA);
 	}
 	
 	@GetMapping(value = "/test_obavestenje")
-	public void testOdlukaObavestenje() throws ParserConfigurationException, SAXException, IOException, ParseException, TransformerException, JAXBException {
+	public void testObavestenje() throws ParserConfigurationException, SAXException, IOException, ParseException, TransformerException, JAXBException {
 		this.testParser(Odluka.class, Schemas.ODLUKA, TestFiles.OBAVESTENJE);
 	}
 	
 	@GetMapping(value = "/test_odgovor")
-	public void testOdlukaOdgovor() throws ParserConfigurationException, SAXException, IOException, ParseException, TransformerException, JAXBException {
+	public void testOdgovor() throws ParserConfigurationException, SAXException, IOException, ParseException, TransformerException, JAXBException {
 		this.testParser(Odluka.class, Schemas.ODLUKA, TestFiles.ODGOVOR);
 	}
 	
 	@GetMapping(value = "/test_odbijanje")
-	public void testOdlukaOdbijanje() throws ParserConfigurationException, SAXException, IOException, ParseException, TransformerException, JAXBException {
+	public void testOdbijanje() throws ParserConfigurationException, SAXException, IOException, ParseException, TransformerException, JAXBException {
 		this.testParser(Odluka.class, Schemas.ODLUKA, TestFiles.ODBIJANJE);
 	}
 		

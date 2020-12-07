@@ -18,7 +18,7 @@ import com.example.demo.parser.JAXBDateAdapter;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = { "broj", "datum" })
 @XmlSeeAlso({ZalbaCutanje.class, ZalbaDelimicnost.class})
-public abstract class Zalba {
+public abstract class Zalba implements DocumentEntity {
 	
 	@XmlElement(namespace = Namespaces.OSNOVA, required = true)
 	private String broj;
@@ -51,6 +51,16 @@ public abstract class Zalba {
 
 	public void setDatum(Date datum) {
 		this.datum = datum;
+	}
+	
+	@Override
+	public String getDocumentBroj() {
+		return this.broj;
+	}
+	
+	@Override
+	public void setDocumentBroj(String broj) {
+		this.broj = broj;
 	}
 
 }

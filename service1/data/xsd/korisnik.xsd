@@ -4,8 +4,19 @@
     xmlns:korisnik="https://github.com/draganagrbic998/xml/korisnik"
     xmlns:osnova="https://github.com/draganagrbic998/xml/osnova">
     <xs:import namespace="https://github.com/draganagrbic998/xml/osnova" schemaLocation="osnova.xsd"/>
-    <xs:complexType name="TOsoba">
+    <xs:complexType name="TKorisnik">
         <xs:sequence>
+            <xs:element name="uloga">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="gradjanin"/>
+                        <xs:enumeration value="sluzbenik"/>
+                        <xs:enumeration value="poverenik"/>
+                        <xs:enumeration value="rukovodilac"/>
+                        <xs:enumeration value="zamenik_poverenika"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
             <xs:element name="ime">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
@@ -20,32 +31,13 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element ref="osnova:Adresa"/>
-            <xs:element name="potpis" type="xs:base64Binary"/>
         </xs:sequence>
     </xs:complexType>
-    <xs:complexType name="TKorisnik">
+    <xs:complexType name="TPodnosilac">
         <xs:complexContent>
-            <xs:extension base="korisnik:TOsoba">
+            <xs:extension base="korisnik:TKorisnik">
                 <xs:sequence>
-                    <xs:element name="jmbg">
-                        <xs:simpleType>
-                            <xs:restriction base="xs:positiveInteger">
-                                <xs:totalDigits value="13"/>
-                            </xs:restriction>
-                        </xs:simpleType>
-                    </xs:element>
-                    <xs:element name="uloga">
-                        <xs:simpleType>
-                            <xs:restriction base="xs:string">
-                                <xs:enumeration value="gradjanin"/>
-                                <xs:enumeration value="sluzbenik"/>
-                                <xs:enumeration value="poverenik"/>
-                                <xs:enumeration value="rukovodilac"/>
-                                <xs:enumeration value="zamenik_poverenika"/>
-                            </xs:restriction>
-                        </xs:simpleType>
-                    </xs:element>
+                    <xs:element ref="osnova:Adresa"/>
                     <xs:element name="email">
                         <xs:simpleType>
                             <xs:restriction base="xs:string">
@@ -53,16 +45,10 @@
                             </xs:restriction>
                         </xs:simpleType>
                     </xs:element>
-                    <xs:element name="lozinka">
-                        <xs:simpleType>
-                            <xs:restriction base="xs:string">
-                                <xs:minLength value="1"/>
-                            </xs:restriction>
-                        </xs:simpleType>
-                    </xs:element>
+                    <xs:element name="potpis" type="xs:base64Binary"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:element name="Korisnik" type="korisnik:TOsoba"/>
+    <xs:element name="Korisnik" type="korisnik:TKorisnik"/>
 </xs:schema>

@@ -7,7 +7,8 @@
  xsi:schemaLocation="https://github.com/draganagrbic998/xml/zahtev ../xsd/zahtev.xsd" xsi:type="zahtev:TZahtev_dostava">
     <osnova:broj>706-57-7512/3293-06</osnova:broj>
     <osnova:datum>2021-01-21</osnova:datum>
-    <korisnik:Korisnik>
+    <korisnik:Korisnik xsi:type="korisnik:TPodnosilac">
+    	<korisnik:uloga>gradjanin</korisnik:uloga>
         <korisnik:ime>QN.RiMEA8ob_b2OifrQZ00Yp07p6cl</korisnik:ime>
         <korisnik:prezime>Nrc8KqoeYKL-b5P7</korisnik:prezime>
         <osnova:Adresa>
@@ -16,6 +17,7 @@
             <osnova:ulica>ZDC67.VEc</osnova:ulica>
             <osnova:broj>1462535463</osnova:broj>
         </osnova:Adresa>
+        <korisnik:email>asd@gmail.com</korisnik:email>
         <korisnik:potpis>7278788667758072</korisnik:potpis>
     </korisnik:Korisnik>
     <organ_vlasti:Organ_vlasti>

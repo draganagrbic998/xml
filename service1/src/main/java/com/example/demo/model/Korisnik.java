@@ -12,7 +12,7 @@ import com.example.demo.model.enums.Uloga;
 
 @XmlRootElement(name = "Korisnik", namespace = Namespaces.KORISNIK)
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder = { "ime", "prezime", "adresa", "potpis", "jmbg", "uloga", "email", "lozinka" })
+@XmlType(propOrder = { "uloga", "ime", "prezime", "adresa", "email", "potpis", "jmbg", "lozinka" })
 public class Korisnik {
 	
 	@XmlAttribute(namespace = Namespaces.XSI, required = true)
@@ -46,24 +46,17 @@ public class Korisnik {
 		super();
 	}
 
-	public Korisnik(String ime, String prezime, Adresa adresa, String potpis) {
+	public Korisnik(Uloga uloga, String ime, String prezime) {
 		super();
+		this.uloga = uloga;
 		this.ime = ime;
 		this.prezime = prezime;
-		this.adresa = adresa;
-		this.potpis = potpis;
 	}
 
-	public Korisnik(String jmbg, Uloga uloga, String email, String lozinka, String ime, String prezime, Adresa adresa,
-			String potpis) {
-		super();
-		this.jmbg = jmbg;
-		this.uloga = uloga;
-		this.email = email;
-		this.lozinka = lozinka;
-		this.ime = ime;
-		this.prezime = prezime;
+	public Korisnik(Uloga uloga, String ime, String prezime, Adresa adresa, String email, String potpis) {
+		this(uloga, ime, prezime);
 		this.adresa = adresa;
+		this.email = email;
 		this.potpis = potpis;
 	}
 

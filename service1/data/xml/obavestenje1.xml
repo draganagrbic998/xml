@@ -11,7 +11,8 @@
     <zahtev:Zahtev xsi:type="zahtev:TZahtev_dostava">
         <osnova:broj>544-46-4819/5088-79</osnova:broj>
         <osnova:datum>2021-05-27Z</osnova:datum>
-        <korisnik:Korisnik>
+        <korisnik:Korisnik xsi:type="korisnik:TPodnosilac">
+        	<korisnik:uloga>gradjanin</korisnik:uloga>
             <korisnik:ime>Cghs4TOzXyC</korisnik:ime>
             <korisnik:prezime>NL6cqRR8</korisnik:prezime>
             <osnova:Adresa>
@@ -20,6 +21,7 @@
                 <osnova:ulica>t4-cElHfGZ0xQ-3Poq7JTbKBM.f</osnova:ulica>
                 <osnova:broj>654106534</osnova:broj>
             </osnova:Adresa>
+            <korisnik:email>asd@gmail.com</korisnik:email>
             <korisnik:potpis>837480668384678074657865778777728572787575866777</korisnik:potpis>
         </korisnik:Korisnik>
         <organ_vlasti:Organ_vlasti>

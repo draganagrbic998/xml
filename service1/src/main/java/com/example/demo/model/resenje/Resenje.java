@@ -3,10 +3,11 @@ package com.example.demo.model.resenje;
 import java.util.Date;
 import java.util.List;
 
+import com.example.demo.model.DocumentEntity;
 import com.example.demo.model.Korisnik;
 import com.example.demo.model.Zalba;
 
-public class Resenje {
+public class Resenje implements DocumentEntity {
 	
 	private String broj;
 	
@@ -114,6 +115,16 @@ public class Resenje {
 
 	public void setTuzba(List<Pasus> tuzba) {
 		this.tuzba = tuzba;
+	}
+	
+	@Override
+	public String getDocumentBroj() {
+		return this.broj;
+	}
+	
+	@Override
+	public void setDocumentBroj(String broj) {
+		this.broj = broj;
 	}
 	
 }
