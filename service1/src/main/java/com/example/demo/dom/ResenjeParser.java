@@ -159,6 +159,7 @@ public class ResenjeParser implements Parser<Resenje> {
 			return node;
 		}
 		Node node = document.createElementNS(Namespaces.RESENJE, "resenje:zakon");
+		node.setTextContent(item.getValue());
 		if (!item.getClan().equals("")) {
 			((Element) node).setAttributeNS(Namespaces.RESENJE, "resenje:clan", item.getClan());			
 		}

@@ -11,18 +11,10 @@
     <zahtev:Zahtev xsi:type="zahtev:TZahtev_uvid">
         <osnova:broj>910-52-8471/9316-21</osnova:broj>
         <osnova:datum>2022-07-04</osnova:datum>
-        <korisnik:Korisnik xsi:type="korisnik:TPodnosilac">
+        <korisnik:Korisnik>
         	<korisnik:uloga>gradjanin</korisnik:uloga>
             <korisnik:ime>jx-CwsNZrT</korisnik:ime>
             <korisnik:prezime>ioOoPxmqrldFBXtb</korisnik:prezime>
-            <osnova:Adresa>
-                <osnova:mesto>A-J1-J.O0</osnova:mesto>
-                <osnova:postanski_broj>71486178</osnova:postanski_broj>
-                <osnova:ulica>vaDJSnDOpa6xl3</osnova:ulica>
-                <osnova:broj>1980611375</osnova:broj>
-            </osnova:Adresa>
-            <korisnik:email>asd@gmail.com</korisnik:email>
-            <korisnik:potpis>837889676987797884687071846678737670707569707987696688737666706583706683898278848886737171728282</korisnik:potpis>
         </korisnik:Korisnik>
         <organ_vlasti:Organ_vlasti>
             <organ_vlasti:naziv>gfifTDlXmy9t-pp</organ_vlasti:naziv>

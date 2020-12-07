@@ -11,7 +11,7 @@
  xsi:schemaLocation="https://github.com/draganagrbic998/xml/zalba ../xsd/zalba.xsd" xsi:type="zalba:TZalba_cutanje">
     <osnova:broj>181-80-1009/9206-08</osnova:broj>
     <osnova:datum>2021-08-21</osnova:datum>
-    <zahtev:Zahtev xsi:type="zahtev:TZahtev_dostava">
+    <zahtev:Zahtev xsi:type="zahtev:TZahtev_uvid">
         <osnova:broj>114-54-1249/3515-24</osnova:broj>
         <osnova:datum>2021-08-14</osnova:datum>
         <korisnik:Korisnik xsi:type="korisnik:TPodnosilac">
@@ -37,8 +37,7 @@
             </osnova:Adresa>
         </organ_vlasti:Organ_vlasti>
         <zahtev:trazena_informacija>Xt6sj7Zt.-Ejh1vCjlasQ2QImJX</zahtev:trazena_informacija>
-        <zahtev:tip_dostave>ostalo</zahtev:tip_dostave>
-        <zahtev:opis_dostave>yEN_gR</zahtev:opis_dostave>
+        <zahtev:tip_obavestenja>uvid</zahtev:tip_obavestenja>
     </zahtev:Zahtev>
-    <zalba:tip_cutanja>nije_postupio_u_zakonskom_roku</zalba:tip_cutanja>
+    <zalba:tip_cutanja>nije_postupio</zalba:tip_cutanja>
 </zalba:Zalba>

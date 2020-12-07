@@ -6,9 +6,9 @@
  xmlns:odluka="https://github.com/draganagrbic998/xml/odluka"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
  xsi:schemaLocation="https://github.com/draganagrbic998/xml/odluka ../xsd/odluka.xsd" xsi:type="odluka:TObavestenje">
-    <osnova:broj>004-84-0600/7866-69</osnova:broj>
+    <osnova:broj>104-84-0600/7866-69</osnova:broj>
     <osnova:datum>2022-09-19</osnova:datum>
-    <zahtev:Zahtev xsi:type="zahtev:TZahtev_dostava">
+    <zahtev:Zahtev xsi:type="zahtev:TZahtev_uvid">
         <osnova:broj>544-46-4819/5088-79</osnova:broj>
         <osnova:datum>2021-05-27Z</osnova:datum>
         <korisnik:Korisnik xsi:type="korisnik:TPodnosilac">
@@ -34,8 +34,7 @@
             </osnova:Adresa>
         </organ_vlasti:Organ_vlasti>
         <zahtev:trazena_informacija>ZrFKmh</zahtev:trazena_informacija>
-        <zahtev:tip_dostave>ostalo</zahtev:tip_dostave>
-        <zahtev:opis_dostave>OepB3S_c</zahtev:opis_dostave>
+        <zahtev:tip_obavestenja>uvid</zahtev:tip_obavestenja>
     </zahtev:Zahtev>
     <odluka:potpis_sluzbenika>83827178</odluka:potpis_sluzbenika>
     <odluka:Uvid>

@@ -11,18 +11,10 @@
     <zahtev:Zahtev xsi:type="zahtev:TZahtev_uvid">
         <osnova:broj>237-42-5334/4592-15</osnova:broj>
         <osnova:datum>2022-11-07</osnova:datum>
-        <korisnik:Korisnik xsi:type="korisnik:TPodnosilac">
+        <korisnik:Korisnik>
         	<korisnik:uloga>gradjanin</korisnik:uloga>
             <korisnik:ime>Q</korisnik:ime>
             <korisnik:prezime>l9KPG_</korisnik:prezime>
-            <osnova:Adresa>
-                <osnova:mesto>On</osnova:mesto>
-                <osnova:postanski_broj>521407983</osnova:postanski_broj>
-                <osnova:ulica>H-x1orTgo2QZAOye-X</osnova:ulica>
-                <osnova:broj>1113881516</osnova:broj>
-            </osnova:Adresa>
-            <korisnik:email>asd@gmail.com</korisnik:email>
-            <korisnik:potpis>ZGVmYXVsdA==</korisnik:potpis>
         </korisnik:Korisnik>
         <organ_vlasti:Organ_vlasti>
             <organ_vlasti:naziv>uw8hnbE93h5</organ_vlasti:naziv>
