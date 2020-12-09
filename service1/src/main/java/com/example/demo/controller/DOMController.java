@@ -1,7 +1,5 @@
 package com.example.demo.controller;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
 
@@ -28,6 +26,9 @@ import com.example.demo.dom.ResenjeParser;
 import com.example.demo.dom.ZahtevParser;
 import com.example.demo.dom.ZalbaParser;
 import com.example.demo.model.DocumentEntity;
+import com.example.demo.model.resenje.Pasus;
+import com.example.demo.model.resenje.PasusItem;
+import com.example.demo.model.resenje.Resenje;
 import com.example.demo.parser.DOMParser;
 import com.example.demo.parser.SchemaValidator;
 
@@ -44,13 +45,23 @@ public class DOMController {
 	public <T> void testParser(Parser<T> parser, String testFile) throws ParserConfigurationException, SAXException, IOException, ParseException, TransformerException {
 	    Schema schema = this.schemaValidator.generateSchema(parser.getSchema());
 		Document document = this.domParser.buildDocumentFromFile(testFile);
-	    schema.newValidator().validate(new DOMSource(document));
+	    schema.newValidator().validate(new DOMSource(document));			
 		T type = parser.parse(document.getDocumentElement());
 		if (type instanceof DocumentEntity) {
 			DocumentEntity documentType = (DocumentEntity) type;
 			System.out.println("Broj ucitanog dokumenta je: " + documentType.getDocumentBroj());
 			documentType.setDocumentBroj("0" + documentType.getDocumentBroj().substring(1));
 			System.out.println("Broj izmenjenog dokumenta je: " + documentType.getDocumentBroj());
+		}
+		if (type instanceof Resenje) {
+			Resenje resenje = (Resenje) type;
+			for (Pasus p: resenje.getOdluka()) {
+				for (PasusItem pi: p.getItems()) {
+					if (!pi.getValue().trim().equals("")) {
+						System.out.println(pi.getType() + ": " + pi.getValue());						
+					}
+				}
+			}
 		}
 		Element typeElement = parser.parse(type, document);
 		document.removeChild(document.getDocumentElement());
