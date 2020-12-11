@@ -27,21 +27,33 @@ public class ExistManager {
 	}
 	
 	public void save(String collectionId, String documentId, File file) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
-		this.createConnection();
-		Collection collection = this.getCollection(collectionId, 0);
-		XMLResource resource = (XMLResource) collection.createResource(documentId, XMLResource.RESOURCE_TYPE);
-		resource.setContent(file);
-		collection.storeResource(resource);
-		collection.close();
-		((EXistResource) resource).freeResources();
+		Collection collection = null;
+		XMLResource resource = null;
+		try { 
+			this.createConnection();
+			collection = this.getCollection(collectionId, 0);
+			resource = (XMLResource) collection.createResource(documentId, XMLResource.RESOURCE_TYPE);
+			resource.setContent(file);
+			collection.storeResource(resource);
+		}
+		finally {
+			collection.close();
+			((EXistResource) resource).freeResources();
+		}
 	}
 	
 	public XMLResource load(String collectionId, String documentId) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
-		this.createConnection();
-		Collection collection = DatabaseManager.getCollection(this.authUtilities.getUri() + collectionId, this.authUtilities.getUser(), this.authUtilities.getPassword());
-		//collection.setProperty(OutputKeys.INDENT, "yes");
-		XMLResource resource = (XMLResource) collection.getResource(documentId);
-		collection.close();
+		Collection collection = null;
+		XMLResource resource = null;
+		try {
+			this.createConnection();
+			collection = this.getCollection(collectionId, 0);
+			//collection.setProperty(OutputKeys.INDENT, "yes");
+			resource = (XMLResource) collection.getResource(documentId);
+		}
+		finally {
+			collection.close();			
+		}
 		return resource;
 	}
 	
