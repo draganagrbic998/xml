@@ -2,6 +2,8 @@ package com.example.demo.database;
 
 import java.io.File;
 
+import javax.xml.transform.OutputKeys;
+
 import org.exist.xmldb.EXistResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,7 +28,7 @@ public class ExistManager {
 		DatabaseManager.registerDatabase(database);
 	}
 	
-	public void save(String collectionId, String documentId, File file) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
+	public void saveFile(String collectionId, String documentId, File file) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
 		Collection collection = null;
 		XMLResource resource = null;
 		try { 
@@ -42,13 +44,41 @@ public class ExistManager {
 		}
 	}
 	
+	public void save(String collectionId, String documentId, String xml) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
+		Collection collection = null;
+		XMLResource resource = null;
+		try { 
+			this.createConnection();
+			collection = this.getCollection(collectionId, 0);
+			resource = (XMLResource) collection.createResource(documentId, XMLResource.RESOURCE_TYPE);
+			resource.setContent(xml);
+			collection.storeResource(resource);
+		}
+		finally {
+			collection.close();
+			((EXistResource) resource).freeResources();
+		}
+	}
+	
+	public int collectionSize(String collectionId) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
+		Collection collection = null;
+		try {
+			this.createConnection();
+			collection = this.getCollection(collectionId, 0);
+			return collection.getChildCollectionCount();
+		}
+		finally {
+			collection.close();
+		}
+	}
+	
 	public XMLResource load(String collectionId, String documentId) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
 		Collection collection = null;
 		XMLResource resource = null;
 		try {
 			this.createConnection();
 			collection = this.getCollection(collectionId, 0);
-			//collection.setProperty(OutputKeys.INDENT, "yes");
+			collection.setProperty(OutputKeys.INDENT, "yes");
 			resource = (XMLResource) collection.getResource(documentId);
 		}
 		finally {

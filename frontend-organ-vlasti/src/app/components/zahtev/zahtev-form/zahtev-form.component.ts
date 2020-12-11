@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SNACKBAR_CLOSE, SNACKBAR_ERROR, SNACKBAR_ERROR_OPTIONS, SNACKBAR_SUCCESS_OPTIONS } from 'src/app/constants/snackbar';
+import { ZahtevService } from 'src/app/services/zahtev/zahtev.service';
 
 @Component({
   selector: 'app-zahtev-form',
@@ -10,6 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class ZahtevFormComponent implements OnInit {
 
   constructor(
+    private zahtevService: ZahtevService,
     private snackBar: MatSnackBar
   ) { }
 
@@ -40,18 +43,16 @@ export class ZahtevFormComponent implements OnInit {
       return;
     }
     this.zahtevPending = true;
-    /*
-    this.userService.login(this.loginForm.value).subscribe(
-      (user: User) => {
-        this.loginPending = false;
-        this.authService.saveUser(user);
-        this.router.navigate(['/']);
+    this.zahtevService.save(this.zahtevForm.value).subscribe(
+      () => {
+        this.zahtevPending = false;
+        this.snackBar.open('Zahtev je uspešno poslat!', SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);
       },
       () => {
-        this.loginPending = false;
-        this.snackBar.open(ERROR_MESSAGE, SNACKBAR_CLOSE, ERROR_SNACKBAR_OPTIONS);
+        this.zahtevPending = false;
+        this.snackBar.open(SNACKBAR_ERROR, SNACKBAR_CLOSE, SNACKBAR_ERROR_OPTIONS);
       }
-    );*/
+    );
   }
 
   ngOnInit(): void {
