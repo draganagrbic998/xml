@@ -1,0 +1,189 @@
+<app-form-container>
+    <h2>Žalba na nepostupanje organa vlasti na podnet zahtev</h2><br><br>
+    <form [formGroup]="zalbaForm">
+        <div [class.disabled]="zalbaPending">
+            <mat-form-field>
+                <mat-label>Naziv organa vlasti</mat-label>
+                <input 
+                matInput 
+                autocomplete="off"
+                formControlName="organVlasti" 
+                placeholder="Unesite naziv organa vlasti">
+                <mat-error>
+                    Morate uneti naziv organa vlasti!
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field> 
+                <mat-label>Datum podnošenja zahteva:</mat-label>
+                <input matInput formControlName="datumZahteva" [matDatepicker]="datumZahtevaPicker" 
+                placeholder="Unesite datum podnošenja zahteva">
+                <mat-datepicker-toggle matSuffix [for]="datumZahtevaPicker"></mat-datepicker-toggle>
+                <mat-datepicker #datumZahtevaPicker></mat-datepicker>
+            </mat-form-field>    
+            <mat-form-field>
+                <mat-label>Tip žalbe: </mat-label>
+                <mat-select formControlName="tipZalbe">
+                    <mat-option [value]="'cutanje'">
+                        žalba na nepostupanje organa vlasti (ćutanje uprave)
+                    </mat-option>
+                    <mat-option [value]="'odbijanje'">
+                        žalba na odbijanje zahteva od strana organa vlasti
+                    </mat-option>
+                </mat-select>                
+            </mat-form-field>
+            <br><br>
+            <mat-form-field *ngIf="zalbaCutanje">
+                <mat-label>Tip ćutanja: </mat-label>
+                <mat-select formControlName="tipCutanja">
+                    <mat-option [value]="'nije postupio'">
+                        nije postupio
+                    </mat-option>
+                    <mat-option [value]="'nije postupio u zakonskom roku'">
+                        nije postupio u zakonskom roku
+                    </mat-option>
+                    <mat-option [value]="'nije postupio u celosti'">
+                        nije postupio u celosti
+                    </mat-option>
+                </mat-select>                
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" *ngIf="zalbaCutanje">
+                <mat-label>Opis tražene informacije</mat-label>
+                <textarea 
+                matInput 
+                autocomplete="off"
+                formControlName="detalji"
+                rows="4"></textarea>
+            </mat-form-field>        
+
+            <mat-form-field *ngIf="zalbaOdbijanje">
+                <mat-label>Broj odluke: </mat-label>
+                <input 
+                matInput 
+                autocomplete="off"
+                formControlName="brojOdluke" 
+                placeholder="Unesite broj odluke">
+                <mat-error>
+                    Morate uneti broj odluke!
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" *ngIf="zalbaOdbijanje">
+                <mat-label>Deo u kojem ste nezadovoljni</mat-label>
+                <textarea 
+                matInput 
+                autocomplete="off"
+                formControlName="detalji"
+                rows="4"></textarea>
+            </mat-form-field>        
+
+            <br><br>
+            
+            <mat-form-field>
+                <mat-label>Ime podnosioca žalbe</mat-label>
+                <input 
+                matInput 
+                autocomplete="off"
+                formControlName="ime" 
+                placeholder="Unesite ime podnosioca žalbe">
+                <mat-error>
+                    Morate uneti ime podnosioca žalbe!
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Prezime podnosioca žalbe</mat-label>
+                <input 
+                matInput 
+                autocomplete="off"
+                formControlName="prezime"
+                placeholder="Unesite prezime žalbe">
+                <mat-error>
+                    Morate uneti prezime podnosioca žalbe!
+                </mat-error>    
+            </mat-form-field>
+            <br><br>
+            <mat-form-field>
+                <mat-label>Mesto</mat-label>
+                <input 
+                matInput 
+                autocomplete="off"
+                formControlName="mesto"
+                placeholder="Unesite mesto">
+                <mat-error>
+                    Morate uneti mesto!
+                </mat-error>    
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Ulica</mat-label>
+                <input 
+                matInput 
+                autocomplete="off"
+                formControlName="ulica"
+                placeholder="Unesite mesto">
+                <mat-error>
+                    Morate uneti ulicu!
+                </mat-error>    
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Broj ulice</mat-label>
+                <input 
+                matInput 
+                autocomplete="off"
+                formControlName="broj"
+                placeholder="Unesite broj ulice">
+                <mat-error>
+                    Morate uneti broj ulice!
+                </mat-error>    
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Kontakt podaci</mat-label>
+                <input 
+                matInput 
+                autocomplete="off"
+                formControlName="kontakt"
+                placeholder="Unesite kontakt podatke">
+                <mat-error>
+                    Morate uneti kontakt podatke!
+                </mat-error>    
+            </mat-form-field>
+
+            <br>
+            <app-spacer-container>
+        
+                <button 
+                mat-stroked-button 
+                (click)="zahtevFile.click()">
+                Priloži kopiju zahteva
+                </button>
+        
+                <button 
+                *ngIf="zalbaOdbijanje || zalbaDelimicnost"
+                mat-stroked-button 
+                (click)="odlukaFile.emit()">
+                Priloži kopiju odluke
+                </button>
+            
+                <input 
+                #zahtevFile 
+                type="file" 
+                (change)="updateFile('kopijaZahteva', zahtevFile.files[0])">
+        
+                <input 
+                #odlukaFile 
+                type="file" 
+                (change)="updateFile('kopijaOdluke', odlukaFile.files[0])">
+    
+            </app-spacer-container>
+    
+        </div>
+        <br><br>    
+
+        <div class="center-container">
+            <button 
+            *ngIf="!zalbaPending"
+            mat-raised-button 
+            color="primary"
+            (click)="posaljiZalbu()">Pošalji žalbu</button>
+            <app-spinner-button *ngIf="zalbaPending"></app-spinner-button>
+        </div>
+    </form>
+</app-form-container>

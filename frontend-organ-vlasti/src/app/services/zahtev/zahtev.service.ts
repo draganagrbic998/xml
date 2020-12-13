@@ -31,6 +31,10 @@ export class ZahtevService {
       <osnova:kontakt>${zahtev.kontakt}</osnova:kontakt>
       <osnova:potpis></osnova:potpis>
       <osnova:odgovoreno></osnova:odgovoreno>
+      <organ_vlasti:OrganVlasti>
+        <organ_vlasti:naziv></organ_vlasti:naziv>
+        <organ_vlasti:sediste></organ_vlasti:sediste>
+      </organ_vlasti:OrganVlasti>
     `;
     if (zahtev.tipUvida !== 'dostava'){
       return `
