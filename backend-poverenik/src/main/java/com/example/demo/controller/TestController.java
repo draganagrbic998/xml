@@ -69,7 +69,7 @@ public class TestController {
 	@GetMapping(value = "/test1")
 	public void test1() throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
 		File file = new File("data/korisnik1.xml");
-		this.existManager.save(Constants.COLLECTIONS_PREFIX + "/korisnici", "asd.xml", file);
+		this.existManager.saveFile(Constants.COLLECTIONS_PREFIX + "/korisnici", "asd.xml", file);
 	}
 	
 	@GetMapping(value = "/test2")
@@ -77,5 +77,6 @@ public class TestController {
 		XMLResource resource = this.existManager.load(Constants.COLLECTIONS_PREFIX + "/test", "test1.xml");
 		System.out.println(resource.getContent());
 	}
+
 
 }
