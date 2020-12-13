@@ -8,12 +8,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { ZahtevFormComponent } from './components/zahtev/zahtev-form/zahtev-form.component';
-import { ZahtevListComponent } from './components/zahtev/zahtev-list/zahtev-list.component';
 import { LoginFormComponent } from './components/main/login-form/login-form.component';
 import { ToolbarComponent } from './components/main/toolbar/toolbar.component';
 import { FormContainerComponent } from './components/layout/form-container/form-container.component';
 import { ZahtevDetailsComponent } from './components/zahtev/zahtev-details/zahtev-details.component';
 import { SpinnerButtonComponent } from './components/layout/spinner-button/spinner-button.component';
+import { PaginatorComponent } from './components/layout/paginator/paginator.component';
+import { CenterContainerComponent } from './components/layout/center-container/center-container.component';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
@@ -28,12 +29,13 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   declarations: [
     AppComponent,
     ZahtevFormComponent,
-    ZahtevListComponent,
     LoginFormComponent,
     ToolbarComponent,
     FormContainerComponent,
     ZahtevDetailsComponent,
-    SpinnerButtonComponent
+    SpinnerButtonComponent,
+    PaginatorComponent,
+    CenterContainerComponent
   ],
   imports: [
     BrowserModule,

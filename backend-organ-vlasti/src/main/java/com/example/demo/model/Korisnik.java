@@ -13,27 +13,26 @@ import javax.xml.bind.annotation.XmlType;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.example.demo.constants.Namespaces;
+
 @SuppressWarnings("serial")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "korisnik", namespace = "mama")
-@XmlType(propOrder = { "uloga", "email", "lozinka", "ime", "prezime" })
+@XmlRootElement(namespace = Namespaces.ORGAN_VLASTI)
+@XmlType(propOrder = { "osoba", "email", "lozinka", "uloga" })
 public class Korisnik implements UserDetails {
-	
-	@XmlElement(namespace = "mama", required = true)
-	private Uloga uloga;
-	
-	@XmlElement(namespace = "mama", required = true)
+		
+	@XmlElement(namespace = Namespaces.OSNOVA, required = true, name = "Osoba")
+	private Osoba osoba;
+
+	@XmlElement(namespace = Namespaces.OSNOVA, required = true)
 	private String email;
 	
-	@XmlElement(namespace = "mama", required = true)
+	@XmlElement(namespace = Namespaces.OSNOVA, required = true)
 	private String lozinka;
 	
-	@XmlElement(namespace = "mama", required = true)
-	private String ime;
-	
-	@XmlElement(namespace = "mama", required = true)
-	private String prezime;
-	
+	@XmlElement(namespace = Namespaces.ORGAN_VLASTI, required = true)
+	private Uloga uloga;
+
 	public Korisnik() {
 		super();
 	}
@@ -75,12 +74,12 @@ public class Korisnik implements UserDetails {
 		return true;
 	}
 
-	public Uloga getUloga() {
-		return uloga;
+	public Osoba getOsoba() {
+		return osoba;
 	}
 
-	public void setUloga(Uloga uloga) {
-		this.uloga = uloga;
+	public void setOsoba(Osoba osoba) {
+		this.osoba = osoba;
 	}
 
 	public String getEmail() {
@@ -99,20 +98,12 @@ public class Korisnik implements UserDetails {
 		this.lozinka = lozinka;
 	}
 
-	public String getIme() {
-		return ime;
+	public Uloga getUloga() {
+		return uloga;
 	}
 
-	public void setIme(String ime) {
-		this.ime = ime;
-	}
-
-	public String getPrezime() {
-		return prezime;
-	}
-
-	public void setPrezime(String prezime) {
-		this.prezime = prezime;
+	public void setUloga(Uloga uloga) {
+		this.uloga = uloga;
 	}
 
 }

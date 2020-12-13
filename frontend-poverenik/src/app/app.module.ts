@@ -13,7 +13,7 @@ import { LoginFormComponent } from './components/main/login-form/login-form.comp
 import { ToolbarComponent } from './components/main/toolbar/toolbar.component';
 import { ZalbaDetailsComponent } from './components/zalba/zalba-details/zalba-details.component';
 import { ZalbaFormComponent } from './components/zalba/zalba-form/zalba-form.component';
-import { ZalbaListComponent } from './components/zalba/zalba-list/zalba-list.component';
+import { SpacerContainerComponent } from './components/layout/spacer-container/spacer-container.component';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
@@ -25,7 +25,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { SpacerContainerComponent } from './components/layout/spacer-container/spacer-container.component';
+import { CenterContainerComponent } from './components/layout/center-container/center-container.component';
 
 @NgModule({
   declarations: [
@@ -36,8 +36,8 @@ import { SpacerContainerComponent } from './components/layout/spacer-container/s
     ToolbarComponent,
     ZalbaDetailsComponent,
     ZalbaFormComponent,
-    ZalbaListComponent,
-    SpacerContainerComponent
+    SpacerContainerComponent,
+    CenterContainerComponent
   ],
   imports: [
     BrowserModule,

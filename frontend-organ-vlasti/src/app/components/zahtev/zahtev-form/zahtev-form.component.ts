@@ -20,7 +20,7 @@ export class ZahtevFormComponent implements OnInit {
   zahtevForm: FormGroup = new FormGroup({
     tipUvida: new FormControl('posedovanje'),
     tipDostave: new FormControl('posta'),
-    opisDostave: new FormControl(''), // dodaj validaciju ako je odabran 'ostalo' tip dostave
+    opisDostave: new FormControl('', [Validators.required]),
     detalji: new FormControl('', [Validators.required, Validators.pattern(new RegExp('\\S'))]),
     ime: new FormControl('', [Validators.required, Validators.pattern(new RegExp('\\S'))]),
     prezime: new FormControl('', [Validators.required, Validators.pattern(new RegExp('\\S'))]),
@@ -35,10 +35,17 @@ export class ZahtevFormComponent implements OnInit {
   }
 
   get ostalaDostavaOdabrana(): boolean{
-    return this.zahtevForm.value.tipDostave === 'ostalo';
+    return this.dostavaOdabrana && this.zahtevForm.value.tipDostave === 'ostalo';
+  }
+
+  refreshForm(): void{
+    if (!this.ostalaDostavaOdabrana){
+      this.zahtevForm.get('opisDostave').setErrors(null);
+    }
   }
 
   posaljiZahtev(): void{
+    this.refreshForm();
     if (this.zahtevForm.invalid){
       return;
     }

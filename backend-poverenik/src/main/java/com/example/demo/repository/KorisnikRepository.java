@@ -21,7 +21,7 @@ public class KorisnikRepository {
 	
 	public Korisnik findByEmail(String email) {
 		try {
-			return (Korisnik) this.jaxbParser.unmarshal(this.existManager.load(this.collectionId, email + ".xml"), Korisnik.class);
+			return (Korisnik) this.jaxbParser.unmarshal(this.existManager.load(this.collectionId, email), Korisnik.class);
 		}
 		catch(Exception e) {
 			return null;

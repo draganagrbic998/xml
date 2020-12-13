@@ -177,13 +177,13 @@
         </div>
         <br><br>    
 
-        <div class="center-container">
+        <app-center-container>
             <button 
             *ngIf="!zalbaPending"
             mat-raised-button 
             color="primary"
             (click)="posaljiZalbu()">Pošalji žalbu</button>
             <app-spinner-button *ngIf="zalbaPending"></app-spinner-button>
-        </div>
+        </app-center-container>
     </form>
 </app-form-container>

@@ -1,6 +1,6 @@
 package com.example.demo.database;
 
-import java.io.File;
+import java.io.OutputStream;
 
 import javax.xml.transform.OutputKeys;
 
@@ -28,47 +28,22 @@ public class ExistManager {
 		DatabaseManager.registerDatabase(database);
 	}
 	
-	public void saveFile(String collectionId, String documentId, File file) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
+	public void save(String collectionId, String documentId, OutputStream out) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
 		Collection collection = null;
 		XMLResource resource = null;
 		try { 
 			this.createConnection();
 			collection = this.getCollection(collectionId, 0);
+			if (documentId == null) {
+				documentId = collection.createId();
+			}
 			resource = (XMLResource) collection.createResource(documentId, XMLResource.RESOURCE_TYPE);
-			resource.setContent(file);
+			resource.setContent(out);
 			collection.storeResource(resource);
 		}
 		finally {
 			collection.close();
 			((EXistResource) resource).freeResources();
-		}
-	}
-	
-	public void save(String collectionId, String documentId, String xml) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
-		Collection collection = null;
-		XMLResource resource = null;
-		try { 
-			this.createConnection();
-			collection = this.getCollection(collectionId, 0);
-			resource = (XMLResource) collection.createResource(documentId, XMLResource.RESOURCE_TYPE);
-			resource.setContent(xml);
-			collection.storeResource(resource);
-		}
-		finally {
-			collection.close();
-			((EXistResource) resource).freeResources();
-		}
-	}
-	
-	public int collectionSize(String collectionId) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
-		Collection collection = null;
-		try {
-			this.createConnection();
-			collection = this.getCollection(collectionId, 0);
-			return collection.getChildCollectionCount();
-		}
-		finally {
-			collection.close();
 		}
 	}
 	

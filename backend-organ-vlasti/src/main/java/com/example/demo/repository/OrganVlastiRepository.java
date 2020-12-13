@@ -18,7 +18,7 @@ public class OrganVlastiRepository {
 	private JAXBParser jaxbParser;
 	
 	private final String collectionId = Constants.COLLECTIONS_PREFIX + "/organ_vlasti";
-	private final String documentId = "1.xml";
+	private final String documentId = "1";
 
 	public OrganVlasti load() {
 		try {

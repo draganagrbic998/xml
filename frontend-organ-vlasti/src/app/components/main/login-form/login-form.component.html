@@ -27,13 +27,13 @@
             </mat-form-field>
         </div>
         <br>
-        <div class="center-container">
+        <app-center-container>
             <button 
             *ngIf="!loginPending"
             mat-raised-button 
             color="primary"
             (click)="login()">Login</button>
             <app-spinner-button *ngIf="loginPending"></app-spinner-button>
-        </div>
+        </app-center-container>
     </form>
 </app-form-container>

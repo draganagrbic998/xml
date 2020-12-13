@@ -42,19 +42,19 @@ export class ZalbaService {
     }
     if (zalba.tipZalbe === 'cutanje'){
       return `
-        <poverenik:zalba
+        <poverenik:Zalba
         xmlns:osnova="${OSNOVA}"
         xmlns:poverenik="${POVERENIK}"
         xmlns:xsi="${XSI}"
         xsi:type="poverenik:TZalbaCutanje">
           ${base}
-          <poverenik:tipCutanja>${zalba.tipCutanja}</poverenik:tipCutanja>
-        </poverenik:zalba>
+          <poverenik:tipCutanja>${zalba.tipCutanja.replace(' ', '_')}</poverenik:tipCutanja>
+        </poverenik:Zalba>
       `;
     }
     else{
       return `
-        <poverenik:zalba
+        <poverenik:Zalba
         xmlns:osnova="${OSNOVA}"
         xmlns:poverenik="${POVERENIK}"
         xmlns:xsi="${XSI}"
@@ -62,7 +62,7 @@ export class ZalbaService {
           ${base}
           <poverenik:brojOdluke>${zalba.brojOdluke}</poverenik:brojOdluke>
           <poverenik:datumOdluke>${formatDate(zalba.datumOdluke)}</poverenik:datumOdluke>
-        </poverenik:zalba>
+        </poverenik:Zalba>
     `;
 
     }

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ZalbaListComponent } from './zalba-list.component';
+import { PaginatorComponent } from './paginator.component';
 
-describe('ZalbaListComponent', () => {
-  let component: ZalbaListComponent;
-  let fixture: ComponentFixture<ZalbaListComponent>;
+describe('PaginatorComponent', () => {
+  let component: PaginatorComponent;
+  let fixture: ComponentFixture<PaginatorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ZalbaListComponent ]
+      declarations: [ PaginatorComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ZalbaListComponent);
+    fixture = TestBed.createComponent(PaginatorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

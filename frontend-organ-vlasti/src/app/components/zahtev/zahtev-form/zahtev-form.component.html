@@ -117,13 +117,13 @@
             </mat-form-field>
         </div>
         <br><br>
-        <div class="center-container">
+        <app-center-container>
             <button 
             *ngIf="!zahtevPending"
             mat-raised-button 
             color="primary"
             (click)="posaljiZahtev()">Pošalji zahtev</button>
             <app-spinner-button *ngIf="zahtevPending"></app-spinner-button>
-        </div>
+        </app-center-container>
     </form>
 </app-form-container>

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ZahtevListComponent } from './zahtev-list.component';
+import { CenterContainerComponent } from './center-container.component';
 
-describe('ZahtevListComponent', () => {
-  let component: ZahtevListComponent;
-  let fixture: ComponentFixture<ZahtevListComponent>;
+describe('CenterContainerComponent', () => {
+  let component: CenterContainerComponent;
+  let fixture: ComponentFixture<CenterContainerComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ZahtevListComponent ]
+      declarations: [ CenterContainerComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ZahtevListComponent);
+    fixture = TestBed.createComponent(CenterContainerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -22,6 +22,7 @@ import javax.xml.transform.stream.StreamResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
@@ -37,7 +38,7 @@ public class DOMParser {
 	public DOMParser() {
 		super();
 		this.builderFactory = DocumentBuilderFactory.newInstance();
-		//this.builderFactory.setValidating(true);
+		this.builderFactory.setValidating(true);
 		this.builderFactory.setNamespaceAware(true);
 		this.builderFactory.setIgnoringComments(true);
 		this.builderFactory.setIgnoringElementContentWhitespace(true);
@@ -64,14 +65,14 @@ public class DOMParser {
 		transformer.transform(new DOMSource(document), new StreamResult(out));
 	}
 	
-	public String buildXml(Document document) throws TransformerException {
+	public String buildXml(Node node) throws TransformerException {
 		StringWriter string = new StringWriter();
 		Transformer transformer = this.transformerFactory.newTransformer();
 		transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
 		transformer.setOutputProperty(OutputKeys.METHOD, "xml");
 		transformer.setOutputProperty(OutputKeys.INDENT, "yes");	
 		transformer.setOutputProperty(OutputKeys.ENCODING, "utf-8");
-		transformer.transform(new DOMSource(document), new StreamResult(string));
+		transformer.transform(new DOMSource(node), new StreamResult(string));
 		return string.toString();
 	}
 	

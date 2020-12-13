@@ -1,17 +1,15 @@
 package com.example.demo.controller;
 
-import java.io.IOException;
-
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
+import javax.xml.bind.JAXBException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.xml.sax.SAXException;
 import org.xmldb.api.base.XMLDBException;
 
 import com.example.demo.service.ZahtevService;
@@ -22,10 +20,11 @@ public class ZahtevController {
 
 	@Autowired
 	private ZahtevService zahtevService;
-		
-	@PostMapping(value = "")
-	public void save(@RequestBody String xml) throws ClassNotFoundException, InstantiationException, IllegalAccessException, ParserConfigurationException, SAXException, IOException, TransformerException, XMLDBException {		
+			
+	@PostMapping
+	public ResponseEntity<Void> save(@RequestBody String xml) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, JAXBException {		
 		this.zahtevService.save(xml);
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
 }

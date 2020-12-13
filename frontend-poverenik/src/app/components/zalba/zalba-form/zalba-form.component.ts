@@ -32,7 +32,6 @@ export class ZalbaFormComponent implements OnInit {
     datumZahteva: new FormControl('', [Validators.required]),
     kopijaZahteva: new FormControl('', [Validators.required]),
     kopijaOdluke: new FormControl('', [Validators.required]),
-
     tipCutanja: new FormControl('nije postupio'),
     brojOdluke: new FormControl('', [Validators.required, Validators.pattern(new RegExp('\\S'))]),
     datumOdluke: new FormControl('', [Validators.required])
