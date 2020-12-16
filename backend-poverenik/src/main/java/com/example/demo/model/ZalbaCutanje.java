@@ -21,6 +21,11 @@ public class ZalbaCutanje extends Zalba {
 		super();
 	}
 
+	public ZalbaCutanje(TipCutanja tipCutanja) {
+		super();
+		this.tipCutanja = tipCutanja;
+	}
+
 	public TipCutanja getTipCutanja() {
 		return tipCutanja;
 	}

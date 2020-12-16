@@ -37,8 +37,7 @@ export class LoginFormComponent implements OnInit {
         this.authService.saveUser(token);
         this.router.navigate(['/']);
       },
-      (e) => {
-        console.log(e);
+      () => {
         this.loginPending = false;
         this.snackBar.open(SNACKBAR_ERROR, SNACKBAR_CLOSE, SNACKBAR_ERROR_OPTIONS);
       }

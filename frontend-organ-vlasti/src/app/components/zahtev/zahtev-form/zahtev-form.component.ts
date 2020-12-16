@@ -19,8 +19,8 @@ export class ZahtevFormComponent implements OnInit {
   zahtevPending = false;
   zahtevForm: FormGroup = new FormGroup({
     detalji: new FormControl('', [Validators.required, Validators.pattern(new RegExp('\\S'))]),
-    tipUvida: new FormControl('posedovanje'),
-    tipDostave: new FormControl('posta'),
+    tipUvida: new FormControl('posedovanje', [Validators.required]),
+    tipDostave: new FormControl('posta', [Validators.required]),
     opisDostave: new FormControl('', [Validators.required]),
   });
 
@@ -33,6 +33,9 @@ export class ZahtevFormComponent implements OnInit {
   }
 
   refreshForm(): void{
+    if (!this.dostavaOdabrana){
+      this.zahtevForm.get('tipDostave').setErrors(null);
+    }
     if (!this.ostalaDostavaOdabrana){
       this.zahtevForm.get('opisDostave').setErrors(null);
     }

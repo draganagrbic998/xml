@@ -3,6 +3,17 @@
     <form [formGroup]="zalbaForm">
         <div [class.disabled]="zalbaPending">
             <mat-form-field>
+                <mat-label>Tip žalbe: </mat-label>
+                <mat-select formControlName="tipZalbe">
+                    <mat-option [value]="'cutanje'">
+                        žalba na nepostupanje organa vlasti (ćutanje uprave)
+                    </mat-option>
+                    <mat-option [value]="'odbijanje'">
+                        žalba na odbijanje zahteva od strana organa vlasti
+                    </mat-option>
+                </mat-select>                
+            </mat-form-field>
+            <mat-form-field>
                 <mat-label>Naziv organa vlasti</mat-label>
                 <input 
                 matInput 
@@ -20,18 +31,14 @@
                 <mat-datepicker-toggle matSuffix [for]="datumZahtevaPicker"></mat-datepicker-toggle>
                 <mat-datepicker #datumZahtevaPicker></mat-datepicker>
             </mat-form-field>    
-            <mat-form-field>
-                <mat-label>Tip žalbe: </mat-label>
-                <mat-select formControlName="tipZalbe">
-                    <mat-option [value]="'cutanje'">
-                        žalba na nepostupanje organa vlasti (ćutanje uprave)
-                    </mat-option>
-                    <mat-option [value]="'odbijanje'">
-                        žalba na odbijanje zahteva od strana organa vlasti
-                    </mat-option>
-                </mat-select>                
-            </mat-form-field>
-            <br><br>
+            <mat-form-field appearance="outline" *ngIf="zalbaCutanje">
+                <mat-label>Opis tražene informacije</mat-label>
+                <textarea 
+                matInput 
+                autocomplete="off"
+                formControlName="detalji"
+                rows="4"></textarea>
+            </mat-form-field>        
             <mat-form-field *ngIf="zalbaCutanje">
                 <mat-label>Tip ćutanja: </mat-label>
                 <mat-select formControlName="tipCutanja">
@@ -46,15 +53,6 @@
                     </mat-option>
                 </mat-select>                
             </mat-form-field>
-
-            <mat-form-field appearance="outline" *ngIf="zalbaCutanje">
-                <mat-label>Opis tražene informacije</mat-label>
-                <textarea 
-                matInput 
-                autocomplete="off"
-                formControlName="detalji"
-                rows="4"></textarea>
-            </mat-form-field>        
 
             <mat-form-field *ngIf="zalbaOdbijanje">
                 <mat-label>Broj odluke: </mat-label>
@@ -77,76 +75,7 @@
             </mat-form-field>        
 
             <br><br>
-            
-            <mat-form-field>
-                <mat-label>Ime podnosioca žalbe</mat-label>
-                <input 
-                matInput 
-                autocomplete="off"
-                formControlName="ime" 
-                placeholder="Unesite ime podnosioca žalbe">
-                <mat-error>
-                    Morate uneti ime podnosioca žalbe!
-                </mat-error>
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>Prezime podnosioca žalbe</mat-label>
-                <input 
-                matInput 
-                autocomplete="off"
-                formControlName="prezime"
-                placeholder="Unesite prezime žalbe">
-                <mat-error>
-                    Morate uneti prezime podnosioca žalbe!
-                </mat-error>    
-            </mat-form-field>
-            <br><br>
-            <mat-form-field>
-                <mat-label>Mesto</mat-label>
-                <input 
-                matInput 
-                autocomplete="off"
-                formControlName="mesto"
-                placeholder="Unesite mesto">
-                <mat-error>
-                    Morate uneti mesto!
-                </mat-error>    
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>Ulica</mat-label>
-                <input 
-                matInput 
-                autocomplete="off"
-                formControlName="ulica"
-                placeholder="Unesite mesto">
-                <mat-error>
-                    Morate uneti ulicu!
-                </mat-error>    
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>Broj ulice</mat-label>
-                <input 
-                matInput 
-                autocomplete="off"
-                formControlName="broj"
-                placeholder="Unesite broj ulice">
-                <mat-error>
-                    Morate uneti broj ulice!
-                </mat-error>    
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>Kontakt podaci</mat-label>
-                <input 
-                matInput 
-                autocomplete="off"
-                formControlName="kontakt"
-                placeholder="Unesite kontakt podatke">
-                <mat-error>
-                    Morate uneti kontakt podatke!
-                </mat-error>    
-            </mat-form-field>
 
-            <br>
             <app-spacer-container>
         
                 <button 
@@ -165,16 +94,19 @@
                 <input 
                 #zahtevFile 
                 type="file" 
+                accept="application/pdf" 
                 (change)="updateFile('kopijaZahteva', zahtevFile.files[0])">
         
                 <input 
-                #odlukaFile 
+                #odlukaFile
+                accept="application/pdf" 
                 type="file" 
                 (change)="updateFile('kopijaOdluke', odlukaFile.files[0])">
     
             </app-spacer-container>
     
         </div>
+
         <br><br>    
 
         <app-center-container>

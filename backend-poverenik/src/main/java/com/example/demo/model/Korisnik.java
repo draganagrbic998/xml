@@ -17,21 +17,18 @@ import com.example.demo.constants.Namespaces;
 
 @SuppressWarnings("serial")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(namespace = Namespaces.POVERENIK)
-@XmlType(propOrder = { "osoba", "email", "lozinka", "uloga" })
+@XmlRootElement(name = "Korisnik", namespace = Namespaces.OSNOVA)
+@XmlType(propOrder = { "email", "lozinka", "gradjanin" })
 public class Korisnik implements UserDetails {
 		
-	@XmlElement(namespace = Namespaces.OSNOVA, required = true, name = "Osoba")
-	private Osoba osoba;
-
 	@XmlElement(namespace = Namespaces.OSNOVA, required = true)
 	private String email;
 	
 	@XmlElement(namespace = Namespaces.OSNOVA, required = true)
 	private String lozinka;
 	
-	@XmlElement(namespace = Namespaces.POVERENIK, required = true)
-	private Uloga uloga;
+	@XmlElement(namespace = Namespaces.OSNOVA, required = true, name = "Gradjanin")
+	private Gradjanin gradjanin;
 
 	public Korisnik() {
 		super();
@@ -40,7 +37,8 @@ public class Korisnik implements UserDetails {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		List<Authority> authorities = new ArrayList<>();
-		authorities.add(new Authority(this.uloga + ""));
+		String uloga = this.gradjanin == null ? "poverenik" : "gradjanin";
+		authorities.add(new Authority(uloga));
 		return authorities;
 	}
 
@@ -74,14 +72,6 @@ public class Korisnik implements UserDetails {
 		return true;
 	}
 
-	public Osoba getOsoba() {
-		return osoba;
-	}
-
-	public void setOsoba(Osoba osoba) {
-		this.osoba = osoba;
-	}
-
 	public String getEmail() {
 		return email;
 	}
@@ -98,12 +88,12 @@ public class Korisnik implements UserDetails {
 		this.lozinka = lozinka;
 	}
 
-	public Uloga getUloga() {
-		return uloga;
+	public Gradjanin getGradjanin() {
+		return gradjanin;
 	}
 
-	public void setUloga(Uloga uloga) {
-		this.uloga = uloga;
+	public void setGradjanin(Gradjanin gradjanin) {
+		this.gradjanin = gradjanin;
 	}
 
 }
