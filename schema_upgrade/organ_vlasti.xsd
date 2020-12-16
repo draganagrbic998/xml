@@ -24,22 +24,6 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:complexType name="TKorisnik">
-        <xs:complexContent>
-            <xs:extension base="osnova:TKorisnik">
-                <xs:sequence>
-                    <xs:element name="uloga">
-                        <xs:simpleType>
-                            <xs:restriction base="xs:string">
-                                <xs:enumeration value="gradjanin"/>
-                                <xs:enumeration value="sluzbenik"/>
-                            </xs:restriction>
-                        </xs:simpleType>
-                    </xs:element>
-                </xs:sequence>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
     <xs:complexType name="TZahtev" abstract="true">
         <xs:complexContent>
             <xs:extension base="osnova:TPodnosenjeDetalji">

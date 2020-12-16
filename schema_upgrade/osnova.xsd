@@ -2,56 +2,23 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
     targetNamespace="https://github.com/draganagrbic998/xml/osnova"
     xmlns:osnova="https://github.com/draganagrbic998/xml/osnova">
-    <xs:complexType name="TKorisnik">
-        <xs:sequence>
-            <xs:element ref="osnova:Osoba"/>
-            <xs:element name="email" type="xs:string"/>
-            <xs:element name="lozinka" type="xs:string"/>
-        </xs:sequence>
-    </xs:complexType>
-    <xs:complexType name="TPodnosenje">
-        <xs:sequence>
-            <xs:element ref="osnova:Osoba"/>
-            <xs:element ref="osnova:Adresa"/>
-            <xs:element name="detalji">
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:minLength value="1"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-            <xs:element name="datum" type="xs:date"/>
-        </xs:sequence>
-    </xs:complexType>
-    <xs:complexType name="TPodnosenjeDetalji">
-        <xs:complexContent>
-            <xs:extension base="osnova:TPodnosenje">
-                <xs:sequence>
-                    <xs:element name="kontakt">
-                        <xs:simpleType>
-                            <xs:restriction base="xs:string">
-                                <xs:minLength value="1"/>
-                            </xs:restriction>
-                        </xs:simpleType>
-                    </xs:element>
-                    <xs:element name="potpis" type="xs:base64Binary"/>
-                    <xs:element name="odgovoreno" type="xs:boolean"/>
-                </xs:sequence>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-    <xs:complexType name="TOdgovaranje">
-        <xs:sequence>
-            <xs:element name="broj">
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:minLength value="1"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-            <xs:element name="datum" type="xs:date"/>
-        </xs:sequence>
-    </xs:complexType>
+    <xs:element name="Korisnik">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="email" type="xs:string"/>
+                <xs:element name="lozinka" type="xs:string"/>
+                <xs:element minOccurs="0" ref="osnova:Gradjanin"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Gradjanin">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="osnova:Osoba"/>
+                <xs:element ref="osnova:Adresa"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
     <xs:element name="Osoba">
         <xs:complexType>
             <xs:sequence>
@@ -93,4 +60,46 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
+    <xs:complexType name="TPodnosenje">
+        <xs:sequence>
+            <xs:element ref="osnova:Gradjanin"/>
+            <xs:element name="datum" type="xs:date"/>
+            <xs:element name="detalji">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:minLength value="1"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TPodnosenjeDetalji">
+        <xs:complexContent>
+            <xs:extension base="osnova:TPodnosenje">
+                <xs:sequence>
+                    <xs:element name="kontakt">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:minLength value="1"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="potpis" type="xs:base64Binary"/>
+                    <xs:element name="odgovoreno" type="xs:boolean"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TOdgovaranje">
+        <xs:sequence>
+            <xs:element name="broj">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:minLength value="1"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="datum" type="xs:date"/>
+        </xs:sequence>
+    </xs:complexType>
 </xs:schema>

@@ -4,22 +4,6 @@
     xmlns:osnova="https://github.com/draganagrbic998/xml/osnova"
     xmlns:poverenik="https://github.com/draganagrbic998/xml/poverenik">
     <xs:import namespace="https://github.com/draganagrbic998/xml/osnova" schemaLocation="osnova.xsd"/>
-    <xs:complexType name="TKorisnik">
-        <xs:complexContent>
-            <xs:extension base="osnova:TKorisnik">
-                <xs:sequence>
-                    <xs:element name="uloga">
-                        <xs:simpleType>
-                            <xs:restriction base="xs:string">
-                                <xs:enumeration value="gradjanin"/>
-                                <xs:enumeration value="poverenik"/>
-                            </xs:restriction>
-                        </xs:simpleType>
-                    </xs:element>
-                </xs:sequence>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
     <xs:complexType name="TZalba" abstract="true">
         <xs:complexContent>
             <xs:extension base="osnova:TPodnosenjeDetalji">
