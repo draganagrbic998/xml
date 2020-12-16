@@ -1,5 +1,6 @@
 package com.example.demo.database;
 
+import java.io.File;
 import java.io.OutputStream;
 
 import javax.xml.transform.OutputKeys;
@@ -39,6 +40,25 @@ public class ExistManager {
 			}
 			resource = (XMLResource) collection.createResource(documentId, XMLResource.RESOURCE_TYPE);
 			resource.setContent(out);
+			collection.storeResource(resource);
+		}
+		finally {
+			collection.close();
+			((EXistResource) resource).freeResources();
+		}
+	}
+	
+	public void save(String collectionId, String documentId, File file) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
+		Collection collection = null;
+		XMLResource resource = null;
+		try { 
+			this.createConnection();
+			collection = this.getCollection(collectionId, 0);
+			if (documentId == null) {
+				documentId = collection.createId();
+			}
+			resource = (XMLResource) collection.createResource(documentId, XMLResource.RESOURCE_TYPE);
+			resource.setContent(file);
 			collection.storeResource(resource);
 		}
 		finally {

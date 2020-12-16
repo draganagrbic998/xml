@@ -21,6 +21,11 @@ public class ZahtevUvid extends Zahtev {
 		super();
 	}
 
+	public ZahtevUvid(TipUvida tipUvida) {
+		super();
+		this.tipUvida = tipUvida;
+	}
+	
 	public TipUvida getTipUvida() {
 		return tipUvida;
 	}

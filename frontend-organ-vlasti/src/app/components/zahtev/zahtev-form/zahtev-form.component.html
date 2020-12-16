@@ -1,7 +1,15 @@
 <app-form-container>
-    <h2>Zahtev za pristup informacijama od javnog značaja</h2><br><br>
+    <h3>Zahtev za pristup informacijama od javnog značaja</h3><br><br>
     <form [formGroup]="zahtevForm">
         <div [class.disabled]="zahtevPending">
+            <mat-form-field appearance="outline">
+                <mat-label>Opis tražene informacije</mat-label>
+                <textarea 
+                matInput 
+                autocomplete="off"
+                formControlName="detalji"
+                rows="4"></textarea>
+            </mat-form-field>        
             <mat-form-field>
                 <mat-label>Pravo koje želite da ostvarite</mat-label>
                 <mat-select formControlName="tipUvida">
@@ -20,7 +28,7 @@
                 </mat-select>                
             </mat-form-field>
             <mat-form-field *ngIf="dostavaOdabrana">
-                <mat-label>Način dostave dokumenta</mat-label>
+                <mat-label>Način dostave</mat-label>
                 <mat-select formControlName="tipDostave">
                     <mat-option [value]="'posta'">poštom</mat-option>
                     <mat-option [value]="'email'">elektronskom poštom</mat-option>
@@ -39,82 +47,7 @@
                     Morate opisati način dostave!
                 </mat-error>    
             </mat-form-field>
-            <mat-form-field appearance="outline">
-                <mat-label>Opis tražene informacije</mat-label>
-                <textarea 
-                matInput 
-                autocomplete="off"
-                formControlName="detalji"
-                rows="4"></textarea>
-            </mat-form-field>        
             <br>
-            <mat-form-field>
-                <mat-label>Ime podnosioca zahteva</mat-label>
-                <input 
-                matInput 
-                autocomplete="off"
-                formControlName="ime" 
-                placeholder="Unesite ime">
-                <mat-error>
-                    Morate uneti ime!
-                </mat-error>
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>Prezime podnosioca zahteva</mat-label>
-                <input 
-                matInput 
-                autocomplete="off"
-                formControlName="prezime"
-                placeholder="Unesite prezime">
-                <mat-error>
-                    Morate uneti prezime!
-                </mat-error>    
-            </mat-form-field>
-            <br><br>
-            <mat-form-field>
-                <mat-label>Mesto</mat-label>
-                <input 
-                matInput 
-                autocomplete="off"
-                formControlName="mesto"
-                placeholder="Unesite mesto">
-                <mat-error>
-                    Morate uneti mesto!
-                </mat-error>    
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>Ulica</mat-label>
-                <input 
-                matInput 
-                autocomplete="off"
-                formControlName="ulica"
-                placeholder="Unesite mesto">
-                <mat-error>
-                    Morate uneti ulicu!
-                </mat-error>    
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>Broj ulice</mat-label>
-                <input 
-                matInput 
-                autocomplete="off"
-                formControlName="broj"
-                placeholder="Unesite broj">
-                <mat-error>
-                    Morate uneti broj!
-                </mat-error>    
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>Ostali kontakt podaci</mat-label>
-                <input 
-                matInput 
-                autocomplete="off"
-                formControlName="kontakt"
-                placeholder="Unesite ostale kontakt podatke">
-                <mat-error>
-                    Morate uneti kontakt podatke!
-                </mat-error>    
-            </mat-form-field>
         </div>
         <br><br>
         <app-center-container>
