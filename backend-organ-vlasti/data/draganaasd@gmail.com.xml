@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<osnova:Korisnik xmlns:osnova="https://github.com/draganagrbic998/xml/osnova"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="https://github.com/draganagrbic998/xml/osnova file:/C:/Users/Dragana/Desktop/schema_upgrade/osnova.xsd">
+    <osnova:email>draganaasd@gmail.com</osnova:email>
+    <osnova:lozinka>$2a$10$aL2cRpbMvSsvTcIGxUoauO4RMefDmYtEEARsmKJpwJ7T585HfBsra</osnova:lozinka>
+</osnova:Korisnik>

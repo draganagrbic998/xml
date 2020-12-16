@@ -18,16 +18,10 @@ export class ZahtevFormComponent implements OnInit {
 
   zahtevPending = false;
   zahtevForm: FormGroup = new FormGroup({
+    detalji: new FormControl('', [Validators.required, Validators.pattern(new RegExp('\\S'))]),
     tipUvida: new FormControl('posedovanje'),
     tipDostave: new FormControl('posta'),
     opisDostave: new FormControl('', [Validators.required]),
-    detalji: new FormControl('', [Validators.required, Validators.pattern(new RegExp('\\S'))]),
-    ime: new FormControl('', [Validators.required, Validators.pattern(new RegExp('\\S'))]),
-    prezime: new FormControl('', [Validators.required, Validators.pattern(new RegExp('\\S'))]),
-    mesto: new FormControl('', [Validators.required, Validators.pattern(new RegExp('\\S'))]),
-    ulica: new FormControl('', [Validators.required, Validators.pattern(new RegExp('\\S'))]),
-    broj: new FormControl('', [Validators.required, Validators.pattern(new RegExp('\\S'))]),
-    kontakt: new FormControl('', [Validators.required, Validators.pattern(new RegExp('\\S'))])
   });
 
   get dostavaOdabrana(): boolean{
@@ -55,7 +49,8 @@ export class ZahtevFormComponent implements OnInit {
         this.zahtevPending = false;
         this.snackBar.open('Zahtev je uspešno poslat!', SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);
       },
-      () => {
+      (e) => {
+        console.log(e);
         this.zahtevPending = false;
         this.snackBar.open(SNACKBAR_ERROR, SNACKBAR_CLOSE, SNACKBAR_ERROR_OPTIONS);
       }
