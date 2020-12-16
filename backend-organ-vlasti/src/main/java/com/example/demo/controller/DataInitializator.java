@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.xmldb.api.base.XMLDBException;
 
-import com.example.demo.constants.Constants;
 import com.example.demo.database.ExistManager;
 import com.example.demo.repository.KorisnikRepository;
 
