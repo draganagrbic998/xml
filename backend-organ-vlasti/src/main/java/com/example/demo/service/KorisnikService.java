@@ -30,23 +30,15 @@ public class KorisnikService implements UserDetailsService {
 
 	@Autowired
 	private TokenUtils tokenUtils;
+	
+	@Autowired
+	private AuthenticationManager authManager;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) {
 		return this.korisnikRepository.findByEmail(username);
 	}
-	
-	@Autowired
-	private AuthenticationManager authManager;
-	
-	public String login(String xml) throws ParserConfigurationException, SAXException, IOException {
-		Document document = this.domParser.buildDocument(xml);
-		String email = document.getElementsByTagName("email").item(0).getTextContent();
-		String password = document.getElementsByTagName("password").item(0).getTextContent();
-		this.authManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
-		return this.tokenUtils.generateToken(email);
-	}
-	
+		
 	public Korisnik currentUser() {
 		try {
 			return (Korisnik) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -54,6 +46,14 @@ public class KorisnikService implements UserDetailsService {
 		catch(Exception e) {
 			return null;
 		}
+	}
+	
+	public String login(String xml) throws ParserConfigurationException, SAXException, IOException {
+		Document document = this.domParser.buildDocument(xml);
+		String email = document.getElementsByTagName("email").item(0).getTextContent();
+		String password = document.getElementsByTagName("password").item(0).getTextContent();
+		this.authManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
+		return this.tokenUtils.generateToken(email);
 	}
 	
 }

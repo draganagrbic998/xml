@@ -24,7 +24,6 @@ public class KorisnikRepository {
 			return (Korisnik) this.jaxbParser.unmarshal(this.existManager.load(collectionId, email + ".xml"), Korisnik.class);
 		}
 		catch(Exception e) {
-			e.printStackTrace();
 			return null;
 		}
 	}

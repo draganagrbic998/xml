@@ -12,6 +12,7 @@ import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 import org.xmldb.api.base.XMLDBException;
 
+import com.example.demo.constants.Constants;
 import com.example.demo.model.Korisnik;
 import com.example.demo.model.OrganVlasti;
 import com.example.demo.model.Zahtev;
@@ -32,15 +33,15 @@ public class ZahtevService {
 	
 	@Autowired
 	private OrganVlastiRepository organVlastiRepository;
+		
+	@Autowired
+	private KorisnikService korisnikService;
 	
 	@Autowired
 	private JAXBParser jaxbParser;
 	
 	@Autowired
 	private DOMParser domParser;
-	
-	@Autowired
-	private KorisnikService korisnikService;
 	
 	public void save(String xml) throws ParserConfigurationException, SAXException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, JAXBException {		
 		Korisnik korisnik = this.korisnikService.currentUser();
@@ -61,7 +62,7 @@ public class ZahtevService {
 		zahtev.setDatum(new Date());
 		zahtev.setDetalji(document.getElementsByTagName("detalji").item(0).getTextContent());
 		zahtev.setKontakt(korisnik.getEmail());
-		zahtev.setPotpis("asd");
+		zahtev.setPotpis(Constants.SIGNATURE);
 		zahtev.setOdgovoreno(false);
 		this.zahtevRepository.save(this.jaxbParser.marshal(zahtev, Zahtev.class));
 	}

@@ -15,10 +15,10 @@ public class ZalbaRepository {
 	@Autowired
 	private ExistManager existManager;
 	
-	private final String collectionId = Constants.COLLECTIONS_PREFIX + "/zalbe";
+	private static final String collectionId = Constants.COLLECTIONS_PREFIX + "/zalbe";
 	
 	public void save(OutputStream out) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
-		this.existManager.save(this.collectionId, null, out);
+		this.existManager.save(collectionId, null, out);
 	}
 	
 }

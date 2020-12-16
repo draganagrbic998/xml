@@ -20,21 +20,15 @@ export class ZalbaFormComponent implements OnInit {
 
   zalbaPending = false;
   zalbaForm: FormGroup = new FormGroup({
-    tipZalbe: new FormControl('cutanje'),
-    ime: new FormControl('', [Validators.required, Validators.pattern(new RegExp('\\S'))]),
-    prezime: new FormControl('', [Validators.required, Validators.pattern(new RegExp('\\S'))]),
-    mesto: new FormControl('', [Validators.required, Validators.pattern(new RegExp('\\S'))]),
-    ulica: new FormControl('', [Validators.required, Validators.pattern(new RegExp('\\S'))]),
-    broj: new FormControl('', [Validators.required, Validators.pattern(new RegExp('\\S'))]),
-    kontakt: new FormControl('', [Validators.required, Validators.pattern(new RegExp('\\S'))]),
-    detalji: new FormControl('', [Validators.required, Validators.pattern(new RegExp('\\S'))]),
+    tipZalbe: new FormControl('cutanje', [Validators.required]),
     organVlasti: new FormControl('', [Validators.required, Validators.pattern(new RegExp('\\S'))]),
     datumZahteva: new FormControl('', [Validators.required]),
-    kopijaZahteva: new FormControl('', [Validators.required]),
-    kopijaOdluke: new FormControl('', [Validators.required]),
-    tipCutanja: new FormControl('nije postupio'),
+    detalji: new FormControl('', [Validators.required, Validators.pattern(new RegExp('\\S'))]),
+    tipCutanja: new FormControl('nije postupio', [Validators.required]),
     brojOdluke: new FormControl('', [Validators.required, Validators.pattern(new RegExp('\\S'))]),
-    datumOdluke: new FormControl('', [Validators.required])
+    datumOdluke: new FormControl('', [Validators.required]),
+    kopijaZahteva: new FormControl('', [Validators.required]),
+    kopijaOdluke: new FormControl('', [Validators.required])
   });
 
   get zalbaCutanje(): boolean{
@@ -64,6 +58,9 @@ export class ZalbaFormComponent implements OnInit {
         this.zalbaForm.get('kopijaOdluke').setErrors(null);
       }
     }
+    if (this.zalbaOdbijanje){
+      this.zalbaForm.get('tipCutanja').setErrors(null);
+    }
   }
 
   posaljiZalbu(): void{
@@ -72,11 +69,11 @@ export class ZalbaFormComponent implements OnInit {
       return;
     }
     this.zalbaPending = true;
-
     this.zalbaService.save(this.zalbaForm.value).subscribe(
       () => {
         this.zalbaPending = false;
         this.snackBar.open('Žalba uspešno poslata!', SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);
+        this.zalbaForm.reset();
       },
       () => {
         this.zalbaPending = false;

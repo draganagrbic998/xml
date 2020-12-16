@@ -28,6 +28,12 @@ public class ZalbaOdbijanje extends Zalba {
 		super();
 	}
 
+	public ZalbaOdbijanje(String brojOdluke, Date datumOdluke) {
+		super();
+		this.brojOdluke = brojOdluke;
+		this.datumOdluke = datumOdluke;
+	}
+
 	public String getBrojOdluke() {
 		return brojOdluke;
 	}
