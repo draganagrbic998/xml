@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="https://github.com/draganagrbic998/xml/organ_vlasti"
+    xmlns:organ_vlasti="https://github.com/draganagrbic998/xml/organ_vlasti"
+    xmlns:osnova="https://github.com/draganagrbic998/xml/osnova">
+    <xs:import namespace="https://github.com/draganagrbic998/xml/osnova" schemaLocation="osnova.xsd"/>
+    <xs:element name="OrganVlasti">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="naziv">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:minLength value="1"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="sediste">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:minLength value="1"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="TKorisnik">
+        <xs:complexContent>
+            <xs:extension base="osnova:TKorisnik">
+                <xs:sequence>
+                    <xs:element name="uloga">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:enumeration value="gradjanin"/>
+                                <xs:enumeration value="sluzbenik"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TZahtev" abstract="true">
+        <xs:complexContent>
+            <xs:extension base="osnova:TPodnosenjeDetalji">
+                <xs:sequence>
+                    <xs:element ref="organ_vlasti:OrganVlasti"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TZahtevUvid">
+        <xs:complexContent>
+            <xs:extension base="organ_vlasti:TZahtev">
+                <xs:sequence>
+                    <xs:element name="tipUvida">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:enumeration value="posedovanje"/>
+                                <xs:enumeration value="uvid"/>
+                                <xs:enumeration value="kopija"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TZahtevDostava">
+        <xs:complexContent>
+            <xs:extension base="organ_vlasti:TZahtev">
+                <xs:sequence>
+                    <xs:element name="tipDostave">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:enumeration value="email"/>
+                                <xs:enumeration value="posta"/>
+                                <xs:enumeration value="faks"/>
+                                <xs:enumeration value="ostalo"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="opisDostave" type="xs:string"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="Zahtev" type="organ_vlasti:TZahtev"/>
+    <xs:complexType name="TOdluka" abstract="true">
+        <xs:complexContent>
+            <xs:extension base="osnova:TOdgovaranje">
+                <xs:sequence>
+                    <xs:element ref="organ_vlasti:OrganVlasti"/>
+                    <xs:element name="Podnosenje" type="osnova:TPodnosenje"/>
+                    <xs:element name="potpis" type="xs:base64Binary"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TObavestenje">
+        <xs:complexContent>
+            <xs:extension base="organ_vlasti:TOdluka">
+                <xs:sequence>
+                    <xs:element name="Uvid">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element ref="osnova:Adresa"/>
+                                <xs:element name="kancelarija">
+                                    <xs:simpleType>
+                                        <xs:restriction base="xs:string">
+                                            <xs:minLength value="1"/>
+                                        </xs:restriction>
+                                    </xs:simpleType>
+                                </xs:element>
+                                <xs:element name="datum" type="xs:date"/>
+                                <xs:element name="pocetak">
+                                    <xs:simpleType>
+                                        <xs:restriction base="xs:string">
+                                            <xs:pattern value="\d{1,2}:\d{1,2}"/>
+                                        </xs:restriction>
+                                    </xs:simpleType>
+                                </xs:element>
+                                <xs:element name="kraj">
+                                    <xs:simpleType>
+                                        <xs:restriction base="xs:string">
+                                            <xs:pattern value="\d{1,2}:\d{1,2}"/>
+                                        </xs:restriction>
+                                    </xs:simpleType>
+                                </xs:element>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="kopija" type="xs:positiveInteger"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="Odluka" type="organ_vlasti:TOdluka"/>
+</xs:schema>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="https://github.com/draganagrbic998/xml/poverenik"
+    xmlns:osnova="https://github.com/draganagrbic998/xml/osnova"
+    xmlns:poverenik="https://github.com/draganagrbic998/xml/poverenik">
+    <xs:import namespace="https://github.com/draganagrbic998/xml/osnova" schemaLocation="osnova.xsd"/>
+    <xs:complexType name="TKorisnik">
+        <xs:complexContent>
+            <xs:extension base="osnova:TKorisnik">
+                <xs:sequence>
+                    <xs:element name="uloga">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:enumeration value="gradjanin"/>
+                                <xs:enumeration value="poverenik"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TZalba" abstract="true">
+        <xs:complexContent>
+            <xs:extension base="osnova:TPodnosenjeDetalji">
+                <xs:sequence>
+                    <xs:element name="organVlasti" type="xs:string"/>
+                    <xs:element name="datumZahteva" type="xs:date"/>
+                    <xs:element name="kopijaZahteva" type="xs:base64Binary"/>
+                    <xs:element minOccurs="0" name="kopijaOdluke" type="xs:base64Binary"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TZalbaCutanje">
+        <xs:complexContent>
+            <xs:extension base="poverenik:TZalba">
+                <xs:sequence>
+                    <xs:element name="tipCutanja">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:enumeration value="nije postupio"/>
+                                <xs:enumeration value="nije postupio u zakonskom roku"/>
+                                <xs:enumeration value="nije postupio u celosti"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TZalbaOdbijanje">
+        <xs:complexContent>
+            <xs:extension base="poverenik:TZalba">
+                <xs:sequence>
+                    <xs:element name="brojOdluke">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:minLength value="1"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="datumOdluke" type="xs:date"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="Zalba" type="poverenik:TZalba"/>
+</xs:schema>
