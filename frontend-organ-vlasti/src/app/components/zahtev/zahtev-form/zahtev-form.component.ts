@@ -48,9 +48,9 @@ export class ZahtevFormComponent implements OnInit {
       () => {
         this.zahtevPending = false;
         this.snackBar.open('Zahtev je uspešno poslat!', SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);
+        this.zahtevForm.reset();
       },
-      (e) => {
-        console.log(e);
+      () => {
         this.zahtevPending = false;
         this.snackBar.open(SNACKBAR_ERROR, SNACKBAR_CLOSE, SNACKBAR_ERROR_OPTIONS);
       }
