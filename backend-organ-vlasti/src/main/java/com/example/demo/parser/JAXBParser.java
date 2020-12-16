@@ -15,12 +15,12 @@ import org.xmldb.api.modules.XMLResource;
 
 @Component
 public class JAXBParser {
-	
+	/*
 	public Object unmarshal(String xml, Class<?> cl) throws JAXBException {
 		JAXBContext context = JAXBContext.newInstance(cl);
 		Unmarshaller unmarshaller = context.createUnmarshaller();
 		return unmarshaller.unmarshal(new StringReader(xml));
-	}
+	}*/
 	
 	public Object unmarshal(XMLResource xml, Class<?> cl) throws JAXBException, XMLDBException {
 		JAXBContext context = JAXBContext.newInstance(cl);

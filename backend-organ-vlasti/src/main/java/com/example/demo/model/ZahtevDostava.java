@@ -24,6 +24,12 @@ public class ZahtevDostava extends Zahtev {
 		super();
 	}
 
+	public ZahtevDostava(TipDostave tipDostave, String opisDostave) {
+		super();
+		this.tipDostave = tipDostave;
+		this.opisDostave = opisDostave;
+	}
+
 	public TipDostave getTipDostave() {
 		return tipDostave;
 	}

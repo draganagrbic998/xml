@@ -16,23 +16,23 @@ import com.example.demo.parser.JAXBDateAdapter;
 
 @XmlDiscriminatorNode("@xsi:type")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder = { "osoba", "adresa", "detalji", "datum", "kontakt", "potpis", "odgovoreno", "organVlasti" })
+@XmlType(propOrder = { "gradjanin", "organVlasti", "datum", "detalji", "kontakt", "potpis", "odgovoreno" })
 @XmlSeeAlso({ZahtevUvid.class, ZahtevDostava.class})
 public abstract class Zahtev {
 	
-	@XmlElement(namespace = Namespaces.OSNOVA, required = true, name = "Osoba")
-	private Osoba osoba;
+	@XmlElement(namespace = Namespaces.OSNOVA, required = true, name = "Gradjanin")
+	private Gradjanin gradjanin;
 	
-	@XmlElement(namespace = Namespaces.OSNOVA, required = true, name = "Adresa")
-	private Adresa adresa;
-	
-	@XmlElement(namespace = Namespaces.OSNOVA, required = true)
-	private String detalji;
+	@XmlElement(namespace = Namespaces.ORGAN_VLASTI, required = true, name = "OrganVlasti")
+	private OrganVlasti organVlasti;
 	
 	@XmlElement(namespace = Namespaces.OSNOVA, required = true)
 	@XmlJavaTypeAdapter(JAXBDateAdapter.class)
 	private Date datum;
-	
+
+	@XmlElement(namespace = Namespaces.OSNOVA, required = true)
+	private String detalji;
+		
 	@XmlElement(namespace = Namespaces.OSNOVA, required = true)
 	private String kontakt;
 	
@@ -42,35 +42,24 @@ public abstract class Zahtev {
 	@XmlElement(namespace = Namespaces.OSNOVA, required = true)
 	private boolean odgovoreno;
 	
-	@XmlElement(namespace = Namespaces.ORGAN_VLASTI, required = true, name = "OrganVlasti")
-	private OrganVlasti organVlasti;
-
 	public Zahtev() {
 		super();
 	}
 
-	public Osoba getOsoba() {
-		return osoba;
+	public Gradjanin getGradjanin() {
+		return gradjanin;
 	}
 
-	public void setOsoba(Osoba osoba) {
-		this.osoba = osoba;
+	public void setGradjanin(Gradjanin gradjanin) {
+		this.gradjanin = gradjanin;
 	}
 
-	public Adresa getAdresa() {
-		return adresa;
+	public OrganVlasti getOrganVlasti() {
+		return organVlasti;
 	}
 
-	public void setAdresa(Adresa adresa) {
-		this.adresa = adresa;
-	}
-
-	public String getDetalji() {
-		return detalji;
-	}
-
-	public void setDetalji(String detalji) {
-		this.detalji = detalji;
+	public void setOrganVlasti(OrganVlasti organVlasti) {
+		this.organVlasti = organVlasti;
 	}
 
 	public Date getDatum() {
@@ -79,6 +68,14 @@ public abstract class Zahtev {
 
 	public void setDatum(Date datum) {
 		this.datum = datum;
+	}
+
+	public String getDetalji() {
+		return detalji;
+	}
+
+	public void setDetalji(String detalji) {
+		this.detalji = detalji;
 	}
 
 	public String getKontakt() {
@@ -103,14 +100,6 @@ public abstract class Zahtev {
 
 	public void setOdgovoreno(boolean odgovoreno) {
 		this.odgovoreno = odgovoreno;
-	}
-
-	public OrganVlasti getOrganVlasti() {
-		return organVlasti;
-	}
-
-	public void setOrganVlasti(OrganVlasti organVlasti) {
-		this.organVlasti = organVlasti;
 	}
 	
 }
