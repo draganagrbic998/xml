@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<organ_vlasti:Zahtev xmlns:osnova="https://github.com/draganagrbic998/xml/osnova"
+ xmlns:organ_vlasti="https://github.com/draganagrbic998/xml/organ_vlasti"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="https://github.com/draganagrbic998/xml/organ_vlasti file:/C:/Users/Lenovo/Desktop/xml/schema_upgrade/organ_vlasti.xsd" xsi:type="organ_vlasti:TZahtevDostava">
+    <osnova:Osoba>
+        <osnova:ime>vwqHc.9wg_0xqZaeV</osnova:ime>
+        <osnova:prezime>X86DKAX.ECyuIe2GVF5efb</osnova:prezime>
+    </osnova:Osoba>
+    <osnova:Adresa>
+        <osnova:mesto>u.Mw6P8g8mtPHT</osnova:mesto>
+        <osnova:ulica>rAB5e-2iiYmEcRnePHwwIE.</osnova:ulica>
+        <osnova:broj>47116073</osnova:broj>
+    </osnova:Adresa>
+    <osnova:detalji>zifatkgqmLOG</osnova:detalji>
+    <osnova:datum>2021-03-07Z</osnova:datum>
+    <osnova:kontakt>XqYF7KFr.QktC_a1vTo3GDwB</osnova:kontakt>
+    <osnova:potpis>8890776887827487767985869081846867846784</osnova:potpis>
+    <osnova:odgovoreno>1</osnova:odgovoreno>
+    <organ_vlasti:OrganVlasti>
+        <organ_vlasti:naziv>rJZuI0TAZBJUeH_d_P8s71_O4U</organ_vlasti:naziv>
+        <organ_vlasti:sediste>bUQvMNPb-8RX8gxMQd</organ_vlasti:sediste>
+    </organ_vlasti:OrganVlasti>
+    <organ_vlasti:tipDostave>ostalo</organ_vlasti:tipDostave>
+    <organ_vlasti:opisDostave>kAN1mGhKLF58</organ_vlasti:opisDostave>
+</organ_vlasti:Zahtev>

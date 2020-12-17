@@ -1,0 +1,72 @@
+bookstore {
+    width: 90%;
+    margin: auto;
+    background: #4caf50;
+    padding: 30px;
+}
+
+bookstore:before {
+    content: "Bookstore (CSS)";
+    font-family:sans-serif;
+    font-size: 32px;
+    font-weight: bold; 
+    color: white;
+}
+
+book {
+    display: block;
+    border-collapse: collapse;
+    border: 1px solid darkgrey;
+    border-bottom: none;
+    background: white;
+    padding: 30px;
+}
+
+book:nth-child(even){ background-color: #f2f2f2 }
+
+book:hover {
+    font-style: italic;
+    background-color: #cae8cb;
+}
+
+book:before {
+    content: attr(category);
+}
+
+
+book[category] title:after {
+    content: " other";
+}
+
+book[category="WEB"] title:after {
+    content: " web";
+}
+
+book title:after {
+    font-size: small;
+    font-weight: normal;
+    vertical-align: super
+}
+
+title, year, price {
+    margin: 30px;
+}
+
+title, price {
+    font-family: sans-serif;
+    font-weight: bold; 
+    color: #102310;
+}
+
+title:hover {
+    font-style: italic;
+}
+
+author {
+    font-size: small;
+}
+author:after { content: ", " }
+
+price:before { content: "($" }
+
+price:after { content: ")" }

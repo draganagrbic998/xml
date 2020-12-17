@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?><html xmlns:b="http://www.ftn.uns.ac.rs/xpath/examples">
+   <head>
+      <title>Bookstore (XSLT)</title>
+      <style type="text/css">
+         table {
+         font-family: serif;
+         border-collapse: collapse;
+         margin: 50px auto 50px auto;
+         width: 90%;
+         }
+         th, td {
+         text-align: left;
+         padding: 30px;
+         }
+         tr:nth-child(even){ background-color: #f2f2f2 }
+         th {
+         background-color: #4caf50;
+         font-family: sans-serif;
+         color: white;
+         }
+         tr { border: 1px solid darkgrey; }
+         tr:hover {
+         font-style: italic;
+         background-color: #cae8cb;
+         }
+         body { font-family: sans-serif; }
+         p { text-indent: 30px; }
+         .sup {
+         vertical-align: super;
+         padding-left: 4px;
+         font-size: small;
+         text-transform: lowercase;
+         }
+         
+         
+      </style>
+   </head>
+   <body>
+      <h1>Bookstore (XSLT)</h1>
+      <p>Total number of books in the bookstore: 
+         
+         <b>7</b>
+      </p>
+      <h2>Available books:</h2>
+      <p>Highlighting (*) the book titles with a 
+         <b>price less than $40</b>.
+      </p>
+      <table style="border: 1px">
+         <tr bgcolor="#9acd32">
+            <th>#</th>
+            <th>Category</th>
+            <th>Title
+               <span class="sup">category</span>
+            </th>
+            <th>Author</th>
+            <th>Year</th>
+            <th>Price</th>
+         </tr>
+         <tr>
+            <td>1</td>
+            <td>CHILDREN</td>
+            <td>
+               <b>
+                  * Harry Potter
+               </b>
+               <span class="sup">CHILDREN</span>
+            </td>
+            <td>J K. Rowling</td>
+            <td>2005</td>
+            <td>
+               <b>($29.99)</b>
+            </td>
+         </tr>
+         <tr>
+            <td>2</td>
+            <td>COOKING</td>
+            <td>
+               <b>
+                  * Everyday Italian
+               </b>
+               <span class="sup">COOKING</span>
+            </td>
+            <td>Giada De Laurentiis</td>
+            <td>2005</td>
+            <td>
+               <b>($30.00)</b>
+            </td>
+         </tr>
+         <tr>
+            <td>3</td>
+            <td>TEST</td>
+            <td>
+               <b>Test book</b>
+               <span class="sup">TEST</span>
+            </td>
+            <td>Test Author</td>
+            <td>2016</td>
+            <td>
+               <b>($59.99)</b>
+            </td>
+         </tr>
+         <tr>
+            <td>4</td>
+            <td>TEST</td>
+            <td>
+               <b>Test book</b>
+               <span class="sup">TEST</span>
+            </td>
+            <td>Test Author</td>
+            <td>2016</td>
+            <td>
+               <b>($59.99)</b>
+            </td>
+         </tr>
+         <tr>
+            <td>5</td>
+            <td>WEB</td>
+            <td>
+               <b>
+                  * AngularJS in Action
+               </b>
+               <span class="sup">WEB</span>
+            </td>
+            <td>Brian Ford
+               <br></br>Lukas Ruebbelke
+               <br></br>
+            </td>
+            <td>2014</td>
+            <td>
+               <b>($39.60)</b>
+            </td>
+         </tr>
+         <tr>
+            <td>6</td>
+            <td>WEB</td>
+            <td>
+               <b>
+                  * Learning XML
+               </b>
+               <span class="sup">WEB</span>
+            </td>
+            <td>Erik T. Ray</td>
+            <td>2003</td>
+            <td>
+               <b>($39.95)</b>
+            </td>
+         </tr>
+         <tr>
+            <td>7</td>
+            <td>WEB</td>
+            <td>
+               <b>XQuery Kick Start</b>
+               <span class="sup">WEB</span>
+            </td>
+            <td>James McGovern
+               <br></br>Per Bothner
+               <br></br>Kurt Cagle
+               <br></br>James Linn
+               <br></br>Vaidyanathan Nagarajan
+               <br></br>
+            </td>
+            <td>2003</td>
+            <td>
+               <b>($49.99)</b>
+            </td>
+         </tr>
+         <tr>
+            <td colspan="5">
+               <b>Average price:</b>
+            </td>
+            <td>
+               <b>$44.22</b>
+            </td>
+         </tr>
+      </table>
+   </body>
+</html>
