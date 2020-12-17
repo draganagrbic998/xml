@@ -27,7 +27,6 @@
 					}
                     .center {
                         text-align: center;
-                        padding: 30px;
                     }
                    	#vremeIMesto{
                    		white-space:pre;
@@ -52,6 +51,9 @@
                     p { 
                     	text-indent: 30px; 
                     }
+                    #dotted{
+                    	border-bottom: 1px dotted black;
+                    }
                     #linija{
 	                    border-bottom: 1px solid black;
 						padding-bottom: 5px;
@@ -65,7 +67,11 @@
             </head>
             <body>
             <div class="page">
+            	<div id = "dotted">
+            	<p class = "center"><xsl:value-of select="organ_vlasti:Zahtev/organ_vlasti:OrganVlasti/organ_vlasti:naziv"/>, <xsl:value-of select="organ_vlasti:Zahtev/organ_vlasti:OrganVlasti/organ_vlasti:sediste"/></p>
+                </div>
                 <p class = "center">назив и седиште органа коме се захтев упућује</p>
+                <br></br>
                 <h1 class = "center"><b>З А Х Т Е В<br></br>
                 за приступ информацији од јавног значаја</b></h1>
                 <p>На основу члана 15. ст. 1. Закона о слободном приступу информацијама од јавног значаја („Службени гласник РС“, бр. 120/04, 54/07, 104/09 и 36/10), од горе наведеног органа захтевам:<a href="#note1" title="U kucici oznaciti koja zakonska prava na pristup informacijama želite da ostvarite.">*</a>
@@ -80,37 +86,41 @@
 					  <li>поштом</li>
 					  <li>електронском поштом</li>
 					  <li>факсом</li>
-					  <li>на други начин: <a href="#note3" title="Када захтевате други начин достављања обавезно уписати који начин достављања захтевате.">***</a></li>
+					  <li>на други начин: <xsl:value-of select="organ_vlasti:Zahtev/organ_vlasti:opisDostave" /><a href="#note3" title="Када захтевате други начин достављања обавезно уписати који начин достављања захтевате.">***</a></li>
 					  </ul>
 				  </li>
 				</ul>
-				<p>Овај захтев се односи на следеће информације:
+				<p>Овај захтев се односи на следеће информације: <xsl:value-of select="organ_vlasti:Zahtev/osnova:detalji" />
                 </p>
 				<div id="maincontainer">
 					<div id="leftcolumn">
-						<div id = "vremeIMesto">У ,<br></br>дана године</div>
+						<div id = "vremeIMesto">У <xsl:value-of select="organ_vlasti:Zahtev/osnova:Gradjanin/osnova:Adresa/osnova:mesto" />,<br></br>дана <xsl:value-of select="organ_vlasti:Zahtev/osnova:datum" /> године</div>
 					</div>
 				
 					<div id="rightcolumn">
 						<div id ="linija">
+						<xsl:value-of select="organ_vlasti:Zahtev/osnova:Gradjanin/osnova:Osoba/osnova:ime" /> <xsl:value-of select="organ_vlasti:Zahtev/osnova:Gradjanin/osnova:Osoba/osnova:prezime" />
 						</div>
 						<div>
 						Тражилац информације/Име и презиме
 						</div>
 						<br></br>
 						<div id ="linija">
+						<xsl:value-of select="organ_vlasti:Zahtev/osnova:Gradjanin/osnova:Adresa/osnova:ulica" /> <xsl:value-of select="organ_vlasti:Zahtev/osnova:Gradjanin/osnova:broj" />
 						</div>
 						<div>
 						адреса
 						</div>
 						<br></br>
 						<div id ="linija">
+						<xsl:value-of select="organ_vlasti:Zahtev/osnova:kontakt" /> 
 						</div>
 						<div>
 						други подаци за контакт
 						</div>
 						<br></br>
 						<div id ="linija">
+						<xsl:value-of select="organ_vlasti:Zahtev/osnova:potpis" /> 
 						</div>
 						<div>
 						Потпис

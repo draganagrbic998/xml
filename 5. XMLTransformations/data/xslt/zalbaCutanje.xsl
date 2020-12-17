@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+	xmlns:osnova="https://github.com/draganagrbic998/xml/osnova"
+ 	xmlns:poverenik="https://github.com/draganagrbic998/xml/poverenik" version="2.0">
     <xsl:template match="/">
         <html>
             <head>
@@ -70,12 +72,14 @@
             	<p>У складу са чланом 22. Закона о слободном приступу информацијама од јавног значаја подносим:</p>
             	<h1 class = "center">Ж А Л Б У</h1>
             	<p class = "center">против</p>
+            	<p class = "center"><xsl:value-of select="poverenik:Zalba/poverenik:organVlasti"/></p>
             	<p class = "center">( навести назив органа)</p>
             	<p class = "center"><span>због тога што орган власти: </span>
             	<span><b>није поступио / није поступио у целости /  у законском року</b></span>
             	<span>(подвући  због чега се изјављује жалба)</span>
             	</p>
-            	<p>по мом захтеву  за слободан приступ информацијама од јавног значаја који сам поднео  том органу  дана ….................... године, а којим сам тражио/ла да ми се у складу са Законом о слободном приступу информацијама од јавног значаја омогући увид- копија документа који садржи информације  о /у вези са :
+            	<p>по мом захтеву  за слободан приступ информацијама од јавног значаја који сам поднео  том органу  дана <xsl:value-of select="poverenik:Zalba/poverenik:datumZahteva"/> године, а којим сам тражио/ла да ми се у складу са Законом о слободном приступу информацијама од јавног значаја омогући увид- копија документа који садржи информације  о /у вези са :
+            	<xsl:value-of select="poverenik:Zalba/osnova:detalji"/>
             	</p>
             	<p class= "center">(навести податке о захтеву и информацији/ама)</p>
             	<p class = "uvuceno">На основу изнетог, предлажем да Повереник уважи моју жалбу и омогући ми приступ траженој/им  информацији/ма.</p>
@@ -83,31 +87,30 @@
             	<p class = "uvuceno"><b>Напомена: </b>Код жалбе  због непоступању по захтеву у целости, треба приложити и добијени одговор органа власти.</p>
             <div id="maincontainer">
 					<div id="leftcolumn">
-						У , дана године
+						У <xsl:value-of select="poverenik:Zalba/osnova:Gradjanin/osnova:Adresa/osnova:mesto" />, дана <xsl:value-of select="poverenik:Zalba/osnova:datum" /> године
 					</div>
 				
 					<div id="rightcolumn">
 						<div id ="linija">
+						<xsl:value-of select="poverenik:Zalba/osnova:Gradjanin/osnova:Osoba/osnova:ime" /> <xsl:value-of select="poverenik:Zalba/osnova:Gradjanin/osnova:Osoba/osnova:prezime" />
 						</div>
 						<div>
 						Подносилац жалбе / Име и презиме
 						</div>
 						<div id ="linija">
-						</div>
-						<div>
-						потпис
-						</div>
-						<div id ="linija">
+						<xsl:value-of select="poverenik:Zalba/osnova:Gradjanin/osnova:Adresa/osnova:mesto" /> <xsl:value-of select="poverenik:Zalba/osnova:Gradjanin/osnova:Adresa/osnova:ulica" /> <xsl:value-of select="poverenik:Zalba/osnova:Gradjanin/osnova:Adresa/osnova:broj" />
 						</div>
 						<div>
 						адреса
 						</div>
 						<div id ="linija">
+						<xsl:value-of select="poverenik:Zalba/osnova:kontakt" /> 
 						</div>
 						<div>
 						други подаци за контакт
 						</div>
 						<div id ="linija">
+						<xsl:value-of select="poverenik:Zalba/osnova:potpis" /> 
 						</div>
 						<div>
 						Потпис
