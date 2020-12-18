@@ -1,0 +1,113 @@
+<app-form-container>
+    <h2>Registration</h2><br><br>
+    <form [formGroup]="registerForm">
+        <div [class.disabled]="registerPending">
+            <mat-form-field>
+                <mat-label>Email</mat-label>
+                <input 
+                matInput 
+                autocomplete="off"
+                formControlName="email" 
+                placeholder="Unesite email">
+                <mat-error *ngIf="!registerForm.get('email').hasError('emailError')">
+                    Email je obavezan!
+                </mat-error>
+                <mat-error *ngIf="registerForm.get('email').hasError('emailError')">
+                    Email vec postoji!
+                </mat-error>
+                <mat-hint *ngIf="registerForm.pending">
+                    Provera jedinstvenosti email-a...
+                </mat-hint>          
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Lozinka</mat-label>
+                <input 
+                type="password" 
+                matInput 
+                autocomplete="off"
+                formControlName="password"
+                placeholder="Unesite lozinku">
+                <mat-error>
+                    Lozinka je obavezna!
+                </mat-error>    
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Potvrda lozinke</mat-label>
+                <input 
+                type="password" 
+                matInput 
+                autocomplete="off"
+                formControlName="passwordConfirmation"
+                placeholder="Potvrdite lozinku">
+                <mat-error>
+                    Lozinke se ne poklapaju!
+                </mat-error>            
+            </mat-form-field>
+            <br><br>
+            <mat-form-field>
+                <mat-label>Ime</mat-label>
+                <input 
+                matInput 
+                autocomplete="off"
+                formControlName="ime"
+                placeholder="Unesite ime">
+                <mat-error>
+                    Ime je obavezno!
+                </mat-error>    
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Prezime</mat-label>
+                <input 
+                matInput 
+                autocomplete="off"
+                formControlName="prezime"
+                placeholder="Unesite prezime">
+                <mat-error>
+                    Prezime je obavezno!
+                </mat-error>    
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Mesto</mat-label>
+                <input 
+                matInput 
+                autocomplete="off"
+                formControlName="mesto"
+                placeholder="Unesite mesto">
+                <mat-error>
+                    Mesto je obavezno!
+                </mat-error>    
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Ulica</mat-label>
+                <input 
+                matInput 
+                autocomplete="off"
+                formControlName="ulica"
+                placeholder="Unesite ulicu">
+                <mat-error>
+                    Ulica je obavezna!
+                </mat-error>    
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Broj ulice</mat-label>
+                <input 
+                matInput 
+                autocomplete="off"
+                formControlName="broj"
+                placeholder="Unesite broj ulica">
+                <mat-error>
+                    Broj ulice je obavezan!
+                </mat-error>    
+            </mat-form-field>
+        </div>
+        <br><br>
+        <app-center-container>
+            <button 
+            *ngIf="!registerPending"
+            mat-raised-button 
+            color="primary"
+            (click)="register()">Register</button>
+            <app-spinner-button *ngIf="registerPending"></app-spinner-button>
+        </app-center-container>
+    </form>
+</app-form-container>

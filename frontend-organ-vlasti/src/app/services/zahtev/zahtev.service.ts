@@ -13,6 +13,8 @@ export class ZahtevService {
     private http: HttpClient
   ) { }
 
+  private readonly API_ZAHTEVI = `${environment.baseUrl}/${environment.apiZahtevi}`;
+
   private jsonToXml(zahtev: Zahtev): string{
     if (zahtev.tipUvida !== 'dostava'){
       return `
@@ -33,7 +35,12 @@ export class ZahtevService {
 
   save(zahtev: Zahtev): Observable<null>{
     const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
-    return this.http.post<null>(`${environment.baseUrl}/${environment.apiZahtevi}`, this.jsonToXml(zahtev), options);
+    return this.http.post<null>(this.API_ZAHTEVI, this.jsonToXml(zahtev), options);
+  }
+
+  view(documentIndex: number): Observable<string>{
+    const headers = new HttpHeaders().set('Content-Type', 'text/xml');
+    return this.http.get<string>(`${this.API_ZAHTEVI}/${documentIndex}`, {headers, responseType: 'text' as 'json'});
   }
 
 }

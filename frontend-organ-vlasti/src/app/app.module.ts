@@ -25,6 +25,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
+import { RegisterFormComponent } from './components/main/register-form/register-form.component';
+import { SafeHtmlPipe } from './safe-html.pipe';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import { AuthInterceptor } from './interceptor/auth.interceptor';
     ZahtevDetailsComponent,
     SpinnerButtonComponent,
     PaginatorComponent,
-    CenterContainerComponent
+    CenterContainerComponent,
+    RegisterFormComponent,
+    SafeHtmlPipe
   ],
   imports: [
     BrowserModule,

@@ -36,7 +36,13 @@ public class ExistManager {
 			this.createConnection();
 			collection = this.getCollection(collectionId, 0);
 			if (documentId == null) {
-				documentId = collection.createId();
+				String[] array = collection.listResources();
+				if (array.length == 0) {
+					documentId = "1";
+				}
+				else {
+					documentId = (Integer.parseInt(array[array.length - 1]) + 1	) + "";				
+				}
 			}
 			resource = (XMLResource) collection.createResource(documentId, XMLResource.RESOURCE_TYPE);
 			resource.setContent(out);
@@ -67,6 +73,7 @@ public class ExistManager {
 		}
 	}
 	
+	
 	public XMLResource load(String collectionId, String documentId) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
 		Collection collection = null;
 		XMLResource resource = null;
@@ -81,6 +88,23 @@ public class ExistManager {
 		}
 		return resource;
 	}
+	
+	public XMLResource load(String collectionId, int documentIndex) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
+		Collection collection = null;
+		XMLResource resource = null;
+		try {
+			this.createConnection();
+			collection = this.getCollection(collectionId, 0);
+			collection.setProperty(OutputKeys.INDENT, "yes");
+			String documentId = collection.listResources()[documentIndex-1];
+			resource = (XMLResource) collection.getResource(documentId);
+		}
+		finally {
+			collection.close();			
+		}
+		return resource;
+	}
+
 	
 	private Collection getCollection(String collectionId, int pathSegmentOffset) throws XMLDBException {
 		
