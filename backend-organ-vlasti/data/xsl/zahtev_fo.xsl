@@ -13,7 +13,7 @@
 	</xsl:variable>
 	
     <xsl:template match="/">
-        <fo:root>
+        <fo:root font-family="Arial">
             <fo:layout-master-set>
                 <fo:simple-page-master master-name="zahtev-page">
                     <fo:region-body margin="0.75in"/>
@@ -27,15 +27,16 @@
 				    </fo:block>
 				</fo:static-content>
                 <fo:flow flow-name="xsl-region-body" linefeed-treatment="preserve">
-                    <fo:block text-align="center" font-family="sans-serif" font-size="12px" padding="10px">
-                        <fo:inline>
-                            <xsl:value-of select="organ_vlasti:Zahtev/organ_vlasti:OrganVlasti/organ_vlasti:naziv"/>, <xsl:value-of select="organ_vlasti:Zahtev/organ_vlasti:OrganVlasti/organ_vlasti:sediste"/>
-                        </fo:inline>
-                        ................................................................................................................................................
-                        naziv i sedište organa kome se zahtev upucuje
-                    	<xsl:value-of select="$NewLine" />
-                    	<xsl:value-of select="$NewLine" />
+                
+                	<!-- odavde pocinje paragrag organa vlasti -->
+                    <fo:block border-bottom="1px dotted black" text-align="center" font-size="12px" margin-left="50px" margin-right="50px">
+                        <xsl:variable name="naziv" select="organ_vlasti:Zahtev/organ_vlasti:OrganVlasti/organ_vlasti:naziv"></xsl:variable>
+                        <xsl:variable name="sediste" select="organ_vlasti:Zahtev/organ_vlasti:OrganVlasti/organ_vlasti:sediste"></xsl:variable>
+                        <xsl:value-of select="concat($naziv, concat(', ', $sediste))"></xsl:value-of> 
+                    назив и седиште органа коме се захтев упућује
                     </fo:block>
+                    <!-- a ovde ses zavrsava -->
+                    
                     <fo:block linefeed-treatment="preserve" text-align="center" font-family="sans-serif" font-size="14px" font-weight="bold" padding="10px">
                         Z A H T E V
                         za pristup informaciji od javnog znacaja

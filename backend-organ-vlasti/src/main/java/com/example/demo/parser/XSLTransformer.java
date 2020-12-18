@@ -63,6 +63,7 @@ public class XSLTransformer {
 		StreamSource transformSource = new StreamSource(xslFile);
 		StreamSource source = new StreamSource(new StringReader(sourceStr));
 		FopFactory fopFactory = FopFactory.newInstance(new File(fopPath));
+		
 		FOUserAgent userAgent = fopFactory.newFOUserAgent();
 		ByteArrayOutputStream outStream = new ByteArrayOutputStream();
 		Transformer xslFoTransformer = this.transformerFactory.newTransformer(transformSource);

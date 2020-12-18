@@ -6,8 +6,9 @@ xmlns:osnova="https://github.com/draganagrbic998/xml/osnova">
     
 		<html>
 			<head>
-
-
+			
+			
+			
 			  <style type="text/css">
 				div.root{
 					width: 520px;
@@ -98,6 +99,8 @@ xmlns:osnova="https://github.com/draganagrbic998/xml/osnova">
 			</head>
 			<body>
 				<div class="root">
+				
+				
 				<p class="dotted">
 	               <xsl:value-of select="organ_vlasti:Zahtev/organ_vlasti:OrganVlasti/organ_vlasti:naziv"></xsl:value-of>, 
 	               <xsl:value-of select="organ_vlasti:Zahtev/organ_vlasti:OrganVlasti/organ_vlasti:sediste"></xsl:value-of> 
