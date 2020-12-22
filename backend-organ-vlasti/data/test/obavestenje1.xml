@@ -26,14 +26,14 @@
     </organ_vlasti:Zahtev>
     <organ_vlasti:Uvid>
         <osnova:Adresa>
-            <osnova:mesto>BtwolcFbs.8mIEpxmp03jhyCM</osnova:mesto>
-            <osnova:ulica>T20.m5OEHljU1r8Dtth8whw-jZux</osnova:ulica>
-            <osnova:broj>jXmKBTUnhKgmI3PkmBSLsIzx7OS3b</osnova:broj>
+            <osnova:mesto>Novi Sad</osnova:mesto>
+            <osnova:ulica>Lasla Gala</osnova:ulica>
+            <osnova:broj>23</osnova:broj>
         </osnova:Adresa>
-        <organ_vlasti:kancelarija>aYI2CXnNoOiyQ52y</organ_vlasti:kancelarija>
-        <organ_vlasti:datum>2021-03-04Z</organ_vlasti:datum>
-        <organ_vlasti:pocetak>60:60</organ_vlasti:pocetak>
-        <organ_vlasti:kraj>1:48</organ_vlasti:kraj>
+        <organ_vlasti:kancelarija>201</organ_vlasti:kancelarija>
+        <organ_vlasti:datum>2021-03-04</organ_vlasti:datum>
+        <organ_vlasti:pocetak>12:00</organ_vlasti:pocetak>
+        <organ_vlasti:kraj>14:00</organ_vlasti:kraj>
     </organ_vlasti:Uvid>
     <organ_vlasti:kopija>34787648</organ_vlasti:kopija>
     <organ_vlasti:potpis>70767174708276726685737669848065</organ_vlasti:potpis>
