@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<poverenik:Zalba xmlns:osnova="https://github.com/draganagrbic998/xml/osnova"
+ xmlns:poverenik="https://github.com/draganagrbic998/xml/poverenik"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="https://github.com/draganagrbic998/xml/poverenik file:/C:/Users/Dragana/Desktop/schema_upgrade2/schemas/poverenik.xsd" xsi:type="poverenik:TZalbaCutanje">
+    <osnova:datum>2021-02-04Z</osnova:datum>
+    <osnova:Gradjanin>
+        <osnova:Osoba>
+            <osnova:ime>FnedQ_GbJ9sOzGaseQjn1.aC9</osnova:ime>
+            <osnova:prezime>wC9</osnova:prezime>
+        </osnova:Osoba>
+        <osnova:Adresa>
+            <osnova:mesto>oW_gXi</osnova:mesto>
+            <osnova:ulica>pTL3saYnBg6Z.PM8</osnova:ulica>
+            <osnova:broj>q_1WkkgcOsFPC07FIhP0J</osnova:broj>
+        </osnova:Adresa>
+    </osnova:Gradjanin>
+    <osnova:OrganVlasti>
+        <osnova:naziv>nDn__dRmYLhmg2</osnova:naziv>
+        <osnova:sediste>RulbSUb3uXrQUozKmTecaE</osnova:sediste>
+    </osnova:OrganVlasti>
+    <osnova:detalji>ClHeL3</osnova:detalji>
+    <osnova:status>cekanje</osnova:status>
+    <osnova:kontakt>Cf0o</osnova:kontakt>
+    <osnova:potpis>67656875828485757866886684776588736683737666847185706683838682767286798166718985827268818380668685808188</osnova:potpis>
+    <poverenik:organVlasti>QhdH0Rf8c.yM3H3n7H</poverenik:organVlasti>
+    <poverenik:datumZahteva>2021-04-13</poverenik:datumZahteva>
+    <poverenik:tipCutanja>nije postupio u celosti</poverenik:tipCutanja>
+</poverenik:Zalba>

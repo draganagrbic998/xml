@@ -2,6 +2,9 @@ package com.example.demo.parser;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.StringReader;
 
 import javax.xml.transform.Result;
@@ -18,6 +21,8 @@ import org.apache.fop.apps.FopFactory;
 import org.apache.fop.apps.MimeConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.w3c.dom.Node;
+import org.xml.sax.SAXException;
 import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
 
@@ -35,6 +40,36 @@ public class XSLTransformer {
 	}
 	
 	private String fopPath = "data/fop.conf";
+	
+	private void testHtml(Node node, String xslPath, String xslTestPath) throws TransformerException, IOException {
+		StreamSource in = new StreamSource(new StringReader(this.domParser.buildXml(node)));
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		Transformer transformer = this.transformerFactory.newTransformer(new StreamSource(new File(xslPath)));
+		Result output = new StreamResult(out);
+		transformer.transform(in, output);
+		FileOutputStream fout = new FileOutputStream(new File(xslTestPath));
+		fout.write(out.toByteArray());
+		fout.close();
+	}
+	
+	public void testPdf(Node node, String xslFoPath, String xslFoTestPath) throws TransformerException, SAXException, IOException {
+		StreamSource in = new StreamSource(new StringReader(this.domParser.buildXml(node)));
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		Transformer transformer = this.transformerFactory.newTransformer(new StreamSource(new File(xslFoPath)));
+		FopFactory foFactory = FopFactory.newInstance(new File(fopPath));
+		FOUserAgent foUserAgent = foFactory.newFOUserAgent();
+		Fop fop = foFactory.newFop(MimeConstants.MIME_PDF, foUserAgent, out);
+		Result output = new SAXResult(fop.getDefaultHandler());
+		transformer.transform(in, output);
+		FileOutputStream fout = new FileOutputStream(new File(xslFoTestPath));
+		fout.write(out.toByteArray());
+		fout.close();
+	}
+	
+	public void testTransforming(Node node, String xslPath, String xslFoPath, String xslTestPath, String xslFoTestPath) throws TransformerException, FileNotFoundException, IOException, SAXException {
+		this.testHtml(node, xslPath, xslTestPath);
+		this.testPdf(node, xslFoPath, xslFoTestPath);
+	}
 
 	
 	public String xml2html(XMLResource resource, String xslFilePath) throws TransformerException, XMLDBException {
