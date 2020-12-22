@@ -28,22 +28,37 @@ version="2.0">
                 <fo:flow flow-name="xsl-region-body" linefeed-treatment="preserve">
                 
                 	<!-- odavde pocinje nasa prica -->
+                	<!-- tri linije -->
                 	
+                	<fo:block-container height="4cm" width="18cm" top="11.0cm" left="0cm" position="absolute">
+              			<fo:block border-bottom="solid" border-bottom-width="0.2mm">
+              			</fo:block>
+              		</fo:block-container>
+              		<fo:block-container height="4cm" width="18cm" top="11.6cm" left="0cm" position="absolute">
+              			<fo:block border-bottom="solid" border-bottom-width="0.2mm">
+              			</fo:block>
+              		</fo:block-container>
+              		<fo:block-container height="4cm" width="18cm" top="12.2cm" left="0cm" position="absolute">
+              			<fo:block border-bottom="solid" border-bottom-width="0.2mm">
+              			</fo:block>              			
+              		</fo:block-container>
+              		
+              		
                 	<fo:block>
                 	
                 		<fo:block text-align="center">
                 		
-                			<fo:inline-container inline-progression-dimension="40%">
+                			<fo:inline-container inline-progression-dimension="45%">
                 			
                 				<fo:block border-bottom="1px solid black">
                 				
-                					<xsl:value-of select="organ_vlasti:Obavestenje/organ_vlasti:OrganVlasti/organ_vlasti:naziv"></xsl:value-of>
+									<xsl:value-of select="organ_vlasti:Obavestenje/organ_vlasti:Zahtev/osnova:OrganVlasti/osnova:naziv"></xsl:value-of>,
                 					
                 				</fo:block>
                 				
                 				<fo:block border-bottom="1px solid black">
                 				
-                					<xsl:value-of select="organ_vlasti:Obavestenje/organ_vlasti:OrganVlasti/organ_vlasti:sediste"></xsl:value-of>
+	                				<xsl:value-of select="organ_vlasti:Obavestenje/organ_vlasti:Zahtev/osnova:OrganVlasti/osnova:sediste"></xsl:value-of>
                 					
                 				</fo:block>
                 				
@@ -102,16 +117,16 @@ version="2.0">
                 		
                 			<fo:inline-container inline-progression-dimension="60%">
                 			
-                				<fo:block border-bottom="1px solid black" border-top="1px solid black">
+                				<fo:block border-bottom="1px solid black">
                 				
-								<xsl:variable name="osoba" select="organ_vlasti:Obavestenje/organ_vlasti:Podnosenje/osnova:Gradjanin/osnova:Osoba"></xsl:variable>
+								<xsl:variable name="osoba" select="organ_vlasti:Obavestenje/organ_vlasti:Zahtev/osnova:Gradjanin/osnova:Osoba"></xsl:variable>
 								<xsl:value-of select="concat($osoba/osnova:ime, concat(' ', $osoba/osnova:prezime))"></xsl:value-of>
                 				
                 				</fo:block>
                 				
                 				<fo:block border-bottom="1px solid black">
                 				
-								<xsl:variable name="adresa" select="organ_vlasti:Obavestenje/organ_vlasti:Podnosenje/osnova:Gradjanin/osnova:Adresa"></xsl:variable>
+								<xsl:variable name="adresa" select="organ_vlasti:Obavestenje/organ_vlasti:Zahtev/osnova:Gradjanin/osnova:Adresa"></xsl:variable>
 								<xsl:value-of select="concat($adresa/osnova:ulica, concat(' ', concat($adresa/osnova:broj, concat(', ', $adresa/osnova:mesto))))"></xsl:value-of>
                 				
                 				</fo:block>
@@ -141,9 +156,9 @@ version="2.0">
                 		
                 		
                 		<fo:block margin-top="20px" linefeed-treatment="ignore" text-indent="40px" text-align="justify">
-                <xsl:variable name="dan" select="substring-after(substring-after(organ_vlasti:Obavestenje/organ_vlasti:Podnosenje/osnova:datum, '-'), '-')"></xsl:variable>
-                <xsl:variable name="mesec" select="substring-before(substring-after(organ_vlasti:Obavestenje/organ_vlasti:Podnosenje/osnova:datum, '-'), '-')"></xsl:variable>
-                <xsl:variable name="godina" select="substring-before(organ_vlasti:Obavestenje/organ_vlasti:Podnosenje/osnova:datum, '-')"></xsl:variable>
+                <xsl:variable name="dan" select="substring-after(substring-after(organ_vlasti:Obavestenje/organ_vlasti:Zahtev/osnova:datum, '-'), '-')"></xsl:variable>
+                <xsl:variable name="mesec" select="substring-before(substring-after(organ_vlasti:Obavestenje/organ_vlasti:Zahtev/osnova:datum, '-'), '-')"></xsl:variable>
+                <xsl:variable name="godina" select="substring-before(organ_vlasti:Obavestenje/organ_vlasti:Zahtev/osnova:datum, '-')"></xsl:variable>
                 		На основу члана 16. ст. 1. Закона о слободном приступу информацијама од 
                 		јавног значаја, поступајући по вашем захтеву за слободан приступ 
                 		информацијама од
@@ -156,13 +171,23 @@ version="2.0">
                 		
                 		</fo:block>
                 		
-                		<fo:block border-bottom="1px solid black">
+                		<fo:block>
                 		
-						<xsl:value-of select="organ_vlasti:Obavestenje/organ_vlasti:Podnosenje/osnova:detalji"></xsl:value-of>
+						<xsl:value-of select="organ_vlasti:Obavestenje/organ_vlasti:Zahtev/osnova:detalji"></xsl:value-of>
                 		
                 		</fo:block>
                 		
                 		<fo:block text-align="center" line-height="5px">
+                		<xsl:value-of select="$NewLine"></xsl:value-of>
+                		<xsl:value-of select="$NewLine"></xsl:value-of>
+                		<xsl:value-of select="$NewLine"></xsl:value-of>
+                		<xsl:value-of select="$NewLine"></xsl:value-of>
+                		<xsl:value-of select="$NewLine"></xsl:value-of>
+                		<xsl:value-of select="$NewLine"></xsl:value-of>
+                		<xsl:value-of select="$NewLine"></xsl:value-of>
+                		<xsl:value-of select="$NewLine"></xsl:value-of>
+                		<xsl:value-of select="$NewLine"></xsl:value-of>
+                		<xsl:value-of select="$NewLine"></xsl:value-of>
                 		(опис тражене информације)
                 		</fo:block>
                 		
@@ -253,6 +278,7 @@ version="2.0">
                 		
                 		</fo:block>
                 		
+                		
                 		<fo:block margin-top="12px">
                 		
                 			<fo:inline-container inline-progression-dimension="30%">
@@ -295,7 +321,6 @@ version="2.0">
                 		</fo:block>
                 	
                 	</fo:block>
-					
                 </fo:flow>
             </fo:page-sequence>
         </fo:root>

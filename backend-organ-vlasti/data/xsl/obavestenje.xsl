@@ -12,14 +12,48 @@ xmlns:organ_vlasti="https://github.com/draganagrbic998/xml/organ_vlasti">
 			</head>
 			
 			<body style="max-width: 550px; margin: auto; border: 1px solid black; padding: 50px;">
+				<p style="text-align: justify; display: inline; margin-bottom:4px;">
+					<span style="width:37%; display: block; height:13pt; border-bottom: 1px solid black;">
+						<xsl:value-of select="organ_vlasti:Obavestenje/organ_vlasti:Zahtev/osnova:OrganVlasti/osnova:naziv"></xsl:value-of>,
+	               	</span>
+					<span style="display: block; height:13pt; width:37%; border-bottom: 1px solid black;">
+	                	<xsl:value-of select="organ_vlasti:Obavestenje/organ_vlasti:Zahtev/osnova:OrganVlasti/osnova:sediste"></xsl:value-of>
+	                </span>
+	                (назив и седиште органа)
+	            </p>
+	            
+	            <p style="margin-top: 0; text-align: left; margin-bottom:0px;">
+					Број предмета: <span style="display: inline-block; height:13pt; width:25%; border-bottom: 1px solid black;">
+						<xsl:value-of select="organ_vlasti:Obavestenje/osnova:broj"></xsl:value-of>
+					</span>
+				</p>
 				
+				<p style="margin-top: 0; text-align: left;">
+					Датум: <span style="display: inline-block; margin-left: 50px; height:13pt; width:25%; border-bottom: 1px solid black;">
+						<xsl:value-of select="organ_vlasti:Obavestenje/osnova:datum"></xsl:value-of>
+					</span>
+				</p>
+				
+				<p style="display: inline; margin-bottom:4px;">
+					<span style="width:80%; display: block; height:13pt; border-bottom: 1px solid black;">
+	               		<xsl:value-of select="organ_vlasti:Obavestenje/organ_vlasti:Zahtev/osnova:Gradjanin/osnova:Osoba/osnova:ime"></xsl:value-of>&#160;&#160;&#160;&#160;
+	               		<xsl:value-of select="organ_vlasti:Obavestenje/organ_vlasti:Zahtev/osnova:Gradjanin/osnova:Osoba/osnova:prezime"></xsl:value-of>
+	               	</span>
+					<span style="display: block; height:13pt; width:80%; border-bottom: 1px solid black;">
+	               		<xsl:value-of select="organ_vlasti:Obavestenje/organ_vlasti:Zahtev/osnova:Gradjanin/osnova:Adresa/osnova:ulica"></xsl:value-of>&#160;
+	                	<xsl:value-of select="organ_vlasti:Obavestenje/organ_vlasti:Zahtev/osnova:Gradjanin/osnova:Adresa/osnova:broj"></xsl:value-of>&#160;
+	                	<xsl:value-of select="organ_vlasti:Obavestenje/organ_vlasti:Zahtev/osnova:Gradjanin/osnova:Adresa/osnova:mesto"></xsl:value-of>
+	                </span>
+	               	Име и презиме / назив / и адреса подносиоца захтева
+	            </p>
+        
 				<h3 style="text-align: center; font-weight: bold;">
 					О Б А В Е Ш Т Е Њ Е<br></br>
 					о стављању на увид документа који садржи<br></br>
 					тражену информацију и о изради копије
 				</h3>
 				
-				<p style="text-indent: 40px; text-align: justify;">
+				<p style="text-indent: 40px; text-align: justify; margin-bottom:4px;">
 					<xsl:variable name="datumZahteva" select="organ_vlasti:Obavestenje/organ_vlasti:Zahtev/osnova:datum"></xsl:variable>
 					<xsl:variable name="danZahteva" select="substring-after(substring-after($datumZahteva, '-'), '-')"></xsl:variable>
 					<xsl:variable name="mesecZahteva" select="substring-before(substring-after($datumZahteva, '-'), '-')"></xsl:variable>
@@ -32,10 +66,17 @@ xmlns:organ_vlasti="https://github.com/draganagrbic998/xml/organ_vlasti">
 					год., којим сте тражили увид у документ/е са информацијама о / у вези са:
 				</p>
 				
-				<p style="border-bottom: 1px solid black; margin-bottom: 0;">
-					<xsl:value-of select="organ_vlasti:Obavestenje/organ_vlasti:Zahtev/osnova:detalji"></xsl:value-of>
-				</p>
-				<p style="margin-top: 0; text-align: center;">
+				<p style="text-align: justify; display: inline;">
+					<span style="width:100%; display: inline-block; height:13pt; border-bottom: 1px solid black;">
+						<xsl:value-of select="organ_vlasti:Obavestenje/organ_vlasti:Zahtev/osnova:detalji"></xsl:value-of>
+	               	</span>
+					<span style="display: inline-block; height:13pt; width:100%; border-bottom: 1px solid black;">
+	                </span>
+					<span style="display: inline-block; height:13pt;width:100%; border-bottom: 1px solid black;">
+	                </span>				
+	            </p>
+				
+				<p style="margin-top: 0; text-align: center; ">
 					(опис тражене информације)
 				</p>
 				<p style="text-align: justify">
