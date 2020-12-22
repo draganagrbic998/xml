@@ -7,6 +7,7 @@
     <xsl:variable name="NewLine">
     <xsl:text>&#xa;</xsl:text>
 	</xsl:variable>
+
 	
     <xsl:template match="/">
         <fo:root font-family="Times New Roman" font-size="14px">
@@ -27,8 +28,8 @@
                 	<!-- odavde pocinje nasa prica -->
                 
                     <fo:block text-align="center" border-bottom="1px dotted black" margin-left="50px" margin-right="50px">
-                        <xsl:variable name="naziv" select="organ_vlasti:Zahtev/organ_vlasti:OrganVlasti/organ_vlasti:naziv"></xsl:variable>
-                        <xsl:variable name="sediste" select="organ_vlasti:Zahtev/organ_vlasti:OrganVlasti/organ_vlasti:sediste"></xsl:variable>
+                        <xsl:variable name="naziv" select="organ_vlasti:Zahtev/osnova:OrganVlasti/osnova:naziv"></xsl:variable>
+                        <xsl:variable name="sediste" select="organ_vlasti:Zahtev/osnova:OrganVlasti/osnova:sediste"></xsl:variable>
                         <xsl:value-of select="concat($naziv, concat(', ', $sediste))"></xsl:value-of> 
                     </fo:block>
                     <fo:block text-align="center" line-height="7px" font-size="12px">
@@ -57,7 +58,7 @@
                     
                     <fo:block margin-top="5px" linefeed-treatment="ignore">
 	                    <fo:list-block start-indent="40px">
-	                    	<xsl:variable name="tipUvida" select="organ_vlasti:Zahtev/organ_vlasti:tipUvida"></xsl:variable>
+	                    	<xsl:variable name="tipUvida" select="organ_vlasti:Zahtev/organ_vlasti:tipZahteva"></xsl:variable>
 							<fo:list-item>
 								 <fo:list-item-label end-indent="label-end()">
 								   <fo:block>
@@ -169,7 +170,7 @@
 											 </fo:block>
 								           </fo:footnote-body>
 								         </fo:footnote>
-										<fo:inline border-bottom="1px solid black">
+										<fo:inline>
 										<xsl:value-of select="$opisDostave"></xsl:value-of>
 										</fo:inline>
 						         	 </fo:block>
@@ -186,8 +187,32 @@
                     
                     <fo:block margin-top="5px" text-indent="40px">
                     Овај захтев се односи на следеће информације: 
-                    <xsl:value-of select="organ_vlasti:Zahtev/osnova:detalji"></xsl:value-of>
+                    	&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<xsl:value-of select="organ_vlasti:Zahtev/osnova:detalji"></xsl:value-of>
                     </fo:block>
+                    
+                    <!-- linije -->
+                    <fo:block-container height="4cm" width="9.2cm" top="11.1cm" left="8cm" position="absolute">
+              			<fo:block border-bottom="solid" border-bottom-width="0.2mm">
+              			</fo:block>
+              		</fo:block-container>
+              		
+                    <fo:block-container height="4cm" width="15.8cm" top="12.4cm" left="1.4cm" position="absolute">
+              			<fo:block border-bottom="solid" border-bottom-width="0.2mm">
+              			</fo:block>
+              		</fo:block-container>
+              		<fo:block-container height="4cm" width="17.2cm" top="13cm" left="0cm" position="absolute">
+              			<fo:block border-bottom="solid" border-bottom-width="0.2mm">
+              			</fo:block>
+              		</fo:block-container>
+              		<fo:block-container height="4cm" width="17.2cm" top="13.6cm" left="0cm" position="absolute">
+              			<fo:block border-bottom="solid" border-bottom-width="0.2mm">
+              			</fo:block>              			
+              		</fo:block-container>
+              		<fo:block-container height="4cm" width="17.2cm" top="13.3cm" left="0cm" position="absolute">
+              			<fo:block font-size="10px" margin-top="0px">
+              				(навести што прецизнији опис информације која се тражи као и друге податке који олакшавају проналажење тражене информације)
+              			</fo:block>
+              		</fo:block-container>
                     
                     <fo:block-container position="absolute" top="17cm" left="0cm" linefeed-treatment="ignore">
 	                <xsl:variable name="dan" select="substring-after(substring-after(organ_vlasti:Zahtev/osnova:datum, '-'), '-')"></xsl:variable>
