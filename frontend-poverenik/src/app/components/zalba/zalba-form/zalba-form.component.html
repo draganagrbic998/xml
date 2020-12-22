@@ -65,6 +65,13 @@
                     Morate uneti broj odluke!
                 </mat-error>
             </mat-form-field>
+            <mat-form-field *ngIf="zalbaOdbijanje"> 
+                <mat-label>Datum donošenja odluke:</mat-label>
+                <input matInput formControlName="datumOdluke" [matDatepicker]="datumOdlukePicker" 
+                placeholder="Unesite datum donošenja odluke">
+                <mat-datepicker-toggle matSuffix [for]="datumOdlukePicker"></mat-datepicker-toggle>
+                <mat-datepicker #datumOdlukePicker></mat-datepicker>
+            </mat-form-field>    
             <mat-form-field appearance="outline" *ngIf="zalbaOdbijanje">
                 <mat-label>Deo u kojem ste nezadovoljni</mat-label>
                 <textarea 
@@ -87,7 +94,7 @@
                 <button 
                 *ngIf="zalbaOdbijanje || zalbaDelimicnost"
                 mat-stroked-button 
-                (click)="odlukaFile.emit()">
+                (click)="odlukaFile.click()">
                 Priloži kopiju odluke
                 </button>
             

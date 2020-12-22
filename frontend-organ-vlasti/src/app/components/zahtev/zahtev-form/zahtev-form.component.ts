@@ -1,66 +1,50 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AfterViewInit, Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { SNACKBAR_CLOSE, SNACKBAR_ERROR, SNACKBAR_ERROR_OPTIONS, SNACKBAR_SUCCESS_OPTIONS } from 'src/app/constants/snackbar';
+import { XonomyService } from 'src/app/services/xonomy/xonomy.service';
 import { ZahtevService } from 'src/app/services/zahtev/zahtev.service';
+
+declare const Xonomy: any;
 
 @Component({
   selector: 'app-zahtev-form',
   templateUrl: './zahtev-form.component.html',
   styleUrls: ['./zahtev-form.component.sass']
 })
-export class ZahtevFormComponent implements OnInit {
+export class ZahtevFormComponent implements AfterViewInit {
 
   constructor(
     private zahtevService: ZahtevService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private xonomyService: XonomyService
   ) { }
 
   zahtevPending = false;
-  zahtevForm: FormGroup = new FormGroup({
-    detalji: new FormControl('', [Validators.required, Validators.pattern(new RegExp('\\S'))]),
-    tipUvida: new FormControl('posedovanje', [Validators.required]),
-    tipDostave: new FormControl('posta', [Validators.required]),
-    opisDostave: new FormControl('', [Validators.required]),
-  });
-
-  get dostavaOdabrana(): boolean{
-    return this.zahtevForm.value.tipUvida === 'dostava';
-  }
-
-  get ostalaDostavaOdabrana(): boolean{
-    return this.dostavaOdabrana && this.zahtevForm.value.tipDostave === 'ostalo';
-  }
-
-  refreshForm(): void{
-    if (!this.dostavaOdabrana){
-      this.zahtevForm.get('tipDostave').setErrors(null);
-    }
-    if (!this.ostalaDostavaOdabrana){
-      this.zahtevForm.get('opisDostave').setErrors(null);
-    }
-  }
 
   posaljiZahtev(): void{
-    this.refreshForm();
-    if (this.zahtevForm.invalid){
-      return;
-    }
+
+    const xml = Xonomy.harvest();
+    console.log(xml);
+    /*
+
     this.zahtevPending = true;
     this.zahtevService.save(this.zahtevForm.value).subscribe(
       () => {
         this.zahtevPending = false;
         this.snackBar.open('Zahtev je uspešno poslat!', SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);
-        this.zahtevForm.reset();
       },
       () => {
         this.zahtevPending = false;
         this.snackBar.open(SNACKBAR_ERROR, SNACKBAR_CLOSE, SNACKBAR_ERROR_OPTIONS);
       }
-    );
+    );*/
   }
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void{
+
+    const editor = document.getElementById('editor');
+    const specification = this.xonomyService.testSpecification;
+    const xmlString = `<Fakultet xmlns='https://github.com/draganagrbic998/xml'></Fakultet>`;
+    Xonomy.render(xmlString, editor, specification);
   }
 
 }

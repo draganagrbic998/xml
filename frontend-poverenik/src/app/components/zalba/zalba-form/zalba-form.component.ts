@@ -65,6 +65,7 @@ export class ZalbaFormComponent implements OnInit {
 
   posaljiZalbu(): void{
     this.refreshForm();
+    console.log(this.zalbaForm.value);
     if (this.zalbaForm.invalid){
       return;
     }

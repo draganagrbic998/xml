@@ -14,6 +14,8 @@ export class ZalbaService {
     private http: HttpClient
   ) { }
 
+  private readonly API_ZALBE = `${environment.baseUrl}/${environment.apiZalbe}`;
+
   private jsonToXml(zalba: Zalba): string{
 
     let base =
@@ -49,6 +51,11 @@ export class ZalbaService {
   save(zalba: Zalba): Observable<null>{
     const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
     return this.http.post<null>(`${environment.baseUrl}/${environment.apiZalbe}`, this.jsonToXml(zalba), options);
+  }
+
+  view(documentIndex: number): Observable<string>{
+    const headers = new HttpHeaders().set('Content-Type', 'text/xml');
+    return this.http.get<string>(`${this.API_ZALBE}/${documentIndex}`, {headers, responseType: 'text' as 'json'});
   }
 
 }

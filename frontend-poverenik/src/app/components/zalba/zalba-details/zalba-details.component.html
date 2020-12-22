@@ -1,1 +1,5 @@
-<p>zalba-details works!</p>
+<button (click)="click()">KLIKNI</button>
+
+<app-form-container>
+    <div [innerHTML]="zalbaView | safeHtml"></div>
+</app-form-container>

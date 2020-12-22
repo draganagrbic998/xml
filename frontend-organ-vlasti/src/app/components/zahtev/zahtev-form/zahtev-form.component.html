@@ -1,54 +1,12 @@
 <app-form-container>
     <h3>Zahtev za pristup informacijama od javnog značaja</h3><br><br>
-    <form [formGroup]="zahtevForm">
-        <div [class.disabled]="zahtevPending">
-            <mat-form-field appearance="outline">
-                <mat-label>Opis tražene informacije</mat-label>
-                <textarea 
-                matInput 
-                autocomplete="off"
-                formControlName="detalji"
-                rows="4"></textarea>
-            </mat-form-field>        
-            <mat-form-field>
-                <mat-label>Pravo koje želite da ostvarite</mat-label>
-                <mat-select formControlName="tipUvida">
-                    <mat-option [value]="'posedovanje'">
-                        obaveštenje da li organ poseduje traženu informaciju
-                    </mat-option>
-                    <mat-option [value]="'uvid'">
-                        uvid u dokument koji sadrži traženu informaciju
-                    </mat-option>
-                    <mat-option [value]="'kopija'">
-                        kopija dokumenta koji sadrži traženu informaciju
-                    </mat-option>
-                    <mat-option [value]="'dostava'">
-                        dostava dokumenta koji sadrži traženu informaciju
-                    </mat-option>
-                </mat-select>                
-            </mat-form-field>
-            <mat-form-field *ngIf="dostavaOdabrana">
-                <mat-label>Način dostave</mat-label>
-                <mat-select formControlName="tipDostave">
-                    <mat-option [value]="'posta'">poštom</mat-option>
-                    <mat-option [value]="'email'">elektronskom poštom</mat-option>
-                    <mat-option [value]="'faks'">faksom</mat-option>
-                    <mat-option [value]="'ostalo'">na drugi način</mat-option>
-                </mat-select>                
-            </mat-form-field>
-            <mat-form-field *ngIf="dostavaOdabrana && ostalaDostavaOdabrana">
-                <mat-label>Opis dostave</mat-label>
-                <input 
-                matInput 
-                autocomplete="off"
-                formControlName="opisDostave"
-                placeholder="Opišite način dostave">
-                <mat-error>
-                    Morate opisati način dostave!
-                </mat-error>    
-            </mat-form-field>
-            <br>
+    <form>
+        <div id="editor">
+
+
+                
         </div>
+
         <br><br>
         <app-center-container>
             <button 

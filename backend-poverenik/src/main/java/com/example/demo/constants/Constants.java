@@ -7,5 +7,6 @@ public class Constants {
 	public static final String FRONTEND_URL = "http://localhost:4200";	//treba da bude 4201
 	public static final String SIGNATURE = "xml-signature";
 	public static final String DATE_FORMAT = "yyyy-MM-dd";
+	public static final String XSL_FOLDER = "data/xsl";
 
 }

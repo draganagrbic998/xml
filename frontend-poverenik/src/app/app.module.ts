@@ -27,6 +27,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { CenterContainerComponent } from './components/layout/center-container/center-container.component';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
+import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { AuthInterceptor } from './interceptor/auth.interceptor';
     ZalbaDetailsComponent,
     ZalbaFormComponent,
     SpacerContainerComponent,
-    CenterContainerComponent
+    CenterContainerComponent,
+    SafeHtmlPipe
   ],
   imports: [
     BrowserModule,
