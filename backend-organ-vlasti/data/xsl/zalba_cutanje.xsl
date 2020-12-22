@@ -67,7 +67,7 @@ xmlns:poverenik="https://github.com/draganagrbic998/xml/poverenik">
 					(подвући  због чега се изјављује жалба)
 				</p>
 				
-				<p style="text-align: justify;">
+				<p style="text-align: justify; margin-bottom: 4px; ">
 				<xsl:variable name="datumZahteva" select="poverenik:Zalba/poverenik:datumZahteva"></xsl:variable>
 				<xsl:variable name="danZahteva" select="substring-after(substring-after($datumZahteva, '-'), '-')"></xsl:variable>
 				<xsl:variable name="mesecZahteva" select="substring-before(substring-after($datumZahteva, '-'), '-')"></xsl:variable>
@@ -80,13 +80,15 @@ xmlns:poverenik="https://github.com/draganagrbic998/xml/poverenik">
 				од јавног значаја омогући увид- копија документа који садржи информације  о /у вези са :
 				</p>
 				
-				<p style="text-align: justify; display: inline; word-break: break-all;">
+				<p style="text-align: justify; margin-bottom: 0; margin-top: 4px; word-break: break-all;">
 					<span style="width:100%; display: inline-block; height:13pt; border-bottom: 1px dotted black;">
 						<xsl:value-of select="poverenik:Zalba/osnova:detalji"></xsl:value-of>
 	               	</span>
 					<span style="display: inline-block; height:13pt; width:100%; border-bottom: 1px dotted black;">
 	                </span>
-					<span style="display: inline-block; height:13pt;width:100%; border-bottom: 1px dotted black;">
+					<span style="display: inline-block; height:13pt; width:100%; border-bottom: 1px dotted black;">
+	                </span>			
+					<span style="display: inline-block; height:13pt; width:100%; border-bottom: 1px dotted black;">
 	                </span>				
 	            </p>
 				

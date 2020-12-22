@@ -93,7 +93,7 @@ xmlns:organ_vlasti="https://github.com/draganagrbic998/xml/organ_vlasti">
 					год., којим сте тражили увид у документ/е са информацијама о / у вези са:
 				</p>
 				
-				<p style="text-align: justify; display: inline; word-break: break-all;">
+				<p style="text-align: justify; margin-top: 4px; margin-bottom: 0; word-break: break-all;">
 					<span style="width:100%; display: inline-block; height:13pt; border-bottom: 1px solid black;">
 						<xsl:value-of select="organ_vlasti:Obavestenje/organ_vlasti:Zahtev/osnova:detalji"></xsl:value-of>
 	               	</span>

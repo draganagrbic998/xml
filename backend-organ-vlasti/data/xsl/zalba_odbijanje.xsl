@@ -65,7 +65,7 @@ xmlns:poverenik="https://github.com/draganagrbic998/xml/poverenik">
 					</span> године.
 				</p>
 				
-				<p style="text-align: justify; text-indent: 40px;">
+				<p style="text-align: justify; text-indent: 40px; margin-bottom: 4px;">
 					<xsl:variable name="datumZahteva" select="poverenik:Zalba/poverenik:datumZahteva"></xsl:variable>
 					<xsl:variable name="danZahteva" select="substring-after(substring-after($datumZahteva, '-'), '-')"></xsl:variable>
 					<xsl:variable name="mesecZahteva" select="substring-before(substring-after($datumZahteva, '-'), '-')"></xsl:variable>
@@ -78,18 +78,19 @@ xmlns:poverenik="https://github.com/draganagrbic998/xml/poverenik">
 					године и тако ми ускраћено-онемогућено остваривање уставног и законског права на 
 					слободан приступ информацијама од јавног значаја. Oдлуку побијам у целости, односно у делу којим
 				</p>
-				
-				<p style="text-align: justify; display: inline; word-break: break-all;">
+
+				<p style="text-align: justify; margin-bottom: 0; margin-top: 4px; word-break: break-all;">
 					<span style="width:100%; display: inline-block; height:13pt; border-bottom: 1px dotted black;">
+						
 						<xsl:value-of select="poverenik:Zalba/osnova:detalji"></xsl:value-of>
 	               	</span>
 					<span style="display: inline-block; height:13pt; width:100%; border-bottom: 1px dotted black;">
 	                </span>
-					<span style="display: inline-block; height:13pt;width:100%; border-bottom: 1px dotted black;">
-	                </span>				
-	            </p>
+					<span style="display: inline-block; height:13pt; width:100%; border-bottom: 1px dotted black;">
+	                </span>			
+	            </p>				
 				
-				<p style="text-align: justify; margin-bottom: 0;">
+				<p style="text-align: justify; margin-bottom: 0; margin-top: 0;">
 					јер није заснована на Закону о слободном приступу информацијама од јавног значаја.
 				</p>
 				<p style="text-align: justify; text-indent: 40px; margin-top: 0; margin-bottom: 0;">
