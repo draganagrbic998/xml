@@ -10,8 +10,6 @@
                 <xs:sequence>
                     <xs:element name="organVlasti" type="xs:string"/>
                     <xs:element name="datumZahteva" type="xs:date"/>
-                    <xs:element name="kopijaZahteva" type="xs:base64Binary"/>
-                    <xs:element minOccurs="0" name="kopijaOdluke" type="xs:base64Binary"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
@@ -37,13 +35,7 @@
         <xs:complexContent>
             <xs:extension base="poverenik:TZalba">
                 <xs:sequence>
-                    <xs:element name="brojOdluke">
-                        <xs:simpleType>
-                            <xs:restriction base="xs:string">
-                                <xs:minLength value="1"/>
-                            </xs:restriction>
-                        </xs:simpleType>
-                    </xs:element>
+                    <xs:element name="brojOdluke" type="xs:string"/>
                     <xs:element name="datumOdluke" type="xs:date"/>
                 </xs:sequence>
             </xs:extension>

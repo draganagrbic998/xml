@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<organ_vlasti:Obavestenje xmlns:osnova="https://github.com/draganagrbic998/xml/osnova"
+ xmlns:organ_vlasti="https://github.com/draganagrbic998/xml/organ_vlasti"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="https://github.com/draganagrbic998/xml/organ_vlasti file:/C:/Users/Dragana/Desktop/schema_upgrade2/schemas/organ_vlasti.xsd">
+    <osnova:datum>2022-06-03Z</osnova:datum>
+    <osnova:broj>op</osnova:broj>
+    <organ_vlasti:Zahtev>
+        <osnova:datum>2022-01-01</osnova:datum>
+        <osnova:Gradjanin>
+            <osnova:Osoba>
+                <osnova:ime>m</osnova:ime>
+                <osnova:prezime>BfXwyhIv</osnova:prezime>
+            </osnova:Osoba>
+            <osnova:Adresa>
+                <osnova:mesto>NcdFzpKQeyGMr_jlY5</osnova:mesto>
+                <osnova:ulica>U9vs</osnova:ulica>
+                <osnova:broj>v1FfMexybeWHvTg1Fam.wu2</osnova:broj>
+            </osnova:Adresa>
+        </osnova:Gradjanin>
+        <osnova:OrganVlasti>
+            <osnova:naziv>OQ6Zh9umankOO3XpOv2cDPGzUqxcXw</osnova:naziv>
+            <osnova:sediste>cyG26ycqsjxkFuyDr3</osnova:sediste>
+        </osnova:OrganVlasti>
+        <osnova:detalji>QWVDk4ED0pcGkd5L_NXqs48xhsvl</osnova:detalji>
+    </organ_vlasti:Zahtev>
+    <organ_vlasti:Uvid>
+        <osnova:Adresa>
+            <osnova:mesto>BtwolcFbs.8mIEpxmp03jhyCM</osnova:mesto>
+            <osnova:ulica>T20.m5OEHljU1r8Dtth8whw-jZux</osnova:ulica>
+            <osnova:broj>jXmKBTUnhKgmI3PkmBSLsIzx7OS3b</osnova:broj>
+        </osnova:Adresa>
+        <organ_vlasti:kancelarija>aYI2CXnNoOiyQ52y</organ_vlasti:kancelarija>
+        <organ_vlasti:datum>2021-03-04Z</organ_vlasti:datum>
+        <organ_vlasti:pocetak>60:60</organ_vlasti:pocetak>
+        <organ_vlasti:kraj>1:48</organ_vlasti:kraj>
+    </organ_vlasti:Uvid>
+    <organ_vlasti:kopija>34787648</organ_vlasti:kopija>
+    <organ_vlasti:potpis>70767174708276726685737669848065</organ_vlasti:potpis>
+</organ_vlasti:Obavestenje>
