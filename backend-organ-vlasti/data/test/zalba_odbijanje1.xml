@@ -6,22 +6,22 @@
     <osnova:datum>2022-06-05</osnova:datum>
     <osnova:Gradjanin>
         <osnova:Osoba>
-            <osnova:ime>aS3jKgtHJSWGq3K0I3lqxZdy2f68</osnova:ime>
-            <osnova:prezime>fl2mAtPb3q_P</osnova:prezime>
+            <osnova:ime>Dragana</osnova:ime>
+            <osnova:prezime>Grbic</osnova:prezime>
         </osnova:Osoba>
         <osnova:Adresa>
-            <osnova:mesto>wwzBgN.7</osnova:mesto>
-            <osnova:ulica>S1S3IhpAxvp05BLGR</osnova:ulica>
-            <osnova:broj>tON2Y7bwLyh</osnova:broj>
+            <osnova:mesto>Novi Sad</osnova:mesto>
+            <osnova:ulica>Lasla Gala</osnova:ulica>
+            <osnova:broj>23</osnova:broj>
         </osnova:Adresa>
     </osnova:Gradjanin>
     <osnova:OrganVlasti>
-        <osnova:naziv>z_6QQOMi_u7VPF</osnova:naziv>
-        <osnova:sediste>jrkCg</osnova:sediste>
+        <osnova:naziv>Naziv organa vlasti</osnova:naziv>
+        <osnova:sediste>Novi Sad</osnova:sediste>
     </osnova:OrganVlasti>
     <osnova:detalji>dkVISd0ewIvnIokPBeWSxmgZlEq</osnova:detalji>
     <osnova:status>cekanje</osnova:status>
-    <osnova:kontakt>nsL</osnova:kontakt>
+    <osnova:kontakt>draganaasd@gmail.com</osnova:kontakt>
     <osnova:potpis>8868787580667690867475806988748789758571728582688375888368906668889079727176868065667384737380728089748974788968</osnova:potpis>
     <poverenik:datumZahteva>2021-04-25</poverenik:datumZahteva>
     <poverenik:brojOdluke>eUnywlF</poverenik:brojOdluke>
