@@ -91,9 +91,17 @@ xmlns:organ_vlasti="https://github.com/draganagrbic998/xml/organ_vlasti">
 					Овај захтев се односи на следеће информације:
 				</p>
 				
-				<p style="border-bottom: 1px solid black; margin-top: 4px; margin-bottom: 0;">
-					<xsl:value-of select="organ_vlasti:Zahtev/osnova:detalji"></xsl:value-of>
-				</p>
+				<p style="text-align: justify; margin-bottom: 4px; display: inline;">
+					<span style="margin-left:40px; width:510px; display: inline-block; height:13pt; border-bottom: 1px solid black;">
+						<xsl:value-of select="organ_vlasti:Zahtev/osnova:detalji"></xsl:value-of>
+	               	</span>
+					<span style="display: inline-block; height:13pt; width:100%; border-bottom: 1px solid black;">
+	                </span>
+					<span style="display: inline-block; height:13pt;width:100%; border-bottom: 1px solid black;">
+	                </span>				
+	            </p>
+				
+				
 				<p style="text-align: justify; font-size: 12px; margin-top: 0;">
 					(навести што прецизнији опис информације која се тражи као и 
 					друге податке који олакшавају проналажење тражене информације)
