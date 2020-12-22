@@ -90,16 +90,17 @@ xmlns:organ_vlasti="https://github.com/draganagrbic998/xml/organ_vlasti">
 					Овај захтев се односи на следеће информације:
 				</p>
 				
-				<p style="text-align: justify; margin-bottom: 4px; display: inline;">
-					<span style="margin-left:40px; width:510px; display: inline-block; height:13pt; border-bottom: 1px solid black;">
+				<p style="text-align: justify; margin-top: 4px; word-break: break-all; margin-bottom: 0;">
+					<span style="display: inline-block; height:13pt; border-bottom: 1px solid black;">
+						<span style="border-bottom: 5px solid white; color: white;">mama</span>
 						<xsl:value-of select="organ_vlasti:Zahtev/osnova:detalji"></xsl:value-of>
-	               	</span>
+	               	</span>					
 					<span style="display: inline-block; height:13pt; width:100%; border-bottom: 1px solid black;">
 	                </span>
 					<span style="display: inline-block; height:13pt;width:100%; border-bottom: 1px solid black;">
 	                </span>				
 	            </p>
-				
+
 				
 				<p style="text-align: justify; font-size: 12px; margin-top: 0;">
 					(навести што прецизнији опис информације која се тражи као и 

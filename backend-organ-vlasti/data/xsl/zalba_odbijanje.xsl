@@ -79,6 +79,16 @@ xmlns:poverenik="https://github.com/draganagrbic998/xml/poverenik">
 					слободан приступ информацијама од јавног значаја. Oдлуку побијам у целости, односно у делу којим
 				</p>
 				
+				<p style="text-align: justify; display: inline; word-break: break-all;">
+					<span style="width:100%; display: inline-block; height:13pt; border-bottom: 1px dotted black;">
+						<xsl:value-of select="poverenik:Zalba/osnova:detalji"></xsl:value-of>
+	               	</span>
+					<span style="display: inline-block; height:13pt; width:100%; border-bottom: 1px dotted black;">
+	                </span>
+					<span style="display: inline-block; height:13pt;width:100%; border-bottom: 1px dotted black;">
+	                </span>				
+	            </p>
+				
 				<p style="text-align: justify; margin-bottom: 0;">
 					јер није заснована на Закону о слободном приступу информацијама од јавног значаја.
 				</p>
