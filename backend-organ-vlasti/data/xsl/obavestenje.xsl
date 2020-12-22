@@ -12,6 +12,66 @@ xmlns:organ_vlasti="https://github.com/draganagrbic998/xml/organ_vlasti">
 			</head>
 			
 			<body style="max-width: 550px; margin: auto; border: 1px solid black; padding: 50px;">
+			
+				<div style="display: flex; flex-direction: row;">
+					<xsl:variable name="organVlasti" select="organ_vlasti:Obavestenje/organ_vlasti:Zahtev/osnova:OrganVlasti"></xsl:variable>
+					<div style="text-align: center;">
+						<p style="border-bottom: 1px solid black; margin-bottom: 0;">
+							<xsl:value-of select="$organVlasti/osnova:naziv"></xsl:value-of>
+						</p>
+						<p style="border-bottom: 1px solid black; margin-bottom: 0; margin-top: 0;">
+							<xsl:value-of select="$organVlasti/osnova:sediste"></xsl:value-of>
+						</p>
+						<p style="margin-bottom: 0; margin-top: 0;">
+							(назив и седиште органа)
+						</p>
+						<div style="display: flex; flex-direction: row; margin-top: 5px;">
+							<xsl:variable name="datumObavestenja" select="organ_vlasti:Obavestenje/osnova:datum"></xsl:variable>
+							<xsl:variable name="danObavestenja" select="substring-after(substring-after($datumObavestenja, '-'), '-')"></xsl:variable>
+							<xsl:variable name="mesecObavestenja" select="substring-before(substring-after($datumObavestenja, '-'), '-')"></xsl:variable>
+							<xsl:variable name="godinaObavestenja" select="substring-before($datumObavestenja, '-')"></xsl:variable>
+							<div style="text-align: left; margin-right: 5px;">
+								<p style="margin-top: 0; margin-bottom: 0;">
+									Број предмета:
+								</p>
+								<p style="margin-top: 0;">
+									Датум:
+								</p>
+							</div>
+							<div>
+								<p style="margin-top: 0; margin-bottom: 0; border-bottom: 1px solid black; min-width: 120px;">
+									<xsl:value-of select="organ_vlasti:Obavestenje/osnova:broj"></xsl:value-of>
+								</p>
+								<p style="margin-top: 0; border-bottom: 1px solid black; min-width: 120px;">
+									<xsl:value-of select="concat($danObavestenja, concat('.', concat($mesecObavestenja, concat('.', concat($godinaObavestenja, '.')))))"></xsl:value-of>
+								</p>
+							</div>
+						</div>
+					</div>
+					<div></div>
+				</div>
+			
+				<div style="display: flex; flex-direction: row;">
+					<xsl:variable name="osoba" select="organ_vlasti:Obavestenje/organ_vlasti:Zahtev/osnova:Gradjanin/osnova:Osoba"></xsl:variable>
+					<xsl:variable name="adresaGradjanina" select="organ_vlasti:Obavestenje/organ_vlasti:Zahtev/osnova:Gradjanin/osnova:Adresa"></xsl:variable>
+					<div style="text-align: center;">
+						<p style="border-bottom: 1px solid black; border-top: 1px solid black; margin-bottom: 0;">
+							<xsl:variable name="ime" select="$osoba/osnova:ime"></xsl:variable>
+							<xsl:variable name="prezime" select="$osoba/osnova:prezime"></xsl:variable>
+							<xsl:value-of select="concat($ime, concat(' ', $prezime))"></xsl:value-of>
+						</p>
+						<p style="border-bottom: 1px solid black; margin-top: 0; margin-bottom: 0;">
+							<xsl:variable name="mestoGradjanina" select="$adresaGradjanina/osnova:mesto"></xsl:variable>
+							<xsl:variable name="ulicaGradjanina" select="$adresaGradjanina/osnova:ulica"></xsl:variable>
+							<xsl:variable name="brojGradjanina" select="$adresaGradjanina/osnova:broj"></xsl:variable>
+							<xsl:value-of select="concat($ulicaGradjanina, concat(' ', concat($brojGradjanina, concat(', ', $mestoGradjanina))))"></xsl:value-of>
+						</p>
+						<p style="margin-top: 0;">
+							Име и презиме / назив / и адреса подносиоца захтева
+						</p>
+					</div>
+					<div></div>
+				</div>
 				
 				<h3 style="text-align: center; font-weight: bold;">
 					О Б А В Е Ш Т Е Њ Е<br></br>
@@ -40,14 +100,14 @@ xmlns:organ_vlasti="https://github.com/draganagrbic998/xml/organ_vlasti">
 				</p>
 				<p style="text-align: justify">
 					<xsl:variable name="uvid" select="organ_vlasti:Obavestenje/organ_vlasti:Uvid"></xsl:variable>
-					<xsl:variable name="adresa" select="$uvid/osnova:Adresa"></xsl:variable>
-					<xsl:variable name="datum" select="$uvid/organ_vlasti:datum"></xsl:variable>
-					<xsl:variable name="dan" select="substring-after(substring-after($datum, '-'), '-')"></xsl:variable>
-					<xsl:variable name="mesec" select="substring-before(substring-after($datum, '-'), '-')"></xsl:variable>
-					<xsl:variable name="godina" select="substring-before($datum, '-')"></xsl:variable>
+					<xsl:variable name="adresaObavestenja" select="$uvid/osnova:Adresa"></xsl:variable>
+					<xsl:variable name="datumUvida" select="$uvid/organ_vlasti:datum"></xsl:variable>
+					<xsl:variable name="danUvida" select="substring-after(substring-after($datumUvida, '-'), '-')"></xsl:variable>
+					<xsl:variable name="mesecUvida" select="substring-before(substring-after($datumUvida, '-'), '-')"></xsl:variable>
+					<xsl:variable name="godinaUvida" select="substring-before($datumUvida, '-')"></xsl:variable>
 					обавештавамо вас да дана
 					<span style="border-bottom: 1px solid black;">
-						<xsl:value-of select="concat($dan, concat('.', concat($mesec, concat('.', concat($godina, '.')))))"></xsl:value-of>
+						<xsl:value-of select="concat($danUvida, concat('.', concat($mesecUvida, concat('.', concat($godinaUvida, '.')))))"></xsl:value-of>
 					</span>
 					, у
 					<span style="border-bottom: 1px solid black;">
@@ -63,15 +123,15 @@ xmlns:organ_vlasti="https://github.com/draganagrbic998/xml/organ_vlasti">
 					</span>
 					часова, у просторијама органа у
 					<span style="border-bottom: 1px solid black;">
-						<xsl:value-of select="$adresa/osnova:mesto"></xsl:value-of>
+						<xsl:value-of select="$adresaObavestenja/osnova:mesto"></xsl:value-of>
 					</span>
 					ул.
 					<span style="border-bottom: 1px solid black;">
-						<xsl:value-of select="$adresa/osnova:ulica"></xsl:value-of>
+						<xsl:value-of select="$adresaObavestenja/osnova:ulica"></xsl:value-of>
 					</span>
 					бр.
 					<span style="border-bottom: 1px solid black;">
-						<xsl:value-of select="$adresa/osnova:broj"></xsl:value-of>
+						<xsl:value-of select="$adresaObavestenja/osnova:broj"></xsl:value-of>
 					</span>
 					, канцеларија бр.
 					<span style="border-bottom: 1px solid black;">

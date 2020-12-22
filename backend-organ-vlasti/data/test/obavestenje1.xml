@@ -3,24 +3,24 @@
  xmlns:organ_vlasti="https://github.com/draganagrbic998/xml/organ_vlasti"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
  xsi:schemaLocation="https://github.com/draganagrbic998/xml/organ_vlasti file:/C:/Users/Dragana/Desktop/schema_upgrade2/schemas/organ_vlasti.xsd">
-    <osnova:datum>2022-06-03Z</osnova:datum>
-    <osnova:broj>op</osnova:broj>
+    <osnova:datum>2022-06-03</osnova:datum>
+    <osnova:broj>1234446</osnova:broj>
     <organ_vlasti:Zahtev>
         <osnova:datum>2022-01-01</osnova:datum>
         <osnova:Gradjanin>
             <osnova:Osoba>
-                <osnova:ime>m</osnova:ime>
-                <osnova:prezime>BfXwyhIv</osnova:prezime>
+                <osnova:ime>Dragana</osnova:ime>
+                <osnova:prezime>Grbic</osnova:prezime>
             </osnova:Osoba>
             <osnova:Adresa>
-                <osnova:mesto>NcdFzpKQeyGMr_jlY5</osnova:mesto>
-                <osnova:ulica>U9vs</osnova:ulica>
-                <osnova:broj>v1FfMexybeWHvTg1Fam.wu2</osnova:broj>
+                <osnova:mesto>Novi Sad</osnova:mesto>
+                <osnova:ulica>Lasla Gala</osnova:ulica>
+                <osnova:broj>23</osnova:broj>
             </osnova:Adresa>
         </osnova:Gradjanin>
         <osnova:OrganVlasti>
-            <osnova:naziv>OQ6Zh9umankOO3XpOv2cDPGzUqxcXw</osnova:naziv>
-            <osnova:sediste>cyG26ycqsjxkFuyDr3</osnova:sediste>
+            <osnova:naziv>Naziv organa vlasti</osnova:naziv>
+            <osnova:sediste>Novi Sad</osnova:sediste>
         </osnova:OrganVlasti>
         <osnova:detalji>QWVDk4ED0pcGkd5L_NXqs48xhsvl</osnova:detalji>
     </organ_vlasti:Zahtev>
