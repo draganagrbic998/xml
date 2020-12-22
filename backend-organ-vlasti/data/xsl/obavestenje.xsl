@@ -26,10 +26,10 @@ xmlns:organ_vlasti="https://github.com/draganagrbic998/xml/organ_vlasti">
 							(назив и седиште органа)
 						</p>
 						<div style="display: flex; flex-direction: row; margin-top: 5px;">
-							<xsl:variable name="datumObavestenja" select="organ_vlasti:Obavestenje/osnova:datum"></xsl:variable>
-							<xsl:variable name="danObavestenja" select="substring-after(substring-after($datumObavestenja, '-'), '-')"></xsl:variable>
-							<xsl:variable name="mesecObavestenja" select="substring-before(substring-after($datumObavestenja, '-'), '-')"></xsl:variable>
-							<xsl:variable name="godinaObavestenja" select="substring-before($datumObavestenja, '-')"></xsl:variable>
+							<xsl:variable name="datum" select="organ_vlasti:Obavestenje/osnova:datum"></xsl:variable>
+							<xsl:variable name="dan" select="substring-after(substring-after($datum, '-'), '-')"></xsl:variable>
+							<xsl:variable name="mesec" select="substring-before(substring-after($datum, '-'), '-')"></xsl:variable>
+							<xsl:variable name="godina" select="substring-before($datum, '-')"></xsl:variable>
 							<div style="text-align: left; margin-right: 5px;">
 								<p style="margin-top: 0; margin-bottom: 0;">
 									Број предмета:
@@ -43,7 +43,7 @@ xmlns:organ_vlasti="https://github.com/draganagrbic998/xml/organ_vlasti">
 									<xsl:value-of select="organ_vlasti:Obavestenje/osnova:broj"></xsl:value-of>
 								</p>
 								<p style="margin-top: 0; border-bottom: 1px solid black; min-width: 120px;">
-									<xsl:value-of select="concat($danObavestenja, concat('.', concat($mesecObavestenja, concat('.', concat($godinaObavestenja, '.')))))"></xsl:value-of>
+									<xsl:value-of select="concat($dan, concat('.', concat($mesec, concat('.', concat($godina, '.')))))"></xsl:value-of>
 								</p>
 							</div>
 						</div>
