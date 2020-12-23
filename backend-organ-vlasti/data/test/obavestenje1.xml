@@ -22,7 +22,8 @@
             <osnova:naziv>Naziv organa vlasti</osnova:naziv>
             <osnova:sediste>Novi Sad</osnova:sediste>
         </osnova:OrganVlasti>
-        <osnova:detalji>asdasdsadsadasdasasdasdsadsadasdasasdasdsadsadasdasasdasdsadsadasdasasdasdsadsadasdasasdasdsadsadasdasasdasdsadsadasdasasdasdsadsadasdas</osnova:detalji>
+        <osnova:detalji>asdasdsadsadasdasasdasdsadsadasdasasda
+        sdsadsadasdasasdasdsadsadass</osnova:detalji>
     </organ_vlasti:Zahtev>
     <organ_vlasti:Uvid>
         <osnova:Adresa>

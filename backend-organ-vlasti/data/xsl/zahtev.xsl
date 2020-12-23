@@ -13,7 +13,7 @@ xmlns:organ_vlasti="https://github.com/draganagrbic998/xml/organ_vlasti">
 			
 			<body style="max-width: 550px; margin: auto; border: 1px solid black; padding: 50px;">
 				
-				<p style="border-bottom: 1px dotted black; margin-bottom: 0; text-align: center;">
+				<p style="border-bottom: 1px dotted black; margin-bottom: 0; text-align: center; margin-left: 20px; margin-right: 20px;">
 					<xsl:variable name="naziv" select="organ_vlasti:Zahtev/osnova:OrganVlasti/osnova:naziv"></xsl:variable>
 					<xsl:variable name="sediste" select="organ_vlasti:Zahtev/osnova:OrganVlasti/osnova:sediste"></xsl:variable>
 					<xsl:value-of select="concat($naziv, concat(', ', $sediste))"></xsl:value-of>
