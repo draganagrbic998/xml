@@ -22,7 +22,7 @@ export class UserService {
     return `
       <login>
         <email>${login.email}</email>
-        <password>${login.password}</password>
+        <password>${login.lozinka}</password>
       </login>
     `;
   }

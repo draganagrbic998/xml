@@ -1,6 +1,6 @@
 export interface Zahtev{
-    detalji: string;
-    tipUvida: string;
+    tipZahteva: string;
     tipDostave?: string;
     opisDostave?: string;
+    detalji: string;
 }

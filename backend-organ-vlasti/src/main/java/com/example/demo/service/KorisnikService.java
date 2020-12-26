@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,6 +12,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
@@ -40,6 +42,10 @@ public class KorisnikService implements UserDetailsService {
 	
 	@Autowired
 	private JAXBParser jaxbParser;
+	
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) {
@@ -63,11 +69,12 @@ public class KorisnikService implements UserDetailsService {
 		return this.tokenUtils.generateToken(email);
 	}
 	
-	public void register(String xml) throws JAXBException, ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
+	public void register(String xml) throws JAXBException, ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, ParserConfigurationException, SAXException, IOException, TransformerException {
 		Korisnik korisnik = (Korisnik) this.jaxbParser.unmarshal(xml, Korisnik.class);
-		if (this.korisnikRepository.findByEmail(korisnik.getEmail()) != null) {
+		/*if (this.korisnikRepository.findByEmail(korisnik.getEmail()) != null) {
 			throw new EmailTakenException();
-		}
+		}*/
+		korisnik.setLozinka(this.passwordEncoder.encode(korisnik.getLozinka()));
 		this.korisnikRepository.save(korisnik);
 	}
 	

@@ -18,17 +18,8 @@
                             </xs:restriction>
                         </xs:simpleType>
                     </xs:element>
-                    <xs:element minOccurs="0" name="tipDostave">
-                        <xs:simpleType>
-                            <xs:restriction base="xs:string">
-                                <xs:enumeration value="email"/>
-                                <xs:enumeration value="posta"/>
-                                <xs:enumeration value="faks"/>
-                                <xs:enumeration value="ostalo"/>
-                            </xs:restriction>
-                        </xs:simpleType>
-                    </xs:element>
-                    <xs:element minOccurs="0" name="opisDostave" type="xs:string"/>
+                    <xs:element minOccurs="0" name="tipDostave" type="osnova:TRequiredString"> </xs:element>
+                    <xs:element minOccurs="0" name="opisDostave" type="osnova:TRequiredString"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>

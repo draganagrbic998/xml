@@ -56,7 +56,7 @@
                 <xs:sequence>
                     <xs:element ref="osnova:Gradjanin"/>
                     <xs:element ref="osnova:OrganVlasti"/>
-                    <xs:element name="detalji">
+                    <xs:element name="Detalji">
                         <xs:complexType mixed="true">
                             <xs:choice maxOccurs="unbounded" minOccurs="0">
                                 <xs:element name="bold" type="xs:string"/>
@@ -72,6 +72,8 @@
         <xs:complexContent>
             <xs:extension base="osnova:TPodnosenje">
                 <xs:sequence>
+                    <xs:element name="email" type="osnova:TRequiredString"/>
+                    <xs:element name="potpis" type="xs:base64Binary"/>
                     <xs:element name="status">
                         <xs:simpleType>
                             <xs:restriction base="xs:string">
@@ -81,8 +83,6 @@
                             </xs:restriction>
                         </xs:simpleType>
                     </xs:element>
-                    <xs:element name="kontakt" type="osnova:TRequiredString"/>
-                    <xs:element name="potpis" type="xs:base64Binary"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
