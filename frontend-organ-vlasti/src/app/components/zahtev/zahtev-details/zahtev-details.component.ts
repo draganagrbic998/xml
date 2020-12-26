@@ -34,6 +34,10 @@ export class ZahtevDetailsComponent implements OnInit {
     window.open(`//localhost:8081/${environment.apiZahtevi}/${broj}/pdf`, '_blank');
   }
 
+  openHtml(broj: string): void{
+    window.open(`//localhost:8081/${environment.apiZahtevi}/${broj}/html`, '_blank');
+  }
+
   ngOnInit(): void {
   }
 

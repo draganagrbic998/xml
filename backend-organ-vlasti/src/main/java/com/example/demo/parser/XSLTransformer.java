@@ -55,6 +55,15 @@ public class XSLTransformer {
 		return out;
 	}
 	
+	public ByteArrayOutputStream generateHtml(Document document, String xslPath) throws TransformerException, SAXException, IOException {
+		StreamSource in = new StreamSource(new StringReader(this.domParser.buildXml(document)));
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		Transformer transformer = this.transformerFactory.newTransformer(new StreamSource(new File(xslPath)));
+		Result output = new StreamResult(out);
+		transformer.transform(in, output);
+		return out;
+	}
+	
 	private void testHtml(Node node, String xslPath, String xslTestPath) throws TransformerException, IOException {
 		StreamSource in = new StreamSource(new StringReader(this.domParser.buildXml(node)));
 		ByteArrayOutputStream out = new ByteArrayOutputStream();

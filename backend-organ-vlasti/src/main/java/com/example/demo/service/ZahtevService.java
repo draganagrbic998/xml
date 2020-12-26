@@ -60,7 +60,8 @@ public class ZahtevService {
 	private XSLTransformer xslTransformer;
 	
 	private static final String XSL_FO_PATH = Constants.XSL_FOLDER + "/zahtev_fo.xsl";
-	
+	private static final String XSL_PATH = Constants.XSL_FOLDER + "/zahtev.xsl";
+
 	public Resource generatePdf(String broj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
 		Document document = this.zahtevRepository.load(broj);
 		ByteArrayOutputStream out = this.xslTransformer.generatePdf(document, XSL_FO_PATH);
@@ -68,6 +69,15 @@ public class ZahtevService {
 		Files.write(file, out.toByteArray());
 		return new UrlResource(file.toUri());
 	}
+	
+	public Resource generateHtml(String broj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
+		Document document = this.zahtevRepository.load(broj);
+		ByteArrayOutputStream out = this.xslTransformer.generateHtml(document, XSL_PATH);
+		Path file = Paths.get(broj + ".html");
+		Files.write(file, out.toByteArray());
+		return new UrlResource(file.toUri());
+	}
+	
 	
 	public OrganVlasti defaultOrganVlasti() {
 		//izmeni ovo kasnije tako da ucita podatke iz nekog xml fajla
