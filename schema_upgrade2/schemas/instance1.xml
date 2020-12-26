@@ -1,29 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dokument:Zahtev 
-    xmlns:dokument="https://github.com/draganagrbic998/xml/dokument"
+<dokument:Obavestenje 
  xmlns="https://github.com/draganagrbic998/xml/osnova"
+ xmlns:dokument="https://github.com/draganagrbic998/xml/dokument"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="https://github.com/draganagrbic998/xml/dokument file:/C:/Users/Dragana/Desktop/projekti/xml/schema_upgrade2/schemas/zahtev.xsd">
-    <datum>2021-03-17</datum>
-    <mesto>NtW-lkme</mesto>
-    <Gradjanin>
-        <Osoba>
-            <ime>ydYW</ime>
-            <prezime>Q-kayt</prezime>
-        </Osoba>
+ xsi:schemaLocation="https://github.com/draganagrbic998/xml/dokument file:/C:/Users/Dragana/Desktop/projekti/xml/schema_upgrade2/schemas/obavestenje.xsd">
+    <datum>2022-02-23Z</datum>
+    <mesto>IAL44M</mesto>
+    <broj>Tb.vZ6yfT8j988Rg2E</broj>
+    <dokument:Zahtev>
+        <datum>2021-06-14</datum>
+        <mesto>Qd90x0k04Yi.OdhHAL6d</mesto>
+        <Gradjanin>
+            <Osoba>
+                <ime>J</ime>
+                <prezime>Qhs</prezime>
+            </Osoba>
+            <Adresa>
+                <mesto>HyFMhKo</mesto>
+                <ulica>AwRlXczJD.sTJ</ulica>
+                <broj>swTTm6H</broj>
+            </Adresa>
+        </Gradjanin>
+        <OrganVlasti>
+            <naziv>EE0FYu5a8W_lWfjajRxnPaI7mcnUU.</naziv>
+            <sediste>EjZ</sediste>
+        </OrganVlasti>
+        <Detalji/>
+    </dokument:Zahtev>
+    <dokument:Uvid>
         <Adresa>
-            <mesto>Z_5PK4kb9JtCxUTG</mesto>
-            <ulica>KnBAko1C4Wak.B93aGG9Q4NK8o</ulica>
-            <broj>Vc4douNW2Z</broj>
+            <mesto>aSt9XKjxrlGfE_</mesto>
+            <ulica>Pe1XT4k6igm6rC8c</ulica>
+            <broj>fDf207i9G</broj>
         </Adresa>
-    </Gradjanin>
-    <OrganVlasti>
-        <naziv>OWcfZ8LYu7</naziv>
-        <sediste>U1iZBjabY3TqEH9NpGHcn</sediste>
-    </OrganVlasti>
-    <Detalji/>
-    <status>odobreno</status>
-    <kontakt>f1Y8Co43SAlS6Qm48</kontakt>
-    <potpis>728984888771886566657273817785898970658282707578677673898984748266817065698872866782697875688690</potpis>
-    <dokument:tipZahteva>obavestenje</dokument:tipZahteva>
-</dokument:Zahtev>
+        <dokument:kancelarija>Fl7</dokument:kancelarija>
+        <dokument:datum>2021-07-20Z</dokument:datum>
+        <dokument:pocetak>46:25</dokument:pocetak>
+        <dokument:kraj>2:58</dokument:kraj>
+    </dokument:Uvid>
+    <dokument:kopija>399419958</dokument:kopija>
+    <dokument:potpis>73827188696787739088738268867570786767717567768879748687888085668888718979746984</dokument:potpis>
+</dokument:Obavestenje>

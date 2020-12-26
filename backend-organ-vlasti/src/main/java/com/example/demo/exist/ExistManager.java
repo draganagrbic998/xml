@@ -1,14 +1,15 @@
-package com.example.demo.database;
+package com.example.demo.exist;
 
 import java.io.File;
-import java.io.OutputStream;
 
 import javax.xml.transform.OutputKeys;
+import javax.xml.transform.TransformerException;
 
 import org.exist.xmldb.EXistResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.Collection;
@@ -17,11 +18,17 @@ import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.CollectionManagementService;
 import org.xmldb.api.modules.XMLResource;
 
+import com.example.demo.constants.Namespaces;
+import com.example.demo.parser.DOMParser;
+
 @Component
 public class ExistManager {
 
 	@Autowired
 	private AuthenticationUtilities authUtilities;
+	
+	@Autowired
+	private DOMParser domParser;
 	
 	@SuppressWarnings("deprecation")
 	public void createConnection() throws ClassNotFoundException, XMLDBException, InstantiationException, IllegalAccessException {
@@ -31,17 +38,18 @@ public class ExistManager {
 		DatabaseManager.registerDatabase(database);
 	}
 	
-	public void save(String collectionId, String documentId, String xml) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
+	public void save(String collectionId, String documentId, Document document) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException {
 		Collection collection = null;
 		XMLResource resource = null;
 		try { 
 			this.createConnection();
 			collection = this.getCollection(collectionId, 0);
 			if (documentId == null) {
-				documentId = collection.createId();
+				documentId = collection.createId().split("\\.")[0];
+				((Element) document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0)).setTextContent(documentId);
 			}
 			resource = (XMLResource) collection.createResource(documentId, XMLResource.RESOURCE_TYPE);
-			resource.setContent(xml);
+			resource.setContent(this.domParser.buildXml(document));
 			collection.storeResource(resource);
 		}
 		finally {
@@ -49,6 +57,8 @@ public class ExistManager {
 			((EXistResource) resource).freeResources();
 		}
 	}
+	
+	
 	
 	public void save(String collectionId, String documentId, File file) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
 		Collection collection = null;
@@ -85,23 +95,6 @@ public class ExistManager {
 		return (Document) resource.getContentAsDOM();
 	}
 	
-	public XMLResource load(String collectionId, int documentIndex) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
-		Collection collection = null;
-		XMLResource resource = null;
-		try {
-			this.createConnection();
-			collection = this.getCollection(collectionId, 0);
-			collection.setProperty(OutputKeys.INDENT, "yes");
-			String documentId = collection.listResources()[documentIndex-1];
-			resource = (XMLResource) collection.getResource(documentId);
-		}
-		finally {
-			collection.close();			
-		}
-		return resource;
-	}
-
-	
 	private Collection getCollection(String collectionId, int pathSegmentOffset) throws XMLDBException {
 		
 		Collection collection = DatabaseManager.getCollection(this.authUtilities.getUri() + collectionId, this.authUtilities.getUser(), this.authUtilities.getPassword());
@@ -111,7 +104,7 @@ public class ExistManager {
          	if(collectionId.startsWith("/")) {
                 collectionId = collectionId.substring(1);
             }
-        	String pathSegments[] = collectionId.split("/");
+        	String[] pathSegments = collectionId.split("/");
             
         	if(pathSegments.length > 0) {
 

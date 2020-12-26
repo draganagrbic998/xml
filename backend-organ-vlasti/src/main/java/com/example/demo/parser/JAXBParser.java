@@ -32,7 +32,7 @@ public class JAXBParser {
 		return unmarshaller.unmarshal(document);
 	}
 	
-	public Node marshal(Object obj) throws JAXBException {
+	public Document marshal(Object obj) throws JAXBException {
 		/*
 		OutputStream out = new ByteArrayOutputStream();
 		JAXBContext context = JAXBContext.newInstance(cl);
@@ -45,7 +45,7 @@ public class JAXBParser {
 	    Marshaller marshaller = context.createMarshaller();
 		//marshaller.setProperty("com.sun.xml.bind.namespacePrefixMapper", new NSPrefixMapper());
 	    marshaller.marshal(obj, res);
-	    return res.getNode().getFirstChild();
+	    return (Document) res.getNode();
 
 	}
 	

@@ -46,6 +46,7 @@
     </xs:element>
     <xs:complexType abstract="true" name="TDokument">
         <xs:sequence>
+            <xs:element name="broj" type="osnova:TRequiredString"/>
             <xs:element name="datum" type="xs:date"/>
             <xs:element name="mesto" type="osnova:TRequiredString"/>
         </xs:sequence>

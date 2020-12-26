@@ -82,11 +82,12 @@ public class ZahtevService {
 		datum.setTextContent(sdf.format(new Date()));
 		Node mesto = document.createElementNS(Namespaces.OSNOVA, "mesto");
 		mesto.setTextContent(this.defaultMesto());
+		documentFragment.appendChild(document.createElementNS(Namespaces.OSNOVA, "broj"));
 		documentFragment.appendChild(datum);
 		documentFragment.appendChild(mesto);
 		
-		Node gradjanin = document.importNode(this.jaxbParser.marshal(this.korisnikService.currentUser().getGradjanin()), true);
-		Node organVlasti = document.importNode(this.jaxbParser.marshal(this.defaultOrganVlasti()), true);
+		Node gradjanin = document.importNode(this.jaxbParser.marshal(this.korisnikService.currentUser().getGradjanin()).getFirstChild(), true);
+		Node organVlasti = document.importNode(this.jaxbParser.marshal(this.defaultOrganVlasti()).getFirstChild(), true);
 		
 		documentFragment.appendChild(gradjanin);
 		documentFragment.appendChild(organVlasti);
@@ -100,7 +101,7 @@ public class ZahtevService {
 		status.setTextContent(StatusZahteva.cekanje + "");
 		documentFragment2.appendChild(status);
 		zahtev.insertBefore(documentFragment2, document.getElementsByTagNameNS(Namespaces.DOKUMENT, "tipZahteva").item(0));
-		this.zahtevRepository.save(this.domParser.buildXml(document));
+		this.zahtevRepository.save(document);
 	}
 	
 }

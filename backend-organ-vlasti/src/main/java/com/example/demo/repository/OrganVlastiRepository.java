@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.constants.Constants;
-import com.example.demo.database.ExistManager;
+import com.example.demo.exist.ExistManager;
 import com.example.demo.model.OrganVlasti;
 import com.example.demo.parser.JAXBParser;
 
