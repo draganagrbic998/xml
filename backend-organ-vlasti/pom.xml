@@ -66,13 +66,19 @@
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
 				
-		
+		<!-- odavde pocinje onaj jaxb.sun -->
         <dependency>
-            <groupId>org.eclipse.persistence</groupId>
-            <artifactId>eclipselink</artifactId>
-            <version>2.7.6</version>
-        </dependency>
-        
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-impl</artifactId>
+			<version>2.2.11</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-core</artifactId>
+			<version>2.2.11</version>
+		</dependency>
+		<!-- i ovde se zavrsava -->
+
 	</dependencies>
 
 	<build>

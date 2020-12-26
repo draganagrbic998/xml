@@ -21,6 +21,7 @@ import org.apache.fop.apps.FopFactory;
 import org.apache.fop.apps.MimeConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 import org.xmldb.api.base.XMLDBException;
@@ -41,6 +42,28 @@ public class XSLTransformer {
 	
 	private String fopPath = "data/fop.conf";
 	
+	
+	public ByteArrayOutputStream generatePdf(Document document, String xslFoPath) throws TransformerException, SAXException, IOException {
+		StreamSource in = new StreamSource(new StringReader(this.domParser.buildXml(document)));
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		Transformer transformer = this.transformerFactory.newTransformer(new StreamSource(new File(xslFoPath)));
+		FopFactory foFactory = FopFactory.newInstance(new File(fopPath));
+		FOUserAgent foUserAgent = foFactory.newFOUserAgent();
+		Fop fop = foFactory.newFop(MimeConstants.MIME_PDF, foUserAgent, out);
+		Result output = new SAXResult(fop.getDefaultHandler());
+		transformer.transform(in, output);
+		return out;
+	}
+	
+	public ByteArrayOutputStream generateHtml(Document document, String xslPath) throws TransformerException, SAXException, IOException {
+		StreamSource in = new StreamSource(new StringReader(this.domParser.buildXml(document)));
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		Transformer transformer = this.transformerFactory.newTransformer(new StreamSource(new File(xslPath)));
+		Result output = new StreamResult(out);
+		transformer.transform(in, output);
+		return out;
+	}
+	
 	private void testHtml(Node node, String xslPath, String xslTestPath) throws TransformerException, IOException {
 		StreamSource in = new StreamSource(new StringReader(this.domParser.buildXml(node)));
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -52,7 +75,7 @@ public class XSLTransformer {
 		fout.close();
 	}
 	
-	public void testPdf(Node node, String xslFoPath, String xslFoTestPath) throws TransformerException, SAXException, IOException {
+	private void testPdf(Node node, String xslFoPath, String xslFoTestPath) throws TransformerException, SAXException, IOException {
 		StreamSource in = new StreamSource(new StringReader(this.domParser.buildXml(node)));
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		Transformer transformer = this.transformerFactory.newTransformer(new StreamSource(new File(xslFoPath)));

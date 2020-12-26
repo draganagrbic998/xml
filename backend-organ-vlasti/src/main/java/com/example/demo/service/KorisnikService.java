@@ -18,6 +18,7 @@ import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 import org.xmldb.api.base.XMLDBException;
 
+import com.example.demo.controller.TokenDTO;
 import com.example.demo.exception.EmailTakenException;
 import com.example.demo.model.Korisnik;
 import com.example.demo.parser.DOMParser;
@@ -61,12 +62,13 @@ public class KorisnikService implements UserDetailsService {
 		}
 	}
 	
-	public String login(String xml) throws ParserConfigurationException, SAXException, IOException {
+	public TokenDTO login(String xml) throws ParserConfigurationException, SAXException, IOException {
 		Document document = this.domParser.buildDocument(xml);
 		String email = document.getElementsByTagName("email").item(0).getTextContent();
 		String password = document.getElementsByTagName("password").item(0).getTextContent();
 		this.authManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
-		return this.tokenUtils.generateToken(email);
+		String uloga = this.korisnikRepository.findByEmail(email).getUloga();
+		return new TokenDTO(this.tokenUtils.generateToken(email), uloga);
 	}
 	
 	public void register(String xml) throws JAXBException, ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, ParserConfigurationException, SAXException, IOException, TransformerException {

@@ -6,6 +6,7 @@ import { Login } from 'src/app/models/login';
 import { Registration } from 'src/app/models/registration';
 import { map } from 'rxjs/operators';
 import { OSNOVA_NAMESPACE } from 'src/app/constants/namespaces';
+import { Token } from 'src/app/models/token';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +31,7 @@ export class UserService {
   private registrationToXml(registration: Registration): string{
     return `
       <Korisnik xmlns="${OSNOVA_NAMESPACE}">
-        <email>${registration.email}</email>
+        <mejl>${registration.mejl}</mejl>
         <lozinka>${registration.lozinka}</lozinka>
         <Gradjanin>
             <Osoba>
@@ -47,11 +48,9 @@ export class UserService {
     `;
   }
 
-  login(login: Login): Observable<string>{
+  login(login: Login): Observable<Token>{
     const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
-    return this.http.post<{token: string}>(`${this.API_AUTH}/login`, this.loginToXml(login), options).pipe(
-      map((response: {token: string}) => response.token)
-    );
+    return this.http.post<Token>(`${this.API_AUTH}/login`, this.loginToXml(login), options);
   }
 
   register(registration: Registration): Observable<null>{

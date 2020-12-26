@@ -1,6 +1,6 @@
 <app-form-container>
     <h3>Zahtev za pristup informacijama od javnog značaja</h3>
-    <br><br><br>
+    <br><br>
     <form [formGroup]="zahtevForm">
 
         <div [class.disabled]="zahtevPending">
@@ -41,10 +41,9 @@
                     Opis dostave je obavezan!
                 </mat-error>    
             </mat-form-field>
-        </div>
-        <br><br>
+            <div id="detaljiEditor"></div>
 
-        <div id="detaljiEditor"></div>
+        </div>
         <br><br>
 
         <app-center-container>

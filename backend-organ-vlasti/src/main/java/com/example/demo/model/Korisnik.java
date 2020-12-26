@@ -18,11 +18,11 @@ import com.example.demo.constants.Namespaces;
 @SuppressWarnings("serial")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "Korisnik", namespace = Namespaces.OSNOVA)
-@XmlType(propOrder = {  "email", "lozinka", "gradjanin" })
+@XmlType(propOrder = {  "mejl", "lozinka", "gradjanin" })
 public class Korisnik implements UserDetails {
 		
 	@XmlElement(namespace = Namespaces.OSNOVA, required = true)
-	private String email;
+	private String mejl;
 	
 	@XmlElement(namespace = Namespaces.OSNOVA, required = true)
 	private String lozinka;
@@ -49,7 +49,7 @@ public class Korisnik implements UserDetails {
 
 	@Override
 	public String getUsername() {
-		return this.email;
+		return this.mejl;
 	}
 
 	@Override
@@ -72,12 +72,12 @@ public class Korisnik implements UserDetails {
 		return true;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getMejl() {
+		return mejl;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setMejl(String mejl) {
+		this.mejl = mejl;
 	}
 
 	public String getLozinka() {
@@ -94,6 +94,13 @@ public class Korisnik implements UserDetails {
 
 	public void setGradjanin(Gradjanin gradjanin) {
 		this.gradjanin = gradjanin;
+	}
+	
+	public String getUloga() {
+		if (this.gradjanin != null) {
+			return "gradjanin";
+		}
+		return "sluzbenik";
 	}
 
 }

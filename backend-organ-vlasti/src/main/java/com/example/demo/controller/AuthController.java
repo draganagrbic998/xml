@@ -29,7 +29,7 @@ public class AuthController {
 	
 	@PostMapping(value = "/login")
 	public ResponseEntity<TokenDTO> login(@RequestBody String xml) throws ParserConfigurationException, SAXException, IOException{
-		return new ResponseEntity<>(new TokenDTO(this.korisnikService.login(xml)), HttpStatus.OK);
+		return new ResponseEntity<>(this.korisnikService.login(xml), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/test", produces = MediaType.TEXT_HTML_VALUE)
