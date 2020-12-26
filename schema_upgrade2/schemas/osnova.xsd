@@ -56,7 +56,7 @@
                 <xs:sequence>
                     <xs:element ref="osnova:Gradjanin"/>
                     <xs:element ref="osnova:OrganVlasti"/>
-                    <xs:element name="detalji">
+                    <xs:element name="Detalji">
                         <xs:complexType mixed="true">
                             <xs:choice maxOccurs="unbounded" minOccurs="0">
                                 <xs:element name="bold" type="xs:string"/>

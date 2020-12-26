@@ -9,102 +9,40 @@ export class XonomyService {
 
   constructor() { }
 
-  public testSpecification = {
+  public detaljiSpecifikacija = {
     elements: {
-      Fakultet: {
-        menu: [{
-          caption: 'Add <Naziv>',
-          action: Xonomy.newElementChild,
-          actionParameter: '<Naziv></Naziv>',
-          hideIf: (jsElement) => {
-            return jsElement.hasChildElement('Naziv');
-          }
-        },
-        {
-          caption: 'Add <GodinaOsnivanja>',
-          action: Xonomy.newElementChild,
-          actionParameter: '<GodinaOsnivanja></GodinaOsnivanja>',
-          hideIf: (jsElement) => {
-            return jsElement.hasChildElement('GodinaOsnivanja');
-          }
-        },
-        {
-          caption: 'Add <Profesori>',
-          action: Xonomy.newElementChild,
-          actionParameter: '<Profesori></Profesori>',
-          hideIf: (jsElement) => {
-            return jsElement.hasChildElement('Profesori');
-          }
-        },
-        {
-          caption: 'Add @Id',
-          action: Xonomy.newAttribute,
-          actionParameter: { name: 'Id', value: '1' },
-          hideIf: (jsElement) => {
-            return jsElement.hasAttribute('Id');
-          }
-        }],
-        attributes: {
-          Id: {
-            asker: Xonomy.askString,
-            menu: [{
-              caption: 'Delete @Id',
-              action: Xonomy.deleteAttribute
-            }]
-          }
-        },
-      },
-      Naziv: {
-        mustBeBefore: ['GodinaOsnivanja', 'Profesori'],
+      Detalji: {
         hasText: true,
-        oneliner: true,
-        // asker: Xonomy.askString,
-        asker: Xonomy.askPicklist,
-        askerParameter: ['mama', 'tata', 'baba'],
-        menu: [{
-          caption: 'Delete <Naziv>',
-          action: Xonomy.deleteElement
-        }]
-
+        menu: [
+          {
+            caption: 'Dodaj <bold> tag',
+            action: Xonomy.newElementChild,
+            actionParameter: '<bold></bold>'
+          },
+          {
+            caption: 'Dodaj <italic> tag',
+            action: Xonomy.newElementChild,
+            actionParameter: '<italic></italic>'
+          }
+        ]
       },
-      GodinaOsnivanja: {
-        mustBeBefore: ['Profesori'],
+      bold: {
         hasText: true,
-        asker: Xonomy.askString,
-        oneliner: true,
-
+        menu: [
+          {
+            caption: 'Obriši <bold> tag',
+            action: Xonomy.deleteElement
+          }
+        ]
       },
-      Profesori: {
-        menu: [{
-          caption: 'Add <Profesor>',
-          action: Xonomy.newElementChild,
-          actionParameter: '<Profesor></Profesor>',
-
-        }]
-      },
-      Profesor: {
-        menu: [{
-          caption: 'Add <Ime>',
-          action: Xonomy.newElementChild,
-          actionParameter: '<Ime></Ime>'
-        },
-        {
-          caption: 'Add <Prezime>',
-          action: Xonomy.newElementChild,
-          actionParameter: '<Prezime></Prezime>'
-        }]
-      },
-      Ime: {
-        mustBeBefore: ['Prezime'],
+      italic: {
         hasText: true,
-        asker: Xonomy.askString,
-        oneliner: true,
-
-      },
-      Prezime: {
-        hasText: true,
-        asker: Xonomy.askString,
-        oneliner: true,
+        menu: [
+          {
+            caption: 'Obriši <italic> tag',
+            action: Xonomy.deleteElement
+          }
+        ]
       }
     }
   };

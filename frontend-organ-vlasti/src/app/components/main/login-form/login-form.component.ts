@@ -23,7 +23,7 @@ export class LoginFormComponent implements OnInit {
   loginPending = false;
   loginForm: FormGroup = new FormGroup({
     email: new FormControl('', [Validators.required]),
-    password: new FormControl('', [Validators.required])
+    lozinka: new FormControl('', [Validators.required])
   });
 
   login(): void{
@@ -45,7 +45,6 @@ export class LoginFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    localStorage.removeItem('user');
   }
 
 }

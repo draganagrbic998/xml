@@ -11,6 +11,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
@@ -40,6 +41,9 @@ public class KorisnikService implements UserDetailsService {
 	
 	@Autowired
 	private JAXBParser jaxbParser;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) {
@@ -68,6 +72,7 @@ public class KorisnikService implements UserDetailsService {
 		if (this.korisnikRepository.findByEmail(korisnik.getEmail()) != null) {
 			throw new EmailTakenException();
 		}
+		korisnik.setLozinka(this.passwordEncoder.encode(korisnik.getLozinka()));
 		this.korisnikRepository.save(korisnik);
 	}
 	

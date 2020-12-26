@@ -1,18 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Korisnik xmlns="https://github.com/draganagrbic998/xml/osnova"
+<dokument:Zahtev xmlns:dokument="https://github.com/draganagrbic998/xml/dokument"
+ xmlns="https://github.com/draganagrbic998/xml/osnova"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="https://github.com/draganagrbic998/xml/osnova file:/C:/Users/Dragana/Desktop/projekti/xml/schema_upgrade2/schemas/osnova.xsd">
-    <email>BtRg233jLOj3</email>
-    <lozinka>EkqPLZCgp</lozinka>
+ xsi:schemaLocation="https://github.com/draganagrbic998/xml/dokument file:/C:/Users/Dragana/Desktop/projekti/xml/schema_upgrade2/schemas/zahtev.xsd">
+    <datum>2021-03-17</datum>
+    <mesto>NtW-lkme</mesto>
     <Gradjanin>
         <Osoba>
-            <ime>Dragana</ime>
-            <prezime>Grbic</prezime>
+            <ime>ydYW</ime>
+            <prezime>Q-kayt</prezime>
         </Osoba>
         <Adresa>
-            <mesto>Novi Sad</mesto>
-            <ulica>Lasla Gala</ulica>
-            <broj>23</broj>
+            <mesto>Z_5PK4kb9JtCxUTG</mesto>
+            <ulica>KnBAko1C4Wak.B93aGG9Q4NK8o</ulica>
+            <broj>Vc4douNW2Z</broj>
         </Adresa>
     </Gradjanin>
-</Korisnik>
+    <OrganVlasti>
+        <naziv>OWcfZ8LYu7</naziv>
+        <sediste>U1iZBjabY3TqEH9NpGHcn</sediste>
+    </OrganVlasti>
+    <Detalji/>
+    <status>odobreno</status>
+    <kontakt>f1Y8Co43SAlS6Qm48</kontakt>
+    <potpis>728984888771886566657273817785898970658282707578677673898984748266817065698872866782697875688690</potpis>
+    <dokument:tipZahteva>obavestenje</dokument:tipZahteva>
+</dokument:Zahtev>
