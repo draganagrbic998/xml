@@ -12,7 +12,9 @@
                 link na html
             </span>
             <span>
-                link na pdf
+                
+                <!--<button (click)="prezumiPdf(zahtev.broj)">PREUZMIE PDF</button>-->
+                <button (click)="openPdf(zahtev.broj)">uzmi pdf</button>
             </span>
             <span *ngIf="uloga === 'sluzbenik' && zahtev.status === 'cekanje'">
                 dodaj obavestenje

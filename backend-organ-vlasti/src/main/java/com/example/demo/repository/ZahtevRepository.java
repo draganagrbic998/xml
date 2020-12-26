@@ -28,6 +28,10 @@ public class ZahtevRepository {
 		return this.existManager.retrieve(ZAHTEVI_COLLECTION, xpathExp);
 	}
 	
+	public Document load(String documentId) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
+		return this.existManager.load(ZAHTEVI_COLLECTION, documentId);
+	}
+	
 	/*
 	public XMLResource load(int documentIndex) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
 		return this.existManager.load(collectionId, documentIndex);

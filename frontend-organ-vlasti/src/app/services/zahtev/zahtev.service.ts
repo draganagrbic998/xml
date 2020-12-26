@@ -58,4 +58,8 @@ export class ZahtevService {
     return this.http.get<string>(`${this.API_ZAHTEVI}/${documentIndex}`, {headers, responseType: 'text' as 'json'});
   }
 
+  getPdf(broj: string): Observable<any>{
+    return this.http.get<any>(`${this.API_ZAHTEVI}/${broj}/pdf`);
+  }
+
 }

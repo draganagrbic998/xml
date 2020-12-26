@@ -1,6 +1,10 @@
 package com.example.demo.service;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,6 +26,7 @@ import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
 
+import com.example.demo.constants.Constants;
 import com.example.demo.constants.Namespaces;
 import com.example.demo.controller.ZahtevDTO;
 import com.example.demo.model.Korisnik;
@@ -30,8 +35,11 @@ import com.example.demo.model.enums.StatusZahteva;
 import com.example.demo.model.enums.TipZahteva;
 import com.example.demo.parser.DOMParser;
 import com.example.demo.parser.JAXBParser;
+import com.example.demo.parser.XSLTransformer;
 import com.example.demo.repository.ZahtevRepository;
 import com.ibm.icu.text.SimpleDateFormat;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 
 @Service
 public class ZahtevService {
@@ -47,6 +55,19 @@ public class ZahtevService {
 	
 	@Autowired
 	private KorisnikService korisnikService;
+	
+	@Autowired
+	private XSLTransformer xslTransformer;
+	
+	private static final String XSL_FO_PATH = Constants.XSL_FOLDER + "/zahtev_fo.xsl";
+	
+	public Resource generatePdf(String broj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
+		Document document = this.zahtevRepository.load(broj);
+		ByteArrayOutputStream out = this.xslTransformer.generatePdf(document, XSL_FO_PATH);
+		Path file = Paths.get(broj + ".pdf");
+		Files.write(file, out.toByteArray());
+		return new UrlResource(file.toUri());
+	}
 	
 	public OrganVlasti defaultOrganVlasti() {
 		//izmeni ovo kasnije tako da ucita podatke iz nekog xml fajla
