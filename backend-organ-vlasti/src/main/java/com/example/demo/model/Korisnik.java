@@ -95,5 +95,12 @@ public class Korisnik implements UserDetails {
 	public void setGradjanin(Gradjanin gradjanin) {
 		this.gradjanin = gradjanin;
 	}
+	
+	public String getUloga() {
+		if (this.gradjanin != null) {
+			return "gradjanin";
+		}
+		return "sluzbenik";
+	}
 
 }

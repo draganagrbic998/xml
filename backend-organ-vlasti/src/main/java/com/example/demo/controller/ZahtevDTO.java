@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.enums.StatusZahteva;
 import com.example.demo.model.enums.TipZahteva;
 
 public class ZahtevDTO {
@@ -7,16 +8,18 @@ public class ZahtevDTO {
 	private String broj;
 	private String datum;
 	private TipZahteva tipZahteva;
+	private StatusZahteva status;
 	
 	public ZahtevDTO() {
 		super();
 	}
 
-	public ZahtevDTO(String broj, String datum, TipZahteva tipZahteva) {
+	public ZahtevDTO(String broj, String datum, TipZahteva tipZahteva, StatusZahteva status) {
 		super();
 		this.broj = broj;
 		this.datum = datum;
 		this.tipZahteva = tipZahteva;
+		this.status = status;
 	}
 
 	public String getBroj() {
@@ -43,4 +46,12 @@ public class ZahtevDTO {
 		this.tipZahteva = tipZahteva;
 	}
 
+	public StatusZahteva getStatus() {
+		return status;
+	}
+
+	public void setStatus(StatusZahteva status) {
+		this.status = status;
+	}
+	
 }

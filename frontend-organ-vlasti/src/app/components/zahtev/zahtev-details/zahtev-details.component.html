@@ -1,5 +1,22 @@
-<button (click)="click()">KLIKNI</button>
-
-<app-form-container>
-    <div [innerHTML]="zahtevVieW | safeHtml"></div>
-</app-form-container>
+  
+<div class="mat-elevation-z8">
+    <mat-card>
+        <mat-card-content>
+            <span>
+                {{zahtev.datum}}
+            </span>  
+            <span>
+                {{zahtev.tipZahteva}}
+            </span>
+            <span>
+                link na html
+            </span>
+            <span>
+                link na pdf
+            </span>
+            <span *ngIf="uloga === 'sluzbenik' && zahtev.status === 'cekanje'">
+                dodaj obavestenje
+            </span>
+        </mat-card-content>
+    </mat-card>
+</div>

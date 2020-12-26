@@ -64,14 +64,6 @@ export class ZahtevFormComponent implements AfterViewInit {
     );
   }
 
-  test(): void{
-    this.zahtevService.list().subscribe(
-      (zahtevi: ZahtevDTO[]) => {
-        console.log(zahtevi);
-      }
-    );
-  }
-
   ngAfterViewInit(): void{
     const detaljiXml = '<Detalji></Detalji>';
     const detaljiEditor = document.getElementById('detaljiEditor');

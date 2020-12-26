@@ -27,6 +27,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
 import { RegisterFormComponent } from './components/main/register-form/register-form.component';
 import { SafeHtmlPipe } from './safe-html.pipe';
+import { ZahtevListComponent } from './components/zahtev/zahtev-list/zahtev-list.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { SafeHtmlPipe } from './safe-html.pipe';
     PaginatorComponent,
     CenterContainerComponent,
     RegisterFormComponent,
-    SafeHtmlPipe
+    SafeHtmlPipe,
+    ZahtevListComponent
   ],
   imports: [
     BrowserModule,

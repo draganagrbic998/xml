@@ -87,7 +87,9 @@ public class ZahtevService {
 			String broj = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
 			String datum = document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).getTextContent();
 			TipZahteva tipZahteva = TipZahteva.valueOf(document.getElementsByTagNameNS(Namespaces.DOKUMENT, "tipZahteva").item(0).getTextContent());
-			zahtevi.add(new ZahtevDTO(broj, datum, tipZahteva));
+			
+			StatusZahteva status = StatusZahteva.valueOf(document.getElementsByTagNameNS(Namespaces.OSNOVA, "status").item(0).getTextContent());
+			zahtevi.add(new ZahtevDTO(broj, datum, tipZahteva, status));
 		}
 		return zahtevi;
 		

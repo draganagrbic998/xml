@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { ZahtevService } from 'src/app/services/zahtev/zahtev.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { ZahtevDTO } from 'src/app/models/zahtevDTO';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-zahtev-details',
@@ -9,18 +10,13 @@ import { ZahtevService } from 'src/app/services/zahtev/zahtev.service';
 export class ZahtevDetailsComponent implements OnInit {
 
   constructor(
-    private zahtevService: ZahtevService
+    private authService: AuthService
   ) { }
 
-  zahtevVieW = '';
+  @Input() zahtev: ZahtevDTO;
 
-  click(): void{
-    this.zahtevService.view(1).subscribe(
-      res => {
-        console.log(res);
-        this.zahtevVieW = res;
-      }
-    );
+  get uloga(): string{
+    return this.authService.getUser()?.uloga;
   }
 
   ngOnInit(): void {
