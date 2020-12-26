@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="https://github.com/draganagrbic998/xml/dokument"
+    xmlns:dokument="https://github.com/draganagrbic998/xml/dokument"
+    xmlns:osnova="https://github.com/draganagrbic998/xml/osnova">
+    <xs:import namespace="https://github.com/draganagrbic998/xml/osnova" schemaLocation="osnova.xsd"/>
+    <xs:complexType name="TObavestenje">
+        <xs:complexContent>
+            <xs:extension base="osnova:TOdgovor">
+                <xs:sequence>
+                    <xs:element name="Zahtev" type="osnova:TPodnosenje"/>
+                    <xs:element name="Uvid">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element ref="osnova:Adresa"/>
+                                <xs:element name="kancelarija" type="xs:string"/>
+                                <xs:element name="datum" type="xs:date"/>
+                                <xs:element name="pocetak">
+                                    <xs:simpleType>
+                                        <xs:restriction base="xs:string">
+                                            <xs:pattern value="\d{1,2}:\d{1,2}"/>
+                                        </xs:restriction>
+                                    </xs:simpleType>
+                                </xs:element>
+                                <xs:element name="kraj">
+                                    <xs:simpleType>
+                                        <xs:restriction base="xs:string">
+                                            <xs:pattern value="\d{1,2}:\d{1,2}"/>
+                                        </xs:restriction>
+                                    </xs:simpleType>
+                                </xs:element>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="kopija" type="xs:positiveInteger"/>
+                    <xs:element name="potpis" type="xs:base64Binary"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="Obavestenje" type="dokument:TObavestenje"/>
+</xs:schema>

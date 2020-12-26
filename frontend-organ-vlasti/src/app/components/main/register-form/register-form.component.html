@@ -1,5 +1,6 @@
 <app-form-container>
-    <h2>Registration</h2><br><br>
+    <h2>Registration</h2>
+    <br><br>
     <form [formGroup]="registerForm">
         <div [class.disabled]="registerPending">
             <mat-form-field>
@@ -9,15 +10,9 @@
                 autocomplete="off"
                 formControlName="email" 
                 placeholder="Unesite email">
-                <mat-error *ngIf="!registerForm.get('email').hasError('emailError')">
+                <mat-error>
                     Email je obavezan!
                 </mat-error>
-                <mat-error *ngIf="registerForm.get('email').hasError('emailError')">
-                    Email vec postoji!
-                </mat-error>
-                <mat-hint *ngIf="registerForm.pending">
-                    Provera jedinstvenosti email-a...
-                </mat-hint>          
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Lozinka</mat-label>
@@ -25,23 +20,11 @@
                 type="password" 
                 matInput 
                 autocomplete="off"
-                formControlName="password"
+                formControlName="lozinka"
                 placeholder="Unesite lozinku">
                 <mat-error>
                     Lozinka je obavezna!
                 </mat-error>    
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>Potvrda lozinke</mat-label>
-                <input 
-                type="password" 
-                matInput 
-                autocomplete="off"
-                formControlName="passwordConfirmation"
-                placeholder="Potvrdite lozinku">
-                <mat-error>
-                    Lozinke se ne poklapaju!
-                </mat-error>            
             </mat-form-field>
             <br><br>
             <mat-form-field>
@@ -94,7 +77,7 @@
                 matInput 
                 autocomplete="off"
                 formControlName="broj"
-                placeholder="Unesite broj ulica">
+                placeholder="Unesite broj ulice">
                 <mat-error>
                     Broj ulice je obavezan!
                 </mat-error>    

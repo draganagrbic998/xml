@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<organ_vlasti:Zahtev xmlns:osnova="https://github.com/draganagrbic998/xml/osnova"
+<organ_vlasti:Zahtev 
+ xmlns:osnova="https://github.com/draganagrbic998/xml/osnova"
  xmlns:organ_vlasti="https://github.com/draganagrbic998/xml/organ_vlasti"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
  xsi:schemaLocation="https://github.com/draganagrbic998/xml/organ_vlasti file:/C:/Users/Dragana/Desktop/schema_upgrade2/schemas/organ_vlasti.xsd">

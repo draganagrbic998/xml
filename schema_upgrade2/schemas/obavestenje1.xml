@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dokument:Obavestenje xmlns:osnova="https://github.com/draganagrbic998/xml/osnova"
+ xmlns:dokument="https://github.com/draganagrbic998/xml/dokument"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="https://github.com/draganagrbic998/xml/dokument file:/C:/Users/Dragana/Desktop/projekti/xml/schema_upgrade2/schemas/obavestenje.xsd">
+    <osnova:datum>2021-08-03</osnova:datum>
+    <osnova:mesto>ZxO7-Urw</osnova:mesto>
+    <osnova:broj>xPvpp_m7</osnova:broj>
+    <dokument:Zahtev>
+        <osnova:datum>2022-03-15</osnova:datum>
+        <osnova:mesto>hWHF</osnova:mesto>
+        <osnova:Gradjanin>
+            <osnova:Osoba>
+                <osnova:ime>z3VZxd6O2m5b</osnova:ime>
+                <osnova:prezime>oeC</osnova:prezime>
+            </osnova:Osoba>
+            <osnova:Adresa>
+                <osnova:mesto>p03cV9T.</osnova:mesto>
+                <osnova:ulica>q1</osnova:ulica>
+                <osnova:broj>ugVOTNiwbAh2d1nBPC</osnova:broj>
+            </osnova:Adresa>
+        </osnova:Gradjanin>
+        <osnova:OrganVlasti>
+            <osnova:naziv>EVVbbMp0ZezyXiIt.M7</osnova:naziv>
+            <osnova:sediste>J</osnova:sediste>
+        </osnova:OrganVlasti>
+        <osnova:detalji>
+            asd<osnova:bold>asd</osnova:bold>asd<osnova:italic>asd</osnova:italic>asd
+        </osnova:detalji>
+    </dokument:Zahtev>
+    <dokument:Uvid>
+        <osnova:Adresa>
+            <osnova:mesto>KNE</osnova:mesto>
+            <osnova:ulica>FQqc.WUYoOZ3Y_TU1CfpY</osnova:ulica>
+            <osnova:broj>Qvg-VAFHjBDxTNbd.wPMd7C</osnova:broj>
+        </osnova:Adresa>
+        <dokument:kancelarija>Rfj</dokument:kancelarija>
+        <dokument:datum>2021-01-24</dokument:datum>
+        <dokument:pocetak>60:60</dokument:pocetak>
+        <dokument:kraj>1:48</dokument:kraj>
+    </dokument:Uvid>
+    <dokument:kopija>602216511</dokument:kopija>
+    <dokument:potpis>8585897971827280688586766889707890856982776777666687867882797382687367689070708071676580807873876966806870866588</dokument:potpis>
+</dokument:Obavestenje>
