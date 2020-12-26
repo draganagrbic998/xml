@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
@@ -22,13 +23,13 @@ import org.xmldb.api.base.XMLDBException;
 import com.example.demo.service.ZahtevService;
 
 @RestController
-@RequestMapping(value = "/api/zahtevi", consumes = MediaType.TEXT_XML_VALUE)
+@RequestMapping(value = "/api/zahtevi")
 public class ZahtevController {
 
 	@Autowired
 	private ZahtevService zahtevService;
 			
-	@PostMapping
+	@PostMapping(consumes = MediaType.TEXT_XML_VALUE)
 	public ResponseEntity<Void> save(@RequestBody String xml) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, JAXBException, ParserConfigurationException, SAXException, IOException, TransformerException {		
 		this.zahtevService.save(xml);
 		return new ResponseEntity<>(HttpStatus.CREATED);
@@ -39,5 +40,10 @@ public class ZahtevController {
 	public ResponseEntity<String> details(@PathVariable int documentIndex) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException {
 		return new ResponseEntity<>(this.zahtevService.getHtml(documentIndex), HttpStatus.OK);
 	}*/
+	
+	@GetMapping
+	public ResponseEntity<List<ZahtevDTO>> list() throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, ParserConfigurationException, SAXException, IOException{
+		return new ResponseEntity<>(this.zahtevService.list(), HttpStatus.OK);
+	}
 	
 }

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Zahtev } from 'src/app/models/zahtev';
 import { environment } from 'src/environments/environment';
 import { DOKUMENT_NAMESPACE, OSNOVA_NAMESPACE } from 'src/app/constants/namespaces';
+import { ZahtevDTO } from 'src/app/models/zahtevDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -47,6 +48,9 @@ export class ZahtevService {
     return this.http.post<null>(this.API_ZAHTEVI, this.zahtevToXml(zahtev), options);
   }
 
+  list(): Observable<ZahtevDTO[]>{
+    return this.http.get<ZahtevDTO[]>(this.API_ZAHTEVI);
+  }
 
   // ovo ces obrisati
   view(documentIndex: number): Observable<string>{

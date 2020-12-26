@@ -58,14 +58,8 @@ public class DOMParser {
 		return builder.parse(new File(path));
 	}
 	
-	public void transformDocument(Document document, OutputStream out) throws TransformerException {
-		Transformer transformer = this.transformerFactory.newTransformer();
-		transformer.setOutputProperty("{http://xml.apache.org/xalan}indent-amount", "2");
-		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-		transformer.transform(new DOMSource(document), new StreamResult(out));
-	}
-	
 	public String buildXml(Node node) throws TransformerException {
+		//prebaci node na document
 		StringWriter string = new StringWriter();
 		Transformer transformer = this.transformerFactory.newTransformer();
 		transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");

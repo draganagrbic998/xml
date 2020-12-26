@@ -1,5 +1,5 @@
 export interface Registration{
-    email: string;
+    mejl: string;
     lozinka: string;
     ime: string;
     prezime: string;

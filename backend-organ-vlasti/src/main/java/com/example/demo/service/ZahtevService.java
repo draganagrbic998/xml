@@ -1,7 +1,9 @@
 package com.example.demo.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
@@ -15,11 +17,17 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+import org.xmldb.api.base.ResourceIterator;
+import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.base.XMLDBException;
+import org.xmldb.api.modules.XMLResource;
 
 import com.example.demo.constants.Namespaces;
+import com.example.demo.controller.ZahtevDTO;
+import com.example.demo.model.Korisnik;
 import com.example.demo.model.OrganVlasti;
 import com.example.demo.model.enums.StatusZahteva;
+import com.example.demo.model.enums.TipZahteva;
 import com.example.demo.parser.DOMParser;
 import com.example.demo.parser.JAXBParser;
 import com.example.demo.repository.ZahtevRepository;
@@ -58,6 +66,33 @@ public class ZahtevService {
 		return "TEST POTPIS";
 	}
 	
+	public List<ZahtevDTO> list() throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException, ParserConfigurationException, SAXException, IOException{
+		
+		Korisnik korisnik = this.korisnikService.currentUser();
+		String xpathExp = null;
+		if (korisnik.getGradjanin() != null) {
+			xpathExp = String.format("/dokument:Zahtev[mejl='%s']", korisnik.getMejl());
+		}
+		else {
+			xpathExp = "/dokument:Zahtev";
+		}
+		ResourceSet result = this.zahtevRepository.list(xpathExp);
+		
+		
+		List<ZahtevDTO> zahtevi = new ArrayList<>();
+		ResourceIterator i = result.getIterator();
+		while (i.hasMoreResources()) {
+			XMLResource resource = (XMLResource) i.nextResource();
+			Document document = domParser.buildDocument(resource.getContent().toString());	//a sto da ne uradim getContentAsDom???
+			String broj = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
+			String datum = document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).getTextContent();
+			TipZahteva tipZahteva = TipZahteva.valueOf(document.getElementsByTagNameNS(Namespaces.DOKUMENT, "tipZahteva").item(0).getTextContent());
+			zahtevi.add(new ZahtevDTO(broj, datum, tipZahteva));
+		}
+		return zahtevi;
+		
+	}
+	
 	public void save(String xml) throws ParserConfigurationException, SAXException, IOException, JAXBException, ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException {
 		Document document = this.domParser.buildDocument(xml);
 		
@@ -94,6 +129,11 @@ public class ZahtevService {
 		
 		zahtev.insertBefore(documentFragment, document.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0));
 		DocumentFragment documentFragment2 = document.createDocumentFragment();
+
+		Node mejl = document.createElementNS(Namespaces.OSNOVA, "mejl");
+		mejl.setTextContent(this.korisnikService.currentUser().getMejl());
+		documentFragment2.appendChild(mejl);
+		
 		Node potpis = document.createElementNS(Namespaces.OSNOVA, "potpis");
 		potpis.setTextContent(this.testPotpis());
 		documentFragment2.appendChild(potpis);

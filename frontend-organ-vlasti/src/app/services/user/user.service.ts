@@ -30,7 +30,7 @@ export class UserService {
   private registrationToXml(registration: Registration): string{
     return `
       <Korisnik xmlns="${OSNOVA_NAMESPACE}">
-        <email>${registration.email}</email>
+        <mejl>${registration.mejl}</mejl>
         <lozinka>${registration.lozinka}</lozinka>
         <Gradjanin>
             <Osoba>

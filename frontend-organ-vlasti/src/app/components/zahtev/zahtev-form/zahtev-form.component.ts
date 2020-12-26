@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SNACKBAR_CLOSE, SNACKBAR_ERROR, SNACKBAR_ERROR_OPTIONS, SNACKBAR_SUCCESS_OPTIONS } from 'src/app/constants/snackbar';
 import { Zahtev } from 'src/app/models/zahtev';
+import { ZahtevDTO } from 'src/app/models/zahtevDTO';
 import { XonomyService } from 'src/app/services/xonomy/xonomy.service';
 import { ZahtevService } from 'src/app/services/zahtev/zahtev.service';
 
@@ -59,6 +60,14 @@ export class ZahtevFormComponent implements AfterViewInit {
       () => {
         this.zahtevPending = false;
         this.snackBar.open(SNACKBAR_ERROR, SNACKBAR_CLOSE, SNACKBAR_ERROR_OPTIONS);
+      }
+    );
+  }
+
+  test(): void{
+    this.zahtevService.list().subscribe(
+      (zahtevi: ZahtevDTO[]) => {
+        console.log(zahtevi);
       }
     );
   }
