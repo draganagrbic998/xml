@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dokument:Zahtev xmlns:dokument="https://github.com/draganagrbic998/xml/dokument"
+<dokument:Zahtev 
+    xmlns:dokument="https://github.com/draganagrbic998/xml/dokument"
  xmlns="https://github.com/draganagrbic998/xml/osnova"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
  xsi:schemaLocation="https://github.com/draganagrbic998/xml/dokument file:/C:/Users/Dragana/Desktop/projekti/xml/schema_upgrade2/schemas/zahtev.xsd">

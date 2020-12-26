@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,7 +38,7 @@ public class AuthController {
 	}
 	
 	@PostMapping(value = "/register")
-	public ResponseEntity<Void> register(@RequestBody String xml) throws ClassNotFoundException, InstantiationException, IllegalAccessException, JAXBException, XMLDBException{
+	public ResponseEntity<Void> register(@RequestBody String xml) throws ClassNotFoundException, InstantiationException, IllegalAccessException, JAXBException, XMLDBException, ParserConfigurationException, SAXException, IOException, TransformerException{
 		this.korisnikService.register(xml);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

@@ -72,6 +72,8 @@
         <xs:complexContent>
             <xs:extension base="osnova:TPodnosenje">
                 <xs:sequence>
+                    <xs:element name="email" type="osnova:TRequiredString"/>
+                    <xs:element name="potpis" type="xs:base64Binary"/>
                     <xs:element name="status">
                         <xs:simpleType>
                             <xs:restriction base="xs:string">
@@ -81,8 +83,6 @@
                             </xs:restriction>
                         </xs:simpleType>
                     </xs:element>
-                    <xs:element name="kontakt" type="osnova:TRequiredString"/>
-                    <xs:element name="potpis" type="xs:base64Binary"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>

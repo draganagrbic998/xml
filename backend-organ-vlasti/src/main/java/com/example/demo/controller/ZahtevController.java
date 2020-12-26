@@ -29,14 +29,15 @@ public class ZahtevController {
 	private ZahtevService zahtevService;
 			
 	@PostMapping
-	public ResponseEntity<Void> save(@RequestBody String xml) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, JAXBException, ParserConfigurationException, SAXException, IOException {		
+	public ResponseEntity<Void> save(@RequestBody String xml) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, JAXBException, ParserConfigurationException, SAXException, IOException, TransformerException {		
 		this.zahtevService.save(xml);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
+	/*
 	@GetMapping(value = "/{documentIndex}", produces = "text/html;charset=UTF-8")
 	public ResponseEntity<String> details(@PathVariable int documentIndex) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException {
 		return new ResponseEntity<>(this.zahtevService.getHtml(documentIndex), HttpStatus.OK);
-	}
+	}*/
 	
 }

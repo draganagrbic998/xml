@@ -1,6 +1,7 @@
 package com.example.demo.repository;
 
 import javax.xml.bind.JAXBException;
+import javax.xml.transform.TransformerException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -9,6 +10,7 @@ import org.xmldb.api.base.XMLDBException;
 import com.example.demo.constants.Constants;
 import com.example.demo.database.ExistManager;
 import com.example.demo.model.Korisnik;
+import com.example.demo.parser.DOMParser;
 import com.example.demo.parser.JAXBParser;
 
 @Repository
@@ -19,6 +21,9 @@ public class KorisnikRepository {
 	
 	@Autowired
 	private JAXBParser jaxbParser;
+	
+	@Autowired
+	private DOMParser domParser;
 	
 	public static final String KORISNICI_COLLECTION = Constants.COLLECTIONS_PREFIX + "/korisnici";
 	
@@ -31,8 +36,8 @@ public class KorisnikRepository {
 		}
 	}
 	
-	public void save(Korisnik korisnik) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, JAXBException {
-		this.existManager.save(KORISNICI_COLLECTION, korisnik.getEmail(), this.jaxbParser.marshal(korisnik, Korisnik.class));
+	public void save(Korisnik korisnik) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, JAXBException, TransformerException {
+		this.existManager.save(KORISNICI_COLLECTION, korisnik.getEmail(), this.domParser.buildXml(this.jaxbParser.marshal(korisnik)));
 	}
 		
 }

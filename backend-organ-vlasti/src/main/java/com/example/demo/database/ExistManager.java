@@ -8,6 +8,8 @@ import javax.xml.transform.OutputKeys;
 import org.exist.xmldb.EXistResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.Database;
@@ -29,23 +31,17 @@ public class ExistManager {
 		DatabaseManager.registerDatabase(database);
 	}
 	
-	public void save(String collectionId, String documentId, OutputStream out) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
+	public void save(String collectionId, String documentId, String xml) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
 		Collection collection = null;
 		XMLResource resource = null;
 		try { 
 			this.createConnection();
 			collection = this.getCollection(collectionId, 0);
 			if (documentId == null) {
-				String[] array = collection.listResources();
-				if (array.length == 0) {
-					documentId = "1";
-				}
-				else {
-					documentId = (Integer.parseInt(array[array.length - 1]) + 1	) + "";				
-				}
+				documentId = collection.createId();
 			}
 			resource = (XMLResource) collection.createResource(documentId, XMLResource.RESOURCE_TYPE);
-			resource.setContent(out);
+			resource.setContent(xml);
 			collection.storeResource(resource);
 		}
 		finally {
@@ -74,7 +70,7 @@ public class ExistManager {
 	}
 	
 	
-	public XMLResource load(String collectionId, String documentId) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
+	public Document load(String collectionId, String documentId) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
 		Collection collection = null;
 		XMLResource resource = null;
 		try {
@@ -86,7 +82,7 @@ public class ExistManager {
 		finally {
 			collection.close();			
 		}
-		return resource;
+		return (Document) resource.getContentAsDOM();
 	}
 	
 	public XMLResource load(String collectionId, int documentIndex) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {

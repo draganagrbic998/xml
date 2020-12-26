@@ -1,10 +1,6 @@
 package com.example.demo.service;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Date;
 
 import javax.xml.bind.JAXBException;
@@ -14,24 +10,20 @@ import javax.xml.transform.TransformerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
+import org.w3c.dom.DocumentFragment;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.xmldb.api.base.XMLDBException;
-import org.xmldb.api.modules.XMLResource;
 
-import com.example.demo.constants.Constants;
-import com.example.demo.model.Korisnik;
+import com.example.demo.constants.Namespaces;
 import com.example.demo.model.OrganVlasti;
-import com.example.demo.model.Zahtev;
-import com.example.demo.model.ZahtevDostava;
-import com.example.demo.model.ZahtevUvid;
-import com.example.demo.model.enums.TipDostave;
-import com.example.demo.model.enums.TipUvida;
+import com.example.demo.model.enums.StatusZahteva;
 import com.example.demo.parser.DOMParser;
 import com.example.demo.parser.JAXBParser;
-import com.example.demo.parser.XSLTransformer;
-import com.example.demo.repository.OrganVlastiRepository;
 import com.example.demo.repository.ZahtevRepository;
+import com.ibm.icu.text.SimpleDateFormat;
 
 @Service
 public class ZahtevService {
@@ -40,65 +32,75 @@ public class ZahtevService {
 	private ZahtevRepository zahtevRepository;
 	
 	@Autowired
-	private OrganVlastiRepository organVlastiRepository;
-		
-	@Autowired
-	private KorisnikService korisnikService;
+	private DOMParser domParser;
 	
 	@Autowired
 	private JAXBParser jaxbParser;
 	
 	@Autowired
-	private DOMParser domParser;
+	private KorisnikService korisnikService;
 	
-	@Autowired
-	private XSLTransformer xslTransformer;
-	
-	private static final String XSL_PATH = Constants.XSL_FOLDER + "/zahtev.xsl";
-	private static final String XSL_FO_PATH = Constants.XSL_FOLDER + "/zahtev_fo.xsl";
-
-	public String getHtml(int index) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException { 
-		XMLResource resource = this.zahtevRepository.load(index);
-		try {
-			this.makePdf(index);	//samo da bih testirala, nek stoji zasad ovde
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-		return this.xslTransformer.xml2html(resource, XSL_PATH);
+	public OrganVlasti defaultOrganVlasti() {
+		//izmeni ovo kasnije tako da ucita podatke iz nekog xml fajla
+		OrganVlasti organVlasti = new OrganVlasti();
+		organVlasti.setNaziv("TEST NAZIV");
+		organVlasti.setSediste("TEST SEDISTE");
+		return organVlasti;
 	}
 	
-	public void makePdf(int index) throws Exception {
-		Node document = this.zahtevRepository.load(index).getContentAsDOM();
-		String xml = this.domParser.buildXml(document);
-		ByteArrayOutputStream outputStream = xslTransformer.xml2pdf(xml, XSL_FO_PATH);
-		Path file = Paths.get("data/temp.pdf");
-		Files.write(file, outputStream.toByteArray());
-		//treba da dodamo da vratimo rezultat klijentu pa da moze da vidi i on
+	public String defaultMesto() {
+		//izmeni ovo na ono sto on kaze
+		return "TEST MESTO";
 	}
 	
-	public void save(String xml) throws ParserConfigurationException, SAXException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, JAXBException {		
-		Korisnik korisnik = this.korisnikService.currentUser();
-		OrganVlasti organVlasti = this.organVlastiRepository.load();
+	public String testPotpis() {
+		//izmeni ovo na ono sto on kaze
+		return "TEST POTPIS";
+	}
+	
+	public void save(String xml) throws ParserConfigurationException, SAXException, IOException, JAXBException, ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException {
 		Document document = this.domParser.buildDocument(xml);
-		Zahtev zahtev;
-		if (document.getElementsByTagName("tipUvida").getLength() > 0) {
-			TipUvida tipUvida = TipUvida.valueOf(document.getElementsByTagName("tipUvida").item(0).getTextContent());
-			zahtev = new ZahtevUvid(tipUvida);
+		
+		((Element) document.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0)).removeAttribute("xml:space");
+		NodeList bolds = document.getElementsByTagNameNS(Namespaces.OSNOVA, "bold");
+		for (int i = 0; i < bolds.getLength(); ++i) {
+			Element bold = (Element) bolds.item(i);
+			bold.removeAttribute("xml:space");
 		}
-		else {
-			TipDostave tipDostave = TipDostave.valueOf(document.getElementsByTagName("tipDostave").item(0).getTextContent());
-			String opisDostave = document.getElementsByTagName("opisDostave").item(0).getTextContent();
-			zahtev = new ZahtevDostava(tipDostave, opisDostave);
+		
+		NodeList italics = document.getElementsByTagNameNS(Namespaces.OSNOVA, "italic");
+		for (int i = 0; i < italics.getLength(); ++i) {
+			Element italic = (Element) italics.item(i);
+			italic.removeAttribute("xml:space");
 		}
-		zahtev.setGradjanin(korisnik.getGradjanin());
-		zahtev.setOrganVlasti(organVlasti);
-		zahtev.setDatum(new Date());
-		zahtev.setDetalji(document.getElementsByTagName("detalji").item(0).getTextContent());
-		zahtev.setKontakt(korisnik.getEmail());
-		zahtev.setPotpis(Constants.SIGNATURE);
-		zahtev.setOdgovoreno(false);
-		this.zahtevRepository.save(this.jaxbParser.marshal(zahtev, Zahtev.class));
+		
+		Element zahtev = (Element) document.getElementsByTagNameNS(Namespaces.DOKUMENT, "Zahtev").item(0);
+		DocumentFragment documentFragment = document.createDocumentFragment();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Node datum = document.createElementNS(Namespaces.OSNOVA, "datum");
+		
+		datum.setTextContent(sdf.format(new Date()));
+		Node mesto = document.createElementNS(Namespaces.OSNOVA, "mesto");
+		mesto.setTextContent(this.defaultMesto());
+		documentFragment.appendChild(datum);
+		documentFragment.appendChild(mesto);
+		
+		Node gradjanin = document.importNode(this.jaxbParser.marshal(this.korisnikService.currentUser().getGradjanin()), true);
+		Node organVlasti = document.importNode(this.jaxbParser.marshal(this.defaultOrganVlasti()), true);
+		
+		documentFragment.appendChild(gradjanin);
+		documentFragment.appendChild(organVlasti);
+		
+		zahtev.insertBefore(documentFragment, document.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0));
+		DocumentFragment documentFragment2 = document.createDocumentFragment();
+		Node potpis = document.createElementNS(Namespaces.OSNOVA, "potpis");
+		potpis.setTextContent(this.testPotpis());
+		documentFragment2.appendChild(potpis);
+		Node status = document.createElementNS(Namespaces.OSNOVA, "status");
+		status.setTextContent(StatusZahteva.cekanje + "");
+		documentFragment2.appendChild(status);
+		zahtev.insertBefore(documentFragment2, document.getElementsByTagNameNS(Namespaces.DOKUMENT, "tipZahteva").item(0));
+		this.zahtevRepository.save(this.domParser.buildXml(document));
 	}
 	
 }

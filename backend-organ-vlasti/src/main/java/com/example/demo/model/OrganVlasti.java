@@ -9,14 +9,14 @@ import javax.xml.bind.annotation.XmlType;
 import com.example.demo.constants.Namespaces;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "OrganVlasti", namespace = Namespaces.ORGAN_VLASTI)
+@XmlRootElement(name = "OrganVlasti", namespace = Namespaces.OSNOVA)
 @XmlType(propOrder = { "naziv", "sediste" })
 public class OrganVlasti {
 	
-	@XmlElement(namespace = Namespaces.ORGAN_VLASTI, required = true)
+	@XmlElement(namespace = Namespaces.OSNOVA, required = true)
 	private String naziv;
 	
-	@XmlElement(namespace = Namespaces.ORGAN_VLASTI, required = true)
+	@XmlElement(namespace = Namespaces.OSNOVA, required = true)
 	private String sediste;
 
 	public OrganVlasti() {

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Zahtev } from 'src/app/models/zahtev';
 import { environment } from 'src/environments/environment';
-import { DOKUMENT_NAMESPACE } from 'src/app/constants/namespaces';
+import { DOKUMENT_NAMESPACE, OSNOVA_NAMESPACE } from 'src/app/constants/namespaces';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,8 @@ export class ZahtevService {
   private zahtevToXml(zahtev: Zahtev): string{
 
     let xml = `
-      <dokument:tipZahteva>${zahtev.tipZahteva}</dokument:tipZahtev>
+      ${zahtev.detalji}
+      <dokument:tipZahteva>${zahtev.tipZahteva}</dokument:tipZahteva>
     `;
     if (zahtev.tipZahteva === 'dostava'){
       xml += `
@@ -31,12 +32,9 @@ export class ZahtevService {
         <dokument:opisDostave>${zahtev.opisDostave}</dokument:opisDostave>
       `;
     }
-    xml += `
-      <dokument:Detalji>${zahtev.detalji}</dokument:Detalji>
-    `;
 
     return `
-      <dokument:Zahtev
+      <dokument:Zahtev xmlns="${OSNOVA_NAMESPACE}"
       xmlns:dokument="${DOKUMENT_NAMESPACE}">
         ${xml}
       </dokument:Zahtev>
