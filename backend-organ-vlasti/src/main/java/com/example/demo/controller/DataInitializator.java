@@ -24,7 +24,7 @@ public class DataInitializator {
 	@GetMapping
 	public void initData() throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
 		File file = new File(KORISNIK1);
-		this.existManager.save(KorisnikRepository.collectionId, KORISNIK1, file);
+		this.existManager.save(KorisnikRepository.KORISNICI_COLLECTION, KORISNIK1, file);
 		
 	}
 	
