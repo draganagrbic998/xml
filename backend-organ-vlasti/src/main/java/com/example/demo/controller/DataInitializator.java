@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.xml.sax.SAXException;
 import org.xmldb.api.base.XMLDBException;
 
+import com.example.demo.constants.Constants;
 import com.example.demo.exist.ExistManager;
 import com.example.demo.parser.DOMParser;
 import com.example.demo.repository.KorisnikRepository;
@@ -20,8 +21,7 @@ import com.example.demo.repository.KorisnikRepository;
 @RequestMapping(value = "/init_data")
 public class DataInitializator {
 	
-	private static final String DATA_FOLDER = "data/";
-	private static final String KORISNIK1 = DATA_FOLDER + "draganaasd@gmail.com.xml";
+	private static final String KORISNIK1 = Constants.INIT_FOLDER + "/draganaasd@gmail.com.xml";
 
 	@Autowired
 	private ExistManager existManager;

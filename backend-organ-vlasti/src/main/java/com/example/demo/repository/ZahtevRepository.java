@@ -32,9 +32,4 @@ public class ZahtevRepository {
 		return this.existManager.load(ZAHTEVI_COLLECTION, documentId);
 	}
 	
-	/*
-	public XMLResource load(int documentIndex) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
-		return this.existManager.load(collectionId, documentIndex);
-	}*/
-	
 }

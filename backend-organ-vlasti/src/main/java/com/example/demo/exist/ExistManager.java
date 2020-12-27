@@ -78,7 +78,6 @@ public class ExistManager {
 			collection = this.getCollection(collectionId, 0);
 			XPathQueryService xpathService = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
 			xpathService.setProperty("indent", "yes");
-			//xpathService.setNamespace("", TARGET_NAMESPACE);
 			xpathService.setNamespace("", Namespaces.OSNOVA);
 			xpathService.setNamespace("dokument", Namespaces.DOKUMENT);
 			result = xpathService.query(xpathExp);

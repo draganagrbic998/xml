@@ -23,7 +23,6 @@ import org.xml.sax.SAXException;
 import org.xmldb.api.base.XMLDBException;
 
 import com.example.demo.service.ObavestenjeService;
-import com.example.demo.service.ZahtevService;
 
 @RestController
 @RequestMapping(value = "/api/obavestenja")

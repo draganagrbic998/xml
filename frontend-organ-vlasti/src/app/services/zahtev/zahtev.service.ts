@@ -52,10 +52,4 @@ export class ZahtevService {
     return this.http.get<ZahtevDTO[]>(this.API_ZAHTEVI);
   }
 
-  // ovo ces obrisati
-  view(documentIndex: number): Observable<string>{
-    const headers = new HttpHeaders().set('Content-Type', 'text/xml');
-    return this.http.get<string>(`${this.API_ZAHTEVI}/${documentIndex}`, {headers, responseType: 'text' as 'json'});
-  }
-
 }

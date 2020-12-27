@@ -44,7 +44,6 @@ public class KorisnikService implements UserDetailsService {
 	@Autowired
 	private JAXBParser jaxbParser;
 	
-	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
@@ -72,10 +71,10 @@ public class KorisnikService implements UserDetailsService {
 	}
 	
 	public void register(String xml) throws JAXBException, ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, ParserConfigurationException, SAXException, IOException, TransformerException {
-		Korisnik korisnik = (Korisnik) this.jaxbParser.unmarshal(xml, Korisnik.class);
-		/*if (this.korisnikRepository.findByEmail(korisnik.getEmail()) != null) {
+		Korisnik korisnik = (Korisnik) this.jaxbParser.unmarshal(this.domParser.buildDocument(xml), Korisnik.class);
+		if (this.korisnikRepository.findByEmail(korisnik.getMejl()) != null) {
 			throw new EmailTakenException();
-		}*/
+		}
 		korisnik.setLozinka(this.passwordEncoder.encode(korisnik.getLozinka()));
 		this.korisnikRepository.save(korisnik);
 	}

@@ -14,7 +14,6 @@ import { ToolbarComponent } from './components/main/toolbar/toolbar.component';
 import { FormContainerComponent } from './components/layout/form-container/form-container.component';
 import { ZahtevDetailsComponent } from './components/zahtev/zahtev-details/zahtev-details.component';
 import { SpinnerButtonComponent } from './components/layout/spinner-button/spinner-button.component';
-import { PaginatorComponent } from './components/layout/paginator/paginator.component';
 import { CenterContainerComponent } from './components/layout/center-container/center-container.component';
 import { ZahtevListComponent } from './components/zahtev/zahtev-list/zahtev-list.component';
 import { ObavestenjeFormComponent } from './components/obavestenje/obavestenje-form/obavestenje-form.component';
@@ -31,7 +30,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 
-import { SafeHtmlPipe } from './safe-html.pipe';
 import { ObavestenjeListComponent } from './components/obavestenje/obavestenje-list/obavestenje-list.component';
 import { ObavestenjeDetailsComponent } from './components/obavestenje/obavestenje-details/obavestenje-details.component';
 
@@ -44,10 +42,8 @@ import { ObavestenjeDetailsComponent } from './components/obavestenje/obavestenj
     FormContainerComponent,
     ZahtevDetailsComponent,
     SpinnerButtonComponent,
-    PaginatorComponent,
     CenterContainerComponent,
     RegisterFormComponent,
-    SafeHtmlPipe,
     ZahtevListComponent,
     ObavestenjeFormComponent,
     ObavestenjeListComponent,

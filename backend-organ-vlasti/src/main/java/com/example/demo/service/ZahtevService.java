@@ -19,7 +19,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.DocumentFragment;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.xmldb.api.base.ResourceIterator;
 import org.xmldb.api.base.ResourceSet;
@@ -65,7 +64,7 @@ public class ZahtevService {
 	public Resource generatePdf(String broj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
 		Document document = this.zahtevRepository.load(broj);
 		ByteArrayOutputStream out = this.xslTransformer.generatePdf(document, XSL_FO_PATH);
-		Path file = Paths.get(broj + ".pdf");
+		Path file = Paths.get(Constants.GEN_FOLDER + "/" + broj + ".pdf");
 		Files.write(file, out.toByteArray());
 		return new UrlResource(file.toUri());
 	}
@@ -73,7 +72,7 @@ public class ZahtevService {
 	public Resource generateHtml(String broj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
 		Document document = this.zahtevRepository.load(broj);
 		ByteArrayOutputStream out = this.xslTransformer.generateHtml(document, XSL_PATH);
-		Path file = Paths.get(broj + ".html");
+		Path file = Paths.get(Constants.GEN_FOLDER + "/" + broj + ".html");
 		Files.write(file, out.toByteArray());
 		return new UrlResource(file.toUri());
 	}
@@ -85,16 +84,6 @@ public class ZahtevService {
 		organVlasti.setNaziv("TEST NAZIV");
 		organVlasti.setSediste("TEST SEDISTE");
 		return organVlasti;
-	}
-	
-	public String defaultMesto() {
-		//izmeni ovo na ono sto on kaze
-		return "TEST MESTO";
-	}
-	
-	public String testPotpis() {
-		//izmeni ovo na ono sto on kaze
-		return "TEST POTPIS";
 	}
 	
 	public List<ZahtevDTO> list() throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException, ParserConfigurationException, SAXException, IOException{
@@ -129,18 +118,7 @@ public class ZahtevService {
 	public void save(String xml) throws ParserConfigurationException, SAXException, IOException, JAXBException, ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException {
 		Document document = this.domParser.buildDocument(xml);
 		
-		((Element) document.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0)).removeAttribute("xml:space");
-		NodeList bolds = document.getElementsByTagNameNS(Namespaces.OSNOVA, "bold");
-		for (int i = 0; i < bolds.getLength(); ++i) {
-			Element bold = (Element) bolds.item(i);
-			bold.removeAttribute("xml:space");
-		}
-		
-		NodeList italics = document.getElementsByTagNameNS(Namespaces.OSNOVA, "italic");
-		for (int i = 0; i < italics.getLength(); ++i) {
-			Element italic = (Element) italics.item(i);
-			italic.removeAttribute("xml:space");
-		}
+		this.domParser.removeXmlSpace(document);
 		
 		Element zahtev = (Element) document.getElementsByTagNameNS(Namespaces.DOKUMENT, "Zahtev").item(0);
 		DocumentFragment documentFragment = document.createDocumentFragment();
@@ -149,7 +127,7 @@ public class ZahtevService {
 		
 		datum.setTextContent(sdf.format(new Date()));
 		Node mesto = document.createElementNS(Namespaces.OSNOVA, "mesto");
-		mesto.setTextContent(this.defaultMesto());
+		mesto.setTextContent(Constants.TEST_MESTO);
 		documentFragment.appendChild(document.createElementNS(Namespaces.OSNOVA, "broj"));
 		documentFragment.appendChild(datum);
 		documentFragment.appendChild(mesto);
@@ -168,7 +146,7 @@ public class ZahtevService {
 		documentFragment2.appendChild(mejl);
 		
 		Node potpis = document.createElementNS(Namespaces.OSNOVA, "potpis");
-		potpis.setTextContent(this.testPotpis());
+		potpis.setTextContent(Constants.SIGNATURE);
 		documentFragment2.appendChild(potpis);
 		Node status = document.createElementNS(Namespaces.OSNOVA, "status");
 		status.setTextContent(StatusZahteva.cekanje + "");

@@ -37,12 +37,6 @@ public class ZahtevController {
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
-	/*
-	@GetMapping(value = "/{documentIndex}", produces = "text/html;charset=UTF-8")
-	public ResponseEntity<String> details(@PathVariable int documentIndex) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException {
-		return new ResponseEntity<>(this.zahtevService.getHtml(documentIndex), HttpStatus.OK);
-	}*/
-	
 	@GetMapping
 	public ResponseEntity<List<ZahtevDTO>> list() throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, ParserConfigurationException, SAXException, IOException{
 		return new ResponseEntity<>(this.zahtevService.list(), HttpStatus.OK);
