@@ -37,7 +37,7 @@ public class Korisnik implements UserDetails {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		List<Authority> authorities = new ArrayList<>();
-		String uloga = this.gradjanin == null ? "sluzbenik" : "gradjanin";
+		String uloga = this.gradjanin == null ? "poverenik" : "gradjanin";
 		authorities.add(new Authority(uloga));
 		return authorities;
 	}
@@ -100,7 +100,7 @@ public class Korisnik implements UserDetails {
 		if (this.gradjanin != null) {
 			return "gradjanin";
 		}
-		return "sluzbenik";
+		return "poverenik";
 	}
 
 }

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ZalbaDTO } from 'src/app/models/zalbaDTO';
+import { ZalbaService } from 'src/app/services/zalba/zalba.service';
 
 @Component({
   selector: 'app-zalba-list',
@@ -7,9 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ZalbaListComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private zalbaService: ZalbaService
+  ) { }
+
+  zalbe: ZalbaDTO[];
 
   ngOnInit(): void {
+    this.zalbaService.list().subscribe(
+      (zalbe: ZalbaDTO[]) => {
+        this.zalbe = zalbe;
+      }
+    );
   }
 
 }

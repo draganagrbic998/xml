@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { DOKUMENT_NAMESPACE, OSNOVA_NAMESPACE, XSI_NAMESPACE } from 'src/app/constants/namespaces';
 import { ZalbaCutanje } from 'src/app/models/zalba-cutanje';
 import { ZalbaOdluka } from 'src/app/models/zalba-odluka';
-import { ZalbaDTO } from 'src/app/models/zaltaDTO';
+import { ZalbaDTO } from 'src/app/models/zalbaDTO';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
