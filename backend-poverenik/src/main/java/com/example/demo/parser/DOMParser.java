@@ -5,7 +5,6 @@ import static org.apache.xerces.jaxp.JAXPConstants.W3C_XML_SCHEMA;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
 
@@ -22,9 +21,12 @@ import javax.xml.transform.stream.StreamResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
-import org.w3c.dom.Node;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+
+import com.example.demo.constants.Namespaces;
 
 @Component
 public class DOMParser {
@@ -58,22 +60,31 @@ public class DOMParser {
 		return builder.parse(new File(path));
 	}
 	
-	public void transformDocument(Document document, OutputStream out) throws TransformerException {
-		Transformer transformer = this.transformerFactory.newTransformer();
-		transformer.setOutputProperty("{http://xml.apache.org/xalan}indent-amount", "2");
-		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-		transformer.transform(new DOMSource(document), new StreamResult(out));
-	}
-	
-	public String buildXml(Node node) throws TransformerException {
+	public String buildXml(Document document) throws TransformerException {
 		StringWriter string = new StringWriter();
 		Transformer transformer = this.transformerFactory.newTransformer();
 		transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
 		transformer.setOutputProperty(OutputKeys.METHOD, "xml");
 		transformer.setOutputProperty(OutputKeys.INDENT, "yes");	
 		transformer.setOutputProperty(OutputKeys.ENCODING, "utf-8");
-		transformer.transform(new DOMSource(node), new StreamResult(string));
+		transformer.transform(new DOMSource(document), new StreamResult(string));
 		return string.toString();
+	}
+	
+	public void removeXmlSpace(Document document) {
+		Element detalji = (Element) document.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0);
+		
+		detalji.removeAttribute("xml:space");
+		NodeList bolds = document.getElementsByTagNameNS(Namespaces.OSNOVA, "bold");
+		for (int i = 0; i < bolds.getLength(); ++i) {
+			Element bold = (Element) bolds.item(i);
+			bold.removeAttribute("xml:space");
+		}
+		NodeList italics = document.getElementsByTagNameNS(Namespaces.OSNOVA, "italic");
+		for (int i = 0; i < italics.getLength(); ++i) {
+			Element italic = (Element) italics.item(i);
+			italic.removeAttribute("xml:space");
+		}
 	}
 	
 }

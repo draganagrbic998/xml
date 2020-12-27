@@ -8,7 +8,6 @@
         <xs:complexContent>
             <xs:extension base="osnova:TPodnosenjeDetalji">
                 <xs:sequence>
-                    <xs:element name="organVlasti" type="xs:string"/>
                     <xs:element name="datumZahteva" type="xs:date"/>
                 </xs:sequence>
             </xs:extension>

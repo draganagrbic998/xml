@@ -5,31 +5,35 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
-import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
+import org.w3c.dom.DocumentFragment;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
+import org.xmldb.api.base.ResourceIterator;
+import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
 
 import com.example.demo.constants.Constants;
 import com.example.demo.constants.Namespaces;
+import com.example.demo.controller.ZalbaDTO;
 import com.example.demo.model.Korisnik;
-import com.example.demo.model.Zalba;
-import com.example.demo.model.ZalbaCutanje;
-import com.example.demo.model.ZalbaOdbijanje;
-import com.example.demo.model.enums.TipCutanja;
+import com.example.demo.model.OrganVlasti;
+import com.example.demo.model.enums.StatusZalbe;
 import com.example.demo.parser.DOMParser;
 import com.example.demo.parser.JAXBParser;
 import com.example.demo.parser.XSLTransformer;
@@ -42,88 +46,105 @@ public class ZalbaService {
 	private ZalbaRepository zalbaRepository;
 	
 	@Autowired
-	private KorisnikService korisnikService;
+	private DOMParser domParser;
 	
 	@Autowired
 	private JAXBParser jaxbParser;
-		
+	
 	@Autowired
-	private DOMParser domParser;
+	private KorisnikService korisnikService;
 	
 	@Autowired
 	private XSLTransformer xslTransformer;
 	
-	private static final String XSL_PATH_CUTANJE = Constants.XSL_FOLDER + "/zalba_cutanje.xsl";
-	private static final String XSL_PATH_ODBIJANJE = Constants.XSL_FOLDER + "/zalba_odbijanje.xsl";
-
-	private static final String XSL_FO_PATH_CUTANJE = Constants.XSL_FOLDER + "/zalba_cutanje_fo.xsl";
-	private static final String XSL_FO_PATH_ODBIJANJE = Constants.XSL_FOLDER + "/zalba_odbijanje_fo.xsl";
+	private static final String XSL_FO_PATH = Constants.XSL_FOLDER + "/zalba_cutanje_fo.xsl";
+	private static final String XSL_PATH = Constants.XSL_FOLDER + "/zalba_cutanje.xsl";
+	//dodaj odvojeno za zalbu cutanje i zalbu odbijanje
 	
-	private static final String XSL_PATH_OBAVESTENJE = Constants.XSL_FOLDER + "/obavestenje.xsl";
-	private static final String XSL_FO_PATH_OBAVESTENJE = Constants.XSL_FOLDER + "/obavestenje_fo.xsl";
 	
-	private SimpleDateFormat format = new SimpleDateFormat(Constants.DATE_FORMAT);
+	public Resource generatePdf(String broj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
+		Document document = this.zalbaRepository.load(broj);
+		ByteArrayOutputStream out = this.xslTransformer.generatePdf(document, XSL_FO_PATH);
+		Path file = Paths.get(Constants.GEN_FOLDER + "/" + broj + ".pdf");
+		Files.write(file, out.toByteArray());
+		return new UrlResource(file.toUri());
+	}
 	
-	public void save(String xml) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, JAXBException, ParserConfigurationException, SAXException, IOException, DOMException, ParseException {		
+	public Resource generateHtml(String broj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
+		Document document = this.zalbaRepository.load(broj);
+		ByteArrayOutputStream out = this.xslTransformer.generateHtml(document, XSL_PATH);
+		Path file = Paths.get(Constants.GEN_FOLDER + "/" + broj + ".html");
+		Files.write(file, out.toByteArray());
+		return new UrlResource(file.toUri());
+	}
+	
+	
+	public OrganVlasti defaultOrganVlasti() {
+		//izmeni ovo kasnije tako da ucita podatke iz nekog xml fajla
+		OrganVlasti organVlasti = new OrganVlasti();
+		organVlasti.setNaziv("TEST NAZIV");
+		organVlasti.setSediste("TEST SEDISTE");
+		return organVlasti;
+	}
+	
+	public List<ZalbaDTO> list() throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException, ParserConfigurationException, SAXException, IOException{
+		
 		Korisnik korisnik = this.korisnikService.currentUser();
-		Document document = this.domParser.buildDocument(xml);
-		Zalba zalba;
-		if (document.getElementsByTagName("tipCutanja").getLength() > 0) {
-			TipCutanja tipCutanja = TipCutanja.valueOf(document.getElementsByTagName("tipCutanja").item(0).getTextContent());
-			zalba = new ZalbaCutanje(tipCutanja);
+		String xpathExp = null;
+		if (korisnik.getGradjanin() != null) {
+			//xpathExp = String.format("/dokument:Zahtev[mejl='%s']", korisnik.getMejl());
 		}
 		else {
-			String brojOdluke = document.getElementsByTagName("brojOdluke").item(0).getTextContent();
-			Date datumOdluke = this.format.parse(document.getElementsByTagName("datumOdluke").item(0).getTextContent());
-			zalba = new ZalbaOdbijanje(brojOdluke, datumOdluke);
+			//xpathExp = "/dokument:Zahtev";
 		}
-		zalba.setGradjanin(korisnik.getGradjanin());
-		zalba.setDatum(new Date());
-		zalba.setDetalji(document.getElementsByTagName("detalji").item(0).getTextContent());
-		zalba.setKontakt(korisnik.getEmail());
-		zalba.setPotpis(Constants.SIGNATURE);
-		zalba.setOdgovoreno(false);
-		zalba.setOrganVlasti(document.getElementsByTagName("organVlasti").item(0).getTextContent());
-		zalba.setDatumZahteva(this.format.parse(document.getElementsByTagName("datumZahteva").item(0).getTextContent()));
-		zalba.setKopijaZahteva(document.getElementsByTagName("kopijaZahteva").item(0).getTextContent());
-		if (document.getElementsByTagName("kopijaOdluke").getLength() > 0) {
-			zalba.setKopijaOdluke(document.getElementsByTagName("kopijaOdluke").item(0).getTextContent());
-		}
+		ResourceSet result = this.zalbaRepository.list(xpathExp);
 		
-		this.zalbaRepository.save(this.jaxbParser.marshal(zalba, Zalba.class));		
+		
+		List<ZalbaDTO> zalbe = new ArrayList<>();
+		ResourceIterator i = result.getIterator();
+		while (i.hasMoreResources()) {
+			XMLResource resource = (XMLResource) i.nextResource();
+			//Document document = domParser.buildDocument(resource.getContent().toString());	//a sto da ne uradim getContentAsDom???
+			//String broj = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
+			//String datum = document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).getTextContent();
+			//TipZahteva tipZahteva = TipZahteva.valueOf(document.getElementsByTagNameNS(Namespaces.DOKUMENT, "tipZahteva").item(0).getTextContent());
+			
+			//StatusZahteva status = StatusZahteva.valueOf(document.getElementsByTagNameNS(Namespaces.OSNOVA, "status").item(0).getTextContent());
+			//zahtevi.add(new ZahtevDTO(broj, datum, tipZahteva, status));
+		}
+		return zalbe;
+		
 	}
 	
-	public String getHtml(int index) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException { 
-		XMLResource resource = this.zalbaRepository.load(index);
-		System.out.println(resource);
-		System.out.println(resource.getContentAsDOM());
-		//boolean cutanje = resource.getContentAsDOM().getAttributes().getNamedItemNS(Namespaces.XSI, "type").getNodeValue().equals("TZalbaCutanje");
-		boolean cutanje = true;
-		
-		try {
-			this.makePdf(index, cutanje);	//samo da bih testirala, nek stoji zasad ovde
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-		if (cutanje) {
-			return this.xslTransformer.xml2html(resource, XSL_PATH_OBAVESTENJE);	//ovo treba zakomentarisati i prebaciti u backend organa vlasti
-			//return this.xslTransformer.xml2html(resource, XSL_PATH_CUTANJE);
-
-		}
-		return this.xslTransformer.xml2html(resource, XSL_PATH_ODBIJANJE);
+	public void save(String xml) throws ParserConfigurationException, SAXException, IOException, JAXBException, ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException {
+		Document document = this.domParser.buildDocument(xml);
+		Element zalba = (Element) document.getElementsByTagNameNS(Namespaces.DOKUMENT, "Zalba").item(0);
+		this.domParser.removeXmlSpace(document);
+		DocumentFragment documentFragment = document.createDocumentFragment();
+		Node datum = document.createElementNS(Namespaces.OSNOVA, "datum");
+		SimpleDateFormat sdf = new SimpleDateFormat(Constants.DATE_FORMAT);
+		datum.setTextContent(sdf.format(new Date()));
+		Node mesto = document.createElementNS(Namespaces.OSNOVA, "mesto");
+		mesto.setTextContent(Constants.TEST_MESTO);
+		documentFragment.appendChild(document.createElementNS(Namespaces.OSNOVA, "broj"));
+		documentFragment.appendChild(datum);
+		documentFragment.appendChild(mesto);
+		Node gradjanin = document.importNode(this.jaxbParser.marshal(this.korisnikService.currentUser().getGradjanin()).getFirstChild(), true);
+		documentFragment.appendChild(gradjanin);
+		zalba.insertBefore(documentFragment, document.getElementsByTagNameNS(Namespaces.OSNOVA, "OrganVlasti").item(0));
+		DocumentFragment documentFragment2 = document.createDocumentFragment();
+		Node mejl = document.createElementNS(Namespaces.OSNOVA, "mejl");
+		mejl.setTextContent(this.korisnikService.currentUser().getMejl());
+		documentFragment2.appendChild(mejl);
+		Node potpis = document.createElementNS(Namespaces.OSNOVA, "potpis");
+		potpis.setTextContent(Constants.SIGNATURE);
+		documentFragment2.appendChild(potpis);
+		Node status = document.createElementNS(Namespaces.OSNOVA, "status");
+		status.setTextContent(StatusZalbe.cekanje + "");
+		documentFragment2.appendChild(status);
+		zalba.insertBefore(documentFragment2, document.getElementsByTagNameNS(Namespaces.DOKUMENT, "datumZahteva").item(0));
+		this.zalbaRepository.save(document);
 	}
-	
-	public void makePdf(int index, boolean cutanje) throws Exception {
-		Node document = this.zalbaRepository.load(index).getContentAsDOM();
-		String xml = this.domParser.buildXml(document);
-		//String path = cutanje ? XSL_FO_PATH_CUTANJE : XSL_FO_PATH_ODBIJANJE;
-		String path = XSL_FO_PATH_OBAVESTENJE;	//ovo treba zakomentarisati i prebaciti na backend organa vlasti
-		ByteArrayOutputStream outputStream = xslTransformer.xml2pdf(xml, path);
-		Path file = Paths.get("data/temp.pdf");
-		Files.write(file, outputStream.toByteArray());
-		//treba da dodamo da vratimo rezultat klijentu pa da moze da vidi i on
-	}
-
 	
 }
+
