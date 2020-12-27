@@ -61,11 +61,11 @@ public class ExistManager {
 			collection = this.getCollection(collectionId, 0);
 			collection.setProperty(OutputKeys.INDENT, "yes");
 			resource = (XMLResource) collection.getResource(documentId);
+			return (Document) resource.getContentAsDOM();
 		}
 		finally {
 			collection.close();			
 		}
-		return (Document) resource.getContentAsDOM();
 	}
 	
 	

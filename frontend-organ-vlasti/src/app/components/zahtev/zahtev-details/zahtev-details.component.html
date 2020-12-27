@@ -9,15 +9,15 @@
                 {{zahtev.tipZahteva}}
             </span>
             <span>
-                <button (click)="openHtml(zahtev.broj)">uzmi html</button>
+                <button (click)="openHtml()">uzmi html</button>
             </span>
             <span>
                 
                 <!--<button (click)="prezumiPdf(zahtev.broj)">PREUZMIE PDF</button>-->
-                <button (click)="openPdf(zahtev.broj)">uzmi pdf</button>
+                <button (click)="openPdf()">uzmi pdf</button>
             </span>
             <span *ngIf="uloga === 'sluzbenik' && zahtev.status === 'cekanje'">
-                dodaj obavestenje
+                <button (click)="dodajObavestenje()">dodaj obavestenje</button>
             </span>
         </mat-card-content>
     </mat-card>
