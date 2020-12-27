@@ -32,6 +32,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 
 import { SafeHtmlPipe } from './safe-html.pipe';
+import { ObavestenjeListComponent } from './components/obavestenje/obavestenje-list/obavestenje-list.component';
+import { ObavestenjeDetailsComponent } from './components/obavestenje/obavestenje-details/obavestenje-details.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +49,9 @@ import { SafeHtmlPipe } from './safe-html.pipe';
     RegisterFormComponent,
     SafeHtmlPipe,
     ZahtevListComponent,
-    ObavestenjeFormComponent
+    ObavestenjeFormComponent,
+    ObavestenjeListComponent,
+    ObavestenjeDetailsComponent
   ],
   imports: [
     BrowserModule,
