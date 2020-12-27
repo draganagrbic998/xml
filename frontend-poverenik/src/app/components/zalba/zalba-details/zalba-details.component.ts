@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ZalbaService } from 'src/app/services/zalba/zalba.service';
 
 @Component({
   selector: 'app-zalba-details',
@@ -8,23 +7,9 @@ import { ZalbaService } from 'src/app/services/zalba/zalba.service';
 })
 export class ZalbaDetailsComponent implements OnInit {
 
-  constructor(
-    private zalbaService: ZalbaService
-  ) { }
+  constructor() { }
 
-  zalbaView = '';
-
-  click(): void{
-    this.zalbaService.view(1).subscribe(
-      res => {
-        console.log(res);
-        this.zalbaView = res;
-      }
-    );
-  }
-
-  ngOnInit(): void{
-
+  ngOnInit(): void {
   }
 
 }

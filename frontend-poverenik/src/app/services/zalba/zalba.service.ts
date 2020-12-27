@@ -1,8 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Zalba } from 'src/app/models/zalba';
-import { formatDate } from 'src/app/utils/utils';
+import { DOKUMENT_NAMESPACE, OSNOVA_NAMESPACE, XSI_NAMESPACE } from 'src/app/constants/namespaces';
+import { ZalbaCutanje } from 'src/app/models/zalba-cutanje';
+import { ZalbaOdluka } from 'src/app/models/zalba-odluka';
+import { ZalbaDTO } from 'src/app/models/zaltaDTO';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -16,46 +18,51 @@ export class ZalbaService {
 
   private readonly API_ZALBE = `${environment.baseUrl}/${environment.apiZalbe}`;
 
-  private jsonToXml(zalba: Zalba): string{
+  private zalbaCutanjeToXml(zalba: ZalbaCutanje): string{
 
-    let base =
-    `
-      <organVlasti>${zalba.organVlasti}</organVlasti>
-      <datumZahteva>${formatDate(zalba.datumZahteva)}</datumZahteva>
-      <detalji>${zalba.detalji}</detalji>
-      <kopijaZahteva>${zalba.kopijaZahteva}</kopijaZahteva>
+    return `
+      <dokument:Zalba xmlns="${OSNOVA_NAMESPACE}"
+      xmlns:dokument="${DOKUMENT_NAMESPACE}"
+      xmlns:xsi="${XSI_NAMESPACE}" xsi:type="dokument:TZalbaCutanje">
+        <OrganVlasti>
+          <naziv>${zalba.organVlasti}</naziv>
+        </OrganVlasti>
+        ${zalba.detalji}
+        <dokument:datumZahteva>2020-12-12</dokument:datumZahteva>
+        <dokument:tipCutanja>${zalba.tipCutanja}</dokument:tipCutanja>
+      </dokument:Zalba>
     `;
-    if (zalba.kopijaOdluke){
-      base += `<kopijaOdluke>${zalba.kopijaOdluke}</kopijaOdluke>`;
-    }
-    if (zalba.tipZalbe === 'cutanje'){
-      return `
-        <zalba>
-          ${base}
-          <tipCutanja>${zalba.tipCutanja.replace(' ', '_')}</tipCutanja>
-        </zalba>
-      `;
-    }
-    else{
-      return `
-        <zalba>
-          ${base}
-          <brojOdluke>${zalba.brojOdluke}</brojOdluke>
-          <datumOdluke>${formatDate(zalba.datumOdluke)}</datumOdluke>
-        </zalba>
-      `;
 
-    }
   }
 
-  save(zalba: Zalba): Observable<null>{
+  private zalbaOdlukaToXml(zalba: ZalbaOdluka): string{
+    return `
+    <dokument:Zalba xmlns="${OSNOVA_NAMESPACE}"
+    xmlns:dokument="${DOKUMENT_NAMESPACE}"
+    xmlns:xsi="${XSI_NAMESPACE}" xsi:type="dokument:TZalbaOdluka">
+      <OrganVlasti>
+        <naziv>${zalba.organVlasti}</naziv>
+      </OrganVlasti>
+      ${zalba.detalji}
+      <dokument:datumZahteva>2020-12-12</dokument:datumZahteva>
+      <dokument:brojOdluke>${zalba.brojOdluke}</dokument:brojOdluke>
+      <dokument:datumOdluke>${zalba.datumOdluke}</dokument:datumOdluke>
+    </dokument:Zalba>
+  `;
+  }
+
+  saveCutanje(zalba: ZalbaCutanje): Observable<null>{
     const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
-    return this.http.post<null>(`${environment.baseUrl}/${environment.apiZalbe}`, this.jsonToXml(zalba), options);
+    return this.http.post<null>(this.API_ZALBE, this.zalbaCutanjeToXml(zalba), options);
   }
 
-  view(documentIndex: number): Observable<string>{
-    const headers = new HttpHeaders().set('Content-Type', 'text/xml');
-    return this.http.get<string>(`${this.API_ZALBE}/${documentIndex}`, {headers, responseType: 'text' as 'json'});
+  saveOdluka(zalba: ZalbaOdluka): Observable<null>{
+    const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
+    return this.http.post<null>(this.API_ZALBE, this.zalbaOdlukaToXml(zalba), options);
+  }
+
+  list(): Observable<ZalbaDTO[]>{
+    return this.http.get<ZalbaDTO[]>(this.API_ZALBE);
   }
 
 }

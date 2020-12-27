@@ -6,14 +6,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { AuthInterceptor } from './interceptor/auth.interceptor';
 
-import { FormContainerComponent } from './components/layout/form-container/form-container.component';
-import { SpinnerButtonComponent } from './components/layout/spinner-button/spinner-button.component';
 import { LoginFormComponent } from './components/main/login-form/login-form.component';
 import { ToolbarComponent } from './components/main/toolbar/toolbar.component';
-import { ZalbaDetailsComponent } from './components/zalba/zalba-details/zalba-details.component';
-import { ZalbaFormComponent } from './components/zalba/zalba-form/zalba-form.component';
-import { SpacerContainerComponent } from './components/layout/spacer-container/spacer-container.component';
+import { FormContainerComponent } from './components/layout/form-container/form-container.component';
+import { SpinnerButtonComponent } from './components/layout/spinner-button/spinner-button.component';
+import { CenterContainerComponent } from './components/layout/center-container/center-container.component';
+import { RegisterFormComponent } from './components/main/register-form/register-form.component';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
@@ -25,26 +25,26 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { CenterContainerComponent } from './components/layout/center-container/center-container.component';
-import { AuthInterceptor } from './interceptor/auth.interceptor';
-import { SafeHtmlPipe } from './pipes/safe-html.pipe';
+import { ZalbaCutanjeFormComponent } from './components/zalba/zalba-cutanje-form/zalba-cutanje-form.component';
+import { ZalbaOdlukaFormComponent } from './components/zalba/zalba-odluka-form/zalba-odluka-form.component';
+import { ZalbaDetailsComponent } from './components/zalba/zalba-details/zalba-details.component';
+import { ZalbaListComponent } from './components/zalba/zalba-list/zalba-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    FormContainerComponent,
-    SpinnerButtonComponent,
     LoginFormComponent,
     ToolbarComponent,
-    ZalbaDetailsComponent,
-    ZalbaFormComponent,
-    SpacerContainerComponent,
+    FormContainerComponent,
+    SpinnerButtonComponent,
     CenterContainerComponent,
-    SafeHtmlPipe
+    RegisterFormComponent,
+    ZalbaCutanjeFormComponent,
+    ZalbaOdlukaFormComponent,
+    ZalbaDetailsComponent,
+    ZalbaListComponent
   ],
   imports: [
-    BrowserModule,
-    AppRoutingModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,

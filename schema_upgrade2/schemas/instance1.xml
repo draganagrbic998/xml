@@ -1,43 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dokument:Obavestenje 
- xmlns="https://github.com/draganagrbic998/xml/osnova"
- xmlns:dokument="https://github.com/draganagrbic998/xml/dokument"
+<dokument:Zalba xmlns:dokument="https://github.com/draganagrbic998/xml/dokument"
+ xmlns:osnova="https://github.com/draganagrbic998/xml/osnova"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="https://github.com/draganagrbic998/xml/dokument file:/C:/Users/Dragana/Desktop/projekti/xml/schema_upgrade2/schemas/obavestenje.xsd">
-    <datum>2022-02-23Z</datum>
-    <mesto>IAL44M</mesto>
-    <broj>Tb.vZ6yfT8j988Rg2E</broj>
-    <dokument:Zahtev>
-        <datum>2021-06-14</datum>
-        <mesto>Qd90x0k04Yi.OdhHAL6d</mesto>
-        <Gradjanin>
-            <Osoba>
-                <ime>J</ime>
-                <prezime>Qhs</prezime>
-            </Osoba>
-            <Adresa>
-                <mesto>HyFMhKo</mesto>
-                <ulica>AwRlXczJD.sTJ</ulica>
-                <broj>swTTm6H</broj>
-            </Adresa>
-        </Gradjanin>
-        <OrganVlasti>
-            <naziv>EE0FYu5a8W_lWfjajRxnPaI7mcnUU.</naziv>
-            <sediste>EjZ</sediste>
-        </OrganVlasti>
-        <Detalji/>
-    </dokument:Zahtev>
-    <dokument:Uvid>
-        <Adresa>
-            <mesto>aSt9XKjxrlGfE_</mesto>
-            <ulica>Pe1XT4k6igm6rC8c</ulica>
-            <broj>fDf207i9G</broj>
-        </Adresa>
-        <dokument:kancelarija>Fl7</dokument:kancelarija>
-        <dokument:datum>2021-07-20Z</dokument:datum>
-        <dokument:pocetak>46:25</dokument:pocetak>
-        <dokument:kraj>2:58</dokument:kraj>
-    </dokument:Uvid>
-    <dokument:kopija>399419958</dokument:kopija>
-    <dokument:potpis>73827188696787739088738268867570786767717567768879748687888085668888718979746984</dokument:potpis>
-</dokument:Obavestenje>
+ xsi:schemaLocation="https://github.com/draganagrbic998/xml/dokument file:/C:/Users/Dragana/Desktop/projekti/xml/schema_upgrade2/schemas/zalba.xsd" xsi:type="dokument:TZalbaCutanje">
+    <osnova:broj>UmN6B4joypVoZESgO387YfreOBa</osnova:broj>
+    <osnova:datum>2021-04-21Z</osnova:datum>
+    <osnova:mesto>g6IO1eQYhlak.4WYrah7zMK</osnova:mesto>
+    <osnova:Gradjanin>
+        <osnova:Osoba>
+            <osnova:ime>vQVT</osnova:ime>
+            <osnova:prezime>GGRF9223IZY1vpxz9gvuxc2kB</osnova:prezime>
+        </osnova:Osoba>
+        <osnova:Adresa>
+            <osnova:mesto>xzXQ0R5qht6.1Wyot5BBH8nJ-x</osnova:mesto>
+            <osnova:ulica>akKIjKW</osnova:ulica>
+            <osnova:broj>nAOqKGF9eF-VkJbLW4rdCIEkYc</osnova:broj>
+        </osnova:Adresa>
+    </osnova:Gradjanin>
+    <osnova:OrganVlasti>
+        <osnova:naziv>CWLbx1LOXBhYYXRbi</osnova:naziv>
+        <osnova:sediste>i1t77kpLO4_ibJ1AHcz_dwUvJrb</osnova:sediste>
+    </osnova:OrganVlasti>
+    <osnova:Detalji/>
+    <osnova:email>yx_BFK2fcaYqTUDHW48IWOW1g</osnova:email>
+    <osnova:potpis>7874878466787784817767888272777485657770887276736865718772756973878782697478866586736788887473727269768867756681</osnova:potpis>
+    <osnova:status>odbijeno</osnova:status>
+    <dokument:datumZahteva>2022-04-07Z</dokument:datumZahteva>
+    <dokument:tipCutanja>nije postupio</dokument:tipCutanja>
+</dokument:Zalba>

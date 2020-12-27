@@ -1,0 +1,68 @@
+<app-form-container>
+    <h3>Zalba na odluku organa vlasti</h3>
+    <br><br>
+    <form [formGroup]="zalbaForm">
+        <div [class.disabled]="savePending">
+            <mat-form-field>
+                <mat-label>Naziv organa vlasti</mat-label>
+                <input 
+                matInput 
+                autocomplete="off"
+                formControlName="organVlasti" 
+                placeholder="Unesite naziv organa vlasti">
+                <mat-error>
+                    Naziv organa vlasti je obavezan!
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field> 
+                <mat-label>Datum podnošenja zahteva: </mat-label>
+                <input 
+                matInput 
+                autocomplete="off"
+                formControlName="datumZahteva" 
+                placeholder="Unesite datum podnošenja zahteva"
+                [matDatepicker]="datumZahtevaPicker">
+                <mat-datepicker-toggle matSuffix [for]="datumZahtevaPicker"></mat-datepicker-toggle>
+                <mat-datepicker #datumZahtevaPicker></mat-datepicker>
+                <mat-error>
+                    Datum podnošenja zahteva je obavezan!
+                </mat-error>    
+            </mat-form-field>       
+            <mat-form-field>
+                <mat-label>Broj odluke</mat-label>
+                <input 
+                matInput 
+                autocomplete="off"
+                formControlName="brojOdluke" 
+                placeholder="Unesite broj odluke">
+                <mat-error>
+                    Broj odluke je obavezan!
+                </mat-error>
+            </mat-form-field>     
+            <mat-form-field> 
+                <mat-label>Datum donošenja odluke: </mat-label>
+                <input 
+                matInput 
+                autocomplete="off"
+                formControlName="datumOdluke" 
+                placeholder="Unesite datum donošenja odluke"
+                [matDatepicker]="datumOdlukePicker">
+                <mat-datepicker-toggle matSuffix [for]="datumOdlukePicker"></mat-datepicker-toggle>
+                <mat-datepicker #datumOdlukePicker></mat-datepicker>
+                <mat-error>
+                    Datum donošenja odluke je obavezan!
+                </mat-error>    
+            </mat-form-field>            
+            <div id="detaljiEditor"></div>
+        </div>    
+        <br><br>
+        <app-center-container>
+            <button 
+            *ngIf="!savePending"
+            mat-raised-button 
+            color="primary"
+            (click)="posaljiZalbu()">Pošalji zalbu</button>
+            <app-spinner-button *ngIf="savePending"></app-spinner-button>
+        </app-center-container>
+    </form>
+</app-form-container>

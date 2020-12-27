@@ -1,5 +1,6 @@
 <app-form-container>
-    <h2>Log In</h2>
+    <h2>Prijava</h2>
+    <br><br>
     <form [formGroup]="loginForm">
         <div [class.disabled]="loginPending">
             <mat-form-field>
@@ -8,25 +9,25 @@
                 matInput 
                 autocomplete="off"
                 formControlName="email" 
-                placeholder="Enter email">
+                placeholder="Unesite email">
                 <mat-error>
-                    You must provide email!
+                    Email je obavezan!
                 </mat-error>
             </mat-form-field>
             <mat-form-field>
-                <mat-label>Password</mat-label>
+                <mat-label>Lozinka</mat-label>
                 <input 
                 type="password" 
                 matInput 
                 autocomplete="off"
-                formControlName="password"
-                placeholder="Enter password">
+                formControlName="lozinka"
+                placeholder="Unesite lozinku">
                 <mat-error>
-                    You must provide password!
+                    Lozinka je obavezna!
                 </mat-error>    
             </mat-form-field>
         </div>
-        <br>
+        <br><br>
         <app-center-container>
             <button 
             *ngIf="!loginPending"

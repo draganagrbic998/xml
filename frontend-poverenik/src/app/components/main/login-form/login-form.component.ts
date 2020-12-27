@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { SNACKBAR_CLOSE, SNACKBAR_ERROR, SNACKBAR_ERROR_OPTIONS } from 'src/app/constants/snackbar';
+import { Token } from 'src/app/models/token';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { UserService } from 'src/app/services/user/user.service';
 
@@ -23,7 +24,7 @@ export class LoginFormComponent implements OnInit {
   loginPending = false;
   loginForm: FormGroup = new FormGroup({
     email: new FormControl('', [Validators.required]),
-    password: new FormControl('', [Validators.required])
+    lozinka: new FormControl('', [Validators.required])
   });
 
   login(): void{
@@ -32,7 +33,7 @@ export class LoginFormComponent implements OnInit {
     }
     this.loginPending = true;
     this.userService.login(this.loginForm.value).subscribe(
-      (token: string) => {
+      (token: Token) => {
         this.loginPending = false;
         this.authService.saveUser(token);
         this.router.navigate(['/']);
