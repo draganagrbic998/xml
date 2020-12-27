@@ -32,8 +32,8 @@ import com.example.demo.constants.Constants;
 import com.example.demo.constants.Namespaces;
 import com.example.demo.controller.ZalbaDTO;
 import com.example.demo.model.Korisnik;
-import com.example.demo.model.OrganVlasti;
 import com.example.demo.model.enums.StatusZalbe;
+import com.example.demo.model.enums.TipZalbe;
 import com.example.demo.parser.DOMParser;
 import com.example.demo.parser.JAXBParser;
 import com.example.demo.parser.XSLTransformer;
@@ -57,14 +57,23 @@ public class ZalbaService {
 	@Autowired
 	private XSLTransformer xslTransformer;
 	
-	private static final String XSL_FO_PATH = Constants.XSL_FOLDER + "/zalba_cutanje_fo.xsl";
-	private static final String XSL_PATH = Constants.XSL_FOLDER + "/zalba_cutanje.xsl";
-	//dodaj odvojeno za zalbu cutanje i zalbu odbijanje
-	
+	private static final String XSL_FO_PATH_CUTANJE = Constants.XSL_FOLDER + "/zalba_cutanje_fo.xsl";
+	private static final String XSL_PATH_CUTANJE = Constants.XSL_FOLDER + "/zalba_cutanje.xsl";
+	private static final String XSL_FO_PATH_ODLUKA = Constants.XSL_FOLDER + "/zalba_odluka_fo.xsl";
+	private static final String XSL_PATH_ODLUKA = Constants.XSL_FOLDER + "/zalba_odluka.xsl";
+
 	
 	public Resource generatePdf(String broj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
 		Document document = this.zalbaRepository.load(broj);
-		ByteArrayOutputStream out = this.xslTransformer.generatePdf(document, XSL_FO_PATH);
+		String xslFoPath;
+		TipZalbe tipZalbe = this.getTipZalbe(((Element) document.getElementsByTagNameNS(Namespaces.DOKUMENT, "Zalba").item(0)).getAttributeNS(Namespaces.XSI, "type"));
+		if (tipZalbe.equals(TipZalbe.cutanje)) {
+			xslFoPath = XSL_FO_PATH_CUTANJE;
+		}
+		else {
+			xslFoPath = XSL_FO_PATH_ODLUKA;
+		}
+		ByteArrayOutputStream out = this.xslTransformer.generatePdf(document, xslFoPath);
 		Path file = Paths.get(Constants.GEN_FOLDER + "/" + broj + ".pdf");
 		Files.write(file, out.toByteArray());
 		return new UrlResource(file.toUri());
@@ -72,19 +81,25 @@ public class ZalbaService {
 	
 	public Resource generateHtml(String broj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
 		Document document = this.zalbaRepository.load(broj);
-		ByteArrayOutputStream out = this.xslTransformer.generateHtml(document, XSL_PATH);
+		String xslPath;
+		TipZalbe tipZalbe = this.getTipZalbe(((Element) document.getElementsByTagNameNS(Namespaces.DOKUMENT, "Zalba").item(0)).getAttributeNS(Namespaces.XSI, "type"));
+		if (tipZalbe.equals(TipZalbe.cutanje)) {
+			xslPath = XSL_PATH_CUTANJE;
+		}
+		else {
+			xslPath = XSL_PATH_ODLUKA;
+		}
+		ByteArrayOutputStream out = this.xslTransformer.generateHtml(document, xslPath);
 		Path file = Paths.get(Constants.GEN_FOLDER + "/" + broj + ".html");
 		Files.write(file, out.toByteArray());
 		return new UrlResource(file.toUri());
 	}
 	
-	
-	public OrganVlasti defaultOrganVlasti() {
-		//izmeni ovo kasnije tako da ucita podatke iz nekog xml fajla
-		OrganVlasti organVlasti = new OrganVlasti();
-		organVlasti.setNaziv("TEST NAZIV");
-		organVlasti.setSediste("TEST SEDISTE");
-		return organVlasti;
+	private TipZalbe getTipZalbe(String tipZalbe) {
+		if (tipZalbe.equals("dokument:TZalbaCutanje")) {
+			return TipZalbe.cutanje;
+		}
+		return TipZalbe.odluka;
 	}
 	
 	public List<ZalbaDTO> list() throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException, ParserConfigurationException, SAXException, IOException{
@@ -92,10 +107,10 @@ public class ZalbaService {
 		Korisnik korisnik = this.korisnikService.currentUser();
 		String xpathExp = null;
 		if (korisnik.getGradjanin() != null) {
-			//xpathExp = String.format("/dokument:Zahtev[mejl='%s']", korisnik.getMejl());
+			xpathExp = String.format("/dokument:Zalba[mejl='%s']", korisnik.getMejl());
 		}
 		else {
-			//xpathExp = "/dokument:Zahtev";
+			xpathExp = "/dokument:Zalba";
 		}
 		ResourceSet result = this.zalbaRepository.list(xpathExp);
 		
@@ -104,13 +119,13 @@ public class ZalbaService {
 		ResourceIterator i = result.getIterator();
 		while (i.hasMoreResources()) {
 			XMLResource resource = (XMLResource) i.nextResource();
-			//Document document = domParser.buildDocument(resource.getContent().toString());	//a sto da ne uradim getContentAsDom???
-			//String broj = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
-			//String datum = document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).getTextContent();
-			//TipZahteva tipZahteva = TipZahteva.valueOf(document.getElementsByTagNameNS(Namespaces.DOKUMENT, "tipZahteva").item(0).getTextContent());
-			
-			//StatusZahteva status = StatusZahteva.valueOf(document.getElementsByTagNameNS(Namespaces.OSNOVA, "status").item(0).getTextContent());
-			//zahtevi.add(new ZahtevDTO(broj, datum, tipZahteva, status));
+			Document document = domParser.buildDocument(resource.getContent().toString());	//a sto da ne uradim getContentAsDom???
+			TipZalbe tipZalbe = this.getTipZalbe(((Element) document.getElementsByTagNameNS(Namespaces.DOKUMENT, "Zalba").item(0)).getAttributeNS(Namespaces.XSI, "type"));
+			String broj = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
+			String datum = document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).getTextContent();
+			String organVlasti = document.getElementsByTagNameNS(Namespaces.OSNOVA, "naziv").item(0).getTextContent();
+			StatusZalbe status = StatusZalbe.valueOf(document.getElementsByTagNameNS(Namespaces.OSNOVA, "status").item(0).getTextContent());			
+			zalbe.add(new ZalbaDTO(tipZalbe, broj, datum, organVlasti, status));
 		}
 		return zalbe;
 		
