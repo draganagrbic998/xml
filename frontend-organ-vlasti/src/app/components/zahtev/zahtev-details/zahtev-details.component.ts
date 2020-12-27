@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ZahtevDTO } from 'src/app/models/zahtevDTO';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ZahtevService } from 'src/app/services/zahtev/zahtev.service';
@@ -13,7 +14,8 @@ export class ZahtevDetailsComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private zahtevService: ZahtevService
+    private zahtevService: ZahtevService,
+    private router: Router
   ) { }
 
   @Input() zahtev: ZahtevDTO;
@@ -30,12 +32,16 @@ export class ZahtevDetailsComponent implements OnInit {
     );
   }
 
-  openPdf(broj: string): void{
-    window.open(`//localhost:8081/${environment.apiZahtevi}/${broj}/pdf`, '_blank');
+  openPdf(): void{
+    window.open(`//localhost:8081/${environment.apiZahtevi}/${this.zahtev.broj}/pdf`, '_blank');
   }
 
-  openHtml(broj: string): void{
-    window.open(`//localhost:8081/${environment.apiZahtevi}/${broj}/html`, '_blank');
+  openHtml(): void{
+    window.open(`//localhost:8081/${environment.apiZahtevi}/${this.zahtev.broj}/html`, '_blank');
+  }
+
+  dodajObavestenje(): void{
+    this.router.navigate([`/obavestenje-form/${this.zahtev.broj}`]);
   }
 
   ngOnInit(): void {

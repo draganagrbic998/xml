@@ -1,0 +1,113 @@
+<app-form-container>
+    <h3>Obaveštenje o stavljanju dokumenta na uvid i izdavanju kopije</h3>
+    <br><br>
+    <form [formGroup]="obavestenjeForm">
+
+        <div [class.disabled]="obavestenjePending">
+
+            <mat-form-field>
+                <mat-label>Mesto</mat-label>
+                <input 
+                matInput 
+                autocomplete="off"
+                formControlName="mesto"
+                placeholder="Unesite mesto">
+                <mat-error>
+                    Mesto je obavezno!
+                </mat-error>    
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Ulica</mat-label>
+                <input 
+                matInput 
+                autocomplete="off"
+                formControlName="ulica"
+                placeholder="Unesite ulicu">
+                <mat-error>
+                    Ulica je obavezna!
+                </mat-error>    
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Broj ulice</mat-label>
+                <input 
+                matInput 
+                autocomplete="off"
+                formControlName="broj"
+                placeholder="Unesite broj ulice">
+                <mat-error>
+                    Broj ulice je obavezan!
+                </mat-error>    
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Kancelarija</mat-label>
+                <input 
+                matInput 
+                autocomplete="off"
+                formControlName="kancelarija"
+                placeholder="Unesite kancelariju">
+                <mat-error>
+                    Kancelarija je obavezna!
+                </mat-error>    
+            </mat-form-field>
+            <mat-form-field> 
+                <input 
+                matInput 
+                autocomplete="off"
+                formControlName="datum" 
+                placeholder="Unesite datum"
+                [matDatepicker]="datum">
+                <mat-datepicker-toggle matSuffix [for]="datum"></mat-datepicker-toggle>
+                <mat-datepicker #datum></mat-datepicker>
+                <mat-error>
+                    Datum je obavezan!
+                </mat-error>    
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Početak</mat-label>
+                <input 
+                matInput 
+                autocomplete="off"
+                formControlName="pocetak"
+                placeholder="Unesite početak">
+                <mat-error>
+                    Početak je obavezan!
+                </mat-error>    
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Kraj</mat-label>
+                <input 
+                matInput 
+                autocomplete="off"
+                formControlName="kraj"
+                placeholder="Unesite kraj">
+                <mat-error>
+                    Kraj je obavezan!
+                </mat-error>    
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Kopija</mat-label>
+                <input 
+                matInput 
+                autocomplete="off"
+                formControlName="kopija"
+                placeholder="Unesite kopiju">
+                <mat-error>
+                    Kopija je obavezan!
+                </mat-error>    
+            </mat-form-field>
+
+            <div id="detaljiEditor"></div>
+
+        </div>
+        <br><br>
+
+        <app-center-container>
+            <button 
+            *ngIf="!obavestenjePending"
+            mat-raised-button 
+            color="primary"
+            (click)="posaljiObavestenje()">Pošalji obaveštenje</button>
+            <app-spinner-button *ngIf="obavestenjePending"></app-spinner-button>
+        </app-center-container>
+    </form>
+</app-form-container>

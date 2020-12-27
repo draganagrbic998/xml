@@ -2,9 +2,10 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginFormComponent } from './components/main/login-form/login-form.component';
 import { RegisterFormComponent } from './components/main/register-form/register-form.component';
+import { ObavestenjeFormComponent } from './components/obavestenje/obavestenje-form/obavestenje-form.component';
 import { ZahtevFormComponent } from './components/zahtev/zahtev-form/zahtev-form.component';
 import { ZahtevListComponent } from './components/zahtev/zahtev-list/zahtev-list.component';
-import { LOGIN_PATH, REGISTER_PATH, ZAHTEV_LIST_PATH, ZAHTEV_FORM_PATH } from './constants/router';
+import { LOGIN_PATH, REGISTER_PATH, ZAHTEV_LIST_PATH, ZAHTEV_FORM_PATH, OBAVESTENJE_FORM } from './constants/router';
 
 const routes: Routes = [
   {
@@ -22,6 +23,10 @@ const routes: Routes = [
   {
     path: ZAHTEV_LIST_PATH,
     component: ZahtevListComponent
+  },
+  {
+    path: OBAVESTENJE_FORM,
+    component: ObavestenjeFormComponent
   }
 ];
 
