@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DOKUMENT_NAMESPACE, OSNOVA_NAMESPACE } from 'src/app/constants/namespaces';
 import { Obavestenje } from 'src/app/models/obavestenje';
+import { ObavestenjeDTO } from 'src/app/models/obavestenjeDTO';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -44,6 +45,10 @@ export class ObavestenjeService {
   save(brojZahteva: string, obavestenje: Obavestenje): Observable<null>{
     const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
     return this.http.post<null>(`${this.API_OBAVESTENJA}/${brojZahteva}`, this.obavestenjeToXml(obavestenje), options);
+  }
+
+  list(): Observable<ObavestenjeDTO[]>{
+    return this.http.get<ObavestenjeDTO[]>(this.API_OBAVESTENJA);
   }
 
 }
