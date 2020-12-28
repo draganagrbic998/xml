@@ -1,4 +1,3 @@
-  
 <div class="mat-elevation-z8">
     <mat-card>
         <mat-card-content>
@@ -9,15 +8,13 @@
                 {{zahtev.tipZahteva}}
             </span>
             <span>
-                <button (click)="openHtml()">uzmi html</button>
+                <a [routerLink]="'/zahtev-list'" (click)="getHtml()">preuzmi html</a>
             </span>
-            <span>
-                
-                <!--<button (click)="prezumiPdf(zahtev.broj)">PREUZMIE PDF</button>-->
-                <button (click)="openPdf()">uzmi pdf</button>
+            <span>                
+                <a [routerLink]="'/zahtev-list'" (click)="getPdf()">preuzmi pdf</a>
             </span>
             <span *ngIf="uloga === 'sluzbenik' && zahtev.status === 'cekanje'">
-                <button (click)="dodajObavestenje()">dodaj obavestenje</button>
+                <a [routerLink]="'/obavestenje-form/' + zahtev.broj">dodaj obavestenje</a>
             </span>
         </mat-card-content>
     </mat-card>

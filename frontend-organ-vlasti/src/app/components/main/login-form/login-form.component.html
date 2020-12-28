@@ -4,14 +4,14 @@
     <form [formGroup]="loginForm">
         <div [class.disabled]="loginPending">
             <mat-form-field>
-                <mat-label>Email</mat-label>
+                <mat-label>Mejl</mat-label>
                 <input 
                 matInput 
                 autocomplete="off"
-                formControlName="email" 
-                placeholder="Unesite email">
+                formControlName="mejl" 
+                placeholder="Unesite mejl">
                 <mat-error>
-                    Email je obavezan!
+                    Mejl je obavezan!
                 </mat-error>
             </mat-form-field>
             <mat-form-field>
@@ -33,7 +33,7 @@
             *ngIf="!loginPending"
             mat-raised-button 
             color="primary"
-            (click)="login()">Login</button>
+            (click)="login()">Prijavi se</button>
             <app-spinner-button *ngIf="loginPending"></app-spinner-button>
         </app-center-container>
     </form>

@@ -32,27 +32,27 @@ public class ObavestenjeController {
 	private ObavestenjeService obavestenjeService;
 			
 	@PostMapping(value="/{brojZahteva}", consumes = MediaType.TEXT_XML_VALUE)
-	public ResponseEntity<Void> save(@PathVariable("brojZahteva") String brojZahteva, @RequestBody String xml) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, JAXBException, ParserConfigurationException, SAXException, IOException, TransformerException {		
+	public ResponseEntity<Void> save(@PathVariable String brojZahteva, @RequestBody String xml) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, JAXBException, ParserConfigurationException, SAXException, IOException, TransformerException {		
 		this.obavestenjeService.save(brojZahteva, xml);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
 	@GetMapping
 	public ResponseEntity<List<ObavestenjeDTO>> list() throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, ParserConfigurationException, SAXException, IOException{
-		return new ResponseEntity<>(this.obavestenjeService.list(), HttpStatus.OK);
+		return new ResponseEntity<>(this.obavestenjeService.retrieve(), HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/{broj}/pdf", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-	public ResponseEntity<Object> generatePdf(@PathVariable("broj") String broj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
-		Resource resource = this.obavestenjeService.generatePdf(broj);
+	@GetMapping(value = "/{broj}/html", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	public ResponseEntity<Object> html(@PathVariable String broj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
+		Resource resource = this.obavestenjeService.generateHtml(broj);
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
 				.body(resource);
 	}
 	
-	@GetMapping(value = "/{broj}/html", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-	public ResponseEntity<Object> generateHtml(@PathVariable("broj") String broj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
-		Resource resource = this.obavestenjeService.generateHtml(broj);
+	@GetMapping(value = "/{broj}/pdf", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	public ResponseEntity<Object> generatePdf(@PathVariable String broj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
+		Resource resource = this.obavestenjeService.generatePdf(broj);
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
 				.body(resource);

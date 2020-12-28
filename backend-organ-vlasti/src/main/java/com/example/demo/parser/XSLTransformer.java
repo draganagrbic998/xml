@@ -22,35 +22,19 @@ import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
+import com.example.demo.constants.Constants;
+
 @Component
 public class XSLTransformer {
 
-	private TransformerFactory transformerFactory;
-	
 	@Autowired
 	private DOMParser domParser;
 
+	private TransformerFactory transformerFactory;
+	
 	public XSLTransformer() {
 		super();
 		this.transformerFactory = TransformerFactory.newInstance();	//da koristim mozda iz domparsera??
-	}
-	
-	private String fopPath = "data/fop.conf";
-	
-	public ByteArrayOutputStream generatePdf(Document document, String xslFoPath) throws TransformerException, SAXException, IOException {
-		StreamSource in = new StreamSource(new StringReader(this.domParser.buildXml(document)));
-		ByteArrayOutputStream out = new ByteArrayOutputStream();
-		Transformer transformer = this.transformerFactory.newTransformer(new StreamSource(new File(xslFoPath)));
-		FopFactory foFactory = FopFactory.newInstance(new File(fopPath));
-		FOUserAgent foUserAgent = foFactory.newFOUserAgent();
-		Fop fop = foFactory.newFop(MimeConstants.MIME_PDF, foUserAgent, out);
-		Result output = new SAXResult(fop.getDefaultHandler());
-		transformer.transform(in, output);
-		//out.toString() koristi kad oces da vratis html kao tekst
-		//transformer.setOutputProperty("{http://xml.apache.org/xalan}indent-amount", "2");
-		//transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-		//transformer.setOutputProperty(OutputKeys.METHOD, "xhtml");
-		return out;
 	}
 	
 	public ByteArrayOutputStream generateHtml(Document document, String xslPath) throws TransformerException {
@@ -58,6 +42,22 @@ public class XSLTransformer {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		Transformer transformer = this.transformerFactory.newTransformer(new StreamSource(new File(xslPath)));
 		Result output = new StreamResult(out);
+		transformer.transform(in, output);
+		//out.toString() koristi kad oces da vratis html kao tekst
+		//transformer.setOutputProperty("{http://xml.apache.org/xalan}indent-amount", "2");
+		//transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+		//transformer.setOutputProperty(OutputKeys.METHOD, "xhtml");
+		return out;
+	}
+		
+	public ByteArrayOutputStream generatePdf(Document document, String xslFoPath) throws TransformerException, SAXException, IOException {
+		StreamSource in = new StreamSource(new StringReader(this.domParser.buildXml(document)));
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		Transformer transformer = this.transformerFactory.newTransformer(new StreamSource(new File(xslFoPath)));
+		FopFactory foFactory = FopFactory.newInstance(new File(Constants.FOP_CONF));
+		FOUserAgent foUserAgent = foFactory.newFOUserAgent();
+		Fop fop = foFactory.newFop(MimeConstants.MIME_PDF, foUserAgent, out);
+		Result output = new SAXResult(fop.getDefaultHandler());
 		transformer.transform(in, output);
 		return out;
 	}

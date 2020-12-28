@@ -1,6 +1,39 @@
 <mat-toolbar color="primary" class="mat-elevation-z24">
     <span>
+        <button 
+        *ngIf="!auth && uloga==='gradjanin'"
+        mat-icon-button
+        [routerLink]="'/zahtev-form'">
+            <mat-icon matTooltip="Zahtev za informacijama od javnog značaja">add</mat-icon>
+        </button>
+        <button 
+        *ngIf="!auth"
+        mat-icon-button
+        [routerLink]="'/zahtev-list'">
+            <mat-icon matTooltip="Lista podnetih zahteva">list</mat-icon>
+        </button>
+        <button 
+        *ngIf="!auth"
+        mat-icon-button
+        [routerLink]="'/obavestenje-list'">
+            <mat-icon matTooltip="Lista izdatih obaveštenja">list</mat-icon>
+        </button>
     </span>
     <span>
+        <button 
+        *ngIf="auth"
+        mat-button [routerLink]="login ? './register' : './login'">
+            <mat-icon>{{login ? 'person_add' : 'login'}}</mat-icon>
+            {{login ? 'Registracija' : 'Prijava'}}
+        </button>   
+        <button *ngIf="!auth" mat-icon-button [matMenuTriggerFor]="more">
+            <mat-icon matTooltip="više">more_vert</mat-icon>
+        </button>
+        <mat-menu #more="matMenu">
+            <button mat-menu-item (click)="signOut()">
+                <mat-icon>logout</mat-icon>
+                <span>Odjava</span>
+            </button>
+        </mat-menu>
     </span>
 </mat-toolbar>

@@ -14,11 +14,16 @@ export class ZahtevListComponent implements OnInit {
   ) { }
 
   zahtevi: ZahtevDTO[];
+  fetchPending = true;
 
   ngOnInit(): void {
     this.zahtevService.list().subscribe(
       (zahtevi: ZahtevDTO[]) => {
         this.zahtevi = zahtevi;
+        this.fetchPending = false;
+      },
+      () => {
+        this.fetchPending = false;
       }
     );
   }

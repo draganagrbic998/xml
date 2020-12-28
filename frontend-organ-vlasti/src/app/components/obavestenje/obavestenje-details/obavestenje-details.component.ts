@@ -13,13 +13,12 @@ export class ObavestenjeDetailsComponent implements OnInit {
 
   @Input() obavestenje: ObavestenjeDTO;
 
-
-  openPdf(): void{
-    window.open(`//localhost:8081/${environment.apiObavestenja}/${this.obavestenje.broj}/pdf`, '_blank');
+  getHtml(): void{
+    window.open(`//localhost:8081/${environment.apiObavestenja}/${this.obavestenje.broj}/html`, '_blank');
   }
 
-  openHtml(): void{
-    window.open(`//localhost:8081/${environment.apiObavestenja}/${this.obavestenje.broj}/html`, '_blank');
+  getPdf(): void{
+    window.open(`//localhost:8081/${environment.apiObavestenja}/${this.obavestenje.broj}/pdf`, '_blank');
   }
 
   ngOnInit(): void {

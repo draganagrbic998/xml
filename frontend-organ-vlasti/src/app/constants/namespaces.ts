@@ -1,2 +1,3 @@
-export const OSNOVA_NAMESPACE = 'https://github.com/draganagrbic998/xml/osnova';
-export const DOKUMENT_NAMESPACE = 'https://github.com/draganagrbic998/xml/dokument';
+export const OSNOVA = 'https://github.com/draganagrbic998/xml/osnova';
+export const ZAHTEV = 'https://github.com/draganagrbic998/xml/zahtev';
+export const OBAVESTENJE = 'https://github.com/draganagrbic998/xml/obavestenje';

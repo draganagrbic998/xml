@@ -7,6 +7,8 @@ import { ObavestenjeListComponent } from './components/obavestenje/obavestenje-l
 import { ZahtevFormComponent } from './components/zahtev/zahtev-form/zahtev-form.component';
 import { ZahtevListComponent } from './components/zahtev/zahtev-list/zahtev-list.component';
 import { LOGIN_PATH, REGISTER_PATH, ZAHTEV_LIST_PATH, ZAHTEV_FORM_PATH, OBAVESTENJE_FORM, OBAVESTENJE_LIST_PATH } from './constants/router';
+import { GradjaninGuard } from './guard/gradjanin/gradjanin.guard';
+import { SluzbenikGuard } from './guard/sluzbenik/sluzbenik.guard';
 
 const routes: Routes = [
   {
@@ -19,7 +21,8 @@ const routes: Routes = [
   },
   {
     path: ZAHTEV_FORM_PATH,
-    component: ZahtevFormComponent
+    component: ZahtevFormComponent,
+    canActivate: [GradjaninGuard]
   },
   {
     path: ZAHTEV_LIST_PATH,
@@ -27,7 +30,8 @@ const routes: Routes = [
   },
   {
     path: OBAVESTENJE_FORM,
-    component: ObavestenjeFormComponent
+    component: ObavestenjeFormComponent,
+    canActivate: [SluzbenikGuard]
   },
   {
     path: OBAVESTENJE_LIST_PATH,

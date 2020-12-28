@@ -17,38 +17,35 @@ declare const Xonomy: any;
 export class ObavestenjeFormComponent implements AfterViewInit {
 
   constructor(
-    private route: ActivatedRoute,
+    private obavestenjeService: ObavestenjeService,
     private xonomyService: XonomyService,
     private snackBar: MatSnackBar,
-    private obavestenjeService: ObavestenjeService
+    private route: ActivatedRoute
   ) { }
 
-  obavestenjePending = false;
+  savePending = false;
   obavestenjeForm: FormGroup = new FormGroup({
-    mesto: new FormControl('', [Validators.required, Validators.pattern(new RegExp('\\S'))]),
-    ulica: new FormControl('', [Validators.required, Validators.pattern(new RegExp('\\S'))]),
-    broj: new FormControl('', [Validators.required, Validators.pattern(new RegExp('\\S'))]),
+    datumUvida: new FormControl('', [Validators.required]),
+    pocetak: new FormControl('', [Validators.required, Validators.pattern(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/)]),
+    kraj: new FormControl('', [Validators.required, Validators.pattern(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/)]),
     kancelarija: new FormControl('', [Validators.required, Validators.pattern(new RegExp('\\S'))]),
-    datum: new FormControl('', [Validators.required]),
-    pocetak: new FormControl('', [Validators.required, Validators.pattern(new RegExp('\\S'))]),
-    kraj: new FormControl('', [Validators.required, Validators.pattern(new RegExp('\\S'))]),
-    kopija: new FormControl('', [Validators.required, Validators.pattern(new RegExp('\\S'))])
+    kopija: new FormControl('', [Validators.required, Validators.pattern(/^[0-9]\d*$/)])
   });
 
-  posaljiObavestenje(): void{
+  save(): void{
     if (this.obavestenjeForm.invalid){
       return;
     }
     const obavestenje: Obavestenje = this.obavestenjeForm.value;
     obavestenje.detalji = Xonomy.harvest();
-    this.obavestenjePending = true;
+    this.savePending = true;
     this.obavestenjeService.save(this.route.snapshot.params.brojZahteva, obavestenje).subscribe(
       () => {
-        this.obavestenjePending = false;
+        this.savePending = false;
         this.snackBar.open('Obaveštenje uspešno poslato!', SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);
       },
       () => {
-        this.obavestenjePending = false;
+        this.savePending = false;
         this.snackBar.open(SNACKBAR_ERROR, SNACKBAR_CLOSE, SNACKBAR_ERROR_OPTIONS);
       }
     );

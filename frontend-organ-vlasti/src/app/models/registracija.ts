@@ -1,4 +1,4 @@
-export interface Registration{
+export interface Registracija{
     mejl: string;
     lozinka: string;
     ime: string;

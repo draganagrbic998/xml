@@ -22,16 +22,12 @@ export class ZahtevDetailsComponent implements OnInit {
     return this.authService.getUser()?.uloga;
   }
 
-  openPdf(): void{
-    window.open(`//localhost:8081/${environment.apiZahtevi}/${this.zahtev.broj}/pdf`, '_blank');
-  }
-
-  openHtml(): void{
+  getHtml(): void{
     window.open(`//localhost:8081/${environment.apiZahtevi}/${this.zahtev.broj}/html`, '_blank');
   }
 
-  dodajObavestenje(): void{
-    this.router.navigate([`/obavestenje-form/${this.zahtev.broj}`]);
+  getPdf(): void{
+    window.open(`//localhost:8081/${environment.apiZahtevi}/${this.zahtev.broj}/pdf`, '_blank');
   }
 
   ngOnInit(): void {

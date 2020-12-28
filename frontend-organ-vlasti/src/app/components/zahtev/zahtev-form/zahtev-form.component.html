@@ -1,9 +1,9 @@
 <app-form-container>
-    <h3>Zahtev za pristup informacijama od javnog značaja</h3>
+    <h3>Zahtev za informacijama od javnog značaja</h3>
     <br><br>
     <form [formGroup]="zahtevForm">
 
-        <div [class.disabled]="zahtevPending">
+        <div [class.disabled]="savePending">
             <mat-form-field>
                 <mat-label>Pravo koje želite da ostvarite: </mat-label>
                 <mat-select formControlName="tipZahteva">
@@ -42,17 +42,18 @@
                 </mat-error>    
             </mat-form-field>
             <div id="detaljiEditor"></div>
-
         </div>
+
         <br><br>
 
         <app-center-container>
             <button 
-            *ngIf="!zahtevPending"
+            *ngIf="!savePending"
             mat-raised-button 
             color="primary"
-            (click)="posaljiZahtev()">Pošalji zahtev</button>
-            <app-spinner-button *ngIf="zahtevPending"></app-spinner-button>
+            (click)="save()">Pošalji zahtev</button>
+            <app-spinner-button *ngIf="savePending"></app-spinner-button>
         </app-center-container>
+        
     </form>
 </app-form-container>

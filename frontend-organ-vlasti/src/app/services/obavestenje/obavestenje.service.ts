@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { DOKUMENT_NAMESPACE, OSNOVA_NAMESPACE } from 'src/app/constants/namespaces';
+import { OBAVESTENJE, OSNOVA } from 'src/app/constants/namespaces';
 import { Obavestenje } from 'src/app/models/obavestenje';
 import { ObavestenjeDTO } from 'src/app/models/obavestenjeDTO';
 import { environment } from 'src/environments/environment';
@@ -17,27 +17,24 @@ export class ObavestenjeService {
 
   private readonly API_OBAVESTENJA = `${environment.baseUrl}/${environment.apiObavestenja}`;
 
+  private dateToString(date: Date): string {
+    return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+  }
+
   private obavestenjeToXml(obavestenje: Obavestenje): string{
 
     return `
-      <dokument:Obavestenje xmlns="${OSNOVA_NAMESPACE}"
-      xmlns:dokument="${DOKUMENT_NAMESPACE}">
-        <dokument:Zahtev>
-          ${obavestenje.detalji}
-        </dokument:Zahtev>
-        <dokument:Uvid>
-          <Adresa>
-              <mesto>${obavestenje.mesto}</mesto>
-              <ulica>${obavestenje.ulica}</ulica>
-              <broj>${obavestenje.broj}</broj>
-          </Adresa>
-          <dokument:kancelarija>${obavestenje.kancelarija}</dokument:kancelarija>
-          <dokument:datum>2020-12-12</dokument:datum>
-          <dokument:pocetak>${obavestenje.pocetak}</dokument:pocetak>
-          <dokument:kraj>${obavestenje.kraj}</dokument:kraj>
-        </dokument:Uvid>
-        <dokument:kopija>${obavestenje.kopija}</dokument:kopija>
-      </dokument:Obavestenje>
+      <obavestenje:Obavestenje xmlns="${OSNOVA}"
+      xmlns:obavestenje="${OBAVESTENJE}">
+        ${obavestenje.detalji}
+        <obavestenje:Uvid>
+          <obavestenje:datumUvida>${this.dateToString(obavestenje.datumUvida)}</obavestenje:datumUvida>
+          <obavestenje:pocetak>${obavestenje.pocetak}</obavestenje:pocetak>
+          <obavestenje:kraj>${obavestenje.kraj}</obavestenje:kraj>
+          <obavestenje:kancelarija>${obavestenje.kancelarija}</obavestenje:kancelarija>
+        </obavestenje:Uvid>
+        <obavestenje:kopija>${obavestenje.kopija}</obavestenje:kopija>
+      </obavestenje:Obavestenje>
     `;
 
   }

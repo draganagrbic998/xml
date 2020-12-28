@@ -14,11 +14,16 @@ export class ObavestenjeListComponent implements OnInit {
   ) { }
 
   obavestenja: ObavestenjeDTO[];
+  fetchPending = true;
 
   ngOnInit(): void {
     this.obavestenjeService.list().subscribe(
       (obavestenja: ObavestenjeDTO[]) => {
         this.obavestenja = obavestenja;
+        this.fetchPending = false;
+      },
+      () => {
+        this.fetchPending = false;
       }
     );
   }

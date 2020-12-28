@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class ExceptionsHandler {
 
 	@ExceptionHandler
-	public ResponseEntity<Void> handle(Exception exception){
+	public ResponseEntity<Void> handleException(Exception exception){
 		exception.printStackTrace();
 		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}

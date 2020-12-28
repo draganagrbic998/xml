@@ -20,6 +20,10 @@ public class ObavestenjeRepository {
 	
 	private static final String OBAVESTENJA_COLLECTION = Constants.COLLECTIONS_PREFIX + "/obavestenja";
 	
+	public void save(Document document, String documentId) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, JAXBException, TransformerException {
+		this.existManager.save(OBAVESTENJA_COLLECTION, documentId, document);
+	}
+
 	public Document load(String documentId) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
 		return this.existManager.load(OBAVESTENJA_COLLECTION, documentId);
 	}
@@ -27,10 +31,5 @@ public class ObavestenjeRepository {
 	public ResourceSet list(String xpathExp) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
 		return this.existManager.retrieve(OBAVESTENJA_COLLECTION, xpathExp);
 	}
-	
-	public void save(Document document) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, JAXBException, TransformerException {
-		this.existManager.save(OBAVESTENJA_COLLECTION, null, document);
-	}
-
 	
 }

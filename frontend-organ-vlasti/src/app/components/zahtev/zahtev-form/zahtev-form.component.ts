@@ -5,6 +5,7 @@ import { SNACKBAR_CLOSE, SNACKBAR_ERROR, SNACKBAR_ERROR_OPTIONS, SNACKBAR_SUCCES
 import { Zahtev } from 'src/app/models/zahtev';
 import { XonomyService } from 'src/app/services/xonomy/xonomy.service';
 import { ZahtevService } from 'src/app/services/zahtev/zahtev.service';
+import { ZahtevValidatorService } from './zahtev-validator.service';
 
 declare const Xonomy: any;
 
@@ -17,15 +18,16 @@ export class ZahtevFormComponent implements AfterViewInit {
 
   constructor(
     private zahtevService: ZahtevService,
-    private snackBar: MatSnackBar,
-    private xonomyService: XonomyService
+    private zahtevValidator: ZahtevValidatorService,
+    private xonomyService: XonomyService,
+    private snackBar: MatSnackBar
   ) { }
 
-  zahtevPending = false;
+  savePending = false;
   zahtevForm: FormGroup = new FormGroup({
     tipZahteva: new FormControl('obavestenje', [Validators.required]),
-    tipDostave: new FormControl('posta', [Validators.required]),
-    opisDostave: new FormControl('', [Validators.required]),
+    tipDostave: new FormControl('posta', [this.zahtevValidator.tipDostave()]),
+    opisDostave: new FormControl('', [this.zahtevValidator.opisDostave()])
   });
 
   get dostava(): boolean{
@@ -36,28 +38,20 @@ export class ZahtevFormComponent implements AfterViewInit {
     return this.dostava && this.zahtevForm.value.tipDostave === 'ostalo';
   }
 
-  refreshForm(): void{
-    if (!this.dostava){
-      this.zahtevForm.get('tipDostave').setErrors(null);
-      this.zahtevForm.get('opisDostave').setErrors(null);
+  save(): void{
+    if (!this.zahtevForm.valid){
+      return;
     }
-    if (!this.ostalaDostava){
-      this.zahtevForm.get('opisDostave').setErrors(null);
-    }
-  }
-
-  posaljiZahtev(): void{
-    this.refreshForm();
     const zahtev: Zahtev = this.zahtevForm.value;
     zahtev.detalji = Xonomy.harvest();
-    this.zahtevPending = true;
+    this.savePending = true;
     this.zahtevService.save(zahtev).subscribe(
       () => {
-        this.zahtevPending = false;
+        this.savePending = false;
         this.snackBar.open('Zahtev uspešno poslat!', SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);
       },
       () => {
-        this.zahtevPending = false;
+        this.savePending = false;
         this.snackBar.open(SNACKBAR_ERROR, SNACKBAR_CLOSE, SNACKBAR_ERROR_OPTIONS);
       }
     );

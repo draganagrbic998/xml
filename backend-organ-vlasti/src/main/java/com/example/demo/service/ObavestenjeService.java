@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -31,6 +32,7 @@ import com.example.demo.constants.Constants;
 import com.example.demo.constants.Namespaces;
 import com.example.demo.controller.ObavestenjeDTO;
 import com.example.demo.model.Korisnik;
+import com.example.demo.model.enums.StatusZahteva;
 import com.example.demo.parser.DOMParser;
 import com.example.demo.parser.XSLTransformer;
 import com.example.demo.repository.ObavestenjeRepository;
@@ -39,10 +41,7 @@ import com.ibm.icu.text.SimpleDateFormat;
 
 @Service
 public class ObavestenjeService {
-
-	@Autowired
-	private ZahtevRepository zahtevRepository;
-	
+		
 	@Autowired
 	private ObavestenjeRepository obavestenjeRepository;
 
@@ -53,88 +52,88 @@ public class ObavestenjeService {
 	private KorisnikService korisnikService;
 	
 	@Autowired
+	private ZahtevRepository zahtevRepository;
+	
+	@Autowired
 	private XSLTransformer xslTransformer;
 	
 	private static final String XSL_FO_PATH = Constants.XSL_FOLDER + "/obavestenje_fo.xsl";
 	private static final String XSL_PATH = Constants.XSL_FOLDER + "/obavestenje.xsl";
+	private static final String GEN_PATH = Constants.GEN_FOLDER + File.separatorChar + "obavestenja" + File.separatorChar;
+
+	public void save(String brojZahteva, String xml) throws ParserConfigurationException, SAXException, IOException, JAXBException, ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException {
+		SimpleDateFormat sdf = new SimpleDateFormat(Constants.DATE_FORMAT);
+		Document document = this.domParser.buildDocument(xml);
+		this.domParser.removeXmlSpace(document);
+		Element obavestenje = (Element) document.getElementsByTagNameNS(Namespaces.OBAVESTENJE, "Obavestenje").item(0);
+		Document zahtevDocument = this.zahtevRepository.load(brojZahteva);
+		Element zahtev = (Element) zahtevDocument.getElementsByTagNameNS(Namespaces.ZAHTEV, "Zahtev").item(0);
+		
+		DocumentFragment documentFragment = document.createDocumentFragment();
+		Node datum = document.createElementNS(Namespaces.OSNOVA, "datum");
+		datum.setTextContent(sdf.format(new Date()));
+		Node mesto = document.createElementNS(Namespaces.OSNOVA, "mesto");
+		mesto.setTextContent(Constants.TEST_MESTO);
+		Node potpis = document.createElementNS(Namespaces.OSNOVA, "potpis");
+		potpis.setTextContent(Constants.TEST_POTPIS);
+		Node gradjanin = document.importNode(zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "Gradjanin").item(0), true);
+		Node organVlasti = document.importNode(zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "OrganVlasti").item(0), true);		
+		documentFragment.appendChild(document.createElementNS(Namespaces.OSNOVA, "broj"));			
+		documentFragment.appendChild(datum);
+		documentFragment.appendChild(mesto);
+		documentFragment.appendChild(potpis);
+		documentFragment.appendChild(gradjanin);
+		documentFragment.appendChild(organVlasti);
+		obavestenje.insertBefore(documentFragment, document.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0));	
+
+		//nzm sto moram da stavim ovaj prefix zahtev ispred, provericu to kasnije
+		Node datumZahteva = document.createElementNS(Namespaces.OBAVESTENJE, "obavestenje:datumZahteva");
+		datumZahteva.setTextContent(zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).getTextContent());
+		obavestenje.appendChild(datumZahteva);
+		
+		zahtev.getElementsByTagNameNS(Namespaces.ZAHTEV, "status").item(0).setTextContent(StatusZahteva.odobreno + "");
+		this.zahtevRepository.save(zahtevDocument, brojZahteva);
+		this.obavestenjeRepository.save(document, null);
+	}
 	
-	public Resource generatePdf(String broj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
-		Document document = this.obavestenjeRepository.load(broj);
-		ByteArrayOutputStream out = this.xslTransformer.generatePdf(document, XSL_FO_PATH);
-		Path file = Paths.get(Constants.GEN_FOLDER + "/" + broj + ".pdf");
-		Files.write(file, out.toByteArray());
-		return new UrlResource(file.toUri());
+	public List<ObavestenjeDTO> retrieve() throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException, ParserConfigurationException, SAXException, IOException{
+		Korisnik korisnik = this.korisnikService.currentUser();
+		String xpathExp;
+		if (korisnik.getUloga().equals(Constants.SLUZBENIK)) {
+			xpathExp = "/obavestenje:Obavestenje";
+		}
+		else {
+			xpathExp = String.format("/obavestenje:Obavestenje[Gradjanin/Osoba/mejl='%s']", korisnik.getOsoba().getMejl());
+		}
+		
+		List<ObavestenjeDTO> obavestenja = new ArrayList<>();
+		ResourceSet result = this.obavestenjeRepository.list(xpathExp);
+		ResourceIterator it = result.getIterator();
+		while (it.hasMoreResources()) {
+			XMLResource resource = (XMLResource) it.nextResource();
+			Document document = this.domParser.buildDocument(resource.getContent().toString());
+			String broj = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
+			String datum = document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).getTextContent();
+			String datumZahteva = document.getElementsByTagNameNS(Namespaces.OBAVESTENJE, "datumZahteva").item(0).getTextContent();
+			obavestenja.add(new ObavestenjeDTO(broj, datum, datumZahteva));
+		}
+		return obavestenja;
 	}
 	
 	public Resource generateHtml(String broj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
 		Document document = this.obavestenjeRepository.load(broj);
 		ByteArrayOutputStream out = this.xslTransformer.generateHtml(document, XSL_PATH);
-		Path file = Paths.get(Constants.GEN_FOLDER + "/" + broj + ".html");
+		Path file = Paths.get(GEN_PATH + broj + ".html");
 		Files.write(file, out.toByteArray());
 		return new UrlResource(file.toUri());
 	}
 	
-	public List<ObavestenjeDTO> list() throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException, ParserConfigurationException, SAXException, IOException{
-		
-		Korisnik korisnik = this.korisnikService.currentUser();
-		String xpathExp = null;
-		if (korisnik.getGradjanin() != null) {
-			xpathExp = String.format("/dokument:Obavestenje[dokument:Zahtev/mejl='%s']", korisnik.getMejl());
-		}
-		else {
-			xpathExp = "/dokument:Obavestenje";
-		}
-		ResourceSet result = this.obavestenjeRepository.list(xpathExp);
-		
-		List<ObavestenjeDTO> obavestenja = new ArrayList<>();
-		ResourceIterator i = result.getIterator();
-		while (i.hasMoreResources()) {
-			XMLResource resource = (XMLResource) i.nextResource();
-			Document document = domParser.buildDocument(resource.getContent().toString());	//a sto da ne uradim getContentAsDom???
-			String broj = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
-			String datum = ((Element) document.getElementsByTagNameNS(Namespaces.DOKUMENT, "Obavestenje").item(0)).getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).getTextContent();
-			String datumZahteva = ((Element) document.getElementsByTagNameNS(Namespaces.DOKUMENT, "Zahtev").item(0)).getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).getTextContent();
-			obavestenja.add(new ObavestenjeDTO(broj, datum, datumZahteva));
-		}
-		return obavestenja;
-		
-	}
-
-	public void save(String brojZahteva, String xml) throws ParserConfigurationException, SAXException, IOException, JAXBException, ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException {
-		Document document = this.domParser.buildDocument(xml);
-		Element detalji = (Element) document.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0);
-		
-		this.domParser.removeXmlSpace(document);
-		
-		Element obavestenje = (Element) document.getElementsByTagNameNS(Namespaces.DOKUMENT, "Obavestenje").item(0);
-		DocumentFragment documentFragment = document.createDocumentFragment();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		Node datum = document.createElementNS(Namespaces.OSNOVA, "datum");
-		
-		datum.setTextContent(sdf.format(new Date()));
-		Node mesto = document.createElementNS(Namespaces.OSNOVA, "mesto");
-		mesto.setTextContent(Constants.TEST_MESTO);
-		documentFragment.appendChild(document.createElementNS(Namespaces.OSNOVA, "broj"));
-		documentFragment.appendChild(datum);
-		documentFragment.appendChild(mesto);
-
-		obavestenje.insertBefore(documentFragment, document.getElementsByTagNameNS(Namespaces.DOKUMENT, "Zahtev").item(0));
-		Element zahtev = (Element) this.zahtevRepository.load(brojZahteva).getElementsByTagNameNS(Namespaces.DOKUMENT, "Zahtev").item(0);
-		Element obavestenjeZahtev = (Element) obavestenje.getElementsByTagNameNS(Namespaces.DOKUMENT, "Zahtev").item(0);
-		DocumentFragment documentFragment2 = document.createDocumentFragment();
-		
-		
-		documentFragment2.appendChild(document.importNode(zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
-		documentFragment2.appendChild(document.importNode(zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(0), true));
-		documentFragment2.appendChild(document.importNode(zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "Gradjanin").item(0), true));
-		documentFragment2.appendChild(document.importNode(zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "OrganVlasti").item(0), true));
-		obavestenjeZahtev.insertBefore(documentFragment2, detalji);
-		
-		Node potpis = document.createElementNS(Namespaces.OSNOVA, "potpis");
-		potpis.setTextContent(Constants.SIGNATURE);
-		obavestenje.appendChild(potpis);
-		this.obavestenjeRepository.save(document);
-	
+	public Resource generatePdf(String broj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
+		Document document = this.obavestenjeRepository.load(broj);
+		ByteArrayOutputStream out = this.xslTransformer.generatePdf(document, XSL_FO_PATH);
+		Path file = Paths.get(GEN_PATH + broj + ".pdf");
+		Files.write(file, out.toByteArray());
+		return new UrlResource(file.toUri());
 	}
 	
 }

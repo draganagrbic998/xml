@@ -23,7 +23,7 @@ export class LoginFormComponent implements OnInit {
 
   loginPending = false;
   loginForm: FormGroup = new FormGroup({
-    email: new FormControl('', [Validators.required]),
+    mejl: new FormControl('', [Validators.required]),
     lozinka: new FormControl('', [Validators.required])
   });
 

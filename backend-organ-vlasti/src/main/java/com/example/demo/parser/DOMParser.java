@@ -73,7 +73,6 @@ public class DOMParser {
 	
 	public void removeXmlSpace(Document document) {
 		Element detalji = (Element) document.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0);
-		
 		detalji.removeAttribute("xml:space");
 		NodeList bolds = document.getElementsByTagNameNS(Namespaces.OSNOVA, "bold");
 		for (int i = 0; i < bolds.getLength(); ++i) {

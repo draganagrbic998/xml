@@ -18,6 +18,10 @@ import { CenterContainerComponent } from './components/layout/center-container/c
 import { ZahtevListComponent } from './components/zahtev/zahtev-list/zahtev-list.component';
 import { ObavestenjeFormComponent } from './components/obavestenje/obavestenje-form/obavestenje-form.component';
 import { RegisterFormComponent } from './components/main/register-form/register-form.component';
+import { ObavestenjeListComponent } from './components/obavestenje/obavestenje-list/obavestenje-list.component';
+import { ObavestenjeDetailsComponent } from './components/obavestenje/obavestenje-details/obavestenje-details.component';
+import { PreloaderComponent } from './components/layout/preloader/preloader.component';
+import { EmptyContainerComponent } from './components/layout/empty-container/empty-container.component';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
@@ -29,9 +33,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-
-import { ObavestenjeListComponent } from './components/obavestenje/obavestenje-list/obavestenje-list.component';
-import { ObavestenjeDetailsComponent } from './components/obavestenje/obavestenje-details/obavestenje-details.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -47,7 +50,9 @@ import { ObavestenjeDetailsComponent } from './components/obavestenje/obavestenj
     ZahtevListComponent,
     ObavestenjeFormComponent,
     ObavestenjeListComponent,
-    ObavestenjeDetailsComponent
+    ObavestenjeDetailsComponent,
+    PreloaderComponent,
+    EmptyContainerComponent
   ],
   imports: [
     BrowserModule,
@@ -67,7 +72,9 @@ import { ObavestenjeDetailsComponent } from './components/obavestenje/obavestenj
     MatSelectModule,
     MatProgressSpinnerModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatIconModule,
+    MatMenuModule
   ],
   providers: [
     {

@@ -36,20 +36,25 @@ public class KorisnikService implements UserDetailsService {
 	private DOMParser domParser;
 
 	@Autowired
+	private JAXBParser jaxbParser;
+
+	@Autowired
 	private TokenUtils tokenUtils;
 	
 	@Autowired
 	private AuthenticationManager authManager;
-	
-	@Autowired
-	private JAXBParser jaxbParser;
-	
+		
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) {
-		return this.korisnikRepository.findByEmail(username);
+		try {
+			return this.load(username);
+		}
+		catch(Exception e) {
+			return null;
+		}
 	}
 		
 	public Korisnik currentUser() {
@@ -61,22 +66,30 @@ public class KorisnikService implements UserDetailsService {
 		}
 	}
 	
-	public TokenDTO login(String xml) throws ParserConfigurationException, SAXException, IOException {
+	public void save(Korisnik korisnik) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, JAXBException, TransformerException {
+		this.korisnikRepository.save(this.jaxbParser.marshal(korisnik), korisnik.getOsoba().getMejl());
+	}
+	
+	public Korisnik load(String documentId) throws ClassNotFoundException, InstantiationException, IllegalAccessException, JAXBException, XMLDBException {
+		return (Korisnik) this.jaxbParser.unmarshal(this.korisnikRepository.load(documentId), Korisnik.class);
+	}
+	
+	public TokenDTO login(String xml) throws ParserConfigurationException, SAXException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, JAXBException, XMLDBException {
 		Document document = this.domParser.buildDocument(xml);
-		String email = document.getElementsByTagName("email").item(0).getTextContent();
-		String password = document.getElementsByTagName("password").item(0).getTextContent();
+		String email = document.getElementsByTagName("mejl").item(0).getTextContent();
+		String password = document.getElementsByTagName("lozinka").item(0).getTextContent();
 		this.authManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
-		String uloga = this.korisnikRepository.findByEmail(email).getUloga();
-		return new TokenDTO(this.tokenUtils.generateToken(email), uloga);
+		return new TokenDTO(this.tokenUtils.generateToken(email), this.load(email).getUloga());
 	}
 	
 	public void register(String xml) throws JAXBException, ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, ParserConfigurationException, SAXException, IOException, TransformerException {
 		Korisnik korisnik = (Korisnik) this.jaxbParser.unmarshal(this.domParser.buildDocument(xml), Korisnik.class);
-		if (this.korisnikRepository.findByEmail(korisnik.getMejl()) != null) {
+		if (this.loadUserByUsername(korisnik.getOsoba().getMejl()) != null) {
 			throw new EmailTakenException();
 		}
+		korisnik.setAktivan(false);
 		korisnik.setLozinka(this.passwordEncoder.encode(korisnik.getLozinka()));
-		this.korisnikRepository.save(korisnik);
+		this.save(korisnik);
 	}
-	
+		
 }
