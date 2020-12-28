@@ -5,8 +5,9 @@
 export const environment = {
   production: false,
   baseUrl: 'http://localhost:8082',
+  apiAuth: 'auth',
   apiZalbe: 'api/zalbe',
-  apiAuth: 'auth'
+  apiResenja: 'api/resenja'
 };
 
 /*

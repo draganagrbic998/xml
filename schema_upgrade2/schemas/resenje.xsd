@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="https://github.com/draganagrbic998/xml/dokument"
+    xmlns:dokument="https://github.com/draganagrbic998/xml/dokument"
+    xmlns:osnova="https://github.com/draganagrbic998/xml/osnova">
+    <xs:import namespace="https://github.com/draganagrbic998/xml/osnova" schemaLocation="osnova.xsd"/>
+    <xs:complexType name="TResenje">
+        <xs:complexContent>
+            <xs:extension base="osnova:TDokument">
+                <xs:sequence>
+                    <xs:element name="status">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:enumeration value="odobrena"/>
+                                <xs:enumeration value="odbijena"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="1" name="Odluka">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element maxOccurs="unbounded" ref="dokument:Pasus"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="Odbrana">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element name="datumSlanja" type="xs:date"/>
+                                <xs:element minOccurs="0" name="datum" type="xs:date"/>
+                                <xs:element minOccurs="0" name="odgovor"
+                                    type="osnova:TRequiredString"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="PodaciZahteva">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element name="mejl" type="xs:string"/>
+                                <xs:element ref="osnova:OrganVlasti"/>
+                                <xs:element name="datum" type="xs:date"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="PodaciZalbe">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element name="datum" type="xs:date"/>
+                                <xs:element name="Detalji" type="osnova:TRequiredString"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="PodaciObavestenja">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element name="brojOdluke" type="xs:string"/>
+                                <xs:element name="datumOdluke" type="xs:date"/>
+                                <xs:element name="detalji" type="osnova:TRequiredString"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="Resenje" type="dokument:TResenje"/>
+    <xs:element name="Pasus">
+        <xs:complexType mixed="true">
+            <xs:choice maxOccurs="unbounded" minOccurs="0">
+                <xs:element name="zakon">
+                    <xs:complexType>
+                        <xs:simpleContent>
+                            <xs:extension base="xs:string">
+                                <xs:attribute name="clan" type="xs:string"/>
+                                <xs:attribute name="stav">
+                                    <xs:simpleType>
+                                        <xs:restriction base="xs:string">
+                                            <xs:enumeration value="\d{1,2}"/>
+                                            <xs:enumeration value="\d{1,2}-\d{1,2}"/>
+                                        </xs:restriction>
+                                    </xs:simpleType>
+                                </xs:attribute>
+                            </xs:extension>
+                        </xs:simpleContent>
+                    </xs:complexType>
+                </xs:element>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

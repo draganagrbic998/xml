@@ -1,0 +1,11 @@
+<app-preloader *ngIf="fetchPending"></app-preloader>
+
+<app-resenje-details 
+*ngFor="let resenje of resenja"
+[resenje]="resenje">
+</app-resenje-details>
+
+<app-empty-container 
+*ngIf="!resenja?.length"
+[title]="'NEMA RESENJA'">
+</app-empty-container>

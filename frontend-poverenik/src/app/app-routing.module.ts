@@ -5,7 +5,11 @@ import { RegisterFormComponent } from './components/main/register-form/register-
 import { ZalbaCutanjeFormComponent } from './components/zalba/zalba-cutanje-form/zalba-cutanje-form.component';
 import { ZalbaListComponent } from './components/zalba/zalba-list/zalba-list.component';
 import { ZalbaOdlukaFormComponent } from './components/zalba/zalba-odluka-form/zalba-odluka-form.component';
-import { LOGIN_PATH, REGISTER_PATH, ZALBA_CUTANJE_FORM, ZALBA_LIST, ZALBA_ODLUKA_FORM } from './constants/router';
+import { ResenjeFormComponent } from './components/resenje/resenje-form/resenje-form.component';
+import { ResenjeListComponent } from './components/resenje/resenje-list/resenje-list.component';
+import { LOGIN_PATH, REGISTER_PATH, ZALBA_CUTANJE_FORM, ZALBA_LIST, ZALBA_ODLUKA_FORM, RESENJE_FORM, RESENJE_LIST } from './constants/router';
+import { GradjaninGuard } from './guard/gradjanin/gradjanin.guard';
+import { PoverenikGuard } from './guard/poverenik/poverenik.guard';
 
 const routes: Routes = [
   {
@@ -18,15 +22,26 @@ const routes: Routes = [
   },
   {
     path: ZALBA_CUTANJE_FORM,
-    component: ZalbaCutanjeFormComponent
+    component: ZalbaCutanjeFormComponent,
+    canActivate: [GradjaninGuard]
   },
   {
     path: ZALBA_ODLUKA_FORM,
-    component: ZalbaOdlukaFormComponent
+    component: ZalbaOdlukaFormComponent,
+    canActivate: [GradjaninGuard]
   },
   {
     path: ZALBA_LIST,
     component: ZalbaListComponent
+  },
+  {
+    path: RESENJE_FORM,
+    component: ResenjeFormComponent,
+    canActivate: [PoverenikGuard]
+  },
+  {
+    path: RESENJE_LIST,
+    component: ResenjeListComponent
   }
 ];
 

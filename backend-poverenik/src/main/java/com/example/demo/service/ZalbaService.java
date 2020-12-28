@@ -66,7 +66,7 @@ public class ZalbaService {
 	public Resource generatePdf(String broj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
 		Document document = this.zalbaRepository.load(broj);
 		String xslFoPath;
-		TipZalbe tipZalbe = this.getTipZalbe(((Element) document.getElementsByTagNameNS(Namespaces.DOKUMENT, "Zalba").item(0)).getAttributeNS(Namespaces.XSI, "type"));
+		TipZalbe tipZalbe = getTipZalbe(((Element) document.getElementsByTagNameNS(Namespaces.DOKUMENT, "Zalba").item(0)).getAttributeNS(Namespaces.XSI, "type"));
 		if (tipZalbe.equals(TipZalbe.cutanje)) {
 			xslFoPath = XSL_FO_PATH_CUTANJE;
 		}
@@ -82,7 +82,7 @@ public class ZalbaService {
 	public Resource generateHtml(String broj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
 		Document document = this.zalbaRepository.load(broj);
 		String xslPath;
-		TipZalbe tipZalbe = this.getTipZalbe(((Element) document.getElementsByTagNameNS(Namespaces.DOKUMENT, "Zalba").item(0)).getAttributeNS(Namespaces.XSI, "type"));
+		TipZalbe tipZalbe = getTipZalbe(((Element) document.getElementsByTagNameNS(Namespaces.DOKUMENT, "Zalba").item(0)).getAttributeNS(Namespaces.XSI, "type"));
 		if (tipZalbe.equals(TipZalbe.cutanje)) {
 			xslPath = XSL_PATH_CUTANJE;
 		}
@@ -95,7 +95,7 @@ public class ZalbaService {
 		return new UrlResource(file.toUri());
 	}
 	
-	private TipZalbe getTipZalbe(String tipZalbe) {
+	public static TipZalbe getTipZalbe(String tipZalbe) {
 		if (tipZalbe.equals("dokument:TZalbaCutanje")) {
 			return TipZalbe.cutanje;
 		}
@@ -120,7 +120,7 @@ public class ZalbaService {
 		while (i.hasMoreResources()) {
 			XMLResource resource = (XMLResource) i.nextResource();
 			Document document = domParser.buildDocument(resource.getContent().toString());	//a sto da ne uradim getContentAsDom???
-			TipZalbe tipZalbe = this.getTipZalbe(((Element) document.getElementsByTagNameNS(Namespaces.DOKUMENT, "Zalba").item(0)).getAttributeNS(Namespaces.XSI, "type"));
+			TipZalbe tipZalbe = getTipZalbe(((Element) document.getElementsByTagNameNS(Namespaces.DOKUMENT, "Zalba").item(0)).getAttributeNS(Namespaces.XSI, "type"));
 			String broj = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
 			String datum = document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).getTextContent();
 			String organVlasti = document.getElementsByTagNameNS(Namespaces.OSNOVA, "naziv").item(0).getTextContent();

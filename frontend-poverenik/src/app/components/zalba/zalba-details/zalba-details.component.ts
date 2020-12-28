@@ -31,7 +31,7 @@ export class ZalbaDetailsComponent implements OnInit {
   }
 
   dodajResenje(): void{
-    // this.router.navigate([`/resenje-form/${this.zalba.broj}`]);
+    this.router.navigate([`/resenje-form/${this.zalba.broj}`]);
   }
 
   ngOnInit(): void {
