@@ -14,7 +14,7 @@ export class RegisterFormComponent implements OnInit {
   constructor(
     private userService: UserService,
     private snackBar: MatSnackBar
-    ) { }
+  ) { }
 
   registerPending = false;
   registerForm: FormGroup = new FormGroup({
@@ -35,7 +35,7 @@ export class RegisterFormComponent implements OnInit {
     this.userService.register(this.registerForm.value).subscribe(
       () => {
         this.registerPending = false;
-        this.snackBar.open('Your request has been sent! Check your email.',
+        this.snackBar.open('Zahtev uspešno poslat! Proverite mejl.',
         SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);
         this.registerForm.reset();
       },

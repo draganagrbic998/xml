@@ -72,9 +72,16 @@ public class DOMParser {
 	}
 	
 	public void removeXmlSpace(Document document) {
-		Element detalji = (Element) document.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0);
+		try {
+			((Element) document.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0)).removeAttribute("xml:space");
+		}catch(Exception e) {};
+		try {
+			((Element) document.getElementsByTagNameNS(Namespaces.DOKUMENT, "Odluka").item(0)).removeAttribute("xml:space");
+		}catch(Exception e) {};
+		try {
+			((Element) document.getElementsByTagNameNS(Namespaces.DOKUMENT, "Pasus").item(0)).removeAttribute("xml:space");
+		}catch(Exception e) {};
 		
-		detalji.removeAttribute("xml:space");
 		NodeList bolds = document.getElementsByTagNameNS(Namespaces.OSNOVA, "bold");
 		for (int i = 0; i < bolds.getLength(); ++i) {
 			Element bold = (Element) bolds.item(i);
@@ -84,6 +91,11 @@ public class DOMParser {
 		for (int i = 0; i < italics.getLength(); ++i) {
 			Element italic = (Element) italics.item(i);
 			italic.removeAttribute("xml:space");
+		}
+		NodeList zakoni = document.getElementsByTagNameNS(Namespaces.DOKUMENT, "zakon");
+		for (int i = 0; i < zakoni.getLength(); ++i) {
+			Element zakon = (Element) zakoni.item(i);
+			zakon.removeAttribute("xml:space");
 		}
 	}
 	

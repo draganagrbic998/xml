@@ -28,13 +28,15 @@
                             <xs:sequence>
                                 <xs:element name="datumSlanja" type="xs:date"/>
                                 <xs:element minOccurs="0" name="datum" type="xs:date"/>
-                                <xs:element minOccurs="0" name="odgovor" type="xs:string"/>
+                                <xs:element minOccurs="0" name="odgovor"
+                                    type="osnova:TRequiredString"/>
                             </xs:sequence>
                         </xs:complexType>
                     </xs:element>
                     <xs:element name="PodaciZahteva">
                         <xs:complexType>
                             <xs:sequence>
+                                <xs:element name="mejl" type="xs:string"/>
                                 <xs:element ref="osnova:OrganVlasti"/>
                                 <xs:element name="datum" type="xs:date"/>
                             </xs:sequence>
@@ -44,16 +46,16 @@
                         <xs:complexType>
                             <xs:sequence>
                                 <xs:element name="datum" type="xs:date"/>
-                                <xs:element name="detalji" type="xs:string"/>
+                                <xs:element name="Detalji" type="osnova:TRequiredString"/>
                             </xs:sequence>
                         </xs:complexType>
                     </xs:element>
                     <xs:element minOccurs="0" name="PodaciObavestenja">
                         <xs:complexType>
                             <xs:sequence>
-                                <xs:element name="broj" type="xs:string"/>
-                                <xs:element name="datum" type="xs:date"/>
-                                <xs:element name="detalji" type="xs:string"/>
+                                <xs:element name="brojOdluke" type="xs:string"/>
+                                <xs:element name="datumOdluke" type="xs:date"/>
+                                <xs:element name="detalji" type="osnova:TRequiredString"/>
                             </xs:sequence>
                         </xs:complexType>
                     </xs:element>

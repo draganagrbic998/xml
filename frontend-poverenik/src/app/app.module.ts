@@ -14,6 +14,15 @@ import { FormContainerComponent } from './components/layout/form-container/form-
 import { SpinnerButtonComponent } from './components/layout/spinner-button/spinner-button.component';
 import { CenterContainerComponent } from './components/layout/center-container/center-container.component';
 import { RegisterFormComponent } from './components/main/register-form/register-form.component';
+import { ZalbaCutanjeFormComponent } from './components/zalba/zalba-cutanje-form/zalba-cutanje-form.component';
+import { ZalbaOdlukaFormComponent } from './components/zalba/zalba-odluka-form/zalba-odluka-form.component';
+import { ZalbaDetailsComponent } from './components/zalba/zalba-details/zalba-details.component';
+import { ZalbaListComponent } from './components/zalba/zalba-list/zalba-list.component';
+import { ResenjeFormComponent } from './components/resenje/resenje-form/resenje-form.component';
+import { ResenjeListComponent } from './components/resenje/resenje-list/resenje-list.component';
+import { ResenjeDetailsComponent } from './components/resenje/resenje-details/resenje-details.component';
+import { PreloaderComponent } from './components/layout/preloader/preloader.component';
+import { EmptyContainerComponent } from './components/layout/empty-container/empty-container.component';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
@@ -25,10 +34,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { ZalbaCutanjeFormComponent } from './components/zalba/zalba-cutanje-form/zalba-cutanje-form.component';
-import { ZalbaOdlukaFormComponent } from './components/zalba/zalba-odluka-form/zalba-odluka-form.component';
-import { ZalbaDetailsComponent } from './components/zalba/zalba-details/zalba-details.component';
-import { ZalbaListComponent } from './components/zalba/zalba-list/zalba-list.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -42,7 +50,12 @@ import { ZalbaListComponent } from './components/zalba/zalba-list/zalba-list.com
     ZalbaCutanjeFormComponent,
     ZalbaOdlukaFormComponent,
     ZalbaDetailsComponent,
-    ZalbaListComponent
+    ZalbaListComponent,
+    ResenjeFormComponent,
+    ResenjeListComponent,
+    ResenjeDetailsComponent,
+    PreloaderComponent,
+    EmptyContainerComponent
   ],
   imports: [
     BrowserModule,
@@ -62,7 +75,10 @@ import { ZalbaListComponent } from './components/zalba/zalba-list/zalba-list.com
     MatSelectModule,
     MatProgressSpinnerModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatIconModule,
+    MatMenuModule,
+    MatTooltipModule
   ],
   providers: [
     {

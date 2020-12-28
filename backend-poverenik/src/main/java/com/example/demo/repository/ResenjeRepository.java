@@ -13,25 +13,23 @@ import com.example.demo.constants.Constants;
 import com.example.demo.exist.ExistManager;
 
 @Repository
-public class ZalbaRepository {
+public class ResenjeRepository {
 
 	@Autowired
 	private ExistManager existManager;
 	
-	private static final String ZALBE_COLLECTION = Constants.COLLECTIONS_PREFIX + "/zalbe";
+	private static final String RESENJE_COLLECTION = Constants.COLLECTIONS_PREFIX + "/resenja";
 	
 	public void save(Document document) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, JAXBException, TransformerException {
-		this.existManager.save(ZALBE_COLLECTION, null, document);
+		this.existManager.save(RESENJE_COLLECTION, null, document);
 	}
 	
-	
-	
 	public ResourceSet list(String xpathExp) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
-		return this.existManager.retrieve(ZALBE_COLLECTION, xpathExp);
+		return this.existManager.retrieve(RESENJE_COLLECTION, xpathExp);
 	}
 	
 	public Document load(String documentId) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
-		return this.existManager.load(ZALBE_COLLECTION, documentId);
+		return this.existManager.load(RESENJE_COLLECTION, documentId);
 	}
 	
 }

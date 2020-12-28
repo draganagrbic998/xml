@@ -14,11 +14,16 @@ export class ZalbaListComponent implements OnInit {
   ) { }
 
   zalbe: ZalbaDTO[];
+  fetchPending = true;
 
   ngOnInit(): void {
     this.zalbaService.list().subscribe(
       (zalbe: ZalbaDTO[]) => {
         this.zalbe = zalbe;
+        this.fetchPending = false;
+      },
+      () => {
+        this.fetchPending = false;
       }
     );
   }
