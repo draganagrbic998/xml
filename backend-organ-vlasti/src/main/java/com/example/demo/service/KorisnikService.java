@@ -87,7 +87,7 @@ public class KorisnikService implements UserDetailsService {
 		if (this.loadUserByUsername(korisnik.getOsoba().getMejl()) != null) {
 			throw new EmailTakenException();
 		}
-		korisnik.setAktivan(false);
+		korisnik.setAktivan(true);
 		korisnik.setLozinka(this.passwordEncoder.encode(korisnik.getLozinka()));
 		this.save(korisnik);
 	}

@@ -17,7 +17,7 @@ public class KorisnikRepository {
 	@Autowired
 	private ExistManager existManager;
 		
-	private static final String KORISNICI_COLLECTION = Constants.COLLECTIONS_PREFIX + "/korisnici";
+	public static final String KORISNICI_COLLECTION = Constants.COLLECTIONS_PREFIX + "/korisnici";
 	
 	public void save(Document document, String documentId) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, JAXBException, TransformerException {
 		this.existManager.save(KORISNICI_COLLECTION, documentId, document);

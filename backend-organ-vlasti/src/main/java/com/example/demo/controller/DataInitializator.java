@@ -16,6 +16,7 @@ import org.xmldb.api.base.XMLDBException;
 import com.example.demo.constants.Constants;
 import com.example.demo.exist.ExistManager;
 import com.example.demo.parser.DOMParser;
+import com.example.demo.repository.KorisnikRepository;
 import com.example.demo.repository.OrganVlastiRepository;
 
 @RestController
@@ -23,6 +24,7 @@ import com.example.demo.repository.OrganVlastiRepository;
 public class DataInitializator {
 	
 	private static final String ORGAN_VLASTI1 = Constants.INIT_FOLDER + File.separatorChar + "organ_vlasti1.xml";
+	private static final String SLUZBENIK1 = Constants.INIT_FOLDER + File.separatorChar + "sluzbenik1.xml";
 
 	@Autowired
 	private ExistManager existManager;
@@ -33,6 +35,7 @@ public class DataInitializator {
 	@GetMapping
 	public void initData() throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, ParserConfigurationException, SAXException, IOException {
 		this.existManager.save(OrganVlastiRepository.ORGAN_VLASTI_COLLECTION, "1", this.domParser.buildDocumentFromFile(ORGAN_VLASTI1));
+		this.existManager.save(KorisnikRepository.KORISNICI_COLLECTION, "1", this.domParser.buildDocumentFromFile(SLUZBENIK1));
 	}
 	
 }
