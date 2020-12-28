@@ -17,17 +17,17 @@
             </mat-form-field>
 
             <mat-form-field> 
-                <mat-label>Datum slanja žalbe organ vlasti</mat-label>
+                <mat-label>Datum slanja žalbe organu vlasti</mat-label>
                 <input 
                 matInput 
                 autocomplete="off"
                 formControlName="datumSlanja" 
-                placeholder="Unesite datum slanja žalbe"
+                placeholder="Unesite datum slanja žalbe organu vlasti"
                 [matDatepicker]="datumSlanja">
                 <mat-datepicker-toggle matSuffix [for]="datumSlanja"></mat-datepicker-toggle>
                 <mat-datepicker #datumSlanja></mat-datepicker>
                 <mat-error>
-                    Datum slanja žalbe je obavezan!
+                    Datum slanja žalbe organu vlasti je obavezan!
                 </mat-error>    
             </mat-form-field>
             <mat-form-field> 
@@ -35,13 +35,13 @@
                 <input 
                 matInput 
                 autocomplete="off"
-                formControlName="datum" 
-                placeholder="Unesite datum prijema odgovora"
+                formControlName="datumOdbrane" 
+                placeholder="Unesite datum prijema odgovora organa vlasti"
                 [matDatepicker]="datum">
                 <mat-datepicker-toggle matSuffix [for]="datum"></mat-datepicker-toggle>
                 <mat-datepicker #datum></mat-datepicker>
                 <mat-error>
-                    Datum prijema odgovora je obavezan!
+                    Datum prijema odgovora organa vlasti je obavezan!
                 </mat-error>    
             </mat-form-field>
 
@@ -50,7 +50,7 @@
                 <textarea 
                 matInput 
                 autocomplete="off"
-                formControlName="odgovor"
+                formControlName="odgovorOdbrane"
                 rows="4"></textarea>
                 <mat-error>
                     Odgovor organa vlasti je obavezan!
@@ -67,7 +67,7 @@
             *ngIf="!savePending"
             mat-raised-button 
             color="primary"
-            (click)="posaljiResenje()">Pošalji rešenje</button>
+            (click)="save()">Pošalji rešenje</button>
             <app-spinner-button *ngIf="savePending"></app-spinner-button>
         </app-center-container>
         

@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { ZalbaDTO } from 'src/app/models/zalbaDTO';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { environment } from 'src/environments/environment';
@@ -12,8 +11,7 @@ import { environment } from 'src/environments/environment';
 export class ZalbaDetailsComponent implements OnInit {
 
   constructor(
-    private authService: AuthService,
-    private router: Router
+    private authService: AuthService
   ) { }
 
   @Input() zalba: ZalbaDTO;
@@ -22,16 +20,12 @@ export class ZalbaDetailsComponent implements OnInit {
     return this.authService.getUser()?.uloga;
   }
 
-  openPdf(): void{
-    window.open(`//localhost:8082/${environment.apiZalbe}/${this.zalba.broj}/pdf`, '_blank');
-  }
-
-  openHtml(): void{
+  getHtml(): void{
     window.open(`//localhost:8082/${environment.apiZalbe}/${this.zalba.broj}/html`, '_blank');
   }
 
-  dodajResenje(): void{
-    this.router.navigate([`/resenje-form/${this.zalba.broj}`]);
+  getPdf(): void{
+    window.open(`//localhost:8082/${environment.apiZalbe}/${this.zalba.broj}/pdf`, '_blank');
   }
 
   ngOnInit(): void {

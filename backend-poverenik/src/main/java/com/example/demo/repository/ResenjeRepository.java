@@ -18,18 +18,18 @@ public class ResenjeRepository {
 	@Autowired
 	private ExistManager existManager;
 	
-	private static final String RESENJE_COLLECTION = Constants.COLLECTIONS_PREFIX + "/resenja";
+	private static final String RESENJA_COLLECTION = Constants.COLLECTIONS_PREFIX + "/resenja";
 	
-	public void save(Document document) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, JAXBException, TransformerException {
-		this.existManager.save(RESENJE_COLLECTION, null, document);
+	public void save(Document document, String documentId) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, JAXBException, TransformerException {
+		this.existManager.save(RESENJA_COLLECTION, documentId, document);
 	}
 	
 	public ResourceSet list(String xpathExp) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
-		return this.existManager.retrieve(RESENJE_COLLECTION, xpathExp);
+		return this.existManager.retrieve(RESENJA_COLLECTION, xpathExp);
 	}
 	
 	public Document load(String documentId) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
-		return this.existManager.load(RESENJE_COLLECTION, documentId);
+		return this.existManager.load(RESENJA_COLLECTION, documentId);
 	}
 	
 }

@@ -57,8 +57,8 @@ public class ObavestenjeService {
 	@Autowired
 	private XSLTransformer xslTransformer;
 	
-	private static final String XSL_FO_PATH = Constants.XSL_FOLDER + "/obavestenje_fo.xsl";
-	private static final String XSL_PATH = Constants.XSL_FOLDER + "/obavestenje.xsl";
+	private static final String XSL_FO_PATH = Constants.XSL_FOLDER + File.separatorChar + "obavestenje_fo.xsl";
+	private static final String XSL_PATH = Constants.XSL_FOLDER + File.separatorChar + "/obavestenje.xsl";
 	private static final String GEN_PATH = Constants.GEN_FOLDER + File.separatorChar + "obavestenja" + File.separatorChar;
 
 	public void save(String brojZahteva, String xml) throws ParserConfigurationException, SAXException, IOException, JAXBException, ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException {

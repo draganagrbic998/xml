@@ -29,7 +29,7 @@ import com.example.demo.service.KorisnikService;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
-	private KorisnikService userService;
+	private KorisnikService korisnikService;
 	
 	@Autowired
 	private TokenUtils tokenUtils;
@@ -47,7 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(this.userService).passwordEncoder(this.passwordEncoder());
+		auth.userDetailsService(this.korisnikService).passwordEncoder(this.passwordEncoder());
 	}
 	
 	@Override
@@ -58,7 +58,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.authorizeRequests()
 			.antMatchers("/auth/**").permitAll()
 			.and().cors().and()
-			.addFilterBefore(new AuthFilter(this.userService, this.tokenUtils), BasicAuthenticationFilter.class);
+			.addFilterBefore(new AuthFilter(this.korisnikService, this.tokenUtils), BasicAuthenticationFilter.class);
 		http.csrf().disable();
 	}
 	

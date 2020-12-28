@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="https://github.com/draganagrbic998/xml/osnova"
+    xmlns:osnova="https://github.com/draganagrbic998/xml/osnova">
+    <xs:simpleType name="TRequiredString">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="Osoba">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="mejl" type="osnova:TRequiredString"/>
+                <xs:element name="ime" type="osnova:TRequiredString"/>
+                <xs:element name="prezime" type="osnova:TRequiredString"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Adresa">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="mesto" type="osnova:TRequiredString"/>
+                <xs:element name="ulica" type="osnova:TRequiredString"/>
+                <xs:element name="broj" type="osnova:TRequiredString"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Gradjanin">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="osnova:Osoba"/>
+                <xs:element ref="osnova:Adresa"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="OrganVlasti">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="naziv" type="osnova:TRequiredString"/>
+                <xs:element ref="osnova:Adresa"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Korisnik">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="aktivan" type="xs:boolean"/>
+                <xs:element name="lozinka" type="osnova:TRequiredString"/>
+                <xs:element ref="osnova:Osoba"/>
+                <xs:element minOccurs="0" ref="osnova:Adresa"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="TDokument">
+        <xs:sequence>
+            <xs:element name="broj" type="osnova:TRequiredString"/>
+            <xs:element name="datum" type="xs:date"/>
+            <xs:element name="mesto" type="osnova:TRequiredString"/>
+            <xs:element name="potpis" type="xs:base64Binary"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TPodnosenje">
+        <xs:complexContent>
+            <xs:extension base="osnova:TDokument">
+                <xs:sequence>
+                    <xs:element ref="osnova:Gradjanin"/>
+                    <xs:element ref="osnova:OrganVlasti"/>
+                    <xs:element ref="osnova:Detalji"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="Detalji">
+        <xs:complexType>
+            <xs:choice maxOccurs="unbounded" minOccurs="0">
+                <xs:element name="bold" type="osnova:TRequiredString"/>
+                <xs:element name="italic" type="osnova:TRequiredString"/>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

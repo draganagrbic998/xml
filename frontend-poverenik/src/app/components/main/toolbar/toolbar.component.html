@@ -1,25 +1,25 @@
 <mat-toolbar color="primary" class="mat-elevation-z24">
     <span>
         <button 
-        *ngIf="uloga==='gradjanin'"
+        *ngIf="!auth && uloga==='gradjanin'"
         mat-icon-button
         [routerLink]="'/zalba-cutanje-form'">
             <mat-icon matTooltip="Žalba na ćutanje organa vlasti">add</mat-icon>
         </button>
         <button 
-        *ngIf="uloga==='gradjanin'"
+        *ngIf="!auth && uloga==='gradjanin'"
         mat-icon-button
         [routerLink]="'/zalba-odluka-form'">
             <mat-icon matTooltip="Žalba na odluku organa vlasti">add</mat-icon>
         </button>
         <button 
-        *ngIf="uloga"
+        *ngIf="!auth"
         mat-icon-button
         [routerLink]="'/zalba-list'">
             <mat-icon matTooltip="Lista podnetih žalbi">list</mat-icon>
         </button>
         <button 
-        *ngIf="uloga"
+        *ngIf="!auth"
         mat-icon-button
         [routerLink]="'/resenje-list'">
             <mat-icon matTooltip="Lista izdatih rešenja">list</mat-icon>
@@ -27,16 +27,16 @@
     </span>
     <span>
         <button 
-        *ngIf="!uloga"
+        *ngIf="auth"
         mat-button [routerLink]="login ? './register' : './login'">
             <mat-icon>{{login ? 'person_add' : 'login'}}</mat-icon>
             {{login ? 'Registracija' : 'Prijava'}}
         </button>   
-        <button *ngIf="uloga" mat-icon-button [matMenuTriggerFor]="more">
+        <button *ngIf="!auth" mat-icon-button [matMenuTriggerFor]="more">
             <mat-icon matTooltip="više">more_vert</mat-icon>
         </button>
         <mat-menu #more="matMenu">
-            <button mat-menu-item (click)="odjava()">
+            <button mat-menu-item (click)="signOut()">
                 <mat-icon>logout</mat-icon>
                 <span>Odjava</span>
             </button>

@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.io.File;
 import java.io.IOException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -21,7 +22,7 @@ import com.example.demo.repository.KorisnikRepository;
 @RequestMapping(value = "/init_data")
 public class DataInitializator {
 	
-	private static final String KORISNIK1 = Constants.INIT_FOLDER + "/draganaasd@gmail.com.xml";
+	private static final String POVERENIK1 = Constants.INIT_FOLDER + File.separatorChar + "poverenik1.xml";
 
 	@Autowired
 	private ExistManager existManager;
@@ -31,7 +32,7 @@ public class DataInitializator {
 	
 	@GetMapping
 	public void initData() throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, ParserConfigurationException, SAXException, IOException {
-		this.existManager.save(KorisnikRepository.KORISNICI_COLLECTION, KORISNIK1, this.domParser.buildDocumentFromFile(KORISNIK1));
+		this.existManager.save(KorisnikRepository.KORISNICI_COLLECTION, "poverenik@gmail.com", this.domParser.buildDocumentFromFile(POVERENIK1));
 	}
 	
 }

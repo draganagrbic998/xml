@@ -72,16 +72,6 @@ public class DOMParser {
 	}
 	
 	public void removeXmlSpace(Document document) {
-		try {
-			((Element) document.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0)).removeAttribute("xml:space");
-		}catch(Exception e) {};
-		try {
-			((Element) document.getElementsByTagNameNS(Namespaces.DOKUMENT, "Odluka").item(0)).removeAttribute("xml:space");
-		}catch(Exception e) {};
-		try {
-			((Element) document.getElementsByTagNameNS(Namespaces.DOKUMENT, "Pasus").item(0)).removeAttribute("xml:space");
-		}catch(Exception e) {};
-		
 		NodeList bolds = document.getElementsByTagNameNS(Namespaces.OSNOVA, "bold");
 		for (int i = 0; i < bolds.getLength(); ++i) {
 			Element bold = (Element) bolds.item(i);
@@ -92,10 +82,41 @@ public class DOMParser {
 			Element italic = (Element) italics.item(i);
 			italic.removeAttribute("xml:space");
 		}
-		NodeList zakoni = document.getElementsByTagNameNS(Namespaces.DOKUMENT, "zakon");
+		NodeList detalji = document.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji");
+		for (int i = 0; i < detalji.getLength(); ++i) {
+			Element detalj = (Element) detalji.item(i);
+			detalj.removeAttribute("xml:space");
+		}
+		
+		NodeList zakoni = document.getElementsByTagNameNS(Namespaces.OSNOVA, "zakon");
 		for (int i = 0; i < zakoni.getLength(); ++i) {
 			Element zakon = (Element) zakoni.item(i);
 			zakon.removeAttribute("xml:space");
+			zakon.setPrefix("resenje");
+		}
+		NodeList pasusi = document.getElementsByTagNameNS(Namespaces.OSNOVA, "Pasus");
+		for (int i = 0; i < pasusi.getLength(); ++i) {
+			Element pasus = (Element) pasusi.item(i);
+			pasus.removeAttribute("xml:space");
+			pasus.setPrefix("resenje");
+		}
+		NodeList dispozitive = document.getElementsByTagNameNS(Namespaces.OSNOVA, "Dispozitiva");
+		for (int i = 0; i < dispozitive.getLength(); ++i) {
+			Element dispozitiva = (Element) dispozitive.item(i);
+			dispozitiva.removeAttribute("xml:space");
+			dispozitiva.setPrefix("resenje");
+		}
+		NodeList obrazlozenja = document.getElementsByTagNameNS(Namespaces.OSNOVA, "Obrazlozenje");
+		for (int i = 0; i < obrazlozenja.getLength(); ++i) {
+			Element obrazlozenje = (Element) obrazlozenja.item(i);
+			obrazlozenje.removeAttribute("xml:space");
+			obrazlozenje.setPrefix("resenje");
+		}
+		NodeList odluke = document.getElementsByTagNameNS(Namespaces.OSNOVA, "Odluka");
+		for (int i = 0; i < odluke.getLength(); ++i) {
+			Element odluka = (Element) odluke.item(i);
+			odluka.removeAttribute("xml:space");
+			odluka.setPrefix("resenje");
 		}
 	}
 	

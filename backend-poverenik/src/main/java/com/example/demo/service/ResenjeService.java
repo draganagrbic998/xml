@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -36,6 +37,7 @@ import com.example.demo.model.enums.StatusResenja;
 import com.example.demo.model.enums.StatusZalbe;
 import com.example.demo.model.enums.TipZalbe;
 import com.example.demo.parser.DOMParser;
+import com.example.demo.parser.JAXBParser;
 import com.example.demo.parser.XSLTransformer;
 import com.example.demo.repository.ResenjeRepository;
 import com.example.demo.repository.ZalbaRepository;
@@ -55,50 +57,86 @@ public class ResenjeService {
 	@Autowired
 	private XSLTransformer xslTransformer;
 	
-	private static final String XSL_FO_PATH = Constants.XSL_FOLDER + "/resenje_fo.xsl";
-	private static final String XSL_PATH = Constants.XSL_FOLDER + "/resenje.xsl";
-	
 	@Autowired
 	private ZalbaRepository zalbaRepository;
+	
+	@Autowired
+	private JAXBParser jaxbParser;
 
+	private static final String XSL_FO_PATH = Constants.XSL_FOLDER + "/resenje_fo.xsl";
+	private static final String XSL_PATH = Constants.XSL_FOLDER + "/resenje.xsl";
+	private static final String GEN_PATH = Constants.GEN_FOLDER + File.separatorChar + "resenja" + File.separatorChar;
 	
-	public Resource generatePdf(String broj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
-		Document document = this.resenjeRepository.load(broj);
-		ByteArrayOutputStream out = this.xslTransformer.generatePdf(document, XSL_FO_PATH);
-		Path file = Paths.get(Constants.GEN_FOLDER + "/" + broj + ".pdf");
-		Files.write(file, out.toByteArray());
-		return new UrlResource(file.toUri());
+	public void save(String brojZalbe, String xml) throws ParserConfigurationException, SAXException, IOException, JAXBException, ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException {
+		SimpleDateFormat sdf = new SimpleDateFormat(Constants.DATE_FORMAT);
+		Document document = this.domParser.buildDocument(xml);
+		Element resenje = (Element) document.getElementsByTagNameNS(Namespaces.RESENJE, "Resenje").item(0);
+		this.domParser.removeXmlSpace(document);
+		Document zalbaDocument = this.zalbaRepository.load(brojZalbe);
+		Element zalba = (Element) zalbaDocument.getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").item(0);
+
+		DocumentFragment documentFragment = document.createDocumentFragment();
+		Node datum = document.createElementNS(Namespaces.OSNOVA, "datum");
+		datum.setTextContent(sdf.format(new Date()));
+		Node mesto = document.createElementNS(Namespaces.OSNOVA, "mesto");
+		mesto.setTextContent(Constants.TEST_MESTO);
+		Node potpis = document.createElementNS(Namespaces.OSNOVA, "potpis");
+		potpis.setTextContent(Constants.TEST_POTPIS);
+		documentFragment.appendChild(document.createElementNS(Namespaces.OSNOVA, "broj"));
+		documentFragment.appendChild(datum);
+		documentFragment.appendChild(mesto);
+		documentFragment.appendChild(potpis);
+		resenje.insertBefore(documentFragment, document.getElementsByTagNameNS(Namespaces.RESENJE, "status").item(0));
+
+		
+		Node podaciZahteva = document.createElementNS(Namespaces.RESENJE, "resenje:PodaciZahteva");
+		podaciZahteva.appendChild(document.importNode(zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "OrganVlasti").item(0), true));
+		podaciZahteva.appendChild(document.importNode(zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "mejl").item(0), true));
+		podaciZahteva.appendChild(document.importNode(zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
+		podaciZahteva.appendChild(document.importNode(zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0), true));
+		resenje.appendChild(podaciZahteva);
+		
+		//moram opet da stavim prefiks :(
+		Node podaciZalbe = document.createElementNS(Namespaces.RESENJE, "resenje:PodaciZalbe");
+		podaciZalbe.appendChild(document.importNode(zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
+		TipZalbe tipZalbe = ZalbaService.getTipZalbe(zalba.getAttributeNS(Namespaces.XSI, "type"));
+		if (tipZalbe.equals(TipZalbe.cutanje)) {
+			podaciZalbe.appendChild(document.importNode(zalba.getElementsByTagNameNS(Namespaces.ZALBA, "tipCutanja").item(0), true));
+		}
+		else {
+			Node podaciObavestenja = document.createElementNS(Namespaces.RESENJE, "resenje:PodaciObavestenja");
+			podaciObavestenja.appendChild(document.importNode(zalba.getElementsByTagNameNS(Namespaces.RESENJE, "brojOdluke").item(0), true));
+			podaciObavestenja.appendChild(document.importNode(zalba.getElementsByTagNameNS(Namespaces.RESENJE, "datumOdluke").item(0), true));
+			podaciZalbe.appendChild(podaciObavestenja);			
+		}
+		resenje.appendChild(podaciZalbe);
+		resenje.appendChild(document.importNode(this.jaxbParser.marshal(this.korisnikService.currentUser().getOsoba()).getElementsByTagNameNS(Namespaces.OSNOVA, "Osoba").item(0), true));
+				
+		zalba.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.odgovoreno + "");
+		this.zalbaRepository.save(zalbaDocument, brojZalbe);
+		this.resenjeRepository.save(document, null);	
 	}
 	
-	public Resource generateHtml(String broj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
-		Document document = this.resenjeRepository.load(broj);
-		ByteArrayOutputStream out = this.xslTransformer.generateHtml(document, XSL_PATH);
-		Path file = Paths.get(Constants.GEN_FOLDER + "/" + broj + ".html");
-		Files.write(file, out.toByteArray());
-		return new UrlResource(file.toUri());
-	}
-	
-	public List<ResenjeDTO> list() throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException, ParserConfigurationException, SAXException, IOException{
+	public List<ResenjeDTO> retrieve() throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException, ParserConfigurationException, SAXException, IOException{
 		
 		Korisnik korisnik = this.korisnikService.currentUser();
 		String xpathExp = null;
-		if (korisnik.getGradjanin() != null) {
-			xpathExp = String.format("/dokument:Resenje[dokument:PodaciZahteva/mejl='%s']", korisnik.getMejl());
+		if (korisnik.getUloga().equals(Constants.POVERENIK)) {
+			xpathExp = "/resenje:Resenje";
 		}
 		else {
-			xpathExp = "/dokument:Resenje";
-		}
-		ResourceSet result = this.resenjeRepository.list(xpathExp);
-		
+			xpathExp = String.format("/resenje:Resenje[resenje:PodaciZahteva/mejl='%s']", korisnik.getOsoba().getMejl());
+		}		
 		
 		List<ResenjeDTO> resenja = new ArrayList<>();
-		ResourceIterator i = result.getIterator();
-		while (i.hasMoreResources()) {
-			XMLResource resource = (XMLResource) i.nextResource();
-			Document document = domParser.buildDocument(resource.getContent().toString());	//a sto da ne uradim getContentAsDom???
+		ResourceSet result = this.resenjeRepository.list(xpathExp);
+		ResourceIterator it = result.getIterator();
+		while (it.hasMoreResources()) {
+			XMLResource resource = (XMLResource) it.nextResource();
+			Document document = this.domParser.buildDocument(resource.getContent().toString());
 			String broj = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
 			String datum = document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).getTextContent();
-			StatusResenja status = StatusResenja.valueOf(document.getElementsByTagNameNS(Namespaces.DOKUMENT,"status").item(0).getTextContent());
+			StatusResenja status = StatusResenja.valueOf(document.getElementsByTagNameNS(Namespaces.RESENJE,"status").item(0).getTextContent());
 			String organVlasti = document.getElementsByTagNameNS(Namespaces.OSNOVA, "naziv").item(0).getTextContent();
 			resenja.add(new ResenjeDTO(broj, datum, status, organVlasti));
 		}
@@ -106,46 +144,20 @@ public class ResenjeService {
 		
 	}
 	
-	public void save(String brojZalbe, String xml) throws ParserConfigurationException, SAXException, IOException, JAXBException, ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException {
-		Document document = this.domParser.buildDocument(xml);
-		Element resenje = (Element) document.getElementsByTagNameNS(Namespaces.DOKUMENT, "Resenje").item(0);
-		this.domParser.removeXmlSpace(document);
-		DocumentFragment documentFragment = document.createDocumentFragment();
-		Node datum = document.createElementNS(Namespaces.OSNOVA, "datum");
-		SimpleDateFormat sdf = new SimpleDateFormat(Constants.DATE_FORMAT);
-		datum.setTextContent(sdf.format(new Date()));
-		Node mesto = document.createElementNS(Namespaces.OSNOVA, "mesto");
-		mesto.setTextContent(Constants.TEST_MESTO);
-		documentFragment.appendChild(document.createElementNS(Namespaces.OSNOVA, "broj"));
-		documentFragment.appendChild(datum);
-		documentFragment.appendChild(mesto);
-		resenje.insertBefore(documentFragment, document.getElementsByTagNameNS(Namespaces.DOKUMENT, "status").item(0));
-		Node podaciZahteva = document.createElementNS(Namespaces.DOKUMENT, "PodaciZahteva");
-		
-		Document zalbaDocument = this.zalbaRepository.load(brojZalbe);
-		zalbaDocument.getElementsByTagNameNS(Namespaces.OSNOVA, "status").item(0).setTextContent(StatusZalbe.odobreno + "");
-		this.zalbaRepository.save(zalbaDocument);
-		
-		Element zalba = (Element) this.zalbaRepository.load(brojZalbe).getElementsByTagNameNS(Namespaces.DOKUMENT, "Zalba").item(0);
-		podaciZahteva.appendChild(document.importNode(zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "mejl").item(0), true));
-		podaciZahteva.appendChild(document.importNode(zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "OrganVlasti").item(0), true));
-		podaciZahteva.appendChild(document.importNode(zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
-		resenje.appendChild(podaciZahteva);
-		
-		Node podaciZalbe = document.createElementNS(Namespaces.DOKUMENT, "PodaciZalbe");
-		podaciZalbe.appendChild(document.importNode(zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
-		podaciZalbe.appendChild(document.importNode(zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0), true));
-		resenje.appendChild(podaciZalbe);
-		
-		TipZalbe tipZalbe = ZalbaService.getTipZalbe(zalba.getAttributeNS(Namespaces.XSI, "type"));
-		if (tipZalbe.equals(TipZalbe.odluka)) {
-			Node podaciObavestenja = document.createElementNS(Namespaces.DOKUMENT, "PodaciObavestenja");
-			podaciObavestenja.appendChild(document.importNode(zalba.getElementsByTagNameNS(Namespaces.DOKUMENT, "brojOdluke").item(0), true));
-			podaciObavestenja.appendChild(document.importNode(zalba.getElementsByTagNameNS(Namespaces.DOKUMENT, "datumOdluke").item(0), true));
-			resenje.appendChild(podaciObavestenja);
-		}
-				
-		this.resenjeRepository.save(document);
+	public Resource generateHtml(String broj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
+		Document document = this.resenjeRepository.load(broj);
+		ByteArrayOutputStream out = this.xslTransformer.generateHtml(document, XSL_PATH);
+		Path file = Paths.get(GEN_PATH + broj + ".html");
+		Files.write(file, out.toByteArray());
+		return new UrlResource(file.toUri());
+	}
+	
+	public Resource generatePdf(String broj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
+		Document document = this.resenjeRepository.load(broj);
+		ByteArrayOutputStream out = this.xslTransformer.generatePdf(document, XSL_FO_PATH);
+		Path file = Paths.get(GEN_PATH + broj + ".pdf");
+		Files.write(file, out.toByteArray());
+		return new UrlResource(file.toUri());
 	}
 	
 }

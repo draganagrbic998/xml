@@ -1,6 +1,7 @@
 export interface ZalbaCutanje{
+    naziv: string;
+    sediste: string;
     detalji: string;
-    organVlasti: string;
     datumZahteva: Date;
     tipCutanja: string;
 }

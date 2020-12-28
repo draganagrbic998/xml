@@ -35,7 +35,7 @@ public class DataInitializator {
 	@GetMapping
 	public void initData() throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, ParserConfigurationException, SAXException, IOException {
 		this.existManager.save(OrganVlastiRepository.ORGAN_VLASTI_COLLECTION, "1", this.domParser.buildDocumentFromFile(ORGAN_VLASTI1));
-		this.existManager.save(KorisnikRepository.KORISNICI_COLLECTION, "1", this.domParser.buildDocumentFromFile(SLUZBENIK1));
+		this.existManager.save(KorisnikRepository.KORISNICI_COLLECTION, "sluzbenik@gmail.com", this.domParser.buildDocumentFromFile(SLUZBENIK1));
 	}
 	
 }

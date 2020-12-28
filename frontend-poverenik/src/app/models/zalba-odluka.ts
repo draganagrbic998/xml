@@ -1,6 +1,7 @@
 export interface ZalbaOdluka{
+    naziv: string;
+    sediste: string;
     detalji: string;
-    organVlasti: string;
     datumZahteva: Date;
     brojOdluke: string;
     datumOdluke: Date;

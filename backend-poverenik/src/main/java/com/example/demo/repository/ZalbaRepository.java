@@ -20,13 +20,11 @@ public class ZalbaRepository {
 	
 	private static final String ZALBE_COLLECTION = Constants.COLLECTIONS_PREFIX + "/zalbe";
 	
-	public void save(Document document) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, JAXBException, TransformerException {
-		this.existManager.save(ZALBE_COLLECTION, null, document);
+	public void save(Document document, String documentId) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, JAXBException, TransformerException {
+		this.existManager.save(ZALBE_COLLECTION, documentId, document);
 	}
 	
-	
-	
-	public ResourceSet list(String xpathExp) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
+	public ResourceSet retrieve(String xpathExp) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
 		return this.existManager.retrieve(ZALBE_COLLECTION, xpathExp);
 	}
 	

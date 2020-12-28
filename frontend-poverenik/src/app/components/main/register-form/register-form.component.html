@@ -1,17 +1,17 @@
 <app-form-container>
-    <h2>Registration</h2>
+    <h2>Registracija</h2>
     <br><br>
     <form [formGroup]="registerForm">
         <div [class.disabled]="registerPending">
             <mat-form-field>
-                <mat-label>Email</mat-label>
+                <mat-label>Mejl</mat-label>
                 <input 
                 matInput 
                 autocomplete="off"
                 formControlName="mejl" 
-                placeholder="Unesite email">
+                placeholder="Unesite mejl">
                 <mat-error>
-                    Email je obavezan!
+                    Mejl je obavezan!
                 </mat-error>
             </mat-form-field>
             <mat-form-field>

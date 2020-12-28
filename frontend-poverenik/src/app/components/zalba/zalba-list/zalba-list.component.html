@@ -1,11 +1,11 @@
-<app-preloader *ngIf="fetchPending"></app-preloader>
+<app-preloader *ngIf="fetchPending">
+</app-preloader>
+
+<app-empty-container *ngIf="!zalbe?.length"
+[title]="'NEMA ŽALBI'">
+</app-empty-container>
 
 <app-zalba-details 
 *ngFor="let zalba of zalbe"
 [zalba]="zalba">
 </app-zalba-details>
-
-
-<app-empty-container *ngIf="!zalbe?.length"
-[title]="'NEMA ZALBI'">
-</app-empty-container>

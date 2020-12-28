@@ -27,7 +27,7 @@ public class AuthController {
 	private KorisnikService korisnikService;
 	
 	@PostMapping(value = "/login")
-	public ResponseEntity<TokenDTO> login(@RequestBody String xml) throws ParserConfigurationException, SAXException, IOException{
+	public ResponseEntity<TokenDTO> login(@RequestBody String xml) throws ParserConfigurationException, SAXException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, JAXBException, XMLDBException{
 		return new ResponseEntity<>(this.korisnikService.login(xml), HttpStatus.OK);
 	}
 	

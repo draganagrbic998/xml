@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ResenjeDTO } from 'src/app/models/resenjeDTO';
-import { AuthService } from 'src/app/services/auth/auth.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -10,22 +9,16 @@ import { environment } from 'src/environments/environment';
 })
 export class ResenjeDetailsComponent implements OnInit {
 
-  constructor(
-    private authService: AuthService
-  ) { }
+  constructor() { }
 
   @Input() resenje: ResenjeDTO;
 
-  get uloga(): string{
-    return this.authService.getUser()?.uloga;
-  }
-
-  openPdf(): void{
-    window.open(`//localhost:8082/${environment.apiResenja}/${this.resenje.broj}/pdf`, '_blank');
-  }
-
-  openHtml(): void{
+  getHtml(): void{
     window.open(`//localhost:8082/${environment.apiResenja}/${this.resenje.broj}/html`, '_blank');
+  }
+
+  getPdf(): void{
+    window.open(`//localhost:8082/${environment.apiResenja}/${this.resenje.broj}/pdf`, '_blank');
   }
 
   ngOnInit(): void {

@@ -2,19 +2,19 @@
     <mat-card>
         <mat-card-content>
             <span>
-                {{resenje.status}}
+                {{resenje.datum}}
             </span>  
             <span>
                 {{resenje.organVlasti}}
             </span>
             <span>
-                {{resenje.datum}}
+                {{resenje.status}}
             </span>
             <span>
-                <button (click)="openHtml()">uzmi html</button>
+                <a [routerLink]="'/resenje-list'" (click)="getHtml()">preuzmi html</a>
             </span>
             <span>                
-                <button (click)="openPdf()">uzmi pdf</button>
+                <a [routerLink]="'/resenje-list'" (click)="getPdf()">preuzmi pdf</a>
             </span>
         </mat-card-content>
     </mat-card>

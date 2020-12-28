@@ -17,31 +17,21 @@ declare const Xonomy: any;
 export class ResenjeFormComponent implements AfterViewInit {
 
   constructor(
-    private route: ActivatedRoute,
+    private resenjeService: ResenjeService,
     private xonomyService: XonomyService,
     private snackBar: MatSnackBar,
-    private resenjeService: ResenjeService
+    private route: ActivatedRoute
   ) { }
 
   savePending = false;
   resenjeForm: FormGroup = new FormGroup({
     status: new FormControl('', [Validators.required]),
     datumSlanja: new FormControl('', [Validators.required]),
-    datum: new FormControl('', [Validators.required]),
-    odgovor: new FormControl('', [Validators.required, Validators.pattern(new RegExp('\\S'))])
+    datumOdbrane: new FormControl(''),
+    odgovorOdbrane: new FormControl('')
   });
 
-  refreshForm(): void{
-    if (!this.resenjeForm.value.datum){
-      this.resenjeForm.get('odgovor').setErrors(null);
-    }
-    if (!this.resenjeForm.value.odgovor){
-      this.resenjeForm.get('datum').setErrors(null);
-    }
-  }
-
-  posaljiResenje(): void{
-    this.refreshForm();
+  save(): void{
     if (this.resenjeForm.invalid){
       return;
     }
@@ -61,7 +51,7 @@ export class ResenjeFormComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void{
-    const odlukaXml = '<Odluka></Odluka>';
+    const odlukaXml = '<Odluka><Dispozitiva></Dispozitiva><Obrazlozenje></Obrazlozenje></Odluka>';
     const odlukaEditor = document.getElementById('odlukaEditor');
     const odlukaSpecifikacija = this.xonomyService.odlukaSpecifikacija;
     Xonomy.render(odlukaXml, odlukaEditor, odlukaSpecifikacija);

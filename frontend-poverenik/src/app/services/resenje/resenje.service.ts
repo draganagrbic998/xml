@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { DOKUMENT_NAMESPACE, OSNOVA_NAMESPACE } from 'src/app/constants/namespaces';
+import { OSNOVA, RESENJE } from 'src/app/constants/namespaces';
 import { Resenje } from 'src/app/models/resenje';
 import { ResenjeDTO } from 'src/app/models/resenjeDTO';
 import { environment } from 'src/environments/environment';
@@ -17,22 +17,26 @@ export class ResenjeService {
 
   private readonly API_RESENJA = `${environment.baseUrl}/${environment.apiResenja}`;
 
+  private dateToString(date: Date): string {
+    return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+  }
+
   private resenjeToXml(resenje: Resenje): string{
 
-    let odbrana = '<datumSlanja>2020-12-12</datumSlanja>';
-    if (resenje.datum && resenje.odgovor){
+    let odbrana = `<resenje:datumSlanja>${this.dateToString(resenje.datumSlanja)}</resenje:datumSlanja>`;
+    if (resenje.datumOdbrane && resenje.odgovorOdbrane){
       odbrana += `
-        <datum>2020-12-12</datum>
-        <odgovor>${resenje.odgovor}</odgovor>
+        <resenje:datum>${this.dateToString(resenje.datumSlanja)}</resenje:datum>
+        <resenje:odgovor>${resenje.odgovorOdbrane}</resenje:odgovor>
       `;
     }
     return `
-    <Resenje xmlns="${DOKUMENT_NAMESPACE}"
-    xmlns:osnova="${OSNOVA_NAMESPACE}">
-      <status>${resenje.status}</status>
-      ${resenje.odluka}
-      ${odbrana}
-      </Resenje>
+      <resenje:Resenje xmlns="${OSNOVA}"
+      xmlns:resenje="${RESENJE}">
+        <resenje:status>${resenje.status}</resenje:status>
+        ${odbrana}
+        ${resenje.odluka}
+      </resenje:Resenje>
     `;
 
   }

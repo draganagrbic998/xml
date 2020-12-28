@@ -11,7 +11,16 @@ export class XonomyService {
 
   public odlukaSpecifikacija = {
     elements: {
-      Odluka: {
+      Dispozitiva: {
+        menu: [
+          {
+            caption: 'Dodaj <Pasus> tag',
+            action: Xonomy.newElementChild,
+            actionParameter: '<Pasus></Pasus>'
+          }
+        ]
+      },
+      Obrazlozenje: {
         menu: [
           {
             caption: 'Dodaj <Pasus> tag',
@@ -24,6 +33,10 @@ export class XonomyService {
         hasText: true,
         menu: [
           {
+            caption: 'Obriši <Pasus> tag',
+            action: Xonomy.deleteElement
+          },
+          {
             caption: 'Dodaj <zakon> tag',
             action: Xonomy.newElementChild,
             actionParameter: '<zakon></zakon>'
@@ -33,6 +46,10 @@ export class XonomyService {
       zakon: {
         hasText: true,
         menu: [
+          {
+            caption: 'Obriši <zakon> tag',
+            action: Xonomy.deleteElement
+          },
           {
             caption: 'Dodaj @clan atribut',
             action: Xonomy.newAttribute,
@@ -52,6 +69,7 @@ export class XonomyService {
         ],
         attributes: {
           clan: {
+            asker: Xonomy.askString,
             menu: [
               {
                 caption: 'Obriši @clan atribut',
@@ -60,6 +78,7 @@ export class XonomyService {
             ]
           },
           stav: {
+            asker: Xonomy.askString,
             menu: [
               {
                 caption: 'Obriši @stav atribut',

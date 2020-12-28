@@ -1,5 +1,5 @@
 <app-form-container>
-    <h3>Zalba na odluku organa vlasti</h3>
+    <h3>Žalba na odluku organa vlasti</h3>
     <br><br>
     <form [formGroup]="zalbaForm">
         <div [class.disabled]="savePending">
@@ -8,10 +8,21 @@
                 <input 
                 matInput 
                 autocomplete="off"
-                formControlName="organVlasti" 
+                formControlName="naziv" 
                 placeholder="Unesite naziv organa vlasti">
                 <mat-error>
                     Naziv organa vlasti je obavezan!
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Sedište organa vlasti</mat-label>
+                <input 
+                matInput 
+                autocomplete="off"
+                formControlName="sediste" 
+                placeholder="Unesite sediste organa vlasti (mesto ulica broj)">
+                <mat-error>
+                    Sedište organa vlasti je obavezan!
                 </mat-error>
             </mat-form-field>
             <mat-form-field> 
@@ -61,7 +72,7 @@
             *ngIf="!savePending"
             mat-raised-button 
             color="primary"
-            (click)="posaljiZalbu()">Pošalji zalbu</button>
+            (click)="save()">Pošalji zalbu</button>
             <app-spinner-button *ngIf="savePending"></app-spinner-button>
         </app-center-container>
     </form>

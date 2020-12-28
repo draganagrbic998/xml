@@ -23,9 +23,6 @@ public class TokenUtils {
 	
 	@Value("Authorization")
 	private String authHeader;
-
-	@Value("web")
-	private String audience;
 		
 	@Value("1000000000")
 	private long expiresIn;
@@ -36,7 +33,6 @@ public class TokenUtils {
 		return Jwts.builder()
 				.setSubject(username)
 				.setIssuer(this.appName)
-				.setAudience(this.audience)
 				.setIssuedAt(new Date())
 				.setExpiration(new Date(new Date().getTime() + this.expiresIn))
 				.signWith(this.signatureAlgorithm, this.appSecret).compact();

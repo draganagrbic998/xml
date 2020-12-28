@@ -40,7 +40,13 @@ public class ExistManager {
 			this.createConnection();
 			collection = this.getCollection(collectionId, 0);
 			if (documentId == null) {
-				documentId = collection.createId().split("\\.")[0];
+				String[] array = collection.listResources();
+				if (array.length == 0) {
+					documentId = "1";
+				}
+				else {
+					documentId = (Integer.parseInt(array[array.length - 1]) + 1) + "";
+				}
 				((Element) document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0)).setTextContent(documentId);
 			}
 			resource = (XMLResource) collection.createResource(documentId, XMLResource.RESOURCE_TYPE);
@@ -55,12 +61,11 @@ public class ExistManager {
 	
 	public Document load(String collectionId, String documentId) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
 		Collection collection = null;
-		XMLResource resource = null;
 		try {
 			this.createConnection();
 			collection = this.getCollection(collectionId, 0);
 			collection.setProperty(OutputKeys.INDENT, "yes");
-			resource = (XMLResource) collection.getResource(documentId);
+			XMLResource resource = (XMLResource) collection.getResource(documentId);
 			return (Document) resource.getContentAsDOM();
 		}
 		finally {
@@ -68,39 +73,33 @@ public class ExistManager {
 		}
 	}
 	
-	
-	
 	public ResourceSet retrieve(String collectionId, String xpathExp) throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-		this.createConnection();
 		Collection collection = null;
-		ResourceSet result = null;
 		try {
+			this.createConnection();
 			collection = this.getCollection(collectionId, 0);
 			XPathQueryService xpathService = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
 			xpathService.setProperty("indent", "yes");
 			xpathService.setNamespace("", Namespaces.OSNOVA);
-			xpathService.setNamespace("dokument", Namespaces.DOKUMENT);
-			result = xpathService.query(xpathExp);
+			xpathService.setNamespace("zalba", Namespaces.ZALBA);
+			xpathService.setNamespace("resenje", Namespaces.RESENJE);
+			return xpathService.query(xpathExp);
 		} 
 		finally {
 			collection.close();			
 		}
-		return result;
 	}
 	
 	private Collection getCollection(String collectionId, int pathSegmentOffset) throws XMLDBException {
 		
 		Collection collection = DatabaseManager.getCollection(this.authUtilities.getUri() + collectionId, this.authUtilities.getUser(), this.authUtilities.getPassword());
-        
         if(collection == null) {
-        
          	if(collectionId.startsWith("/")) {
                 collectionId = collectionId.substring(1);
             }
         	String[] pathSegments = collectionId.split("/");
             
         	if(pathSegments.length > 0) {
-
         		StringBuilder path = new StringBuilder();
                 for(int i = 0; i <= pathSegmentOffset; ++i) {
                     path.append("/" + pathSegments[i]);
@@ -120,14 +119,11 @@ public class ExistManager {
                 }
                 
             }
-        	
             return this.getCollection(collectionId, ++pathSegmentOffset);
-        } 
-        
+        }
         else {
             return collection;
         }
-		
 	}
 	
 }

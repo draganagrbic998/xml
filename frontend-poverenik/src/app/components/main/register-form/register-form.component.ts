@@ -37,7 +37,6 @@ export class RegisterFormComponent implements OnInit {
         this.registerPending = false;
         this.snackBar.open('Zahtev uspešno poslat! Proverite mejl.',
         SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);
-        this.registerForm.reset();
       },
       () => {
         this.registerPending = false;

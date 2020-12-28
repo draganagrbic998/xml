@@ -1,7 +1,7 @@
 export interface Resenje{
     status: string;
     datumSlanja: Date;
-    datum?: Date;
-    odgovor?: Date;
+    datumOdbrane: Date;
+    odgovorOdbrane: Date;
     odluka: string;
 }
