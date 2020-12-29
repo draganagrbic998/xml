@@ -1,159 +1,225 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet 
-xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0"
+<xsl:stylesheet version="2.0"
+xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 xmlns:osnova="https://github.com/draganagrbic998/xml/osnova"
-xmlns:poverenik="https://github.com/draganagrbic998/xml/poverenik">
+xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 
-	<xsl:template match="/">
+	<xsl:template match="/zalba:Zalba">
 	
 		<html>
 			
 			<head>
+				<style>
+					body{
+						max-width: 600px; 
+						margin: auto; 
+						border: 1px solid black; 
+						padding: 50px;
+						text-align: justify;
+						font-family: serif;
+					}
+					p{
+						margin: 0;
+					}
+					.center{
+						text-align: center;
+					}
+					.dotted{
+						border-bottom: 1px dotted black;
+					}
+					.bold{
+						font-weight: bold;
+					}
+					.indent{
+						text-indent: 40px;
+					}
+					.line{
+						display: inline-block; 
+						height: 13pt; 
+						width: 100%; 
+						border-bottom: 1px dotted black;
+					}
+					.flex{
+						display: flex; 
+						flex-direction: row; 
+						justify-content: space-between;
+					}
+					.details{
+						word-break: break-all;
+					}
+					.small{
+						font-size: 13px;
+					}
+				</style>
 			</head>
 			
-			<body style="max-width: 600px; margin: auto; border: 1px solid black; padding: 50px;">
+			<body>
 
-				<p style="text-align: center; font-weight: bold;">
-					ЖАЛБА  ПРОТИВ  ОДЛУКЕ ОРГАНА  ВЛАСТИ КОЈОМ ЈЕ<br></br>
+				<p class="center bold small">
+					ЖАЛБА  ПРОТИВ  ОДЛУКЕ ОРГАНА  ВЛАСТИ КОЈОМ ЈЕ
+				</p>
+
+				<p class="center bold small">
 					<u>ОДБИЈЕН ИЛИ ОДБАЧЕН ЗАХТЕВ</u> ЗА ПРИСТУП ИНФОРМАЦИЈИ
 				</p>
 				
-				<p style="text-align: justify;">
-					<b>Повереникy за информације од јавног значаја и заштиту података о личности</b><br></br>
+				<br></br>
+				
+				<p class="bold">
+					Повереникy за информације од јавног значаја и заштиту података о личности
+				</p>
+
+				<p>
 					Адреса за пошту:  Београд, Булевар краља Александрa бр. 15
 				</p>
 				
-				<h3 style="text-align: center;">
-					Ж А Л Б У
-				</h3>
+				<br></br>
 				
-				<div style="display: flex; flex-direction: row; margin-left: 80px; margin-right: 80px;">
-					<xsl:variable name="osoba" select="poverenik:Zalba/osnova:Gradjanin/osnova:Osoba"></xsl:variable>
-					(<span style="border-bottom: 1px dotted black; flex: 1; text-align: center;">
+				<p class="center bold">
+					Ж А Л Б У
+				</p>
+				
+				<br></br>
+				
+				<div class="flex" style="margin-left: 80px; margin-right: 80px;">
+					<xsl:variable name="osoba" select="osnova:Gradjanin/osnova:Osoba"></xsl:variable>
+					(<span class="center dotted" style="flex: 1;">
 						<xsl:value-of select="concat($osoba/osnova:ime, concat(' ', $osoba/osnova:prezime))"></xsl:value-of>
 					</span>
 				</div>
-				<div style="display: flex; flex-direction: row; margin-left: 100px; margin-right: 100px;">
-					<xsl:variable name="adresa" select="poverenik:Zalba/osnova:Gradjanin/osnova:Adresa"></xsl:variable> 
-					<span style="border-bottom: 1px dotted black; flex: 1; text-align: center;">
+				<div class="flex" style="margin-left: 100px; margin-right: 100px;">
+					<xsl:variable name="adresa" select="osnova:Gradjanin/osnova:Adresa"></xsl:variable>
+					<span class="center dotted" style="flex: 1;">
 						<xsl:value-of select="concat($adresa/osnova:ulica, concat(' ', $adresa/osnova:broj, concat(', ', $adresa/osnova:mesto)))"></xsl:value-of>
 					</span>)
 				</div>
-				<p style="margin-top: 0; text-align: center;">
+				<p class="center">
 					Име, презиме, односно назив, адреса и седиште жалиоца
 				</p>
 				
-				<p style="text-align: center; margin-bottom: 0;">
+				<br></br>
+				
+				<p class="center">
 					против решења-закључка 
 				</p>
-				<div style="display: flex; flex-direction: row; margin-left: 40px; margin-right: 40px;">
-					(<span style="text-align: center; flex: 1; border-bottom: 1px dotted black;">
-						<xsl:value-of select="poverenik:Zalba/osnova:OrganVlasti/osnova:naziv"></xsl:value-of>
+				<div class="flex" style="margin-left: 40px; margin-right: 40px;">
+					<xsl:variable name="sedisteMesto" select="osnova:OrganVlasti/osnova:Adresa/osnova:mesto"></xsl:variable>
+					<xsl:variable name="sedisteUlica" select="osnova:OrganVlasti/osnova:Adresa/osnova:ulica"></xsl:variable>
+					<xsl:variable name="sedisteBroj" select="osnova:OrganVlasti/osnova:Adresa/osnova:broj"></xsl:variable>
+					<xsl:variable name="sediste" select="concat($sedisteUlica, concat(' ', concat($sedisteBroj, concat(', ', $sedisteMesto))))"></xsl:variable>
+					(<span class="center dotted" style="flex: 1;">
+						<xsl:value-of select="concat(osnova:OrganVlasti/osnova:naziv, concat(', ', $sediste))"></xsl:value-of>
 					</span>)
 				</div>
-				<p style="text-align: center; margin-top: 0; margin-bottom: 0;">
+				<p class="center">
 					(назив органа који је донео одлуку)
 				</p>
-				<p style="margin-top: 0;">
-					<xsl:variable name="dan" select="substring-after(substring-after(poverenik:Zalba/osnova:datum, '-'), '-')"></xsl:variable>
-					<xsl:variable name="mesec" select="substring-before(substring-after(poverenik:Zalba/osnova:datum, '-'), '-')"></xsl:variable>
-					<xsl:variable name="godina" select="substring(substring-before(poverenik:Zalba/osnova:datum, '-'), 3, 2)"></xsl:variable>
-					Број <span style="border-bottom: 1px dotted black;">
-						<xsl:value-of select="poverenik:Zalba/poverenik:brojOdluke"></xsl:value-of>
-					</span> од <span style="border-bottom: 1px dotted black;">
+				<p>
+					<xsl:variable name="dan" select="substring-after(substring-after(osnova:datum, '-'), '-')"></xsl:variable>
+					<xsl:variable name="mesec" select="substring-before(substring-after(osnova:datum, '-'), '-')"></xsl:variable>
+					<xsl:variable name="godina" select="substring-before(osnova:datum, '-')"></xsl:variable>
+					Број 
+					<span class="dotted">
+						<xsl:value-of select="zalba:brojOdluke"></xsl:value-of>
+					</span> 
+					од 
+					<span class="dotted">
 						<xsl:value-of select="concat($dan, concat('.', concat($mesec, concat('.', concat($godina, '.')))))"></xsl:value-of>
-					</span> године.
+					</span> 
+					године.
 				</p>
 				
-				<p style="text-align: justify; text-indent: 40px; margin-bottom: 4px;">
-					<xsl:variable name="datumZahteva" select="poverenik:Zalba/poverenik:datumZahteva"></xsl:variable>
-					<xsl:variable name="danZahteva" select="substring-after(substring-after($datumZahteva, '-'), '-')"></xsl:variable>
-					<xsl:variable name="mesecZahteva" select="substring-before(substring-after($datumZahteva, '-'), '-')"></xsl:variable>
-					<xsl:variable name="godinaZahteva" select="substring-before($datumZahteva, '-')"></xsl:variable>
+				<br></br>
+				
+				<p class="indent">
+					<xsl:variable name="danZahteva" select="substring-after(substring-after(zalba:datumZahteva, '-'), '-')"></xsl:variable>
+					<xsl:variable name="mesecZahteva" select="substring-before(substring-after(zalba:datumZahteva, '-'), '-')"></xsl:variable>
+					<xsl:variable name="godinaZahteva" select="substring-before(zalba:datumZahteva, '-')"></xsl:variable>
 					Наведеном одлуком органа власти (решењем, закључком, обавештењем у писаној форми са елементима одлуке) , 
 					супротно закону, одбијен-одбачен је мој захтев који сам поднео/ла-упутио/ла дана
-					<span style="border-bottom: 1px dotted black;">
+					<span class="dotted">
 						<xsl:value-of select="concat($danZahteva, concat('.', concat($mesecZahteva, concat('.', concat($godinaZahteva, '.')))))"></xsl:value-of>
 					</span>
 					године и тако ми ускраћено-онемогућено остваривање уставног и законског права на 
 					слободан приступ информацијама од јавног значаја. Oдлуку побијам у целости, односно у делу којим
 				</p>
 
-				<p style="text-align: justify; margin-bottom: 0; margin-top: 4px; word-break: break-all;">
-					<span style="width:100%; display: inline-block; height:13pt; border-bottom: 1px dotted black;">
-						
-						<xsl:value-of select="poverenik:Zalba/osnova:detalji"></xsl:value-of>
+				<p class="details">
+					<span class="line">
+						<xsl:copy-of select="osnova:Detalji"></xsl:copy-of>
 	               	</span>
-					<span style="display: inline-block; height:13pt; width:100%; border-bottom: 1px dotted black;">
+					<span class="line">
 	                </span>
-					<span style="display: inline-block; height:13pt; width:100%; border-bottom: 1px dotted black;">
+					<span class="line">
 	                </span>			
 	            </p>				
 				
-				<p style="text-align: justify; margin-bottom: 0; margin-top: 0;">
+				<p>
 					јер није заснована на Закону о слободном приступу информацијама од јавног значаја.
 				</p>
-				<p style="text-align: justify; text-indent: 40px; margin-top: 0; margin-bottom: 0;">
+				<p class="indent">
 					На основу изнетих разлога, предлажем да Повереник уважи моју жалбу,  поништи одлука првостепеног 
 					органа и омогући ми приступ траженој/им  информацији/ма.
 				</p>
-				<p style="text-align: justify; text-indent: 40px; margin-top: 0;">
+				<p class="indent">
 					Жалбу подносим благовремено, у законском року утврђеном у члану 22. ст. 1. 
 					Закона о слободном приступу информацијама од јавног значаја.
 				</p>
+				
+				<br></br><br></br>
 
-				<div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
-					<xsl:variable name="osoba" select="poverenik:Zalba/osnova:Gradjanin/osnova:Osoba"></xsl:variable>
-					<xsl:variable name="adresa" select="poverenik:Zalba/osnova:Gradjanin/osnova:Adresa"></xsl:variable>
-					<div style="margin-left: 40px;">
-						<xsl:variable name="dan" select="substring-after(substring-after(poverenik:Zalba/osnova:datum, '-'), '-')"></xsl:variable>
-						<xsl:variable name="mesec" select="substring-before(substring-after(poverenik:Zalba/osnova:datum, '-'), '-')"></xsl:variable>
-						<xsl:variable name="godina" select="substring(substring-before(poverenik:Zalba/osnova:datum, '-'), 3, 2)"></xsl:variable>
+				<div class="flex" style="align-items: center;">
+					<div>
+						<xsl:variable name="dan" select="substring-after(substring-after(osnova:datum, '-'), '-')"></xsl:variable>
+						<xsl:variable name="mesec" select="substring-before(substring-after(osnova:datum, '-'), '-')"></xsl:variable>
+						<xsl:variable name="godina" select="substring(substring-before(osnova:datum, '-'), 3, 2)"></xsl:variable>
 						<p>
-							У <span style="border-bottom: 1px dotted black; padding-left: 15px; padding-right: 15px;">
-								Novom Sadu
-							</span>,
+							У <span class="dotted">&#160;<xsl:value-of select="osnova:mesto"></xsl:value-of>&#160;</span>,
 						</p>
-						<p style="margin-left: 20px; margin-top: 30px;">
-							дана <span style="border-bottom: 1px dotted black;">
+						<p style="margin-top: 5px;">
+							дана 
+							<span class="dotted">
 								<xsl:value-of select="concat($dan, concat('.', concat($mesec, '.')))"></xsl:value-of>
-							</span> 20<span style="border-bottom: 1px dotted black;">
+							</span> 
+							20<span class="dotted">
 								<xsl:value-of select="$godina"></xsl:value-of>
 							</span>. године
 						</p>
-						
 					</div>
 					<div style="text-align: right;">
-					
-						<p style="border-bottom: 1px dotted black; margin-bottom: 0;">
+						<xsl:variable name="osoba" select="osnova:Gradjanin/osnova:Osoba"></xsl:variable>
+						<xsl:variable name="adresa" select="osnova:Gradjanin/osnova:Adresa"></xsl:variable>
+						<p class="dotted">
 							<xsl:value-of select="concat($osoba/osnova:ime, concat(' ', $osoba/osnova:prezime))"></xsl:value-of>
 						</p>
-						<p style="margin-top: 0; font-size: 13px;">
+						<p>
 							Подносилац жалбе / Име и презиме
 						</p>
-						<p style="border-bottom: 1px dotted black; margin-bottom: 0;">
+						<p class="dotted" style="margin-top: 5px;">
 							<xsl:value-of select="concat($adresa/osnova:ulica, concat(' ', $adresa/osnova:broj, concat(', ', $adresa/osnova:mesto)))"></xsl:value-of>
 						</p>
-						<p style="margin-top: 0; font-size: 13px;">
+						<p>
 							адреса
 						</p>
-						<p style="border-bottom: 1px dotted black; margin-bottom: 0;">
-							<xsl:value-of select="poverenik:Zalba/osnova:kontakt"></xsl:value-of>
+						<p class="dotted" style="margin-top: 5px;">
+							<xsl:value-of select="$osoba/osnova:mejl"></xsl:value-of>
 						</p>
-						<p style="margin-top: 0; font-size: 13px;">
+						<p>
 							други подаци за контакт
 						</p>
-						<p style="border-bottom: 1px dotted black; margin-bottom: 0;">
+						<p class="dotted" style="margin-top: 5px;">
 							<br></br>
 						</p>
-						<p style="margin-top: 0; font-size: 13px;">
+						<p>
 							потпис
 						</p>
 
 					</div>
 				</div>
 				
-				<p style="font-weight: bold; text-align: justify; text-indent: 20px; margin-bottom: 0;">
+				<br></br><br></br>
+				
+				<p class="bold" style="text-indent: 20px;">
 					Напомена:
 				</p>
 				<ul style="margin-top: 0; padding-left: 30px;">

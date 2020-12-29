@@ -31,9 +31,9 @@ export class ZalbaService {
         <OrganVlasti>
           <naziv>${zalba.naziv}</naziv>
           <Adresa>
-            <mesto>${zalba.sediste.split(' '[0])}</mesto>
-            <ulica>${zalba.sediste.split(' '[1])}</ulica>
-            <broj>${zalba.sediste.split(' '[2])}</broj>
+            <mesto>${zalba.sediste.split(' ')[0]}</mesto>
+            <ulica>${zalba.sediste.split(' ')[1]}</ulica>
+            <broj>${zalba.sediste.split(' ')[2]}</broj>
           </Adresa>
         </OrganVlasti>
         ${zalba.detalji}
@@ -48,7 +48,7 @@ export class ZalbaService {
     return `
     <zalba:Zalba xmlns="${OSNOVA}"
     xmlns:zalba="${ZALBA}"
-    xmlns:xsi="${XSI}" xsi:type="zalba:TZalbaCutanje">
+    xmlns:xsi="${XSI}" xsi:type="zalba:TZalbaOdluka">
       <OrganVlasti>
         <naziv>${zalba.naziv}</naziv>
         <Adresa>

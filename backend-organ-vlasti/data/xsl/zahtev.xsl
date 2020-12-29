@@ -1,48 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet 
-xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0"
+<xsl:stylesheet version="2.0"
+xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 xmlns:osnova="https://github.com/draganagrbic998/xml/osnova"
-xmlns:organ_vlasti="https://github.com/draganagrbic998/xml/organ_vlasti">
+xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev">
 
-	<xsl:template match="/">
+	<xsl:template match="/zahtev:Zahtev">
 	
 		<html>
 			
 			<head>
+				<style>
+					body{
+						max-width: 600px; 
+						margin: auto; 
+						border: 1px solid black; 
+						padding: 50px;
+						text-align: justify;
+						font-family: serif;
+					}
+					p{
+						margin: 0;
+					}
+					ul{
+						list-style-type: none;
+						padding-left: 40px;
+					}
+					.center{
+						text-align: center;
+					}
+					.underline{
+						border-bottom: 1px solid black;
+					}
+					.dotted{
+						border-bottom: 1px dotted black;
+					}
+					.bold{
+						font-weight: bold;
+					}
+					.indent{
+						text-indent: 40px;
+					}
+					.line{
+						display: inline-block; 
+						height: 13pt; 
+						width: 100%; 
+						border-bottom: 1px solid black;
+					}
+					.flex{
+						display: flex; 
+						flex-direction: row; 
+						justify-content: space-between;
+					}
+					.details{
+						word-break: break-all;
+					}
+					.small{
+						font-size: 13px;
+					}
+					.big{
+						font-size: 20px;
+					}
+				</style>
 			</head>
 			
-			<body style="max-width: 550px; margin: auto; border: 1px solid black; padding: 50px;">
-				
-				<p style="border-bottom: 1px dotted black; margin-bottom: 0; text-align: center; margin-left: 20px; margin-right: 20px;">
-					<xsl:variable name="naziv" select="organ_vlasti:Zahtev/osnova:OrganVlasti/osnova:naziv"></xsl:variable>
-					<xsl:variable name="sediste" select="organ_vlasti:Zahtev/osnova:OrganVlasti/osnova:sediste"></xsl:variable>
-					<xsl:value-of select="concat($naziv, concat(', ', $sediste))"></xsl:value-of>
+			<body>
+			
+				<p class="center dotted" style="margin-left: 20px; margin-right: 20px;">
+					<xsl:variable name="sedisteMesto" select="osnova:OrganVlasti/osnova:Adresa/osnova:mesto"></xsl:variable>
+					<xsl:variable name="sedisteUlica" select="osnova:OrganVlasti/osnova:Adresa/osnova:ulica"></xsl:variable>
+					<xsl:variable name="sedisteBroj" select="osnova:OrganVlasti/osnova:Adresa/osnova:broj"></xsl:variable>
+					<xsl:variable name="sediste" select="concat($sedisteUlica, concat(' ', concat($sedisteBroj, concat(', ', $sedisteMesto))))"></xsl:variable>
+					<xsl:value-of select="concat(osnova:OrganVlasti/osnova:naziv, concat(', ', $sediste))"></xsl:value-of>
 				</p>
-				<p style="margin-top: 0; text-align: center;">
+				
+				<p class="center">
 					назив и седиште органа коме се захтев упућује
 				</p>
-				<br></br>
 				
-				<h3 style="font-weight: bold; text-align: center;">
-					З А Х Т Е В<br></br>
+				<br></br><br></br><br></br>
+				
+				<p class="center bold big">
+					З А Х Т Е В
+				</p>
+				
+				<p class="center bold big">
 					за приступ информацији од јавног значаја
-				</h3>
-				<br></br>
+				</p>
 				
-				<p style="text-indent: 40px; text-align: justify;">
+				<br></br><br></br>
+								
+				<p class="indent">
 					На основу члана 15. ст. 1. Закона о слободном приступу информацијама од јавног значаја 
 					(„Службени гласник РС“, бр. 120/04, 54/07, 104/09 и 36/10), од горе наведеног органа захтевам:*
 				</p>
 				
-				<ul style="padding-left: 40px; list-style-type: none;">
-					<xsl:variable name="tipZahteva" select="organ_vlasti:Zahtev/organ_vlasti:tipZahteva"></xsl:variable>
-					<xsl:variable name="tipDostave" select="organ_vlasti:Zahtev/organ_vlasti:tipDostave"></xsl:variable>
-					<xsl:variable name="opisDostave" select="organ_vlasti:Zahtev/organ_vlasti:opisDostave"></xsl:variable>
+				<ul>
+					<xsl:variable name="tipZahteva" select="zahtev:tipZahteva"></xsl:variable>
 					<li>
-						<span>
 						<xsl:if test="$tipZahteva = 'obavestenje'">&#9632;</xsl:if>
 						<xsl:if test="not($tipZahteva = 'obavestenje')">&#9633;</xsl:if>
-						</span> обавештење да ли поседује тражену информацију;
+						обавештење да ли поседује тражену информацију;
 					</li>
 					<li>
 						<xsl:if test="$tipZahteva = 'uvid'">&#9632;</xsl:if>
@@ -58,7 +115,9 @@ xmlns:organ_vlasti="https://github.com/draganagrbic998/xml/organ_vlasti">
 						<xsl:if test="$tipZahteva = 'dostava'">&#9632;</xsl:if>
 						<xsl:if test="not($tipZahteva = 'dostava')">&#9633;</xsl:if>
 						достављање копије документа који садржи тражену информацију:**
-						<ul style="padding-left: 40px; list-style-type: none;">
+						<ul>
+							<xsl:variable name="tipDostave" select="zahtev:tipDostave"></xsl:variable>
+							<xsl:variable name="opisDostave" select="zahtev:opisDostave"></xsl:variable>
 							<li>
 								<xsl:if test="$tipDostave = 'posta'">&#9632;</xsl:if>
 								<xsl:if test="not($tipDostave = 'posta')">&#9633;</xsl:if>
@@ -74,11 +133,11 @@ xmlns:organ_vlasti="https://github.com/draganagrbic998/xml/organ_vlasti">
 								<xsl:if test="not($tipDostave = 'faks')">&#9633;</xsl:if>
 								факсом
 							</li>
-							<li style="display: flex; flex-direction: row;">
+							<li class="flex">
 								<xsl:if test="$tipDostave = 'ostalo'">&#9632;</xsl:if>
 								<xsl:if test="not($tipDostave = 'ostalo')">&#9633;</xsl:if>
 								на други начин:***
-								<span style="border-bottom: 1px solid black; flex: 1">
+								<span class="underline" style="flex: 1;">
 									<xsl:value-of select="$opisDostave"></xsl:value-of>
 								</span>
 							</li>
@@ -86,88 +145,91 @@ xmlns:organ_vlasti="https://github.com/draganagrbic998/xml/organ_vlasti">
 					</li>
 				</ul>
 				
-				<p style="text-indent: 40px; text-align: justify; margin-bottom: 4px;">
+				<p class="indent">
 					Овај захтев се односи на следеће информације:
 				</p>
 				
-				<p style="text-align: justify; margin-top: 4px; word-break: break-all; margin-bottom: 0;">
-					<span style="display: inline-block; height:13pt; border-bottom: 1px solid black;">
-						<span style="border-bottom: 5px solid white; color: white;">mama</span>
-						<xsl:value-of select="organ_vlasti:Zahtev/osnova:detalji"></xsl:value-of>
-	               	</span>					
-					<span style="display: inline-block; height:13pt; width:100%; border-bottom: 1px solid black;">
+				<p class="details">
+					<span class="line">
+						<span style="border-bottom: 1px solid white;">
+						&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+						</span>
+						<xsl:copy-of select="osnova:Detalji"></xsl:copy-of>
 	                </span>
-					<span style="display: inline-block; height:13pt;width:100%; border-bottom: 1px solid black;">
+					<span class="line">
+	                </span>
+					<span class="line">
 	                </span>				
 	            </p>
 
-				
-				<p style="text-align: justify; font-size: 12px; margin-top: 0;">
+				<p class="small">
 					(навести што прецизнији опис информације која се тражи као и 
 					друге податке који олакшавају проналажење тражене информације)
 				</p>
 				
-				<br></br>
-				<div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
-					<xsl:variable name="osoba" select="organ_vlasti:Zahtev/osnova:Gradjanin/osnova:Osoba"></xsl:variable>
-					<xsl:variable name="adresa" select="organ_vlasti:Zahtev/osnova:Gradjanin/osnova:Adresa"></xsl:variable>
+				<br></br><br></br>
+				
+				<div class="flex" style="align-items: center;">
 					<div>
-						<xsl:variable name="dan" select="substring-after(substring-after(organ_vlasti:Zahtev/osnova:datum, '-'), '-')"></xsl:variable>
-						<xsl:variable name="mesec" select="substring-before(substring-after(organ_vlasti:Zahtev/osnova:datum, '-'), '-')"></xsl:variable>
-						<xsl:variable name="godina" select="substring(substring-before(organ_vlasti:Zahtev/osnova:datum, '-'), 3, 2)"></xsl:variable>
-						<p style="display: flex; flex-direction: row; margin-right: 20px;">
-							У <span style="border-bottom: 1px solid black; flex: 1; text-align: center;">
-								Novom Sadu
-							</span>,
-						</p>
 						<p>
-							дана <span style="border-bottom: 1px solid black;">
-								<xsl:value-of select="concat($dan, concat('.', concat($mesec, '.')))"></xsl:value-of>
-							</span> 20<span style="border-bottom: 1px solid black;">
-								<xsl:value-of select="$godina"></xsl:value-of>
-							</span>. године
+							У <span class="underline">&#160;<xsl:value-of select="osnova:mesto"></xsl:value-of>&#160;</span>,
 						</p>
-						
+						<p style="margin-top: 5px;">
+							<xsl:variable name="dan" select="substring-after(substring-after(osnova:datum, '-'), '-')"></xsl:variable>
+							<xsl:variable name="mesec" select="substring-before(substring-after(osnova:datum, '-'), '-')"></xsl:variable>
+							<xsl:variable name="godina" select="substring(substring-before(osnova:datum, '-'), 3, 2)"></xsl:variable>
+							дана 
+							<span class="underline">
+								<xsl:value-of select="concat($dan, concat('.', concat($mesec, '.')))"></xsl:value-of>
+							</span> 
+							20<span class="underline">
+								<xsl:value-of select="$godina"></xsl:value-of>
+							</span>. 
+							године
+						</p>
 					</div>
-					<div style="text-align: center;">
 					
-						<p style="border-bottom: 1px solid black; margin-bottom: 0;">
+					<div class="center">
+						<xsl:variable name="osoba" select="osnova:Gradjanin/osnova:Osoba"></xsl:variable>
+						<xsl:variable name="adresa" select="osnova:Gradjanin/osnova:Adresa"></xsl:variable>
+						<p class="underline">
 							<xsl:value-of select="concat($osoba/osnova:ime, concat(' ', $osoba/osnova:prezime))"></xsl:value-of>
 						</p>
-						<p style="margin-top: 0; font-size: 13px;">
+						<p class="small">
 							Тражилац информације/Име и презиме
 						</p>
-						<p style="border-bottom: 1px solid black; margin-bottom: 0;">
+						<p class="underline" style="margin-top: 5px;">
 							<xsl:value-of select="concat($adresa/osnova:ulica, concat(' ', $adresa/osnova:broj, concat(', ', $adresa/osnova:mesto)))"></xsl:value-of>
 						</p>
-						<p style="margin-top: 0; font-size: 13px;">
+						<p class="small">
 							адреса
 						</p>
-						<p style="border-bottom: 1px solid black; margin-bottom: 0;">
-							<xsl:value-of select="organ_vlasti:Zahtev/osnova:kontakt"></xsl:value-of>
+						<p class="underline" style="margin-top: 5px;">
+							<xsl:value-of select="$osoba/osnova:mejl"></xsl:value-of>
 						</p>
-						<p style="margin-top: 0; font-size: 13px;">
+						<p class="small">
 							други подаци за контакт
 						</p>
-						<p style="border-bottom: 1px solid black; margin-bottom: 0;">
+						<p class="underline" style="margin-top: 5px;">
 							<br></br>
 						</p>
-						<p style="margin-top: 0; font-size: 13px;">
+						<p class="small">
 							Потпис
 						</p>
 
 					</div>
 				</div>
-				<br></br>
 				
-				<p style="border-bottom: 1px solid black; width: 60%; margin-bottom: 0;"></p>
-				<p style="margin-top: 0; margin-bottom: 0; font-size: 12px;">
+				<br></br><br></br><br></br><br></br>
+				
+				<p class="underline" style="width: 50%;"></p>
+				<p class="small">
 				* У кућици означити која законска права на приступ информацијама желите да остварите.
 				</p>
-				<p style="margin-top: 0; margin-bottom: 0; font-size: 12px;">
+				<p class="small">
 				** У кућици означити начин достављања копије докумената.
 				</p>
-				<p style="margin-top: 0; font-size: 12px;">
+				<p class="small">
 				*** Када захтевате други начин достављања обавезно уписати који начин достављања захтевате.
 				</p>
 								
