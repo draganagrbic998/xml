@@ -6,9 +6,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
@@ -30,7 +28,6 @@ import org.xmldb.api.modules.XMLResource;
 
 import com.example.demo.constants.Constants;
 import com.example.demo.constants.Namespaces;
-import com.example.demo.controller.ObavestenjeDTO;
 import com.example.demo.model.Korisnik;
 import com.example.demo.model.enums.StatusZahteva;
 import com.example.demo.parser.DOMParser;
@@ -96,7 +93,7 @@ public class ObavestenjeService {
 		this.obavestenjeRepository.save(document, null);
 	}
 	
-	public List<ObavestenjeDTO> retrieve() throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException, ParserConfigurationException, SAXException, IOException{
+	public String retrieve() throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException, ParserConfigurationException, SAXException, IOException, TransformerException{
 		Korisnik korisnik = this.korisnikService.currentUser();
 		String xpathExp;
 		if (korisnik.getUloga().equals(Constants.SLUZBENIK)) {
@@ -106,18 +103,23 @@ public class ObavestenjeService {
 			xpathExp = String.format("/obavestenje:Obavestenje[Gradjanin/Osoba/mejl='%s']", korisnik.getOsoba().getMejl());
 		}
 		
-		List<ObavestenjeDTO> obavestenja = new ArrayList<>();
+		Document obavestenjaDocument = this.domParser.emptyDocument();
+		Node obavestenja = obavestenjaDocument.createElementNS(Namespaces.OBAVESTENJE, "Obavestenja");
+		obavestenjaDocument.appendChild(obavestenja);
 		ResourceSet result = this.obavestenjeRepository.list(xpathExp);
 		ResourceIterator it = result.getIterator();
+		
 		while (it.hasMoreResources()) {
 			XMLResource resource = (XMLResource) it.nextResource();
 			Document document = this.domParser.buildDocument(resource.getContent().toString());
-			String broj = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
-			String datum = document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).getTextContent();
-			String datumZahteva = document.getElementsByTagNameNS(Namespaces.OBAVESTENJE, "datumZahteva").item(0).getTextContent();
-			obavestenja.add(new ObavestenjeDTO(broj, datum, datumZahteva));
+			Node obavestenje = obavestenjaDocument.createElementNS(Namespaces.OBAVESTENJE, "Obavestenje");
+			obavestenje.appendChild(obavestenjaDocument.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0), true));
+			obavestenje.appendChild(obavestenjaDocument.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
+			obavestenje.appendChild(obavestenjaDocument.importNode(document.getElementsByTagNameNS(Namespaces.OBAVESTENJE, "datumZahteva").item(0), true));
+			obavestenja.appendChild(obavestenje);
 		}
-		return obavestenja;
+		
+		return this.domParser.buildXml(obavestenjaDocument);
 	}
 	
 	public String generateHtml(String broj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {

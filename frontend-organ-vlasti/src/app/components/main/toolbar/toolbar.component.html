@@ -19,13 +19,16 @@
             <mat-icon matTooltip="Lista izdatih obaveštenja">list</mat-icon>
         </button>
     </span>
-    <span>
+    <span class="details">
         <button 
         *ngIf="auth"
         mat-button [routerLink]="login ? './register' : './login'">
             <mat-icon>{{login ? 'person_add' : 'login'}}</mat-icon>
             {{login ? 'Registracija' : 'Prijava'}}
         </button>   
+        <span *ngIf="!auth">
+            {{imePrezime}}
+        </span>
         <button *ngIf="!auth" mat-icon-button [matMenuTriggerFor]="more">
             <mat-icon matTooltip="više">more_vert</mat-icon>
         </button>

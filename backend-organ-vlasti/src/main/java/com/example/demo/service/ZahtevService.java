@@ -6,9 +6,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
+import java.text.ParseException;
 import java.util.Date;
-import java.util.List;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
@@ -16,6 +15,7 @@ import javax.xml.transform.TransformerException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentFragment;
 import org.w3c.dom.Element;
@@ -28,10 +28,8 @@ import org.xmldb.api.modules.XMLResource;
 
 import com.example.demo.constants.Constants;
 import com.example.demo.constants.Namespaces;
-import com.example.demo.controller.ZahtevDTO;
 import com.example.demo.model.Korisnik;
 import com.example.demo.model.enums.StatusZahteva;
-import com.example.demo.model.enums.TipZahteva;
 import com.example.demo.parser.DOMParser;
 import com.example.demo.parser.JAXBParser;
 import com.example.demo.parser.XSLTransformer;
@@ -98,7 +96,7 @@ public class ZahtevService {
 		this.zahtevRepository.save(document, null);
 	}
 	
-	public List<ZahtevDTO> retrieve() throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException, ParserConfigurationException, SAXException, IOException{
+	public String retrieve() throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException, ParserConfigurationException, SAXException, IOException, TransformerException, DOMException, ParseException{
 		Korisnik korisnik = this.korisnikService.currentUser();
 		String xpathExp;
 		if (korisnik.getUloga().equals(Constants.SLUZBENIK)) {
@@ -108,19 +106,24 @@ public class ZahtevService {
 			xpathExp = String.format("/zahtev:Zahtev[Gradjanin/Osoba/mejl='%s']", korisnik.getOsoba().getMejl());
 		}
 
-		List<ZahtevDTO> zahtevi = new ArrayList<>();
+		Document zahteviDocument = this.domParser.emptyDocument();
+		Node zahtevi = zahteviDocument.createElementNS(Namespaces.ZAHTEV, "Zahtevi");
+		zahteviDocument.appendChild(zahtevi);
 		ResourceSet result = this.zahtevRepository.list(xpathExp);
 		ResourceIterator it = result.getIterator();
+		
 		while (it.hasMoreResources()) {
 			XMLResource resource = (XMLResource) it.nextResource();
 			Document document = this.domParser.buildDocument(resource.getContent().toString());
-			String broj = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
-			String datum = document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).getTextContent();
-			TipZahteva tipZahteva = TipZahteva.valueOf(document.getElementsByTagNameNS(Namespaces.ZAHTEV, "tipZahteva").item(0).getTextContent());
-			StatusZahteva status = StatusZahteva.valueOf(document.getElementsByTagNameNS(Namespaces.ZAHTEV, "status").item(0).getTextContent());
-			zahtevi.add(new ZahtevDTO(broj, datum, tipZahteva, status));
+			Node zahtev = zahteviDocument.createElementNS(Namespaces.ZAHTEV, "Zahtev");
+			zahtev.appendChild(zahteviDocument.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0), true));
+			zahtev.appendChild(zahteviDocument.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
+			zahtev.appendChild(zahteviDocument.importNode(document.getElementsByTagNameNS(Namespaces.ZAHTEV, "tipZahteva").item(0), true));
+			zahtev.appendChild(zahteviDocument.importNode(document.getElementsByTagNameNS(Namespaces.ZAHTEV, "status").item(0), true));
+			zahtevi.appendChild(zahtev);			
 		}
-		return zahtevi;
+		return this.domParser.buildXml(zahteviDocument);
+		
 	}
 	
 	public String generateHtml(String broj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {

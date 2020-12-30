@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import java.io.IOException;
-import java.util.List;
+import java.text.ParseException;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.w3c.dom.DOMException;
 import org.xml.sax.SAXException;
 import org.xmldb.api.base.XMLDBException;
 
@@ -37,8 +38,8 @@ public class ZahtevController {
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
-	@GetMapping
-	public ResponseEntity<List<ZahtevDTO>> list() throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, ParserConfigurationException, SAXException, IOException{
+	@GetMapping(produces = MediaType.TEXT_XML_VALUE)
+	public ResponseEntity<String> list() throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, ParserConfigurationException, SAXException, IOException, DOMException, TransformerException, ParseException{
 		return new ResponseEntity<>(this.zahtevService.retrieve(), HttpStatus.OK);
 	}
 	

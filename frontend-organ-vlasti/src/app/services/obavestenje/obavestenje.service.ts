@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { OBAVESTENJE, OSNOVA } from 'src/app/constants/namespaces';
 import { Obavestenje } from 'src/app/models/obavestenje';
 import { ObavestenjeDTO } from 'src/app/models/obavestenjeDTO';
@@ -39,18 +40,35 @@ export class ObavestenjeService {
 
   }
 
+  private xmlToObavestenja(xml: string): ObavestenjeDTO[]{
+    const parser = new DOMParser();
+    const document = parser.parseFromString(xml, 'text/xml').getElementsByTagNameNS(OBAVESTENJE, 'Obavestenje');
+    const obavestenja: ObavestenjeDTO[] = [];
+
+    for (const key of Object.keys(document)){
+      obavestenja.push({
+        broj: document[key].getElementsByTagNameNS(OSNOVA, 'broj')[0].textContent,
+        datum: document[key].getElementsByTagNameNS(OSNOVA, 'datum')[0].textContent,
+        datumZahteva: document[key].getElementsByTagNameNS(OBAVESTENJE, 'datumZahteva')[0].textContent,
+      });
+    }
+
+    return obavestenja;
+  }
+
   save(brojZahteva: string, obavestenje: Obavestenje): Observable<null>{
     const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
     return this.http.post<null>(`${this.API_OBAVESTENJA}/${brojZahteva}`, this.obavestenjeToXml(obavestenje), options);
   }
 
   list(): Observable<ObavestenjeDTO[]>{
-    return this.http.get<ObavestenjeDTO[]>(this.API_OBAVESTENJA);
+    return this.http.get<string>(this.API_OBAVESTENJA, {responseType: 'text' as 'json'}).pipe(
+      map((xml: string) => this.xmlToObavestenja(xml))
+    );
   }
 
   view(broj: string): Observable<string>{
-    const headers = new HttpHeaders().set('Content-Type', 'text/xml');
-    return this.http.get<string>(`${this.API_OBAVESTENJA}/${broj}`, {headers, responseType: 'text' as 'json'});
+    return this.http.get<string>(`${this.API_OBAVESTENJA}/${broj}`, {responseType: 'text' as 'json'});
   }
 
 }

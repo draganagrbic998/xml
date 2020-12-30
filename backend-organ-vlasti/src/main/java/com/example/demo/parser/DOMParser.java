@@ -48,6 +48,12 @@ public class DOMParser {
 		this.transformerFactory = TransformerFactory.newInstance();
 	}
 	
+	public Document emptyDocument() throws ParserConfigurationException {
+		DocumentBuilder builder = this.builderFactory.newDocumentBuilder();
+		builder.setErrorHandler(this.errorHandler);
+		return builder.newDocument();
+	}
+	
 	public Document buildDocument(String xml) throws ParserConfigurationException, SAXException, IOException {
 		DocumentBuilder builder = this.builderFactory.newDocumentBuilder();
 		builder.setErrorHandler(this.errorHandler);
