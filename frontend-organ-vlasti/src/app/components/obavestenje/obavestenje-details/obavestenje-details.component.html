@@ -8,10 +8,10 @@
                 {{obavestenje.datumZahteva}}
             </span>
             <span>
-                <a [routerLink]="'/obavestenje-list'" (click)="getHtml()">preuzmi html</a>
+                <a [routerLink]="'/html/obavestenja/' + obavestenje.broj">preuzmi html</a>
             </span>
             <span>                
-                <a [routerLink]="'/obavestenje-list'" (click)="getPdf()">preuzmi pdf</a>
+                <a [routerLink]="'/pdf/obavestenja/' + obavestenje.broj">preuzmi pdf</a>
             </span>
         </mat-card-content>
     </mat-card>

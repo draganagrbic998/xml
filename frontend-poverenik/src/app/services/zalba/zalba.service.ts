@@ -52,9 +52,9 @@ export class ZalbaService {
       <OrganVlasti>
         <naziv>${zalba.naziv}</naziv>
         <Adresa>
-          <mesto>${zalba.sediste.split(' '[0])}</mesto>
-          <ulica>${zalba.sediste.split(' '[1])}</ulica>
-          <broj>${zalba.sediste.split(' '[2])}</broj>
+          <mesto>${zalba.sediste.split(' ')[0]}</mesto>
+          <ulica>${zalba.sediste.split(' ')[1]}</ulica>
+          <broj>${zalba.sediste.split(' ')[2]}</broj>
         </Adresa>
       </OrganVlasti>
       ${zalba.detalji}
@@ -77,6 +77,11 @@ export class ZalbaService {
 
   list(): Observable<ZalbaDTO[]>{
     return this.http.get<ZalbaDTO[]>(this.API_ZALBE);
+  }
+
+  view(broj: string): Observable<string>{
+    const headers = new HttpHeaders().set('Content-Type', 'text/xml');
+    return this.http.get<string>(`${this.API_ZALBE}/${broj}`, {headers, responseType: 'text' as 'json'});
   }
 
 }

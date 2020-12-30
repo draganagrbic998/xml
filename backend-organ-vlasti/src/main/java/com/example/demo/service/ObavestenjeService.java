@@ -120,12 +120,10 @@ public class ObavestenjeService {
 		return obavestenja;
 	}
 	
-	public Resource generateHtml(String broj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
+	public String generateHtml(String broj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
 		Document document = this.obavestenjeRepository.load(broj);
 		ByteArrayOutputStream out = this.xslTransformer.generateHtml(document, XSL_PATH);
-		Path file = Paths.get(GEN_PATH + broj + ".html");
-		Files.write(file, out.toByteArray());
-		return new UrlResource(file.toUri());
+		return out.toString();
 	}
 	
 	public Resource generatePdf(String broj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {

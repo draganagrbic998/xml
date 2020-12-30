@@ -8,10 +8,10 @@
                 {{zahtev.tipZahteva}}
             </span>
             <span>
-                <a [routerLink]="'/zahtev-list'" (click)="getHtml()">preuzmi html</a>
+                <a [routerLink]="'/html/zahtevi/' + zahtev.broj">preuzmi html</a>
             </span>
             <span>                
-                <a [routerLink]="'/zahtev-list'" (click)="getPdf()">preuzmi pdf</a>
+                <a [routerLink]="'/pdf/zahtevi/' + zahtev.broj">preuzmi pdf</a>
             </span>
             <span *ngIf="uloga === 'sluzbenik' && zahtev.status === 'cekanje'">
                 <a [routerLink]="'/obavestenje-form/' + zahtev.broj">dodaj obavestenje</a>

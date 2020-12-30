@@ -8,3 +8,6 @@ export const ZALBA_LIST = 'zalba-list';
 export const RESENJE_FORM = 'resenje-form/:brojZalbe';
 export const RESENJE_LIST = 'resenje-list';
 
+export const HTML_PATH = 'html/:dokument/:broj';
+export const PDF_PATH = 'pdf/:dokument/:broj';
+

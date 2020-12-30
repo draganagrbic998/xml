@@ -124,7 +124,7 @@ public class ZalbaService {
 		
 	}
 	
-	public Resource generateHtml(String broj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
+	public String generateHtml(String broj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
 		Document document = this.zalbaRepository.load(broj);
 		String xslPath;
 		TipZalbe tipZalbe = getTipZalbe(((Element) document.getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").item(0)).getAttributeNS(Namespaces.XSI, "type"));
@@ -135,9 +135,7 @@ public class ZalbaService {
 			xslPath = XSL_PATH_ODLUKA;
 		}
 		ByteArrayOutputStream out = this.xslTransformer.generateHtml(document, xslPath);
-		Path file = Paths.get(GEN_PATH + broj + ".html");
-		Files.write(file, out.toByteArray());
-		return new UrlResource(file.toUri());
+		return out.toString();
 	}
 	
 	public Resource generatePdf(String broj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {

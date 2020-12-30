@@ -42,12 +42,9 @@ public class ZahtevController {
 		return new ResponseEntity<>(this.zahtevService.retrieve(), HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/{broj}/html", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-	public ResponseEntity<Object> html(@PathVariable String broj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
-		Resource resource = this.zahtevService.generateHtml(broj);
-		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-				.body(resource);
+	@GetMapping(value = "/{broj}", produces = "text/html; charset=utf-8")
+	public ResponseEntity<String> html(@PathVariable String broj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
+		return new ResponseEntity<>(this.zahtevService.generateHtml(broj), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/{broj}/pdf", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)

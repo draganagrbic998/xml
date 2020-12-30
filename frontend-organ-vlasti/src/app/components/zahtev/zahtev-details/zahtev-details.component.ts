@@ -12,22 +12,13 @@ import { environment } from 'src/environments/environment';
 export class ZahtevDetailsComponent implements OnInit {
 
   constructor(
-    private authService: AuthService,
-    private router: Router
+    private authService: AuthService
   ) { }
 
   @Input() zahtev: ZahtevDTO;
 
   get uloga(): string{
     return this.authService.getUser()?.uloga;
-  }
-
-  getHtml(): void{
-    window.open(`//localhost:8081/${environment.apiZahtevi}/${this.zahtev.broj}/html`, '_blank');
-  }
-
-  getPdf(): void{
-    window.open(`//localhost:8081/${environment.apiZahtevi}/${this.zahtev.broj}/pdf`, '_blank');
   }
 
   ngOnInit(): void {

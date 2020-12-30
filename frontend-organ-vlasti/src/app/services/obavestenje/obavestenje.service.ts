@@ -48,4 +48,9 @@ export class ObavestenjeService {
     return this.http.get<ObavestenjeDTO[]>(this.API_OBAVESTENJA);
   }
 
+  view(broj: string): Observable<string>{
+    const headers = new HttpHeaders().set('Content-Type', 'text/xml');
+    return this.http.get<string>(`${this.API_OBAVESTENJA}/${broj}`, {headers, responseType: 'text' as 'json'});
+  }
+
 }

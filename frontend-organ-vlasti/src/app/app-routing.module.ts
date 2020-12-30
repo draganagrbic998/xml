@@ -1,12 +1,23 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { HtmlViewerComponent } from './components/main/html-viewer/html-viewer.component';
 import { LoginFormComponent } from './components/main/login-form/login-form.component';
+import { PdfViewerComponent } from './components/main/pdf-viewer/pdf-viewer.component';
 import { RegisterFormComponent } from './components/main/register-form/register-form.component';
 import { ObavestenjeFormComponent } from './components/obavestenje/obavestenje-form/obavestenje-form.component';
 import { ObavestenjeListComponent } from './components/obavestenje/obavestenje-list/obavestenje-list.component';
 import { ZahtevFormComponent } from './components/zahtev/zahtev-form/zahtev-form.component';
 import { ZahtevListComponent } from './components/zahtev/zahtev-list/zahtev-list.component';
-import { LOGIN_PATH, REGISTER_PATH, ZAHTEV_LIST_PATH, ZAHTEV_FORM_PATH, OBAVESTENJE_FORM, OBAVESTENJE_LIST_PATH } from './constants/router';
+import {
+  LOGIN_PATH,
+  REGISTER_PATH,
+  ZAHTEV_LIST_PATH,
+  ZAHTEV_FORM_PATH,
+  OBAVESTENJE_FORM,
+  OBAVESTENJE_LIST_PATH,
+  HTML_PATH,
+  PDF_PATH
+} from './constants/router';
 import { GradjaninGuard } from './guard/gradjanin/gradjanin.guard';
 import { SluzbenikGuard } from './guard/sluzbenik/sluzbenik.guard';
 
@@ -36,6 +47,14 @@ const routes: Routes = [
   {
     path: OBAVESTENJE_LIST_PATH,
     component: ObavestenjeListComponent
+  },
+  {
+    path: HTML_PATH,
+    component: HtmlViewerComponent
+  },
+  {
+    path: PDF_PATH,
+    component: PdfViewerComponent
   }
 ];
 

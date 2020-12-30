@@ -22,6 +22,7 @@ import { ObavestenjeListComponent } from './components/obavestenje/obavestenje-l
 import { ObavestenjeDetailsComponent } from './components/obavestenje/obavestenje-details/obavestenje-details.component';
 import { PreloaderComponent } from './components/layout/preloader/preloader.component';
 import { EmptyContainerComponent } from './components/layout/empty-container/empty-container.component';
+import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
@@ -35,6 +36,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+import { HtmlViewerComponent } from './components/main/html-viewer/html-viewer.component';
+import { PdfViewerComponent } from './components/main/pdf-viewer/pdf-viewer.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +56,10 @@ import { MatMenuModule } from '@angular/material/menu';
     ObavestenjeListComponent,
     ObavestenjeDetailsComponent,
     PreloaderComponent,
-    EmptyContainerComponent
+    EmptyContainerComponent,
+    SafeHtmlPipe,
+    HtmlViewerComponent,
+    PdfViewerComponent
   ],
   imports: [
     BrowserModule,
@@ -74,7 +81,8 @@ import { MatMenuModule } from '@angular/material/menu';
     MatDatepickerModule,
     MatNativeDateModule,
     MatIconModule,
-    MatMenuModule
+    MatMenuModule,
+    NgxExtendedPdfViewerModule
   ],
   providers: [
     {
@@ -83,6 +91,6 @@ import { MatMenuModule } from '@angular/material/menu';
       multi: true
     }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

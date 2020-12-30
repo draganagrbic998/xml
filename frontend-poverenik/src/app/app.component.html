@@ -1,3 +1,5 @@
-<app-toolbar></app-toolbar>
-<div></div>
+<div *ngIf="!pdfPage">
+    <app-toolbar></app-toolbar>
+    <div class="block"></div>    
+</div>
 <router-outlet></router-outlet>

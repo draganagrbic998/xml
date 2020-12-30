@@ -7,9 +7,21 @@ import { ZalbaListComponent } from './components/zalba/zalba-list/zalba-list.com
 import { ZalbaOdlukaFormComponent } from './components/zalba/zalba-odluka-form/zalba-odluka-form.component';
 import { ResenjeFormComponent } from './components/resenje/resenje-form/resenje-form.component';
 import { ResenjeListComponent } from './components/resenje/resenje-list/resenje-list.component';
-import { LOGIN_PATH, REGISTER_PATH, ZALBA_CUTANJE_FORM, ZALBA_LIST, ZALBA_ODLUKA_FORM, RESENJE_FORM, RESENJE_LIST } from './constants/router';
+import {
+  LOGIN_PATH,
+  REGISTER_PATH,
+  ZALBA_CUTANJE_FORM,
+  ZALBA_LIST,
+  ZALBA_ODLUKA_FORM,
+  RESENJE_FORM,
+  RESENJE_LIST,
+  HTML_PATH,
+  PDF_PATH
+ } from './constants/router';
 import { GradjaninGuard } from './guard/gradjanin/gradjanin.guard';
 import { PoverenikGuard } from './guard/poverenik/poverenik.guard';
+import { HtmlViewerComponent } from './components/main/html-viewer/html-viewer.component';
+import { PdfViewerComponent } from './components/main/pdf-viewer/pdf-viewer.component';
 
 const routes: Routes = [
   {
@@ -42,6 +54,14 @@ const routes: Routes = [
   {
     path: RESENJE_LIST,
     component: ResenjeListComponent
+  },
+  {
+    path: HTML_PATH,
+    component: HtmlViewerComponent
+  },
+  {
+    path: PDF_PATH,
+    component: PdfViewerComponent
   }
 ];
 

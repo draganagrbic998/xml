@@ -23,6 +23,8 @@ import { ResenjeListComponent } from './components/resenje/resenje-list/resenje-
 import { ResenjeDetailsComponent } from './components/resenje/resenje-details/resenje-details.component';
 import { PreloaderComponent } from './components/layout/preloader/preloader.component';
 import { EmptyContainerComponent } from './components/layout/empty-container/empty-container.component';
+import { HtmlViewerComponent } from './components/main/html-viewer/html-viewer.component';
+import { PdfViewerComponent } from './components/main/pdf-viewer/pdf-viewer.component';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
@@ -37,6 +39,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 
 @NgModule({
   declarations: [
@@ -55,7 +59,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     ResenjeListComponent,
     ResenjeDetailsComponent,
     PreloaderComponent,
-    EmptyContainerComponent
+    EmptyContainerComponent,
+    HtmlViewerComponent,
+    PdfViewerComponent,
+    SafeHtmlPipe
   ],
   imports: [
     BrowserModule,
@@ -78,7 +85,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatNativeDateModule,
     MatIconModule,
     MatMenuModule,
-    MatTooltipModule
+    MatTooltipModule,
+    NgxExtendedPdfViewerModule
   ],
   providers: [
     {

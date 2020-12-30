@@ -50,4 +50,9 @@ export class ResenjeService {
     return this.http.get<ResenjeDTO[]>(this.API_RESENJA);
   }
 
+  view(broj: string): Observable<string>{
+    const headers = new HttpHeaders().set('Content-Type', 'text/xml');
+    return this.http.get<string>(`${this.API_RESENJA}/${broj}`, {headers, responseType: 'text' as 'json'});
+  }
+
 }

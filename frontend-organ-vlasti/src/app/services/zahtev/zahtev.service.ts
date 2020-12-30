@@ -48,4 +48,9 @@ export class ZahtevService {
     return this.http.get<ZahtevDTO[]>(this.API_ZAHTEVI);
   }
 
+  view(broj: string): Observable<string>{
+    const headers = new HttpHeaders().set('Content-Type', 'text/xml');
+    return this.http.get<string>(`${this.API_ZAHTEVI}/${broj}`, {headers, responseType: 'text' as 'json'});
+  }
+
 }
