@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { OSNOVA, XSI, ZALBA } from 'src/app/constants/namespaces';
 import { ZalbaCutanje } from 'src/app/models/zalba-cutanje';
 import { ZalbaOdluka } from 'src/app/models/zalba-odluka';
@@ -65,6 +66,24 @@ export class ZalbaService {
 `;
   }
 
+  private xmlToZalbe(xml: string): ZalbaDTO[]{
+    const parser = new DOMParser();
+    const document = parser.parseFromString(xml, 'text/xml').getElementsByTagNameNS(ZALBA, 'Zalba');
+    const zalbe: ZalbaDTO[] = [];
+
+    for (const key of Object.keys(document)){
+      zalbe.push({
+        tipZalbe: document[key].getElementsByTagNameNS(ZALBA, 'tipZalbe')[0].textContent,
+        broj: document[key].getElementsByTagNameNS(OSNOVA, 'broj')[0].textContent,
+        datum: document[key].getElementsByTagNameNS(OSNOVA, 'datum')[0].textContent,
+        organVlasti: document[key].getElementsByTagNameNS(OSNOVA, 'naziv')[0].textContent,
+        status: document[key].getElementsByTagNameNS(ZALBA, 'status')[0].textContent
+      });
+    }
+
+    return zalbe;
+  }
+
   saveZalbaCutanje(zalba: ZalbaCutanje): Observable<null>{
     const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
     return this.http.post<null>(this.API_ZALBE, this.zalbaCutanjeToXml(zalba), options);
@@ -76,12 +95,13 @@ export class ZalbaService {
   }
 
   list(): Observable<ZalbaDTO[]>{
-    return this.http.get<ZalbaDTO[]>(this.API_ZALBE);
+    return this.http.get<string>(this.API_ZALBE, {responseType: 'text' as 'json'}).pipe(
+      map((xml: string) => this.xmlToZalbe(xml))
+    );
   }
 
   view(broj: string): Observable<string>{
-    const headers = new HttpHeaders().set('Content-Type', 'text/xml');
-    return this.http.get<string>(`${this.API_ZALBE}/${broj}`, {headers, responseType: 'text' as 'json'});
+    return this.http.get<string>(`${this.API_ZALBE}/${broj}`, {responseType: 'text' as 'json'});
   }
 
 }

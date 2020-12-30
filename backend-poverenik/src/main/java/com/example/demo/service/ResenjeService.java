@@ -7,9 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
@@ -31,9 +29,7 @@ import org.xmldb.api.modules.XMLResource;
 
 import com.example.demo.constants.Constants;
 import com.example.demo.constants.Namespaces;
-import com.example.demo.controller.ResenjeDTO;
 import com.example.demo.model.Korisnik;
-import com.example.demo.model.enums.StatusResenja;
 import com.example.demo.model.enums.StatusZalbe;
 import com.example.demo.model.enums.TipZalbe;
 import com.example.demo.parser.DOMParser;
@@ -117,7 +113,7 @@ public class ResenjeService {
 		this.resenjeRepository.save(document, null);	
 	}
 	
-	public List<ResenjeDTO> retrieve() throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException, ParserConfigurationException, SAXException, IOException{
+	public String retrieve() throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException, ParserConfigurationException, SAXException, IOException, TransformerException{
 		
 		Korisnik korisnik = this.korisnikService.currentUser();
 		String xpathExp = null;
@@ -128,19 +124,24 @@ public class ResenjeService {
 			xpathExp = String.format("/resenje:Resenje[resenje:PodaciZahteva/mejl='%s']", korisnik.getOsoba().getMejl());
 		}		
 		
-		List<ResenjeDTO> resenja = new ArrayList<>();
+		Document resenjaDocument = this.domParser.emptyDocument();
+		Node resenja = resenjaDocument.createElementNS(Namespaces.RESENJE, "Resenja");
+		resenjaDocument.appendChild(resenja);
 		ResourceSet result = this.resenjeRepository.list(xpathExp);
 		ResourceIterator it = result.getIterator();
+		
 		while (it.hasMoreResources()) {
 			XMLResource resource = (XMLResource) it.nextResource();
 			Document document = this.domParser.buildDocument(resource.getContent().toString());
-			String broj = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
-			String datum = document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).getTextContent();
-			StatusResenja status = StatusResenja.valueOf(document.getElementsByTagNameNS(Namespaces.RESENJE,"status").item(0).getTextContent());
-			String organVlasti = document.getElementsByTagNameNS(Namespaces.OSNOVA, "naziv").item(0).getTextContent();
-			resenja.add(new ResenjeDTO(broj, datum, status, organVlasti));
+			Node resenje = resenjaDocument.createElementNS(Namespaces.RESENJE, "Resenje");
+			resenje.appendChild(resenjaDocument.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0), true));
+			resenje.appendChild(resenjaDocument.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
+			resenje.appendChild(resenjaDocument.importNode(document.getElementsByTagNameNS(Namespaces.RESENJE, "status").item(0), true));
+			resenje.appendChild(resenjaDocument.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "naziv").item(0), true));
+			resenja.appendChild(resenje);
 		}
-		return resenja;
+		
+		return this.domParser.buildXml(resenjaDocument);
 		
 	}
 	

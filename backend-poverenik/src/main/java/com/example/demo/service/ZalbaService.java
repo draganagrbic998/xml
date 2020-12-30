@@ -7,9 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
@@ -31,7 +29,6 @@ import org.xmldb.api.modules.XMLResource;
 
 import com.example.demo.constants.Constants;
 import com.example.demo.constants.Namespaces;
-import com.example.demo.controller.ZalbaDTO;
 import com.example.demo.model.Korisnik;
 import com.example.demo.model.enums.StatusZalbe;
 import com.example.demo.model.enums.TipZalbe;
@@ -96,8 +93,7 @@ public class ZalbaService {
 		this.zalbaRepository.save(document, null);
 	}
 	
-	public List<ZalbaDTO> retrieve() throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException, ParserConfigurationException, SAXException, IOException{
-		
+	public String retrieve() throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException, ParserConfigurationException, SAXException, IOException, TransformerException{
 		Korisnik korisnik = this.korisnikService.currentUser();
 		String xpathExp;
 		if (korisnik.getUloga().equals(Constants.POVERENIK)) {
@@ -107,20 +103,27 @@ public class ZalbaService {
 			xpathExp = String.format("/zalba:Zalba[Gradjanin/Osoba/mejl='%s']", korisnik.getOsoba().getMejl());
 		}
 				
-		List<ZalbaDTO> zalbe = new ArrayList<>();
+		Document zalbeDocument = this.domParser.emptyDocument();
+		Node zalbe = zalbeDocument.createElementNS(Namespaces.ZALBA, "Zalbe");
+		zalbeDocument.appendChild(zalbe);
 		ResourceSet result = this.zalbaRepository.retrieve(xpathExp);
 		ResourceIterator it = result.getIterator();
+		
 		while (it.hasMoreResources()) {
 			XMLResource resource = (XMLResource) it.nextResource();
 			Document document = this.domParser.buildDocument(resource.getContent().toString());
-			TipZalbe tipZalbe = getTipZalbe(((Element) document.getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").item(0)).getAttributeNS(Namespaces.XSI, "type"));
-			String broj = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
-			String datum = document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).getTextContent();
-			String organVlasti = document.getElementsByTagNameNS(Namespaces.OSNOVA, "naziv").item(0).getTextContent();
-			StatusZalbe status = StatusZalbe.valueOf(document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).getTextContent());			
-			zalbe.add(new ZalbaDTO(tipZalbe, broj, datum, organVlasti, status));
+			Node zalba = zalbeDocument.createElementNS(Namespaces.ZALBA, "Zalba");
+			Node tipZalbe = zalbeDocument.createElementNS(Namespaces.ZALBA, "tipZalbe");
+			tipZalbe.setTextContent(getTipZalbe(((Element) document.getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").item(0)).getAttributeNS(Namespaces.XSI, "type")) + "");
+			zalba.appendChild(tipZalbe);
+			zalba.appendChild(zalbeDocument.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0), true));
+			zalba.appendChild(zalbeDocument.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
+			zalba.appendChild(zalbeDocument.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "naziv").item(0), true));
+			zalba.appendChild(zalbeDocument.importNode(document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0), true));
+			zalbe.appendChild(zalba);
 		}
-		return zalbe;
+		
+		return this.domParser.buildXml(zalbeDocument);
 		
 	}
 	

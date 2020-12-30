@@ -78,8 +78,6 @@ public class DOMParser {
 	}
 	
 	public void removeXmlSpace(Document document) {
-		Element detalji = (Element) document.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0);
-		detalji.removeAttribute("xml:space");
 		NodeList bolds = document.getElementsByTagNameNS(Namespaces.OSNOVA, "bold");
 		for (int i = 0; i < bolds.getLength(); ++i) {
 			Element bold = (Element) bolds.item(i);
@@ -89,6 +87,11 @@ public class DOMParser {
 		for (int i = 0; i < italics.getLength(); ++i) {
 			Element italic = (Element) italics.item(i);
 			italic.removeAttribute("xml:space");
+		}
+		NodeList detalji = document.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji");
+		for (int i = 0; i < detalji.getLength(); ++i) {
+			Element detalj = (Element) detalji.item(i);
+			detalj.removeAttribute("xml:space");
 		}
 	}
 	

@@ -5,7 +5,8 @@ import { environment } from 'src/environments/environment';
 import { Prijava } from 'src/app/models/prijava';
 import { Registracija } from 'src/app/models/registracija';
 import { OSNOVA } from 'src/app/constants/namespaces';
-import { Token } from 'src/app/models/token';
+import { Profil } from 'src/app/models/profil';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -46,14 +47,28 @@ export class UserService {
     `;
   }
 
-  login(prijava: Prijava): Observable<Token>{
-    const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
-    return this.http.post<Token>(`${this.API_AUTH}/login`, this.prijavaToXml(prijava), options);
+  private xmlToProfil(xml: string): Profil{
+    const parser = new DOMParser();
+    const document = parser.parseFromString(xml, 'text/xml');
+    return {
+      token: document.getElementsByTagName('token')[0].textContent,
+      uloga: document.getElementsByTagName('uloga')[0].textContent,
+      ime: document.getElementsByTagName('ime')[0].textContent,
+      prezime: document.getElementsByTagName('prezime')[0].textContent
+    };
+  }
+
+  login(prijava: Prijava): Observable<Profil>{
+    const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml'), responseType: 'text' as 'json' };
+    return this.http.post<string>(`${this.API_AUTH}/login`, this.prijavaToXml(prijava), options).pipe(
+      map((xml: string) => this.xmlToProfil(xml))
+    );
   }
 
   register(registracija: Registracija): Observable<null>{
     const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
     return this.http.post<null>(`${this.API_AUTH}/register`, this.registracijaToXml(registracija), options);
   }
+
 
 }

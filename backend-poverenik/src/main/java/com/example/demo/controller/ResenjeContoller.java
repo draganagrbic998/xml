@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
@@ -37,8 +36,8 @@ public class ResenjeContoller {
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
-	@GetMapping
-	public ResponseEntity<List<ResenjeDTO>> list() throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, ParserConfigurationException, SAXException, IOException{
+	@GetMapping(produces = MediaType.TEXT_XML_VALUE)
+	public ResponseEntity<String> list() throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, ParserConfigurationException, SAXException, IOException, TransformerException{
 		return new ResponseEntity<>(this.resenjeService.retrieve(), HttpStatus.OK);
 	}
 	

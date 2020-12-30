@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Token } from 'src/app/models/token';
+import { Profil } from 'src/app/models/profil';
 
 @Injectable({
   providedIn: 'root'
@@ -10,15 +10,15 @@ export class AuthService {
 
   private readonly USER_KEY = 'user';
 
-  saveUser(token: Token): void{
-    localStorage.setItem(this.USER_KEY, JSON.stringify(token));
+  saveUser(profil: Profil): void{
+    localStorage.setItem(this.USER_KEY, JSON.stringify(profil));
   }
 
   deleteUser(): void{
     localStorage.removeItem(this.USER_KEY);
   }
 
-  getUser(): Token{
+  getUser(): Profil{
     return JSON.parse(localStorage.getItem(this.USER_KEY));
   }
 

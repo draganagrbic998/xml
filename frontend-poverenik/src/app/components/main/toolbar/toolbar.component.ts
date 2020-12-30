@@ -27,6 +27,10 @@ export class ToolbarComponent implements OnInit {
     return this.router.url.includes(LOGIN_PATH);
   }
 
+  get imePrezime(): string{
+    return `${this.authService.getUser()?.ime} ${this.authService.getUser()?.prezime}`;
+  }
+
   signOut(): void{
     this.authService.deleteUser();
     this.router.navigate([LOGIN_PATH]);

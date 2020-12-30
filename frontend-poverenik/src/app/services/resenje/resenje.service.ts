@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { OSNOVA, RESENJE } from 'src/app/constants/namespaces';
 import { Resenje } from 'src/app/models/resenje';
 import { ResenjeDTO } from 'src/app/models/resenjeDTO';
@@ -41,18 +42,36 @@ export class ResenjeService {
 
   }
 
+  private xmlToResenja(xml: string): ResenjeDTO[]{
+    const parser = new DOMParser();
+    const document = parser.parseFromString(xml, 'text/xml').getElementsByTagNameNS(RESENJE, 'Resenje');
+    const resenja: ResenjeDTO[] = [];
+
+    for (const key of Object.keys(document)){
+      resenja.push({
+        broj: document[key].getElementsByTagNameNS(OSNOVA, 'broj')[0].textContent,
+        datum: document[key].getElementsByTagNameNS(OSNOVA, 'datum')[0].textContent,
+        status: document[key].getElementsByTagNameNS(RESENJE, 'status')[0].textContent,
+        organVlasti: document[key].getElementsByTagNameNS(OSNOVA, 'naziv')[0].textContent,
+      });
+    }
+
+    return resenja;
+  }
+
   save(brojZalbe: string, resenje: Resenje): Observable<null>{
     const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
     return this.http.post<null>(`${this.API_RESENJA}/${brojZalbe}`, this.resenjeToXml(resenje), options);
   }
 
   list(): Observable<ResenjeDTO[]>{
-    return this.http.get<ResenjeDTO[]>(this.API_RESENJA);
+    return this.http.get<string>(this.API_RESENJA, {responseType: 'text' as 'json'}).pipe(
+      map((xml: string) => this.xmlToResenja(xml))
+    );
   }
 
   view(broj: string): Observable<string>{
-    const headers = new HttpHeaders().set('Content-Type', 'text/xml');
-    return this.http.get<string>(`${this.API_RESENJA}/${broj}`, {headers, responseType: 'text' as 'json'});
+    return this.http.get<string>(`${this.API_RESENJA}/${broj}`, {responseType: 'text' as 'json'});
   }
 
 }
