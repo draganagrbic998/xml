@@ -33,7 +33,7 @@ public class ExistManager {
 		DatabaseManager.registerDatabase(database);
 	}
 	
-	public void save(String collectionId, String documentId, Document document) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException {
+	public String save(String collectionId, String documentId, Document document) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException {
 		Collection collection = null;
 		XMLResource resource = null;
 		try { 
@@ -52,6 +52,7 @@ public class ExistManager {
 			resource = (XMLResource) collection.createResource(documentId, XMLResource.RESOURCE_TYPE);
 			resource.setContentAsDOM(document);
 			collection.storeResource(resource);
+			return documentId;
 		}
 		finally {
 			collection.close();

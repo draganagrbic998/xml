@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.ParseException;
 import java.util.Date;
 
 import javax.xml.bind.JAXBException;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentFragment;
 import org.w3c.dom.Element;
@@ -34,6 +36,8 @@ import com.example.demo.parser.DOMParser;
 import com.example.demo.parser.XSLTransformer;
 import com.example.demo.repository.ObavestenjeRepository;
 import com.example.demo.repository.ZahtevRepository;
+import com.example.demo.service.email.Email;
+import com.example.demo.service.email.EmailService;
 import com.ibm.icu.text.SimpleDateFormat;
 
 @Service
@@ -54,12 +58,16 @@ public class ObavestenjeService {
 	@Autowired
 	private XSLTransformer xslTransformer;
 	
+	@Autowired
+	private EmailService emailService;
+	
 	private static final String XSL_FO_PATH = Constants.XSL_FOLDER + File.separatorChar + "obavestenje_fo.xsl";
 	private static final String XSL_PATH = Constants.XSL_FOLDER + File.separatorChar + "/obavestenje.xsl";
 	private static final String GEN_PATH = Constants.GEN_FOLDER + File.separatorChar + "obavestenja" + File.separatorChar;
 
-	public void save(String brojZahteva, String xml) throws ParserConfigurationException, SAXException, IOException, JAXBException, ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException {
+	public void save(String brojZahteva, String xml) throws ParserConfigurationException, SAXException, IOException, JAXBException, ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, DOMException, ParseException {
 		SimpleDateFormat sdf = new SimpleDateFormat(Constants.DATE_FORMAT);
+		SimpleDateFormat sdf2 = new SimpleDateFormat("dd.MM.yyy.");
 		Document document = this.domParser.buildDocument(xml);
 		this.domParser.removeXmlSpace(document);
 		Element obavestenje = (Element) document.getElementsByTagNameNS(Namespaces.OBAVESTENJE, "Obavestenje").item(0);
@@ -73,8 +81,8 @@ public class ObavestenjeService {
 		mesto.setTextContent(Constants.TEST_MESTO);
 		Node potpis = document.createElementNS(Namespaces.OSNOVA, "potpis");
 		potpis.setTextContent(Constants.TEST_POTPIS);
-		Node gradjanin = document.importNode(zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "Gradjanin").item(0), true);
-		Node organVlasti = document.importNode(zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "OrganVlasti").item(0), true);		
+		Element gradjanin = (Element) document.importNode(zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "Gradjanin").item(0), true);
+		Element organVlasti = (Element) document.importNode(zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "OrganVlasti").item(0), true);		
 		documentFragment.appendChild(document.createElementNS(Namespaces.OSNOVA, "broj"));			
 		documentFragment.appendChild(datum);
 		documentFragment.appendChild(mesto);
@@ -90,7 +98,33 @@ public class ObavestenjeService {
 		
 		zahtev.getElementsByTagNameNS(Namespaces.ZAHTEV, "status").item(0).setTextContent(StatusZahteva.odobreno + "");
 		this.zahtevRepository.save(zahtevDocument, brojZahteva);
-		this.obavestenjeRepository.save(document, null);
+		String broj = this.obavestenjeRepository.save(document, null);
+		
+		Element osoba = (Element) gradjanin.getElementsByTagNameNS(Namespaces.OSNOVA, "Osoba").item(0);
+		String mejl = osoba.getElementsByTagNameNS(Namespaces.OSNOVA, "mejl").item(0).getTextContent();
+		String ime = osoba.getElementsByTagNameNS(Namespaces.OSNOVA, "ime").item(0).getTextContent();
+		String prezime = osoba.getElementsByTagNameNS(Namespaces.OSNOVA, "prezime").item(0).getTextContent();
+		String naziv = organVlasti.getElementsByTagNameNS(Namespaces.OSNOVA, "naziv").item(0).getTextContent();
+		Element sediste = (Element) organVlasti.getElementsByTagNameNS(Namespaces.OSNOVA, "Adresa").item(0);
+		String sedisteEmail = sediste.getElementsByTagNameNS(Namespaces.OSNOVA, "ulica").item(0).getTextContent() + " " 
+				+ sediste.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent() + ", " 
+				+ sediste.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(0).getTextContent();
+		String datumZahtevaEmail = sdf2.format(sdf.parse(zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).getTextContent()));
+		Email email = new Email();
+		email.setTo(mejl);
+		email.setSubject("Obaveštenje o zahtevu za informacije od javnog značaja");
+		String text = "Poštovani/a " + ime + " " + prezime + ", \n\n"
+				+ "Organ vlasti " + naziv + " Vas obaveštava o Vašem zahtevu za informacijama od javnog značaja, "
+				+ "koji ste podneli dana " + datumZahtevaEmail + "\n\n"
+				+ "Informacijama od javnog značaja koje ste tražili možete pristupiti klikom na linkove ispod. \n"
+				+ Constants.BACKEND_URL + "/api/obavestenja/" + broj + "/html\n"
+				+ Constants.BACKEND_URL + "/api/obavestenja/" + broj + "/pdf\n\n"
+				+ "Svako dobro, \n\n"
+				+ naziv + "\n" 
+				+ sedisteEmail;
+		email.setText(text);
+		this.emailService.sendEmail(email);
+		
 	}
 	
 	public String retrieve() throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException, ParserConfigurationException, SAXException, IOException, TransformerException{
@@ -122,10 +156,18 @@ public class ObavestenjeService {
 		return this.domParser.buildXml(obavestenjaDocument);
 	}
 	
-	public String generateHtml(String broj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
+	public String html(String broj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
 		Document document = this.obavestenjeRepository.load(broj);
 		ByteArrayOutputStream out = this.xslTransformer.generateHtml(document, XSL_PATH);
 		return out.toString();
+	}
+	
+	public Resource generateHtml(String broj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
+		Document document = this.obavestenjeRepository.load(broj);
+		ByteArrayOutputStream out = this.xslTransformer.generateHtml(document, XSL_PATH);
+		Path file = Paths.get(GEN_PATH + broj + ".html");
+		Files.write(file, out.toByteArray());
+		return new UrlResource(file.toUri());
 	}
 	
 	public Resource generatePdf(String broj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
