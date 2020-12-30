@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<rdf:RDF
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+	xml:base="http://https://github.com/draganagrbic998/xml/#">
+
+	<rdfs:Class rdf:ID="Resenje">
+		<rdfs:subClassOf rdf:resource="#DokumentSaTipom"/>
+	</rdfs:Class>
+	
+	<rdfs:Property rdf:ID="status">
+		<rdfs:domain rdf:resource="#Resenje"/>
+	</rdfs:Property>
+		
+	<rdfs:Property rdf:ID="podnesenaZalba"/>
+		<rdfs:domain rdf:resource="#Resenje"/>
+		<rdfs:range rdf:resource="#Zalba"/>
+	</rdfs:Property>
+	
+</rdf:RDF>

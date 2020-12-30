@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<rdf:RDF
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+	xml:base="http://https://github.com/draganagrbic998/xml/#">
+
+	<rdfs:Class rdf:ID="Dokument"/>
+
+	<rdfs:Property rdf:ID="datum">
+		<rdfs:domain rdf:resource="#Dokument"/>
+	</rdfs:Property>
+	
+	<rdfs:Property rdf:ID="mesto">
+		<rdfs:domain rdf:resource="#Dokument"/>
+	</rdfs:Property>
+	
+	<rdfs:Class rdf:ID="DokumentSaTipom">
+		<rdfs:subClassOf rdf:resource="#Dokument"/>
+	</rdfs:Class>
+	
+	<rdfs:Property rdf:ID="tip">
+		<rdfs:domain rdf:resource="#DokumentSaTipom"/>
+	</rdfs:Property>
+	
+	<rdfs:Property rdf:ID="sastavljenoOdStrane">
+		<rdfs:domain rdf:resource="#Dokument"/>
+	</rdfs:Property>
+	
+	<rdfs:Property rdf:ID="izdatoU">
+		<rdfs:domain rdf:resource="#Dokument"/>
+	</rdfs:Property>
+	
+	<rdfs:Property rdf:ID="podneseniZahtev">
+		<rdfs:domain rdf:resource="#Zalba"/>
+		<rdfs:range rdf:resource="#Zahtev"/>
+	</rdfs:Property>
+	
+</rdf:RDF>
