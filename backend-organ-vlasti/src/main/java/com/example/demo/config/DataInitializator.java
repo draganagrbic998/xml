@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+package com.example.demo.config;
 
 import java.io.File;
 import java.io.IOException;
@@ -7,9 +7,9 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.context.event.EventListener;
+import org.springframework.stereotype.Component;
 import org.xml.sax.SAXException;
 import org.xmldb.api.base.XMLDBException;
 
@@ -17,10 +17,11 @@ import com.example.demo.constants.Constants;
 import com.example.demo.exist.ExistManager;
 import com.example.demo.parser.DOMParser;
 import com.example.demo.repository.KorisnikRepository;
+import com.example.demo.repository.ObavestenjeRepository;
 import com.example.demo.repository.OrganVlastiRepository;
+import com.example.demo.repository.ZahtevRepository;
 
-@RestController
-@RequestMapping(value = "/init_data")
+@Component
 public class DataInitializator {
 	
 	private static final String ORGAN_VLASTI1 = Constants.INIT_FOLDER + File.separatorChar + "organ_vlasti1.xml";
@@ -28,12 +29,16 @@ public class DataInitializator {
 
 	@Autowired
 	private ExistManager existManager;
-
+	
 	@Autowired
 	private DOMParser domParser;
-	
-	@GetMapping
-	public void initData() throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, ParserConfigurationException, SAXException, IOException {
+
+	@EventListener(ContextRefreshedEvent.class)
+	public void dataInit() throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, ParserConfigurationException, SAXException, IOException {
+		this.existManager.dropCollection(OrganVlastiRepository.ORGAN_VLASTI_COLLECTION);
+		this.existManager.dropCollection(KorisnikRepository.KORISNICI_COLLECTION);
+		this.existManager.dropCollection(ZahtevRepository.ZAHTEVI_COLLECTION);
+		this.existManager.dropCollection(ObavestenjeRepository.OBAVESTENJA_COLLECTION);
 		this.existManager.save(OrganVlastiRepository.ORGAN_VLASTI_COLLECTION, "1", this.domParser.buildDocumentFromFile(ORGAN_VLASTI1));
 		this.existManager.save(KorisnikRepository.KORISNICI_COLLECTION, "sluzbenik@gmail.com", this.domParser.buildDocumentFromFile(SLUZBENIK1));
 	}

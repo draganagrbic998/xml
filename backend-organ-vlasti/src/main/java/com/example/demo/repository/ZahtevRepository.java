@@ -21,7 +21,7 @@ public class ZahtevRepository {
 	@Autowired
 	private ExistManager existManager;
 		
-	private static final String ZAHTEVI_COLLECTION = Constants.COLLECTIONS_PREFIX + "/zahtevi";
+	public static final String ZAHTEVI_COLLECTION = Constants.COLLECTIONS_PREFIX + "/zahtevi";
 	
 	public void save(Document document, String documentId) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, JAXBException, TransformerException, SAXException, IOException {
 		this.existManager.save(ZAHTEVI_COLLECTION, documentId, document);

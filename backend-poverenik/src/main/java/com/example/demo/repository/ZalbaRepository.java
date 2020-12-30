@@ -18,7 +18,7 @@ public class ZalbaRepository {
 	@Autowired
 	private ExistManager existManager;
 	
-	private static final String ZALBE_COLLECTION = Constants.COLLECTIONS_PREFIX + "/zalbe";
+	public static final String ZALBE_COLLECTION = Constants.COLLECTIONS_PREFIX + "/zalbe";
 	
 	public void save(Document document, String documentId) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, JAXBException, TransformerException {
 		this.existManager.save(ZALBE_COLLECTION, documentId, document);

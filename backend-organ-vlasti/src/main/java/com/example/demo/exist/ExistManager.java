@@ -126,4 +126,18 @@ public class ExistManager {
         }
 	}
 	
+	public void dropCollection(String collectionId) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
+		this.createConnection();
+		Collection collection = null;
+		try {
+			collection = this.getCollection(collectionId, 0);
+			for (String documentId: collection.listResources()) {
+				collection.removeResource(collection.getResource(documentId));
+			}
+		}
+		finally {
+			collection.close();
+		}
+	}
+	
 }

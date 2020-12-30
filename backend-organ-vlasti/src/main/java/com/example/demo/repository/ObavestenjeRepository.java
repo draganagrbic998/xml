@@ -18,7 +18,7 @@ public class ObavestenjeRepository {
 	@Autowired
 	private ExistManager existManager;
 	
-	private static final String OBAVESTENJA_COLLECTION = Constants.COLLECTIONS_PREFIX + "/obavestenja";
+	public static final String OBAVESTENJA_COLLECTION = Constants.COLLECTIONS_PREFIX + "/obavestenja";
 	
 	public void save(Document document, String documentId) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, JAXBException, TransformerException {
 		this.existManager.save(OBAVESTENJA_COLLECTION, documentId, document);

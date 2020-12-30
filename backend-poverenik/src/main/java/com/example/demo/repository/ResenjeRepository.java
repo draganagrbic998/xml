@@ -18,7 +18,7 @@ public class ResenjeRepository {
 	@Autowired
 	private ExistManager existManager;
 	
-	private static final String RESENJA_COLLECTION = Constants.COLLECTIONS_PREFIX + "/resenja";
+	public static final String RESENJA_COLLECTION = Constants.COLLECTIONS_PREFIX + "/resenja";
 	
 	public void save(Document document, String documentId) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, JAXBException, TransformerException {
 		this.existManager.save(RESENJA_COLLECTION, documentId, document);
