@@ -1,0 +1,18 @@
+<app-form-container>
+    <h3>Odbijanje zahteva za informacijama od javnog značaja</h3>
+    <br><br>
+    <div [class.disabled]="savePending">
+        <div id="detaljiEditor"></div>
+    </div>
+
+    <br><br>
+
+    <app-center-container>
+        <button 
+        *ngIf="!savePending"
+        mat-raised-button 
+        color="primary"
+        (click)="save()">Odbij zahtev</button>
+        <app-spinner-button *ngIf="savePending"></app-spinner-button>
+    </app-center-container>
+</app-form-container>

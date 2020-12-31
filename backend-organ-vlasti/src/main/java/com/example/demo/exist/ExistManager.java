@@ -83,7 +83,7 @@ public class ExistManager {
 			xpathService.setProperty("indent", "yes");
 			xpathService.setNamespace("", Namespaces.OSNOVA);
 			xpathService.setNamespace("zahtev", Namespaces.ZAHTEV);
-			xpathService.setNamespace("obavestenje", Namespaces.OBAVESTENJE);
+			xpathService.setNamespace("odgovor", Namespaces.ODGOVOR);
 			return xpathService.query(xpathExp);
 		} 
 		finally {

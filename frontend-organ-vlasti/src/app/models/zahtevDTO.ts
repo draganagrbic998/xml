@@ -1,7 +1,7 @@
 export interface ZahtevDTO{
+    tipZahteva: string;
     broj: string;
     datum: string;
-    tipZahteva: string;
     status: string;
 }
 

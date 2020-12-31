@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ObavestenjeService } from 'src/app/services/obavestenje/obavestenje.service';
+import { OdgovorService } from 'src/app/services/odgovor/odgovor.service';
 import { ZahtevService } from 'src/app/services/zahtev/zahtev.service';
 
 @Component({
@@ -12,7 +12,7 @@ export class HtmlViewerComponent implements OnInit {
 
   constructor(
     private zahtevService: ZahtevService,
-    private obavestenjeService: ObavestenjeService,
+    private odgovorService: OdgovorService,
     private route: ActivatedRoute
   ) { }
 
@@ -21,7 +21,7 @@ export class HtmlViewerComponent implements OnInit {
 
   ngOnInit(): void {
     const dokument = this.route.snapshot.params.dokument;
-    const service = dokument === 'zahtevi' ? this.zahtevService : this.obavestenjeService;
+    const service = dokument === 'zahtevi' ? this.zahtevService : this.odgovorService;
     service.view(this.route.snapshot.params.broj).subscribe(
       (html: string) => {
         this.html = html;

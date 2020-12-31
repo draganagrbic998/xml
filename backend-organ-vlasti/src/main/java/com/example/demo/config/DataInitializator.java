@@ -17,7 +17,7 @@ import com.example.demo.constants.Constants;
 import com.example.demo.exist.ExistManager;
 import com.example.demo.parser.DOMParser;
 import com.example.demo.repository.KorisnikRepository;
-import com.example.demo.repository.ObavestenjeRepository;
+import com.example.demo.repository.OdgovorRepository;
 import com.example.demo.repository.OrganVlastiRepository;
 import com.example.demo.repository.ZahtevRepository;
 
@@ -38,7 +38,7 @@ public class DataInitializator {
 		this.existManager.dropCollection(OrganVlastiRepository.ORGAN_VLASTI_COLLECTION);
 		this.existManager.dropCollection(KorisnikRepository.KORISNICI_COLLECTION);
 		this.existManager.dropCollection(ZahtevRepository.ZAHTEVI_COLLECTION);
-		this.existManager.dropCollection(ObavestenjeRepository.OBAVESTENJA_COLLECTION);
+		this.existManager.dropCollection(OdgovorRepository.ODGOVORI_COLLECTION);
 		this.existManager.save(OrganVlastiRepository.ORGAN_VLASTI_COLLECTION, "1", this.domParser.buildDocumentFromFile(ORGAN_VLASTI1));
 		this.existManager.save(KorisnikRepository.KORISNICI_COLLECTION, "sluzbenik@gmail.com", this.domParser.buildDocumentFromFile(SLUZBENIK1));
 	}

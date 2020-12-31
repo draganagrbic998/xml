@@ -7,22 +7,23 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
+import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 
 import { ZahtevFormComponent } from './components/zahtev/zahtev-form/zahtev-form.component';
-import { LoginFormComponent } from './components/main/login-form/login-form.component';
+import { LoginFormComponent } from './components/auth/login-form/login-form.component';
 import { ToolbarComponent } from './components/main/toolbar/toolbar.component';
 import { FormContainerComponent } from './components/layout/form-container/form-container.component';
-import { ZahtevDetailsComponent } from './components/zahtev/zahtev-details/zahtev-details.component';
 import { SpinnerButtonComponent } from './components/layout/spinner-button/spinner-button.component';
 import { CenterContainerComponent } from './components/layout/center-container/center-container.component';
 import { ZahtevListComponent } from './components/zahtev/zahtev-list/zahtev-list.component';
-import { ObavestenjeFormComponent } from './components/obavestenje/obavestenje-form/obavestenje-form.component';
-import { RegisterFormComponent } from './components/main/register-form/register-form.component';
-import { ObavestenjeListComponent } from './components/obavestenje/obavestenje-list/obavestenje-list.component';
-import { ObavestenjeDetailsComponent } from './components/obavestenje/obavestenje-details/obavestenje-details.component';
+import { ObavestenjeFormComponent } from './components/odgovor/obavestenje-form/obavestenje-form.component';
+import { RegisterFormComponent } from './components/auth/register-form/register-form.component';
+import { OdgovorListComponent } from './components/odgovor/odgovor-list/odgovor-list.component';
 import { PreloaderComponent } from './components/layout/preloader/preloader.component';
 import { EmptyContainerComponent } from './components/layout/empty-container/empty-container.component';
-import { SafeHtmlPipe } from './pipes/safe-html.pipe';
+import { HtmlViewerComponent } from './components/main/html-viewer/html-viewer.component';
+import { PdfViewerComponent } from './components/main/pdf-viewer/pdf-viewer.component';
+import { OdbijanjeFormComponent } from './components/odgovor/odbijanje-form/odbijanje-form.component';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
@@ -36,9 +37,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
-import { HtmlViewerComponent } from './components/main/html-viewer/html-viewer.component';
-import { PdfViewerComponent } from './components/main/pdf-viewer/pdf-viewer.component';
 
 @NgModule({
   declarations: [
@@ -47,19 +48,18 @@ import { PdfViewerComponent } from './components/main/pdf-viewer/pdf-viewer.comp
     LoginFormComponent,
     ToolbarComponent,
     FormContainerComponent,
-    ZahtevDetailsComponent,
     SpinnerButtonComponent,
     CenterContainerComponent,
     RegisterFormComponent,
     ZahtevListComponent,
     ObavestenjeFormComponent,
-    ObavestenjeListComponent,
-    ObavestenjeDetailsComponent,
+    OdgovorListComponent,
     PreloaderComponent,
     EmptyContainerComponent,
     SafeHtmlPipe,
     HtmlViewerComponent,
-    PdfViewerComponent
+    PdfViewerComponent,
+    OdbijanjeFormComponent
   ],
   imports: [
     BrowserModule,
@@ -82,6 +82,8 @@ import { PdfViewerComponent } from './components/main/pdf-viewer/pdf-viewer.comp
     MatNativeDateModule,
     MatIconModule,
     MatMenuModule,
+    MatTableModule,
+    MatPaginatorModule,
     NgxExtendedPdfViewerModule
   ],
   providers: [

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ObavestenjeDetailsComponent } from './obavestenje-details.component';
+import { OdbijanjeFormComponent } from './odbijanje-form.component';
 
-describe('ObavestenjeDetailsComponent', () => {
-  let component: ObavestenjeDetailsComponent;
-  let fixture: ComponentFixture<ObavestenjeDetailsComponent>;
+describe('OdbijanjeFormComponent', () => {
+  let component: OdbijanjeFormComponent;
+  let fixture: ComponentFixture<OdbijanjeFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ObavestenjeDetailsComponent ]
+      declarations: [ OdbijanjeFormComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ObavestenjeDetailsComponent);
+    fixture = TestBed.createComponent(OdbijanjeFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

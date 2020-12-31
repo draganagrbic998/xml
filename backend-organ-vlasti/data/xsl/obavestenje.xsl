@@ -2,9 +2,9 @@
 <xsl:stylesheet 
 xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0"
 xmlns:osnova="https://github.com/draganagrbic998/xml/osnova"
-xmlns:obavestenje="https://github.com/draganagrbic998/xml/obavestenje">
+xmlns:odgovor="https://github.com/draganagrbic998/xml/odgovor">
 
-	<xsl:template match="/obavestenje:Obavestenje">
+	<xsl:template match="/odgovor:Odgovor">
 	
 		<html>
 			
@@ -140,9 +140,9 @@ xmlns:obavestenje="https://github.com/draganagrbic998/xml/obavestenje">
 						На основу члана 16. ст. 1. Закона о слободном приступу информацијама од јавног значаја, 
 						поступајући по вашем захтеву за слободан приступ информацијама од
 						<span class="underline">
-							<xsl:variable name="danZahteva" select="substring-after(substring-after(obavestenje:datumZahteva, '-'), '-')"></xsl:variable>
-							<xsl:variable name="mesecZahteva" select="substring-before(substring-after(obavestenje:datumZahteva, '-'), '-')"></xsl:variable>
-							<xsl:variable name="godinaZahteva" select="substring-before(obavestenje:datumZahteva, '-')"></xsl:variable>
+							<xsl:variable name="danZahteva" select="substring-after(substring-after(odgovor:datumZahteva, '-'), '-')"></xsl:variable>
+							<xsl:variable name="mesecZahteva" select="substring-before(substring-after(odgovor:datumZahteva, '-'), '-')"></xsl:variable>
+							<xsl:variable name="godinaZahteva" select="substring-before(odgovor:datumZahteva, '-')"></xsl:variable>
 							<xsl:value-of select="concat($danZahteva, concat('.', concat($mesecZahteva, concat('.', concat($godinaZahteva, '.')))))"></xsl:value-of>
 						</span>
 						год., којим сте тражили увид у документ/е са информацијама о / у вези са:
@@ -167,7 +167,7 @@ xmlns:obavestenje="https://github.com/draganagrbic998/xml/obavestenje">
 					<p>
 						обавештавамо вас да дана
 						<span class="underline">
-							<xsl:variable name="datumUvida" select="obavestenje:Uvid/obavestenje:datumUvida"></xsl:variable>
+							<xsl:variable name="datumUvida" select="odgovor:Uvid/odgovor:datumUvida"></xsl:variable>
 							<xsl:variable name="danUvida" select="substring-after(substring-after($datumUvida, '-'), '-')"></xsl:variable>
 							<xsl:variable name="mesecUvida" select="substring-before(substring-after($datumUvida, '-'), '-')"></xsl:variable>
 							<xsl:variable name="godinaUvida" select="substring-before($datumUvida, '-')"></xsl:variable>
@@ -175,15 +175,15 @@ xmlns:obavestenje="https://github.com/draganagrbic998/xml/obavestenje">
 						</span>
 						, у
 						<span class="underline">
-							<xsl:value-of select="obavestenje:Uvid/obavestenje:pocetak"></xsl:value-of>
+							<xsl:value-of select="odgovor:Uvid/odgovor:pocetak"></xsl:value-of>
 						</span>
 						часова, односно у времену од
 						<span class="underline">
-							<xsl:value-of select="obavestenje:Uvid/obavestenje:pocetak"></xsl:value-of>
+							<xsl:value-of select="odgovor:Uvid/odgovor:pocetak"></xsl:value-of>
 						</span>
 						до
 						<span class="underline">
-							<xsl:value-of select="obavestenje:Uvid/obavestenje:kraj"></xsl:value-of>
+							<xsl:value-of select="odgovor:Uvid/odgovor:kraj"></xsl:value-of>
 						</span>
 						часова, у просторијама органа у
 						<span class="underline">
@@ -199,7 +199,7 @@ xmlns:obavestenje="https://github.com/draganagrbic998/xml/obavestenje">
 						</span>
 						, канцеларија бр.
 						<span class="underline">
-							<xsl:value-of select="obavestenje:Uvid/obavestenje:kancelarija"></xsl:value-of>
+							<xsl:value-of select="odgovor:Uvid/odgovor:kancelarija"></xsl:value-of>
 						</span>
 						можете извршити увид у документ/е у коме је садржана тражена информација. 				
 					</p>
@@ -224,7 +224,7 @@ xmlns:obavestenje="https://github.com/draganagrbic998/xml/obavestenje">
 					<p class="indent">
 						Износ укупних трошкова израде копије документа по вашем захтеву износи
 						<span class="dotted">
-							<xsl:value-of select="obavestenje:kopija"></xsl:value-of>
+							<xsl:value-of select="odgovor:kopija"></xsl:value-of>
 						</span>
 						динара и уплаћује се на жиро-рачун Буџета Републике Србије бр. 840-742328-843-30, 
 						с позивом на број 97 – ознака шифре општине/града где се налази орган власти 

@@ -77,4 +77,12 @@
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
+    <xs:element name="Detalji">
+        <xs:complexType mixed="true">
+            <xs:choice maxOccurs="unbounded" minOccurs="0">
+                <xs:element name="bold" type="osnova:TRequiredString"/>
+                <xs:element name="italic" type="osnova:TRequiredString"/>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
 </xs:schema>

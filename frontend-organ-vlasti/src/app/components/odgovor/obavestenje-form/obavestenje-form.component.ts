@@ -4,7 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { SNACKBAR_CLOSE, SNACKBAR_ERROR, SNACKBAR_ERROR_OPTIONS, SNACKBAR_SUCCESS_OPTIONS } from 'src/app/constants/snackbar';
 import { Obavestenje } from 'src/app/models/obavestenje';
-import { ObavestenjeService } from 'src/app/services/obavestenje/obavestenje.service';
+import { OdgovorService } from 'src/app/services/odgovor/odgovor.service';
 import { XonomyService } from 'src/app/services/xonomy/xonomy.service';
 
 declare const Xonomy: any;
@@ -17,7 +17,7 @@ declare const Xonomy: any;
 export class ObavestenjeFormComponent implements AfterViewInit {
 
   constructor(
-    private obavestenjeService: ObavestenjeService,
+    private odgovorService: OdgovorService,
     private xonomyService: XonomyService,
     private snackBar: MatSnackBar,
     private route: ActivatedRoute
@@ -39,7 +39,7 @@ export class ObavestenjeFormComponent implements AfterViewInit {
     const obavestenje: Obavestenje = this.obavestenjeForm.value;
     obavestenje.detalji = Xonomy.harvest();
     this.savePending = true;
-    this.obavestenjeService.save(this.route.snapshot.params.brojZahteva, obavestenje).subscribe(
+    this.odgovorService.saveObavestenje(this.route.snapshot.params.brojZahteva, obavestenje).subscribe(
       () => {
         this.savePending = false;
         this.snackBar.open('Obaveštenje uspešno poslato!', SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);

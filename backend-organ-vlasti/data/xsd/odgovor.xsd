@@ -44,10 +44,11 @@
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
+    <xs:element name="Obavestenje" type="odgovor:TObavestenje"/>
     <xs:complexType name="TOdbijanje">
         <xs:complexContent>
             <xs:extension base="odgovor:TOdgovor"/>
         </xs:complexContent>
     </xs:complexType>
-    <xs:element name="Odgovor" type="odgovor:TOdgovor"/>
+    <xs:element name="Odbijanje" type="odgovor:TOdbijanje"/>
 </xs:schema>

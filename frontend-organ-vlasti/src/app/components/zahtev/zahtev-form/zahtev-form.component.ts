@@ -62,6 +62,17 @@ export class ZahtevFormComponent implements AfterViewInit {
     const detaljiEditor = document.getElementById('detaljiEditor');
     const detaljiSpecifikacija = this.xonomyService.detaljiSpecifikacija;
     Xonomy.render(detaljiXml, detaljiEditor, detaljiSpecifikacija);
+
+    this.zahtevForm.get('tipZahteva').valueChanges.subscribe(
+      () => {
+        this.zahtevForm.get('tipDostave').updateValueAndValidity();
+      }
+    );
+    this.zahtevForm.get('tipDostave').valueChanges.subscribe(
+      () => {
+        this.zahtevForm.get('opisDostave').updateValueAndValidity();
+      }
+    );
   }
 
 }

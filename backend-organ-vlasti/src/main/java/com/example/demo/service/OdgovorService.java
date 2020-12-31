@@ -32,19 +32,20 @@ import com.example.demo.constants.Constants;
 import com.example.demo.constants.Namespaces;
 import com.example.demo.model.Korisnik;
 import com.example.demo.model.enums.StatusZahteva;
+import com.example.demo.model.enums.TipOdgovora;
 import com.example.demo.parser.DOMParser;
 import com.example.demo.parser.XSLTransformer;
-import com.example.demo.repository.ObavestenjeRepository;
+import com.example.demo.repository.OdgovorRepository;
 import com.example.demo.repository.ZahtevRepository;
 import com.example.demo.service.email.Email;
 import com.example.demo.service.email.EmailService;
 import com.ibm.icu.text.SimpleDateFormat;
 
 @Service
-public class ObavestenjeService {
+public class OdgovorService {
 		
 	@Autowired
-	private ObavestenjeRepository obavestenjeRepository;
+	private OdgovorRepository odgovorRepository;
 
 	@Autowired
 	private DOMParser domParser;
@@ -61,8 +62,10 @@ public class ObavestenjeService {
 	@Autowired
 	private EmailService emailService;
 	
-	private static final String XSL_FO_PATH = Constants.XSL_FOLDER + File.separatorChar + "obavestenje_fo.xsl";
-	private static final String XSL_PATH = Constants.XSL_FOLDER + File.separatorChar + "/obavestenje.xsl";
+	private static final String XSL_FO_PATH_ODBIJANJE = Constants.XSL_FOLDER + File.separatorChar + "odbijanje_fo.xsl";
+	private static final String XSL_PATH_ODBIJANJE = Constants.XSL_FOLDER + File.separatorChar + "/odbijanje.xsl";
+	private static final String XSL_FO_PATH_OBAVESTENJE = Constants.XSL_FOLDER + File.separatorChar + "obavestenje_fo.xsl";
+	private static final String XSL_PATH_OBAVESTENJE = Constants.XSL_FOLDER + File.separatorChar + "/obavestenje.xsl";
 	private static final String GEN_PATH = Constants.GEN_FOLDER + File.separatorChar + "obavestenja" + File.separatorChar;
 
 	public void save(String brojZahteva, String xml) throws ParserConfigurationException, SAXException, IOException, JAXBException, ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, DOMException, ParseException {
@@ -70,7 +73,7 @@ public class ObavestenjeService {
 		SimpleDateFormat sdf2 = new SimpleDateFormat("dd.MM.yyy.");
 		Document document = this.domParser.buildDocument(xml);
 		this.domParser.removeXmlSpace(document);
-		Element obavestenje = (Element) document.getElementsByTagNameNS(Namespaces.OBAVESTENJE, "Obavestenje").item(0);
+		Element odgovor = (Element) document.getElementsByTagNameNS(Namespaces.ODGOVOR, "Odgovor").item(0);
 		Document zahtevDocument = this.zahtevRepository.load(brojZahteva);
 		Element zahtev = (Element) zahtevDocument.getElementsByTagNameNS(Namespaces.ZAHTEV, "Zahtev").item(0);
 		
@@ -89,16 +92,24 @@ public class ObavestenjeService {
 		documentFragment.appendChild(potpis);
 		documentFragment.appendChild(gradjanin);
 		documentFragment.appendChild(organVlasti);
-		obavestenje.insertBefore(documentFragment, document.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0));	
+		odgovor.insertBefore(documentFragment, document.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0));	
 
 		//nzm sto moram da stavim ovaj prefix zahtev ispred, provericu to kasnije
-		Node datumZahteva = document.createElementNS(Namespaces.OBAVESTENJE, "obavestenje:datumZahteva");
+		Node datumZahteva = document.createElementNS(Namespaces.ODGOVOR, "odgovor:datumZahteva");
 		datumZahteva.setTextContent(zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).getTextContent());
-		obavestenje.appendChild(datumZahteva);
+		TipOdgovora tipOdgovora = getTipOdgovora(odgovor.getAttributeNS(Namespaces.XSI, "type"));
+		if (tipOdgovora.equals(TipOdgovora.obavestenje)) {
+			odgovor.insertBefore(datumZahteva, odgovor.getElementsByTagNameNS(Namespaces.ODGOVOR, "Uvid").item(0));
+			zahtev.getElementsByTagNameNS(Namespaces.ZAHTEV, "status").item(0).setTextContent(StatusZahteva.odobreno + "");
+		}
+		else {
+			odgovor.appendChild(datumZahteva);
+			zahtev.getElementsByTagNameNS(Namespaces.ZAHTEV, "status").item(0).setTextContent(StatusZahteva.odbijeno + "");
+		}
 		
-		zahtev.getElementsByTagNameNS(Namespaces.ZAHTEV, "status").item(0).setTextContent(StatusZahteva.odobreno + "");
 		this.zahtevRepository.save(zahtevDocument, brojZahteva);
-		String broj = this.obavestenjeRepository.save(document, null);
+		String broj = this.odgovorRepository.save(document, null);
+		
 		
 		Element osoba = (Element) gradjanin.getElementsByTagNameNS(Namespaces.OSNOVA, "Osoba").item(0);
 		String mejl = osoba.getElementsByTagNameNS(Namespaces.OSNOVA, "mejl").item(0).getTextContent();
@@ -112,13 +123,12 @@ public class ObavestenjeService {
 		String datumZahtevaEmail = sdf2.format(sdf.parse(zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).getTextContent()));
 		Email email = new Email();
 		email.setTo(mejl);
-		email.setSubject("Obaveštenje o zahtevu za informacije od javnog značaja");
+		email.setSubject("Odgovor o zahtevu za informacije od javnog značaja");		
 		String text = "Poštovani/a " + ime + " " + prezime + ", \n\n"
-				+ "Organ vlasti " + naziv + " Vas obaveštava o Vašem zahtevu za informacijama od javnog značaja, "
-				+ "koji ste podneli dana " + datumZahtevaEmail + "\n\n"
-				+ "Informacijama od javnog značaja koje ste tražili možete pristupiti klikom na linkove ispod. \n"
-				+ Constants.BACKEND_URL + "/api/obavestenja/" + broj + "/html\n"
-				+ Constants.BACKEND_URL + "/api/obavestenja/" + broj + "/pdf\n\n"
+				+ "Odgovor/i na zahtev za informacijama od javnog značaja koji ste podneli dana " 
+				+ datumZahtevaEmail + "nalaze se u linkovima ispod: \n"
+				+ Constants.BACKEND_URL + "/api/odgovori/" + broj + "/html\n"
+				+ Constants.BACKEND_URL + "/api/odgovori/" + broj + "/pdf\n\n"
 				+ "Svako dobro, \n\n"
 				+ naziv + "\n" 
 				+ sedisteEmail;
@@ -131,51 +141,85 @@ public class ObavestenjeService {
 		Korisnik korisnik = this.korisnikService.currentUser();
 		String xpathExp;
 		if (korisnik.getUloga().equals(Constants.SLUZBENIK)) {
-			xpathExp = "/obavestenje:Obavestenje";
+			xpathExp = "/odgovor:Odgovor";
 		}
 		else {
-			xpathExp = String.format("/obavestenje:Obavestenje[Gradjanin/Osoba/mejl='%s']", korisnik.getOsoba().getMejl());
+			xpathExp = String.format("/odgovor:Odgovor[Gradjanin/Osoba/mejl='%s']", korisnik.getOsoba().getMejl());
 		}
 		
-		Document obavestenjaDocument = this.domParser.emptyDocument();
-		Node obavestenja = obavestenjaDocument.createElementNS(Namespaces.OBAVESTENJE, "Obavestenja");
-		obavestenjaDocument.appendChild(obavestenja);
-		ResourceSet result = this.obavestenjeRepository.list(xpathExp);
+		Document odgovoriDocument = this.domParser.emptyDocument();
+		Node odgovori = odgovoriDocument.createElementNS(Namespaces.ODGOVOR, "Odgovori");
+		odgovoriDocument.appendChild(odgovori);
+		ResourceSet result = this.odgovorRepository.list(xpathExp);
 		ResourceIterator it = result.getIterator();
 		
 		while (it.hasMoreResources()) {
 			XMLResource resource = (XMLResource) it.nextResource();
 			Document document = this.domParser.buildDocument(resource.getContent().toString());
-			Node obavestenje = obavestenjaDocument.createElementNS(Namespaces.OBAVESTENJE, "Obavestenje");
-			obavestenje.appendChild(obavestenjaDocument.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0), true));
-			obavestenje.appendChild(obavestenjaDocument.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
-			obavestenje.appendChild(obavestenjaDocument.importNode(document.getElementsByTagNameNS(Namespaces.OBAVESTENJE, "datumZahteva").item(0), true));
-			obavestenja.appendChild(obavestenje);
+			Node odgovor = odgovoriDocument.createElementNS(Namespaces.ODGOVOR, "Odgovor");
+			Node tipOdgovora = odgovoriDocument.createElementNS(Namespaces.ODGOVOR, "tipOdgovora");
+			tipOdgovora.setTextContent(getTipOdgovora(((Element) document.getElementsByTagNameNS(Namespaces.ODGOVOR, "Odgovor").item(0)).getAttributeNS(Namespaces.XSI, "type")) + "");
+			odgovor.appendChild(tipOdgovora);
+			odgovor.appendChild(odgovoriDocument.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0), true));
+			odgovor.appendChild(odgovoriDocument.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
+			odgovor.appendChild(odgovoriDocument.importNode(document.getElementsByTagNameNS(Namespaces.ODGOVOR, "datumZahteva").item(0), true));
+			odgovori.appendChild(odgovor);
 		}
 		
-		return this.domParser.buildXml(obavestenjaDocument);
+		return this.domParser.buildXml(odgovoriDocument);
 	}
 	
 	public String html(String broj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
-		Document document = this.obavestenjeRepository.load(broj);
-		ByteArrayOutputStream out = this.xslTransformer.generateHtml(document, XSL_PATH);
+		Document document = this.odgovorRepository.load(broj);
+		String xslPath;
+		TipOdgovora tipOdgovora = getTipOdgovora(((Element) document.getElementsByTagNameNS(Namespaces.ODGOVOR, "Odgovor").item(0)).getAttributeNS(Namespaces.XSI, "type"));
+		if (tipOdgovora.equals(TipOdgovora.obavestenje)) {
+			xslPath = XSL_PATH_OBAVESTENJE;
+		}
+		else {
+			xslPath = XSL_PATH_ODBIJANJE;
+		}
+		ByteArrayOutputStream out = this.xslTransformer.generateHtml(document, xslPath);
 		return out.toString();
 	}
 	
 	public Resource generateHtml(String broj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
-		Document document = this.obavestenjeRepository.load(broj);
-		ByteArrayOutputStream out = this.xslTransformer.generateHtml(document, XSL_PATH);
+		Document document = this.odgovorRepository.load(broj);
+		String xslPath;
+		TipOdgovora tipOdgovora = getTipOdgovora(((Element) document.getElementsByTagNameNS(Namespaces.ODGOVOR, "Odgovor").item(0)).getAttributeNS(Namespaces.XSI, "type"));
+		if (tipOdgovora.equals(TipOdgovora.obavestenje)) {
+			xslPath = XSL_PATH_OBAVESTENJE;
+		}
+		else {
+			xslPath = XSL_PATH_ODBIJANJE;
+		}
+		ByteArrayOutputStream out = this.xslTransformer.generateHtml(document, xslPath);
 		Path file = Paths.get(GEN_PATH + broj + ".html");
 		Files.write(file, out.toByteArray());
 		return new UrlResource(file.toUri());
 	}
 	
 	public Resource generatePdf(String broj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
-		Document document = this.obavestenjeRepository.load(broj);
-		ByteArrayOutputStream out = this.xslTransformer.generatePdf(document, XSL_FO_PATH);
+		Document document = this.odgovorRepository.load(broj);
+		String xslFoPath;
+		TipOdgovora tipOdgovora = getTipOdgovora(((Element) document.getElementsByTagNameNS(Namespaces.ODGOVOR, "Odgovor").item(0)).getAttributeNS(Namespaces.XSI, "type"));
+		if (tipOdgovora.equals(TipOdgovora.obavestenje)) {
+			xslFoPath = XSL_FO_PATH_OBAVESTENJE;
+		}
+		else {
+			xslFoPath = XSL_FO_PATH_ODBIJANJE;
+		}
+		ByteArrayOutputStream out = this.xslTransformer.generatePdf(document, xslFoPath);
 		Path file = Paths.get(GEN_PATH + broj + ".pdf");
 		Files.write(file, out.toByteArray());
 		return new UrlResource(file.toUri());
+	}
+	
+	public static TipOdgovora getTipOdgovora(String tipOdgovora) {
+		if (tipOdgovora.equals("odgovor:TObavestenje")) {
+			return TipOdgovora.obavestenje;
+		}
+		return TipOdgovora.odbijanje;
 	}
 	
 }
