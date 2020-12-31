@@ -62,6 +62,11 @@ const routes: Routes = [
   {
     path: PDF_PATH,
     component: PdfViewerComponent
+  },
+  {
+    path: '**',
+    pathMatch: 'full',
+    redirectTo: ZAHTEV_LIST_PATH
   }
 ];
 

@@ -19,6 +19,7 @@ import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 import org.xmldb.api.base.XMLDBException;
 
+import com.example.demo.constants.Constants;
 import com.example.demo.exception.EmailTakenException;
 import com.example.demo.model.Korisnik;
 import com.example.demo.parser.DOMParser;
@@ -103,6 +104,7 @@ public class KorisnikService implements UserDetailsService {
 		if (this.loadUserByUsername(korisnik.getOsoba().getMejl()) != null) {
 			throw new EmailTakenException();
 		}
+		korisnik.getOsoba().setPotpis(Constants.TEST_POTPIS);
 		korisnik.setAktivan(true);
 		korisnik.setLozinka(this.passwordEncoder.encode(korisnik.getLozinka()));
 		this.save(korisnik);

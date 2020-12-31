@@ -23,26 +23,28 @@ export class OdgovorService {
     return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
   }
 
-  private odbijanjeToXml(odbijanje: Odbijanje): string{
+  private odbijanjeToXml(brojZahteva, odbijanje: Odbijanje): string{
 
     return `
       <odgovor:Odgovor xmlns="${OSNOVA}"
       xmlns:odgovor="${ODGOVOR}"
       xmlns:xsi="${XSI}"
       xsi:type="TOdbijanje">
+        <odgovor:brojZahteva>${brojZahteva}</odgovor:brojZahteva>
         ${odbijanje.detalji}
       </odgovor:Odgovor>
     `;
 
   }
 
-  private obavestenjeToXml(obavestenje: Obavestenje): string{
+  private obavestenjeToXml(brojZahteva, obavestenje: Obavestenje): string{
 
     return `
       <odgovor:Odgovor xmlns="${OSNOVA}"
       xmlns:odgovor="${ODGOVOR}"
       xmlns:xsi="${XSI}"
       xsi:type="TObavestenje">
+        <odgovor:brojZahteva>${brojZahteva}</odgovor:brojZahteva>
         ${obavestenje.detalji}
         <odgovor:Uvid>
           <odgovor:datumUvida>${this.dateToString(obavestenje.datumUvida)}</odgovor:datumUvida>
@@ -75,12 +77,12 @@ export class OdgovorService {
 
   saveObavestenje(brojZahteva: string, obavestenje: Obavestenje): Observable<null>{
     const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
-    return this.http.post<null>(`${this.API_ODGOVORI}/${brojZahteva}`, this.obavestenjeToXml(obavestenje), options);
+    return this.http.post<null>(this.API_ODGOVORI, this.obavestenjeToXml(brojZahteva, obavestenje), options);
   }
 
   saveOdbijanje(brojZahteva: string, odbijanje: Odbijanje): Observable<null>{
     const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
-    return this.http.post<null>(`${this.API_ODGOVORI}/${brojZahteva}`, this.odbijanjeToXml(odbijanje), options);
+    return this.http.post<null>(this.API_ODGOVORI, this.odbijanjeToXml(brojZahteva, odbijanje), options);
   }
 
   list(): Observable<OdgovorDTO[]>{

@@ -31,7 +31,6 @@ export class UserService {
   private registracijaToXml(registracija: Registracija): string{
     return `
       <Korisnik xmlns="${OSNOVA}">
-        <aktivan>false</aktivan>
         <lozinka>${registracija.lozinka}</lozinka>
         <Osoba>
           <mejl>${registracija.mejl}</mejl>

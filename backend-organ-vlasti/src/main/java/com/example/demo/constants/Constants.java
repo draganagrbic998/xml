@@ -18,7 +18,6 @@ public class Constants {
 
 	public static final String COLLECTIONS_PREFIX = "/db/database";
 	public static final String DATE_FORMAT = "yyyy-MM-dd";
-	public static final String TEST_MESTO = "TEST MESTO";
 	public static final String TEST_POTPIS = "TEST POTPIS";
 	
 }

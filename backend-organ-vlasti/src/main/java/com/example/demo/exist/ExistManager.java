@@ -1,5 +1,7 @@
 package com.example.demo.exist;
 
+import java.util.Arrays;
+
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.TransformerException;
 
@@ -41,12 +43,7 @@ public class ExistManager {
 			collection = this.getCollection(collectionId, 0);
 			if (documentId == null) {
 				String[] array = collection.listResources();
-				if (array.length == 0) {
-					documentId = "1";
-				}
-				else {
-					documentId = (Integer.parseInt(array[array.length - 1]) + 1) + "";
-				}
+				documentId = Arrays.asList(array).stream().mapToInt(str -> Integer.parseInt(str)).max().orElse(1) + "";
 				((Element) document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0)).setTextContent(documentId);
 			}
 			resource = (XMLResource) collection.createResource(documentId, XMLResource.RESOURCE_TYPE);

@@ -239,8 +239,11 @@ xmlns:odgovor="https://github.com/draganagrbic998/xml/odgovor">
 								<fo:block margin-left="30px">
 									(М.П.)
 								</fo:block>
-								<fo:block border-bottom="0.2mm solid black" margin-left="100px" margin-right="20px" linefeed-treatment="preserve">
+								<fo:block>
 									&#160;
+								</fo:block>
+								<fo:block text-align="center" border-bottom="0.2mm solid black" margin-left="100px" margin-right="20px">
+									<xsl:value-of select="$osoba/osnova:potpis"></xsl:value-of>
 								</fo:block>
 								<fo:block text-align="right">
 									(потпис овлашћеног лица, односно руководиоца органа)

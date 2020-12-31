@@ -66,30 +66,29 @@ public class OdgovorService {
 	private static final String XSL_PATH_ODBIJANJE = Constants.XSL_FOLDER + File.separatorChar + "/odbijanje.xsl";
 	private static final String XSL_FO_PATH_OBAVESTENJE = Constants.XSL_FOLDER + File.separatorChar + "obavestenje_fo.xsl";
 	private static final String XSL_PATH_OBAVESTENJE = Constants.XSL_FOLDER + File.separatorChar + "/obavestenje.xsl";
-	private static final String GEN_PATH = Constants.GEN_FOLDER + File.separatorChar + "obavestenja" + File.separatorChar;
+	private static final String GEN_PATH = Constants.GEN_FOLDER + File.separatorChar + "odgovori" + File.separatorChar;
 
-	public void save(String brojZahteva, String xml) throws ParserConfigurationException, SAXException, IOException, JAXBException, ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, DOMException, ParseException {
+	public void save(String xml) throws ParserConfigurationException, SAXException, IOException, JAXBException, ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, DOMException, ParseException {
 		SimpleDateFormat sdf = new SimpleDateFormat(Constants.DATE_FORMAT);
 		SimpleDateFormat sdf2 = new SimpleDateFormat("dd.MM.yyy.");
 		Document document = this.domParser.buildDocument(xml);
 		this.domParser.removeXmlSpace(document);
 		Element odgovor = (Element) document.getElementsByTagNameNS(Namespaces.ODGOVOR, "Odgovor").item(0);
+		String brojZahteva = odgovor.getElementsByTagNameNS(Namespaces.ODGOVOR, "brojZahteva").item(0).getTextContent();
+		odgovor.removeChild(odgovor.getElementsByTagNameNS(Namespaces.ODGOVOR, "brojZahteva").item(0));
+		
 		Document zahtevDocument = this.zahtevRepository.load(brojZahteva);
 		Element zahtev = (Element) zahtevDocument.getElementsByTagNameNS(Namespaces.ZAHTEV, "Zahtev").item(0);
 		
 		DocumentFragment documentFragment = document.createDocumentFragment();
 		Node datum = document.createElementNS(Namespaces.OSNOVA, "datum");
 		datum.setTextContent(sdf.format(new Date()));
-		Node mesto = document.createElementNS(Namespaces.OSNOVA, "mesto");
-		mesto.setTextContent(Constants.TEST_MESTO);
-		Node potpis = document.createElementNS(Namespaces.OSNOVA, "potpis");
-		potpis.setTextContent(Constants.TEST_POTPIS);
 		Element gradjanin = (Element) document.importNode(zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "Gradjanin").item(0), true);
 		Element organVlasti = (Element) document.importNode(zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "OrganVlasti").item(0), true);		
+		gradjanin.getElementsByTagNameNS(Namespaces.OSNOVA, "potpis").item(0).setTextContent(this.korisnikService.currentUser().getOsoba().getPotpis());
+		
 		documentFragment.appendChild(document.createElementNS(Namespaces.OSNOVA, "broj"));			
 		documentFragment.appendChild(datum);
-		documentFragment.appendChild(mesto);
-		documentFragment.appendChild(potpis);
 		documentFragment.appendChild(gradjanin);
 		documentFragment.appendChild(organVlasti);
 		odgovor.insertBefore(documentFragment, document.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0));	
@@ -216,7 +215,7 @@ public class OdgovorService {
 	}
 	
 	public static TipOdgovora getTipOdgovora(String tipOdgovora) {
-		if (tipOdgovora.equals("odgovor:TObavestenje")) {
+		if (tipOdgovora.contains("TObavestenje")) {
 			return TipOdgovora.obavestenje;
 		}
 		return TipOdgovora.odbijanje;

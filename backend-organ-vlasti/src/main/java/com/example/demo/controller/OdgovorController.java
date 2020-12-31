@@ -32,9 +32,9 @@ public class OdgovorController {
 	@Autowired
 	private OdgovorService odgovorService;
 			
-	@PostMapping(value="/{brojZahteva}", consumes = MediaType.TEXT_XML_VALUE)
-	public ResponseEntity<Void> save(@PathVariable String brojZahteva, @RequestBody String xml) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, JAXBException, ParserConfigurationException, SAXException, IOException, TransformerException, DOMException, ParseException {		
-		this.odgovorService.save(brojZahteva, xml);
+	@PostMapping(consumes = MediaType.TEXT_XML_VALUE)
+	public ResponseEntity<Void> save( @RequestBody String xml) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, JAXBException, ParserConfigurationException, SAXException, IOException, TransformerException, DOMException, ParseException {		
+		this.odgovorService.save(xml);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	

@@ -245,12 +245,14 @@ xmlns:odgovor="https://github.com/draganagrbic998/xml/odgovor">
 								2.&#160;&#160;&#160;Архиви
 							</p>
 						</div>
-						<div style="margin-top: 15px;">
+						<div>
+							<br></br>
 							<p>
 								(М.П.)
 							</p>
-							<p class="underline" style="margin-left: 100px; margin-right: 20px;">
-								<br></br><br></br>
+							<br></br>
+							<p class="underline center" style="margin-left: 100px; margin-right: 20px;">
+								<xsl:value-of select="$osoba/osnova:potpis"></xsl:value-of>
 							</p>
 							<p style="margin-left: 30px;">
 								(потпис овлашћеног лица, односно руководиоца органа)

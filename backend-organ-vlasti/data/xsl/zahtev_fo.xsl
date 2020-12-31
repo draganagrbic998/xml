@@ -231,7 +231,7 @@ xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev">
 										&#160;
 										&#160;
 									</fo:block>
-									У <fo:inline border-bottom="0.2mm solid black">&#160;<xsl:value-of select="osnova:mesto"></xsl:value-of>&#160;</fo:inline>, 
+									У <fo:inline border-bottom="0.2mm solid black">&#160;<xsl:value-of select="osnova:OrganVlasti/osnova:Adresa/osnova:mesto"></xsl:value-of>&#160;</fo:inline>, 
 								</fo:block>
 								<fo:block margin-top="10px">
 									<xsl:variable name="dan" select="substring-after(substring-after(osnova:datum, '-'), '-')"></xsl:variable>
@@ -268,7 +268,7 @@ xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev">
 									други подаци за контакт
 								</fo:block>
 								<fo:block border-bottom="0.2mm solid black" margin-top="5px">
-									&#160;
+									<xsl:value-of select="$osoba/osnova:potpis"></xsl:value-of>
 								</fo:block>
 								<fo:block font-size="10px">
 									Потпис

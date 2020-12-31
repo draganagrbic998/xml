@@ -155,8 +155,8 @@ xmlns:odgovor="https://github.com/draganagrbic998/xml/odgovor">
 		            <div class="flex">
 		            	<div></div>
 		            	<div>
-							<p class="underline" style="margin-left: 100px; margin-right: 20px;">
-								<br></br>
+							<p class="underline center" style="margin-left: 100px; margin-right: 20px;">
+								<xsl:value-of select="osnova:Gradjanin/osnova:Osoba/osnova:potpis"></xsl:value-of>
 							</p>
 							<p>
 								(потпис овлашћеног лица, односно руководиоца органа)

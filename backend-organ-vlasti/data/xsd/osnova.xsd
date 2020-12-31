@@ -13,6 +13,7 @@
                 <xs:element name="mejl" type="osnova:TRequiredString"/>
                 <xs:element name="ime" type="osnova:TRequiredString"/>
                 <xs:element name="prezime" type="osnova:TRequiredString"/>
+                <xs:element name="potpis" type="xs:base64Binary"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -55,8 +56,6 @@
         <xs:sequence>
             <xs:element name="broj" type="osnova:TRequiredString"/>
             <xs:element name="datum" type="xs:date"/>
-            <xs:element name="mesto" type="osnova:TRequiredString"/>
-            <xs:element name="potpis" type="xs:base64Binary"/>
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="TPodnosenje">

@@ -17,7 +17,7 @@ export class ZahtevListComponent implements AfterViewInit {
     private authService: AuthService
   ) { }
 
-  columns: string[] = ['tipZahteva', 'datum', 'status', 'html', 'pdf', 'akcije'];
+  columns: string[] = ['datum', 'status', 'html', 'pdf', 'akcije'];
   zahtevi: MatTableDataSource<ZahtevDTO> = new MatTableDataSource<ZahtevDTO>([]);
   fetchPending = true;
 

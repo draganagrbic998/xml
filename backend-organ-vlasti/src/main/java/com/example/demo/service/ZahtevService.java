@@ -72,10 +72,6 @@ public class ZahtevService {
 		DocumentFragment documentFragment = document.createDocumentFragment();
 		Node datum = document.createElementNS(Namespaces.OSNOVA, "datum");
 		datum.setTextContent(sdf.format(new Date()));
-		Node mesto = document.createElementNS(Namespaces.OSNOVA, "mesto");
-		mesto.setTextContent(Constants.TEST_MESTO);
-		Node potpis = document.createElementNS(Namespaces.OSNOVA, "potpis");
-		potpis.setTextContent(Constants.TEST_POTPIS);
 		Element korisnik = (Element) this.jaxbParser.marshal(this.korisnikService.currentUser()).getElementsByTagNameNS(Namespaces.OSNOVA, "Korisnik").item(0);
 		Node gradjanin = document.createElementNS(Namespaces.OSNOVA, "Gradjanin");
 		gradjanin.appendChild(document.importNode(korisnik.getElementsByTagNameNS(Namespaces.OSNOVA, "Osoba").item(0), true));
@@ -83,8 +79,6 @@ public class ZahtevService {
 		Node organVlasti = document.importNode(this.jaxbParser.marshal(this.organVlastiService.load()).getElementsByTagNameNS(Namespaces.OSNOVA, "OrganVlasti").item(0), true);
 		documentFragment.appendChild(document.createElementNS(Namespaces.OSNOVA, "broj"));
 		documentFragment.appendChild(datum);
-		documentFragment.appendChild(mesto);
-		documentFragment.appendChild(potpis);
 		documentFragment.appendChild(gradjanin);
 		documentFragment.appendChild(organVlasti);
 		zahtev.insertBefore(documentFragment, document.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0));
