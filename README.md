@@ -9,7 +9,7 @@
 Napomene:
 1. Port organa vlasti - 8081
 2. Port poverenika - 8082
-3. Port frontend aplikacija - 4200/4201
-4. Port tomcat servera sa bazama - 8080
-5. Putanja za inicijalizaciju xml baze portala organa vlasti - http://localhost:8081/init_data
-6. Putanja za inicijalizaciju xml baze poverenika - http://localhost:8082/init_data
+3. Port email servica - 8083
+4. Port frontend aplikacija - 4200/4201
+5. Port tomcat servera sa bazama - 8080
+
