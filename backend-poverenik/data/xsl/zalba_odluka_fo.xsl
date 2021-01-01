@@ -169,7 +169,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 										&#160;
 										&#160;
 									</fo:block>
-									У <fo:inline border-bottom="1px dotted black">&#160;<xsl:value-of select="osnova:mesto"></xsl:value-of>&#160;</fo:inline>,
+									У <fo:inline border-bottom="1px dotted black">&#160;<xsl:value-of select="osnova:OrganVlasti/osnova:Adresa/osnova:mesto"></xsl:value-of>&#160;</fo:inline>,
 								</fo:block>
 								<fo:block margin-top="5px">
 									дана 
@@ -204,7 +204,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 									други подаци за контакт
 								</fo:block>
 								<fo:block border-bottom="1px dotted black" margin-top="5px">
-									&#160;
+									<xsl:value-of select="$osoba/osnova:potpis"></xsl:value-of>
 								</fo:block>
 								<fo:block>
 									потпис

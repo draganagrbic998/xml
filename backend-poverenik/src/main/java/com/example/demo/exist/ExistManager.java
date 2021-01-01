@@ -1,5 +1,7 @@
 package com.example.demo.exist;
 
+import java.util.Arrays;
+
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.TransformerException;
 
@@ -33,7 +35,7 @@ public class ExistManager {
 		DatabaseManager.registerDatabase(database);
 	}
 	
-	public void save(String collectionId, String documentId, Document document) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException {
+	public String save(String collectionId, String documentId, Document document) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException {
 		Collection collection = null;
 		XMLResource resource = null;
 		try { 
@@ -41,17 +43,13 @@ public class ExistManager {
 			collection = this.getCollection(collectionId, 0);
 			if (documentId == null) {
 				String[] array = collection.listResources();
-				if (array.length == 0) {
-					documentId = "1";
-				}
-				else {
-					documentId = (Integer.parseInt(array[array.length - 1]) + 1) + "";
-				}
+				documentId = (Arrays.asList(array).stream().mapToInt(str -> Integer.parseInt(str)).max().orElse(0) + 1) + "";
 				((Element) document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0)).setTextContent(documentId);
 			}
 			resource = (XMLResource) collection.createResource(documentId, XMLResource.RESOURCE_TYPE);
 			resource.setContentAsDOM(document);
 			collection.storeResource(resource);
+			return documentId;
 		}
 		finally {
 			collection.close();

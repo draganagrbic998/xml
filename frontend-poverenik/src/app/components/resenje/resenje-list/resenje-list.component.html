@@ -1,10 +1,43 @@
 <app-preloader *ngIf="fetchPending">
 </app-preloader>
 
-<app-empty-container *ngIf="!resenja?.length"
-[title]="'NEMA REŠENJA'"></app-empty-container>
+<div class="root">
 
-<app-resenje-details 
-*ngFor="let resenje of resenja"
-[resenje]="resenje">
-</app-resenje-details>
+  <h2>Lista izdatih rešenja</h2><br>
+
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="resenja">
+
+      <ng-container matColumnDef="organVlasti">
+        <th mat-header-cell *matHeaderCellDef>Organ vlasti</th>
+        <td mat-cell *matCellDef="let resenje"> {{resenje.organVlasti}} </td>
+      </ng-container>
+    
+      <ng-container matColumnDef="datum">
+        <th mat-header-cell *matHeaderCellDef>Datum izdavanja</th>
+        <td mat-cell *matCellDef="let resenje"> {{resenje.datum}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="html">
+        <th mat-header-cell *matHeaderCellDef>Html</th>
+        <td mat-cell *matCellDef="let resenje">
+          <a [routerLink]="'/html/resenja/' + resenje.broj">preuzmi html</a>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="pdf">
+        <th mat-header-cell *matHeaderCellDef>Pdf</th>
+        <td mat-cell *matCellDef="let resenje">
+          <a [routerLink]="'/pdf/resenja/' + resenje.broj">preuzmi pdf</a>
+        </td>
+      </ng-container>
+    
+      <tr mat-header-row *matHeaderRowDef="columns"></tr>
+      <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+      <tr class="mat-row" *matNoDataRow><td class="mat-cell" colspan="5">Nema rešenja</td></tr>
+
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </div>
+  
+</div>

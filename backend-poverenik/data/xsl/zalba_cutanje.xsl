@@ -198,7 +198,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 								Подносилац жалбе / Име и презиме
 							</p>
 							<p class="dotted" style="margin-top: 5px;">
-								<br></br>
+								<xsl:value-of select="$osoba/osnova:potpis"></xsl:value-of>
 							</p>
 							<p>
 								потпис
@@ -216,7 +216,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 								други подаци за контакт
 							</p>
 							<p class="dotted" style="margin-top: 5px;">
-								<br></br>
+								<xsl:value-of select="$osoba/osnova:potpis"></xsl:value-of>
 							</p>
 							<p>
 								Потпис
@@ -230,7 +230,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 						<xsl:variable name="dan" select="substring-after(substring-after(osnova:datum, '-'), '-')"></xsl:variable>
 						<xsl:variable name="mesec" select="substring-before(substring-after(osnova:datum, '-'), '-')"></xsl:variable>
 						<xsl:variable name="godina" select="substring(substring-before(osnova:datum, '-'), 3, 2)"></xsl:variable>
-						У <span class="dotted">&#160;<xsl:value-of select="osnova:mesto"></xsl:value-of>&#160;</span>,
+						У <span class="dotted">&#160;<xsl:value-of select="osnova:OrganVlasti/osnova:Adresa/osnova:mesto"></xsl:value-of>&#160;</span>,
 						дана 
 						<span class="dotted">
 							<xsl:value-of select="concat($dan, concat('.', concat($mesec, '.')))"></xsl:value-of>

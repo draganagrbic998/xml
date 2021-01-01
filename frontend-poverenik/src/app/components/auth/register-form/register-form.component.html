@@ -26,6 +26,18 @@
                     Lozinka je obavezna!
                 </mat-error>    
             </mat-form-field>
+            <mat-form-field>
+                <mat-label>Ponovljena lozinka</mat-label>
+                <input 
+                type="password" 
+                matInput 
+                autocomplete="off"
+                formControlName="ponovljenaLozinka"
+                placeholder="Unesite ponovo lozinku">
+                <mat-error>
+                    Lozinke se ne poklapaju!
+                </mat-error>    
+            </mat-form-field>
             <br><br>
             <mat-form-field>
                 <mat-label>Ime</mat-label>

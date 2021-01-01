@@ -118,7 +118,7 @@ xmlns:odgovor="https://github.com/draganagrbic998/xml/odgovor">
                		</fo:block>
 
 					<fo:block>
-						<xsl:value-of select="osnova:Detalji"></xsl:value-of>
+			            <xsl:apply-templates select="osnova:Detalji"></xsl:apply-templates>
 					</fo:block>					
 					<fo:block-container position="absolute" top="10.6cm">
               			<fo:block border-bottom="0.2mm solid black">
@@ -243,7 +243,7 @@ xmlns:odgovor="https://github.com/draganagrbic998/xml/odgovor">
 									&#160;
 								</fo:block>
 								<fo:block text-align="center" border-bottom="0.2mm solid black" margin-left="100px" margin-right="20px">
-									<xsl:value-of select="$osoba/osnova:potpis"></xsl:value-of>
+									<xsl:value-of select="osnova:Gradjanin/osnova:Osoba/osnova:potpis"></xsl:value-of>
 								</fo:block>
 								<fo:block text-align="right">
 									(потпис овлашћеног лица, односно руководиоца органа)
@@ -256,4 +256,13 @@ xmlns:odgovor="https://github.com/draganagrbic998/xml/odgovor">
             </fo:page-sequence>
         </fo:root>
     </xsl:template>
+    
+    <xsl:template match="osnova:bold">
+        <fo:inline font-weight="bold"><xsl:apply-templates select="@*|node()"></xsl:apply-templates></fo:inline>
+    </xsl:template>
+    
+    <xsl:template match="osnova:italic">
+        <fo:inline font-style="italic"><xsl:apply-templates select="@*|node()"></xsl:apply-templates></fo:inline>
+    </xsl:template>
+    
 </xsl:stylesheet>

@@ -11,7 +11,7 @@ xmlns:odgovor="https://github.com/draganagrbic998/xml/odgovor">
 			<head> 
 				<style>
 					.root{
-						max-width: 700px; 
+						max-width: 600px; 
 						margin: auto; 
 						border: 1px solid black; 
 						padding: 50px;
@@ -39,8 +39,8 @@ xmlns:odgovor="https://github.com/draganagrbic998/xml/odgovor">
 						text-indent: 40px;
 					}
 					.line{
-						display: inline-block; 
-						height: 13pt; 
+						display: block; 
+						height: 17pt; 
 						width: 100%; 
 						border-bottom: 1px dotted black;
 					}
@@ -138,7 +138,7 @@ xmlns:odgovor="https://github.com/draganagrbic998/xml/odgovor">
 					
 					<p class="details">
 						<span class="line">
-							<xsl:copy-of select="osnova:Detalji"></xsl:copy-of>
+				            <xsl:apply-templates select="osnova:Detalji"></xsl:apply-templates>
 		               	</span>
 						<span class="line">
 		                </span>
@@ -171,5 +171,13 @@ xmlns:odgovor="https://github.com/draganagrbic998/xml/odgovor">
 		</html>
 	
 	</xsl:template>
+	
+    <xsl:template match="osnova:bold">
+        <b><xsl:apply-templates select="@*|node()"></xsl:apply-templates></b>
+    </xsl:template>
+    
+    <xsl:template match="osnova:italic">
+        <i><xsl:apply-templates select="@*|node()"></xsl:apply-templates></i>
+    </xsl:template>
 
 </xsl:stylesheet>

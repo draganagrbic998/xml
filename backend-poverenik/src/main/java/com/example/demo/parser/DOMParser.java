@@ -88,23 +88,28 @@ public class DOMParser {
 			Element italic = (Element) italics.item(i);
 			italic.removeAttribute("xml:space");
 		}
-		NodeList detalji = document.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji");
-		for (int i = 0; i < detalji.getLength(); ++i) {
-			Element detalj = (Element) detalji.item(i);
-			detalj.removeAttribute("xml:space");
+		NodeList pasusi = document.getElementsByTagNameNS(Namespaces.OSNOVA, "Pasus");
+		for (int i = 0; i < pasusi.getLength(); ++i) {
+			Element pasus = (Element) pasusi.item(i);
+			pasus.removeAttribute("xml:space");
+			pasus.setPrefix("resenje");
 		}
-		
 		NodeList zakoni = document.getElementsByTagNameNS(Namespaces.OSNOVA, "zakon");
 		for (int i = 0; i < zakoni.getLength(); ++i) {
 			Element zakon = (Element) zakoni.item(i);
 			zakon.removeAttribute("xml:space");
 			zakon.setPrefix("resenje");
 		}
-		NodeList pasusi = document.getElementsByTagNameNS(Namespaces.OSNOVA, "Pasus");
-		for (int i = 0; i < pasusi.getLength(); ++i) {
-			Element pasus = (Element) pasusi.item(i);
-			pasus.removeAttribute("xml:space");
-			pasus.setPrefix("resenje");
+		NodeList detalji = document.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji");
+		for (int i = 0; i < detalji.getLength(); ++i) {
+			Element detalj = (Element) detalji.item(i);
+			detalj.removeAttribute("xml:space");
+		}
+		NodeList odluke = document.getElementsByTagNameNS(Namespaces.OSNOVA, "Odluka");
+		for (int i = 0; i < odluke.getLength(); ++i) {
+			Element odluka = (Element) odluke.item(i);
+			odluka.removeAttribute("xml:space");
+			odluka.setPrefix("resenje");
 		}
 		NodeList dispozitive = document.getElementsByTagNameNS(Namespaces.OSNOVA, "Dispozitiva");
 		for (int i = 0; i < dispozitive.getLength(); ++i) {
@@ -117,12 +122,6 @@ public class DOMParser {
 			Element obrazlozenje = (Element) obrazlozenja.item(i);
 			obrazlozenje.removeAttribute("xml:space");
 			obrazlozenje.setPrefix("resenje");
-		}
-		NodeList odluke = document.getElementsByTagNameNS(Namespaces.OSNOVA, "Odluka");
-		for (int i = 0; i < odluke.getLength(); ++i) {
-			Element odluka = (Element) odluke.item(i);
-			odluka.removeAttribute("xml:space");
-			odluka.setPrefix("resenje");
 		}
 	}
 	

@@ -30,9 +30,9 @@ public class ResenjeContoller {
 	@Autowired
 	private ResenjeService resenjeService;
 			
-	@PostMapping(value="/{brojZalbe}", consumes = MediaType.TEXT_XML_VALUE)
-	public ResponseEntity<Void> save(@PathVariable String brojZalbe, @RequestBody String xml) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, JAXBException, ParserConfigurationException, SAXException, IOException, TransformerException {		
-		this.resenjeService.save(brojZalbe, xml);
+	@PostMapping(consumes = MediaType.TEXT_XML_VALUE)
+	public ResponseEntity<Void> save(@RequestBody String xml) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, JAXBException, ParserConfigurationException, SAXException, IOException, TransformerException {		
+		this.resenjeService.save(xml);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	

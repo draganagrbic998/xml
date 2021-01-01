@@ -43,8 +43,8 @@ xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev">
 						text-indent: 40px;
 					}
 					.line{
-						display: inline-block; 
-						height: 13pt; 
+						display: block; 
+						height: 17pt; 
 						width: 100%; 
 						border-bottom: 1px solid black;
 					}
@@ -152,15 +152,17 @@ xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev">
 						Овај захтев се односи на следеће информације:
 					</p>
 					
-					<p class="details">
-						<span class="line">
-							<xsl:copy-of select="osnova:Detalji"></xsl:copy-of>
-		                </span>
-						<span class="line">
-		                </span>
-						<span class="line">
-		                </span>				
-		            </p>
+				<p>
+					<span class="line">
+				        <xsl:copy>
+				            <xsl:apply-templates select="osnova:Detalji"></xsl:apply-templates>
+				        </xsl:copy>
+	               	</span>
+					<span class="line">
+	                </span>
+					<span class="line">
+	                </span>				
+	            </p>
 	
 					<p class="small">
 						(навести што прецизнији опис информације која се тражи као и 
@@ -240,5 +242,13 @@ xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev">
 		</html>
 	
 	</xsl:template>
+	
+    <xsl:template match="osnova:bold">
+        <b><xsl:apply-templates select="@*|node()"></xsl:apply-templates></b>
+    </xsl:template>
+    
+    <xsl:template match="osnova:italic">
+        <i><xsl:apply-templates select="@*|node()"></xsl:apply-templates></i>
+    </xsl:template>
 
 </xsl:stylesheet>

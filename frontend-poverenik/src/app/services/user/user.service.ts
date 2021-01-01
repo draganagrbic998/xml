@@ -31,7 +31,6 @@ export class UserService {
   private registracijaToXml(registracija: Registracija): string{
     return `
       <Korisnik xmlns="${OSNOVA}">
-        <aktivan>false</aktivan>
         <lozinka>${registracija.lozinka}</lozinka>
         <Osoba>
           <mejl>${registracija.mejl}</mejl>
@@ -69,6 +68,5 @@ export class UserService {
     const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
     return this.http.post<null>(`${this.API_AUTH}/register`, this.registracijaToXml(registracija), options);
   }
-
 
 }

@@ -10,7 +10,7 @@ import com.example.demo.constants.Namespaces;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "Osoba", namespace = Namespaces.OSNOVA)
-@XmlType(propOrder = { "mejl", "ime", "prezime" })
+@XmlType(propOrder = { "mejl", "ime", "prezime", "potpis" })
 public class Osoba {
 	
 	@XmlElement(namespace = Namespaces.OSNOVA, required = true)
@@ -21,6 +21,9 @@ public class Osoba {
 	
 	@XmlElement(namespace = Namespaces.OSNOVA, required = true)
 	private String prezime;
+	
+	@XmlElement(namespace = Namespaces.OSNOVA, required = true)
+	private String potpis;
 	
 	public Osoba() {
 		super();
@@ -48,6 +51,14 @@ public class Osoba {
 
 	public void setPrezime(String prezime) {
 		this.prezime = prezime;
+	}
+
+	public String getPotpis() {
+		return potpis;
+	}
+
+	public void setPotpis(String potpis) {
+		this.potpis = potpis;
 	}
 
 }

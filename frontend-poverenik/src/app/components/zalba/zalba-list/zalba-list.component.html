@@ -1,11 +1,51 @@
 <app-preloader *ngIf="fetchPending">
 </app-preloader>
 
-<app-empty-container *ngIf="!zalbe?.length"
-[title]="'NEMA ŽALBI'">
-</app-empty-container>
+<div class="root">
 
-<app-zalba-details 
-*ngFor="let zalba of zalbe"
-[zalba]="zalba">
-</app-zalba-details>
+  <h2>Lista podnetih žalbi povereniku</h2><br>
+
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="zalbe">
+    
+      <ng-container matColumnDef="tipZalbe">
+        <th mat-header-cell *matHeaderCellDef>Tip zalbe</th>
+        <td mat-cell *matCellDef="let zalba"> {{zalba.tipZalbe}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="datum">
+        <th mat-header-cell *matHeaderCellDef>Datum</th>
+        <td mat-cell *matCellDef="let zalba"> {{zalba.datum}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="html">
+        <th mat-header-cell *matHeaderCellDef>Html</th>
+        <td mat-cell *matCellDef="let zalba">
+          <a [routerLink]="'/html/zalbe/' + zalba.broj">preuzmi html</a>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="pdf">
+        <th mat-header-cell *matHeaderCellDef>Pdf</th>
+        <td mat-cell *matCellDef="let zalba">
+          <a [routerLink]="'/pdf/zalbe/' + zalba.broj">preuzmi pdf</a>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="akcije">
+        <th mat-header-cell *matHeaderCellDef>Akcije</th>
+        <td mat-cell *matCellDef="let zalba">
+            <a *ngIf="uloga === 'poverenik' && zalba.status === 'cekanje'"
+            [routerLink]="'/resenje-form/' + zalba.broj">dodaj rešenje</a>
+        </td>
+      </ng-container>
+    
+      <tr mat-header-row *matHeaderRowDef="columns"></tr>
+      <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+      <tr class="mat-row" *matNoDataRow><td class="mat-cell" colspan="5">Nema žalbi</td></tr>
+
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </div>
+  
+</div>

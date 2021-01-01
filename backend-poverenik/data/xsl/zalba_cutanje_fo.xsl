@@ -185,7 +185,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 									Подносилац жалбе / Име и презиме
 								</fo:block>
 								<fo:block border-bottom="1px dotted black" margin-top="5px">
-									&#160;
+									<xsl:value-of select="$osoba/osnova:potpis"></xsl:value-of>
 								</fo:block>
 								<fo:block>
 									потпис
@@ -203,7 +203,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 									други подаци за контакт
 								</fo:block>
 								<fo:block border-bottom="1px dotted black" margin-top="5px">
-									&#160;
+									<xsl:value-of select="$osoba/osnova:potpis"></xsl:value-of>
 								</fo:block>
 								<fo:block>
 									Потпис
@@ -219,7 +219,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 							<xsl:variable name="dan" select="substring-after(substring-after(osnova:datum, '-'), '-')"></xsl:variable>
 							<xsl:variable name="mesec" select="substring-before(substring-after(osnova:datum, '-'), '-')"></xsl:variable>
 							<xsl:variable name="godina" select="substring(substring-before(osnova:datum, '-'), 3, 2)"></xsl:variable>
-							У<fo:inline border-bottom="1px dotted black">&#160;<xsl:value-of select="osnova:mesto"></xsl:value-of>&#160;</fo:inline>, 
+							У<fo:inline border-bottom="1px dotted black">&#160;<xsl:value-of select="osnova:OrganVlasti/osnova:Adresa/osnova:mesto"></xsl:value-of>&#160;</fo:inline>, 
 							дана
 							<fo:inline border-bottom="1px dotted black">
 								<xsl:value-of select="concat($dan, concat('.', concat($mesec, '.')))"></xsl:value-of>

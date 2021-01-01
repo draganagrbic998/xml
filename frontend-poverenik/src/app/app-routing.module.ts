@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LoginFormComponent } from './components/main/login-form/login-form.component';
-import { RegisterFormComponent } from './components/main/register-form/register-form.component';
+import { LoginFormComponent } from './components/auth/login-form/login-form.component';
+import { RegisterFormComponent } from './components/auth/register-form/register-form.component';
 import { ZalbaCutanjeFormComponent } from './components/zalba/zalba-cutanje-form/zalba-cutanje-form.component';
 import { ZalbaListComponent } from './components/zalba/zalba-list/zalba-list.component';
 import { ZalbaOdlukaFormComponent } from './components/zalba/zalba-odluka-form/zalba-odluka-form.component';
@@ -62,6 +62,11 @@ const routes: Routes = [
   {
     path: PDF_PATH,
     component: PdfViewerComponent
+  },
+  {
+    path: '**',
+    pathMatch: 'full',
+    redirectTo: ZALBA_LIST
   }
 ];
 

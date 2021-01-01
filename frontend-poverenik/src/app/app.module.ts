@@ -7,22 +7,20 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
+import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 
-import { LoginFormComponent } from './components/main/login-form/login-form.component';
+import { LoginFormComponent } from './components/auth/login-form/login-form.component';
 import { ToolbarComponent } from './components/main/toolbar/toolbar.component';
 import { FormContainerComponent } from './components/layout/form-container/form-container.component';
 import { SpinnerButtonComponent } from './components/layout/spinner-button/spinner-button.component';
 import { CenterContainerComponent } from './components/layout/center-container/center-container.component';
-import { RegisterFormComponent } from './components/main/register-form/register-form.component';
+import { RegisterFormComponent } from './components/auth/register-form/register-form.component';
 import { ZalbaCutanjeFormComponent } from './components/zalba/zalba-cutanje-form/zalba-cutanje-form.component';
 import { ZalbaOdlukaFormComponent } from './components/zalba/zalba-odluka-form/zalba-odluka-form.component';
-import { ZalbaDetailsComponent } from './components/zalba/zalba-details/zalba-details.component';
 import { ZalbaListComponent } from './components/zalba/zalba-list/zalba-list.component';
 import { ResenjeFormComponent } from './components/resenje/resenje-form/resenje-form.component';
 import { ResenjeListComponent } from './components/resenje/resenje-list/resenje-list.component';
-import { ResenjeDetailsComponent } from './components/resenje/resenje-details/resenje-details.component';
 import { PreloaderComponent } from './components/layout/preloader/preloader.component';
-import { EmptyContainerComponent } from './components/layout/empty-container/empty-container.component';
 import { HtmlViewerComponent } from './components/main/html-viewer/html-viewer.component';
 import { PdfViewerComponent } from './components/main/pdf-viewer/pdf-viewer.component';
 
@@ -39,8 +37,9 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
-import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 
 @NgModule({
   declarations: [
@@ -53,13 +52,10 @@ import { SafeHtmlPipe } from './pipes/safe-html.pipe';
     RegisterFormComponent,
     ZalbaCutanjeFormComponent,
     ZalbaOdlukaFormComponent,
-    ZalbaDetailsComponent,
     ZalbaListComponent,
     ResenjeFormComponent,
     ResenjeListComponent,
-    ResenjeDetailsComponent,
     PreloaderComponent,
-    EmptyContainerComponent,
     HtmlViewerComponent,
     PdfViewerComponent,
     SafeHtmlPipe
@@ -86,6 +82,8 @@ import { SafeHtmlPipe } from './pipes/safe-html.pipe';
     MatIconModule,
     MatMenuModule,
     MatTooltipModule,
+    MatTableModule,
+    MatPaginatorModule,
     NgxExtendedPdfViewerModule
   ],
   providers: [

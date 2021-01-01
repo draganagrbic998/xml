@@ -43,7 +43,7 @@ public class ExistManager {
 			collection = this.getCollection(collectionId, 0);
 			if (documentId == null) {
 				String[] array = collection.listResources();
-				documentId = Arrays.asList(array).stream().mapToInt(str -> Integer.parseInt(str)).max().orElse(1) + "";
+				documentId = (Arrays.asList(array).stream().mapToInt(str -> Integer.parseInt(str)).max().orElse(0) + 1) + "";
 				((Element) document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0)).setTextContent(documentId);
 			}
 			resource = (XMLResource) collection.createResource(documentId, XMLResource.RESOURCE_TYPE);

@@ -178,7 +178,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 							<xsl:variable name="mesec" select="substring-before(substring-after(osnova:datum, '-'), '-')"></xsl:variable>
 							<xsl:variable name="godina" select="substring(substring-before(osnova:datum, '-'), 3, 2)"></xsl:variable>
 							<p>
-								У <span class="dotted">&#160;<xsl:value-of select="osnova:mesto"></xsl:value-of>&#160;</span>,
+								У <span class="dotted">&#160;<xsl:value-of select="osnova:OrganVlasti/osnova:Adresa/osnova:mesto"></xsl:value-of>&#160;</span>,
 							</p>
 							<p style="margin-top: 5px;">
 								дана 
@@ -212,7 +212,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 								други подаци за контакт
 							</p>
 							<p class="dotted" style="margin-top: 5px;">
-								<br></br>
+								<xsl:value-of select="$osoba/osnova:potpis"></xsl:value-of>
 							</p>
 							<p>
 								потпис

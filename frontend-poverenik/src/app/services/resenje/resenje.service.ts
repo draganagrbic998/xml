@@ -22,7 +22,7 @@ export class ResenjeService {
     return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
   }
 
-  private resenjeToXml(resenje: Resenje): string{
+  private resenjeToXml(brojZalbe, resenje: Resenje): string{
 
     let odbrana = `<resenje:datumSlanja>${this.dateToString(resenje.datumSlanja)}</resenje:datumSlanja>`;
     if (resenje.datumOdbrane && resenje.odgovorOdbrane){
@@ -34,8 +34,11 @@ export class ResenjeService {
     return `
       <resenje:Resenje xmlns="${OSNOVA}"
       xmlns:resenje="${RESENJE}">
+        <resenje:brojZalbe>${brojZalbe}</resenje:brojZalbe>
         <resenje:status>${resenje.status}</resenje:status>
-        ${odbrana}
+        <resenje:Odbrana>
+          ${odbrana}
+        </resenje:Odbrana>
         ${resenje.odluka}
       </resenje:Resenje>
     `;
@@ -61,7 +64,7 @@ export class ResenjeService {
 
   save(brojZalbe: string, resenje: Resenje): Observable<null>{
     const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
-    return this.http.post<null>(`${this.API_RESENJA}/${brojZalbe}`, this.resenjeToXml(resenje), options);
+    return this.http.post<null>(this.API_RESENJA, this.resenjeToXml(brojZalbe, resenje), options);
   }
 
   list(): Observable<ResenjeDTO[]>{
