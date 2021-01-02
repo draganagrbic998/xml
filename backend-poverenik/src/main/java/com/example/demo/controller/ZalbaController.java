@@ -54,5 +54,11 @@ public class ZalbaController {
 				.body(resource);
 	}
 	
+	@GetMapping(value = "/rdf")
+	public ResponseEntity<Void> extractMetadata() throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, JAXBException, ParserConfigurationException, SAXException, IOException, TransformerException {		
+		this.zalbaService.extractMetadata();
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
 }
 

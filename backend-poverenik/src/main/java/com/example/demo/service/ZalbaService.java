@@ -35,6 +35,7 @@ import com.example.demo.model.enums.TipZalbe;
 import com.example.demo.parser.DOMParser;
 import com.example.demo.parser.JAXBParser;
 import com.example.demo.parser.XSLTransformer;
+import com.example.demo.rdf.MetadataExtraction;
 import com.example.demo.repository.ZalbaRepository;
 
 @Service
@@ -54,6 +55,9 @@ public class ZalbaService {
 	
 	@Autowired
 	private XSLTransformer xslTransformer;
+	
+	@Autowired
+	private MetadataExtraction metadataExtraction;
 	
 	private static final String XSL_FO_PATH_CUTANJE = Constants.XSL_FOLDER + File.separatorChar + "zalba_cutanje_fo.xsl";
 	private static final String XSL_PATH_CUTANJE = Constants.XSL_FOLDER + File.separatorChar + "/zalba_cutanje.xsl";
@@ -149,6 +153,12 @@ public class ZalbaService {
 		Path file = Paths.get(GEN_PATH + broj + ".pdf");
 		Files.write(file, out.toByteArray());
 		return new UrlResource(file.toUri());
+	}
+	
+	public void extractMetadata() throws IOException, SAXException, TransformerException {
+		String xmlFilePath = "data/xml/zahtev1.xml";
+		String rdfFilePath = "data/gen/zahtev.rdf";
+		this.metadataExtraction.run(xmlFilePath, rdfFilePath);
 	}
 	
 	public static TipZalbe getTipZalbe(String tipZalbe) {
