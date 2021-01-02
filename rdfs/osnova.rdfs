@@ -2,7 +2,7 @@
 <rdf:RDF
 	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-	xml:base="http://https://github.com/draganagrbic998/xml/#">
+	xml:base="https://github.com/draganagrbic998/xml/#">
 
 	<rdfs:Class rdf:ID="Dokument"/>
 
@@ -18,6 +18,10 @@
 		<rdfs:subClassOf rdf:resource="#Dokument"/>
 	</rdfs:Class>
 	
+	<rdfs:Class rdf:ID="DokumentSaZahtevom">
+		<rdfs:subClassOf rdf:resource="#DokumentSaTipom"/>
+	</rdfs:Class>
+	
 	<rdfs:Property rdf:ID="tip">
 		<rdfs:domain rdf:resource="#DokumentSaTipom"/>
 	</rdfs:Property>
@@ -31,7 +35,7 @@
 	</rdfs:Property>
 	
 	<rdfs:Property rdf:ID="podneseniZahtev">
-		<rdfs:domain rdf:resource="#Zalba"/>
+		<rdfs:domain rdf:resource="#DokumentSaZahtevom"/>
 		<rdfs:range rdf:resource="#Zahtev"/>
 	</rdfs:Property>
 	
