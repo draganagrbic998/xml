@@ -3,6 +3,7 @@ package com.example.demo.service;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -37,7 +38,7 @@ import com.example.demo.parser.JAXBParser;
 import com.example.demo.parser.XSLTransformer;
 import com.example.demo.rdf.MetadataExtraction;
 import com.example.demo.repository.ZalbaRepository;
-import com.example.demo.soap.IzvestajPodaci;
+import com.example.demo.ws.zalbepodaci.data.ZalbePodaciData;
 
 @Service
 public class ZalbaService {
@@ -138,14 +139,14 @@ public class ZalbaService {
 
 	}
 
-	public IzvestajPodaci retrieveIzvestajData() throws XMLDBException, ClassNotFoundException, InstantiationException,
+	public ZalbePodaciData retrieveZalbePodaci() throws XMLDBException, ClassNotFoundException, InstantiationException,
 			IllegalAccessException, ParserConfigurationException, SAXException, IOException {
 		String xpathExp = "/zalba:Zalba";
 
 		ResourceSet result = this.zalbaRepository.retrieve(xpathExp);
 		ResourceIterator it = result.getIterator();
 
-		IzvestajPodaci ip = new IzvestajPodaci();
+		ZalbePodaciData ip = new ZalbePodaciData();
 		int cutanja = 0;
 		int delimicnosti = 0;
 		int odbijanja = 0;
@@ -165,9 +166,9 @@ public class ZalbaService {
 				odbijanja++;
 		}
 
-		ip.setZalbeCutanje(Integer.toString(cutanja));
-		ip.setZalbeDelimicnost(Integer.toString(delimicnosti));
-		ip.setZalbeOdbijanje(Integer.toString(odbijanja));
+		ip.setZalbeCutanja(BigInteger.valueOf(cutanja));
+		ip.setZalbeDelimicnosti(BigInteger.valueOf(delimicnosti));
+		ip.setZalbeOdbijanja(BigInteger.valueOf(odbijanja));
 		
 		return ip;
 	}

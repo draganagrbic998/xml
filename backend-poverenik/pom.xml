@@ -16,6 +16,7 @@
 
 	<properties>
 		<java.version>11</java.version>
+		<cxf.version>3.3.0</cxf.version>
 	</properties>
 
 	<dependencies>
@@ -67,13 +68,65 @@
 		    <version>3.9.0</version>
 		</dependency>
 		
+		<!-- CXF -->
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-spring-boot-starter-jaxws</artifactId>
+			<version>${cxf.version}</version>
+		</dependency>
+		
 	</dependencies>
 
+	<profiles>
+		<profile>
+			<id>noGenerate</id>
+			<activation> <!-- Ovo treba promeniti za generisanje -->
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<xjc.generate>none</xjc.generate> 
+			</properties>
+		</profile>
+		<profile>
+			<id>generate</id>
+			<properties>
+				<xjc.generate>generate-sources</xjc.generate>
+			</properties>
+		</profile>
+	</profiles>
+	
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-codegen-plugin</artifactId>
+				<version>${cxf.version}</version>
+				<executions>
+					<execution>
+						<id>generate-sources</id>
+						<phase>${xjc.generate}</phase>
+						<configuration>
+							<sourceRoot>${project.build.directory}/generated/cxf</sourceRoot>
+							<wsdlOptions>
+								<wsdlOption>
+									<wsdl>${basedir}/src/main/resources/wsdl/ZalbePodaci.wsdl</wsdl>
+									<extraargs>
+										<extraarg>-impl</extraarg>
+										<extraarg>-verbose</extraarg>
+									</extraargs>
+									<wsdlLocation>classpath:wsdl/ZalbePodaci.wsdl</wsdlLocation>
+								</wsdlOption>
+							</wsdlOptions>
+						</configuration>
+						<goals>
+							<goal>wsdl2java</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
