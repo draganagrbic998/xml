@@ -37,116 +37,165 @@ import com.example.demo.parser.JAXBParser;
 import com.example.demo.parser.XSLTransformer;
 import com.example.demo.rdf.MetadataExtraction;
 import com.example.demo.repository.ZalbaRepository;
+import com.example.demo.soap.IzvestajPodaci;
 
 @Service
 public class ZalbaService {
-	
+
 	@Autowired
 	private ZalbaRepository zalbaRepository;
-	
+
 	@Autowired
 	private DOMParser domParser;
-	
+
 	@Autowired
 	private JAXBParser jaxbParser;
-	
+
 	@Autowired
 	private KorisnikService korisnikService;
-	
+
 	@Autowired
 	private XSLTransformer xslTransformer;
-	
+
 	@Autowired
 	private MetadataExtraction metadataExtraction;
-	
-	private static final String XSL_FO_PATH_CUTANJE = Constants.XSL_FOLDER + File.separatorChar + "zalba_cutanje_fo.xsl";
+
+	private static final String XSL_FO_PATH_CUTANJE = Constants.XSL_FOLDER + File.separatorChar
+			+ "zalba_cutanje_fo.xsl";
 	private static final String XSL_PATH_CUTANJE = Constants.XSL_FOLDER + File.separatorChar + "/zalba_cutanje.xsl";
 	private static final String XSL_FO_PATH_ODLUKA = Constants.XSL_FOLDER + File.separatorChar + "/zalba_odluka_fo.xsl";
 	private static final String XSL_PATH_ODLUKA = Constants.XSL_FOLDER + File.separatorChar + "/zalba_odluka.xsl";
 	private static final String GEN_PATH = Constants.GEN_FOLDER + File.separatorChar + "zalbe" + File.separatorChar;
-	
-	public void save(String xml) throws ParserConfigurationException, SAXException, IOException, JAXBException, ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException {
+
+	public void save(String xml)
+			throws ParserConfigurationException, SAXException, IOException, JAXBException, ClassNotFoundException,
+			InstantiationException, IllegalAccessException, XMLDBException, TransformerException {
 		SimpleDateFormat sdf = new SimpleDateFormat(Constants.DATE_FORMAT);
 		Document document = this.domParser.buildDocument(xml);
 		Element zalba = (Element) document.getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").item(0);
 		this.domParser.removeXmlSpace(document);
-		
+
 		DocumentFragment documentFragment = document.createDocumentFragment();
 		Node datum = document.createElementNS(Namespaces.OSNOVA, "datum");
 		datum.setTextContent(sdf.format(new Date()));
-		Element korisnik = (Element) this.jaxbParser.marshal(this.korisnikService.currentUser()).getElementsByTagNameNS(Namespaces.OSNOVA, "Korisnik").item(0);
+		Element korisnik = (Element) this.jaxbParser.marshal(this.korisnikService.currentUser())
+				.getElementsByTagNameNS(Namespaces.OSNOVA, "Korisnik").item(0);
 		Node gradjanin = document.createElementNS(Namespaces.OSNOVA, "Gradjanin");
-		gradjanin.appendChild(document.importNode(korisnik.getElementsByTagNameNS(Namespaces.OSNOVA, "Osoba").item(0), true));
-		gradjanin.appendChild(document.importNode(korisnik.getElementsByTagNameNS(Namespaces.OSNOVA, "Adresa").item(0), true));
+		gradjanin.appendChild(
+				document.importNode(korisnik.getElementsByTagNameNS(Namespaces.OSNOVA, "Osoba").item(0), true));
+		gradjanin.appendChild(
+				document.importNode(korisnik.getElementsByTagNameNS(Namespaces.OSNOVA, "Adresa").item(0), true));
 		documentFragment.appendChild(document.createElementNS(Namespaces.OSNOVA, "broj"));
 		documentFragment.appendChild(datum);
 		documentFragment.appendChild(gradjanin);
 		zalba.insertBefore(documentFragment, document.getElementsByTagNameNS(Namespaces.OSNOVA, "OrganVlasti").item(0));
-		
-		//nzm sto moram da stavim zalba prefiks pre
+
+		// nzm sto moram da stavim zalba prefiks pre
 		Node status = document.createElementNS(Namespaces.ZALBA, "zalba:status");
 		status.setTextContent(StatusZalbe.cekanje + "");
 		zalba.insertBefore(status, document.getElementsByTagNameNS(Namespaces.ZALBA, "datumZahteva").item(0));
-				
+
 		this.zalbaRepository.save(document, null);
 	}
-	
-	public String retrieve() throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException, ParserConfigurationException, SAXException, IOException, TransformerException{
+
+	public String retrieve() throws XMLDBException, ClassNotFoundException, InstantiationException,
+			IllegalAccessException, ParserConfigurationException, SAXException, IOException, TransformerException {
 		Korisnik korisnik = this.korisnikService.currentUser();
 		String xpathExp;
 		if (korisnik.getUloga().equals(Constants.POVERENIK)) {
 			xpathExp = "/zalba:Zalba";
-		}
-		else {
+		} else {
 			xpathExp = String.format("/zalba:Zalba[Gradjanin/Osoba/mejl='%s']", korisnik.getOsoba().getMejl());
 		}
-				
+
 		Document zalbeDocument = this.domParser.emptyDocument();
 		Node zalbe = zalbeDocument.createElementNS(Namespaces.ZALBA, "Zalbe");
 		zalbeDocument.appendChild(zalbe);
 		ResourceSet result = this.zalbaRepository.retrieve(xpathExp);
 		ResourceIterator it = result.getIterator();
-		
+
 		while (it.hasMoreResources()) {
 			XMLResource resource = (XMLResource) it.nextResource();
 			Document document = this.domParser.buildDocument(resource.getContent().toString());
 			Node zalba = zalbeDocument.createElementNS(Namespaces.ZALBA, "Zalba");
 			Node tipZalbe = zalbeDocument.createElementNS(Namespaces.ZALBA, "tipZalbe");
-			tipZalbe.setTextContent(getTipZalbe(((Element) document.getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").item(0)).getAttributeNS(Namespaces.XSI, "type")) + "");
+			tipZalbe.setTextContent(
+					getTipZalbe(((Element) document.getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").item(0))
+							.getAttributeNS(Namespaces.XSI, "type")) + "");
 			zalba.appendChild(tipZalbe);
-			zalba.appendChild(zalbeDocument.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0), true));
-			zalba.appendChild(zalbeDocument.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
-			zalba.appendChild(zalbeDocument.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "naziv").item(0), true));
-			zalba.appendChild(zalbeDocument.importNode(document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0), true));
+			zalba.appendChild(
+					zalbeDocument.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0), true));
+			zalba.appendChild(zalbeDocument
+					.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
+			zalba.appendChild(zalbeDocument
+					.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "naziv").item(0), true));
+			zalba.appendChild(zalbeDocument
+					.importNode(document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0), true));
 			zalbe.appendChild(zalba);
 		}
-		
+
 		return this.domParser.buildXml(zalbeDocument);
-		
+
 	}
-	
-	public String generateHtml(String broj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
+
+	public IzvestajPodaci retrieveIzvestajData() throws XMLDBException, ClassNotFoundException, InstantiationException,
+			IllegalAccessException, ParserConfigurationException, SAXException, IOException {
+		String xpathExp = "/zalba:Zalba";
+
+		ResourceSet result = this.zalbaRepository.retrieve(xpathExp);
+		ResourceIterator it = result.getIterator();
+
+		IzvestajPodaci ip = new IzvestajPodaci();
+		int cutanja = 0;
+		int delimicnosti = 0;
+		int odbijanja = 0;
+		
+		while (it.hasMoreResources()) {
+			XMLResource resource = (XMLResource) it.nextResource();
+			Document document = this.domParser.buildDocument(resource.getContent().toString());
+			
+			String tz = getTipZalbe(((Element) document.getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").item(0))
+							.getAttributeNS(Namespaces.XSI, "type")) + "";
+			
+			if (tz.equalsIgnoreCase("cutanje"))
+				cutanja++;
+			else if (tz.equalsIgnoreCase("delimicnost"))
+				delimicnosti++;
+			else
+				odbijanja++;
+		}
+
+		ip.setZalbeCutanje(Integer.toString(cutanja));
+		ip.setZalbeDelimicnost(Integer.toString(delimicnosti));
+		ip.setZalbeOdbijanje(Integer.toString(odbijanja));
+		
+		return ip;
+	}
+
+	public String generateHtml(String broj) throws ClassNotFoundException, InstantiationException,
+			IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
 		Document document = this.zalbaRepository.load(broj);
 		String xslPath;
-		TipZalbe tipZalbe = getTipZalbe(((Element) document.getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").item(0)).getAttributeNS(Namespaces.XSI, "type"));
+		TipZalbe tipZalbe = getTipZalbe(((Element) document.getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").item(0))
+				.getAttributeNS(Namespaces.XSI, "type"));
 		if (tipZalbe.equals(TipZalbe.cutanje)) {
 			xslPath = XSL_PATH_CUTANJE;
-		}
-		else {
+		} else {
 			xslPath = XSL_PATH_ODLUKA;
 		}
 		ByteArrayOutputStream out = this.xslTransformer.generateHtml(document, xslPath);
 		return out.toString();
 	}
-	
-	public Resource generatePdf(String broj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
+
+	public Resource generatePdf(String broj) throws ClassNotFoundException, InstantiationException,
+			IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
 		Document document = this.zalbaRepository.load(broj);
 		String xslFoPath;
-		TipZalbe tipZalbe = getTipZalbe(((Element) document.getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").item(0)).getAttributeNS(Namespaces.XSI, "type"));
+		TipZalbe tipZalbe = getTipZalbe(((Element) document.getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").item(0))
+				.getAttributeNS(Namespaces.XSI, "type"));
 		if (tipZalbe.equals(TipZalbe.cutanje)) {
 			xslFoPath = XSL_FO_PATH_CUTANJE;
-		}
-		else {
+		} else {
 			xslFoPath = XSL_FO_PATH_ODLUKA;
 		}
 		ByteArrayOutputStream out = this.xslTransformer.generatePdf(document, xslFoPath);
@@ -154,19 +203,18 @@ public class ZalbaService {
 		Files.write(file, out.toByteArray());
 		return new UrlResource(file.toUri());
 	}
-	
+
 	public void extractMetadata() throws IOException, SAXException, TransformerException {
 		String xmlFilePath = "data/xml/zahtev1.xml";
 		String rdfFilePath = "data/gen/zahtev.rdf";
 		this.metadataExtraction.run(xmlFilePath, rdfFilePath);
 	}
-	
+
 	public static TipZalbe getTipZalbe(String tipZalbe) {
 		if (tipZalbe.contains("TZalbaCutanje")) {
 			return TipZalbe.cutanje;
 		}
 		return TipZalbe.odluka;
 	}
-	
-}
 
+}

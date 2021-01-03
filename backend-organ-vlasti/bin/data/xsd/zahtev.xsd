@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="https://github.com/draganagrbic998/xml/zahtev"
+    xmlns:osnova="https://github.com/draganagrbic998/xml/osnova"
+    xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev">
+    <xs:import namespace="https://github.com/draganagrbic998/xml/osnova" schemaLocation="osnova.xsd"/>
+    <xs:complexType name="TZahtev">
+        <xs:complexContent>
+            <xs:extension base="osnova:TPodnosenje">
+                <xs:sequence>
+                    <xs:element name="tipZahteva">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:enumeration value="obavestenje"/>
+                                <xs:enumeration value="uvid"/>
+                                <xs:enumeration value="kopija"/>
+                                <xs:enumeration value="dostava"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="tipDostave">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:enumeration value="posta"/>
+                                <xs:enumeration value="email"/>
+                                <xs:enumeration value="faks"/>
+                                <xs:enumeration value="ostalo"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="opisDostave" type="osnova:TRequiredString"/>
+                    <xs:element name="status">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:enumeration value="cekanje"/>
+                                <xs:enumeration value="odobreno"/>
+                                <xs:enumeration value="odbijeno"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="Zahtev" type="zahtev:TZahtev"/>
+</xs:schema>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Korisnik xmlns="https://github.com/draganagrbic998/xml/osnova">
+    <aktivan>true</aktivan>
+    <lozinka>$2a$10$gfuYh.hxu0AlVb1yVXRcie38viaXdpwa2aZHWWhdPVQiq741vD8F.</lozinka>
+    <Osoba>
+        <mejl>sluzbenik@gmail.com</mejl>
+        <ime>Djokica</ime>
+        <prezime>Djokic</prezime>
+        <potpis>TEST POTPIS</potpis>
+    </Osoba>
+</Korisnik>
