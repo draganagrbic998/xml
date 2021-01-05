@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -162,6 +163,11 @@ public class ZalbaService {
 			return TipZalbe.cutanje;
 		}
 		return TipZalbe.odluka;
+	}
+
+	public void proslediZalbu(String broj) throws MalformedURLException, SOAPException, TransformerException, ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
+		Document document = this.zalbaRepository.load(broj);
+		SOAPService.sendSOAPMessage(document, "zalba");
 	}
 
 }
