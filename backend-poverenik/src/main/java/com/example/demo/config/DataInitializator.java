@@ -16,9 +16,9 @@ import org.xmldb.api.base.XMLDBException;
 import com.example.demo.constants.Constants;
 import com.example.demo.exist.ExistManager;
 import com.example.demo.parser.DOMParser;
-import com.example.demo.repository.KorisnikRepository;
-import com.example.demo.repository.ResenjeRepository;
-import com.example.demo.repository.ZalbaRepository;
+import com.example.demo.repository.xml.KorisnikExist;
+import com.example.demo.repository.xml.ResenjeExist;
+import com.example.demo.repository.xml.ZalbaExist;
 
 @Component
 public class DataInitializator {
@@ -33,10 +33,10 @@ public class DataInitializator {
 
 	@EventListener(ContextRefreshedEvent.class)
 	public void dataInit() throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, ParserConfigurationException, SAXException, IOException {
-		this.existManager.dropCollection(KorisnikRepository.KORISNICI_COLLECTION);
-		this.existManager.dropCollection(ZalbaRepository.ZALBE_COLLECTION);
-		this.existManager.dropCollection(ResenjeRepository.RESENJA_COLLECTION);
-		this.existManager.save(KorisnikRepository.KORISNICI_COLLECTION, "poverenik@gmail.com", this.domParser.buildDocumentFromFile(POVERENIK1));
+		this.existManager.dropCollection(KorisnikExist.KORISNICI_COLLECTION);
+		this.existManager.dropCollection(ZalbaExist.ZALBE_COLLECTION);
+		this.existManager.dropCollection(ResenjeExist.RESENJA_COLLECTION);
+		this.existManager.save(KorisnikExist.KORISNICI_COLLECTION, "poverenik@gmail.com", this.domParser.buildDocumentFromFile(POVERENIK1));
 	}
 	
 }

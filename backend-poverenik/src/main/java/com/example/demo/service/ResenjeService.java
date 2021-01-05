@@ -35,15 +35,15 @@ import com.example.demo.model.enums.StatusZalbe;
 import com.example.demo.parser.DOMParser;
 import com.example.demo.parser.JAXBParser;
 import com.example.demo.parser.XSLTransformer;
-import com.example.demo.repository.ResenjeRepository;
-import com.example.demo.repository.ZalbaRepository;
+import com.example.demo.repository.xml.ResenjeExist;
+import com.example.demo.repository.xml.ZalbaExist;
 import com.example.demo.ws.utils.SOAPService;
 
 @Service
 public class ResenjeService {
 	
 	@Autowired
-	private ResenjeRepository resenjeRepository;
+	private ResenjeExist resenjeRepository;
 	
 	@Autowired
 	private DOMParser domParser;
@@ -55,7 +55,7 @@ public class ResenjeService {
 	private XSLTransformer xslTransformer;
 	
 	@Autowired
-	private ZalbaRepository zalbaRepository;
+	private ZalbaExist zalbaRepository;
 	
 	@Autowired
 	private JAXBParser jaxbParser;
@@ -70,7 +70,7 @@ public class ResenjeService {
 		Element resenje = (Element) document.getElementsByTagNameNS(Namespaces.RESENJE, "Resenje").item(0);
 		String brojZalbe = resenje.getElementsByTagNameNS(Namespaces.RESENJE, "brojZalbe").item(0).getTextContent();
 		resenje.removeChild(resenje.getElementsByTagNameNS(Namespaces.RESENJE, "brojZalbe").item(0));
-		this.domParser.removeXmlSpace(document);
+
 		Document zalbaDocument = this.zalbaRepository.load(brojZalbe);
 		Element zalba = (Element) zalbaDocument.getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").item(0);
 

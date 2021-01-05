@@ -4,8 +4,8 @@ import { HtmlViewerComponent } from './components/main/html-viewer/html-viewer.c
 import { LoginFormComponent } from './components/auth/login-form/login-form.component';
 import { PdfViewerComponent } from './components/main/pdf-viewer/pdf-viewer.component';
 import { RegisterFormComponent } from './components/auth/register-form/register-form.component';
-import { ObavestenjeFormComponent } from './components/odgovor/obavestenje-form/obavestenje-form.component';
-import { OdgovorListComponent } from './components/odgovor/odgovor-list/odgovor-list.component';
+import { ObavestenjeFormComponent } from './components/odluka/obavestenje-form/obavestenje-form.component';
+import { OdlukaListComponent } from './components/odluka/odluka-list/odluka-list.component';
 import { ZahtevFormComponent } from './components/zahtev/zahtev-form/zahtev-form.component';
 import { ZahtevListComponent } from './components/zahtev/zahtev-list/zahtev-list.component';
 import {
@@ -21,7 +21,7 @@ import {
 } from './constants/router';
 import { GradjaninGuard } from './guard/gradjanin/gradjanin.guard';
 import { SluzbenikGuard } from './guard/sluzbenik/sluzbenik.guard';
-import { OdbijanjeFormComponent } from './components/odgovor/odbijanje-form/odbijanje-form.component';
+import { OdbijanjeFormComponent } from './components/odluka/odbijanje-form/odbijanje-form.component';
 
 const routes: Routes = [
   {
@@ -53,7 +53,7 @@ const routes: Routes = [
   },
   {
     path: ODGOVOR_LIST_PATH,
-    component: OdgovorListComponent
+    component: OdlukaListComponent
   },
   {
     path: HTML_PATH,

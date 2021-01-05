@@ -21,12 +21,8 @@ import javax.xml.transform.stream.StreamResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-
-import com.example.demo.constants.Namespaces;
 
 @Component
 public class DOMParser {
@@ -69,60 +65,13 @@ public class DOMParser {
 	public String buildXml(Document document) throws TransformerException {
 		StringWriter string = new StringWriter();
 		Transformer transformer = this.transformerFactory.newTransformer();
+		transformer.setOutputProperty("{http://xml.apache.org/xalan}indent-amount", "2");	//ovo sam dodala
 		transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
 		transformer.setOutputProperty(OutputKeys.METHOD, "xml");
 		transformer.setOutputProperty(OutputKeys.INDENT, "yes");	
 		transformer.setOutputProperty(OutputKeys.ENCODING, "utf-8");
 		transformer.transform(new DOMSource(document), new StreamResult(string));
 		return string.toString();
-	}
-	
-	public void removeXmlSpace(Document document) {
-		NodeList bolds = document.getElementsByTagNameNS(Namespaces.OSNOVA, "bold");
-		for (int i = 0; i < bolds.getLength(); ++i) {
-			Element bold = (Element) bolds.item(i);
-			bold.removeAttribute("xml:space");
-		}
-		NodeList italics = document.getElementsByTagNameNS(Namespaces.OSNOVA, "italic");
-		for (int i = 0; i < italics.getLength(); ++i) {
-			Element italic = (Element) italics.item(i);
-			italic.removeAttribute("xml:space");
-		}
-		NodeList pasusi = document.getElementsByTagNameNS(Namespaces.OSNOVA, "Pasus");
-		for (int i = 0; i < pasusi.getLength(); ++i) {
-			Element pasus = (Element) pasusi.item(i);
-			pasus.removeAttribute("xml:space");
-			pasus.setPrefix("resenje");
-		}
-		NodeList zakoni = document.getElementsByTagNameNS(Namespaces.OSNOVA, "zakon");
-		for (int i = 0; i < zakoni.getLength(); ++i) {
-			Element zakon = (Element) zakoni.item(i);
-			zakon.removeAttribute("xml:space");
-			zakon.setPrefix("resenje");
-		}
-		NodeList detalji = document.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji");
-		for (int i = 0; i < detalji.getLength(); ++i) {
-			Element detalj = (Element) detalji.item(i);
-			detalj.removeAttribute("xml:space");
-		}
-		NodeList odluke = document.getElementsByTagNameNS(Namespaces.OSNOVA, "Odluka");
-		for (int i = 0; i < odluke.getLength(); ++i) {
-			Element odluka = (Element) odluke.item(i);
-			odluka.removeAttribute("xml:space");
-			odluka.setPrefix("resenje");
-		}
-		NodeList dispozitive = document.getElementsByTagNameNS(Namespaces.OSNOVA, "Dispozitiva");
-		for (int i = 0; i < dispozitive.getLength(); ++i) {
-			Element dispozitiva = (Element) dispozitive.item(i);
-			dispozitiva.removeAttribute("xml:space");
-			dispozitiva.setPrefix("resenje");
-		}
-		NodeList obrazlozenja = document.getElementsByTagNameNS(Namespaces.OSNOVA, "Obrazlozenje");
-		for (int i = 0; i < obrazlozenja.getLength(); ++i) {
-			Element obrazlozenje = (Element) obrazlozenja.item(i);
-			obrazlozenje.removeAttribute("xml:space");
-			obrazlozenje.setPrefix("resenje");
-		}
 	}
 	
 }

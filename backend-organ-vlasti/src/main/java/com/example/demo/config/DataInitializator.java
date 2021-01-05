@@ -17,10 +17,10 @@ import com.example.demo.constants.Constants;
 import com.example.demo.exist.ExistManager;
 import com.example.demo.fuseki.FusekiManager;
 import com.example.demo.parser.DOMParser;
-import com.example.demo.repository.KorisnikExist;
-import com.example.demo.repository.OdlukaExist;
-import com.example.demo.repository.OrganVlastiExist;
-import com.example.demo.repository.ZahtevExist;
+import com.example.demo.repository.xml.KorisnikExist;
+import com.example.demo.repository.xml.OdlukaExist;
+import com.example.demo.repository.xml.OrganVlastiExist;
+import com.example.demo.repository.xml.ZahtevExist;
 
 @Component
 public class DataInitializator {

@@ -16,13 +16,13 @@ import { FormContainerComponent } from './components/layout/form-container/form-
 import { SpinnerButtonComponent } from './components/layout/spinner-button/spinner-button.component';
 import { CenterContainerComponent } from './components/layout/center-container/center-container.component';
 import { ZahtevListComponent } from './components/zahtev/zahtev-list/zahtev-list.component';
-import { ObavestenjeFormComponent } from './components/odgovor/obavestenje-form/obavestenje-form.component';
+import { ObavestenjeFormComponent } from './components/odluka/obavestenje-form/obavestenje-form.component';
 import { RegisterFormComponent } from './components/auth/register-form/register-form.component';
-import { OdgovorListComponent } from './components/odgovor/odgovor-list/odgovor-list.component';
+import { OdlukaListComponent } from './components/odluka/odluka-list/odluka-list.component';
 import { PreloaderComponent } from './components/layout/preloader/preloader.component';
 import { HtmlViewerComponent } from './components/main/html-viewer/html-viewer.component';
 import { PdfViewerComponent } from './components/main/pdf-viewer/pdf-viewer.component';
-import { OdbijanjeFormComponent } from './components/odgovor/odbijanje-form/odbijanje-form.component';
+import { OdbijanjeFormComponent } from './components/odluka/odbijanje-form/odbijanje-form.component';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
@@ -39,6 +39,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+import { ZalbaListComponent } from './components/zalba/zalba-list/zalba-list.component';
+import { ResenjeListComponent } from './components/resenje/resenje-list/resenje-list.component';
 
 @NgModule({
   declarations: [
@@ -52,12 +54,14 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
     RegisterFormComponent,
     ZahtevListComponent,
     ObavestenjeFormComponent,
-    OdgovorListComponent,
+    OdlukaListComponent,
     PreloaderComponent,
     SafeHtmlPipe,
     HtmlViewerComponent,
     PdfViewerComponent,
-    OdbijanjeFormComponent
+    OdbijanjeFormComponent,
+    ZalbaListComponent,
+    ResenjeListComponent
   ],
   imports: [
     BrowserModule,

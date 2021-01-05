@@ -6,7 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.example.demo.model.OrganVlasti;
 import com.example.demo.parser.JAXBParser;
-import com.example.demo.repository.OrganVlastiExist;
+import com.example.demo.repository.xml.OrganVlastiExist;
+
 import org.springframework.stereotype.Service;
 import org.xmldb.api.base.XMLDBException;
 

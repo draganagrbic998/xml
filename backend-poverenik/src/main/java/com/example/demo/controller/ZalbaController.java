@@ -23,7 +23,7 @@ import org.w3c.dom.DOMException;
 import org.xml.sax.SAXException;
 import org.xmldb.api.base.XMLDBException;
 
-import com.example.demo.service.ZalbaService;
+import com.example.demo.service.zalba.ZalbaService;
 
 @RestController
 @RequestMapping(value = "/api/zalbe")

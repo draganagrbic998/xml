@@ -24,7 +24,7 @@ import com.example.demo.exception.EmailTakenException;
 import com.example.demo.model.Korisnik;
 import com.example.demo.parser.DOMParser;
 import com.example.demo.parser.JAXBParser;
-import com.example.demo.repository.KorisnikExist;
+import com.example.demo.repository.xml.KorisnikExist;
 import com.example.demo.security.TokenUtils;
 
 @Service

@@ -25,7 +25,7 @@ import com.example.demo.constants.Namespaces;
 import com.example.demo.fuseki.Prefixes;
 import com.example.demo.model.enums.TipOdgovora;
 import com.example.demo.parser.DOMParser;
-import com.example.demo.repository.ZahtevExist;
+import com.example.demo.repository.xml.ZahtevExist;
 import com.example.demo.service.KorisnikService;
 import com.ibm.icu.text.SimpleDateFormat;
 

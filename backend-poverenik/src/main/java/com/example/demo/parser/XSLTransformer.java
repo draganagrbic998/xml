@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Result;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
@@ -27,26 +28,37 @@ import com.example.demo.constants.Constants;
 @Component
 public class XSLTransformer {
 
+	private TransformerFactory transformerFactory;
+	private static final String GRDDL_FILE = Constants.DATA_FOLDER + File.separatorChar + "grddl.xsl";
+	
 	@Autowired
 	private DOMParser domParser;
-
-	private TransformerFactory transformerFactory;
 	
 	public XSLTransformer() {
 		super();
-		this.transformerFactory = TransformerFactory.newInstance();	//da koristim mozda iz domparsera??
+		this.transformerFactory = TransformerFactory.newInstance();
+	}
+	
+	public ByteArrayOutputStream generateMetadata(String xml) throws TransformerException {
+		StreamSource in = new StreamSource(new StringReader(xml));
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		Transformer transformer = this.transformerFactory.newTransformer(new StreamSource(new File(GRDDL_FILE)));
+		transformer.setOutputProperty("{http://xml.apache.org/xalan}indent-amount", "2");
+		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+		StreamResult output = new StreamResult(out);
+		transformer.transform(in, output);
+		return out;
 	}
 	
 	public ByteArrayOutputStream generateHtml(Document document, String xslPath) throws TransformerException {
 		StreamSource in = new StreamSource(new StringReader(this.domParser.buildXml(document)));
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		Transformer transformer = this.transformerFactory.newTransformer(new StreamSource(new File(xslPath)));
-		Result output = new StreamResult(out);
+		transformer.setOutputProperty("{http://xml.apache.org/xalan}indent-amount", "2");
+		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+		transformer.setOutputProperty(OutputKeys.METHOD, "xhtml");
+		StreamResult output = new StreamResult(out);
 		transformer.transform(in, output);
-		//out.toString() koristi kad oces da vratis html kao tekst
-		//transformer.setOutputProperty("{http://xml.apache.org/xalan}indent-amount", "2");
-		//transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-		//transformer.setOutputProperty(OutputKeys.METHOD, "xhtml");
 		return out;
 	}
 		

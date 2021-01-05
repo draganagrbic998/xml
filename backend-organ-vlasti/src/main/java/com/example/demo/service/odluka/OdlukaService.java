@@ -30,11 +30,11 @@ import com.example.demo.model.Korisnik;
 import com.example.demo.model.enums.StatusZahteva;
 import com.example.demo.model.enums.TipOdgovora;
 import com.example.demo.parser.XSLTransformer;
-import com.example.demo.repository.KorisnikRDF;
-import com.example.demo.repository.OdlukaExist;
-import com.example.demo.repository.OdlukaRDF;
-import com.example.demo.repository.ZahtevExist;
-import com.example.demo.repository.ZahtevRDF;
+import com.example.demo.repository.rdf.KorisnikRDF;
+import com.example.demo.repository.rdf.OdlukaRDF;
+import com.example.demo.repository.rdf.ZahtevRDF;
+import com.example.demo.repository.xml.OdlukaExist;
+import com.example.demo.repository.xml.ZahtevExist;
 import com.example.demo.service.KorisnikService;
 
 @Service

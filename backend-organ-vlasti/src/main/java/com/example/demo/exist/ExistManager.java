@@ -81,6 +81,8 @@ public class ExistManager {
 			xpathService.setNamespace("", Namespaces.OSNOVA);
 			xpathService.setNamespace("zahtev", Namespaces.ZAHTEV);
 			xpathService.setNamespace("odgovor", Namespaces.ODLUKA);
+			xpathService.setNamespace("zalba", Namespaces.ZALBA);
+			xpathService.setNamespace("resenje", Namespaces.RESENJE);
 			return xpathService.query(xpathExp);
 		} 
 		finally {

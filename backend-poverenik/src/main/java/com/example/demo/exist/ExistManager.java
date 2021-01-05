@@ -25,7 +25,7 @@ import com.example.demo.constants.Namespaces;
 public class ExistManager {
 
 	@Autowired
-	private AuthenticationUtilities authUtilities;
+	private ExistAuthentication authUtilities;
 	
 	@SuppressWarnings("deprecation")
 	public void createConnection() throws ClassNotFoundException, XMLDBException, InstantiationException, IllegalAccessException {
@@ -77,7 +77,7 @@ public class ExistManager {
 			this.createConnection();
 			collection = this.getCollection(collectionId, 0);
 			XPathQueryService xpathService = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
-			xpathService.setProperty("indent", "yes");
+			xpathService.setProperty(OutputKeys.INDENT, "yes");
 			xpathService.setNamespace("", Namespaces.OSNOVA);
 			xpathService.setNamespace("zalba", Namespaces.ZALBA);
 			xpathService.setNamespace("resenje", Namespaces.RESENJE);
