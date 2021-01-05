@@ -3,12 +3,12 @@ package com.example.demo.constants;
 import java.io.File;
 
 public class Constants {
-	
+
 	public static final String BACKEND_URL = "http://localhost:8082";
-	public static final String FRONTEND_URL = "http://localhost:4200";	//treba 4201
+	public static final String FRONTEND_URL = "http://localhost:4200"; // treba 4201
 	public static final String POVERENIK = "poverenik";
 	public static final String GRADJANIN = "gradjanin";
-	
+
 	public static final String CREATE_ZALBA_SERVICE = "http://localhost:8081/ws/createZalba";
 	public static final String CREATE_RESENJE_SERVICE = "http://localhost:8081/ws/createResenje";
 
