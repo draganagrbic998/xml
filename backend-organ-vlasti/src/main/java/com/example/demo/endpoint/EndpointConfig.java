@@ -16,10 +16,13 @@ public class EndpointConfig {
 
 	@Autowired
 	private Bus bus;
-
+	
+	@Autowired
+	private CreateZalbaPortImpl czpi;
+	
 	@Bean
 	public Endpoint createZalbaEndpoint() {
-		EndpointImpl endpoint = new EndpointImpl(bus, new CreateZalbaPortImpl());
+		EndpointImpl endpoint = new EndpointImpl(bus, czpi);
 		endpoint.publish("/createZalba");
 		return endpoint;
 	}

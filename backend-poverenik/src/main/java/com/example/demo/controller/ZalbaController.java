@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.soap.SOAPException;
 import javax.xml.transform.TransformerException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.w3c.dom.DOMException;
 import org.xml.sax.SAXException;
 import org.xmldb.api.base.XMLDBException;
 
@@ -29,36 +31,42 @@ public class ZalbaController {
 
 	@Autowired
 	private ZalbaService zalbaService;
-			
+
 	@PostMapping(consumes = MediaType.TEXT_XML_VALUE)
-	public ResponseEntity<Void> save(@RequestBody String xml) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, JAXBException, ParserConfigurationException, SAXException, IOException, TransformerException {		
+	public ResponseEntity<Void> save(@RequestBody String xml) throws ClassNotFoundException, InstantiationException,
+			IllegalAccessException, XMLDBException, JAXBException, ParserConfigurationException, SAXException,
+			IOException, TransformerException, UnsupportedOperationException, DOMException, SOAPException {
 		this.zalbaService.save(xml);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
-	
+
 	@GetMapping(produces = MediaType.TEXT_XML_VALUE)
-	public ResponseEntity<String> list() throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, ParserConfigurationException, SAXException, IOException, TransformerException{
+	public ResponseEntity<String> list() throws ClassNotFoundException, InstantiationException, IllegalAccessException,
+			XMLDBException, ParserConfigurationException, SAXException, IOException, TransformerException {
 		return new ResponseEntity<>(this.zalbaService.retrieve(), HttpStatus.OK);
 	}
-	
+
 	@GetMapping(value = "/{broj}", produces = "text/html; charset=utf-8")
-	public ResponseEntity<String> html(@PathVariable String broj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
+	public ResponseEntity<String> html(@PathVariable String broj) throws ClassNotFoundException, InstantiationException,
+			IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
 		return new ResponseEntity<>(this.zalbaService.generateHtml(broj), HttpStatus.OK);
 	}
-	
+
 	@GetMapping(value = "/{broj}/pdf", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-	public ResponseEntity<Object> pdf(@PathVariable String broj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
+	public ResponseEntity<Object> pdf(@PathVariable String broj) throws ClassNotFoundException, InstantiationException,
+			IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
 		Resource resource = this.zalbaService.generatePdf(broj);
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
 				.body(resource);
 	}
-	
+
 	@GetMapping(value = "/rdf")
-	public ResponseEntity<Void> extractMetadata() throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, JAXBException, ParserConfigurationException, SAXException, IOException, TransformerException {		
+	public ResponseEntity<Void> extractMetadata()
+			throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException,
+			JAXBException, ParserConfigurationException, SAXException, IOException, TransformerException {
 		this.zalbaService.extractMetadata();
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-	
-}
 
+}

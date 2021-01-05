@@ -12,12 +12,13 @@ import java.util.Date;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.soap.SOAPException;
 import javax.xml.transform.TransformerException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentFragment;
 import org.w3c.dom.Element;
@@ -38,6 +39,7 @@ import com.example.demo.parser.JAXBParser;
 import com.example.demo.parser.XSLTransformer;
 import com.example.demo.rdf.MetadataExtraction;
 import com.example.demo.repository.ZalbaRepository;
+import com.example.demo.ws.utils.SOAPService;
 import com.example.demo.ws.zalbepodaci.data.ZalbePodaciData;
 
 @Service
@@ -68,9 +70,9 @@ public class ZalbaService {
 	private static final String XSL_PATH_ODLUKA = Constants.XSL_FOLDER + File.separatorChar + "/zalba_odluka.xsl";
 	private static final String GEN_PATH = Constants.GEN_FOLDER + File.separatorChar + "zalbe" + File.separatorChar;
 
-	public void save(String xml)
-			throws ParserConfigurationException, SAXException, IOException, JAXBException, ClassNotFoundException,
-			InstantiationException, IllegalAccessException, XMLDBException, TransformerException {
+	public void save(String xml) throws ParserConfigurationException, SAXException, IOException, JAXBException,
+			ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException,
+			TransformerException, UnsupportedOperationException, DOMException, SOAPException {
 		SimpleDateFormat sdf = new SimpleDateFormat(Constants.DATE_FORMAT);
 		Document document = this.domParser.buildDocument(xml);
 		Element zalba = (Element) document.getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").item(0);
@@ -97,6 +99,8 @@ public class ZalbaService {
 		zalba.insertBefore(status, document.getElementsByTagNameNS(Namespaces.ZALBA, "datumZahteva").item(0));
 
 		this.zalbaRepository.save(document, null);
+
+		SOAPService.sendSOAPMessage(document, "zalba");
 	}
 
 	public String retrieve() throws XMLDBException, ClassNotFoundException, InstantiationException,
@@ -150,14 +154,14 @@ public class ZalbaService {
 		int cutanja = 0;
 		int delimicnosti = 0;
 		int odbijanja = 0;
-		
+
 		while (it.hasMoreResources()) {
 			XMLResource resource = (XMLResource) it.nextResource();
 			Document document = this.domParser.buildDocument(resource.getContent().toString());
-			
+
 			String tz = getTipZalbe(((Element) document.getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").item(0))
-							.getAttributeNS(Namespaces.XSI, "type")) + "";
-			
+					.getAttributeNS(Namespaces.XSI, "type")) + "";
+
 			if (tz.equalsIgnoreCase("cutanje"))
 				cutanja++;
 			else if (tz.equalsIgnoreCase("delimicnost"))
@@ -169,7 +173,7 @@ public class ZalbaService {
 		ip.setZalbeCutanja(BigInteger.valueOf(cutanja));
 		ip.setZalbeDelimicnosti(BigInteger.valueOf(delimicnosti));
 		ip.setZalbeOdbijanja(BigInteger.valueOf(odbijanja));
-		
+
 		return ip;
 	}
 

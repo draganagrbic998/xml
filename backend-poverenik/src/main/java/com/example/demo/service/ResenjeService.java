@@ -11,6 +11,7 @@ import java.util.Date;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.soap.SOAPException;
 import javax.xml.transform.TransformerException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,7 @@ import com.example.demo.parser.JAXBParser;
 import com.example.demo.parser.XSLTransformer;
 import com.example.demo.repository.ResenjeRepository;
 import com.example.demo.repository.ZalbaRepository;
+import com.example.demo.ws.utils.SOAPService;
 
 @Service
 public class ResenjeService {
@@ -62,7 +64,7 @@ public class ResenjeService {
 	private static final String XSL_PATH = Constants.XSL_FOLDER + "/resenje.xsl";
 	private static final String GEN_PATH = Constants.GEN_FOLDER + File.separatorChar + "resenja" + File.separatorChar;
 	
-	public void save(String xml) throws ParserConfigurationException, SAXException, IOException, JAXBException, ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException {
+	public void save(String xml) throws ParserConfigurationException, SAXException, IOException, JAXBException, ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, SOAPException {
 		SimpleDateFormat sdf = new SimpleDateFormat(Constants.DATE_FORMAT);
 		Document document = this.domParser.buildDocument(xml);
 		Element resenje = (Element) document.getElementsByTagNameNS(Namespaces.RESENJE, "Resenje").item(0);
@@ -98,7 +100,9 @@ public class ResenjeService {
 				
 		zalba.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.odgovoreno + "");
 		this.zalbaRepository.save(zalbaDocument, brojZalbe);
-		this.resenjeRepository.save(document, null);	
+		this.resenjeRepository.save(document, null);
+		
+		SOAPService.sendSOAPMessage(document, "resenje");
 	}
 	
 	public String retrieve() throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException, ParserConfigurationException, SAXException, IOException, TransformerException{
