@@ -9,7 +9,7 @@ import com.example.demo.constants.Constants;
 import com.example.demo.exist.ExistManager;
 
 @Repository
-public class OrganVlastiRepository {
+public class OrganVlastiExist {
 
 	@Autowired
 	private ExistManager existManager;

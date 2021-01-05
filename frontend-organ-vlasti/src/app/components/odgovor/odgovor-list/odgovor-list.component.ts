@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { OdgovorDTO } from 'src/app/models/odgovorDTO';
-import { OdgovorService } from 'src/app/services/odgovor/odgovor.service';
+import { OdlukaService } from 'src/app/services/odluka/odluka.service';
 
 @Component({
   selector: 'app-odgovor-list',
@@ -12,7 +12,7 @@ import { OdgovorService } from 'src/app/services/odgovor/odgovor.service';
 export class OdgovorListComponent implements AfterViewInit {
 
   constructor(
-    private odgovorService: OdgovorService
+    private odgovorService: OdlukaService
   ) { }
 
   columns: string[] = ['tipOdgovora', 'datum', 'datumZahteva', 'html', 'pdf'];

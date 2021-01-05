@@ -22,7 +22,8 @@ import org.w3c.dom.DOMException;
 import org.xml.sax.SAXException;
 import org.xmldb.api.base.XMLDBException;
 
-import com.example.demo.service.ZahtevService;
+import com.example.demo.service.zahtev.ZahtevService;
+
 import org.springframework.core.io.Resource;
 
 @RestController
@@ -31,10 +32,10 @@ public class ZahtevController {
 
 	@Autowired
 	private ZahtevService zahtevService;
-			
+				
 	@PostMapping(consumes = MediaType.TEXT_XML_VALUE)
 	public ResponseEntity<Void> save(@RequestBody String xml) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, JAXBException, ParserConfigurationException, SAXException, IOException, TransformerException {		
-		this.zahtevService.save(xml);
+		this.zahtevService.add(xml);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	

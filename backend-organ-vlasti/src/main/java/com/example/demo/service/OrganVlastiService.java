@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.example.demo.model.OrganVlasti;
 import com.example.demo.parser.JAXBParser;
-import com.example.demo.repository.OrganVlastiRepository;
+import com.example.demo.repository.OrganVlastiExist;
 import org.springframework.stereotype.Service;
 import org.xmldb.api.base.XMLDBException;
 
@@ -14,7 +14,7 @@ import org.xmldb.api.base.XMLDBException;
 public class OrganVlastiService {
 
 	@Autowired
-	private OrganVlastiRepository organVlastiRepository;
+	private OrganVlastiExist organVlastiRepository;
 	
 	@Autowired
 	private JAXBParser jaxbParser;

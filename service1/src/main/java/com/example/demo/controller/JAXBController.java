@@ -42,6 +42,8 @@ public class JAXBController {
 		JAXBContext context = JAXBContext.newInstance(className);
 		Unmarshaller unmarshaller = context.createUnmarshaller();
 		unmarshaller.setSchema(schema);
+		//            unmarshaller.setEventHandler(new MyValidationEventHandler());
+
 		Object obj = unmarshaller.unmarshal(new File(testFile));		
 		if (obj instanceof DocumentEntity) {
 			DocumentEntity documentType = (DocumentEntity) obj;

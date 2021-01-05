@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { OdgovorService } from 'src/app/services/odgovor/odgovor.service';
+import { OdlukaService } from 'src/app/services/odluka/odluka.service';
 import { ZahtevService } from 'src/app/services/zahtev/zahtev.service';
 
 @Component({
@@ -12,7 +12,7 @@ export class HtmlViewerComponent implements OnInit {
 
   constructor(
     private zahtevService: ZahtevService,
-    private odgovorService: OdgovorService,
+    private odgovorService: OdlukaService,
     private route: ActivatedRoute
   ) { }
 

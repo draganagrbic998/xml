@@ -3,7 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { SNACKBAR_CLOSE, SNACKBAR_ERROR, SNACKBAR_ERROR_OPTIONS, SNACKBAR_SUCCESS_OPTIONS } from 'src/app/constants/snackbar';
 import { Odbijanje } from 'src/app/models/odbijanje';
-import { OdgovorService } from 'src/app/services/odgovor/odgovor.service';
+import { OdlukaService } from 'src/app/services/odluka/odluka.service';
 import { XonomyService } from 'src/app/services/xonomy/xonomy.service';
 
 declare const Xonomy: any;
@@ -16,7 +16,7 @@ declare const Xonomy: any;
 export class OdbijanjeFormComponent implements AfterViewInit {
 
   constructor(
-    private odgovorService: OdgovorService,
+    private odgovorService: OdlukaService,
     private xonomyService: XonomyService,
     private snackBar: MatSnackBar,
     private route: ActivatedRoute

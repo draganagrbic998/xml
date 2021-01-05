@@ -20,7 +20,6 @@ import { ObavestenjeFormComponent } from './components/odgovor/obavestenje-form/
 import { RegisterFormComponent } from './components/auth/register-form/register-form.component';
 import { OdgovorListComponent } from './components/odgovor/odgovor-list/odgovor-list.component';
 import { PreloaderComponent } from './components/layout/preloader/preloader.component';
-import { EmptyContainerComponent } from './components/layout/empty-container/empty-container.component';
 import { HtmlViewerComponent } from './components/main/html-viewer/html-viewer.component';
 import { PdfViewerComponent } from './components/main/pdf-viewer/pdf-viewer.component';
 import { OdbijanjeFormComponent } from './components/odgovor/odbijanje-form/odbijanje-form.component';
@@ -55,7 +54,6 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
     ObavestenjeFormComponent,
     OdgovorListComponent,
     PreloaderComponent,
-    EmptyContainerComponent,
     SafeHtmlPipe,
     HtmlViewerComponent,
     PdfViewerComponent,

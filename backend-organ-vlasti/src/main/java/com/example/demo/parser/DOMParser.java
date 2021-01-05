@@ -21,12 +21,8 @@ import javax.xml.transform.stream.StreamResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-
-import com.example.demo.constants.Namespaces;
 
 @Component
 public class DOMParser {
@@ -69,25 +65,13 @@ public class DOMParser {
 	public String buildXml(Document document) throws TransformerException {
 		StringWriter string = new StringWriter();
 		Transformer transformer = this.transformerFactory.newTransformer();
+		transformer.setOutputProperty("{http://xml.apache.org/xalan}indent-amount", "2");	//ovo sam dodala
 		transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
 		transformer.setOutputProperty(OutputKeys.METHOD, "xml");
 		transformer.setOutputProperty(OutputKeys.INDENT, "yes");	
 		transformer.setOutputProperty(OutputKeys.ENCODING, "utf-8");
 		transformer.transform(new DOMSource(document), new StreamResult(string));
 		return string.toString();
-	}
-	
-	public void removeXmlSpace(Document document) {
-		NodeList bolds = document.getElementsByTagNameNS(Namespaces.OSNOVA, "bold");
-		for (int i = 0; i < bolds.getLength(); ++i) {
-			Element bold = (Element) bolds.item(i);
-			bold.removeAttribute("xml:space");
-		}
-		NodeList italics = document.getElementsByTagNameNS(Namespaces.OSNOVA, "italic");
-		for (int i = 0; i < italics.getLength(); ++i) {
-			Element italic = (Element) italics.item(i);
-			italic.removeAttribute("xml:space");
-		}
 	}
 	
 }

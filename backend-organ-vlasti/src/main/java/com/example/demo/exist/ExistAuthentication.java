@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-public class AuthenticationUtilities {
+public class ExistAuthentication {
 
 	@Value("${exist.user}")
 	private String user;
@@ -24,7 +24,7 @@ public class AuthenticationUtilities {
 	@Value("${exist.uri}")
 	private String uri;
 
-	public AuthenticationUtilities() {
+	public ExistAuthentication() {
 		super();
 	}
 

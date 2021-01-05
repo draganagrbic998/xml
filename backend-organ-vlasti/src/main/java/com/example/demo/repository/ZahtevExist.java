@@ -16,14 +16,14 @@ import com.example.demo.constants.Constants;
 import com.example.demo.exist.ExistManager;
 
 @Repository
-public class ZahtevRepository {
+public class ZahtevExist {
 
 	@Autowired
 	private ExistManager existManager;
 		
 	public static final String ZAHTEVI_COLLECTION = Constants.COLLECTIONS_PREFIX + "/zahtevi";
 	
-	public void save(Document document, String documentId) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, JAXBException, TransformerException, SAXException, IOException {
+	public void save(String documentId, Document document) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, JAXBException, TransformerException, SAXException, IOException {
 		this.existManager.save(ZAHTEVI_COLLECTION, documentId, document);
 	}
 

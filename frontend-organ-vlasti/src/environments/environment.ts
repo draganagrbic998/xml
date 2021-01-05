@@ -7,7 +7,7 @@ export const environment = {
   baseUrl: 'http://localhost:8081',
   apiAuth: 'auth',
   apiZahtevi: 'api/zahtevi',
-  apiOdgovori: 'api/odgovori'
+  apiOdluke: 'api/odgovori'
 };
 
 /*

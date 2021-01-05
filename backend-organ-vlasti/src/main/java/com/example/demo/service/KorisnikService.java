@@ -24,14 +24,14 @@ import com.example.demo.exception.EmailTakenException;
 import com.example.demo.model.Korisnik;
 import com.example.demo.parser.DOMParser;
 import com.example.demo.parser.JAXBParser;
-import com.example.demo.repository.KorisnikRepository;
+import com.example.demo.repository.KorisnikExist;
 import com.example.demo.security.TokenUtils;
 
 @Service
 public class KorisnikService implements UserDetailsService {
 
 	@Autowired
-	private KorisnikRepository korisnikRepository;
+	private KorisnikExist korisnikRepository;
 	
 	@Autowired
 	private DOMParser domParser;
@@ -68,7 +68,7 @@ public class KorisnikService implements UserDetailsService {
 	}
 	
 	public void save(Korisnik korisnik) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, JAXBException, TransformerException {
-		this.korisnikRepository.save(this.jaxbParser.marshal(korisnik), korisnik.getOsoba().getMejl());
+		this.korisnikRepository.save(korisnik.getOsoba().getMejl(), this.jaxbParser.marshal(korisnik));
 	}
 	
 	public Korisnik load(String documentId) throws ClassNotFoundException, InstantiationException, IllegalAccessException, JAXBException, XMLDBException {

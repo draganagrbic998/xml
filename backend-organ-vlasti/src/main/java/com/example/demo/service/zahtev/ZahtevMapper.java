@@ -1,20 +1,16 @@
-package com.example.demo.service;
+package com.example.demo.service.zahtev;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.text.ParseException;
 import java.util.Date;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentFragment;
@@ -28,21 +24,16 @@ import org.xmldb.api.modules.XMLResource;
 
 import com.example.demo.constants.Constants;
 import com.example.demo.constants.Namespaces;
-import com.example.demo.model.Korisnik;
+import com.example.demo.fuseki.Prefixes;
 import com.example.demo.model.enums.StatusZahteva;
 import com.example.demo.parser.DOMParser;
 import com.example.demo.parser.JAXBParser;
-import com.example.demo.parser.XSLTransformer;
-import com.example.demo.repository.ZahtevRepository;
+import com.example.demo.service.KorisnikService;
+import com.example.demo.service.OrganVlastiService;
 import com.ibm.icu.text.SimpleDateFormat;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 
-@Service
-public class ZahtevService {
-	
-	@Autowired
-	private ZahtevRepository zahtevRepository;
+@Component
+public class ZahtevMapper {
 	
 	@Autowired
 	private DOMParser domParser;
@@ -55,21 +46,14 @@ public class ZahtevService {
 	
 	@Autowired
 	private OrganVlastiService organVlastiService;
-		
-	@Autowired
-	private XSLTransformer xslTransformer;
+	
+	private static final SimpleDateFormat sdf = new SimpleDateFormat(Constants.DATE_FORMAT);
 
-	private static final String XSL_PATH = Constants.XSL_FOLDER + File.separatorChar + "zahtev.xsl";
-	private static final String XSL_FO_PATH = Constants.XSL_FOLDER + File.separatorChar + "zahtev_fo.xsl";
-	private static final String GEN_PATH = Constants.GEN_FOLDER + File.separatorChar + "zahtevi" + File.separatorChar;
-
-	public void save(String xml) throws ParserConfigurationException, SAXException, IOException, JAXBException, ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException {
-		SimpleDateFormat sdf = new SimpleDateFormat(Constants.DATE_FORMAT);
+	public Document map(String xml) throws ParserConfigurationException, SAXException, IOException, JAXBException, DOMException, ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
 		Document document = this.domParser.buildDocument(xml);
-		this.domParser.removeXmlSpace(document);
 		Element zahtev = (Element) document.getElementsByTagNameNS(Namespaces.ZAHTEV, "Zahtev").item(0);
-		
 		DocumentFragment documentFragment = document.createDocumentFragment();
+		
 		Node datum = document.createElementNS(Namespaces.OSNOVA, "datum");
 		datum.setTextContent(sdf.format(new Date()));
 		Element korisnik = (Element) this.jaxbParser.marshal(this.korisnikService.currentUser()).getElementsByTagNameNS(Namespaces.OSNOVA, "Korisnik").item(0);
@@ -82,29 +66,18 @@ public class ZahtevService {
 		documentFragment.appendChild(gradjanin);
 		documentFragment.appendChild(organVlasti);
 		zahtev.insertBefore(documentFragment, document.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0));
-
-		//nzm sto moram da stavim ovaj prefix zahtev ispred, provericu to kasnije
 		Node status = document.createElementNS(Namespaces.ZAHTEV, "zahtev:status");
 		status.setTextContent(StatusZahteva.cekanje + "");
 		zahtev.appendChild(status);
-		this.zahtevRepository.save(document, null);
+		
+		return document;
 	}
 	
-	public String retrieve() throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException, ParserConfigurationException, SAXException, IOException, TransformerException, DOMException, ParseException{
-		Korisnik korisnik = this.korisnikService.currentUser();
-		String xpathExp;
-		if (korisnik.getUloga().equals(Constants.SLUZBENIK)) {
-			xpathExp = "/zahtev:Zahtev";
-		}
-		else {
-			xpathExp = String.format("/zahtev:Zahtev[Gradjanin/Osoba/mejl='%s']", korisnik.getOsoba().getMejl());
-		}
-
+	public String map(ResourceSet resources) throws ParserConfigurationException, XMLDBException, SAXException, IOException, TransformerException {
 		Document zahteviDocument = this.domParser.emptyDocument();
 		Node zahtevi = zahteviDocument.createElementNS(Namespaces.ZAHTEV, "Zahtevi");
 		zahteviDocument.appendChild(zahtevi);
-		ResourceSet result = this.zahtevRepository.list(xpathExp);
-		ResourceIterator it = result.getIterator();
+		ResourceIterator it = resources.getIterator();
 		
 		while (it.hasMoreResources()) {
 			XMLResource resource = (XMLResource) it.nextResource();
@@ -117,21 +90,51 @@ public class ZahtevService {
 			zahtevi.appendChild(zahtev);			
 		}
 		return this.domParser.buildXml(zahteviDocument);
+	}
+	
+	public Model[] map(Document document) {
+		String email = document.getElementsByTagNameNS(Namespaces.OSNOVA, "mejl").item(0).getTextContent();
+		String broj = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
+		String datum = document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).getTextContent();
+		String mesto = document.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(0).getTextContent();
 		
+		Model model = ModelFactory.createDefaultModel();
+		model.setNsPrefix("pred", Prefixes.PREDIKAT);
+		
+		model.add(
+			model.createResource(Prefixes.ZAHTEV_PREFIX + broj),
+			model.createProperty(Prefixes.PREDIKAT, "datum"),
+			model.createLiteral(datum)
+		);
+		
+		model.add(
+			model.createResource(Prefixes.ZAHTEV_PREFIX + broj),
+			model.createProperty(Prefixes.PREDIKAT, "mesto"),
+			model.createLiteral(mesto)
+		);
+		
+		model.add(
+			model.createResource(Prefixes.ZAHTEV_PREFIX + broj),
+			model.createProperty(Prefixes.PREDIKAT, "sastavljenoOdStrane"),
+			model.createResource(Prefixes.KORISNIK_PREFIX + email)
+		);
+		
+		Model model2 = ModelFactory.createDefaultModel();
+		model2.setNsPrefix("pred", Prefixes.PREDIKAT);
+		
+		
+		model2.add(
+			model.createResource(Prefixes.KORISNIK_PREFIX + email),
+			model.createProperty(Prefixes.PREDIKAT, "sastavio"),
+			model.createResource(Prefixes.ZAHTEV_PREFIX + broj)
+		);
+
+		Model[] models = new Model[2];
+		models[0] = model;
+		models[1] = model2;
+		return models;
 	}
 	
-	public String generateHtml(String broj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
-		Document document = this.zahtevRepository.load(broj);
-		ByteArrayOutputStream out = this.xslTransformer.generateHtml(document, XSL_PATH);
-		return out.toString();
-	}
 	
-	public Resource generatePdf(String broj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
-		Document document = this.zahtevRepository.load(broj);
-		ByteArrayOutputStream out = this.xslTransformer.generatePdf(document, XSL_FO_PATH);
-		Path file = Paths.get(GEN_PATH + broj + ".pdf");
-		Files.write(file, out.toByteArray());
-		return new UrlResource(file.toUri());
-	}
 	
 }

@@ -15,6 +15,7 @@ public class Constants {
 	public static final String GEN_FOLDER = DATA_FOLDER + File.separatorChar + "gen";
 	public static final String INIT_FOLDER = DATA_FOLDER + File.separatorChar + "init";
 	public static final String FOP_CONF = DATA_FOLDER + File.separatorChar + "fop.conf";
+	public static final String SPARQL_FOLDER = DATA_FOLDER + File.separatorChar + "sparql";
 
 	public static final String COLLECTIONS_PREFIX = "/db/database";
 	public static final String DATE_FORMAT = "yyyy-MM-dd";
