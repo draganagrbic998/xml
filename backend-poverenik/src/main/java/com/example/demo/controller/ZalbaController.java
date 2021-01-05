@@ -70,10 +70,4 @@ public class ZalbaController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	@GetMapping(value = "/rdf")
-	public ResponseEntity<Void> extractMetadata() throws IOException, SAXException, TransformerException {
-		this.zalbaService.extractMetadata();
-		return new ResponseEntity<>(HttpStatus.OK);
-	}
-
 }

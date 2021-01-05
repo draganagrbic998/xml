@@ -19,7 +19,6 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 import org.xmldb.api.base.ResourceIterator;
 import org.xmldb.api.base.ResourceSet;
@@ -27,14 +26,13 @@ import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
 
 import com.example.demo.constants.Constants;
-import com.example.demo.constants.Namespaces;
 import com.example.demo.model.Korisnik;
 import com.example.demo.model.enums.TipZalbe;
 import com.example.demo.parser.DOMParser;
 import com.example.demo.parser.XSLTransformer;
-import com.example.demo.rdf.MetadataExtraction;
 import com.example.demo.repository.xml.ZalbaExist;
 import com.example.demo.service.KorisnikService;
+import com.example.demo.ws.utils.SOAPService;
 import com.example.demo.ws.zalbepodaci.data.ZalbePodaciData;
 
 @Service
@@ -44,19 +42,16 @@ public class ZalbaService {
 	private ZalbaExist zalbaRepository;
 
 	@Autowired
-	private DOMParser domParser;
-
-	@Autowired
 	private KorisnikService korisnikService;
 
 	@Autowired
 	private XSLTransformer xslTransformer;
-
-	@Autowired
-	private MetadataExtraction metadataExtraction;
 	
 	@Autowired
 	private ZalbaMapper zalbaMapper;
+	
+	@Autowired
+	private DOMParser domParser;
 
 	private static final String XSL_FO_PATH_CUTANJE = Constants.XSL_FOLDER + File.separatorChar + "zalba_cutanje_fo.xsl";
 	private static final String XSL_PATH_CUTANJE = Constants.XSL_FOLDER + File.separatorChar + "/zalba_cutanje.xsl";
@@ -101,10 +96,7 @@ public class ZalbaService {
 		while (it.hasMoreResources()) {
 			XMLResource resource = (XMLResource) it.nextResource();
 			Document document = this.domParser.buildDocument(resource.getContent().toString());
-
-			String tz = getTipZalbe(((Element) document.getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").item(0))
-					.getAttributeNS(Namespaces.XSI, "type")) + "";
-
+			String tz = ZalbaMapper.getTipZalbe(document) + "";
 			if (tz.equalsIgnoreCase("cutanje"))
 				cutanja++;
 			else if (tz.equalsIgnoreCase("delimicnost"))
@@ -124,8 +116,7 @@ public class ZalbaService {
 			IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
 		Document document = this.zalbaRepository.load(broj);
 		String xslPath;
-		TipZalbe tipZalbe = getTipZalbe(((Element) document.getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").item(0))
-				.getAttributeNS(Namespaces.XSI, "type"));
+		TipZalbe tipZalbe = ZalbaMapper.getTipZalbe(document);
 		if (tipZalbe.equals(TipZalbe.cutanje)) {
 			xslPath = XSL_PATH_CUTANJE;
 		} else {
@@ -139,8 +130,7 @@ public class ZalbaService {
 			IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
 		Document document = this.zalbaRepository.load(broj);
 		String xslFoPath;
-		TipZalbe tipZalbe = getTipZalbe(((Element) document.getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").item(0))
-				.getAttributeNS(Namespaces.XSI, "type"));
+		TipZalbe tipZalbe = ZalbaMapper.getTipZalbe(document);
 		if (tipZalbe.equals(TipZalbe.cutanje)) {
 			xslFoPath = XSL_FO_PATH_CUTANJE;
 		} else {
@@ -150,19 +140,6 @@ public class ZalbaService {
 		Path file = Paths.get(GEN_PATH + broj + ".pdf");
 		Files.write(file, out.toByteArray());
 		return new UrlResource(file.toUri());
-	}
-
-	public void extractMetadata() throws IOException, SAXException, TransformerException {
-		String xmlFilePath = "data/xml/zahtev1.xml";
-		String rdfFilePath = "data/gen/zahtev.rdf";
-		this.metadataExtraction.run(xmlFilePath, rdfFilePath);
-	}
-
-	public static TipZalbe getTipZalbe(String tipZalbe) {
-		if (tipZalbe.contains("TZalbaCutanje")) {
-			return TipZalbe.cutanje;
-		}
-		return TipZalbe.odluka;
 	}
 
 	public void proslediZalbu(String broj) throws MalformedURLException, SOAPException, TransformerException, ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
