@@ -20,6 +20,9 @@ public class EndpointConfig {
 	@Autowired
 	private CreateZalbaPortImpl czpi;
 	
+	@Autowired
+	private CreateResenjePortImpl crpi;
+	
 	@Bean
 	public Endpoint createZalbaEndpoint() {
 		EndpointImpl endpoint = new EndpointImpl(bus, czpi);
@@ -29,7 +32,7 @@ public class EndpointConfig {
 
 	@Bean
 	public Endpoint createResenjeEndpoint() {
-		EndpointImpl endpoint = new EndpointImpl(bus, new CreateResenjePortImpl());
+		EndpointImpl endpoint = new EndpointImpl(bus, crpi);
 		endpoint.publish("/createResenje");
 		return endpoint;
 	}
