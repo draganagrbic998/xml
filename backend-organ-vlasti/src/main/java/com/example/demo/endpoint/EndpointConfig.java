@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.example.demo.ws.resenje.CreateResenjePortImpl;
 import com.example.demo.ws.zalba.CreateZalbaPortImpl;
 
 @Configuration
@@ -17,10 +18,17 @@ public class EndpointConfig {
 	private Bus bus;
 
 	@Bean
-	public Endpoint helloMessageEndpoint() {
+	public Endpoint createZalbaEndpoint() {
 		EndpointImpl endpoint = new EndpointImpl(bus, new CreateZalbaPortImpl());
 		endpoint.publish("/createZalba");
 		return endpoint;
 	}
 
+	@Bean
+	public Endpoint createResenjeEndpoint() {
+		EndpointImpl endpoint = new EndpointImpl(bus, new CreateResenjePortImpl());
+		endpoint.publish("/createResenje");
+		return endpoint;
+	}
+	
 }
