@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
@@ -61,10 +62,16 @@ public class ZalbaController {
 				.body(resource);
 	}
 
+	@PostMapping(value = "/send/{broj}")
+	public ResponseEntity<Void> proslediZalbu(@PathVariable String broj)
+			throws MalformedURLException, ClassNotFoundException, InstantiationException, IllegalAccessException,
+			SOAPException, TransformerException, XMLDBException {
+		this.zalbaService.proslediZalbu(broj);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
 	@GetMapping(value = "/rdf")
-	public ResponseEntity<Void> extractMetadata()
-			throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException,
-			JAXBException, ParserConfigurationException, SAXException, IOException, TransformerException {
+	public ResponseEntity<Void> extractMetadata() throws IOException, SAXException, TransformerException {
 		this.zalbaService.extractMetadata();
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

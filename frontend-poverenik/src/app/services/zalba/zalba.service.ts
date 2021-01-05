@@ -104,4 +104,9 @@ export class ZalbaService {
     return this.http.get<string>(`${this.API_ZALBE}/${broj}`, {responseType: 'text' as 'json'});
   }
 
+  send(broj: string): Observable<null>{
+    const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
+    return this.http.post<null>(`${this.API_ZALBE}/send/${broj}`, options);
+  }
+
 }

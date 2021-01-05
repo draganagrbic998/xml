@@ -25,7 +25,7 @@ import com.example.demo.constants.Constants;
 
 public class SOAPService {
 	
-	public static void sendSOAPMessage(Document zalbaDocument, String tipDokumenta) throws SOAPException, MalformedURLException, TransformerException {
+	public static void sendSOAPMessage(Document document, String tipDokumenta) throws SOAPException, MalformedURLException, TransformerException {
 		MessageFactory factory = MessageFactory.newInstance();
 		SOAPMessage message = factory.createMessage();
 
@@ -41,7 +41,7 @@ public class SOAPService {
 
 		SOAPElement symbol = body.addChildElement(name);
 		
-	    DOMSource domSource = new DOMSource(zalbaDocument);
+	    DOMSource domSource = new DOMSource(document);
 		TransformerFactory tf = TransformerFactory.newInstance();
 		Transformer trans = tf.newTransformer();
 		StringWriter sw = new StringWriter();
