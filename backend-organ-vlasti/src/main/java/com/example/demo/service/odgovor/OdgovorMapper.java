@@ -41,12 +41,12 @@ public class OdgovorMapper {
 			
 			Node datum = document.createElementNS(Namespaces.OSNOVA, "datum");
 			datum.setTextContent(sdf.format(new Date()));
-			Element gradjanin = (Element) document.importNode(zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "Gradjanin").item(0), true);
+			Element osoba = (Element) document.importNode(zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "Osoba").item(0), true);
 			Element organVlasti = (Element) document.importNode(zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "OrganVlasti").item(0), true);		
-			gradjanin.getElementsByTagNameNS(Namespaces.OSNOVA, "potpis").item(0).setTextContent(this.korisnikService.currentUser().getOsoba().getPotpis());
+			osoba.getElementsByTagNameNS(Namespaces.OSNOVA, "potpis").item(0).setTextContent(this.korisnikService.currentUser().getOsoba().getPotpis());
 			documentFragment.appendChild(document.createElementNS(Namespaces.OSNOVA, "broj"));			
 			documentFragment.appendChild(datum);
-			documentFragment.appendChild(gradjanin);
+			documentFragment.appendChild(osoba);
 			documentFragment.appendChild(organVlasti);
 			odgovor.insertBefore(documentFragment, document.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0));	
 

@@ -34,7 +34,7 @@ public class ZalbaMapper {
 	@Autowired
 	private JAXBParser jaxbParser;
 		
-	private static final SimpleDateFormat sdf = new SimpleDateFormat(Constants.DATE_FORMAT);
+	public static final SimpleDateFormat sdf = new SimpleDateFormat(Constants.DATE_FORMAT);
 	
 	public Document map(String xml) {
 		try {

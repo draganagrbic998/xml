@@ -11,6 +11,7 @@ import org.xmldb.api.modules.XMLResource;
 
 import com.example.demo.constants.Namespaces;
 import com.example.demo.exception.MyException;
+import com.example.demo.model.enums.StatusZalbe;
 import com.example.demo.model.enums.TipZalbe;
 import com.example.demo.parser.DOMParser;
 
@@ -54,6 +55,8 @@ public class ZalbaMapper {
 	
 	public Document map(String xml) {
 		try {
+			Document document = this.domParser.buildDocument(xml);
+			document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.prosledjeno + "");
 			return this.domParser.buildDocument(xml);
 		}
 		catch(Exception e) {

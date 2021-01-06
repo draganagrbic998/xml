@@ -6,19 +6,24 @@ import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.xmldb.api.base.ResourceIterator;
 import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.modules.XMLResource;
 
 import com.example.demo.constants.Constants;
+import com.example.demo.constants.Namespaces;
 import com.example.demo.exception.MyException;
 import com.example.demo.model.Korisnik;
+import com.example.demo.model.enums.StatusZalbe;
 import com.example.demo.model.enums.TipZalbe;
 import com.example.demo.parser.DOMParser;
 import com.example.demo.parser.XSLTransformer;
@@ -138,7 +143,14 @@ public class ZalbaService {
 
 	public void proslediZalbu(String broj) {
 		Document document = this.zalbaExist.load(broj);
+		document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.prosledjeno + "");
 		this.soapService.sendSOAPMessage(document, TipDokumenta.zalba);
+		
+		Element zalba = (Element) document.getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").item(0);
+		Node datumProsledjivanja = document.createElementNS(Namespaces.ZALBA, "zalba:datumProsledjivanja");
+		datumProsledjivanja.setTextContent(ZalbaMapper.sdf.format(new Date()));
+		zalba.insertBefore(datumProsledjivanja, document.getElementsByTagNameNS(Namespaces.ZALBA, "datumZahteva").item(0));
+		this.zalbaExist.save(broj, document);
 	}
 
 }

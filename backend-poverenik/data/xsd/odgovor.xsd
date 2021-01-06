@@ -8,7 +8,7 @@
         <xs:complexContent>
             <xs:extension base="osnova:TDokument">
                 <xs:sequence>
-                    <xs:element ref="osnova:Gradjanin"/>
+                    <xs:element ref="osnova:Osoba"/>
                     <xs:element ref="osnova:OrganVlasti"/>
                     <xs:element ref="osnova:Detalji"/>
                     <xs:element name="datumZalbe" type="xs:date"/>
