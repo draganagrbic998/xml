@@ -43,13 +43,13 @@ public class SOAPService {
 			
 			Name name = null;
 			URL endpoint = null;
-			if (tipDokumenta.equals(TipDokumenta.zalba)) {
-				name = this.soapFactory.createName(SOAPConstants.CREATE_ZALBA_ELEMENT, "m", SOAPConstants.CREATE_ZALBA_NAMESPACE);
-				endpoint = new URL(SOAPConstants.CREATE_ZALBA_SERVICE);
+			if (tipDokumenta.equals(TipDokumenta.odgovor)) {
+				name = this.soapFactory.createName(SOAPConstants.CREATE_ODGOVOR_ELEMENT, "m", SOAPConstants.CREATE_ODGOVOR_NAMESPACE);
+				endpoint = new URL(SOAPConstants.CREATE_ODGOVOR_SERVICE);
 			}
 			else {
-				name = this.soapFactory.createName(SOAPConstants.CREATE_RESENJE_ELEMENT, "m", SOAPConstants.CREATE_RESENJE_NAMESPACE);
-				endpoint = new URL(SOAPConstants.CREATE_RESENJE_SERVICE);
+				name = this.soapFactory.createName(SOAPConstants.CREATE_ODGOVOR_ELEMENT, "m", SOAPConstants.CREATE_ODGOVOR_NAMESPACE);
+				endpoint = new URL(SOAPConstants.CREATE_ODGOVOR_SERVICE);
 			}
 
 			SOAPElement symbol = body.addChildElement(name);

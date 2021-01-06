@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-preloader',
@@ -8,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
 export class PreloaderComponent implements OnInit {
 
   constructor() { }
+
+  @Input() transparent; boolean;
 
   ngOnInit(): void {
   }

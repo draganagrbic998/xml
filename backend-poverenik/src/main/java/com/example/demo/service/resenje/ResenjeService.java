@@ -23,6 +23,7 @@ import com.example.demo.repository.xml.ResenjeExist;
 import com.example.demo.repository.xml.ZalbaExist;
 import com.example.demo.service.KorisnikService;
 import com.example.demo.ws.utils.SOAPService;
+import com.example.demo.ws.utils.TipDokumenta;
 
 @Service
 public class ResenjeService {
@@ -41,24 +42,22 @@ public class ResenjeService {
 
 	@Autowired
 	private XSLTransformer xslTransformer;
+	
+	@Autowired
+	private SOAPService soapService;
 
 	private static final String XSL_PATH = Constants.XSL_FOLDER + "/resenje.xsl";
 	private static final String XSL_FO_PATH = Constants.XSL_FOLDER + "/resenje_fo.xsl";
 	private static final String GEN_PATH = Constants.GEN_FOLDER + File.separatorChar + "resenja" + File.separatorChar;
 	
 	public void add(String xml) {
-		try {
-			Document document = this.resenjeMapper.map(xml);
-			String brojZalbe = document.getElementsByTagNameNS(Namespaces.RESENJE, "brojZalbe").item(0).getTextContent();
-			Document zalbaDocument = this.zalbaExist.load(brojZalbe);
-			zalbaDocument.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.reseno + "");
-			this.zalbaExist.save(brojZalbe, zalbaDocument);
-			this.resenjeExist.save(null, document);
-			SOAPService.sendSOAPMessage(document, "resenje");
-		}
-		catch(Exception e) {
-			throw new MyException(e);
-		}
+		Document document = this.resenjeMapper.map(xml);
+		String brojZalbe = document.getElementsByTagNameNS(Namespaces.RESENJE, "brojZalbe").item(0).getTextContent();
+		Document zalbaDocument = this.zalbaExist.load(brojZalbe);
+		zalbaDocument.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.reseno + "");
+		this.zalbaExist.save(brojZalbe, zalbaDocument);
+		this.resenjeExist.save(null, document);
+		this.soapService.sendSOAPMessage(document, TipDokumenta.resenje);
 	}
 	
 	public String retrieve() {

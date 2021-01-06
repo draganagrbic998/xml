@@ -1,15 +1,15 @@
-<app-preloader *ngIf="fetchPending">
+<app-preloader *ngIf="fetchPending || sendPending" [transparent]="sendPending">
 </app-preloader>
 
 <div class="root">
 
-  <h2>Lista podnetih žalbi povereniku</h2><br>
+  <h2>Lista podnetih žalbi</h2><br>
 
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="zalbe">
     
       <ng-container matColumnDef="tipZalbe">
-        <th mat-header-cell *matHeaderCellDef>Tip zalbe</th>
+        <th mat-header-cell *matHeaderCellDef>Tip žalbe</th>
         <td mat-cell *matCellDef="let zalba"> {{zalba.tipZalbe}} </td>
       </ng-container>
   
@@ -39,8 +39,7 @@
           *ngIf="!sendPending && uloga === 'poverenik' && zalba.status === 'cekanje'"
           mat-raised-button 
           color="primary"
-          (click)="send(zalba.broj)">Prosledi zalbu</button>
-          <app-spinner-button *ngIf="sendPending"></app-spinner-button>
+          (click)="send(zalba.broj)">Prosledi žalbu</button>
           <a *ngIf="uloga === 'poverenik' && zalba.status === 'odgovoreno'"
           [routerLink]="'/resenje-form/' + zalba.broj">dodaj rešenje</a>
         </td>

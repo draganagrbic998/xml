@@ -7,6 +7,8 @@ import org.w3c.dom.Document;
 import com.example.demo.constants.Namespaces;
 import com.example.demo.model.enums.StatusZalbe;
 import com.example.demo.repository.xml.ZalbaExist;
+import com.example.demo.ws.utils.SOAPService;
+import com.example.demo.ws.utils.TipDokumenta;
 
 @Service
 public class OdgovorService {
@@ -16,14 +18,17 @@ public class OdgovorService {
 
 	@Autowired
 	private OdgovorMapper odgovorMapper;
-		
+	
+	@Autowired
+	private SOAPService soapService;
+			
 	public void add(String xml) {
 		Document document = this.odgovorMapper.map(xml);
 		String brojZalbe = document.getElementsByTagNameNS(Namespaces.ODGOVOR, "brojZalbe").item(0).getTextContent();
 		Document zalbaDocument = this.zalbaExist.load(brojZalbe);
 		zalbaDocument.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.odgovoreno + "");
 		this.zalbaExist.save(brojZalbe, zalbaDocument);
-		//dodaj petre da ovaj sad odgoro pretvoris u xml posalji preko soapa povereniku
+		this.soapService.sendSOAPMessage(document, TipDokumenta.odgovor);
 	}
 	
 }

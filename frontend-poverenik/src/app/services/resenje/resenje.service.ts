@@ -47,19 +47,19 @@ export class ResenjeService {
 
   private xmlToResenja(xml: string): ResenjeDTO[]{
     const parser = new DOMParser();
-    const document = parser.parseFromString(xml, 'text/xml').getElementsByTagNameNS(RESENJE, 'Resenje');
-    const resenja: ResenjeDTO[] = [];
+    const resenja = parser.parseFromString(xml, 'text/xml').getElementsByTagNameNS(RESENJE, 'Resenje');
+    const resenjaDTO: ResenjeDTO[] = [];
 
-    for (const key of Object.keys(document)){
-      resenja.push({
-        broj: document[key].getElementsByTagNameNS(OSNOVA, 'broj')[0].textContent,
-        datum: document[key].getElementsByTagNameNS(OSNOVA, 'datum')[0].textContent,
-        status: document[key].getElementsByTagNameNS(RESENJE, 'status')[0].textContent,
-        organVlasti: document[key].getElementsByTagNameNS(OSNOVA, 'naziv')[0].textContent,
+    for (let i = 0; i < resenja.length; ++i){
+      resenjaDTO.push({
+        broj: resenja.item(i).getElementsByTagNameNS(OSNOVA, 'broj')[0].textContent,
+        datum: resenja.item(i).getElementsByTagNameNS(OSNOVA, 'datum')[0].textContent,
+        status: resenja.item(i).getElementsByTagNameNS(RESENJE, 'status')[0].textContent,
+        organVlasti: resenja.item(i).getElementsByTagNameNS(OSNOVA, 'naziv')[0].textContent,
       });
     }
 
-    return resenja;
+    return resenjaDTO;
   }
 
   save(brojZalbe: string, resenje: Resenje): Observable<null>{

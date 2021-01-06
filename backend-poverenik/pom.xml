@@ -73,7 +73,6 @@
 		    <version>3.9.0</version>
 		</dependency>
 		
-		<!-- CXF -->
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-spring-boot-starter-jaxws</artifactId>
@@ -85,7 +84,7 @@
 	<profiles>
 		<profile>
 			<id>noGenerate</id>
-			<activation> <!-- Ovo treba promeniti za generisanje -->
+			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
@@ -117,6 +116,14 @@
 						<configuration>
 							<sourceRoot>${project.build.directory}/generated/cxf</sourceRoot>
 							<wsdlOptions>
+								<wsdlOption>
+									<wsdl>${basedir}/src/main/resources/wsdl/Odgovor.wsdl</wsdl>
+									<extraargs>
+										<extraarg>-impl</extraarg>
+										<extraarg>-verbose</extraarg>
+									</extraargs>
+									<wsdlLocation>classpath:wsdl/Odgovor.wsdl</wsdlLocation>
+								</wsdlOption>
 								<wsdlOption>
 									<wsdl>${basedir}/src/main/resources/wsdl/ZalbePodaci.wsdl</wsdl>
 									<extraargs>

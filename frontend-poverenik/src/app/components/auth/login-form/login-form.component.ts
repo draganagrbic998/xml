@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { ZALBA_LIST } from 'src/app/constants/router';
 import { SNACKBAR_CLOSE, SNACKBAR_ERROR, SNACKBAR_ERROR_OPTIONS } from 'src/app/constants/snackbar';
 import { Profil } from 'src/app/models/profil';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -36,10 +37,9 @@ export class LoginFormComponent implements OnInit {
       (profil: Profil) => {
         this.loginPending = false;
         this.authService.saveUser(profil);
-        this.router.navigate(['/']);
+        this.router.navigate([ZALBA_LIST]);
       },
-      (e) => {
-        console.log(e);
+      () => {
         this.loginPending = false;
         this.snackBar.open(SNACKBAR_ERROR, SNACKBAR_CLOSE, SNACKBAR_ERROR_OPTIONS);
       }

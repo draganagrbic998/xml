@@ -20,11 +20,11 @@ export class ZalbaListComponent implements AfterViewInit {
     private snackBar: MatSnackBar
   ) { }
 
-  sendPending = false;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   columns: string[] = ['tipZalbe', 'datum', 'html', 'pdf', 'akcije'];
   zalbe: MatTableDataSource<ZalbaDTO> = new MatTableDataSource<ZalbaDTO>([]);
   fetchPending = true;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  sendPending = false;
 
   get uloga(): string{
     return this.authService.getUser()?.uloga;
@@ -46,7 +46,6 @@ export class ZalbaListComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.zalbe.paginator = this.paginator;
-
     this.zalbaService.list().subscribe(
       (zalbe: ZalbaDTO[]) => {
         this.zalbe = new MatTableDataSource<ZalbaDTO>(zalbe);

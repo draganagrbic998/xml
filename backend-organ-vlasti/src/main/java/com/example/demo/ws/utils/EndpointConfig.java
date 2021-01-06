@@ -1,4 +1,4 @@
-package com.example.demo.ws;
+package com.example.demo.ws.utils;
 
 import javax.xml.ws.Endpoint;
 

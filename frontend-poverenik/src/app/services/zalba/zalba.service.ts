@@ -7,6 +7,7 @@ import { ZalbaCutanje } from 'src/app/models/zalba-cutanje';
 import { ZalbaOdluka } from 'src/app/models/zalba-odluka';
 import { ZalbaDTO } from 'src/app/models/zalbaDTO';
 import { environment } from 'src/environments/environment';
+import { XonomyService } from '../xonomy/xonomy.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,8 @@ import { environment } from 'src/environments/environment';
 export class ZalbaService {
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private xonomyService: XonomyService
   ) { }
 
   private readonly API_ZALBE = `${environment.baseUrl}/${environment.apiZalbe}`;
@@ -85,11 +87,13 @@ export class ZalbaService {
   }
 
   saveZalbaCutanje(zalba: ZalbaCutanje): Observable<null>{
+    zalba.detalji = this.xonomyService.removeXmlSpace(zalba.detalji);
     const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
     return this.http.post<null>(this.API_ZALBE, this.zalbaCutanjeToXml(zalba), options);
   }
 
   saveZalbaOdluka(zalba: ZalbaOdluka): Observable<null>{
+    zalba.detalji = this.xonomyService.removeXmlSpace(zalba.detalji);
     const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
     return this.http.post<null>(this.API_ZALBE, this.zalbaOdlukaToXml(zalba), options);
   }

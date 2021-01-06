@@ -25,6 +25,7 @@ import com.example.demo.parser.XSLTransformer;
 import com.example.demo.repository.xml.ZalbaExist;
 import com.example.demo.service.KorisnikService;
 import com.example.demo.ws.utils.SOAPService;
+import com.example.demo.ws.utils.TipDokumenta;
 import com.example.demo.ws.zalbepodaci.data.ZalbePodaciData;
 
 @Service
@@ -44,6 +45,9 @@ public class ZalbaService {
 	
 	@Autowired
 	private XSLTransformer xslTransformer;
+	
+	@Autowired
+	private SOAPService soapService;
 
 	private static final String XSL_PATH_CUTANJE = Constants.XSL_FOLDER + File.separatorChar + "/zalba_cutanje.xsl";
 	private static final String XSL_FO_PATH_CUTANJE = Constants.XSL_FOLDER + File.separatorChar + "zalba_cutanje_fo.xsl";
@@ -133,13 +137,8 @@ public class ZalbaService {
 	}
 
 	public void proslediZalbu(String broj) {
-		try {
-			Document document = this.zalbaExist.load(broj);
-			SOAPService.sendSOAPMessage(document, "zalba");
-		}
-		catch(Exception e) {
-			throw new MyException(e);
-		}
+		Document document = this.zalbaExist.load(broj);
+		this.soapService.sendSOAPMessage(document, TipDokumenta.zalba);
 	}
 
 }

@@ -66,7 +66,7 @@ const routes: Routes = [
   {
     path: '**',
     pathMatch: 'full',
-    redirectTo: ZALBA_LIST
+    redirectTo: LOGIN_PATH
   }
 ];
 

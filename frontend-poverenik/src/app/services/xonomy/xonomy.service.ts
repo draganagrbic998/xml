@@ -129,4 +129,21 @@ export class XonomyService {
     }
   };
 
+  removeXmlSpace(xml: string): string{
+    const parser = new DOMParser();
+    const detalji = parser.parseFromString(xml, 'text/xml').getElementsByTagName('Detalji')[0];
+    detalji.removeAttribute('xml:space');
+    const bolds = detalji.getElementsByTagName('bold');
+    for (let i = 0; i < bolds.length; ++i){
+      bolds.item(i).removeAttribute('xml:space');
+    }
+    const italics = detalji.getElementsByTagName('italic');
+    for (let i = 0; i < italics.length; ++i){
+      italics.item(i).removeAttribute('xml:space');
+    }
+    const serializer = new XMLSerializer();
+    return serializer.serializeToString(detalji);
+  }
+
+
 }

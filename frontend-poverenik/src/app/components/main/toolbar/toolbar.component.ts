@@ -19,16 +19,16 @@ export class ToolbarComponent implements OnInit {
     return this.authService.getUser()?.uloga;
   }
 
+  get imePrezime(): string{
+    return `${this.authService.getUser()?.ime} ${this.authService.getUser()?.prezime}`;
+  }
+
   get auth(): boolean{
     return this.router.url.includes(LOGIN_PATH) || this.router.url.includes(REGISTER_PATH);
   }
 
   get login(): boolean{
     return this.router.url.includes(LOGIN_PATH);
-  }
-
-  get imePrezime(): string{
-    return `${this.authService.getUser()?.ime} ${this.authService.getUser()?.prezime}`;
   }
 
   signOut(): void{
