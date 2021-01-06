@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { OdgovorDTO } from 'src/app/models/odgovorDTO';
+import { OdlukaDTO } from 'src/app/models/odlukaDTO';
 import { OdlukaService } from 'src/app/services/odluka/odluka.service';
 
 @Component({
@@ -12,21 +12,19 @@ import { OdlukaService } from 'src/app/services/odluka/odluka.service';
 export class OdlukaListComponent implements AfterViewInit {
 
   constructor(
-    private odgovorService: OdlukaService
+    private odlukaService: OdlukaService
   ) { }
 
-  columns: string[] = ['tipOdgovora', 'datum', 'datumZahteva', 'html', 'pdf'];
-  odgovori: MatTableDataSource<OdgovorDTO> = new MatTableDataSource<OdgovorDTO>([]);
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  columns: string[] = ['tipOdluke', 'datum', 'datumZahteva', 'html', 'pdf'];
+  odluke: MatTableDataSource<OdlukaDTO> = new MatTableDataSource<OdlukaDTO>([]);
   fetchPending = true;
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-
   ngAfterViewInit(): void {
-    this.odgovori.paginator = this.paginator;
-
-    this.odgovorService.list().subscribe(
-      (odgovori: OdgovorDTO[]) => {
-        this.odgovori = new MatTableDataSource<OdgovorDTO>(odgovori);
+    this.odluke.paginator = this.paginator;
+    this.odlukaService.list().subscribe(
+      (odluke: OdlukaDTO[]) => {
+        this.odluke = new MatTableDataSource<OdlukaDTO>(odluke);
         this.fetchPending = false;
       },
       () => {

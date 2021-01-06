@@ -16,7 +16,7 @@ declare const Xonomy: any;
 export class OdbijanjeFormComponent implements AfterViewInit {
 
   constructor(
-    private odgovorService: OdlukaService,
+    private odlukaService: OdlukaService,
     private xonomyService: XonomyService,
     private snackBar: MatSnackBar,
     private route: ActivatedRoute
@@ -27,7 +27,7 @@ export class OdbijanjeFormComponent implements AfterViewInit {
   save(): void{
     const odbijanje: Odbijanje = {detalji: Xonomy.harvest()};
     this.savePending = true;
-    this.odgovorService.saveOdbijanje(this.route.snapshot.params.brojZahteva, odbijanje).subscribe(
+    this.odlukaService.saveOdbijanje(this.route.snapshot.params.brojZahteva, odbijanje).subscribe(
       () => {
         this.savePending = false;
         this.snackBar.open('Zahtev odbijen!', SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);

@@ -1,6 +1,5 @@
 <app-form-container>
-    <h3>Obaveštenje o stavljanju dokumenta na uvid i izdavanju kopije</h3>
-    <br><br>
+    <h3>Obaveštenje o stavljanju dokumenta na uvid i izdavanju kopije</h3><br><br>
     <form [formGroup]="obavestenjeForm">
 
         <div [class.disabled]="savePending">
@@ -64,9 +63,7 @@
             </mat-form-field>
             <div id="detaljiEditor"></div>
         </div>
-        
         <br><br>
-
         <app-center-container>
             <button 
             *ngIf="!savePending"

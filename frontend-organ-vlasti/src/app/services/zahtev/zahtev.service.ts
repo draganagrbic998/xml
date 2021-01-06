@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { OSNOVA, ZAHTEV } from 'src/app/constants/namespaces';
 import { ZahtevDTO } from 'src/app/models/zahtevDTO';
 import { map } from 'rxjs/operators';
+import { XonomyService } from '../xonomy/xonomy.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,8 @@ import { map } from 'rxjs/operators';
 export class ZahtevService {
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private xonomyService: XonomyService
   ) { }
 
   private readonly API_ZAHTEVI = `${environment.baseUrl}/${environment.apiZahtevi}`;
@@ -58,19 +60,7 @@ export class ZahtevService {
   }
 
   save(zahtev: Zahtev): Observable<null>{
-    const parser = new DOMParser();
-    const detalji = parser.parseFromString(zahtev.detalji, 'text/xml').getElementsByTagName('Detalji')[0];
-    detalji.removeAttribute('xml:space');
-    const bolds = detalji.getElementsByTagName('bold');
-    for (let i = 0; i < bolds.length; ++i){
-      bolds.item(i).removeAttribute('xml:space');
-    }
-    const italics = detalji.getElementsByTagName('italic');
-    for (let i = 0; i < italics.length; ++i){
-      italics.item(i).removeAttribute('xml:space');
-    }
-    const serializer = new XMLSerializer();
-    zahtev.detalji = serializer.serializeToString(detalji);
+    zahtev.detalji = this.xonomyService.removeXmlSpace(zahtev.detalji);
     const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
     return this.http.post<null>(this.API_ZAHTEVI, this.zahtevToXml(zahtev), options);
   }

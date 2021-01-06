@@ -18,7 +18,6 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
@@ -26,10 +25,7 @@ import org.xml.sax.SAXException;
 
 @Component
 public class DOMParser {
-	
-	@Autowired
-	private DOMErrorHandler errorHandler;
-	
+		
 	private DocumentBuilderFactory builderFactory;
 	private TransformerFactory transformerFactory;
 	
@@ -46,26 +42,22 @@ public class DOMParser {
 	
 	public Document emptyDocument() throws ParserConfigurationException {
 		DocumentBuilder builder = this.builderFactory.newDocumentBuilder();
-		builder.setErrorHandler(this.errorHandler);
 		return builder.newDocument();
 	}
 	
 	public Document buildDocument(String xml) throws ParserConfigurationException, SAXException, IOException {
 		DocumentBuilder builder = this.builderFactory.newDocumentBuilder();
-		builder.setErrorHandler(this.errorHandler);
 		return builder.parse(new InputSource(new StringReader(xml)));
 	}
 	
 	public Document buildDocumentFromFile(String path) throws ParserConfigurationException, SAXException, IOException {
 		DocumentBuilder builder = this.builderFactory.newDocumentBuilder();
-		builder.setErrorHandler(this.errorHandler);
 		return builder.parse(new File(path));
 	}
 	
 	public String buildXml(Document document) throws TransformerException {
 		StringWriter string = new StringWriter();
 		Transformer transformer = this.transformerFactory.newTransformer();
-		transformer.setOutputProperty("{http://xml.apache.org/xalan}indent-amount", "2");	//ovo sam dodala
 		transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
 		transformer.setOutputProperty(OutputKeys.METHOD, "xml");
 		transformer.setOutputProperty(OutputKeys.INDENT, "yes");	

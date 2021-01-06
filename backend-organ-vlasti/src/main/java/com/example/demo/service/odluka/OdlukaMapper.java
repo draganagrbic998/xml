@@ -1,10 +1,6 @@
 package com.example.demo.service.odluka;
 
-import java.io.IOException;
 import java.util.Date;
-
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -14,16 +10,15 @@ import org.w3c.dom.Document;
 import org.w3c.dom.DocumentFragment;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.xml.sax.SAXException;
 import org.xmldb.api.base.ResourceIterator;
 import org.xmldb.api.base.ResourceSet;
-import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
 
 import com.example.demo.constants.Constants;
 import com.example.demo.constants.Namespaces;
+import com.example.demo.exception.MyException;
 import com.example.demo.fuseki.Prefixes;
-import com.example.demo.model.enums.TipOdgovora;
+import com.example.demo.model.enums.TipOdluke;
 import com.example.demo.parser.DOMParser;
 import com.example.demo.repository.xml.ZahtevExist;
 import com.example.demo.service.KorisnikService;
@@ -31,50 +26,54 @@ import com.ibm.icu.text.SimpleDateFormat;
 
 @Component
 public class OdlukaMapper {
-	
+
 	@Autowired
-	private DOMParser domParser;
-	
-	@Autowired
-	private ZahtevExist zahtevRepository;
+	private ZahtevExist zahtevExist;
 	
 	@Autowired
 	private KorisnikService korisnikService;
-	
+
+	@Autowired
+	private DOMParser domParser;
+		
 	private static final SimpleDateFormat sdf = new SimpleDateFormat(Constants.DATE_FORMAT);
 	//private static final SimpleDateFormat sdf2 = new SimpleDateFormat("dd.MM.yyy.");
 	
-	public Document map(String xml) throws ParserConfigurationException, SAXException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
+	public Document map(String xml) {
 		
-		Document document = this.domParser.buildDocument(xml);
-		Element odgovor = (Element) document.getElementsByTagNameNS(Namespaces.ODLUKA, "Odgovor").item(0);
-		String brojZahteva = odgovor.getElementsByTagNameNS(Namespaces.ODLUKA, "brojZahteva").item(0).getTextContent();
-		Document zahtevDocument = this.zahtevRepository.load(brojZahteva);
-		Element zahtev = (Element) zahtevDocument.getElementsByTagNameNS(Namespaces.ZAHTEV, "Zahtev").item(0);
-		DocumentFragment documentFragment = document.createDocumentFragment();
-		
-		Node datum = document.createElementNS(Namespaces.OSNOVA, "datum");
-		datum.setTextContent(sdf.format(new Date()));
-		Element gradjanin = (Element) document.importNode(zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "Gradjanin").item(0), true);
-		Element organVlasti = (Element) document.importNode(zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "OrganVlasti").item(0), true);		
-		gradjanin.getElementsByTagNameNS(Namespaces.OSNOVA, "potpis").item(0).setTextContent(this.korisnikService.currentUser().getOsoba().getPotpis());
-		documentFragment.appendChild(document.createElementNS(Namespaces.OSNOVA, "broj"));			
-		documentFragment.appendChild(datum);
-		documentFragment.appendChild(gradjanin);
-		documentFragment.appendChild(organVlasti);
-		odgovor.insertBefore(documentFragment, document.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0));	
+		try {
+			Document document = this.domParser.buildDocument(xml);
+			Element odluka = (Element) document.getElementsByTagNameNS(Namespaces.ODLUKA, "Odluka").item(0);
+			String brojZahteva = odluka.getElementsByTagNameNS(Namespaces.ODLUKA, "brojZahteva").item(0).getTextContent();
+			Element zahtev = (Element) this.zahtevExist.load(brojZahteva).getElementsByTagNameNS(Namespaces.ZAHTEV, "Zahtev").item(0);
+			DocumentFragment documentFragment = document.createDocumentFragment();
+			
+			Node datum = document.createElementNS(Namespaces.OSNOVA, "datum");
+			datum.setTextContent(sdf.format(new Date()));
+			Element gradjanin = (Element) document.importNode(zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "Gradjanin").item(0), true);
+			Element organVlasti = (Element) document.importNode(zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "OrganVlasti").item(0), true);		
+			gradjanin.getElementsByTagNameNS(Namespaces.OSNOVA, "potpis").item(0).setTextContent(this.korisnikService.currentUser().getOsoba().getPotpis());
+			documentFragment.appendChild(document.createElementNS(Namespaces.OSNOVA, "broj"));			
+			documentFragment.appendChild(datum);
+			documentFragment.appendChild(gradjanin);
+			documentFragment.appendChild(organVlasti);
+			odluka.insertBefore(documentFragment, document.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0));	
 
-		Node datumZahteva = document.createElementNS(Namespaces.ODLUKA, "odgovor:datumZahteva");
-		datumZahteva.setTextContent(zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).getTextContent());
-		TipOdgovora tipOdgovora = getTipOdgovora(document);
-		if (tipOdgovora.equals(TipOdgovora.obavestenje)) {
-			odgovor.insertBefore(datumZahteva, odgovor.getElementsByTagNameNS(Namespaces.ODLUKA, "Uvid").item(0));
+			Node datumZahteva = document.createElementNS(Namespaces.ODLUKA, "odluka:datumZahteva");
+			datumZahteva.setTextContent(zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).getTextContent());
+			TipOdluke tipOdluke = getTipOdluke(document);
+			if (tipOdluke.equals(TipOdluke.obavestenje)) {
+				odluka.insertBefore(datumZahteva, odluka.getElementsByTagNameNS(Namespaces.ODLUKA, "Uvid").item(0));
+			}
+			else {
+				odluka.appendChild(datumZahteva);
+			}
+			return document;
 		}
-		else {
-			odgovor.appendChild(datumZahteva);
+		catch(Exception e) {
+			throw new MyException(e);
 		}
 		
-		return document;
 		//String broj = this.odlukaRepository.save(document, null);
 		
 		/*
@@ -103,26 +102,31 @@ public class OdlukaMapper {
 		this.emailService.sendEmail(email);*/
 	}
 	
-	public String map(ResourceSet resources) throws ParserConfigurationException, XMLDBException, SAXException, IOException, TransformerException {
-		Document odgovoriDocument = this.domParser.emptyDocument();
-		Node odgovori = odgovoriDocument.createElementNS(Namespaces.ODLUKA, "Odgovori");
-		odgovoriDocument.appendChild(odgovori);
-		ResourceIterator it = resources.getIterator();
-		
-		while (it.hasMoreResources()) {
-			XMLResource resource = (XMLResource) it.nextResource();
-			Document document = this.domParser.buildDocument(resource.getContent().toString());
-			Node odgovor = odgovoriDocument.createElementNS(Namespaces.ODLUKA, "Odgovor");
-			Node tipOdgovora = odgovoriDocument.createElementNS(Namespaces.ODLUKA, "tipOdgovora");
-			tipOdgovora.setTextContent(getTipOdgovora(document) + "");
-			odgovor.appendChild(tipOdgovora);
-			odgovor.appendChild(odgovoriDocument.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0), true));
-			odgovor.appendChild(odgovoriDocument.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
-			odgovor.appendChild(odgovoriDocument.importNode(document.getElementsByTagNameNS(Namespaces.ODLUKA, "datumZahteva").item(0), true));
-			odgovori.appendChild(odgovor);
+	public String map(ResourceSet resources) {
+		try {
+			Document odlukeDocument = this.domParser.emptyDocument();
+			Node odluke = odlukeDocument.createElementNS(Namespaces.ODLUKA, "Odluke");
+			odlukeDocument.appendChild(odluke);
+			ResourceIterator it = resources.getIterator();
+			
+			while (it.hasMoreResources()) {
+				XMLResource resource = (XMLResource) it.nextResource();
+				Document document = this.domParser.buildDocument(resource.getContent().toString());
+				Node odluka = odlukeDocument.createElementNS(Namespaces.ODLUKA, "Odluka");
+				Node tipOdluke = odlukeDocument.createElementNS(Namespaces.ODLUKA, "tipOdluke");
+				tipOdluke.setTextContent(getTipOdluke(document) + "");
+				odluka.appendChild(tipOdluke);
+				odluka.appendChild(odlukeDocument.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0), true));
+				odluka.appendChild(odlukeDocument.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
+				odluka.appendChild(odlukeDocument.importNode(document.getElementsByTagNameNS(Namespaces.ODLUKA, "datumZahteva").item(0), true));
+				odluke.appendChild(odluka);
+			}
+			
+			return this.domParser.buildXml(odlukeDocument);
 		}
-		
-		return this.domParser.buildXml(odgovoriDocument);
+		catch(Exception e) {
+			throw new MyException(e);
+		}
 	}
 	
 	public Model[] map(Document document) {
@@ -159,10 +163,8 @@ public class OdlukaMapper {
 			model.createResource(Prefixes.ZAHTEV_PREFIX + brojZahteva)
 		);
 		
-		
 		Model model2 = ModelFactory.createDefaultModel();
 		model2.setNsPrefix("pred", Prefixes.PREDIKAT);
-		
 		
 		model2.add(
 			model.createResource(Prefixes.KORISNIK_PREFIX + email),
@@ -178,7 +180,6 @@ public class OdlukaMapper {
 			model.createProperty(Prefixes.PREDIKAT + "donesenaOdluka"),
 			model.createResource(Prefixes.ODLUKA_PREFIX + broj)
 		);
-		
 
 		Model[] models = new Model[3];
 		models[0] = model;
@@ -187,12 +188,12 @@ public class OdlukaMapper {
 		return models;
 	}
 	
-	public static TipOdgovora getTipOdgovora(Document document) {
-		String tipOdgovora = ((Element) document.getElementsByTagNameNS(Namespaces.ODLUKA, "Odgovor").item(0)).getAttributeNS(Namespaces.XSI, "type");
-		if (tipOdgovora.contains("TObavestenje")) {
-			return TipOdgovora.obavestenje;
+	public static TipOdluke getTipOdluke(Document document) {
+		String tipOdluke = ((Element) document.getElementsByTagNameNS(Namespaces.ODLUKA, "Odluka").item(0)).getAttributeNS(Namespaces.XSI, "type");
+		if (tipOdluke.contains("TObavestenje")) {
+			return TipOdluke.obavestenje;
 		}
-		return TipOdgovora.odbijanje;
+		return TipOdluke.odbijanje;
 	}
 	
 }

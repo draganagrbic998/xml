@@ -1,7 +1,5 @@
 package com.example.demo.repository.rdf;
 
-import java.io.IOException;
-
 import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.Model;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +20,7 @@ public class ZahtevRDF {
 		this.fusekiManager.save(GRAPH_URI, model);
 	}
 	
-	public ResultSet retrieve(String broj) throws IOException {
+	public ResultSet retrieve(String broj) {
 		return this.fusekiManager.retrieve(GRAPH_URI, Prefixes.ZAHTEV_PREFIX + broj);
 	}
 	

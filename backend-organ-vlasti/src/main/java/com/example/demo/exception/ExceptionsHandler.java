@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class ExceptionsHandler {
 
 	@ExceptionHandler
-	public ResponseEntity<Void> handleException(Exception exception){
-		exception.printStackTrace();
+	public ResponseEntity<Void> handleException(MyException exception){
+		exception.getException().printStackTrace();
 		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	

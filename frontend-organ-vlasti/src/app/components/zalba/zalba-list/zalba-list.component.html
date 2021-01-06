@@ -1,1 +1,53 @@
-<p>zalba-list works!</p>
+<app-preloader *ngIf="fetchPending">
+</app-preloader>
+
+<div class="root">
+
+  <h2>Lista podnetih žalbi</h2><br>
+
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="zalbe">
+    
+      <ng-container matColumnDef="tipZalbe">
+        <th mat-header-cell *matHeaderCellDef>Tip žalbe</th>
+        <td mat-cell *matCellDef="let zalba"> {{zalba.tipZalbe}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="datum">
+        <th mat-header-cell *matHeaderCellDef>Datum podnošenja</th>
+        <td mat-cell *matCellDef="let zalba"> {{zalba.datum}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="html">
+        <th mat-header-cell *matHeaderCellDef>Html</th>
+        <td mat-cell *matCellDef="let zalba">
+          <a [routerLink]="'/html/zalbe/' + zalba.broj">preuzmi html</a>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="pdf">
+        <th mat-header-cell *matHeaderCellDef>Pdf</th>
+        <td mat-cell *matCellDef="let zalba">
+          <a [routerLink]="'/pdf/zalbe/' + zalba.broj">preuzmi pdf</a>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="akcije">
+        <th mat-header-cell *matHeaderCellDef>Akcije</th>
+        <td mat-cell *matCellDef="let zalba">
+          <button 
+          [routerLink]="'/odgovor-form/' + zalba.broj"
+          mat-raised-button 
+          color="primary">Odgovori</button>
+          </td>
+      </ng-container>
+    
+      <tr mat-header-row *matHeaderRowDef="columns"></tr>
+      <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+      <tr class="mat-row" *matNoDataRow><td class="mat-cell" colspan="5">Nema žalbi</td></tr>
+
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </div>
+  
+</div>

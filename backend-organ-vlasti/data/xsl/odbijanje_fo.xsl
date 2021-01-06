@@ -3,9 +3,9 @@
 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 xmlns:fo="http://www.w3.org/1999/XSL/Format"
 xmlns:osnova="https://github.com/draganagrbic998/xml/osnova"
-xmlns:odgovor="https://github.com/draganagrbic998/xml/odgovor">
+xmlns:odluka="https://github.com/draganagrbic998/xml/odluka">
 	
-    <xsl:template match="/odgovor:Odgovor">
+    <xsl:template match="/odluka:Odluka">
         <fo:root font-size="12px" text-align="justify" font-family="Times New Roman">
             <fo:layout-master-set>
                 <fo:simple-page-master master-name="odbijanje-page">
@@ -98,9 +98,9 @@ xmlns:odgovor="https://github.com/draganagrbic998/xml/odgovor">
 						</fo:inline>
 						поднео дана 
 						<fo:inline border-bottom="1px solid black">
-							<xsl:variable name="danZahteva" select="substring-after(substring-after(odgovor:datumZahteva, '-'), '-')"></xsl:variable>
-							<xsl:variable name="mesecZahteva" select="substring-before(substring-after(odgovor:datumZahteva, '-'), '-')"></xsl:variable>
-							<xsl:variable name="godinaZahteva" select="substring-before(odgovor:datumZahteva, '-')"></xsl:variable>
+							<xsl:variable name="danZahteva" select="substring-after(substring-after(odluka:datumZahteva, '-'), '-')"></xsl:variable>
+							<xsl:variable name="mesecZahteva" select="substring-before(substring-after(odluka:datumZahteva, '-'), '-')"></xsl:variable>
+							<xsl:variable name="godinaZahteva" select="substring-before(odluka:datumZahteva, '-')"></xsl:variable>
 							<xsl:value-of select="concat($danZahteva, concat('.', concat($mesecZahteva, concat('.', concat($godinaZahteva, '.')))))"></xsl:value-of>
 						</fo:inline>
 						Обраложење одбијања захтева је следеће:

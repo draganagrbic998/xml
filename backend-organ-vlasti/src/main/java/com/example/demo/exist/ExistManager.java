@@ -3,7 +3,6 @@ package com.example.demo.exist;
 import java.util.Arrays;
 
 import javax.xml.transform.OutputKeys;
-import javax.xml.transform.TransformerException;
 
 import org.exist.xmldb.EXistResource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +13,12 @@ import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.Database;
 import org.xmldb.api.base.ResourceSet;
-import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.CollectionManagementService;
 import org.xmldb.api.modules.XMLResource;
 import org.xmldb.api.modules.XPathQueryService;
 
 import com.example.demo.constants.Namespaces;
+import com.example.demo.exception.MyException;
 
 @Component
 public class ExistManager {
@@ -28,14 +27,19 @@ public class ExistManager {
 	private ExistAuthentication authUtilities;
 	
 	@SuppressWarnings("deprecation")
-	public void createConnection() throws ClassNotFoundException, XMLDBException, InstantiationException, IllegalAccessException {
-		Class<?> cl = Class.forName(this.authUtilities.getDriver());
-		Database database = (Database) cl.newInstance();
-		database.setProperty("create-database", "true");
-		DatabaseManager.registerDatabase(database);
+	public void createConnection() {
+		try {
+			Class<?> cl = Class.forName(this.authUtilities.getDriver());
+			Database database = (Database) cl.newInstance();
+			database.setProperty("create-database", "true");
+			DatabaseManager.registerDatabase(database);			
+		}
+		catch(Exception e) {
+			throw new MyException(e);
+		}
 	}
 	
-	public String save(String collectionId, String documentId, Document document) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException {
+	public String save(String collectionId, String documentId, Document document) {
 		Collection collection = null;
 		XMLResource resource = null;
 		try { 
@@ -51,13 +55,21 @@ public class ExistManager {
 			collection.storeResource(resource);
 			return documentId;
 		}
+		catch(Exception e) {
+			throw new MyException(e);
+		}
 		finally {
-			collection.close();
-			((EXistResource) resource).freeResources();
+			try {
+				collection.close();
+				((EXistResource) resource).freeResources();
+			}
+			catch(Exception e) {
+				throw new MyException(e);
+			}
 		}
 	}
 	
-	public Document load(String collectionId, String documentId) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
+	public Document load(String collectionId, String documentId) {
 		Collection collection = null;
 		try {
 			this.createConnection();
@@ -66,12 +78,20 @@ public class ExistManager {
 			XMLResource resource = (XMLResource) collection.getResource(documentId);
 			return (Document) resource.getContentAsDOM();
 		}
+		catch(Exception e) {
+			throw new MyException(e);
+		}
 		finally {
-			collection.close();			
+			try {
+				collection.close();			
+			}
+			catch(Exception e) {
+				throw new MyException(e);
+			}
 		}
 	}
 	
-	public ResourceSet retrieve(String collectionId, String xpathExp) throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+	public ResourceSet retrieve(String collectionId, String xpathExp) {
 		Collection collection = null;
 		try {
 			this.createConnection();
@@ -80,53 +100,66 @@ public class ExistManager {
 			xpathService.setProperty(OutputKeys.INDENT, "yes");
 			xpathService.setNamespace("", Namespaces.OSNOVA);
 			xpathService.setNamespace("zahtev", Namespaces.ZAHTEV);
-			xpathService.setNamespace("odgovor", Namespaces.ODLUKA);
+			xpathService.setNamespace("odluka", Namespaces.ODLUKA);
 			xpathService.setNamespace("zalba", Namespaces.ZALBA);
 			xpathService.setNamespace("resenje", Namespaces.RESENJE);
 			return xpathService.query(xpathExp);
 		} 
+		catch(Exception e) {
+			throw new MyException(e);
+		}
 		finally {
-			collection.close();			
+			try {
+				collection.close();			
+			}
+			catch(Exception e) {
+				throw new MyException(e);
+			}
 		}
 	}
 	
-	private Collection getCollection(String collectionId, int pathSegmentOffset) throws XMLDBException {
+	private Collection getCollection(String collectionId, int pathSegmentOffset) {
 		
-		Collection collection = DatabaseManager.getCollection(this.authUtilities.getUri() + collectionId, this.authUtilities.getUser(), this.authUtilities.getPassword());
-        if(collection == null) {
-         	if(collectionId.startsWith("/")) {
-                collectionId = collectionId.substring(1);
-            }
-        	String[] pathSegments = collectionId.split("/");
-            
-        	if(pathSegments.length > 0) {
-        		StringBuilder path = new StringBuilder();
-                for(int i = 0; i <= pathSegmentOffset; ++i) {
-                    path.append("/" + pathSegments[i]);
-                }
-                Collection startCollection = DatabaseManager.getCollection(this.authUtilities.getUri() + path, this.authUtilities.getUser(), this.authUtilities.getPassword());
-                
-                if (startCollection == null) {
-                	String parentPath = path.substring(0, path.lastIndexOf("/"));
-                    Collection parentCollection = DatabaseManager.getCollection(this.authUtilities.getUri() + parentPath, this.authUtilities.getUser(), this.authUtilities.getPassword());
-                    CollectionManagementService collectionService = (CollectionManagementService) parentCollection.getService("CollectionManagementService", "1.0");                    
-                    collection = collectionService.createCollection(pathSegments[pathSegmentOffset]);
-                    collection.close();
-                    parentCollection.close();
-                } 
-                else {
-                    startCollection.close();
-                }
-                
-            }
-            return this.getCollection(collectionId, ++pathSegmentOffset);
-        }
-        else {
-            return collection;
-        }
+		try {
+			Collection collection = DatabaseManager.getCollection(this.authUtilities.getUri() + collectionId, this.authUtilities.getUser(), this.authUtilities.getPassword());
+	        if(collection == null) {
+	         	if(collectionId.startsWith("/")) {
+	                collectionId = collectionId.substring(1);
+	            }
+	        	String[] pathSegments = collectionId.split("/");
+	            
+	        	if(pathSegments.length > 0) {
+	        		StringBuilder path = new StringBuilder();
+	                for(int i = 0; i <= pathSegmentOffset; ++i) {
+	                    path.append("/" + pathSegments[i]);
+	                }
+	                Collection startCollection = DatabaseManager.getCollection(this.authUtilities.getUri() + path, this.authUtilities.getUser(), this.authUtilities.getPassword());
+	                
+	                if (startCollection == null) {
+	                	String parentPath = path.substring(0, path.lastIndexOf("/"));
+	                    Collection parentCollection = DatabaseManager.getCollection(this.authUtilities.getUri() + parentPath, this.authUtilities.getUser(), this.authUtilities.getPassword());
+	                    CollectionManagementService collectionService = (CollectionManagementService) parentCollection.getService("CollectionManagementService", "1.0");                    
+	                    collection = collectionService.createCollection(pathSegments[pathSegmentOffset]);
+	                    collection.close();
+	                    parentCollection.close();
+	                } 
+	                else {
+	                    startCollection.close();
+	                }
+	                
+	            }
+	            return this.getCollection(collectionId, ++pathSegmentOffset);
+	        }
+	        else {
+	            return collection;
+	        }
+		}
+		catch(Exception e) {
+			throw new MyException(e);
+		}
 	}
 	
-	public void dropCollection(String collectionId) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
+	public void dropCollection(String collectionId) {
 		this.createConnection();
 		Collection collection = null;
 		try {
@@ -135,8 +168,16 @@ public class ExistManager {
 				collection.removeResource(collection.getResource(documentId));
 			}
 		}
+		catch(Exception e) {
+			throw new MyException(e);
+		}
 		finally {
-			collection.close();
+			try {
+				collection.close();
+			}
+			catch(Exception e) {
+				throw new MyException(e);
+			}
 		}
 	}
 	

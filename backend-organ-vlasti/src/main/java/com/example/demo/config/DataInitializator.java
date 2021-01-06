@@ -1,26 +1,23 @@
 package com.example.demo.config;
 
 import java.io.File;
-import java.io.IOException;
-
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
-import org.xml.sax.SAXException;
-import org.xmldb.api.base.XMLDBException;
 
 import com.example.demo.constants.Constants;
+import com.example.demo.exception.MyException;
 import com.example.demo.exist.ExistManager;
 import com.example.demo.fuseki.FusekiManager;
 import com.example.demo.parser.DOMParser;
 import com.example.demo.repository.xml.KorisnikExist;
 import com.example.demo.repository.xml.OdlukaExist;
 import com.example.demo.repository.xml.OrganVlastiExist;
+import com.example.demo.repository.xml.ResenjeExist;
 import com.example.demo.repository.xml.ZahtevExist;
+import com.example.demo.repository.xml.ZalbaExist;
 
 @Component
 public class DataInitializator {
@@ -39,16 +36,23 @@ public class DataInitializator {
 	private DOMParser domParser;
 
 	@EventListener(ContextRefreshedEvent.class)
-	public void dataInit() throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, ParserConfigurationException, SAXException, IOException {
-		this.existManager.dropCollection(OrganVlastiExist.ORGAN_VLASTI_COLLECTION);
-		this.existManager.dropCollection(KorisnikExist.KORISNICI_COLLECTION);
-		this.existManager.dropCollection(ZahtevExist.ZAHTEVI_COLLECTION);
-		this.existManager.dropCollection(OdlukaExist.ODGOVORI_COLLECTION);
-		this.existManager.save(OrganVlastiExist.ORGAN_VLASTI_COLLECTION, "1", this.domParser.buildDocumentFromFile(ORGAN_VLASTI1));
-		this.existManager.save(KorisnikExist.KORISNICI_COLLECTION, "sluzbenik@gmail.com", this.domParser.buildDocumentFromFile(SLUZBENIK1));
-		this.existManager.save(KorisnikExist.KORISNICI_COLLECTION, "draganaasd@gmail.com", this.domParser.buildDocumentFromFile(GRADJANIN1));
-		
-		this.fusekiManager.dropAll();
+	public void dataInit() {
+		try {
+			this.existManager.dropCollection(OrganVlastiExist.ORGAN_VLASTI_COLLECTION);
+			this.existManager.dropCollection(KorisnikExist.KORISNICI_COLLECTION);
+			this.existManager.dropCollection(ZahtevExist.ZAHTEVI_COLLECTION);
+			this.existManager.dropCollection(OdlukaExist.ODLUKE_COLLECTION);
+			this.existManager.dropCollection(ZalbaExist.ZALBE_COLLECTION);
+			this.existManager.dropCollection(ResenjeExist.RESENJA_COLLECTION);
+			this.existManager.save(OrganVlastiExist.ORGAN_VLASTI_COLLECTION, "1", this.domParser.buildDocumentFromFile(ORGAN_VLASTI1));
+			this.existManager.save(KorisnikExist.KORISNICI_COLLECTION, "sluzbenik@gmail.com", this.domParser.buildDocumentFromFile(SLUZBENIK1));
+			this.existManager.save(KorisnikExist.KORISNICI_COLLECTION, "draganaasd@gmail.com", this.domParser.buildDocumentFromFile(GRADJANIN1));
+			
+			this.fusekiManager.dropAll();
+		}
+		catch(Exception e) {
+			throw new MyException(e);
+		}
 	}
 	
 }

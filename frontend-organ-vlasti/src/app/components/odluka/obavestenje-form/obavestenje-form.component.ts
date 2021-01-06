@@ -17,7 +17,7 @@ declare const Xonomy: any;
 export class ObavestenjeFormComponent implements AfterViewInit {
 
   constructor(
-    private odgovorService: OdlukaService,
+    private odlukaService: OdlukaService,
     private xonomyService: XonomyService,
     private snackBar: MatSnackBar,
     private route: ActivatedRoute
@@ -39,7 +39,7 @@ export class ObavestenjeFormComponent implements AfterViewInit {
     const obavestenje: Obavestenje = this.obavestenjeForm.value;
     obavestenje.detalji = Xonomy.harvest();
     this.savePending = true;
-    this.odgovorService.saveObavestenje(this.route.snapshot.params.brojZahteva, obavestenje).subscribe(
+    this.odlukaService.saveObavestenje(this.route.snapshot.params.brojZahteva, obavestenje).subscribe(
       () => {
         this.savePending = false;
         this.snackBar.open('Obaveštenje uspešno poslato!', SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);

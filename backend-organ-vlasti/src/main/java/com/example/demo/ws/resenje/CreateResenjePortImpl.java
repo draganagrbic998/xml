@@ -44,7 +44,7 @@ public class CreateResenjePortImpl implements CreateResenje {
 		System.out.println(createResenje);
 		try {
 			Document resenjeDocument = this.domParser.buildDocument(createResenje);
-			this.resenjeRepository.save(resenjeDocument, null);
+			this.resenjeRepository.save(null, resenjeDocument);
 		} catch (java.lang.Exception ex) {
 			ex.printStackTrace();
 			throw new RuntimeException(ex);

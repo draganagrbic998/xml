@@ -1,13 +1,9 @@
 package com.example.demo.repository.xml;
 
-import javax.xml.bind.JAXBException;
-import javax.xml.transform.TransformerException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.w3c.dom.Document;
 import org.xmldb.api.base.ResourceSet;
-import org.xmldb.api.base.XMLDBException;
 
 import com.example.demo.constants.Constants;
 import com.example.demo.exist.ExistManager;
@@ -18,18 +14,18 @@ public class OdlukaExist {
 	@Autowired
 	private ExistManager existManager;
 	
-	public static final String ODGOVORI_COLLECTION = Constants.COLLECTIONS_PREFIX + "/odgovori";
+	public static final String ODLUKE_COLLECTION = Constants.COLLECTIONS_PREFIX + "/odluke";
 	
-	public String save(String documentId, Document document) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, JAXBException, TransformerException {
-		return this.existManager.save(ODGOVORI_COLLECTION, documentId, document);
+	public String save(String documentId, Document document) {
+		return this.existManager.save(ODLUKE_COLLECTION, documentId, document);
 	}
 
-	public Document load(String documentId) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
-		return this.existManager.load(ODGOVORI_COLLECTION, documentId);
+	public Document load(String documentId) {
+		return this.existManager.load(ODLUKE_COLLECTION, documentId);
 	}
 	
-	public ResourceSet list(String xpathExp) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
-		return this.existManager.retrieve(ODGOVORI_COLLECTION, xpathExp);
+	public ResourceSet list(String xpathExp) {
+		return this.existManager.retrieve(ODLUKE_COLLECTION, xpathExp);
 	}
 	
 }

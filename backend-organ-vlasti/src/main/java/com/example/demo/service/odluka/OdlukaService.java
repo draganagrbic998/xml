@@ -2,33 +2,24 @@ package com.example.demo.service.odluka;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.text.ParseException;
-
-import javax.xml.bind.JAXBException;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 
 import org.apache.jena.rdf.model.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
-import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.xml.sax.SAXException;
 import org.xmldb.api.base.ResourceSet;
-import org.xmldb.api.base.XMLDBException;
 
 import com.example.demo.constants.Constants;
 import com.example.demo.constants.Namespaces;
+import com.example.demo.exception.MyException;
 import com.example.demo.model.Korisnik;
 import com.example.demo.model.enums.StatusZahteva;
-import com.example.demo.model.enums.TipOdgovora;
+import com.example.demo.model.enums.TipOdluke;
 import com.example.demo.parser.XSLTransformer;
 import com.example.demo.repository.rdf.KorisnikRDF;
 import com.example.demo.repository.rdf.OdlukaRDF;
@@ -41,22 +32,13 @@ import com.example.demo.service.KorisnikService;
 public class OdlukaService {
 		
 	@Autowired
-	private OdlukaExist odlukaRepository;
+	private OdlukaExist odlukaExist;
 	
 	@Autowired
-	private ZahtevExist zahtevRepository;
+	private ZahtevExist zahtevExist;
 
 	@Autowired
 	private KorisnikService korisnikService;
-
-	@Autowired
-	private XSLTransformer xslTransformer;
-		
-	@Autowired
-	private OdlukaMapper odlukaMapper;
-	
-	//@Autowired
-	//private EmailService emailService;
 	
 	@Autowired
 	private KorisnikRDF korisnikRDF;
@@ -66,52 +48,57 @@ public class OdlukaService {
 	
 	@Autowired
 	private OdlukaRDF odlukaRDF;
-
+		
+	@Autowired
+	private OdlukaMapper odlukaMapper;
+	
+	@Autowired
+	private XSLTransformer xslTransformer;
+	
+	//@Autowired
+	//private EmailService emailService;
+	
 	private static final String XSL_FO_PATH_ODBIJANJE = Constants.XSL_FOLDER + File.separatorChar + "odbijanje_fo.xsl";
 	private static final String XSL_PATH_ODBIJANJE = Constants.XSL_FOLDER + File.separatorChar + "/odbijanje.xsl";
 	private static final String XSL_FO_PATH_OBAVESTENJE = Constants.XSL_FOLDER + File.separatorChar + "obavestenje_fo.xsl";
 	private static final String XSL_PATH_OBAVESTENJE = Constants.XSL_FOLDER + File.separatorChar + "/obavestenje.xsl";
-	private static final String GEN_PATH = Constants.GEN_FOLDER + File.separatorChar + "odgovori" + File.separatorChar;
+	private static final String GEN_PATH = Constants.GEN_FOLDER + File.separatorChar + "odluke" + File.separatorChar;
 
-	public void add(String xml) throws ParserConfigurationException, SAXException, IOException, JAXBException, ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, DOMException, ParseException {
-		
+	public void add(String xml) {
 		Document document = this.odlukaMapper.map(xml);
 		String brojZahteva = document.getElementsByTagNameNS(Namespaces.ODLUKA, "brojZahteva").item(0).getTextContent();
-		//document.removeChild(document.getElementsByTagNameNS(Namespaces.ODLUKA, "brojZahteva").item(0));
-		Document zahtevDocument = this.zahtevRepository.load(brojZahteva);
-		if (OdlukaMapper.getTipOdgovora(document).equals(TipOdgovora.obavestenje)) {
+		Document zahtevDocument = this.zahtevExist.load(brojZahteva);
+		if (OdlukaMapper.getTipOdluke(document).equals(TipOdluke.obavestenje)) {
 			zahtevDocument.getElementsByTagNameNS(Namespaces.ZAHTEV, "status").item(0).setTextContent(StatusZahteva.odobreno + "");
 		}
 		else {
 			zahtevDocument.getElementsByTagNameNS(Namespaces.ZAHTEV, "status").item(0).setTextContent(StatusZahteva.odbijeno + "");
 		}
-		this.odlukaRepository.save(null, document);
-		this.zahtevRepository.save(brojZahteva, zahtevDocument);
+		this.odlukaExist.save(null, document);
+		this.zahtevExist.save(brojZahteva, zahtevDocument);
 		Model[] models = this.odlukaMapper.map(document);
 		this.odlukaRDF.save(models[0]);
 		this.korisnikRDF.save(models[1]);
 		this.zahtevRDF.save(models[2]);
 	}
 	
-	public String retrieve() throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException, ParserConfigurationException, SAXException, IOException, TransformerException{
+	public String retrieve() {
 		Korisnik korisnik = this.korisnikService.currentUser();
 		String xpathExp;
 		if (korisnik.getUloga().equals(Constants.SLUZBENIK)) {
-			xpathExp = "/odgovor:Odgovor";
+			xpathExp = "/odluka:Odluka";
 		}
 		else {
-			xpathExp = String.format("/odgovor:Odgovor[Gradjanin/Osoba/mejl='%s']", korisnik.getOsoba().getMejl());
+			xpathExp = String.format("/odluka:Odluka[Gradjanin/Osoba/mejl='%s']", korisnik.getOsoba().getMejl());
 		}
-
-		ResourceSet resources = this.odlukaRepository.list(xpathExp);
+		ResourceSet resources = this.odlukaExist.list(xpathExp);
 		return this.odlukaMapper.map(resources);
 	}
 	
-	public String html(String broj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
-		Document document = this.odlukaRepository.load(broj);
+	public String html(String broj) {
+		Document document = this.odlukaExist.load(broj);
 		String xslPath;
-		TipOdgovora tipOdgovora = getTipOdgovora(((Element) document.getElementsByTagNameNS(Namespaces.ODLUKA, "Odgovor").item(0)).getAttributeNS(Namespaces.XSI, "type"));
-		if (tipOdgovora.equals(TipOdgovora.obavestenje)) {
+		if (OdlukaMapper.getTipOdluke(document).equals(TipOdluke.obavestenje)) {
 			xslPath = XSL_PATH_OBAVESTENJE;
 		}
 		else {
@@ -121,43 +108,44 @@ public class OdlukaService {
 		return out.toString();
 	}
 	
-	public Resource generateHtml(String broj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
-		Document document = this.odlukaRepository.load(broj);
-		String xslPath;
-		TipOdgovora tipOdgovora = getTipOdgovora(((Element) document.getElementsByTagNameNS(Namespaces.ODLUKA, "Odgovor").item(0)).getAttributeNS(Namespaces.XSI, "type"));
-		if (tipOdgovora.equals(TipOdgovora.obavestenje)) {
-			xslPath = XSL_PATH_OBAVESTENJE;
+	public Resource generateHtml(String broj) {
+		try {
+			Document document = this.odlukaExist.load(broj);
+			String xslPath;
+			if (OdlukaMapper.getTipOdluke(document).equals(TipOdluke.obavestenje)) {
+				xslPath = XSL_PATH_OBAVESTENJE;
+			}
+			else {
+				xslPath = XSL_PATH_ODBIJANJE;
+			}
+			ByteArrayOutputStream out = this.xslTransformer.generateHtml(document, xslPath);
+			Path file = Paths.get(GEN_PATH + broj + ".html");
+			Files.write(file, out.toByteArray());
+			return new UrlResource(file.toUri());
 		}
-		else {
-			xslPath = XSL_PATH_ODBIJANJE;
+		catch(Exception e) {
+			throw new MyException(e);
 		}
-		ByteArrayOutputStream out = this.xslTransformer.generateHtml(document, xslPath);
-		Path file = Paths.get(GEN_PATH + broj + ".html");
-		Files.write(file, out.toByteArray());
-		return new UrlResource(file.toUri());
 	}
 	
-	public Resource generatePdf(String broj) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
-		Document document = this.odlukaRepository.load(broj);
-		String xslFoPath;
-		TipOdgovora tipOdgovora = getTipOdgovora(((Element) document.getElementsByTagNameNS(Namespaces.ODLUKA, "Odgovor").item(0)).getAttributeNS(Namespaces.XSI, "type"));
-		if (tipOdgovora.equals(TipOdgovora.obavestenje)) {
-			xslFoPath = XSL_FO_PATH_OBAVESTENJE;
+	public Resource generatePdf(String broj) {
+		try {
+			Document document = this.odlukaExist.load(broj);
+			String xslFoPath;
+			if (OdlukaMapper.getTipOdluke(document).equals(TipOdluke.obavestenje)) {
+				xslFoPath = XSL_FO_PATH_OBAVESTENJE;
+			}
+			else {
+				xslFoPath = XSL_FO_PATH_ODBIJANJE;
+			}
+			ByteArrayOutputStream out = this.xslTransformer.generatePdf(document, xslFoPath);
+			Path file = Paths.get(GEN_PATH + broj + ".pdf");
+			Files.write(file, out.toByteArray());
+			return new UrlResource(file.toUri());
 		}
-		else {
-			xslFoPath = XSL_FO_PATH_ODBIJANJE;
+		catch(Exception e) {
+			throw new MyException(e);
 		}
-		ByteArrayOutputStream out = this.xslTransformer.generatePdf(document, xslFoPath);
-		Path file = Paths.get(GEN_PATH + broj + ".pdf");
-		Files.write(file, out.toByteArray());
-		return new UrlResource(file.toUri());
 	}
-	
-	public static TipOdgovora getTipOdgovora(String tipOdgovora) {
-		if (tipOdgovora.contains("TObavestenje")) {
-			return TipOdgovora.obavestenje;
-		}
-		return TipOdgovora.odbijanje;
-	}
-	
+
 }

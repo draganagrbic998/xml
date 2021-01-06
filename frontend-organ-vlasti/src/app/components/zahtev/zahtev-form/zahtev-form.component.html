@@ -1,6 +1,5 @@
 <app-form-container>
-    <h3>Zahtev za informacijama od javnog značaja</h3>
-    <br><br>
+    <h3>Zahtev za informacijama od javnog značaja</h3><br><br>
     <form [formGroup]="zahtevForm">
 
         <div [class.disabled]="savePending">
@@ -43,9 +42,7 @@
             </mat-form-field>
             <div id="detaljiEditor"></div>
         </div>
-
         <br><br>
-
         <app-center-container>
             <button 
             *ngIf="!savePending"

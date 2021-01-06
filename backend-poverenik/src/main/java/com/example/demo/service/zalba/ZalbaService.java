@@ -2,30 +2,22 @@ package com.example.demo.service.zalba;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
 import java.math.BigInteger;
-import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import javax.xml.bind.JAXBException;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.soap.SOAPException;
-import javax.xml.transform.TransformerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
-import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
 import org.xmldb.api.base.ResourceIterator;
 import org.xmldb.api.base.ResourceSet;
-import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
 
 import com.example.demo.constants.Constants;
+import com.example.demo.exception.MyException;
 import com.example.demo.model.Korisnik;
 import com.example.demo.model.enums.TipZalbe;
 import com.example.demo.parser.DOMParser;
@@ -39,35 +31,32 @@ import com.example.demo.ws.zalbepodaci.data.ZalbePodaciData;
 public class ZalbaService {
 
 	@Autowired
-	private ZalbaExist zalbaRepository;
+	private ZalbaExist zalbaExist;
 
 	@Autowired
 	private KorisnikService korisnikService;
-
-	@Autowired
-	private XSLTransformer xslTransformer;
 	
 	@Autowired
 	private ZalbaMapper zalbaMapper;
 	
 	@Autowired
 	private DOMParser domParser;
+	
+	@Autowired
+	private XSLTransformer xslTransformer;
 
-	private static final String XSL_FO_PATH_CUTANJE = Constants.XSL_FOLDER + File.separatorChar + "zalba_cutanje_fo.xsl";
 	private static final String XSL_PATH_CUTANJE = Constants.XSL_FOLDER + File.separatorChar + "/zalba_cutanje.xsl";
-	private static final String XSL_FO_PATH_ODLUKA = Constants.XSL_FOLDER + File.separatorChar + "/zalba_odluka_fo.xsl";
+	private static final String XSL_FO_PATH_CUTANJE = Constants.XSL_FOLDER + File.separatorChar + "zalba_cutanje_fo.xsl";
 	private static final String XSL_PATH_ODLUKA = Constants.XSL_FOLDER + File.separatorChar + "/zalba_odluka.xsl";
+	private static final String XSL_FO_PATH_ODLUKA = Constants.XSL_FOLDER + File.separatorChar + "/zalba_odluka_fo.xsl";
 	private static final String GEN_PATH = Constants.GEN_FOLDER + File.separatorChar + "zalbe" + File.separatorChar;
 
-	public void save(String xml) throws ParserConfigurationException, SAXException, IOException, JAXBException,
-			ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException,
-			TransformerException, UnsupportedOperationException, DOMException, SOAPException {
+	public void save(String xml) {
 		Document document = this.zalbaMapper.map(xml);
-		this.zalbaRepository.save(document, null);
+		this.zalbaExist.save(null, document);
 	}
 
-	public String retrieve() throws XMLDBException, ClassNotFoundException, InstantiationException,
-			IllegalAccessException, ParserConfigurationException, SAXException, IOException, TransformerException {
+	public String retrieve() {
 		Korisnik korisnik = this.korisnikService.currentUser();
 		String xpathExp;
 		if (korisnik.getUloga().equals(Constants.POVERENIK)) {
@@ -75,49 +64,46 @@ public class ZalbaService {
 		} else {
 			xpathExp = String.format("/zalba:Zalba[Gradjanin/Osoba/mejl='%s']", korisnik.getOsoba().getMejl());
 		}
-
-		ResourceSet resources = this.zalbaRepository.retrieve(xpathExp);
+		ResourceSet resources = this.zalbaExist.retrieve(xpathExp);
 		return this.zalbaMapper.map(resources);
-
 	}
 
-	public ZalbePodaciData retrieveZalbePodaci() throws XMLDBException, ClassNotFoundException, InstantiationException,
-			IllegalAccessException, ParserConfigurationException, SAXException, IOException {
-		String xpathExp = "/zalba:Zalba";
+	public ZalbePodaciData retrieveZalbePodaci() {
+		try {
+			String xpathExp = "/zalba:Zalba";
+			ResourceSet result = this.zalbaExist.retrieve(xpathExp);
+			ResourceIterator it = result.getIterator();
 
-		ResourceSet result = this.zalbaRepository.retrieve(xpathExp);
-		ResourceIterator it = result.getIterator();
+			ZalbePodaciData ip = new ZalbePodaciData();
+			int cutanja = 0;
+			int delimicnosti = 0;
+			int odbijanja = 0;
 
-		ZalbePodaciData ip = new ZalbePodaciData();
-		int cutanja = 0;
-		int delimicnosti = 0;
-		int odbijanja = 0;
+			while (it.hasMoreResources()) {
+				XMLResource resource = (XMLResource) it.nextResource();
+				Document document = this.domParser.buildDocument(resource.getContent().toString());
+				TipZalbe tipZalbe = ZalbaMapper.getTipZalbe(document);
+				if (tipZalbe.equals(TipZalbe.cutanje))
+					cutanja++;
+				else
+					odbijanja++;
+			}
 
-		while (it.hasMoreResources()) {
-			XMLResource resource = (XMLResource) it.nextResource();
-			Document document = this.domParser.buildDocument(resource.getContent().toString());
-			String tz = ZalbaMapper.getTipZalbe(document) + "";
-			if (tz.equalsIgnoreCase("cutanje"))
-				cutanja++;
-			else if (tz.equalsIgnoreCase("delimicnost"))
-				delimicnosti++;
-			else
-				odbijanja++;
+			ip.setZalbeCutanja(BigInteger.valueOf(cutanja));
+			ip.setZalbeDelimicnosti(BigInteger.valueOf(delimicnosti));
+			ip.setZalbeOdbijanja(BigInteger.valueOf(odbijanja));
+
+			return ip;
 		}
-
-		ip.setZalbeCutanja(BigInteger.valueOf(cutanja));
-		ip.setZalbeDelimicnosti(BigInteger.valueOf(delimicnosti));
-		ip.setZalbeOdbijanja(BigInteger.valueOf(odbijanja));
-
-		return ip;
+		catch(Exception e) {
+			throw new MyException(e);
+		}
 	}
 
-	public String generateHtml(String broj) throws ClassNotFoundException, InstantiationException,
-			IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
-		Document document = this.zalbaRepository.load(broj);
+	public String generateHtml(String broj) {
+		Document document = this.zalbaExist.load(broj);
 		String xslPath;
-		TipZalbe tipZalbe = ZalbaMapper.getTipZalbe(document);
-		if (tipZalbe.equals(TipZalbe.cutanje)) {
+		if (ZalbaMapper.getTipZalbe(document).equals(TipZalbe.cutanje)) {
 			xslPath = XSL_PATH_CUTANJE;
 		} else {
 			xslPath = XSL_PATH_ODLUKA;
@@ -126,25 +112,34 @@ public class ZalbaService {
 		return out.toString();
 	}
 
-	public Resource generatePdf(String broj) throws ClassNotFoundException, InstantiationException,
-			IllegalAccessException, XMLDBException, TransformerException, SAXException, IOException {
-		Document document = this.zalbaRepository.load(broj);
-		String xslFoPath;
-		TipZalbe tipZalbe = ZalbaMapper.getTipZalbe(document);
-		if (tipZalbe.equals(TipZalbe.cutanje)) {
-			xslFoPath = XSL_FO_PATH_CUTANJE;
-		} else {
-			xslFoPath = XSL_FO_PATH_ODLUKA;
+	public Resource generatePdf(String broj) {
+		try {
+			Document document = this.zalbaExist.load(broj);
+			String xslFoPath;
+			if (ZalbaMapper.getTipZalbe(document).equals(TipZalbe.cutanje)) {
+				xslFoPath = XSL_FO_PATH_CUTANJE;
+			} 
+			else {
+				xslFoPath = XSL_FO_PATH_ODLUKA;
+			}
+			ByteArrayOutputStream out = this.xslTransformer.generatePdf(document, xslFoPath);
+			Path file = Paths.get(GEN_PATH + broj + ".pdf");
+			Files.write(file, out.toByteArray());
+			return new UrlResource(file.toUri());
 		}
-		ByteArrayOutputStream out = this.xslTransformer.generatePdf(document, xslFoPath);
-		Path file = Paths.get(GEN_PATH + broj + ".pdf");
-		Files.write(file, out.toByteArray());
-		return new UrlResource(file.toUri());
+		catch(Exception e) {
+			throw new MyException(e);
+		}
 	}
 
-	public void proslediZalbu(String broj) throws MalformedURLException, SOAPException, TransformerException, ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
-		Document document = this.zalbaRepository.load(broj);
-		SOAPService.sendSOAPMessage(document, "zalba");
+	public void proslediZalbu(String broj) {
+		try {
+			Document document = this.zalbaExist.load(broj);
+			SOAPService.sendSOAPMessage(document, "zalba");
+		}
+		catch(Exception e) {
+			throw new MyException(e);
+		}
 	}
 
 }

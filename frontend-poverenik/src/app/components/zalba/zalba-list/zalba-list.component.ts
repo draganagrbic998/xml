@@ -24,17 +24,13 @@ export class ZalbaListComponent implements AfterViewInit {
   columns: string[] = ['tipZalbe', 'datum', 'html', 'pdf', 'akcije'];
   zalbe: MatTableDataSource<ZalbaDTO> = new MatTableDataSource<ZalbaDTO>([]);
   fetchPending = true;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   get uloga(): string{
     return this.authService.getUser()?.uloga;
   }
 
-  checkStatus(status : string): boolean{
-    if (status === "odgovoreno")
-      return true;
-  }
-
-  send(broj : string): void{
+  send(broj: string): void{
     this.sendPending = true;
     this.zalbaService.send(broj).subscribe(
       () => {
@@ -47,8 +43,6 @@ export class ZalbaListComponent implements AfterViewInit {
       }
     );
   }
-
-  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   ngAfterViewInit(): void {
     this.zalbe.paginator = this.paginator;

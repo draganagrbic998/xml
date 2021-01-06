@@ -159,8 +159,10 @@ xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev">
 				        </xsl:copy>
 	               	</span>
 					<span class="line">
+					&#160;
 	                </span>
 					<span class="line">
+					&#160;
 	                </span>				
 	            </p>
 	

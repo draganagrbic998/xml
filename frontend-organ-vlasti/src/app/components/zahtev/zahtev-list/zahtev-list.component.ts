@@ -17,6 +17,7 @@ export class ZahtevListComponent implements AfterViewInit {
     private authService: AuthService
   ) { }
 
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   columns: string[] = ['datum', 'status', 'html', 'pdf', 'akcije'];
   zahtevi: MatTableDataSource<ZahtevDTO> = new MatTableDataSource<ZahtevDTO>([]);
   fetchPending = true;
@@ -25,11 +26,8 @@ export class ZahtevListComponent implements AfterViewInit {
     return this.authService.getUser()?.uloga;
   }
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-
   ngAfterViewInit(): void {
     this.zahtevi.paginator = this.paginator;
-
     this.zahtevService.list().subscribe(
       (zahtevi: ZahtevDTO[]) => {
         this.zahtevi = new MatTableDataSource<ZahtevDTO>(zahtevi);

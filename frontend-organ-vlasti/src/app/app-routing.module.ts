@@ -14,14 +14,20 @@ import {
   ZAHTEV_LIST_PATH,
   ZAHTEV_FORM_PATH,
   OBAVESTENJE_FORM,
-  ODGOVOR_LIST_PATH,
+  ODLUKA_LIST_PATH,
   HTML_PATH,
   PDF_PATH,
-  ODBIJANJE_FORM
+  ODBIJANJE_FORM,
+  ODGOVOR_PATH,
+  ZALBA_LIST_PATH,
+  RESENJE_LIST_PATH
 } from './constants/router';
 import { GradjaninGuard } from './guard/gradjanin/gradjanin.guard';
 import { SluzbenikGuard } from './guard/sluzbenik/sluzbenik.guard';
 import { OdbijanjeFormComponent } from './components/odluka/odbijanje-form/odbijanje-form.component';
+import { OdgovorFormComponent } from './components/zalba/odgovor-form/odgovor-form.component';
+import { ZalbaListComponent } from './components/zalba/zalba-list/zalba-list.component';
+import { ResenjeListComponent } from './components/resenje/resenje-list/resenje-list.component';
 
 const routes: Routes = [
   {
@@ -52,8 +58,23 @@ const routes: Routes = [
     canActivate: [SluzbenikGuard]
   },
   {
-    path: ODGOVOR_LIST_PATH,
+    path: ODLUKA_LIST_PATH,
     component: OdlukaListComponent
+  },
+  {
+    path: ZALBA_LIST_PATH,
+    component: ZalbaListComponent,
+    canActivate: [SluzbenikGuard]
+  },
+  {
+    path: RESENJE_LIST_PATH,
+    component: ResenjeListComponent,
+      canActivate: [SluzbenikGuard]
+  },
+  {
+    path: ODGOVOR_PATH,
+    component: OdgovorFormComponent,
+    canActivate: [SluzbenikGuard]
   },
   {
     path: HTML_PATH,
@@ -66,7 +87,7 @@ const routes: Routes = [
   {
     path: '**',
     pathMatch: 'full',
-    redirectTo: ZAHTEV_LIST_PATH
+    redirectTo: LOGIN_PATH
   }
 ];
 

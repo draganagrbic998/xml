@@ -2,7 +2,6 @@ package com.example.demo.fuseki;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -10,7 +9,6 @@ import java.nio.file.Paths;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.query.ResultSet;
-import org.apache.jena.query.ResultSetFormatter;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.update.UpdateExecutionFactory;
 import org.apache.jena.update.UpdateFactory;
@@ -20,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.example.demo.constants.Constants;
+import com.example.demo.exception.MyException;
 
 @Component
 public class FusekiManager {
@@ -38,11 +37,10 @@ public class FusekiManager {
 		processor.execute();
 	}
 	
-	public ResultSet retrieve(String graphUri, String subject) throws IOException {
+	public ResultSet retrieve(String graphUri, String subject) {
 		String sparqlQuery = String.format(this.readFile(QUERY1_PATH), this.authUtilities.getData() + graphUri, subject);
 		QueryExecution query = QueryExecutionFactory.sparqlService(this.authUtilities.getQuery(), sparqlQuery);
 		ResultSet results = query.execSelect();
-		ResultSetFormatter.outputAsJSON(System.out, results);
 		return results;
 	}
 	
@@ -53,9 +51,13 @@ public class FusekiManager {
         processor.execute();
 	}
 	
-	private String readFile(String path) throws IOException {
-		byte[] encoded = Files.readAllBytes(Paths.get(path));
-		return new String(encoded, StandardCharsets.UTF_8);
+	private String readFile(String path) {
+		try {
+			return new String(Files.readAllBytes(Paths.get(path)), StandardCharsets.UTF_8);
+		}
+		catch(Exception e) {
+			throw new MyException(e);
+		}
 	}
 	
 }

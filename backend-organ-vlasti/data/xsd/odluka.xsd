@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="https://github.com/draganagrbic998/xml/odgovor"
+    xmlns:osnova="https://github.com/draganagrbic998/xml/osnova"
+    xmlns:odgovor="https://github.com/draganagrbic998/xml/odgovor">
+    <xs:import namespace="https://github.com/draganagrbic998/xml/osnova" schemaLocation="osnova.xsd"/>
+    <xs:complexType name="TOdluka" abstract="true">
+        <xs:complexContent>
+            <xs:extension base="osnova:TPodnosenje">
+                <xs:sequence>
+                    <xs:element name="datumZahteva" type="xs:date"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TObavestenje">
+        <xs:complexContent>
+            <xs:extension base="odgovor:TOdluka">
+                <xs:sequence>
+                    <xs:element name="Uvid">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element name="datumUvida" type="xs:date"/>
+                                <xs:element name="pocetak">
+                                    <xs:simpleType>
+                                        <xs:restriction base="xs:string">
+                                            <xs:enumeration value="\d{1,2}:\d{1,2}"/>
+                                        </xs:restriction>
+                                    </xs:simpleType>
+                                </xs:element>
+                                <xs:element name="kraj">
+                                    <xs:simpleType>
+                                        <xs:restriction base="xs:string">
+                                            <xs:enumeration value="\d{1,2}:\d{1,2}"/>
+                                        </xs:restriction>
+                                    </xs:simpleType>
+                                </xs:element>
+                                <xs:element name="kancelarija" type="osnova:TRequiredString"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="kopija" type="xs:positiveInteger"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TOdbijanje">
+        <xs:complexContent>
+            <xs:extension base="odgovor:TOdluka"/>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="Odluka" type="odgovor:TOdluka"/>
+</xs:schema>

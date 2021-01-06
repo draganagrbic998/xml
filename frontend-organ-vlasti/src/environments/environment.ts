@@ -7,7 +7,10 @@ export const environment = {
   baseUrl: 'http://localhost:8081',
   apiAuth: 'auth',
   apiZahtevi: 'api/zahtevi',
-  apiOdluke: 'api/odgovori'
+  apiOdluke: 'api/odluke',
+  apiZalbe: 'api/zalbe',
+  apiResenja: 'api/resenja',
+  apiOdgovori: 'api/odgovori'
 };
 
 /*

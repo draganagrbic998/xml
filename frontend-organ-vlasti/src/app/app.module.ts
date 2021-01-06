@@ -41,6 +41,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { ZalbaListComponent } from './components/zalba/zalba-list/zalba-list.component';
 import { ResenjeListComponent } from './components/resenje/resenje-list/resenje-list.component';
+import { OdgovorFormComponent } from './components/zalba/odgovor-form/odgovor-form.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { ResenjeListComponent } from './components/resenje/resenje-list/resenje-
     PdfViewerComponent,
     OdbijanjeFormComponent,
     ZalbaListComponent,
-    ResenjeListComponent
+    ResenjeListComponent,
+    OdgovorFormComponent
   ],
   imports: [
     BrowserModule,

@@ -12,7 +12,7 @@ public class SparqlUtil {
 	
 	private static final String SELECT_NAMED_GRAPH_TEMPLATE = "SELECT * FROM <%1$s> WHERE { %2$s }";
 	
-		public static final String NTRIPLES = "N-TRIPLES";
+	public static final String NTRIPLES = "N-TRIPLES";
 
 	public static final String RDF_XML = "RDF/XML";
 	

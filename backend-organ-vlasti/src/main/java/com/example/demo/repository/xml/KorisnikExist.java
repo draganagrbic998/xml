@@ -1,12 +1,8 @@
 package com.example.demo.repository.xml;
 
-import javax.xml.bind.JAXBException;
-import javax.xml.transform.TransformerException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.w3c.dom.Document;
-import org.xmldb.api.base.XMLDBException;
 
 import com.example.demo.constants.Constants;
 import com.example.demo.exist.ExistManager;
@@ -19,11 +15,11 @@ public class KorisnikExist {
 		
 	public static final String KORISNICI_COLLECTION = Constants.COLLECTIONS_PREFIX + "/korisnici";
 	
-	public void save(String documentId, Document document) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException, JAXBException, TransformerException {
+	public void save(String documentId, Document document) {
 		this.existManager.save(KORISNICI_COLLECTION, documentId, document);
 	}
 	
-	public Document load(String documentId) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
+	public Document load(String documentId) {
 		return this.existManager.load(KORISNICI_COLLECTION, documentId);
 	}
 		

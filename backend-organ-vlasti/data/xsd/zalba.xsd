@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="https://github.com/draganagrbic998/xml/zalba"
+    xmlns:osnova="https://github.com/draganagrbic998/xml/osnova"
+    xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
+    <xs:import namespace="https://github.com/draganagrbic998/xml/osnova" schemaLocation="osnova.xsd"/>
+    <xs:complexType name="TZalba" abstract="true">
+        <xs:complexContent>
+            <xs:extension base="osnova:TPodnosenje">
+                <xs:sequence>
+                    <xs:element name="status">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:enumeration value="cekanje"/>
+                                <xs:enumeration value="odgovoreno"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="datumZahteva" type="xs:date"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TZalbaCutanje">
+        <xs:complexContent>
+            <xs:extension base="zalba:TZalba">
+                <xs:sequence>
+                    <xs:element name="tipCutanja">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:enumeration value="nije postupio"/>
+                                <xs:enumeration value="nije postupio u zakonskom roku"/>
+                                <xs:enumeration value="nije postupio u celosti"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TZalbaOdluka">
+        <xs:complexContent>
+            <xs:extension base="zalba:TZalba">
+                <xs:sequence>
+                    <xs:element name="brojOdluke" type="osnova:TRequiredString"/>
+                    <xs:element name="datumOdluke" type="xs:date"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="Zalba" type="zalba:TZalba"/>
+</xs:schema>
