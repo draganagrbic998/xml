@@ -10,6 +10,7 @@ Napomene:
 1. Port organa vlasti - 8081
 2. Port poverenika - 8082
 3. Port email servica - 8083
-4. Port frontend aplikacija - 4200/4201
-5. Port tomcat servera sa bazama - 8080
+4. Port frontenda organa vlasti - 4200
+5. Port frontenda poverenika - 4201
+6. Port tomcat servera sa bazama - 8080
 
