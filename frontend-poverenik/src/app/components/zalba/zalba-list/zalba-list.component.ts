@@ -30,10 +30,23 @@ export class ZalbaListComponent implements AfterViewInit {
     return this.authService.getUser()?.uloga;
   }
 
-  send(broj: string): void{
+  canAddResenje(zalba: ZalbaDTO): boolean {
+    if (zalba.status === 'odgovoreno') {
+      return true;
+    }
+
+    if (zalba.status !== 'cekanje' && ((new Date()).getTime() - zalba.datumProsledjivanja) / 86400000 > 15) {
+      return true;
+    }
+
+    return false;
+  }
+
+  send(zalba: ZalbaDTO): void{
     this.sendPending = true;
-    this.zalbaService.send(broj).subscribe(
+    this.zalbaService.send(zalba.broj).subscribe(
       () => {
+        zalba.status = 'prosledjeno';
         this.sendPending = false;
         this.snackBar.open('Zalba uspešno prosledjena organu vlasti!', SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);
       },

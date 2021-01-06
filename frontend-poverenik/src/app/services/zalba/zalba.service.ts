@@ -72,14 +72,26 @@ export class ZalbaService {
     const parser = new DOMParser();
     const document = parser.parseFromString(xml, 'text/xml').getElementsByTagNameNS(ZALBA, 'Zalba');
     const zalbe: ZalbaDTO[] = [];
+    let zalbaDatumProsledjivanja: number;
+    let zalbaStatus: string;
 
     for (const key of Object.keys(document)){
+      zalbaStatus = document[key].getElementsByTagNameNS(ZALBA, 'status')[0].textContent;
+
+      if (zalbaStatus !== 'cekanje') {
+        zalbaDatumProsledjivanja = Date.parse(document[key].getElementsByTagNameNS(ZALBA, 'datumProsledjivanja')[0].textContent);
+      }
+      else {
+        zalbaDatumProsledjivanja = Date.now();
+      }
+
       zalbe.push({
         tipZalbe: document[key].getElementsByTagNameNS(ZALBA, 'tipZalbe')[0].textContent,
         broj: document[key].getElementsByTagNameNS(OSNOVA, 'broj')[0].textContent,
         datum: document[key].getElementsByTagNameNS(OSNOVA, 'datum')[0].textContent,
         organVlasti: document[key].getElementsByTagNameNS(OSNOVA, 'naziv')[0].textContent,
-        status: document[key].getElementsByTagNameNS(ZALBA, 'status')[0].textContent
+        status: zalbaStatus,
+        datumProsledjivanja: zalbaDatumProsledjivanja
       });
     }
 

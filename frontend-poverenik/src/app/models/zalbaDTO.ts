@@ -4,5 +4,6 @@ export interface ZalbaDTO{
     datum: string;
     organVlasti: string;
     status: string;
+    datumProsledjivanja: number;
 }
 
