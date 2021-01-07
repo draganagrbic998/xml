@@ -21,7 +21,7 @@ export class ZalbaListComponent implements AfterViewInit {
   ) { }
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  columns: string[] = ['tipZalbe', 'datum', 'dokumenti', 'akcije'];
+  columns: string[] = ['tipZalbe', 'datum', 'dokumenti', 'akcije', 'odgovor'];
   zalbe: MatTableDataSource<ZalbaDTO> = new MatTableDataSource<ZalbaDTO>([]);
   fetchPending = true;
   sendPending = false;
@@ -30,7 +30,7 @@ export class ZalbaListComponent implements AfterViewInit {
     return this.authService.getUser()?.uloga;
   }
 
-  canAddResenje(zalba: ZalbaDTO): boolean {
+  canResiti(zalba: ZalbaDTO): boolean {
     if (zalba.status === 'odgovoreno') {
       return true;
     }
@@ -42,13 +42,51 @@ export class ZalbaListComponent implements AfterViewInit {
     return false;
   }
 
-  send(zalba: ZalbaDTO): void{
+  canObustaviti(zalba: ZalbaDTO): boolean{
+    return zalba.status === 'odustato';
+  }
+
+  obustavi(zalba: ZalbaDTO): void{
     this.sendPending = true;
-    this.zalbaService.send(zalba.broj).subscribe(
+    this.zalbaService.obustavi(zalba.broj).subscribe(
+      () => {
+        zalba.status = 'obustavljeno';
+        this.sendPending = false;
+        this.snackBar.open('Žalba obustavljena!', SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);
+      },
+      () => {
+        this.sendPending = false;
+        this.snackBar.open(SNACKBAR_ERROR, SNACKBAR_CLOSE, SNACKBAR_ERROR_OPTIONS);
+      }
+    );
+  }
+
+  canOdustati(zalba: ZalbaDTO): boolean{
+    return zalba.status === 'cekanje' || zalba.status === 'prosledjeno' || zalba.status === 'odgovoreno';
+  }
+
+  odustani(zalba: ZalbaDTO): void{
+    this.sendPending = true;
+    this.zalbaService.odustani(zalba.broj).subscribe(
+      () => {
+        zalba.status = 'odustato';
+        this.sendPending = false;
+        this.snackBar.open('Žalba odustata!', SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);
+      },
+      () => {
+        this.sendPending = false;
+        this.snackBar.open(SNACKBAR_ERROR, SNACKBAR_CLOSE, SNACKBAR_ERROR_OPTIONS);
+      }
+    );
+  }
+
+  prosledi(zalba: ZalbaDTO): void{
+    this.sendPending = true;
+    this.zalbaService.prosledi(zalba.broj).subscribe(
       () => {
         zalba.status = 'prosledjeno';
         this.sendPending = false;
-        this.snackBar.open('Zalba uspešno prosledjena organu vlasti!', SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);
+        this.snackBar.open('Žalba prosledjena!', SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);
       },
       () => {
         this.sendPending = false;

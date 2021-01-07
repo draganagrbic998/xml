@@ -13,6 +13,7 @@ import org.w3c.dom.Document;
 import org.xmldb.api.base.ResourceSet;
 
 import com.example.demo.constants.Constants;
+import com.example.demo.constants.Namespaces;
 import com.example.demo.exception.MyException;
 import com.example.demo.model.Korisnik;
 import com.example.demo.parser.XSLTransformer;
@@ -51,9 +52,11 @@ public class ZahtevService {
 	public void add(String xml) {
 		Document document = this.zahtevMapper.map(xml);
 		this.zahtevExist.save(null, document);
-		Model[] models = this.zahtevMapper.map(document);
-		this.zahtevRDF.save(models[0]);
-		this.korisnikRDF.save(models[1]);		
+		Model model = this.zahtevMapper.map(document);
+		this.zahtevRDF.save(model);
+		//Model[] models = this.zahtevMapper.map(document);
+		//this.zahtevRDF.save(models[0]);
+		//this.korisnikRDF.save(models[1]);		
 	}
 	
 	public String retrieve() {

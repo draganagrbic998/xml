@@ -10,10 +10,6 @@ import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.w3c.dom.Document;
-
-import com.example.demo.parser.DOMParser;
-import com.example.demo.repository.xml.OdgovorExist;
 
 import com.example.demo.service.odgovor.OdgovorService;
 

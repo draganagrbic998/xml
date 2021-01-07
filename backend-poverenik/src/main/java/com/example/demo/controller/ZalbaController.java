@@ -46,9 +46,21 @@ public class ZalbaController {
 				.body(resource);
 	}
 
-	@PostMapping(value = "/send/{broj}")
-	public ResponseEntity<Void> proslediZalbu(@PathVariable String broj) {
-		this.zalbaService.proslediZalbu(broj);
+	@PostMapping(value = "/prosledi/{broj}")
+	public ResponseEntity<Void> prosledi(@PathVariable String broj) {
+		this.zalbaService.prosledi(broj);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
+	@PostMapping(value = "/odustani/{broj}")
+	public ResponseEntity<Void> odustani(@PathVariable String broj){
+		this.zalbaService.odustani(broj);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/obustavi/{broj}")
+	public ResponseEntity<Void> obustavi(@PathVariable String broj) {
+		this.zalbaService.obustavi(broj);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 

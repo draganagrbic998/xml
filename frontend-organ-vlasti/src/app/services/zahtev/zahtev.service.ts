@@ -3,10 +3,11 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Zahtev } from 'src/app/models/zahtev';
 import { environment } from 'src/environments/environment';
-import { OSNOVA, ZAHTEV } from 'src/app/constants/namespaces';
+import { KORISNIK, OSNOVA, PREDIKAT, ZAHTEV } from 'src/app/constants/namespaces';
 import { ZahtevDTO } from 'src/app/models/zahtevDTO';
 import { map } from 'rxjs/operators';
 import { XonomyService } from '../xonomy/xonomy.service';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,8 @@ export class ZahtevService {
 
   constructor(
     private http: HttpClient,
-    private xonomyService: XonomyService
+    private xonomyService: XonomyService,
+    private authService: AuthService
   ) { }
 
   private readonly API_ZAHTEVI = `${environment.baseUrl}/${environment.apiZahtevi}`;
@@ -24,7 +26,7 @@ export class ZahtevService {
 
     let xml = `
       ${zahtev.detalji}
-      <zahtev:tipZahteva>${zahtev.tipZahteva}</zahtev:tipZahteva>
+      <zahtev:tipZahteva property="pred:tip" datatype="xs:string">${zahtev.tipZahteva}</zahtev:tipZahteva>
     `;
     if (zahtev.tipZahteva === 'dostava'){
       xml += '<zahtev:tipDostave>${zahtev.tipDostave}</zahtev:tipDostave>';
@@ -34,8 +36,14 @@ export class ZahtevService {
     }
 
     return `
-      <zahtev:Zahtev xmlns="${OSNOVA}"
-      xmlns:zahtev="${ZAHTEV}">
+      <zahtev:Zahtev
+      xmlns="http://www.w3.org/ns/rdfa#"
+      xmlns:xs="http://www.w3.org/2001/XMLSchema#"
+      xmlns:pred="${PREDIKAT}"
+      xmlns:osnova="${OSNOVA}"
+      xmlns:zahtev="${ZAHTEV}"
+      rel="pred:podneo"
+      href="${KORISNIK}/${this.authService.getUser().mejl}">
         ${xml}
       </zahtev:Zahtev>
     `;

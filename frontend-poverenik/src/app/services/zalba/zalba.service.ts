@@ -63,30 +63,28 @@ export class ZalbaService {
 
   private xmlToZalbe(xml: string): ZalbaDTO[]{
     const parser = new DOMParser();
-    const document = parser.parseFromString(xml, 'text/xml').getElementsByTagNameNS(ZALBA, 'Zalba');
-    const zalbe: ZalbaDTO[] = [];
-    let zalbaDatumProsledjivanja: number;
-    let zalbaStatus: string;
+    const zalbe = parser.parseFromString(xml, 'text/xml').getElementsByTagNameNS(ZALBA, 'Zalba');
+    const zalbeDTO: ZalbaDTO[] = [];
 
-    for (const key of Object.keys(document)){
-      zalbaStatus = document[key].getElementsByTagNameNS(ZALBA, 'status')[0].textContent;
-
-      if (zalbaStatus !== 'cekanje') {
-        zalbaDatumProsledjivanja = Date.parse(document[key].getElementsByTagNameNS(ZALBA, 'datumProsledjivanja')[0].textContent);
+    for (let i = 0; i < zalbe.length; ++i){
+      let datumProsledjivanja;
+      if (zalbe.item(i).getElementsByTagNameNS(ZALBA, 'status')[0].textContent === 'cekanje'){
+        datumProsledjivanja = Date.now();
       }
-      else {
-        zalbaDatumProsledjivanja = Date.now();
+      else{
+        datumProsledjivanja = Date.parse(zalbe.item(i).getElementsByTagNameNS(ZALBA, 'datumProsledjivanja')[0].textContent);
       }
 
-      zalbe.push({
-        tipZalbe: document[key].getElementsByTagNameNS(ZALBA, 'tipZalbe')[0].textContent,
-        broj: document[key].getElementsByTagNameNS(OSNOVA, 'broj')[0].textContent,
-        datum: document[key].getElementsByTagNameNS(OSNOVA, 'datum')[0].textContent,
-       status: document[key].getElementsByTagNameNS(ZALBA, 'status')[0].textContent
+      zalbeDTO.push({
+        tipZalbe: zalbe.item(i).getElementsByTagNameNS(ZALBA, 'tipZalbe')[0].textContent,
+        broj: zalbe.item(i).getElementsByTagNameNS(OSNOVA, 'broj')[0].textContent,
+        datum: zalbe.item(i).getElementsByTagNameNS(OSNOVA, 'datum')[0].textContent,
+        status: zalbe.item(i).getElementsByTagNameNS(ZALBA, 'status')[0].textContent,
+        datumProsledjivanja
       });
     }
 
-    return zalbe;
+    return zalbeDTO;
   }
 
   saveZalbaCutanje(zalba: ZalbaCutanje): Observable<null>{
@@ -111,9 +109,19 @@ export class ZalbaService {
     return this.http.get<string>(`${this.API_ZALBE}/${broj}`, {responseType: 'text' as 'json'});
   }
 
-  send(broj: string): Observable<null>{
+  prosledi(broj: string): Observable<null>{
     const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
-    return this.http.post<null>(`${this.API_ZALBE}/send/${broj}`, options);
+    return this.http.post<null>(`${this.API_ZALBE}/prosledi/${broj}`, options);
+  }
+
+  odustani(broj: string): Observable<null>{
+    const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
+    return this.http.post<null>(`${this.API_ZALBE}/odustani/${broj}`, options);
+  }
+
+  obustavi(broj: string): Observable<null>{
+    const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
+    return this.http.post<null>(`${this.API_ZALBE}/obustavi/${broj}`, options);
   }
 
 }

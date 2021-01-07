@@ -94,6 +94,9 @@ public class KorisnikService implements UserDetailsService {
 			Node uloga = profilDocument.createElement("uloga");
 			uloga.setTextContent(korisnik.getUloga());
 			profil.appendChild(uloga);
+			Node mejl = profilDocument.createElement("mejl");
+			mejl.setTextContent(korisnik.getOsoba().getMejl());
+			profil.appendChild(mejl);
 			Node ime = profilDocument.createElement("ime");
 			ime.setTextContent(korisnik.getOsoba().getIme());
 			profil.appendChild(ime);

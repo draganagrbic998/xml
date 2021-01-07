@@ -84,8 +84,6 @@ public class ZalbaMapper {
 						zalbeDocument.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0), true));
 				zalba.appendChild(zalbeDocument
 						.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
-				zalba.appendChild(zalbeDocument
-						.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "naziv").item(0), true));
 				Node statusNode = zalba.appendChild(zalbeDocument
 						.importNode(document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0), true));
 								

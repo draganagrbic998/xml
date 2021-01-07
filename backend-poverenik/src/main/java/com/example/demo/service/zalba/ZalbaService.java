@@ -29,6 +29,8 @@ import com.example.demo.parser.DOMParser;
 import com.example.demo.parser.XSLTransformer;
 import com.example.demo.repository.xml.ZalbaExist;
 import com.example.demo.service.KorisnikService;
+import com.example.demo.service.email.Email;
+import com.example.demo.service.email.EmailService;
 import com.example.demo.ws.utils.SOAPService;
 import com.example.demo.ws.utils.TipDokumenta;
 import com.example.demo.ws.zalbepodaci.data.ZalbePodaciData;
@@ -53,6 +55,9 @@ public class ZalbaService {
 	
 	@Autowired
 	private SOAPService soapService;
+	
+	@Autowired
+	private EmailService emailService;
 
 	private static final String XSL_PATH_CUTANJE = Constants.XSL_FOLDER + File.separatorChar + "/zalba_cutanje.xsl";
 	private static final String XSL_FO_PATH_CUTANJE = Constants.XSL_FOLDER + File.separatorChar + "zalba_cutanje_fo.xsl";
@@ -140,8 +145,25 @@ public class ZalbaService {
 			throw new MyException(e);
 		}
 	}
+	
+	public void odustani(String broj) {
+		Document document = this.zalbaExist.load(broj);
+		document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.odustato + "");
+		this.zalbaExist.save(broj, document);
+		//dodaj slanje mejla
+		//Email email = new Email();
+		//email.setTo(this.korisnikService.currentUser().getOsoba().getMejl());
+		//email.setSubject("Odustaja od žalbe");
 
-	public void proslediZalbu(String broj) {
+	}
+	
+	public void obustavi(String broj) {
+		Document document = this.zalbaExist.load(broj);
+		document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.obustaljveno + "");
+		this.zalbaExist.save(broj, document);
+	}
+
+	public void prosledi(String broj) {
 		Document document = this.zalbaExist.load(broj);
 		document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.prosledjeno + "");
 		this.soapService.sendSOAPMessage(document, TipDokumenta.zalba);

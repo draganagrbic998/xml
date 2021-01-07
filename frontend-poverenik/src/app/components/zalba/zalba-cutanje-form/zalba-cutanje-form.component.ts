@@ -5,6 +5,7 @@ import { SNACKBAR_CLOSE, SNACKBAR_ERROR, SNACKBAR_ERROR_OPTIONS, SNACKBAR_SUCCES
 import { ZalbaCutanje } from 'src/app/models/zalba-cutanje';
 import { XonomyService } from 'src/app/services/xonomy/xonomy.service';
 import { ZalbaService } from 'src/app/services/zalba/zalba.service';
+import { ZalbaValidatorService } from './zalba-validator.service';
 
 declare const Xonomy: any;
 
@@ -17,6 +18,7 @@ export class ZalbaCutanjeFormComponent implements AfterViewInit {
 
   constructor(
     private zalbaService: ZalbaService,
+    private zalbaValidator: ZalbaValidatorService,
     private xonomyService: XonomyService,
     private snackBar: MatSnackBar
   ) { }
@@ -25,7 +27,7 @@ export class ZalbaCutanjeFormComponent implements AfterViewInit {
   zalbaForm: FormGroup = new FormGroup({
     naziv: new FormControl('', [Validators.required, Validators.pattern(new RegExp('\\S'))]),
     brojZahteva: new FormControl('', [Validators.required, Validators.pattern(/^[0-9]\d*$/)]),
-    brojOdluke: new FormControl('', [Validators.required, Validators.pattern(/^[0-9]\d*$/)]),
+    brojOdluke: new FormControl('', [this.zalbaValidator.brojOdluke()]),
     datumZahteva: new FormControl('', [Validators.required]),
     tipCutanja: new FormControl('nije postupio', [Validators.required]),
   });

@@ -1,5 +1,6 @@
 package com.example.demo.service.zahtev;
 
+import java.io.StringReader;
 import java.util.Date;
 
 import org.apache.jena.rdf.model.Model;
@@ -18,9 +19,11 @@ import com.example.demo.constants.Constants;
 import com.example.demo.constants.Namespaces;
 import com.example.demo.exception.MyException;
 import com.example.demo.fuseki.Prefixes;
+import com.example.demo.fuseki.SparqlUtil;
 import com.example.demo.model.enums.StatusZahteva;
 import com.example.demo.parser.DOMParser;
 import com.example.demo.parser.JAXBParser;
+import com.example.demo.parser.XSLTransformer;
 import com.example.demo.service.KorisnikService;
 import com.example.demo.service.OrganVlastiService;
 import com.ibm.icu.text.SimpleDateFormat;
@@ -41,6 +44,9 @@ public class ZahtevMapper {
 	private JAXBParser jaxbParser;
 		
 	private static final SimpleDateFormat sdf = new SimpleDateFormat(Constants.DATE_FORMAT);
+	
+	@Autowired
+	private XSLTransformer xslTransformer;
 
 	public Document map(String xml) {
 		try {
@@ -48,14 +54,14 @@ public class ZahtevMapper {
 			Element zahtev = (Element) document.getElementsByTagNameNS(Namespaces.ZAHTEV, "Zahtev").item(0);
 			DocumentFragment documentFragment = document.createDocumentFragment();
 			
-			Node datum = document.createElementNS(Namespaces.OSNOVA, "datum");
+			Node datum = document.createElementNS(Namespaces.OSNOVA, "osnova:datum");
 			datum.setTextContent(sdf.format(new Date()));
 			Element korisnik = (Element) this.jaxbParser.marshal(this.korisnikService.currentUser()).getElementsByTagNameNS(Namespaces.OSNOVA, "Korisnik").item(0);
-			Node gradjanin = document.createElementNS(Namespaces.OSNOVA, "Gradjanin");
+			Node gradjanin = document.createElementNS(Namespaces.OSNOVA, "osnova:Gradjanin");
 			gradjanin.appendChild(document.importNode(korisnik.getElementsByTagNameNS(Namespaces.OSNOVA, "Osoba").item(0), true));
 			gradjanin.appendChild(document.importNode(korisnik.getElementsByTagNameNS(Namespaces.OSNOVA, "Adresa").item(0), true));
 			Node organVlasti = document.importNode(this.jaxbParser.marshal(this.organVlastiService.load()).getElementsByTagNameNS(Namespaces.OSNOVA, "OrganVlasti").item(0), true);
-			documentFragment.appendChild(document.createElementNS(Namespaces.OSNOVA, "broj"));
+			documentFragment.appendChild(document.createElementNS(Namespaces.OSNOVA, "osnova:broj"));
 			documentFragment.appendChild(datum);
 			documentFragment.appendChild(gradjanin);
 			documentFragment.appendChild(organVlasti);
@@ -95,46 +101,35 @@ public class ZahtevMapper {
 		}
 	}
 	
-	public Model[] map(Document document) {
-		String email = document.getElementsByTagNameNS(Namespaces.OSNOVA, "mejl").item(0).getTextContent();
-		String broj = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
-		String datum = document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).getTextContent();
-		String mesto = document.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(0).getTextContent();
+	public Model map(Document document) {
 		
-		Model model = ModelFactory.createDefaultModel();
-		model.setNsPrefix("pred", Prefixes.PREDIKAT);
-		
-		model.add(
-			model.createResource(Prefixes.ZAHTEV_PREFIX + broj),
-			model.createProperty(Prefixes.PREDIKAT, "datum"),
-			model.createLiteral(datum)
-		);
-		
-		model.add(
-			model.createResource(Prefixes.ZAHTEV_PREFIX + broj),
-			model.createProperty(Prefixes.PREDIKAT, "mesto"),
-			model.createLiteral(mesto)
-		);
-		
-		model.add(
-			model.createResource(Prefixes.ZAHTEV_PREFIX + broj),
-			model.createProperty(Prefixes.PREDIKAT, "sastavljenoOdStrane"),
-			model.createResource(Prefixes.KORISNIK_PREFIX + email)
-		);
-		
-		Model model2 = ModelFactory.createDefaultModel();
-		model2.setNsPrefix("pred", Prefixes.PREDIKAT);
-		
-		model2.add(
-			model.createResource(Prefixes.KORISNIK_PREFIX + email),
-			model.createProperty(Prefixes.PREDIKAT, "sastavio"),
-			model.createResource(Prefixes.ZAHTEV_PREFIX + broj)
-		);
+		try {
+			Element zahtev = (Element) document.getElementsByTagNameNS(Namespaces.ZAHTEV, "Zahtev").item(0);
+			zahtev.setAttribute("about", Prefixes.ZAHTEV_PREFIX + zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent());
+			((Element) zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0)).setAttribute("property", "pred:datum");
+			((Element) zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0)).setAttribute("datatype", "xs:string");
+			
+			((Element) zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(0)).setAttribute("property", "pred:mesto");
+			((Element) zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(0)).setAttribute("datatype", "xs:string");
 
-		Model[] models = new Model[2];
-		models[0] = model;
-		models[1] = model2;
-		return models;
+			((Element) zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(1)).setAttribute("property", "pred:izdatoU");
+			((Element) zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(1)).setAttribute("datatype", "xs:string");
+
+			((Element) zahtev.getElementsByTagNameNS(Namespaces.ZAHTEV, "status").item(0)).setAttribute("property", "pred:status");
+			((Element) zahtev.getElementsByTagNameNS(Namespaces.ZAHTEV, "status").item(0)).setAttribute("datatype", "xs:string");
+
+			String result = this.xslTransformer.generateMetadata(this.domParser.buildXml(document)).toString();
+			Model model = ModelFactory.createDefaultModel();
+			model.setNsPrefix("pred", Prefixes.PREDIKAT);
+			model.read(new StringReader(result), null);
+			model.write(System.out, SparqlUtil.NTRIPLES);
+			
+			return model;
+		}
+		catch(Exception e) {
+			throw new MyException(e);
+		}
+		
 	}
 	
 }
