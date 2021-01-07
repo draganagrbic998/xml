@@ -123,6 +123,22 @@
 							<sourceRoot>${project.build.directory}/generated/cxf</sourceRoot>
 							<wsdlOptions>
 								<wsdlOption>
+									<wsdl>${basedir}/src/main/resources/wsdl/Zahtev.wsdl</wsdl>
+									<extraargs>
+										<extraarg>-impl</extraarg>
+										<extraarg>-verbose</extraarg>
+									</extraargs>
+									<wsdlLocation>classpath:wsdl/Zahtev.wsdl</wsdlLocation>
+								</wsdlOption>
+								<wsdlOption>
+									<wsdl>${basedir}/src/main/resources/wsdl/Odluka.wsdl</wsdl>
+									<extraargs>
+										<extraarg>-impl</extraarg>
+										<extraarg>-verbose</extraarg>
+									</extraargs>
+									<wsdlLocation>classpath:wsdl/Odluka.wsdl</wsdlLocation>
+								</wsdlOption>
+								<wsdlOption>
 									<wsdl>${basedir}/src/main/resources/wsdl/Zalba.wsdl</wsdl>
 									<extraargs>
 										<extraarg>-impl</extraarg>

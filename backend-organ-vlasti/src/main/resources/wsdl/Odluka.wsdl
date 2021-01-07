@@ -10,17 +10,24 @@
 			xmlns="http://demo.example.com/ws/odluka"
 			attributeFormDefault="unqualified" elementFormDefault="unqualified"
 			targetNamespace="http://demo.example.com/ws/odluka">
-			<xs:element name="createOdluka" type="xs:string" />
+			<xs:element name="createOdlukaRequest" type="xs:string" />
+			<xs:element name="createOdlukaResponse" type="xs:string" />
 		</xs:schema>
 	</wsdl:types>
-	<wsdl:message name="createOdluka">
-		<wsdl:part name="createOdluka" element="tns:createOdluka">
+	<wsdl:message name="createOdlukaRequest">
+		<wsdl:part name="createOdlukaRequest" element="tns:createOdlukaRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="createOdlukaResponse">
+		<wsdl:part name="createOdlukaResponse" element="tns:createOdlukaResponse">
 		</wsdl:part>
 	</wsdl:message>
 	<wsdl:portType name="Odluka">
 		<wsdl:operation name="createOdluka">
-			<wsdl:input name="createOdluka" message="tns:createOdluka">
+			<wsdl:input name="createOdlukaRequest" message="tns:createOdlukaRequest">
 			</wsdl:input>
+			<wsdl:output name="createOdlukaResponse" message="tns:createOdlukaResponse">
+			</wsdl:output>
 		</wsdl:operation>
 	</wsdl:portType>
 	<wsdl:binding name="OdlukaServiceSoapBinding"
@@ -29,9 +36,12 @@
 			transport="http://schemas.xmlsoap.org/soap/http" />
 		<wsdl:operation name="createOdluka">
 			<soap:operation soapAction="" style="document" />
-			<wsdl:input name="createOdluka">
+			<wsdl:input name="createOdlukaRequest">
 				<soap:body use="literal" />
 			</wsdl:input>
+			<wsdl:output name="createOdlukaResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
 		</wsdl:operation>
 	</wsdl:binding>
 	<wsdl:service name="OdlukaService">
