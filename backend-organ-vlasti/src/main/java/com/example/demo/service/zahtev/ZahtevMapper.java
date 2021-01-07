@@ -19,7 +19,6 @@ import com.example.demo.constants.Constants;
 import com.example.demo.constants.Namespaces;
 import com.example.demo.exception.MyException;
 import com.example.demo.fuseki.Prefixes;
-import com.example.demo.fuseki.SparqlUtil;
 import com.example.demo.model.enums.StatusZahteva;
 import com.example.demo.parser.DOMParser;
 import com.example.demo.parser.JAXBParser;
@@ -133,8 +132,6 @@ public class ZahtevMapper {
 			Model model = ModelFactory.createDefaultModel();
 			model.setNsPrefix("pred", Prefixes.PREDIKAT);
 			model.read(new StringReader(result), null);
-			model.write(System.out, SparqlUtil.NTRIPLES);
-			System.out.println("ZAVSILA");
 			
 			return model;
 		}

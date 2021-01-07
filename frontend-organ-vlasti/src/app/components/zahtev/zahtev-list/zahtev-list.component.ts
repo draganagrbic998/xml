@@ -4,6 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ZahtevDTO } from 'src/app/models/zahtevDTO';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ZahtevService } from 'src/app/services/zahtev/zahtev.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-zahtev-list',
@@ -18,12 +19,20 @@ export class ZahtevListComponent implements AfterViewInit {
   ) { }
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  columns: string[] = ['datum', 'status', 'html', 'pdf', 'akcije'];
+  columns: string[] = ['datum', 'status', 'dokumenti', 'akcije', 'metapodaci'];
   zahtevi: MatTableDataSource<ZahtevDTO> = new MatTableDataSource<ZahtevDTO>([]);
   fetchPending = true;
 
   get uloga(): string{
     return this.authService.getUser()?.uloga;
+  }
+
+  xmlMetadata(broj: string): void{
+    window.open(`//localhost:8081/${environment.apiZahtevi}/${broj}/metadata/xml`, '_blank');
+  }
+
+  jsonMetadata(broj: string): void{
+    window.open(`//localhost:8081/${environment.apiZahtevi}/${broj}/metadata/json`, '_blank');
   }
 
   ngAfterViewInit(): void {
