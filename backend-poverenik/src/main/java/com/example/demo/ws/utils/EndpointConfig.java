@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.example.demo.ws.odgovor.CreateOdgovorPortImpl;
+import com.example.demo.ws.odgovor.OdgovorPortImpl;
 
 @Configuration
 public class EndpointConfig {
@@ -17,7 +17,7 @@ public class EndpointConfig {
 	private Bus bus;
 	
 	@Autowired
-	private CreateOdgovorPortImpl copi;
+	private OdgovorPortImpl copi;
 		
 	@Bean
 	public Endpoint createZalbaEndpoint() {

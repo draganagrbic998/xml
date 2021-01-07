@@ -13,46 +13,46 @@ import javax.xml.ws.Service;
  * Generated source version: 3.3.0
  *
  */
-@WebServiceClient(name = "CreateOdgovorService",
+@WebServiceClient(name = "OdgovorService",
                   wsdlLocation = "classpath:wsdl/Odgovor.wsdl",
                   targetNamespace = "http://demo.example.com/ws/odgovor")
-public class CreateOdgovorService extends Service {
+public class OdgovorService extends Service {
 
     public final static URL WSDL_LOCATION;
 
-    public final static QName SERVICE = new QName("http://demo.example.com/ws/odgovor", "CreateOdgovorService");
-    public final static QName CreateOdgovorPort = new QName("http://demo.example.com/ws/odgovor", "CreateOdgovorPort");
+    public final static QName SERVICE = new QName("http://demo.example.com/ws/odgovor", "OdgovorService");
+    public final static QName OdgovorPort = new QName("http://demo.example.com/ws/odgovor", "OdgovorPort");
     static {
-        URL url = CreateOdgovorService.class.getClassLoader().getResource("wsdl/Odgovor.wsdl");
+        URL url = OdgovorService.class.getClassLoader().getResource("wsdl/Odgovor.wsdl");
         if (url == null) {
-            java.util.logging.Logger.getLogger(CreateOdgovorService.class.getName())
+            java.util.logging.Logger.getLogger(OdgovorService.class.getName())
                 .log(java.util.logging.Level.INFO,
                      "Can not initialize the default wsdl from {0}", "classpath:wsdl/Odgovor.wsdl");
         }
         WSDL_LOCATION = url;
     }
 
-    public CreateOdgovorService(URL wsdlLocation) {
+    public OdgovorService(URL wsdlLocation) {
         super(wsdlLocation, SERVICE);
     }
 
-    public CreateOdgovorService(URL wsdlLocation, QName serviceName) {
+    public OdgovorService(URL wsdlLocation, QName serviceName) {
         super(wsdlLocation, serviceName);
     }
 
-    public CreateOdgovorService() {
+    public OdgovorService() {
         super(WSDL_LOCATION, SERVICE);
     }
 
-    public CreateOdgovorService(WebServiceFeature ... features) {
+    public OdgovorService(WebServiceFeature ... features) {
         super(WSDL_LOCATION, SERVICE, features);
     }
 
-    public CreateOdgovorService(URL wsdlLocation, WebServiceFeature ... features) {
+    public OdgovorService(URL wsdlLocation, WebServiceFeature ... features) {
         super(wsdlLocation, SERVICE, features);
     }
 
-    public CreateOdgovorService(URL wsdlLocation, QName serviceName, WebServiceFeature ... features) {
+    public OdgovorService(URL wsdlLocation, QName serviceName, WebServiceFeature ... features) {
         super(wsdlLocation, serviceName, features);
     }
 
@@ -62,11 +62,11 @@ public class CreateOdgovorService extends Service {
     /**
      *
      * @return
-     *     returns CreateOdgovor
+     *     returns Odgovor
      */
-    @WebEndpoint(name = "CreateOdgovorPort")
-    public CreateOdgovor getCreateOdgovorPort() {
-        return super.getPort(CreateOdgovorPort, CreateOdgovor.class);
+    @WebEndpoint(name = "OdgovorPort")
+    public Odgovor getCreateOdgovorPort() {
+        return super.getPort(OdgovorPort, Odgovor.class);
     }
 
     /**
@@ -74,11 +74,11 @@ public class CreateOdgovorService extends Service {
      * @param features
      *     A list of {@link javax.xml.ws.WebServiceFeature} to configure on the proxy.  Supported features not in the <code>features</code> parameter will have their default values.
      * @return
-     *     returns CreateOdgovor
+     *     returns Odgovor
      */
-    @WebEndpoint(name = "CreateOdgovorPort")
-    public CreateOdgovor getCreateOdgovorPort(WebServiceFeature... features) {
-        return super.getPort(CreateOdgovorPort, CreateOdgovor.class, features);
+    @WebEndpoint(name = "OdgovorPort")
+    public Odgovor getCreateOdgovorPort(WebServiceFeature... features) {
+        return super.getPort(OdgovorPort, Odgovor.class, features);
     }
 
 }

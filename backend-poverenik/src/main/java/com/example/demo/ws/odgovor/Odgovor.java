@@ -13,10 +13,10 @@ import javax.xml.bind.annotation.XmlSeeAlso;
  * Generated source version: 3.3.0
  *
  */
-@WebService(targetNamespace = "http://demo.example.com/ws/odgovor", name = "CreateOdgovor")
+@WebService(targetNamespace = "http://demo.example.com/ws/odgovor", name = "Odgovor")
 @XmlSeeAlso({ObjectFactory.class})
 @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
-public interface CreateOdgovor {
+public interface Odgovor {
 
     @WebMethod
     @Oneway

@@ -19,11 +19,11 @@ import com.example.demo.service.odgovor.OdgovorService;
  *
  */
 
-@javax.jws.WebService(serviceName = "CreateOdgovorService", portName = "CreateOdgovorPort", targetNamespace = "http://demo.example.com/ws/odgovor", wsdlLocation = "classpath:wsdl/Odgovor.wsdl", endpointInterface = "com.example.demo.ws.odgovor.CreateOdgovor")
+@javax.jws.WebService(serviceName = "OdgovorService", portName = "OdgovorPort", targetNamespace = "http://demo.example.com/ws/odgovor", wsdlLocation = "classpath:wsdl/Odgovor.wsdl", endpointInterface = "com.example.demo.ws.odgovor.Odgovor")
 @Component
-public class CreateOdgovorPortImpl implements CreateOdgovor {
+public class OdgovorPortImpl implements Odgovor {
 
-    private static final Logger LOG = Logger.getLogger(CreateOdgovorPortImpl.class.getName());
+    private static final Logger LOG = Logger.getLogger(OdgovorPortImpl.class.getName());
     
     @Autowired
     private OdgovorService odgovorService;
