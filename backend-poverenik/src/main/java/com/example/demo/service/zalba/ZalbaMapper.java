@@ -85,11 +85,8 @@ public class ZalbaMapper {
 				zalba.appendChild(zalbeDocument
 						.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
 				zalba.appendChild(zalbeDocument
-<<<<<<< HEAD
-=======
 						.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "naziv").item(0), true));
 				Node statusNode = zalba.appendChild(zalbeDocument
->>>>>>> 05352031953df735d6bbc76f3eb73c17b6072141
 						.importNode(document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0), true));
 								
 				if (!statusNode.getTextContent().equalsIgnoreCase("cekanje"))

@@ -13,21 +13,7 @@ public class OdgovorExist {
 
 	@Autowired
 	private ExistManager existManager;
-	
-<<<<<<< HEAD
-	public static final String ODGOVORI_COLLECTION = Constants.COLLECTIONS_PREFIX + "/odgovori";
-	
-	public void save(String documentId, Document document) {
-		this.existManager.save(ODGOVORI_COLLECTION, documentId, document);
-	}
-	
-	public ResourceSet retrieve(String xpathExp) {
-		return this.existManager.retrieve(ODGOVORI_COLLECTION, xpathExp);
-	}
-	
-	public Document load(String documentId) {
-		return this.existManager.load(ODGOVORI_COLLECTION, documentId);
-=======
+
 	public static final String ODGOVOR_COLLECTION = Constants.COLLECTIONS_PREFIX + "/odgovori";
 	
 	public void save(String documentId, Document document) {
@@ -40,7 +26,6 @@ public class OdgovorExist {
 	
 	public Document load(String documentId) {
 		return this.existManager.load(ODGOVOR_COLLECTION, documentId);
->>>>>>> 05352031953df735d6bbc76f3eb73c17b6072141
 	}
 	
 }

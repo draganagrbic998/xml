@@ -27,7 +27,6 @@ import com.example.demo.service.odgovor.OdgovorService;
 @Component
 public class CreateOdgovorPortImpl implements CreateOdgovor {
 
-<<<<<<< HEAD
     private static final Logger LOG = Logger.getLogger(CreateOdgovorPortImpl.class.getName());
     
     @Autowired
@@ -46,32 +45,5 @@ public class CreateOdgovorPortImpl implements CreateOdgovor {
             throw new RuntimeException(ex);
         }
     }
-=======
-	private static final Logger LOG = Logger.getLogger(CreateOdgovorPortImpl.class.getName());
-
-	@Autowired
-	private OdgovorExist odgovorRepository;
-
-	@Autowired
-	private DOMParser domParser;
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.example.demo.ws.odgovor.CreateOdgovor#createOdgovor(java.lang.String
-	 * createOdgovor)*
-	 */
-	public void createOdgovor(java.lang.String createOdgovor) {
-		LOG.info("Executing operation createOdgovor");
-		System.out.println(createOdgovor);
-		try {
-			Document odgovorDocument = this.domParser.buildDocument(createOdgovor);
-			this.odgovorRepository.save(null, odgovorDocument);
-		} catch (java.lang.Exception ex) {
-			ex.printStackTrace();
-			throw new RuntimeException(ex);
-		}
-	}
->>>>>>> 05352031953df735d6bbc76f3eb73c17b6072141
 
 }
