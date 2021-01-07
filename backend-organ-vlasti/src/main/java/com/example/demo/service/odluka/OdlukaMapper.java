@@ -1,5 +1,6 @@
 package com.example.demo.service.odluka;
 
+import java.io.StringReader;
 import java.util.Date;
 
 import org.apache.jena.rdf.model.Model;
@@ -20,6 +21,7 @@ import com.example.demo.exception.MyException;
 import com.example.demo.fuseki.Prefixes;
 import com.example.demo.model.enums.TipOdluke;
 import com.example.demo.parser.DOMParser;
+import com.example.demo.parser.XSLTransformer;
 import com.example.demo.repository.xml.ZahtevExist;
 import com.example.demo.service.KorisnikService;
 import com.ibm.icu.text.SimpleDateFormat;
@@ -38,6 +40,9 @@ public class OdlukaMapper {
 		
 	private static final SimpleDateFormat sdf = new SimpleDateFormat(Constants.DATE_FORMAT);
 	//private static final SimpleDateFormat sdf2 = new SimpleDateFormat("dd.MM.yyy.");
+	
+	@Autowired
+	private XSLTransformer xslTransformer;
 	
 	public Document map(String xml) {
 		
@@ -123,63 +128,48 @@ public class OdlukaMapper {
 		}
 	}
 	
-	public Model[] map(Document document) {
-		String email = this.korisnikService.currentUser().getOsoba().getMejl();
-		String broj = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
-		String datum = document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).getTextContent();
-		String mesto = document.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(0).getTextContent();
-		String brojZahteva = document.getElementsByTagNameNS(Namespaces.ODLUKA, "brojZahteva").item(0).getTextContent();
-		
-		Model model = ModelFactory.createDefaultModel();
-		model.setNsPrefix("pred", Prefixes.PREDIKAT);
-		
-		model.add(
-			model.createResource(Prefixes.ODLUKA_PREFIX + broj),
-			model.createProperty(Prefixes.PREDIKAT, "datum"),
-			model.createLiteral(datum)
-		);
-		
-		model.add(
-			model.createResource(Prefixes.ODLUKA_PREFIX + broj),
-			model.createProperty(Prefixes.PREDIKAT, "mesto"),
-			model.createLiteral(mesto)
-		);
-		
-		model.add(
-			model.createResource(Prefixes.ODLUKA_PREFIX + broj),
-			model.createProperty(Prefixes.PREDIKAT, "sastavljenoOdStrane"),
-			model.createResource(Prefixes.KORISNIK_PREFIX + email)
-		);
-		
-		model.add(
-			model.createResource(Prefixes.ODLUKA_PREFIX + broj),
-			model.createProperty(Prefixes.PREDIKAT + "podneseniZahtev"),
-			model.createResource(Prefixes.ZAHTEV_PREFIX + brojZahteva)
-		);
-		
-		Model model2 = ModelFactory.createDefaultModel();
-		model2.setNsPrefix("pred", Prefixes.PREDIKAT);
-		
-		model2.add(
-			model.createResource(Prefixes.KORISNIK_PREFIX + email),
-			model.createProperty(Prefixes.PREDIKAT, "sastavio"),
-			model.createResource(Prefixes.ODLUKA_PREFIX + broj)
-		);
-		
-		Model model3 = ModelFactory.createDefaultModel();
-		model3.setNsPrefix("pred", Prefixes.PREDIKAT);
-		
-		model3.add(
-			model.createResource(Prefixes.ZAHTEV_PREFIX + brojZahteva),
-			model.createProperty(Prefixes.PREDIKAT + "donesenaOdluka"),
-			model.createResource(Prefixes.ODLUKA_PREFIX + broj)
-		);
+	public Model map(Document document) {
+		try {
+			Element odluka = (Element) document.getElementsByTagNameNS(Namespaces.ODLUKA, "Odluka").item(0);
+			odluka.setAttribute("xmlns:pred", Prefixes.PREDIKAT);
+			odluka.setAttribute("xmlns:xs", Namespaces.XS);
 
-		Model[] models = new Model[3];
-		models[0] = model;
-		models[1] = model2;
-		models[2] = model3;
-		return models;
+			odluka.setAttribute("about", Prefixes.ODLUKA_PREFIX + odluka.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent());
+			odluka.setAttribute("rel", "pred:izdao");
+			odluka.setAttribute("href", Prefixes.KORISNIK_PREFIX + this.korisnikService.currentUser().getOsoba().getMejl());
+			
+			Element brojZahteva = (Element) odluka.getElementsByTagNameNS(Namespaces.ODLUKA, "brojZahteva").item(0);
+			brojZahteva.setAttribute("rel", "pred:zahtev");
+			brojZahteva.setAttribute("href", Prefixes.ZAHTEV_PREFIX + brojZahteva.getTextContent());
+
+			Node tipOdluke = document.createElementNS(Namespaces.ODLUKA, "tipOdluke");
+			tipOdluke.setTextContent(odluka.getAttributeNS(Namespaces.XSI, "type"));
+			odluka.appendChild(tipOdluke);
+			((Element) odluka.getElementsByTagNameNS(Namespaces.ODLUKA, "tipOdluke").item(0)).setAttribute("property", "pred:tip");
+			((Element) odluka.getElementsByTagNameNS(Namespaces.ODLUKA, "tipOdluke").item(0)).setAttribute("datatype", "xs:string");
+
+
+			
+			((Element) odluka.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0)).setAttribute("property", "pred:datum");
+			((Element) odluka.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0)).setAttribute("datatype", "xs:string");
+			
+			((Element) odluka.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(0)).setAttribute("property", "pred:mesto");
+			((Element) odluka.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(0)).setAttribute("datatype", "xs:string");
+
+			((Element) odluka.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(1)).setAttribute("property", "pred:izdatoU");
+			((Element) odluka.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(1)).setAttribute("datatype", "xs:string");
+
+			String result = this.xslTransformer.generateMetadata(this.domParser.buildXml(document)).toString();
+			Model model = ModelFactory.createDefaultModel();
+			model.setNsPrefix("pred", Prefixes.PREDIKAT);
+			model.read(new StringReader(result), null);
+			System.out.println(result);
+			
+			return model;
+		}
+		catch(Exception e) {
+			throw new MyException(e);
+		}
 	}
 	
 	public static TipOdluke getTipOdluke(Document document) {

@@ -6,7 +6,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import org.apache.jena.rdf.model.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -21,9 +20,7 @@ import com.example.demo.model.Korisnik;
 import com.example.demo.model.enums.StatusZahteva;
 import com.example.demo.model.enums.TipOdluke;
 import com.example.demo.parser.XSLTransformer;
-import com.example.demo.repository.rdf.KorisnikRDF;
 import com.example.demo.repository.rdf.OdlukaRDF;
-import com.example.demo.repository.rdf.ZahtevRDF;
 import com.example.demo.repository.xml.OdlukaExist;
 import com.example.demo.repository.xml.ZahtevExist;
 import com.example.demo.service.KorisnikService;
@@ -39,12 +36,6 @@ public class OdlukaService {
 
 	@Autowired
 	private KorisnikService korisnikService;
-	
-	@Autowired
-	private KorisnikRDF korisnikRDF;
-	
-	@Autowired
-	private ZahtevRDF zahtevRDF;
 	
 	@Autowired
 	private OdlukaRDF odlukaRDF;
@@ -76,10 +67,7 @@ public class OdlukaService {
 		}
 		this.odlukaExist.save(null, document);
 		this.zahtevExist.save(brojZahteva, zahtevDocument);
-		Model[] models = this.odlukaMapper.map(document);
-		this.odlukaRDF.save(models[0]);
-		this.korisnikRDF.save(models[1]);
-		this.zahtevRDF.save(models[2]);
+		this.odlukaRDF.save(this.odlukaMapper.map(document));
 	}
 	
 	public String retrieve() {
