@@ -39,8 +39,8 @@
           *ngIf="!sendPending && uloga === 'poverenik' && zalba.status === 'cekanje'"
           mat-raised-button 
           color="primary"
-          (click)="send(zalba.broj)">Prosledi žalbu</button>
-          <a *ngIf="uloga === 'poverenik' && zalba.status === 'odgovoreno'"
+          (click)="send(zalba)">Prosledi žalbu</button>
+          <a *ngIf="uloga === 'poverenik' && canAddResenje(zalba)"
           [routerLink]="'/resenje-form/' + zalba.broj">dodaj rešenje</a>
         </td>
       </ng-container>
