@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { OdgovorService } from 'src/app/services/odgovor/odgovor.service';
 import { ResenjeService } from 'src/app/services/resenje/resenje.service';
 import { ZalbaService } from 'src/app/services/zalba/zalba.service';
 
@@ -13,6 +14,7 @@ export class HtmlViewerComponent implements OnInit {
   constructor(
     private zalbaService: ZalbaService,
     private resenjeService: ResenjeService,
+    private odgovoriService: OdgovorService,
     private route: ActivatedRoute
   ) { }
 
@@ -21,7 +23,16 @@ export class HtmlViewerComponent implements OnInit {
 
   ngOnInit(): void {
     const dokument = this.route.snapshot.params.dokument;
-    const service = dokument === 'zalbe' ? this.zalbaService : this.resenjeService;
+    let service;
+    if (dokument === 'zalbe'){
+      service = this.zalbaService;
+    }
+    else if (dokument === 'resenja'){
+      service = this.resenjeService;
+    }
+    else{
+      service = this.odgovoriService;
+    }
     service.view(this.route.snapshot.params.broj).subscribe(
       (html: string) => {
         this.html = html;

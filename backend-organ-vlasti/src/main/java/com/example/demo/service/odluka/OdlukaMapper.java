@@ -61,13 +61,7 @@ public class OdlukaMapper {
 
 			Node datumZahteva = document.createElementNS(Namespaces.ODLUKA, "odluka:datumZahteva");
 			datumZahteva.setTextContent(zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).getTextContent());
-			TipOdluke tipOdluke = getTipOdluke(document);
-			if (tipOdluke.equals(TipOdluke.obavestenje)) {
-				odluka.insertBefore(datumZahteva, odluka.getElementsByTagNameNS(Namespaces.ODLUKA, "Uvid").item(0));
-			}
-			else {
-				odluka.appendChild(datumZahteva);
-			}
+			odluka.insertBefore(datumZahteva, odluka.getElementsByTagNameNS(Namespaces.ODLUKA, "brojZahteva").item(0));
 			return document;
 		}
 		catch(Exception e) {

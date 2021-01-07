@@ -79,13 +79,9 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 					</fo:block>
 					
 					<fo:block margin-left="40px" margin-right="40px" text-align-last="justify">
-						<xsl:variable name="sedisteMesto" select="osnova:OrganVlasti/osnova:Adresa/osnova:mesto"></xsl:variable>
-						<xsl:variable name="sedisteUlica" select="osnova:OrganVlasti/osnova:Adresa/osnova:ulica"></xsl:variable>
-						<xsl:variable name="sedisteBroj" select="osnova:OrganVlasti/osnova:Adresa/osnova:broj"></xsl:variable>
-						<xsl:variable name="sediste" select="concat($sedisteUlica, concat(' ', concat($sedisteBroj, concat(', ', $sedisteMesto))))"></xsl:variable>
 						(<fo:inline border-bottom="1px dotted black">
 							<fo:leader></fo:leader>
-								<xsl:value-of select="concat(osnova:OrganVlasti/osnova:naziv, concat(', ', $sediste))"></xsl:value-of>
+								<xsl:value-of select="zalba:organVlasti"></xsl:value-of>
 							<fo:leader></fo:leader>
 						</fo:inline>)
 					</fo:block>
@@ -169,7 +165,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 										&#160;
 										&#160;
 									</fo:block>
-									У <fo:inline border-bottom="1px dotted black">&#160;<xsl:value-of select="osnova:OrganVlasti/osnova:Adresa/osnova:mesto"></xsl:value-of>&#160;</fo:inline>,
+									У <fo:inline border-bottom="1px dotted black">&#160;Novom sadu&#160;</fo:inline>,
 								</fo:block>
 								<fo:block margin-top="5px">
 									дана 

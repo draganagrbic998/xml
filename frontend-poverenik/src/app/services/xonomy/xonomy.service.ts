@@ -49,44 +49,8 @@ export class XonomyService {
           {
             caption: 'Obriši <zakon> tag',
             action: Xonomy.deleteElement
-          },
-          {
-            caption: 'Dodaj @clan atribut',
-            action: Xonomy.newAttribute,
-            actionParameter: { name: 'clan', value: '1' },
-            hideIf: (jsElement) => {
-              return jsElement.hasAttribute('clan');
-            }
-          },
-          {
-            caption: 'Dodaj @stav atribut',
-            action: Xonomy.newAttribute,
-            actionParameter: { name: 'stav', value: '1' },
-            hideIf: (jsElement) => {
-              return jsElement.hasAttribute('stav');
-            }
           }
-        ],
-        attributes: {
-          clan: {
-            asker: Xonomy.askString,
-            menu: [
-              {
-                caption: 'Obriši @clan atribut',
-                action: Xonomy.deleteAttribute
-              },
-            ]
-          },
-          stav: {
-            asker: Xonomy.askString,
-            menu: [
-              {
-                caption: 'Obriši @stav atribut',
-                action: Xonomy.deleteAttribute
-              }
-            ]
-          }
-        }
+        ]
       }
     }
   };
@@ -131,18 +95,43 @@ export class XonomyService {
 
   removeXmlSpace(xml: string): string{
     const parser = new DOMParser();
-    const detalji = parser.parseFromString(xml, 'text/xml').getElementsByTagName('Detalji')[0];
-    detalji.removeAttribute('xml:space');
-    const bolds = detalji.getElementsByTagName('bold');
+    const serializer = new XMLSerializer();
+    const document = parser.parseFromString(xml, 'text/xml');
+
+    const bolds = document.getElementsByTagName('bold');
     for (let i = 0; i < bolds.length; ++i){
       bolds.item(i).removeAttribute('xml:space');
     }
-    const italics = detalji.getElementsByTagName('italic');
+    const italics = document.getElementsByTagName('italic');
     for (let i = 0; i < italics.length; ++i){
       italics.item(i).removeAttribute('xml:space');
     }
-    const serializer = new XMLSerializer();
-    return serializer.serializeToString(detalji);
+    const zakoni = document.getElementsByTagName('zakon');
+    for (let i = 0; i < zakoni.length; ++i){
+      zakoni.item(i).removeAttribute('xml:space');
+    }
+    const detalji = document.getElementsByTagName('Detalji');
+    for (let i = 0; i < detalji.length; ++i){
+      detalji.item(i).removeAttribute('xml:space');
+    }
+    const odluke = document.getElementsByTagName('Odluka');
+    for (let i = 0; i < odluke.length; ++i){
+      odluke.item(i).removeAttribute('xml:space');
+    }
+    const dispozitive = document.getElementsByTagName('Dispozitiva');
+    for (let i = 0; i < dispozitive.length; ++i){
+      dispozitive.item(i).removeAttribute('xml:space');
+    }
+    const obrazlozenja = document.getElementsByTagName('Obrazlozenje');
+    for (let i = 0; i < obrazlozenja.length; ++i){
+      obrazlozenja.item(i).removeAttribute('xml:space');
+    }
+    const pasusi = document.getElementsByTagName('Pasus');
+    for (let i = 0; i < pasusi.length; ++i){
+      pasusi.item(i).removeAttribute('xml:space');
+    }
+
+    return serializer.serializeToString(document);
   }
 
 

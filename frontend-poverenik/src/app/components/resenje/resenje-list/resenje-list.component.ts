@@ -17,7 +17,8 @@ export class ResenjeListComponent implements AfterViewInit {
     private authService: AuthService
   ) { }
 
-  columns: string[] = ['organVlasti', 'datum', 'html', 'pdf'];
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  columns: string[] = ['datum', 'status', 'html', 'pdf'];
   resenja: MatTableDataSource<ResenjeDTO> = new MatTableDataSource<ResenjeDTO>([]);
   fetchPending = true;
 
@@ -25,11 +26,8 @@ export class ResenjeListComponent implements AfterViewInit {
     return this.authService.getUser()?.uloga;
   }
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-
   ngAfterViewInit(): void {
     this.resenja.paginator = this.paginator;
-
     this.resenjeService.list().subscribe(
       (resenja: ResenjeDTO[]) => {
         this.resenja = new MatTableDataSource<ResenjeDTO>(resenja);

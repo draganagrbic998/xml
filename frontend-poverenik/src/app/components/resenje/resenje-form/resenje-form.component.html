@@ -1,6 +1,5 @@
 <app-form-container>
-    <h3>Rešenje o žalbi na organ vlasti</h3>
-    <br><br>
+    <h3>Rešenje o žalbi na organ vlasti</h3><br><br>
     <form [formGroup]="resenjeForm">
 
         <div [class.disabled]="savePending">
@@ -14,54 +13,11 @@
                         žalbe se prihvata
                     </mat-option>
                 </mat-select>                
-            </mat-form-field>
-
-            <mat-form-field> 
-                <mat-label>Datum slanja žalbe organu vlasti</mat-label>
-                <input 
-                matInput 
-                autocomplete="off"
-                formControlName="datumSlanja" 
-                placeholder="Unesite datum slanja žalbe organu vlasti"
-                [matDatepicker]="datumSlanja">
-                <mat-datepicker-toggle matSuffix [for]="datumSlanja"></mat-datepicker-toggle>
-                <mat-datepicker #datumSlanja></mat-datepicker>
-                <mat-error>
-                    Datum slanja žalbe organu vlasti je obavezan!
-                </mat-error>    
-            </mat-form-field>
-            <mat-form-field> 
-                <mat-label>Datum prijema odgovora organ vlasti</mat-label>
-                <input 
-                matInput 
-                autocomplete="off"
-                formControlName="datumOdbrane" 
-                placeholder="Unesite datum prijema odgovora organa vlasti"
-                [matDatepicker]="datum">
-                <mat-datepicker-toggle matSuffix [for]="datum"></mat-datepicker-toggle>
-                <mat-datepicker #datum></mat-datepicker>
-                <mat-error>
-                    Datum prijema odgovora organa vlasti je obavezan!
-                </mat-error>    
-            </mat-form-field>
-
-            <mat-form-field appearance="outline">
-                <mat-label>Odgovor organa vlasti</mat-label>
-                <textarea 
-                matInput 
-                autocomplete="off"
-                formControlName="odgovorOdbrane"
-                rows="4"></textarea>
-                <mat-error>
-                    Odgovor organa vlasti je obavezan!
-                </mat-error>
-            </mat-form-field>        
-
+            </mat-form-field>      
             <div id="odlukaEditor"></div>
-
         </div>
-        <br><br>
 
+        <br><br>
         <app-center-container>
             <button 
             *ngIf="!savePending"
@@ -70,6 +26,5 @@
             (click)="save()">Pošalji rešenje</button>
             <app-spinner-button *ngIf="savePending"></app-spinner-button>
         </app-center-container>
-        
     </form>
 </app-form-container>

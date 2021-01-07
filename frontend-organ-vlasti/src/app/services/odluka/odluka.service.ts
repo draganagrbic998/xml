@@ -32,8 +32,8 @@ export class OdlukaService {
       xmlns:odluka="${ODLUKA}"
       xmlns:xsi="${XSI}"
       xsi:type="TOdbijanje">
-        <odluka:brojZahteva>${brojZahteva}</odluka:brojZahteva>
         ${odbijanje.detalji}
+        <odluka:brojZahteva>${brojZahteva}</odluka:brojZahteva>
       </odluka:Odluka>
     `;
 
@@ -46,7 +46,6 @@ export class OdlukaService {
       xmlns:odluka="${ODLUKA}"
       xmlns:xsi="${XSI}"
       xsi:type="TObavestenje">
-        <odluka:brojZahteva>${brojZahteva}</odluka:brojZahteva>
         ${obavestenje.detalji}
         <odluka:Uvid>
           <odluka:datumUvida>${this.dateToString(obavestenje.datumUvida)}</odluka:datumUvida>
@@ -55,6 +54,7 @@ export class OdlukaService {
           <odluka:kancelarija>${obavestenje.kancelarija}</odluka:kancelarija>
         </odluka:Uvid>
         <odluka:kopija>${obavestenje.kopija}</odluka:kopija>
+        <odluka:brojZahteva>${brojZahteva}</odluka:brojZahteva>
       </odluka:Odluka>
     `;
 

@@ -62,11 +62,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 					</fo:block>
 					
 					<fo:block text-align="center" border-bottom="1px dotted black" border-top="1px dotted black">
-						<xsl:variable name="sedisteMesto" select="osnova:OrganVlasti/osnova:Adresa/osnova:mesto"></xsl:variable>
-						<xsl:variable name="sedisteUlica" select="osnova:OrganVlasti/osnova:Adresa/osnova:ulica"></xsl:variable>
-						<xsl:variable name="sedisteBroj" select="osnova:OrganVlasti/osnova:Adresa/osnova:broj"></xsl:variable>
-						<xsl:variable name="sediste" select="concat($sedisteUlica, concat(' ', concat($sedisteBroj, concat(', ', $sedisteMesto))))"></xsl:variable>
-						<xsl:value-of select="concat(osnova:OrganVlasti/osnova:naziv, concat(', ', $sediste))"></xsl:value-of>
+						<xsl:value-of select="zalba:organVlasti"></xsl:value-of>
 					</fo:block>
 					
 					<fo:block text-align="center">
@@ -219,7 +215,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 							<xsl:variable name="dan" select="substring-after(substring-after(osnova:datum, '-'), '-')"></xsl:variable>
 							<xsl:variable name="mesec" select="substring-before(substring-after(osnova:datum, '-'), '-')"></xsl:variable>
 							<xsl:variable name="godina" select="substring(substring-before(osnova:datum, '-'), 3, 2)"></xsl:variable>
-							У<fo:inline border-bottom="1px dotted black">&#160;<xsl:value-of select="osnova:OrganVlasti/osnova:Adresa/osnova:mesto"></xsl:value-of>&#160;</fo:inline>, 
+							У<fo:inline border-bottom="1px dotted black">&#160;Novom sadu&#160;</fo:inline>, 
 							дана
 							<fo:inline border-bottom="1px dotted black">
 								<xsl:value-of select="concat($dan, concat('.', concat($mesec, '.')))"></xsl:value-of>

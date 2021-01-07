@@ -1,9 +1,9 @@
 export interface ZalbaOdluka{
     naziv: string;
-    sediste: string;
     detalji: string;
+    brojZahteva: number;
     datumZahteva: Date;
-    brojOdluke: string;
+    brojOdluke: number;
     datumOdluke: Date;
 }
 

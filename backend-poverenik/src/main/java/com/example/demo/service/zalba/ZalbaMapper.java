@@ -54,7 +54,7 @@ public class ZalbaMapper {
 			documentFragment.appendChild(document.createElementNS(Namespaces.OSNOVA, "broj"));
 			documentFragment.appendChild(datum);
 			documentFragment.appendChild(gradjanin);
-			zalba.insertBefore(documentFragment, document.getElementsByTagNameNS(Namespaces.OSNOVA, "OrganVlasti").item(0));
+			zalba.insertBefore(documentFragment, document.getElementsByTagNameNS(Namespaces.ZALBA, "organVlasti").item(0));
 			
 			Node status = document.createElementNS(Namespaces.ZALBA, "zalba:status");
 			status.setTextContent(StatusZalbe.cekanje + "");
@@ -84,8 +84,6 @@ public class ZalbaMapper {
 						zalbeDocument.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0), true));
 				zalba.appendChild(zalbeDocument
 						.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
-				zalba.appendChild(zalbeDocument
-						.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "naziv").item(0), true));
 				zalba.appendChild(zalbeDocument
 						.importNode(document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0), true));
 				zalbe.appendChild(zalba);

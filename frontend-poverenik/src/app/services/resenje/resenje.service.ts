@@ -6,6 +6,7 @@ import { OSNOVA, RESENJE } from 'src/app/constants/namespaces';
 import { Resenje } from 'src/app/models/resenje';
 import { ResenjeDTO } from 'src/app/models/resenjeDTO';
 import { environment } from 'src/environments/environment';
+import { XonomyService } from '../xonomy/xonomy.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,32 +14,18 @@ import { environment } from 'src/environments/environment';
 export class ResenjeService {
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private xonomyService: XonomyService
   ) { }
 
   private readonly API_RESENJA = `${environment.baseUrl}/${environment.apiResenja}`;
 
-  private dateToString(date: Date): string {
-    return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
-  }
-
   private resenjeToXml(brojZalbe, resenje: Resenje): string{
-
-    let odbrana = `<resenje:datumSlanja>${this.dateToString(resenje.datumSlanja)}</resenje:datumSlanja>`;
-    if (resenje.datumOdbrane && resenje.odgovorOdbrane){
-      odbrana += `
-        <resenje:datum>${this.dateToString(resenje.datumSlanja)}</resenje:datum>
-        <resenje:odgovor>${resenje.odgovorOdbrane}</resenje:odgovor>
-      `;
-    }
     return `
       <resenje:Resenje xmlns="${OSNOVA}"
       xmlns:resenje="${RESENJE}">
         <resenje:brojZalbe>${brojZalbe}</resenje:brojZalbe>
         <resenje:status>${resenje.status}</resenje:status>
-        <resenje:Odbrana>
-          ${odbrana}
-        </resenje:Odbrana>
         ${resenje.odluka}
       </resenje:Resenje>
     `;
@@ -54,8 +41,7 @@ export class ResenjeService {
       resenjaDTO.push({
         broj: resenja.item(i).getElementsByTagNameNS(OSNOVA, 'broj')[0].textContent,
         datum: resenja.item(i).getElementsByTagNameNS(OSNOVA, 'datum')[0].textContent,
-        status: resenja.item(i).getElementsByTagNameNS(RESENJE, 'status')[0].textContent,
-        organVlasti: resenja.item(i).getElementsByTagNameNS(OSNOVA, 'naziv')[0].textContent,
+        status: resenja.item(i).getElementsByTagNameNS(RESENJE, 'status')[0].textContent
       });
     }
 
@@ -63,6 +49,7 @@ export class ResenjeService {
   }
 
   save(brojZalbe: string, resenje: Resenje): Observable<null>{
+    resenje.odluka = this.xonomyService.removeXmlSpace(resenje.odluka);
     const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
     return this.http.post<null>(this.API_RESENJA, this.resenjeToXml(brojZalbe, resenje), options);
   }

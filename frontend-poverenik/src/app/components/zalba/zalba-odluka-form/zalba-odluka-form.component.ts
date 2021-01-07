@@ -5,7 +5,6 @@ import { SNACKBAR_CLOSE, SNACKBAR_ERROR, SNACKBAR_ERROR_OPTIONS, SNACKBAR_SUCCES
 import { ZalbaOdluka } from 'src/app/models/zalba-odluka';
 import { XonomyService } from 'src/app/services/xonomy/xonomy.service';
 import { ZalbaService } from 'src/app/services/zalba/zalba.service';
-import { ZalbaValidatorService } from '../zalba-validator.service';
 
 declare const Xonomy: any;
 
@@ -18,7 +17,6 @@ export class ZalbaOdlukaFormComponent implements AfterViewInit {
 
   constructor(
     private zalbaService: ZalbaService,
-    private zalbaValidator: ZalbaValidatorService,
     private xonomyService: XonomyService,
     private snackBar: MatSnackBar
   ) { }
@@ -26,9 +24,9 @@ export class ZalbaOdlukaFormComponent implements AfterViewInit {
   savePending = false;
   zalbaForm: FormGroup = new FormGroup({
     naziv: new FormControl('', [Validators.required, Validators.pattern(new RegExp('\\S'))]),
-    sediste: new FormControl('', [Validators.required, this.zalbaValidator.adresa()]),
+    brojZahteva: new FormControl('', [Validators.required, Validators.pattern(/^[0-9]\d*$/)]),
     datumZahteva: new FormControl('', [Validators.required]),
-    brojOdluke: new FormControl('', [Validators.required, Validators.pattern(new RegExp('\\S'))]),
+    brojOdluke: new FormControl('', [Validators.required, Validators.pattern(/^[0-9]\d*$/)]),
     datumOdluke: new FormControl('', [Validators.required])
   });
 

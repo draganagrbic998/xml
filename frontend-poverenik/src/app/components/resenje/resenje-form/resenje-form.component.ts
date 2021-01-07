@@ -25,10 +25,7 @@ export class ResenjeFormComponent implements AfterViewInit {
 
   savePending = false;
   resenjeForm: FormGroup = new FormGroup({
-    status: new FormControl('', [Validators.required]),
-    datumSlanja: new FormControl('', [Validators.required]),
-    datumOdbrane: new FormControl(''),
-    odgovorOdbrane: new FormControl('')
+    status: new FormControl('', [Validators.required])
   });
 
   save(): void{

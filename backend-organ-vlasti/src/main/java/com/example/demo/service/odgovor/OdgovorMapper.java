@@ -51,7 +51,8 @@ public class OdgovorMapper {
 			odgovor.insertBefore(documentFragment, document.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0));	
 
 			Node datumZalbe = document.createElementNS(Namespaces.ODGOVOR, "odgovor:datumZalbe");
-			datumZalbe.setTextContent(zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).getTextContent());		
+			datumZalbe.setTextContent(zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).getTextContent());	
+			odgovor.appendChild(datumZalbe);
 			return document;
 		}
 		catch(Exception e) {

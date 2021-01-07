@@ -9,6 +9,7 @@
             <xs:extension base="osnova:TPodnosenje">
                 <xs:sequence>
                     <xs:element name="datumZahteva" type="xs:date"/>
+                    <xs:element name="brojZahteva" type="xs:positiveInteger"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>

@@ -26,22 +26,21 @@ export class ZalbaService {
   }
 
   private zalbaCutanjeToXml(zalba: ZalbaCutanje): string{
-
+    let result = `
+      <zalba:organVlasti>${zalba.naziv}</zalba:organVlasti>
+      ${zalba.detalji}
+      <zalba:brojZahteva>${zalba.brojZahteva}</zalba:brojZahteva>
+      <zalba:datumZahteva>${this.dateToString(zalba.datumZahteva)}</zalba:datumZahteva>
+      <zalba:tipCutanja>${zalba.tipCutanja}</zalba:tipCutanja>
+    `;
+    if (zalba.brojOdluke){
+      result += `<zalba:brojOdluke>${zalba.brojOdluke}</zalba:brojOdluke>`;
+    }
     return `
       <zalba:Zalba xmlns="${OSNOVA}"
       xmlns:zalba="${ZALBA}"
       xmlns:xsi="${XSI}" xsi:type="zalba:TZalbaCutanje">
-        <OrganVlasti>
-          <naziv>${zalba.naziv}</naziv>
-          <Adresa>
-            <mesto>${zalba.sediste.split(' ')[0]}</mesto>
-            <ulica>${zalba.sediste.split(' ')[1]}</ulica>
-            <broj>${zalba.sediste.split(' ')[2]}</broj>
-          </Adresa>
-        </OrganVlasti>
-        ${zalba.detalji}
-        <zalba:datumZahteva>${this.dateToString(zalba.datumZahteva)}</zalba:datumZahteva>
-        <zalba:tipCutanja>${zalba.tipCutanja}</zalba:tipCutanja>
+        ${result}
       </zalba:Zalba>
     `;
 
@@ -52,15 +51,9 @@ export class ZalbaService {
     <zalba:Zalba xmlns="${OSNOVA}"
     xmlns:zalba="${ZALBA}"
     xmlns:xsi="${XSI}" xsi:type="zalba:TZalbaOdluka">
-      <OrganVlasti>
-        <naziv>${zalba.naziv}</naziv>
-        <Adresa>
-          <mesto>${zalba.sediste.split(' ')[0]}</mesto>
-          <ulica>${zalba.sediste.split(' ')[1]}</ulica>
-          <broj>${zalba.sediste.split(' ')[2]}</broj>
-        </Adresa>
-      </OrganVlasti>
+      <zalba:organVlasti>${zalba.naziv}</zalba:organVlasti>
       ${zalba.detalji}
+      <zalba:brojZahteva>${zalba.brojZahteva}</zalba:brojZahteva>
       <zalba:datumZahteva>${this.dateToString(zalba.datumZahteva)}</zalba:datumZahteva>
       <zalba:brojOdluke>${zalba.brojOdluke}</zalba:brojOdluke>
       <zalba:datumOdluke>${this.dateToString(zalba.datumOdluke)}</zalba:datumOdluke>
@@ -78,7 +71,6 @@ export class ZalbaService {
         tipZalbe: document[key].getElementsByTagNameNS(ZALBA, 'tipZalbe')[0].textContent,
         broj: document[key].getElementsByTagNameNS(OSNOVA, 'broj')[0].textContent,
         datum: document[key].getElementsByTagNameNS(OSNOVA, 'datum')[0].textContent,
-        organVlasti: document[key].getElementsByTagNameNS(OSNOVA, 'naziv')[0].textContent,
         status: document[key].getElementsByTagNameNS(ZALBA, 'status')[0].textContent
       });
     }
