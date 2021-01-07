@@ -38,7 +38,7 @@ public class DataInitializator {
 			this.existManager.dropCollection(KorisnikExist.KORISNICI_COLLECTION);
 			this.existManager.dropCollection(ZalbaExist.ZALBE_COLLECTION);
 			this.existManager.dropCollection(ResenjeExist.RESENJA_COLLECTION);
-			this.existManager.dropCollection(OdgovorExist.ODGOVORI_COLLECTION);
+			this.existManager.dropCollection(OdgovorExist.ODGOVOR_COLLECTION);
 			this.existManager.save(KorisnikExist.KORISNICI_COLLECTION, "poverenik@gmail.com", this.domParser.buildDocumentFromFile(POVERENIK1));
 			this.existManager.save(KorisnikExist.KORISNICI_COLLECTION, "draganaasd@gmail.com", this.domParser.buildDocumentFromFile(GRADJANIN1));
 
