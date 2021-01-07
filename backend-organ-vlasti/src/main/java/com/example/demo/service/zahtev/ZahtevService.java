@@ -13,11 +13,9 @@ import org.w3c.dom.Document;
 import org.xmldb.api.base.ResourceSet;
 
 import com.example.demo.constants.Constants;
-import com.example.demo.constants.Namespaces;
 import com.example.demo.exception.MyException;
 import com.example.demo.model.Korisnik;
 import com.example.demo.parser.XSLTransformer;
-import com.example.demo.repository.rdf.KorisnikRDF;
 import com.example.demo.repository.rdf.ZahtevRDF;
 import com.example.demo.repository.xml.ZahtevExist;
 import com.example.demo.service.KorisnikService;
@@ -35,10 +33,7 @@ public class ZahtevService {
 			
 	@Autowired
 	private ZahtevRDF zahtevRDF;
-	
-	@Autowired
-	private KorisnikRDF korisnikRDF;
-	
+
 	@Autowired
 	private ZahtevMapper zahtevMapper;
 	
@@ -54,9 +49,6 @@ public class ZahtevService {
 		this.zahtevExist.save(null, document);
 		Model model = this.zahtevMapper.map(document);
 		this.zahtevRDF.save(model);
-		//Model[] models = this.zahtevMapper.map(document);
-		//this.zahtevRDF.save(models[0]);
-		//this.korisnikRDF.save(models[1]);		
 	}
 	
 	public String retrieve() {

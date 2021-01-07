@@ -105,7 +105,18 @@ public class ZahtevMapper {
 		
 		try {
 			Element zahtev = (Element) document.getElementsByTagNameNS(Namespaces.ZAHTEV, "Zahtev").item(0);
+			zahtev.setAttribute("xmlns:pred", Prefixes.PREDIKAT);
+			zahtev.setAttribute("xmlns:xs", Namespaces.XS);
+
 			zahtev.setAttribute("about", Prefixes.ZAHTEV_PREFIX + zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent());
+			zahtev.setAttribute("rel", "pred:podneo");
+			zahtev.setAttribute("href", Prefixes.KORISNIK_PREFIX + this.korisnikService.currentUser().getOsoba().getMejl());
+			
+			((Element) zahtev.getElementsByTagNameNS(Namespaces.ZAHTEV, "tipZahteva").item(0)).setAttribute("property", "pred:tip");
+			((Element) zahtev.getElementsByTagNameNS(Namespaces.ZAHTEV, "tipZahteva").item(0)).setAttribute("datatype", "xs:string");
+
+
+			
 			((Element) zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0)).setAttribute("property", "pred:datum");
 			((Element) zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0)).setAttribute("datatype", "xs:string");
 			
@@ -123,6 +134,7 @@ public class ZahtevMapper {
 			model.setNsPrefix("pred", Prefixes.PREDIKAT);
 			model.read(new StringReader(result), null);
 			model.write(System.out, SparqlUtil.NTRIPLES);
+			System.out.println("ZAVSILA");
 			
 			return model;
 		}
