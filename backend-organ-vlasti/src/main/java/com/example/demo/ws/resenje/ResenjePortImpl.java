@@ -21,11 +21,11 @@ import com.example.demo.repository.xml.ResenjeExist;
  *
  */
 
-@javax.jws.WebService(serviceName = "CreateResenjeService", portName = "CreateResenjePort", targetNamespace = "http://demo.example.com/ws/resenje", wsdlLocation = "classpath:wsdl/Resenje.wsdl", endpointInterface = "com.example.demo.ws.resenje.CreateResenje")
+@javax.jws.WebService(serviceName = "ResenjeService", portName = "ResenjePort", targetNamespace = "http://demo.example.com/ws/resenje", wsdlLocation = "classpath:wsdl/Resenje.wsdl", endpointInterface = "com.example.demo.ws.resenje.Resenje")
 @Component
-public class CreateResenjePortImpl implements CreateResenje {
+public class ResenjePortImpl implements Resenje {
 
-	private static final Logger LOG = Logger.getLogger(CreateResenjePortImpl.class.getName());
+	private static final Logger LOG = Logger.getLogger(ResenjePortImpl.class.getName());
 
 	@Autowired
 	private ResenjeExist resenjeRepository;

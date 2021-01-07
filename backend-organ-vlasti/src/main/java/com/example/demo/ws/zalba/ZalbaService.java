@@ -13,46 +13,46 @@ import javax.xml.ws.Service;
  * Generated source version: 3.3.0
  *
  */
-@WebServiceClient(name = "CreateZalbaService",
+@WebServiceClient(name = "ZalbaService",
                   wsdlLocation = "classpath:wsdl/Zalba.wsdl",
                   targetNamespace = "http://demo.example.com/ws/zalba")
-public class CreateZalbaService extends Service {
+public class ZalbaService extends Service {
 
     public final static URL WSDL_LOCATION;
 
-    public final static QName SERVICE = new QName("http://demo.example.com/ws/zalba", "CreateZalbaService");
-    public final static QName CreateZalbaPort = new QName("http://demo.example.com/ws/zalba", "CreateZalbaPort");
+    public final static QName SERVICE = new QName("http://demo.example.com/ws/zalba", "ZalbaService");
+    public final static QName ZalbaPort = new QName("http://demo.example.com/ws/zalba", "ZalbaPort");
     static {
-        URL url = CreateZalbaService.class.getClassLoader().getResource("wsdl/Zalba.wsdl");
+        URL url = ZalbaService.class.getClassLoader().getResource("wsdl/Zalba.wsdl");
         if (url == null) {
-            java.util.logging.Logger.getLogger(CreateZalbaService.class.getName())
+            java.util.logging.Logger.getLogger(ZalbaService.class.getName())
                 .log(java.util.logging.Level.INFO,
                      "Can not initialize the default wsdl from {0}", "classpath:wsdl/Zalba.wsdl");
         }
         WSDL_LOCATION = url;
     }
 
-    public CreateZalbaService(URL wsdlLocation) {
+    public ZalbaService(URL wsdlLocation) {
         super(wsdlLocation, SERVICE);
     }
 
-    public CreateZalbaService(URL wsdlLocation, QName serviceName) {
+    public ZalbaService(URL wsdlLocation, QName serviceName) {
         super(wsdlLocation, serviceName);
     }
 
-    public CreateZalbaService() {
+    public ZalbaService() {
         super(WSDL_LOCATION, SERVICE);
     }
 
-    public CreateZalbaService(WebServiceFeature ... features) {
+    public ZalbaService(WebServiceFeature ... features) {
         super(WSDL_LOCATION, SERVICE, features);
     }
 
-    public CreateZalbaService(URL wsdlLocation, WebServiceFeature ... features) {
+    public ZalbaService(URL wsdlLocation, WebServiceFeature ... features) {
         super(wsdlLocation, SERVICE, features);
     }
 
-    public CreateZalbaService(URL wsdlLocation, QName serviceName, WebServiceFeature ... features) {
+    public ZalbaService(URL wsdlLocation, QName serviceName, WebServiceFeature ... features) {
         super(wsdlLocation, serviceName, features);
     }
 
@@ -62,11 +62,11 @@ public class CreateZalbaService extends Service {
     /**
      *
      * @return
-     *     returns CreateZalba
+     *     returns Zalba
      */
-    @WebEndpoint(name = "CreateZalbaPort")
-    public CreateZalba getCreateZalbaPort() {
-        return super.getPort(CreateZalbaPort, CreateZalba.class);
+    @WebEndpoint(name = "ZalbaPort")
+    public Zalba getZalbaPort() {
+        return super.getPort(ZalbaPort, Zalba.class);
     }
 
     /**
@@ -74,11 +74,11 @@ public class CreateZalbaService extends Service {
      * @param features
      *     A list of {@link javax.xml.ws.WebServiceFeature} to configure on the proxy.  Supported features not in the <code>features</code> parameter will have their default values.
      * @return
-     *     returns CreateZalba
+     *     returns Zalba
      */
-    @WebEndpoint(name = "CreateZalbaPort")
-    public CreateZalba getCreateZalbaPort(WebServiceFeature... features) {
-        return super.getPort(CreateZalbaPort, CreateZalba.class, features);
+    @WebEndpoint(name = "ZalbaPort")
+    public Zalba getZalbaPort(WebServiceFeature... features) {
+        return super.getPort(ZalbaPort, Zalba.class, features);
     }
 
 }

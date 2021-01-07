@@ -13,46 +13,46 @@ import javax.xml.ws.Service;
  * Generated source version: 3.3.0
  *
  */
-@WebServiceClient(name = "CreateResenjeService",
+@WebServiceClient(name = "ResenjeService",
                   wsdlLocation = "classpath:wsdl/Resenje.wsdl",
                   targetNamespace = "http://demo.example.com/ws/resenje")
-public class CreateResenjeService extends Service {
+public class ResenjeService extends Service {
 
     public final static URL WSDL_LOCATION;
 
-    public final static QName SERVICE = new QName("http://demo.example.com/ws/resenje", "CreateResenjeService");
-    public final static QName CreateResenjePort = new QName("http://demo.example.com/ws/resenje", "CreateResenjePort");
+    public final static QName SERVICE = new QName("http://demo.example.com/ws/resenje", "ResenjeService");
+    public final static QName ResenjePort = new QName("http://demo.example.com/ws/resenje", "ResenjePort");
     static {
-        URL url = CreateResenjeService.class.getClassLoader().getResource("wsdl/Resenje.wsdl");
+        URL url = ResenjeService.class.getClassLoader().getResource("wsdl/Resenje.wsdl");
         if (url == null) {
-            java.util.logging.Logger.getLogger(CreateResenjeService.class.getName())
+            java.util.logging.Logger.getLogger(ResenjeService.class.getName())
                 .log(java.util.logging.Level.INFO,
                      "Can not initialize the default wsdl from {0}", "classpath:wsdl/Resenje.wsdl");
         }
         WSDL_LOCATION = url;
     }
 
-    public CreateResenjeService(URL wsdlLocation) {
+    public ResenjeService(URL wsdlLocation) {
         super(wsdlLocation, SERVICE);
     }
 
-    public CreateResenjeService(URL wsdlLocation, QName serviceName) {
+    public ResenjeService(URL wsdlLocation, QName serviceName) {
         super(wsdlLocation, serviceName);
     }
 
-    public CreateResenjeService() {
+    public ResenjeService() {
         super(WSDL_LOCATION, SERVICE);
     }
 
-    public CreateResenjeService(WebServiceFeature ... features) {
+    public ResenjeService(WebServiceFeature ... features) {
         super(WSDL_LOCATION, SERVICE, features);
     }
 
-    public CreateResenjeService(URL wsdlLocation, WebServiceFeature ... features) {
+    public ResenjeService(URL wsdlLocation, WebServiceFeature ... features) {
         super(wsdlLocation, SERVICE, features);
     }
 
-    public CreateResenjeService(URL wsdlLocation, QName serviceName, WebServiceFeature ... features) {
+    public ResenjeService(URL wsdlLocation, QName serviceName, WebServiceFeature ... features) {
         super(wsdlLocation, serviceName, features);
     }
 
@@ -62,11 +62,11 @@ public class CreateResenjeService extends Service {
     /**
      *
      * @return
-     *     returns CreateResenje
+     *     returns Resenje
      */
-    @WebEndpoint(name = "CreateResenjePort")
-    public CreateResenje getCreateResenjePort() {
-        return super.getPort(CreateResenjePort, CreateResenje.class);
+    @WebEndpoint(name = "ResenjePort")
+    public Resenje getResenjePort() {
+        return super.getPort(ResenjePort, Resenje.class);
     }
 
     /**
@@ -74,11 +74,11 @@ public class CreateResenjeService extends Service {
      * @param features
      *     A list of {@link javax.xml.ws.WebServiceFeature} to configure on the proxy.  Supported features not in the <code>features</code> parameter will have their default values.
      * @return
-     *     returns CreateResenje
+     *     returns Resenje
      */
-    @WebEndpoint(name = "CreateResenjePort")
-    public CreateResenje getCreateResenjePort(WebServiceFeature... features) {
-        return super.getPort(CreateResenjePort, CreateResenje.class, features);
+    @WebEndpoint(name = "ResenjePort")
+    public Resenje getResenjePort(WebServiceFeature... features) {
+        return super.getPort(ResenjePort, Resenje.class, features);
     }
 
 }

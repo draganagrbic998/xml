@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.example.demo.ws.resenje.CreateResenjePortImpl;
-import com.example.demo.ws.zalba.CreateZalbaPortImpl;
+import com.example.demo.ws.resenje.ResenjePortImpl;
+import com.example.demo.ws.zalba.ZalbaPortImpl;
 
 @Configuration
 public class EndpointConfig {
@@ -18,10 +18,10 @@ public class EndpointConfig {
 	private Bus bus;
 	
 	@Autowired
-	private CreateZalbaPortImpl czpi;
+	private ZalbaPortImpl czpi;
 	
 	@Autowired
-	private CreateResenjePortImpl crpi;
+	private ResenjePortImpl crpi;
 	
 	@Bean
 	public Endpoint createZalbaEndpoint() {

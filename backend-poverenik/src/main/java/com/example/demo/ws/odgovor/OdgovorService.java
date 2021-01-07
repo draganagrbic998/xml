@@ -65,7 +65,7 @@ public class OdgovorService extends Service {
      *     returns Odgovor
      */
     @WebEndpoint(name = "OdgovorPort")
-    public Odgovor getCreateOdgovorPort() {
+    public Odgovor getOdgovorPort() {
         return super.getPort(OdgovorPort, Odgovor.class);
     }
 
@@ -77,7 +77,7 @@ public class OdgovorService extends Service {
      *     returns Odgovor
      */
     @WebEndpoint(name = "OdgovorPort")
-    public Odgovor getCreateOdgovorPort(WebServiceFeature... features) {
+    public Odgovor getOdgovorPort(WebServiceFeature... features) {
         return super.getPort(OdgovorPort, Odgovor.class, features);
     }
 
