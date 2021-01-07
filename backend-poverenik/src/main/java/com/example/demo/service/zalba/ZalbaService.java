@@ -8,6 +8,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
 
+import org.apache.jena.rdf.model.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -27,6 +28,7 @@ import com.example.demo.model.enums.StatusZalbe;
 import com.example.demo.model.enums.TipZalbe;
 import com.example.demo.parser.DOMParser;
 import com.example.demo.parser.XSLTransformer;
+import com.example.demo.repository.rdf.ZalbaRDF;
 import com.example.demo.repository.xml.ZalbaExist;
 import com.example.demo.service.KorisnikService;
 import com.example.demo.service.email.Email;
@@ -46,6 +48,9 @@ public class ZalbaService {
 	
 	@Autowired
 	private ZalbaMapper zalbaMapper;
+	
+	@Autowired
+	private ZalbaRDF zalbaRDF;
 	
 	@Autowired
 	private DOMParser domParser;
@@ -68,6 +73,8 @@ public class ZalbaService {
 	public void save(String xml) {
 		Document document = this.zalbaMapper.map(xml);
 		this.zalbaExist.save(null, document);
+		Model model = this.zalbaMapper.map(document);
+		this.zalbaRDF.save(model);
 	}
 
 	public String retrieve() {

@@ -31,9 +31,27 @@ public class XSLTransformer {
 	@Autowired
 	private DOMParser domParser;
 	
+	private static final String GRDDL_FILE = Constants.DATA_FOLDER + File.separatorChar + "grddl.xsl";
+	
 	public XSLTransformer() {
 		super();
 		this.transformerFactory = TransformerFactory.newInstance();
+	}
+	
+	public ByteArrayOutputStream generateMetadata(String xml) {
+		try {
+			StreamSource in = new StreamSource(new StringReader(xml));
+			ByteArrayOutputStream out = new ByteArrayOutputStream();
+			Transformer transformer = this.transformerFactory.newTransformer(new StreamSource(new File(GRDDL_FILE)));
+			transformer.setOutputProperty("{http://xml.apache.org/xalan}indent-amount", "2");
+			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+			StreamResult output = new StreamResult(out);
+			transformer.transform(in, output);
+			return out;
+		}
+		catch(Exception e) {
+			throw new MyException(e);
+		}
 	}
 	
 	public ByteArrayOutputStream generateHtml(Document document, String xslPath) {

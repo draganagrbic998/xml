@@ -8,4 +8,6 @@ public class Namespaces {
 	public static final String RESENJE = "https://github.com/draganagrbic998/xml/resenje";
 	public static final String ODGOVOR = "https://github.com/draganagrbic998/xml/odgovor";
 
+	public static final String XS = "http://www.w3.org/2001/XMLSchema#";
+
 }
