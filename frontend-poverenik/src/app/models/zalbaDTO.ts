@@ -3,6 +3,5 @@ export interface ZalbaDTO{
     broj: string;
     datum: string;
     status: string;
-    datumProsledjivanja: number;
 }
 

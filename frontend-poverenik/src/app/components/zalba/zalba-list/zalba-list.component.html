@@ -18,18 +18,11 @@
         <td mat-cell *matCellDef="let zalba"> {{zalba.datum}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="html">
-        <th mat-header-cell *matHeaderCellDef>Html</th>
+      <ng-container matColumnDef="dokumenti">
+        <th mat-header-cell *matHeaderCellDef>Dokumenti</th>
         <td mat-cell *matCellDef="let zalba">
           <a [routerLink]="'/html/zalbe/' + zalba.broj">preuzmi html</a>
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="pdf">
-        <th mat-header-cell *matHeaderCellDef>Pdf</th>
-        <td mat-cell *matCellDef="let zalba">
-          <a [routerLink]="'/pdf/zalbe/' + zalba.broj">preuzmi pdf</a>
-        </td>
+          <a [routerLink]="'/pdf/zalbe/' + zalba.broj">preuzmi pdf</a>        </td>
       </ng-container>
 
       <ng-container matColumnDef="akcije">

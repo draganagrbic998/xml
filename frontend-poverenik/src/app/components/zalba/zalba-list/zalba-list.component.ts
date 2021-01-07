@@ -21,7 +21,7 @@ export class ZalbaListComponent implements AfterViewInit {
   ) { }
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  columns: string[] = ['tipZalbe', 'datum', 'html', 'pdf', 'akcije'];
+  columns: string[] = ['tipZalbe', 'datum', 'dokumenti', 'akcije'];
   zalbe: MatTableDataSource<ZalbaDTO> = new MatTableDataSource<ZalbaDTO>([]);
   fetchPending = true;
   sendPending = false;
