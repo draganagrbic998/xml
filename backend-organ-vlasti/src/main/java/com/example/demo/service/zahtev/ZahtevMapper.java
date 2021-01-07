@@ -54,14 +54,14 @@ public class ZahtevMapper {
 			Element zahtev = (Element) document.getElementsByTagNameNS(Namespaces.ZAHTEV, "Zahtev").item(0);
 			DocumentFragment documentFragment = document.createDocumentFragment();
 			
-			Node datum = document.createElementNS(Namespaces.OSNOVA, "osnova:datum");
+			Node datum = document.createElementNS(Namespaces.OSNOVA, "datum");
 			datum.setTextContent(sdf.format(new Date()));
 			Element korisnik = (Element) this.jaxbParser.marshal(this.korisnikService.currentUser()).getElementsByTagNameNS(Namespaces.OSNOVA, "Korisnik").item(0);
-			Node gradjanin = document.createElementNS(Namespaces.OSNOVA, "osnova:Gradjanin");
+			Node gradjanin = document.createElementNS(Namespaces.OSNOVA, "Gradjanin");
 			gradjanin.appendChild(document.importNode(korisnik.getElementsByTagNameNS(Namespaces.OSNOVA, "Osoba").item(0), true));
 			gradjanin.appendChild(document.importNode(korisnik.getElementsByTagNameNS(Namespaces.OSNOVA, "Adresa").item(0), true));
 			Node organVlasti = document.importNode(this.jaxbParser.marshal(this.organVlastiService.load()).getElementsByTagNameNS(Namespaces.OSNOVA, "OrganVlasti").item(0), true);
-			documentFragment.appendChild(document.createElementNS(Namespaces.OSNOVA, "osnova:broj"));
+			documentFragment.appendChild(document.createElementNS(Namespaces.OSNOVA, "broj"));
 			documentFragment.appendChild(datum);
 			documentFragment.appendChild(gradjanin);
 			documentFragment.appendChild(organVlasti);

@@ -37,7 +37,7 @@ export class ZahtevService {
 
     return `
       <zahtev:Zahtev
-      xmlns:osnova="${OSNOVA}"
+      xmlns="${OSNOVA}"
       xmlns:zahtev="${ZAHTEV}">
         ${xml}
       </zahtev:Zahtev>
