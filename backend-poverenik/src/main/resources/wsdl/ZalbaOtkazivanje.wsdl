@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="OtkaziZalbuService"
+	targetNamespace="http://demo.example.com/ws/zalba"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:tns="http://demo.example.com/ws/zalba"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+	<wsdl:types>
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+			xmlns="http://demo.example.com/ws/zalba"
+			attributeFormDefault="unqualified" elementFormDefault="unqualified"
+			targetNamespace="http://demo.example.com/ws/zalba">
+			<xs:element name="zalbaId" type="xs:string" />
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="otkaziZalbu">
+		<wsdl:part name="otkaziZalbu" element="tns:zalbaId">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="otkaziZalbu">
+		<wsdl:operation name="otkaziZalbu">
+			<wsdl:input name="otkaziZalbu" message="tns:otkaziZalbu">
+			</wsdl:input>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="OtkaziZalbuServiceSoapBinding"
+		type="tns:OtkaziZalbu">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="otkaziZalbu">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="otkaziZalbu">
+				<soap:body use="literal" />
+			</wsdl:input>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="OtkaziZalbuService">
+		<wsdl:port name="OtkaziZalbuPort"
+			binding="tns:OtkaziZalbuServiceSoapBinding">
+			<soap:address
+				location="http://localhost:8082/OtkaziZalbuPort" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

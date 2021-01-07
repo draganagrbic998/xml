@@ -1,0 +1,4 @@
+SELECT * from <%s>
+WHERE {
+  <%s> ?predicate ?object
+}

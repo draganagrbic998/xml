@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Korisnik xmlns="https://github.com/draganagrbic998/xml/osnova">
+    <aktivan>true</aktivan>
+    <lozinka>$2a$10$gfuYh.hxu0AlVb1yVXRcie38viaXdpwa2aZHWWhdPVQiq741vD8F.</lozinka>
+    <Osoba>
+        <mejl>draganaasd@gmail.com</mejl>
+        <ime>Dragana</ime>
+        <prezime>Grbic</prezime>
+        <potpis>TEST POTPIS</potpis>
+    </Osoba>
+    <Adresa>
+    	<mesto>Novi Sad</mesto>
+    	<ulica>Lasla Gala</ulica>
+    	<broj>23</broj>
+    </Adresa>
+</Korisnik>

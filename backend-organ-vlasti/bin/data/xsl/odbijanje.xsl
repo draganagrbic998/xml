@@ -2,9 +2,9 @@
 <xsl:stylesheet 
 xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0"
 xmlns:osnova="https://github.com/draganagrbic998/xml/osnova"
-xmlns:odgovor="https://github.com/draganagrbic998/xml/odgovor">
+xmlns:odluka="https://github.com/draganagrbic998/xml/odluka">
 
-	<xsl:template match="/odgovor:Odgovor">
+	<xsl:template match="/odluka:Odluka">
 	
 		<html>
 			
@@ -126,11 +126,11 @@ xmlns:odgovor="https://github.com/draganagrbic998/xml/odgovor">
 							<xsl:variable name="osoba" select="osnova:Gradjanin/osnova:Osoba"></xsl:variable>
 							<xsl:value-of select="concat($osoba/osnova:ime, concat(' ', $osoba/osnova:prezime))"></xsl:value-of>
 						</span>
-						поднео дана 
+						поднео/ла дана 
 						<span class="underline">
-							<xsl:variable name="danZahteva" select="substring-after(substring-after(odgovor:datumZahteva, '-'), '-')"></xsl:variable>
-							<xsl:variable name="mesecZahteva" select="substring-before(substring-after(odgovor:datumZahteva, '-'), '-')"></xsl:variable>
-							<xsl:variable name="godinaZahteva" select="substring-before(odgovor:datumZahteva, '-')"></xsl:variable>
+							<xsl:variable name="danZahteva" select="substring-after(substring-after(odluka:datumZahteva, '-'), '-')"></xsl:variable>
+							<xsl:variable name="mesecZahteva" select="substring-before(substring-after(odluka:datumZahteva, '-'), '-')"></xsl:variable>
+							<xsl:variable name="godinaZahteva" select="substring-before(odluka:datumZahteva, '-')"></xsl:variable>
 							<xsl:value-of select="concat($danZahteva, concat('.', concat($mesecZahteva, concat('.', concat($godinaZahteva, '.')))))"></xsl:value-of>
 						</span>
 						Обраложење одбијања захтева је следеће:
@@ -141,19 +141,23 @@ xmlns:odgovor="https://github.com/draganagrbic998/xml/odgovor">
 				            <xsl:apply-templates select="osnova:Detalji"></xsl:apply-templates>
 		               	</span>
 						<span class="line">
+						&#160;
 		                </span>
 						<span class="line">
+						&#160;
 		                </span>				
 						<span class="line">
+						&#160;
 		                </span>				
 						<span class="line">
+						&#160;
 		                </span>				
 		            </p>
 		            
 		            <br></br><br></br><br></br><br></br>
 		            
 		            <div class="flex">
-		            	<div></div>
+		            	<div>&#160;</div>
 		            	<div>
 							<p class="underline center" style="margin-left: 100px; margin-right: 20px;">
 								<xsl:value-of select="osnova:Gradjanin/osnova:Osoba/osnova:potpis"></xsl:value-of>
