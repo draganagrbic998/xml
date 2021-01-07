@@ -6,6 +6,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import org.apache.jena.query.ResultSet;
+import org.apache.jena.query.ResultSetFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -16,6 +18,7 @@ import org.xmldb.api.base.ResourceSet;
 import com.example.demo.constants.Constants;
 import com.example.demo.constants.Namespaces;
 import com.example.demo.exception.MyException;
+import com.example.demo.fuseki.MetadataType;
 import com.example.demo.model.Korisnik;
 import com.example.demo.model.enums.StatusZahteva;
 import com.example.demo.model.enums.TipOdluke;
@@ -128,6 +131,25 @@ public class OdlukaService {
 			}
 			ByteArrayOutputStream out = this.xslTransformer.generatePdf(document, xslFoPath);
 			Path file = Paths.get(GEN_PATH + broj + ".pdf");
+			Files.write(file, out.toByteArray());
+			return new UrlResource(file.toUri());
+		}
+		catch(Exception e) {
+			throw new MyException(e);
+		}
+	}
+	
+	public Resource generateMetadata(String broj, MetadataType type) {
+		try {
+			ResultSet results = this.odlukaRDF.retrieve(broj);
+			ByteArrayOutputStream out = new ByteArrayOutputStream();
+			if (type.equals(MetadataType.xml)) {
+				ResultSetFormatter.outputAsXML(out, results);
+			}
+			else {
+				ResultSetFormatter.outputAsJSON(out, results);
+			}
+			Path file = Paths.get(GEN_PATH + broj + "_metadata." + type);
 			Files.write(file, out.toByteArray());
 			return new UrlResource(file.toUri());
 		}
