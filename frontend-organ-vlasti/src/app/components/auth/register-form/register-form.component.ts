@@ -38,7 +38,7 @@ export class RegisterFormComponent implements OnInit {
     this.userService.register(this.registerForm.value).subscribe(
       () => {
         this.registerPending = false;
-        this.snackBar.open('Registracija uspešno poslata! Proverite mejl.',
+        this.snackBar.open('Registracija poslata! Proverite mejl.',
         SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);
       },
       () => {

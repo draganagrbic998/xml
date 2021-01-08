@@ -4,6 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ResenjeDTO } from 'src/app/models/resenjeDTO';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ResenjeService } from 'src/app/services/resenje/resenje.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-resenje-list',
@@ -18,9 +19,17 @@ export class ResenjeListComponent implements AfterViewInit {
   ) { }
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  columns: string[] = ['datum', 'status', 'html', 'pdf'];
+  columns: string[] = ['datum', 'status', 'dokumenti', 'metapodaci'];
   resenja: MatTableDataSource<ResenjeDTO> = new MatTableDataSource<ResenjeDTO>([]);
   fetchPending = true;
+
+  xmlMetadata(broj: string): void{
+    window.open(`//localhost:8081/${environment.apiResenja}/${broj}/metadata/xml`, '_blank');
+  }
+
+  jsonMetadata(broj: string): void{
+    window.open(`//localhost:8081/${environment.apiResenja}/${broj}/metadata/json`, '_blank');
+  }
 
   get uloga(): string{
     return this.authService.getUser()?.uloga;

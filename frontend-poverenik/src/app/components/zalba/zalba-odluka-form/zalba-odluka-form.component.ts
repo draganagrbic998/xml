@@ -38,7 +38,7 @@ export class ZalbaOdlukaFormComponent implements AfterViewInit {
     this.zalbaService.saveZalbaOdluka(zalba).subscribe(
       () => {
         this.savePending = false;
-        this.snackBar.open('Zalba uspešno poslata!', SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);
+        this.snackBar.open('Zalba poslata!', SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);
       },
       () => {
         this.savePending = false;

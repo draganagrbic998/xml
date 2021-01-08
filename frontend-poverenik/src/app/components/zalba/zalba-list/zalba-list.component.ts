@@ -22,7 +22,7 @@ export class ZalbaListComponent implements AfterViewInit {
   ) { }
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  columns: string[] = ['tipZalbe', 'datum', 'dokumenti', 'metapodaci', 'odgovor', 'akcije'];
+  columns: string[] = ['tipZalbe', 'datum', 'status', 'dokumenti', 'metapodaci', 'odgovor', 'akcije'];
   zalbe: MatTableDataSource<ZalbaDTO> = new MatTableDataSource<ZalbaDTO>([]);
   fetchPending = true;
   sendPending = false;
@@ -44,6 +44,10 @@ export class ZalbaListComponent implements AfterViewInit {
     return `${array[2]}.${array[1]}.${array[0]}.`;
   }
 
+  canOdustati(zalba: ZalbaDTO): boolean{
+    return zalba.status === 'cekanje' || zalba.status === 'prosledjeno' || zalba.status === 'odgovoreno';
+  }
+
   canResiti(zalba: ZalbaDTO): boolean {
     if (zalba.status === 'odgovoreno') {
       return true;
@@ -61,27 +65,19 @@ export class ZalbaListComponent implements AfterViewInit {
     return false;
   }
 
-  canObustaviti(zalba: ZalbaDTO): boolean{
-    return zalba.status === 'odustato';
-  }
-
-  obustavi(zalba: ZalbaDTO): void{
+  prosledi(zalba: ZalbaDTO): void{
     this.sendPending = true;
-    this.zalbaService.obustavi(zalba.broj).subscribe(
+    this.zalbaService.prosledi(zalba.broj).subscribe(
       () => {
-        zalba.status = 'obustavljeno';
+        zalba.status = 'prosledjeno';
         this.sendPending = false;
-        this.snackBar.open('Žalba obustavljena!', SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);
+        this.snackBar.open('Žalba prosledjena!', SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);
       },
       () => {
         this.sendPending = false;
         this.snackBar.open(SNACKBAR_ERROR, SNACKBAR_CLOSE, SNACKBAR_ERROR_OPTIONS);
       }
     );
-  }
-
-  canOdustati(zalba: ZalbaDTO): boolean{
-    return zalba.status === 'cekanje' || zalba.status === 'prosledjeno' || zalba.status === 'odgovoreno';
   }
 
   odustani(zalba: ZalbaDTO): void{
@@ -99,13 +95,13 @@ export class ZalbaListComponent implements AfterViewInit {
     );
   }
 
-  prosledi(zalba: ZalbaDTO): void{
+  obustavi(zalba: ZalbaDTO): void{
     this.sendPending = true;
-    this.zalbaService.prosledi(zalba.broj).subscribe(
+    this.zalbaService.obustavi(zalba.broj).subscribe(
       () => {
-        zalba.status = 'prosledjeno';
+        zalba.status = 'obustavljeno';
         this.sendPending = false;
-        this.snackBar.open('Žalba prosledjena!', SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);
+        this.snackBar.open('Žalba obustavljena!', SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);
       },
       () => {
         this.sendPending = false;

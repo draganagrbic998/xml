@@ -27,7 +27,7 @@ export class ZalbaCutanjeFormComponent implements AfterViewInit {
   zalbaForm: FormGroup = new FormGroup({
     naziv: new FormControl('', [Validators.required, Validators.pattern(new RegExp('\\S'))]),
     brojZahteva: new FormControl('', [Validators.required, Validators.pattern(/^[0-9]\d*$/)]),
-    brojOdluke: new FormControl('', [this.zalbaValidator.brojOdluke()]),
+    brojOdluke: new FormControl('', [Validators.pattern(/^[0-9]\d*$/), this.zalbaValidator.brojOdluke()]),
     tipCutanja: new FormControl('nije postupio', [Validators.required]),
   });
 
@@ -45,7 +45,7 @@ export class ZalbaCutanjeFormComponent implements AfterViewInit {
     this.zalbaService.saveZalbaCutanje(zalba).subscribe(
       () => {
         this.savePending = false;
-        this.snackBar.open('Zalba uspešno poslata!', SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);
+        this.snackBar.open('Zalba poslata!', SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);
       },
       () => {
         this.savePending = false;
@@ -55,16 +55,16 @@ export class ZalbaCutanjeFormComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void{
+    const detaljiXml = '<Detalji></Detalji>';
+    const detaljiEditor = document.getElementById('detaljiEditor');
+    const detaljiSpecifikacija = this.xonomyService.detaljiSpecifikacija;
+    Xonomy.render(detaljiXml, detaljiEditor, detaljiSpecifikacija);
+
     this.zalbaForm.get('tipCutanja').valueChanges.subscribe(
       () => {
         this.zalbaForm.get('brojOdluke').updateValueAndValidity();
       }
     );
-
-    const detaljiXml = '<Detalji></Detalji>';
-    const detaljiEditor = document.getElementById('detaljiEditor');
-    const detaljiSpecifikacija = this.xonomyService.detaljiSpecifikacija;
-    Xonomy.render(detaljiXml, detaljiEditor, detaljiSpecifikacija);
   }
 
 }

@@ -21,10 +21,6 @@ export class ZalbaService {
 
   private readonly API_ZALBE = `${environment.baseUrl}/${environment.apiZalbe}`;
 
-  private dateToString(date: Date): string {
-    return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
-  }
-
   private zalbaCutanjeToXml(zalba: ZalbaCutanje): string{
     let result = `
       ${zalba.detalji}
@@ -41,9 +37,11 @@ export class ZalbaService {
       `;
     }
     return `
-      <zalba:Zalba xmlns="${OSNOVA}"
+      <zalba:Zalba
+      xmlns="${OSNOVA}"
       xmlns:zalba="${ZALBA}"
-      xmlns:xsi="${XSI}" xsi:type="zalba:TZalbaCutanje">
+      xmlns:xsi="${XSI}"
+      xsi:type="zalba:TZalbaCutanje">
         ${result}
       </zalba:Zalba>
     `;
@@ -52,7 +50,8 @@ export class ZalbaService {
 
   private zalbaOdlukaToXml(zalba: ZalbaOdluka): string{
     return `
-    <zalba:Zalba xmlns="${OSNOVA}"
+    <zalba:Zalba
+    xmlns="${OSNOVA}"
     xmlns:zalba="${ZALBA}"
     xmlns:xsi="${XSI}" xsi:type="zalba:TZalbaOdluka">
       ${zalba.detalji}

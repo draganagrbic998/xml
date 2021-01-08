@@ -52,6 +52,7 @@ export class UserService {
     return {
       token: document.getElementsByTagName('token')[0].textContent,
       uloga: document.getElementsByTagName('uloga')[0].textContent,
+      mejl: document.getElementsByTagName('mejl')[0].textContent,
       ime: document.getElementsByTagName('ime')[0].textContent,
       prezime: document.getElementsByTagName('prezime')[0].textContent
     };

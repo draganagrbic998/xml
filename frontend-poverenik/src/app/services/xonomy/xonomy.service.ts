@@ -134,5 +134,4 @@ export class XonomyService {
     return serializer.serializeToString(document);
   }
 
-
 }

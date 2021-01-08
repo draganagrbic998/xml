@@ -14,11 +14,15 @@ export class HtmlViewerComponent implements OnInit {
   constructor(
     private zalbaService: ZalbaService,
     private resenjeService: ResenjeService,
-    private odgovoriService: OdgovorService,
+    private odgovorService: OdgovorService,
     private route: ActivatedRoute
   ) { }
 
-  html: string;
+  html = `
+    <div style="height: 100%; width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+      <h1>GREŠKA PRILIKOM UČITAVANJA DOKUMENTA!!</h1>
+    </div>
+  `;
   fetchPending =  true;
 
   ngOnInit(): void {
@@ -31,7 +35,7 @@ export class HtmlViewerComponent implements OnInit {
       service = this.resenjeService;
     }
     else{
-      service = this.odgovoriService;
+      service = this.odgovorService;
     }
     service.view(this.route.snapshot.params.broj).subscribe(
       (html: string) => {

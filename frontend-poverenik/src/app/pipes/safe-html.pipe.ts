@@ -10,7 +10,7 @@ export class SafeHtmlPipe implements PipeTransform {
     private sanitizer: DomSanitizer
   ) {}
 
-  transform(html: any): any {
+  transform(html: string): any {
     return this.sanitizer.bypassSecurityTrustHtml(html);
   }
 
