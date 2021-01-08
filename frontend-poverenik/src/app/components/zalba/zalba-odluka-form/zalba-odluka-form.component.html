@@ -24,20 +24,6 @@
                     Broj zahteva je obavezan!
                 </mat-error>    
             </mat-form-field>
-            <mat-form-field> 
-                <mat-label>Datum podnošenja zahteva: </mat-label>
-                <input 
-                matInput 
-                autocomplete="off"
-                formControlName="datumZahteva" 
-                placeholder="Unesite datum podnošenja zahteva"
-                [matDatepicker]="datumZahtevaPicker">
-                <mat-datepicker-toggle matSuffix [for]="datumZahtevaPicker"></mat-datepicker-toggle>
-                <mat-datepicker #datumZahtevaPicker></mat-datepicker>
-                <mat-error>
-                    Datum podnošenja zahteva je obavezan!
-                </mat-error>    
-            </mat-form-field>       
             <mat-form-field>
                 <mat-label>Broj odluke</mat-label>
                 <input 
@@ -49,20 +35,6 @@
                     Broj odluke je obavezan!
                 </mat-error>
             </mat-form-field>     
-            <mat-form-field> 
-                <mat-label>Datum donošenja odluke: </mat-label>
-                <input 
-                matInput 
-                autocomplete="off"
-                formControlName="datumOdluke" 
-                placeholder="Unesite datum donošenja odluke"
-                [matDatepicker]="datumOdlukePicker">
-                <mat-datepicker-toggle matSuffix [for]="datumOdlukePicker"></mat-datepicker-toggle>
-                <mat-datepicker #datumOdlukePicker></mat-datepicker>
-                <mat-error>
-                    Datum donošenja odluke je obavezan!
-                </mat-error>    
-            </mat-form-field>            
             <div id="detaljiEditor"></div>
         </div>    
         <br><br>

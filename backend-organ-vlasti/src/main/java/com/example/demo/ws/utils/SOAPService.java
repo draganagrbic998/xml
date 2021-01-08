@@ -56,6 +56,7 @@ public class SOAPService {
 			symbol.addTextNode(this.domParser.buildXml(document));
 			SOAPConnection connection = this.soapConnectionFactory.createConnection();
 			connection.call(message, endpoint);
+
 		}
 		catch(Exception e) {
 			throw new MyException(e);

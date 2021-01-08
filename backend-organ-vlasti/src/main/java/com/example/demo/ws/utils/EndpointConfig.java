@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.example.demo.ws.resenje.ResenjePortImpl;
+import com.example.demo.ws.zahtev.ZahtevPortImpl;
 import com.example.demo.ws.zalba.ZalbaPortImpl;
 
 @Configuration
@@ -23,10 +24,20 @@ public class EndpointConfig {
 	@Autowired
 	private ResenjePortImpl crpi;
 	
+	@Autowired
+	private ZahtevPortImpl zpi;
+	
 	@Bean
 	public Endpoint createZalbaEndpoint() {
 		EndpointImpl endpoint = new EndpointImpl(bus, czpi);
 		endpoint.publish("/createZalba");
+		return endpoint;
+	}
+	
+	@Bean
+	public Endpoint createZahtevEndpoint() {
+		EndpointImpl endpoint = new EndpointImpl(bus, zpi);
+		endpoint.publish("/createZahtev");
 		return endpoint;
 	}
 

@@ -165,7 +165,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 										&#160;
 										&#160;
 									</fo:block>
-									У <fo:inline border-bottom="1px dotted black">&#160;Novom sadu&#160;</fo:inline>,
+									У <fo:inline border-bottom="1px dotted black">&#160;<xsl:variable select="osnova:Gradjanin/osnova:Adresa/osnova:mesto"></xsl:variable>&#160;</fo:inline>,
 								</fo:block>
 								<fo:block margin-top="5px">
 									дана 

@@ -25,7 +25,12 @@ public class OdgovorExist {
 	}
 	
 	public Document load(String documentId) {
-		return this.existManager.load(ODGOVOR_COLLECTION, documentId);
+		try {
+			return this.existManager.load(ODGOVOR_COLLECTION, documentId);
+		}
+		catch(Exception e) {
+			return null;
+		}
 	}
 	
 }

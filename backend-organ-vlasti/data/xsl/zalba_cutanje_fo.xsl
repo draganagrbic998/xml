@@ -215,7 +215,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 							<xsl:variable name="dan" select="substring-after(substring-after(osnova:datum, '-'), '-')"></xsl:variable>
 							<xsl:variable name="mesec" select="substring-before(substring-after(osnova:datum, '-'), '-')"></xsl:variable>
 							<xsl:variable name="godina" select="substring(substring-before(osnova:datum, '-'), 3, 2)"></xsl:variable>
-							У<fo:inline border-bottom="1px dotted black">&#160;Novom sadu&#160;</fo:inline>, 
+							У<fo:inline border-bottom="1px dotted black">&#160;<xsl:variable select="osnova:Gradjanin/osnova:Adresa/osnova:mesto"></xsl:variable>&#160;</fo:inline>, 
 							дана
 							<fo:inline border-bottom="1px dotted black">
 								<xsl:value-of select="concat($dan, concat('.', concat($mesec, '.')))"></xsl:value-of>

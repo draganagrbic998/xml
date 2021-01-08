@@ -38,8 +38,7 @@ public class OdlukaMapper {
 	@Autowired
 	private DOMParser domParser;
 		
-	private static final SimpleDateFormat sdf = new SimpleDateFormat(Constants.DATE_FORMAT);
-	//private static final SimpleDateFormat sdf2 = new SimpleDateFormat("dd.MM.yyy.");
+	public static final SimpleDateFormat sdf = new SimpleDateFormat(Constants.DATE_FORMAT);
 	
 	@Autowired
 	private XSLTransformer xslTransformer;
@@ -71,34 +70,7 @@ public class OdlukaMapper {
 		}
 		catch(Exception e) {
 			throw new MyException(e);
-		}
-		
-		//String broj = this.odlukaRepository.save(document, null);
-		
-		/*
-		Element osoba = (Element) gradjanin.getElementsByTagNameNS(Namespaces.OSNOVA, "Osoba").item(0);
-		String mejl = osoba.getElementsByTagNameNS(Namespaces.OSNOVA, "mejl").item(0).getTextContent();
-		String ime = osoba.getElementsByTagNameNS(Namespaces.OSNOVA, "ime").item(0).getTextContent();
-		String prezime = osoba.getElementsByTagNameNS(Namespaces.OSNOVA, "prezime").item(0).getTextContent();
-		String naziv = organVlasti.getElementsByTagNameNS(Namespaces.OSNOVA, "naziv").item(0).getTextContent();
-		Element sediste = (Element) organVlasti.getElementsByTagNameNS(Namespaces.OSNOVA, "Adresa").item(0);
-		String sedisteEmail = sediste.getElementsByTagNameNS(Namespaces.OSNOVA, "ulica").item(0).getTextContent() + " " 
-				+ sediste.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent() + ", " 
-				+ sediste.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(0).getTextContent();
-		String datumZahtevaEmail = sdf2.format(sdf.parse(zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).getTextContent()));
-		Email email = new Email();
-		email.setTo(mejl);
-		email.setSubject("Odgovor o zahtevu za informacije od javnog značaja");		
-		String text = "Poštovani/a " + ime + " " + prezime + ", \n\n"
-				+ "Odgovor/i na zahtev za informacijama od javnog značaja koji ste podneli dana " 
-				+ datumZahtevaEmail + "nalaze se u linkovima ispod: \n"
-				+ Constants.BACKEND_URL + "/api/odgovori/" + broj + "/html\n"
-				+ Constants.BACKEND_URL + "/api/odgovori/" + broj + "/pdf\n\n"
-				+ "Svako dobro, \n\n"
-				+ naziv + "\n" 
-				+ sedisteEmail;
-		email.setText(text);
-		this.emailService.sendEmail(email);*/
+		}	
 	}
 	
 	public String map(ResourceSet resources) {

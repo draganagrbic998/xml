@@ -21,6 +21,8 @@ import com.example.demo.model.enums.TipZalbe;
 import com.example.demo.parser.DOMParser;
 import com.example.demo.parser.JAXBParser;
 import com.example.demo.service.KorisnikService;
+import com.example.demo.ws.utils.SOAPService;
+import com.example.demo.ws.utils.TipDokumenta;
 
 @Component
 public class ZalbaMapper {
@@ -33,6 +35,9 @@ public class ZalbaMapper {
 		
 	@Autowired
 	private JAXBParser jaxbParser;
+	
+	@Autowired
+	private SOAPService soapService;
 		
 	public static final SimpleDateFormat sdf = new SimpleDateFormat(Constants.DATE_FORMAT);
 	
@@ -58,7 +63,20 @@ public class ZalbaMapper {
 			
 			Node status = document.createElementNS(Namespaces.ZALBA, "zalba:status");
 			status.setTextContent(StatusZalbe.cekanje + "");
-			zalba.insertBefore(status, document.getElementsByTagNameNS(Namespaces.ZALBA, "datumZahteva").item(0));
+			zalba.insertBefore(status, document.getElementsByTagNameNS(Namespaces.ZALBA, "PodaciZahteva").item(0));
+			
+			Element zahtev = (Element) this.soapService.sendSOAPMessage(document.getElementsByTagNameNS(Namespaces.OSNOVA, "brojZahteva").item(0).getTextContent(), TipDokumenta.zahtev);
+			Node podaciZahteva = document.getElementsByTagNameNS(Namespaces.ZALBA, "PodaciZahteva").item(0);
+			podaciZahteva.appendChild(document.importNode(zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
+			podaciZahteva.appendChild(document.importNode(zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0), true));
+			
+			if (document.getElementsByTagNameNS(Namespaces.ZALBA, "PodaciOdluke").getLength() > 0) {
+				Element odluka = (Element) this.soapService.sendSOAPMessage(document.getElementsByTagNameNS(Namespaces.OSNOVA, "brojOdluke").item(0).getTextContent(), TipDokumenta.zahtev);
+				Node podaciOdluke = document.getElementsByTagNameNS(Namespaces.ZALBA, "PodaciOdluke").item(0);
+				podaciOdluke.appendChild(document.importNode(odluka.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
+				podaciOdluke.appendChild(document.importNode(odluka.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0), true));
+			}
+			
 			return document;
 		}
 		catch(Exception e) {
@@ -95,6 +113,15 @@ public class ZalbaMapper {
 			}
 
 			return this.domParser.buildXml(zalbeDocument);
+		}
+		catch(Exception e) {
+			throw new MyException(e);
+		}
+	}
+	
+	public String map(Document document) {
+		try {
+			return this.domParser.buildXml(document);
 		}
 		catch(Exception e) {
 			throw new MyException(e);

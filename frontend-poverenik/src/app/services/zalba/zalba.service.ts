@@ -29,12 +29,17 @@ export class ZalbaService {
     let result = `
       <zalba:organVlasti>${zalba.naziv}</zalba:organVlasti>
       ${zalba.detalji}
-      <zalba:brojZahteva>${zalba.brojZahteva}</zalba:brojZahteva>
-      <zalba:datumZahteva>${this.dateToString(zalba.datumZahteva)}</zalba:datumZahteva>
+      <zalba:PodaciZahteva>
+        <brojZahteva>${zalba.brojZahteva}</brojZahteva>
+      </zalba:PodaciZahteva>
       <zalba:tipCutanja>${zalba.tipCutanja}</zalba:tipCutanja>
     `;
     if (zalba.brojOdluke){
-      result += `<zalba:brojOdluke>${zalba.brojOdluke}</zalba:brojOdluke>`;
+      result += `
+        <zalba:PodaciOdluke>
+          <brojZahteva>${zalba.brojZahteva}</brojZahteva>
+        </zalba:PodaciOdluke>
+      `;
     }
     return `
       <zalba:Zalba xmlns="${OSNOVA}"
@@ -53,12 +58,14 @@ export class ZalbaService {
     xmlns:xsi="${XSI}" xsi:type="zalba:TZalbaOdluka">
       <zalba:organVlasti>${zalba.naziv}</zalba:organVlasti>
       ${zalba.detalji}
-      <zalba:brojZahteva>${zalba.brojZahteva}</zalba:brojZahteva>
-      <zalba:datumZahteva>${this.dateToString(zalba.datumZahteva)}</zalba:datumZahteva>
-      <zalba:brojOdluke>${zalba.brojOdluke}</zalba:brojOdluke>
-      <zalba:datumOdluke>${this.dateToString(zalba.datumOdluke)}</zalba:datumOdluke>
+      <zalba:PodaciZahteva>
+        <brojZahteva>${zalba.brojZahteva}</brojZahteva>
+      </zalba:PodaciZahteva>
+      <zalba:PodaciOdluke>
+      <brojZahteva>${zalba.brojZahteva}</brojZahteva>
+      </zalba:PodaciOdluke>
     </zalba:Zalba>
-`;
+  `;
   }
 
   private xmlToZalbe(xml: string): ZalbaDTO[]{

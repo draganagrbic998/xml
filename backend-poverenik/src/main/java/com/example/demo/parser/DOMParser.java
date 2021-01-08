@@ -20,8 +20,11 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+
+import com.example.demo.exception.MyException;
 
 @Component
 public class DOMParser {
@@ -64,6 +67,23 @@ public class DOMParser {
 		transformer.setOutputProperty(OutputKeys.ENCODING, "utf-8");
 		transformer.transform(new DOMSource(document), new StreamResult(string));
 		return string.toString();
+	}
+	
+	public String buildXmlFromNode(Node document) {
+		try {
+			StringWriter string = new StringWriter();
+			Transformer transformer = this.transformerFactory.newTransformer();
+			transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
+			transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+			transformer.setOutputProperty(OutputKeys.INDENT, "yes");	
+			transformer.setOutputProperty(OutputKeys.ENCODING, "utf-8");
+			transformer.transform(new DOMSource(document), new StreamResult(string));
+			return string.toString();
+		}
+		catch(Exception e) {
+			throw new MyException(e);
+		}
+
 	}
 	
 }

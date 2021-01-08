@@ -7,5 +7,6 @@ public class Namespaces {
 	public static final String ZALBA = "https://github.com/draganagrbic998/xml/zalba";
 	public static final String RESENJE = "https://github.com/draganagrbic998/xml/resenje";
 	public static final String ODGOVOR = "https://github.com/draganagrbic998/xml/odgovor";
+	public static final String ZAHTEV = "https://github.com/draganagrbic998/xml/zahtev";
 
 }

@@ -57,7 +57,7 @@ public class ResenjeService {
 		zalbaDocument.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.reseno + "");
 		this.zalbaExist.save(brojZalbe, zalbaDocument);
 		this.resenjeExist.save(null, document);
-		this.soapService.sendSOAPMessage(document, TipDokumenta.resenje);
+		this.soapService.sendSOAPMessage(this.resenjeMapper.map(document), TipDokumenta.resenje);
 	}
 	
 	public String retrieve() {

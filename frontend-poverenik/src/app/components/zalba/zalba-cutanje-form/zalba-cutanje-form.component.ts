@@ -28,9 +28,12 @@ export class ZalbaCutanjeFormComponent implements AfterViewInit {
     naziv: new FormControl('', [Validators.required, Validators.pattern(new RegExp('\\S'))]),
     brojZahteva: new FormControl('', [Validators.required, Validators.pattern(/^[0-9]\d*$/)]),
     brojOdluke: new FormControl('', [this.zalbaValidator.brojOdluke()]),
-    datumZahteva: new FormControl('', [Validators.required]),
     tipCutanja: new FormControl('nije postupio', [Validators.required]),
   });
+
+  zalbaDelimicnost(): boolean{
+    return this.zalbaForm.value.tipCutanja === 'nije postupio u celosti';
+  }
 
   save(): void{
     if (this.zalbaForm.invalid){

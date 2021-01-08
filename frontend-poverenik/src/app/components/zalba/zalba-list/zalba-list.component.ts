@@ -35,7 +35,12 @@ export class ZalbaListComponent implements AfterViewInit {
       return true;
     }
 
-    if (zalba.status !== 'cekanje' && ((new Date()).getTime() - zalba.datumProsledjivanja) / 86400000 > 15) {
+    /*
+    if (zalba.status !== 'prosledjeno' && ((new Date()).getTime() - zalba.datumProsledjivanja) / 86400000 > 15) {
+      return true;
+    }*/
+
+    if (zalba.status === 'prosledjeno'){
       return true;
     }
 

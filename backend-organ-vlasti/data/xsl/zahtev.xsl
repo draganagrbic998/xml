@@ -80,7 +80,7 @@ xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev">
 						назив и седиште органа коме се захтев упућује
 					</p>
 					
-					<br></br><br></br><br></br>
+					<br>&#160;</br><br>&#160;</br><br>&#160;</br>
 					
 					<p class="center bold big">
 						З А Х Т Е В
@@ -90,7 +90,7 @@ xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev">
 						за приступ информацији од јавног значаја
 					</p>
 					
-					<br></br><br></br>
+					<br>&#160;</br><br>&#160;</br>
 									
 					<p class="indent">
 						На основу члана 15. ст. 1. Закона о слободном приступу информацијама од јавног значаја 
@@ -171,12 +171,12 @@ xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev">
 						друге податке који олакшавају проналажење тражене информације)
 					</p>
 					
-					<br></br><br></br>
+					<br>&#160;</br><br>&#160;</br>
 					
 					<div class="flex" style="align-items: center;">
 						<div>
 							<p>
-								У <span class="underline">&#160;<xsl:value-of select="osnova:OrganVlasti/osnova:Adresa/osnova:mesto"></xsl:value-of>&#160;</span>,
+								У <span class="underline">&#160;<xsl:value-of select="osnova:Gradjanin/osnova:Adresa/osnova:mesto"></xsl:value-of>&#160;</span>,
 							</p>
 							<p style="margin-top: 5px;">
 								<xsl:variable name="dan" select="substring-after(substring-after(osnova:datum, '-'), '-')"></xsl:variable>
@@ -224,7 +224,7 @@ xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev">
 						</div>
 					</div>
 					
-					<br></br><br></br><br></br><br></br>
+					<br>&#160;</br><br>&#160;</br><br>&#160;</br><br>&#160;</br>
 					
 					<p class="underline" style="width: 50%;"></p>
 					<p class="small">

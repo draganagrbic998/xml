@@ -29,8 +29,6 @@ import com.example.demo.parser.DOMParser;
 import com.example.demo.parser.XSLTransformer;
 import com.example.demo.repository.xml.ZalbaExist;
 import com.example.demo.service.KorisnikService;
-import com.example.demo.service.email.Email;
-import com.example.demo.service.email.EmailService;
 import com.example.demo.ws.utils.SOAPService;
 import com.example.demo.ws.utils.TipDokumenta;
 import com.example.demo.ws.zalbepodaci.data.ZalbePodaciData;
@@ -55,9 +53,6 @@ public class ZalbaService {
 	
 	@Autowired
 	private SOAPService soapService;
-	
-	@Autowired
-	private EmailService emailService;
 
 	private static final String XSL_PATH_CUTANJE = Constants.XSL_FOLDER + File.separatorChar + "/zalba_cutanje.xsl";
 	private static final String XSL_FO_PATH_CUTANJE = Constants.XSL_FOLDER + File.separatorChar + "zalba_cutanje_fo.xsl";
@@ -151,10 +146,6 @@ public class ZalbaService {
 		document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.odustato + "");
 		this.zalbaExist.save(broj, document);
 		//dodaj slanje mejla
-		//Email email = new Email();
-		//email.setTo(this.korisnikService.currentUser().getOsoba().getMejl());
-		//email.setSubject("Odustaja od žalbe");
-
 	}
 	
 	public void obustavi(String broj) {
@@ -166,12 +157,12 @@ public class ZalbaService {
 	public void prosledi(String broj) {
 		Document document = this.zalbaExist.load(broj);
 		document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.prosledjeno + "");
-		this.soapService.sendSOAPMessage(document, TipDokumenta.zalba);
+		this.soapService.sendSOAPMessage(this.zalbaMapper.map(document), TipDokumenta.zalba);
 		
 		Element zalba = (Element) document.getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").item(0);
 		Node datumProsledjivanja = document.createElementNS(Namespaces.ZALBA, "zalba:datumProsledjivanja");
 		datumProsledjivanja.setTextContent(ZalbaMapper.sdf.format(new Date()));
-		zalba.insertBefore(datumProsledjivanja, document.getElementsByTagNameNS(Namespaces.ZALBA, "datumZahteva").item(0));
+		zalba.insertBefore(datumProsledjivanja, document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0));
 		this.zalbaExist.save(broj, document);
 	}
 

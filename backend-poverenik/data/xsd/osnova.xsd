@@ -63,7 +63,7 @@
             <xs:extension base="osnova:TDokument">
                 <xs:sequence>
                     <xs:element ref="osnova:Gradjanin"/>
-                    <xs:element ref="osnova:OrganVlasti"/>
+                    <xs:element name="organVlasti" type="xs:string"/>
                     <xs:element ref="osnova:Detalji"/>
                 </xs:sequence>
             </xs:extension>
@@ -77,4 +77,11 @@
             </xs:choice>
         </xs:complexType>
     </xs:element>
+    <xs:complexType name="TPodaci">
+        <xs:sequence>
+            <xs:element name="broj"/>
+            <xs:element name="datum"/>
+            <xs:element ref="osnova:Detalji"/>
+        </xs:sequence>
+    </xs:complexType>
 </xs:schema>

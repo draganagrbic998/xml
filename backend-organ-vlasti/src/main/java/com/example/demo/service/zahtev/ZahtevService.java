@@ -18,6 +18,7 @@ import com.example.demo.constants.Constants;
 import com.example.demo.exception.MyException;
 import com.example.demo.fuseki.MetadataType;
 import com.example.demo.model.Korisnik;
+import com.example.demo.parser.DOMParser;
 import com.example.demo.parser.XSLTransformer;
 import com.example.demo.repository.rdf.ZahtevRDF;
 import com.example.demo.repository.xml.ZahtevExist;
@@ -42,11 +43,23 @@ public class ZahtevService {
 	
 	@Autowired
 	private XSLTransformer xslTransformer;
+	
+	@Autowired
+	private DOMParser domParser;
 
 	private static final String XSL_PATH = Constants.XSL_FOLDER + File.separatorChar + "zahtev.xsl";
 	private static final String XSL_FO_PATH = Constants.XSL_FOLDER + File.separatorChar + "zahtev_fo.xsl";
 	private static final String GEN_PATH = Constants.GEN_FOLDER + File.separatorChar + "zahtevi" + File.separatorChar;
 
+	public String load(String broj) {
+		try {
+			return this.domParser.buildXml(this.zahtevExist.load(broj));
+		}
+		catch(Exception e) {
+			throw new MyException(e);
+		}
+	}
+	
 	public void add(String xml) {
 		Document document = this.zahtevMapper.map(xml);
 		this.zahtevExist.save(null, document);

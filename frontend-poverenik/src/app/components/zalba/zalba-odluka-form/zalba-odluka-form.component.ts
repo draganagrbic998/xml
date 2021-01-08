@@ -25,9 +25,7 @@ export class ZalbaOdlukaFormComponent implements AfterViewInit {
   zalbaForm: FormGroup = new FormGroup({
     naziv: new FormControl('', [Validators.required, Validators.pattern(new RegExp('\\S'))]),
     brojZahteva: new FormControl('', [Validators.required, Validators.pattern(/^[0-9]\d*$/)]),
-    datumZahteva: new FormControl('', [Validators.required]),
-    brojOdluke: new FormControl('', [Validators.required, Validators.pattern(/^[0-9]\d*$/)]),
-    datumOdluke: new FormControl('', [Validators.required])
+    brojOdluke: new FormControl('', [Validators.required, Validators.pattern(/^[0-9]\d*$/)])
   });
 
   save(): void{

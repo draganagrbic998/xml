@@ -67,7 +67,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 						ТРАЖИОЦА У ЗАКОНСКОМ  РОКУ  (ЋУТАЊЕ УПРАВЕ)
 					</p>
 					
-					<br></br>
+					<br>&#160;</br>
 					
 					<p class="bold">
 						Повереникy за информације од јавног значаја и заштиту података о личности
@@ -77,13 +77,13 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 						Адреса за пошту:  Београд, Булевар краља Александрa бр. 15
 					</p>
 					
-					<br></br>
+					<br>&#160;</br>
 					
 					<p>
 						У складу са чланом 22. Закона о слободном приступу информацијама од јавног значаја подносим:
 					</p>
 					
-					<br></br>
+					<br>&#160;</br>
 									
 					<p class="center bold">
 						Ж А Л Б У
@@ -93,7 +93,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 						против
 					</p>
 					
-					<br></br>
+					<br>&#160;</br>
 					
 					<p class="center dotted" style="border-top: 1px dotted black;">
 						<xsl:value-of select="zalba:organVlasti"></xsl:value-of>
@@ -102,7 +102,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 						(навести назив органа)
 					</p>
 					
-					<br></br>
+					<br>&#160;</br>
 					
 					<p class="center">
 						због тога што орган власти:				
@@ -136,7 +136,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 						(подвући  због чега се изјављује жалба)
 					</p>
 					
-					<br></br>
+					<br>&#160;</br>
 					
 					<p>
 					по мом захтеву  за слободан приступ информацијама од јавног значаја који сам поднео  том органу  дана
@@ -169,7 +169,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 						(навести податке о захтеву и информацији/ама)
 					</p>
 					
-					<br></br>
+					<br>&#160;</br>
 					
 					<p class="indent">
 						На основу изнетог, предлажем да Повереник уважи моју жалбу и омогући ми приступ 
@@ -183,7 +183,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 						добијени одговор органа власти.
 					</p>
 					
-					<br></br><br></br>
+					<br>&#160;</br><br>&#160;</br>
 					
 					<div class="flex" style="text-align: right;">
 						<div>&#160;</div>
@@ -223,13 +223,13 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 						</div>
 					</div>
 					
-					<br></br><br></br>
+					<br>&#160;</br><br>&#160;</br>
 					
 					<div>
 						<xsl:variable name="dan" select="substring-after(substring-after(osnova:datum, '-'), '-')"></xsl:variable>
 						<xsl:variable name="mesec" select="substring-before(substring-after(osnova:datum, '-'), '-')"></xsl:variable>
 						<xsl:variable name="godina" select="substring(substring-before(osnova:datum, '-'), 3, 2)"></xsl:variable>
-						У <span class="dotted">&#160;Novom sadu&#160;</span>,
+						У <span class="dotted">&#160;<xsl:variable select="osnova:Gradjanin/osnova:Adresa/osnova:mesto"></xsl:variable>&#160;</span>,
 						дана 
 						<span class="dotted">
 							<xsl:value-of select="concat($dan, concat('.', concat($mesec, '.')))"></xsl:value-of>

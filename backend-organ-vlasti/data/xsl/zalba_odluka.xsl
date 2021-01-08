@@ -67,7 +67,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 						<u>ОДБИЈЕН ИЛИ ОДБАЧЕН ЗАХТЕВ</u> ЗА ПРИСТУП ИНФОРМАЦИЈИ
 					</p>
 					
-					<br></br>
+					<br>&#160;</br>
 					
 					<p class="bold">
 						Повереникy за информације од јавног значаја и заштиту података о личности
@@ -77,13 +77,13 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 						Адреса за пошту:  Београд, Булевар краља Александрa бр. 15
 					</p>
 					
-					<br></br>
+					<br>&#160;</br>
 					
 					<p class="center bold">
 						Ж А Л Б У
 					</p>
 					
-					<br></br>
+					<br>&#160;</br>
 					
 					<div class="flex" style="margin-left: 80px; margin-right: 80px;">
 						<xsl:variable name="osoba" select="osnova:Gradjanin/osnova:Osoba"></xsl:variable>
@@ -101,7 +101,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 						Име, презиме, односно назив, адреса и седиште жалиоца
 					</p>
 					
-					<br></br>
+					<br>&#160;</br>
 					
 					<p class="center">
 						против решења-закључка 
@@ -129,7 +129,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 						године.
 					</p>
 					
-					<br></br>
+					<br>&#160;</br>
 					
 					<p class="indent">
 						<xsl:variable name="danZahteva" select="substring-after(substring-after(zalba:datumZahteva, '-'), '-')"></xsl:variable>
@@ -168,7 +168,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 						Закона о слободном приступу информацијама од јавног значаја.
 					</p>
 					
-					<br></br><br></br>
+					<br>&#160;</br><br>&#160;</br>
 	
 					<div class="flex" style="align-items: center;">
 						<div>
@@ -176,7 +176,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 							<xsl:variable name="mesec" select="substring-before(substring-after(osnova:datum, '-'), '-')"></xsl:variable>
 							<xsl:variable name="godina" select="substring(substring-before(osnova:datum, '-'), 3, 2)"></xsl:variable>
 							<p>
-								У <span class="dotted">&#160;Novom sadu&#160;</span>,
+								У <span class="dotted">&#160;<xsl:variable select="osnova:Gradjanin/osnova:Adresa/osnova:mesto"></xsl:variable>&#160;</span>,
 							</p>
 							<p style="margin-top: 5px;">
 								дана 
@@ -219,7 +219,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 						</div>
 					</div>
 					
-					<br></br><br></br>
+					<br>&#160;</br><br>&#160;</br>
 					
 					<p class="bold" style="text-indent: 20px;">
 						Напомена:
