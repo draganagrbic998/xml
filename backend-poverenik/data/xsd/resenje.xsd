@@ -36,41 +36,26 @@
                     </xs:element>
                     <xs:element ref="osnova:Osoba"/>
                     <xs:element name="organVlasti"/>
-                    <xs:element name="PodaciZahteva">
-                        <xs:complexType>
-                            <xs:sequence>
-                                <xs:element name="mejl" type="osnova:TRequiredString"/>
-                                <xs:element name="brojZahteva" type="xs:positiveInteger"/>
-                                <xs:element name="datumZahteva" type="xs:date"/>
-                                <xs:element ref="osnova:Detalji"/>
-                            </xs:sequence>
-                        </xs:complexType>
-                    </xs:element>
+                    <xs:element name="PodaciZahteva" type="osnova:TPodaci"> </xs:element>
                     <xs:element name="PodaciZalbe">
                         <xs:complexType>
                             <xs:sequence>
+                                <xs:element name="tipZalbe">
+                                    <xs:simpleType>
+                                        <xs:restriction base="xs:string">
+                                            <xs:enumeration value="cutanje"/>
+                                            <xs:enumeration value="delimicnost"/>
+                                            <xs:enumeration value="odbijanje"/>
+                                        </xs:restriction>
+                                    </xs:simpleType>
+                                </xs:element>
                                 <xs:element name="brojZalbe" type="xs:positiveInteger"/>
                                 <xs:element name="datumZalbe" type="xs:date"/>
                                 <xs:element name="datumProsledjivanja" type="xs:date"/>
                             </xs:sequence>
                         </xs:complexType>
                     </xs:element>
-                    <xs:element name="PodaciOdluke" minOccurs="0">
-                        <xs:complexType>
-                            <xs:sequence>
-                                <xs:element name="tipOdluke">
-                                    <xs:simpleType>
-                                        <xs:restriction base="xs:string">
-                                            <xs:enumeration value="obavestenje"/>
-                                            <xs:enumeration value="odbijanje"/>
-                                        </xs:restriction>
-                                    </xs:simpleType>
-                                </xs:element>
-                                <xs:element name="brojOdluke" type="osnova:TRequiredString"/>
-                                <xs:element name="datumOdluke" type="xs:date"/>
-                                <xs:element ref="osnova:Detalji"/>
-                            </xs:sequence>
-                        </xs:complexType>
+                    <xs:element name="PodaciOdluke" minOccurs="0" type="osnova:TPodaci">
                     </xs:element>
                 </xs:sequence>
             </xs:extension>

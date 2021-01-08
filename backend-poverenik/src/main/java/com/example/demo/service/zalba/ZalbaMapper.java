@@ -67,22 +67,37 @@ public class ZalbaMapper {
 			documentFragment.appendChild(document.createElementNS(Namespaces.OSNOVA, "broj"));
 			documentFragment.appendChild(datum);
 			documentFragment.appendChild(gradjanin);
-			zalba.insertBefore(documentFragment, document.getElementsByTagNameNS(Namespaces.ZALBA, "organVlasti").item(0));
 			
 			Node status = document.createElementNS(Namespaces.ZALBA, "zalba:status");
 			status.setTextContent(StatusZalbe.cekanje + "");
-			zalba.insertBefore(status, document.getElementsByTagNameNS(Namespaces.ZALBA, "PodaciZahteva").item(0));
 			
-			Element zahtev = (Element) this.soapService.sendSOAPMessage(document.getElementsByTagNameNS(Namespaces.OSNOVA, "brojZahteva").item(0).getTextContent(), TipDokumenta.zahtev);
+			String brojZahteva = ((Element) document.getElementsByTagNameNS(Namespaces.ZALBA, "PodaciZahteva").item(0)).getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
+			Document zahtevDocument = this.domParser.buildDocument(this.soapService.sendSOAPMessage(brojZahteva, TipDokumenta.zahtev));
+			
+			Element zahtev = (Element) zahtevDocument.getElementsByTagNameNS(Namespaces.ZAHTEV, "Zahtev").item(0);
+			documentFragment.appendChild(
+				document.importNode(zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "OrganVlasti").item(0), true)
+			);
+			zalba.insertBefore(documentFragment, document.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0));
+			zalba.insertBefore(status, document.getElementsByTagNameNS(Namespaces.ZALBA, "PodaciZahteva").item(0));
+
+			
 			Node podaciZahteva = document.getElementsByTagNameNS(Namespaces.ZALBA, "PodaciZahteva").item(0);
 			podaciZahteva.appendChild(document.importNode(zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
 			podaciZahteva.appendChild(document.importNode(zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0), true));
+			zalba.appendChild(podaciZahteva);
 			
 			if (document.getElementsByTagNameNS(Namespaces.ZALBA, "PodaciOdluke").getLength() > 0) {
-				Element odluka = (Element) this.soapService.sendSOAPMessage(document.getElementsByTagNameNS(Namespaces.OSNOVA, "brojOdluke").item(0).getTextContent(), TipDokumenta.zahtev);
+				
+				String brojOdluke = ((Element) document.getElementsByTagNameNS(Namespaces.ZALBA, "PodaciOdluke").item(0)).getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
+				Document odlukaDocument = this.domParser.buildDocument(this.soapService.sendSOAPMessage(brojOdluke, TipDokumenta.odluka));
+				
+				Element odluka = (Element) odlukaDocument.getElementsByTagNameNS(Namespaces.ZAHTEV, "Zahtev").item(0);
+
 				Node podaciOdluke = document.getElementsByTagNameNS(Namespaces.ZALBA, "PodaciOdluke").item(0);
 				podaciOdluke.appendChild(document.importNode(odluka.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
 				podaciOdluke.appendChild(document.importNode(odluka.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0), true));
+				zalba.appendChild(podaciOdluke);
 			}
 			
 			return document;
@@ -139,27 +154,33 @@ public class ZalbaMapper {
 	public static TipZalbe getTipZalbe(Document document) {
 		String tipZalbe = ((Element) document.getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").item(0)).getAttributeNS(Namespaces.XSI, "type");
 		if (tipZalbe.contains("TZalbaCutanje")) {
-			return TipZalbe.cutanje;
+			if (document.getElementsByTagNameNS(Namespaces.ZALBA, "PodaciOdluke").getLength() == 0) {
+				return TipZalbe.cutanje;
+			}
+			return TipZalbe.delimicnost;
 		}
 		return TipZalbe.odluka;
 	}
 
 	public Model map(Document document) {
 		try {
-			Element zalba = (Element) document.getElementsByTagNameNS(Namespaces.ZALBA, "Zahtev").item(0);
+			Element zalba = (Element) document.getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").item(0);
 			zalba.setAttribute("xmlns:pred", Prefixes.PREDIKAT);
 			zalba.setAttribute("xmlns:xs", Namespaces.XS);
 
-			zalba.setAttribute("about", Prefixes.ZAHTEV_PREFIX + zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent());
+			zalba.setAttribute("about", Prefixes.ZALBA_PREFIX + zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent());
 			zalba.setAttribute("rel", "pred:podneo");
 			zalba.setAttribute("href", Prefixes.KORISNIK_PREFIX + this.korisnikService.currentUser().getOsoba().getMejl());
 			
+			Node tipZalbe = document.createElementNS(Namespaces.ZALBA, "tipZalbe");
+			tipZalbe.setTextContent(getTipZalbe(document) + "");
+			zalba.appendChild(tipZalbe);
 			((Element) zalba.getElementsByTagNameNS(Namespaces.ZALBA, "tipZalbe").item(0)).setAttribute("property", "pred:tip");
 			((Element) zalba.getElementsByTagNameNS(Namespaces.ZALBA, "tipZalbe").item(0)).setAttribute("datatype", "xs:string");
 
-			String tipZalbe = ((Element) zalba.getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").item(0)).getAttributeNS(Namespaces.XSI, "type") + "";
-			if (tipZalbe.contains("TZalbaOdluka")) {
-				Element brojOdluke = (Element) zalba.getElementsByTagNameNS(Namespaces.ZALBA, "brojZOdluke").item(0);
+			
+			if (zalba.getElementsByTagNameNS(Namespaces.ZALBA, "PodaciOdluke").getLength() > 0) {
+				Element brojOdluke = (Element) ((Element) document.getElementsByTagNameNS(Namespaces.ZALBA, "PodaciOdluke").item(0)).getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0);
 				brojOdluke.setAttribute("rel", "pred:odluka");
 				brojOdluke.setAttribute("href", Prefixes.ODLUKA_PREFIX + brojOdluke.getTextContent());			
 			}
@@ -177,7 +198,7 @@ public class ZalbaMapper {
 			((Element) zalba.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0)).setAttribute("datatype", "xs:string");
 
 			
-			Element brojZahteva = (Element) zalba.getElementsByTagNameNS(Namespaces.ZALBA, "brojZahteva").item(0);
+			Element brojZahteva = (Element) ((Element) document.getElementsByTagNameNS(Namespaces.ZALBA, "PodaciZahteva").item(0)).getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0);
 			brojZahteva.setAttribute("rel", "pred:zahtev");
 			brojZahteva.setAttribute("href", Prefixes.ZAHTEV_PREFIX + brojZahteva.getTextContent());
 			

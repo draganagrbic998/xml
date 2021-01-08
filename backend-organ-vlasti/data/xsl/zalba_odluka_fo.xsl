@@ -81,7 +81,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 					<fo:block margin-left="40px" margin-right="40px" text-align-last="justify">
 						(<fo:inline border-bottom="1px dotted black">
 							<fo:leader></fo:leader>
-								<xsl:value-of select="zalba:organVlasti"></xsl:value-of>
+								<xsl:value-of select="osnova:OrganVlasti/osnova:naziv"></xsl:value-of>
 							<fo:leader></fo:leader>
 						</fo:inline>)
 					</fo:block>
@@ -91,16 +91,16 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 					</fo:block>
 					
 					<fo:block>
-						<xsl:variable name="dan" select="substring-after(substring-after(osnova:datum, '-'), '-')"></xsl:variable>
-						<xsl:variable name="mesec" select="substring-before(substring-after(osnova:datum, '-'), '-')"></xsl:variable>
-						<xsl:variable name="godina" select="substring-before(osnova:datum, '-')"></xsl:variable>
+						<xsl:variable name="danOdluke" select="substring-after(substring-after(zalba:PodaciOdluke/osnova:datum, '-'), '-')"></xsl:variable>
+						<xsl:variable name="mesecOdluke" select="substring-before(substring-after(zalba:PodaciOdluke/osnova:datum, '-'), '-')"></xsl:variable>
+						<xsl:variable name="godinaOdluke" select="substring-before(zalba:PodaciOdluke/osnova:datum, '-')"></xsl:variable>
 						Број 
 						<fo:inline border-bottom="1px dotted black">
-							<xsl:value-of select="zalba:brojOdluke"></xsl:value-of>
+							<xsl:value-of select="zalba:PodaciOdluke/osnova:brojOdluke"></xsl:value-of>
 						</fo:inline> 
 						од 
 						<fo:inline border-bottom="1px dotted black">
-							<xsl:value-of select="concat($dan, concat('.', concat($mesec, concat('.', concat($godina, '.')))))"></xsl:value-of>
+							<xsl:value-of select="concat($danOdluke, concat('.', concat($mesecOdluke, concat('.', concat($godinaOdluke, '.')))))"></xsl:value-of>
 						</fo:inline> 
 						године.
 					</fo:block>
@@ -110,9 +110,9 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
     				</fo:block>
                		
                		<fo:block text-indent="40px">
-						<xsl:variable name="danZahteva" select="substring-after(substring-after(zalba:datumZahteva, '-'), '-')"></xsl:variable>
-						<xsl:variable name="mesecZahteva" select="substring-before(substring-after(zalba:datumZahteva, '-'), '-')"></xsl:variable>
-						<xsl:variable name="godinaZahteva" select="substring-before(zalba:datumZahteva, '-')"></xsl:variable>
+						<xsl:variable name="danZahteva" select="substring-after(substring-after(zalba:PodaciZahteva/osnova:datum, '-'), '-')"></xsl:variable>
+						<xsl:variable name="mesecZahteva" select="substring-before(substring-after(zalba:PodaciZahteva/osnova:datum, '-'), '-')"></xsl:variable>
+						<xsl:variable name="godinaZahteva" select="substring-before(zalba:PodaciZahteva/osnova:datum, '-')"></xsl:variable>
 	               		Наведеном одлуком органа власти (решењем, закључком, обавештењем у писаној форми са елементима одлуке) , 
 	               		супротно закону, одбијен-одбачен је мој захтев који сам поднео/ла-упутио/ла дана
 						<fo:inline border-bottom="1px dotted black">

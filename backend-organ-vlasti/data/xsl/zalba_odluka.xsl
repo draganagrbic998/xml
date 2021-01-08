@@ -67,7 +67,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 						<u>ОДБИЈЕН ИЛИ ОДБАЧЕН ЗАХТЕВ</u> ЗА ПРИСТУП ИНФОРМАЦИЈИ
 					</p>
 					
-					<br>&#160;</br>
+					<br></br>
 					
 					<p class="bold">
 						Повереникy за информације од јавног значаја и заштиту података о личности
@@ -77,13 +77,13 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 						Адреса за пошту:  Београд, Булевар краља Александрa бр. 15
 					</p>
 					
-					<br>&#160;</br>
+					<br></br>
 					
 					<p class="center bold">
 						Ж А Л Б У
 					</p>
 					
-					<br>&#160;</br>
+					<br></br>
 					
 					<div class="flex" style="margin-left: 80px; margin-right: 80px;">
 						<xsl:variable name="osoba" select="osnova:Gradjanin/osnova:Osoba"></xsl:variable>
@@ -101,40 +101,40 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 						Име, презиме, односно назив, адреса и седиште жалиоца
 					</p>
 					
-					<br>&#160;</br>
+					<br></br>
 					
 					<p class="center">
 						против решења-закључка 
 					</p>
 					<div class="flex" style="margin-left: 40px; margin-right: 40px;">
 						(<span class="center dotted" style="flex: 1;">
-						<xsl:value-of select="zalba:organVlasti"></xsl:value-of>
+						<xsl:value-of select="osnova:OrganVlasti/osnova:naziv"></xsl:value-of>
 						</span>)
 					</div>
 					<p class="center">
 						(назив органа који је донео одлуку)
 					</p>
 					<p>
-						<xsl:variable name="dan" select="substring-after(substring-after(osnova:datum, '-'), '-')"></xsl:variable>
-						<xsl:variable name="mesec" select="substring-before(substring-after(osnova:datum, '-'), '-')"></xsl:variable>
-						<xsl:variable name="godina" select="substring-before(osnova:datum, '-')"></xsl:variable>
+						<xsl:variable name="danOdluke" select="substring-after(substring-after(zalba:PodaciOdluke/osnova:datum, '-'), '-')"></xsl:variable>
+						<xsl:variable name="mesecOdluke" select="substring-before(substring-after(zalba:PodaciOdluke/osnova:datum, '-'), '-')"></xsl:variable>
+						<xsl:variable name="godinaOdluke" select="substring-before(zalba:PodaciOdluke/osnova:datum, '-')"></xsl:variable>
 						Број 
 						<span class="dotted">
-							<xsl:value-of select="zalba:brojOdluke"></xsl:value-of>
+							<xsl:value-of select="zalba:PodaciOdluke/osnova:brojOdluke"></xsl:value-of>
 						</span> 
 						од 
 						<span class="dotted">
-							<xsl:value-of select="concat($dan, concat('.', concat($mesec, concat('.', concat($godina, '.')))))"></xsl:value-of>
+							<xsl:value-of select="concat($danOdluke, concat('.', concat($mesecOdluke, concat('.', concat($godinaOdluke, '.')))))"></xsl:value-of>
 						</span> 
 						године.
 					</p>
 					
-					<br>&#160;</br>
+					<br></br>
 					
 					<p class="indent">
-						<xsl:variable name="danZahteva" select="substring-after(substring-after(zalba:datumZahteva, '-'), '-')"></xsl:variable>
-						<xsl:variable name="mesecZahteva" select="substring-before(substring-after(zalba:datumZahteva, '-'), '-')"></xsl:variable>
-						<xsl:variable name="godinaZahteva" select="substring-before(zalba:datumZahteva, '-')"></xsl:variable>
+						<xsl:variable name="danZahteva" select="substring-after(substring-after(zalba:PodaciZahteva/osnova:datum, '-'), '-')"></xsl:variable>
+						<xsl:variable name="mesecZahteva" select="substring-before(substring-after(zalba:PodaciZahteva/osnova:datum, '-'), '-')"></xsl:variable>
+						<xsl:variable name="godinaZahteva" select="substring-before(zalba:PodaciZahteva/osnova:datum, '-')"></xsl:variable>
 						Наведеном одлуком органа власти (решењем, закључком, обавештењем у писаној форми са елементима одлуке) , 
 						супротно закону, одбијен-одбачен је мој захтев који сам поднео/ла-упутио/ла дана
 						<span class="dotted">
@@ -149,10 +149,10 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 							<xsl:copy-of select="osnova:Detalji"></xsl:copy-of>
 		               	</span>
 						<span class="line">
-						&#160;
+						
 		                </span>
 						<span class="line">
-						&#160;
+						
 		                </span>			
 		            </p>				
 					
@@ -168,7 +168,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 						Закона о слободном приступу информацијама од јавног значаја.
 					</p>
 					
-					<br>&#160;</br><br>&#160;</br>
+					<br></br><br></br>
 	
 					<div class="flex" style="align-items: center;">
 						<div>
@@ -219,7 +219,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 						</div>
 					</div>
 					
-					<br>&#160;</br><br>&#160;</br>
+					<br></br><br></br>
 					
 					<p class="bold" style="text-indent: 20px;">
 						Напомена:

@@ -6,6 +6,7 @@ import { SNACKBAR_CLOSE, SNACKBAR_ERROR, SNACKBAR_ERROR_OPTIONS, SNACKBAR_SUCCES
 import { ZalbaDTO } from 'src/app/models/zalbaDTO';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ZalbaService } from 'src/app/services/zalba/zalba.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-zalba-list',
@@ -21,13 +22,26 @@ export class ZalbaListComponent implements AfterViewInit {
   ) { }
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  columns: string[] = ['tipZalbe', 'datum', 'dokumenti', 'akcije', 'odgovor'];
+  columns: string[] = ['tipZalbe', 'datum', 'dokumenti', 'metapodaci', 'odgovor', 'akcije'];
   zalbe: MatTableDataSource<ZalbaDTO> = new MatTableDataSource<ZalbaDTO>([]);
   fetchPending = true;
   sendPending = false;
 
   get uloga(): string{
     return this.authService.getUser()?.uloga;
+  }
+
+  xmlMetadata(broj: string): void{
+    window.open(`//localhost:8082/${environment.apiZalbe}/${broj}/metadata/xml`, '_blank');
+  }
+
+  jsonMetadata(broj: string): void{
+    window.open(`//localhost:8082/${environment.apiZalbe}/${broj}/metadata/json`, '_blank');
+  }
+
+  convertDate(date: string): string{
+    const array: string[] = date.split('-');
+    return `${array[2]}.${array[1]}.${array[0]}.`;
   }
 
   canResiti(zalba: ZalbaDTO): boolean {

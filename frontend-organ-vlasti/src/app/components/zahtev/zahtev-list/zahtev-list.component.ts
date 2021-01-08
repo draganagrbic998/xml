@@ -35,6 +35,11 @@ export class ZahtevListComponent implements AfterViewInit {
     window.open(`//localhost:8081/${environment.apiZahtevi}/${broj}/metadata/json`, '_blank');
   }
 
+  convertDate(date: string): string{
+    const array: string[] = date.split('-');
+    return `${array[2]}.${array[1]}.${array[0]}.`;
+  }
+
   ngAfterViewInit(): void {
     this.zahtevi.paginator = this.paginator;
     this.zahtevService.list().subscribe(

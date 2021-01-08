@@ -27,17 +27,16 @@ export class ZalbaService {
 
   private zalbaCutanjeToXml(zalba: ZalbaCutanje): string{
     let result = `
-      <zalba:organVlasti>${zalba.naziv}</zalba:organVlasti>
       ${zalba.detalji}
       <zalba:PodaciZahteva>
-        <brojZahteva>${zalba.brojZahteva}</brojZahteva>
+        <broj>${zalba.brojZahteva}</broj>
       </zalba:PodaciZahteva>
       <zalba:tipCutanja>${zalba.tipCutanja}</zalba:tipCutanja>
     `;
     if (zalba.brojOdluke){
       result += `
         <zalba:PodaciOdluke>
-          <brojZahteva>${zalba.brojZahteva}</brojZahteva>
+          <broj>${zalba.brojOdluke}</broj>
         </zalba:PodaciOdluke>
       `;
     }
@@ -56,13 +55,12 @@ export class ZalbaService {
     <zalba:Zalba xmlns="${OSNOVA}"
     xmlns:zalba="${ZALBA}"
     xmlns:xsi="${XSI}" xsi:type="zalba:TZalbaOdluka">
-      <zalba:organVlasti>${zalba.naziv}</zalba:organVlasti>
       ${zalba.detalji}
       <zalba:PodaciZahteva>
-        <brojZahteva>${zalba.brojZahteva}</brojZahteva>
+        <broj>${zalba.brojZahteva}</broj>
       </zalba:PodaciZahteva>
       <zalba:PodaciOdluke>
-      <brojZahteva>${zalba.brojZahteva}</brojZahteva>
+      <broj>${zalba.brojZahteva}</broj>
       </zalba:PodaciOdluke>
     </zalba:Zalba>
   `;

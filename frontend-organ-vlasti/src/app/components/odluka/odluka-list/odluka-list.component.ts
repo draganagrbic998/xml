@@ -29,6 +29,11 @@ export class OdlukaListComponent implements AfterViewInit {
     window.open(`//localhost:8081/${environment.apiOdluke}/${broj}/metadata/json`, '_blank');
   }
 
+  convertDate(date: string): string{
+    const array: string[] = date.split('-');
+    return `${array[2]}.${array[1]}.${array[0]}.`;
+  }
+
   ngAfterViewInit(): void {
     this.odluke.paginator = this.paginator;
     this.odlukaService.list().subscribe(

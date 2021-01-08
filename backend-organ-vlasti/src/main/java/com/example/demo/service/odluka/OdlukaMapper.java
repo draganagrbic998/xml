@@ -115,7 +115,7 @@ public class OdlukaMapper {
 			brojZahteva.setAttribute("href", Prefixes.ZAHTEV_PREFIX + brojZahteva.getTextContent());
 
 			Node tipOdluke = document.createElementNS(Namespaces.ODLUKA, "tipOdluke");
-			tipOdluke.setTextContent(odluka.getAttributeNS(Namespaces.XSI, "type"));
+			tipOdluke.setTextContent(getTipOdluke(document) + "");
 			odluka.appendChild(tipOdluke);
 			((Element) odluka.getElementsByTagNameNS(Namespaces.ODLUKA, "tipOdluke").item(0)).setAttribute("property", "pred:tip");
 			((Element) odluka.getElementsByTagNameNS(Namespaces.ODLUKA, "tipOdluke").item(0)).setAttribute("datatype", "xs:string");

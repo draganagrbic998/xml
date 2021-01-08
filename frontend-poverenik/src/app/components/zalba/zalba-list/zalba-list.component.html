@@ -15,15 +15,31 @@
   
       <ng-container matColumnDef="datum">
         <th mat-header-cell *matHeaderCellDef>Datum</th>
-        <td mat-cell *matCellDef="let zalba"> {{zalba.datum}} </td>
+        <td mat-cell *matCellDef="let zalba"> {{convertDate(zalba.datum)}} </td>
       </ng-container>
 
       <ng-container matColumnDef="dokumenti">
         <th mat-header-cell *matHeaderCellDef>Dokumenti</th>
         <td mat-cell *matCellDef="let zalba">
-          <a [routerLink]="'/html/zalbe/' + zalba.broj">preuzmi html</a><br>
-          <a [routerLink]="'/pdf/zalbe/' + zalba.broj">preuzmi pdf</a>        
+          <a [routerLink]="'/html/zalbe/' + zalba.broj">HTML</a><br>
+          <a [routerLink]="'/pdf/zalbe/' + zalba.broj">PDF</a>        
       </td>
+      </ng-container>
+
+      <ng-container matColumnDef="metapodaci">
+        <th mat-header-cell *matHeaderCellDef>Metapodaci</th>
+        <td mat-cell *matCellDef="let zalba">
+          <a (click)="xmlMetadata(zalba.broj)" href="/zalba-list">XML</a><br>
+          <a (click)="jsonMetadata(zalba.broj)" href="/zalba-list">JSON</a>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="odgovor">
+        <th mat-header-cell *matHeaderCellDef>Odgovor</th>
+        <td mat-cell *matCellDef="let zalba">
+          <a *ngIf="zalba.status === 'odgovoreno'" [routerLink]="'/html/odgovori/' + zalba.broj">preuzmi html</a><br>
+          <a *ngIf="zalba.status === 'odgovoreno'" [routerLink]="'/pdf/odgovori/' + zalba.broj">preuzmi pdf</a>          
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="akcije">
@@ -36,24 +52,20 @@
           (click)="prosledi(zalba)">Prosledi žalbu
           </button>
           <button
+          mat-raised-button 
+          color="primary"
           *ngIf="!sendPending && uloga === 'gradjanin' && canOdustati(zalba)"
           (click)="odustani(zalba)"
           >Odustani od žalbe</button>
           <button
+          mat-raised-button 
+          color="primary"
           *ngIf="!sendPending && uloga === 'poverenik' && canObustaviti(zalba)"
           (click)="obustavi(zalba)"
           >Obustavi žalbu</button>
           <a *ngIf="uloga === 'poverenik' && canResiti(zalba)"
           [routerLink]="'/resenje-form/' + zalba.broj">dodaj rešenje</a>
         </td>
-      </ng-container>
-
-      <ng-container matColumnDef="odgovor">
-        <th mat-header-cell *matHeaderCellDef>Odgovor</th>
-        <td mat-cell *matCellDef="let zalba">
-          <a *ngIf="zalba.status === 'odgovoreno'" [routerLink]="'/html/odgovori/' + zalba.broj">preuzmi html</a><br>
-          <a *ngIf="zalba.status === 'odgovoreno'" [routerLink]="'/pdf/odgovori/' + zalba.broj">preuzmi pdf</a>          
-      </td>
       </ng-container>
     
       <tr mat-header-row *matHeaderRowDef="columns"></tr>

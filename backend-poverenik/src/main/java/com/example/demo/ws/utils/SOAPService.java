@@ -1,6 +1,5 @@
 package com.example.demo.ws.utils;
 
-import java.io.ByteArrayOutputStream;
 import java.net.URL;
 
 import javax.xml.soap.MessageFactory;
@@ -9,18 +8,13 @@ import javax.xml.soap.SOAPBody;
 import javax.xml.soap.SOAPConnection;
 import javax.xml.soap.SOAPConnectionFactory;
 import javax.xml.soap.SOAPElement;
-import javax.xml.soap.SOAPEnvelope;
 import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPFactory;
 import javax.xml.soap.SOAPMessage;
-import javax.xml.soap.SOAPPart;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.w3c.dom.Node;
 
 import com.example.demo.exception.MyException;
-import com.example.demo.parser.DOMParser;
 
 @Service
 public class SOAPService {
@@ -36,14 +30,10 @@ public class SOAPService {
 		this.soapConnectionFactory = SOAPConnectionFactory.newInstance();
 	}
 	
-	@Autowired
-	private DOMParser domParser;
 	
-	public Node sendSOAPMessage(String xml, TipDokumenta tipDokumenta) {
+	public String sendSOAPMessage(String xml, TipDokumenta tipDokumenta) {
 		try {
 			SOAPMessage message = this.messageFactory.createMessage();
-			message.setProperty(SOAPMessage.WRITE_XML_DECLARATION, "true");
-			message.setProperty(SOAPMessage.CHARACTER_SET_ENCODING, "UTF-8");
 			SOAPBody body = message.getSOAPBody();
 			
 			Name name = null;
@@ -65,20 +55,17 @@ public class SOAPService {
 				endpoint = new URL(SOAPConstants.GET_ODLUKA_SERVICE);
 			}
 			
-			 SOAPPart sp = message.getSOAPPart();
-			 SOAPEnvelope se = sp.getEnvelope();
-			 se.setEncodingStyle("http://schemas.xmlsoap.org/soap/encoding/");
-			 se.setAttribute("xmlns:SOAP-ENC", "http://schemas.xmlsoap.org/soap/encoding/");
-			 se.setAttribute("xmlns:soa", "http://www.sbg.com");
-
 
 			SOAPElement symbol = body.addChildElement(name);
 			symbol.addTextNode(xml);
 			SOAPConnection connection = this.soapConnectionFactory.createConnection();
 			SOAPMessage response = connection.call(message, endpoint);
-			
-			System.out.println(this.domParser.buildXmlFromNode(response.getSOAPBody().getFirstChild().getFirstChild()));
-			return null;
+			try {
+				return response.getSOAPBody().getTextContent();
+			}
+			catch(Exception e) {
+				return null;
+			}
 
 		}
 		catch(Exception e) {

@@ -62,7 +62,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 					</fo:block>
 					
 					<fo:block text-align="center" border-bottom="1px dotted black" border-top="1px dotted black">
-						<xsl:value-of select="zalba:organVlasti"></xsl:value-of>
+						<xsl:value-of select="osnova:OrganVlasti/osnova:naziv"></xsl:value-of>
 					</fo:block>
 					
 					<fo:block text-align="center">
@@ -112,9 +112,9 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 					<fo:block>
 						по мом захтеву за слободан приступ информацијама од јавног значаја који сам поднео том органу дана 
 						<fo:inline border-bottom="1px dotted black">
-							<xsl:variable name="danZahteva" select="substring-after(substring-after(zalba:datumZahteva, '-'), '-')"></xsl:variable>
-							<xsl:variable name="mesecZahteva" select="substring-before(substring-after(zalba:datumZahteva, '-'), '-')"></xsl:variable>
-							<xsl:variable name="godinaZahteva" select="substring-before(zalba:datumZahteva, '-')"></xsl:variable>
+							<xsl:variable name="danZahteva" select="substring-after(substring-after(zalba:PodaciZahteva/osnova:datum, '-'), '-')"></xsl:variable>
+							<xsl:variable name="mesecZahteva" select="substring-before(substring-after(zalba:PodaciZahteva/osnova:datum, '-'), '-')"></xsl:variable>
+							<xsl:variable name="godinaZahteva" select="substring-before(zalba:PodaciZahteva/osnova:datum, '-')"></xsl:variable>
 							<xsl:value-of select="concat($danZahteva, concat('.', concat($mesecZahteva, concat('.', concat($godinaZahteva, '.')))))"></xsl:value-of>
 						</fo:inline>
 						године, а којим сам тражио/ла да ми се у складу са Законом о слободном приступу информацијама 

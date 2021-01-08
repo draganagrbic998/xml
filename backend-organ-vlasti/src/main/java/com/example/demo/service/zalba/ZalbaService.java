@@ -17,6 +17,7 @@ import com.example.demo.constants.Constants;
 import com.example.demo.exception.MyException;
 import com.example.demo.model.enums.TipZalbe;
 import com.example.demo.parser.XSLTransformer;
+import com.example.demo.repository.rdf.ZalbaRDF;
 import com.example.demo.repository.xml.ZalbaExist;
 
 @Service
@@ -30,7 +31,10 @@ public class ZalbaService {
 
 	@Autowired
 	private XSLTransformer xslTransformer;
-
+	
+	@Autowired
+	private ZalbaRDF zalbaRDF;
+	
 	private static final String XSL_PATH_CUTANJE = Constants.XSL_FOLDER + File.separatorChar + "/zalba_cutanje.xsl";
 	private static final String XSL_FO_PATH_CUTANJE = Constants.XSL_FOLDER + File.separatorChar + "zalba_cutanje_fo.xsl";
 	private static final String XSL_PATH_ODLUKA = Constants.XSL_FOLDER + File.separatorChar + "/zalba_odluka.xsl";
@@ -40,6 +44,7 @@ public class ZalbaService {
 	public void save(String xml) {
 		Document document = this.zalbaMapper.map(xml);
 		this.zalbaExist.save(this.zalbaMapper.getBroj(document), document);
+		this.zalbaRDF.save(this.zalbaMapper.map(document));
 	}
 
 	public String retrieve() {

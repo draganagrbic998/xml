@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.fuseki.MetadataType;
 import com.example.demo.service.zalba.ZalbaService;
 
 @RestController
@@ -64,4 +65,21 @@ public class ZalbaController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
+	@GetMapping(value = "/{broj}/metadata/xml", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	public ResponseEntity<Object> xmlMetadata(@PathVariable String broj) {
+		Resource resource = this.zalbaService.generateMetadata(broj, MetadataType.xml);
+		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+				.body(resource);
+	}
+	
+	@GetMapping(value = "/{broj}/metadata/json", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	public ResponseEntity<Object> jsonMetadata(@PathVariable String broj) {
+		Resource resource = this.zalbaService.generateMetadata(broj, MetadataType.json);
+		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+				.body(resource);
+	}
+
+	
 }

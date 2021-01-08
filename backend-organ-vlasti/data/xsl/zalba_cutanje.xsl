@@ -67,7 +67,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 						ТРАЖИОЦА У ЗАКОНСКОМ  РОКУ  (ЋУТАЊЕ УПРАВЕ)
 					</p>
 					
-					<br>&#160;</br>
+					<br></br>
 					
 					<p class="bold">
 						Повереникy за информације од јавног значаја и заштиту података о личности
@@ -77,13 +77,13 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 						Адреса за пошту:  Београд, Булевар краља Александрa бр. 15
 					</p>
 					
-					<br>&#160;</br>
+					<br></br>
 					
 					<p>
 						У складу са чланом 22. Закона о слободном приступу информацијама од јавног значаја подносим:
 					</p>
 					
-					<br>&#160;</br>
+					<br></br>
 									
 					<p class="center bold">
 						Ж А Л Б У
@@ -93,16 +93,16 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 						против
 					</p>
 					
-					<br>&#160;</br>
+					<br></br>
 					
 					<p class="center dotted" style="border-top: 1px dotted black;">
-						<xsl:value-of select="zalba:organVlasti"></xsl:value-of>
+						<xsl:value-of select="osnova:OrganVlasti/osnova:naziv"></xsl:value-of>
 					</p>
 					<p class="center">
 						(навести назив органа)
 					</p>
 					
-					<br>&#160;</br>
+					<br></br>
 					
 					<p class="center">
 						због тога што орган власти:				
@@ -136,14 +136,14 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 						(подвући  због чега се изјављује жалба)
 					</p>
 					
-					<br>&#160;</br>
+					<br></br>
 					
 					<p>
 					по мом захтеву  за слободан приступ информацијама од јавног значаја који сам поднео  том органу  дана
 					<span class="dotted">
-						<xsl:variable name="danZahteva" select="substring-after(substring-after(zalba:datumZahteva, '-'), '-')"></xsl:variable>
-						<xsl:variable name="mesecZahteva" select="substring-before(substring-after(zalba:datumZahteva, '-'), '-')"></xsl:variable>
-						<xsl:variable name="godinaZahteva" select="substring-before(zalba:datumZahteva, '-')"></xsl:variable>
+						<xsl:variable name="danZahteva" select="substring-after(substring-after(zalba:PodaciZahteva/osnova:datum, '-'), '-')"></xsl:variable>
+						<xsl:variable name="mesecZahteva" select="substring-before(substring-after(zalba:PodaciZahteva/osnova:datum, '-'), '-')"></xsl:variable>
+						<xsl:variable name="godinaZahteva" select="substring-before(zalba:PodaciZahteva/osnova:datum, '-')"></xsl:variable>
 						<xsl:value-of select="concat($danZahteva, concat('.', concat($mesecZahteva, concat('.', concat($godinaZahteva, '.')))))"></xsl:value-of>
 					</span>
 					године, а којим сам тражио/ла да ми се у складу са Законом о слободном приступу информацијама 
@@ -155,13 +155,13 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 							<xsl:copy-of select="osnova:Detalji"></xsl:copy-of>
 		               	</span>
 						<span class="line">
-						&#160;
+						
 		                </span>
 						<span class="line">
-						&#160;
+						
 		                </span>			
 						<span class="line">
-						&#160;
+						
 		                </span>				
 		            </p>
 					
@@ -169,7 +169,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 						(навести податке о захтеву и информацији/ама)
 					</p>
 					
-					<br>&#160;</br>
+					<br></br>
 					
 					<p class="indent">
 						На основу изнетог, предлажем да Повереник уважи моју жалбу и омогући ми приступ 
@@ -183,7 +183,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 						добијени одговор органа власти.
 					</p>
 					
-					<br>&#160;</br><br>&#160;</br>
+					<br></br><br></br>
 					
 					<div class="flex" style="text-align: right;">
 						<div>&#160;</div>
@@ -223,7 +223,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 						</div>
 					</div>
 					
-					<br>&#160;</br><br>&#160;</br>
+					<br></br><br></br>
 					
 					<div>
 						<xsl:variable name="dan" select="substring-after(substring-after(osnova:datum, '-'), '-')"></xsl:variable>

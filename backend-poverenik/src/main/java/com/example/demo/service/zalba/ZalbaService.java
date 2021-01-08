@@ -8,6 +8,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
 
+import org.apache.jena.query.ResultSet;
+import org.apache.jena.query.ResultSetFormatter;
 import org.apache.jena.rdf.model.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -23,6 +25,7 @@ import org.xmldb.api.modules.XMLResource;
 import com.example.demo.constants.Constants;
 import com.example.demo.constants.Namespaces;
 import com.example.demo.exception.MyException;
+import com.example.demo.fuseki.MetadataType;
 import com.example.demo.model.Korisnik;
 import com.example.demo.model.enums.StatusZalbe;
 import com.example.demo.model.enums.TipZalbe;
@@ -58,6 +61,7 @@ public class ZalbaService {
 	
 	@Autowired
 	private SOAPService soapService;
+	
 
 	private static final String XSL_PATH_CUTANJE = Constants.XSL_FOLDER + File.separatorChar + "/zalba_cutanje.xsl";
 	private static final String XSL_FO_PATH_CUTANJE = Constants.XSL_FOLDER + File.separatorChar + "zalba_cutanje_fo.xsl";
@@ -119,10 +123,10 @@ public class ZalbaService {
 	public String generateHtml(String broj) {
 		Document document = this.zalbaExist.load(broj);
 		String xslPath;
-		if (ZalbaMapper.getTipZalbe(document).equals(TipZalbe.cutanje)) {
-			xslPath = XSL_PATH_CUTANJE;
-		} else {
+		if (ZalbaMapper.getTipZalbe(document).equals(TipZalbe.odluka)) {
 			xslPath = XSL_PATH_ODLUKA;
+		} else {
+			xslPath = XSL_PATH_CUTANJE;
 		}
 		ByteArrayOutputStream out = this.xslTransformer.generateHtml(document, xslPath);
 		return out.toString();
@@ -133,10 +137,10 @@ public class ZalbaService {
 			Document document = this.zalbaExist.load(broj);
 			String xslFoPath;
 			if (ZalbaMapper.getTipZalbe(document).equals(TipZalbe.cutanje)) {
-				xslFoPath = XSL_FO_PATH_CUTANJE;
+				xslFoPath = XSL_FO_PATH_ODLUKA;
 			} 
 			else {
-				xslFoPath = XSL_FO_PATH_ODLUKA;
+				xslFoPath = XSL_FO_PATH_CUTANJE;
 			}
 			ByteArrayOutputStream out = this.xslTransformer.generatePdf(document, xslFoPath);
 			Path file = Paths.get(GEN_PATH + broj + ".pdf");
@@ -171,6 +175,25 @@ public class ZalbaService {
 		datumProsledjivanja.setTextContent(ZalbaMapper.sdf.format(new Date()));
 		zalba.insertBefore(datumProsledjivanja, document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0));
 		this.zalbaExist.save(broj, document);
+	}
+	
+	public Resource generateMetadata(String broj, MetadataType type) {
+		try {
+			ResultSet results = this.zalbaRDF.retrieve(broj);
+			ByteArrayOutputStream out = new ByteArrayOutputStream();
+			if (type.equals(MetadataType.xml)) {
+				ResultSetFormatter.outputAsXML(out, results);
+			}
+			else {
+				ResultSetFormatter.outputAsJSON(out, results);
+			}
+			Path file = Paths.get(GEN_PATH + broj + "_metadata." + type);
+			Files.write(file, out.toByteArray());
+			return new UrlResource(file.toUri());
+		}
+		catch(Exception e) {
+			throw new MyException(e);
+		}
 	}
 
 }
