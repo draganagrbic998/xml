@@ -14,7 +14,7 @@ import javax.xml.soap.SOAPMessage;
 
 import org.springframework.stereotype.Service;
 
-import com.example.demo.exception.MyException;
+import com.example.demo.common.MyException;
 
 @Service
 public class SOAPService {

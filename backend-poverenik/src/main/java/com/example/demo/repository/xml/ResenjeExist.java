@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 import org.w3c.dom.Document;
 import org.xmldb.api.base.ResourceSet;
 
-import com.example.demo.constants.Constants;
+import com.example.demo.common.Constants;
 import com.example.demo.exist.ExistManager;
 
 @Repository
@@ -20,7 +20,7 @@ public class ResenjeExist {
 		this.existManager.save(RESENJA_COLLECTION, documentId, document);
 	}
 	
-	public ResourceSet list(String xpathExp) {
+	public ResourceSet retrieve(String xpathExp) {
 		return this.existManager.retrieve(RESENJA_COLLECTION, xpathExp);
 	}
 	

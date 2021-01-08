@@ -13,9 +13,10 @@ import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.xmldb.api.base.ResourceSet;
 
-import com.example.demo.constants.Constants;
-import com.example.demo.exception.MyException;
-import com.example.demo.model.enums.TipZalbe;
+import com.example.demo.common.Constants;
+import com.example.demo.common.MyException;
+import com.example.demo.enums.TipZalbe;
+import com.example.demo.parser.DOMParser;
 import com.example.demo.parser.XSLTransformer;
 import com.example.demo.repository.rdf.ZalbaRDF;
 import com.example.demo.repository.xml.ZalbaExist;
@@ -30,11 +31,14 @@ public class ZalbaService {
 	private ZalbaMapper zalbaMapper;
 
 	@Autowired
-	private XSLTransformer xslTransformer;
+	private ZalbaRDF zalbaRDF;
+
+	@Autowired
+	private DOMParser domParser;
 	
 	@Autowired
-	private ZalbaRDF zalbaRDF;
-	
+	private XSLTransformer xslTransformer;
+		
 	private static final String XSL_PATH_CUTANJE = Constants.XSL_FOLDER + File.separatorChar + "/zalba_cutanje.xsl";
 	private static final String XSL_FO_PATH_CUTANJE = Constants.XSL_FOLDER + File.separatorChar + "zalba_cutanje_fo.xsl";
 	private static final String XSL_PATH_ODLUKA = Constants.XSL_FOLDER + File.separatorChar + "/zalba_odluka.xsl";
@@ -63,7 +67,7 @@ public class ZalbaService {
 		else {
 			xslPath = XSL_PATH_ODLUKA;
 		}
-		ByteArrayOutputStream out = this.xslTransformer.generateHtml(document, xslPath);
+		ByteArrayOutputStream out = this.xslTransformer.generateHtml(this.domParser.buildXml(document), xslPath);
 		return out.toString();
 	}
 
@@ -76,7 +80,7 @@ public class ZalbaService {
 			} else {
 				xslFoPath = XSL_FO_PATH_ODLUKA;
 			}
-			ByteArrayOutputStream out = this.xslTransformer.generatePdf(document, xslFoPath);
+			ByteArrayOutputStream out = this.xslTransformer.generatePdf(this.domParser.buildXml(document), xslFoPath);
 			Path file = Paths.get(GEN_PATH + broj + ".pdf");
 			Files.write(file, out.toByteArray());
 			return new UrlResource(file.toUri());

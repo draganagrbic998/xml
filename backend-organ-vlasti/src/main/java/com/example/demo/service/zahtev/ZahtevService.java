@@ -14,9 +14,9 @@ import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.xmldb.api.base.ResourceSet;
 
-import com.example.demo.constants.Constants;
-import com.example.demo.exception.MyException;
-import com.example.demo.fuseki.MetadataType;
+import com.example.demo.common.Constants;
+import com.example.demo.common.MyException;
+import com.example.demo.enums.MetadataType;
 import com.example.demo.model.Korisnik;
 import com.example.demo.parser.DOMParser;
 import com.example.demo.parser.XSLTransformer;
@@ -42,29 +42,24 @@ public class ZahtevService {
 	private ZahtevMapper zahtevMapper;
 	
 	@Autowired
-	private XSLTransformer xslTransformer;
-	
-	@Autowired
 	private DOMParser domParser;
 
+	@Autowired
+	private XSLTransformer xslTransformer;
+	
 	private static final String XSL_PATH = Constants.XSL_FOLDER + File.separatorChar + "zahtev.xsl";
 	private static final String XSL_FO_PATH = Constants.XSL_FOLDER + File.separatorChar + "zahtev_fo.xsl";
 	private static final String GEN_PATH = Constants.GEN_FOLDER + File.separatorChar + "zahtevi" + File.separatorChar;
-
-	public String load(String broj) {
-		try {
-			return this.domParser.buildXml(this.zahtevExist.load(broj));
-		}
-		catch(Exception e) {
-			throw new MyException(e);
-		}
-	}
 	
-	public void add(String xml) {
+	public void retrieve(String xml) {
 		Document document = this.zahtevMapper.map(xml);
 		this.zahtevExist.save(null, document);
 		Model model = this.zahtevMapper.map(document);
 		this.zahtevRDF.save(model);
+	}
+	
+	public String load(String broj) {
+		return this.domParser.buildXml(this.zahtevExist.load(broj));
 	}
 	
 	public String retrieve() {
@@ -76,20 +71,20 @@ public class ZahtevService {
 		else {
 			xpathExp = String.format("/zahtev:Zahtev[Gradjanin/Osoba/mejl='%s']", korisnik.getOsoba().getMejl());
 		}
-		ResourceSet resources = this.zahtevExist.list(xpathExp);
+		ResourceSet resources = this.zahtevExist.retrieve(xpathExp);
 		return this.zahtevMapper.map(resources);
 	}
 		
 	public String generateHtml(String broj) {
 		Document document = this.zahtevExist.load(broj);
-		ByteArrayOutputStream out = this.xslTransformer.generateHtml(document, XSL_PATH);
+		ByteArrayOutputStream out = this.xslTransformer.generateHtml(this.domParser.buildXml(document), XSL_PATH);
 		return out.toString();
 	}
 	
 	public Resource generatePdf(String broj) {
 		try {
 			Document document = this.zahtevExist.load(broj);
-			ByteArrayOutputStream out = this.xslTransformer.generatePdf(document, XSL_FO_PATH);
+			ByteArrayOutputStream out = this.xslTransformer.generatePdf(this.domParser.buildXml(document), XSL_FO_PATH);
 			Path file = Paths.get(GEN_PATH + broj + ".pdf");
 			Files.write(file, out.toByteArray());
 			return new UrlResource(file.toUri());

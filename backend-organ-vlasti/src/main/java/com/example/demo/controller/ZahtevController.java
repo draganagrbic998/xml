@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.fuseki.MetadataType;
+import com.example.demo.enums.MetadataType;
 import com.example.demo.service.zahtev.ZahtevService;
 
 import org.springframework.core.io.Resource;
@@ -26,7 +26,7 @@ public class ZahtevController {
 				
 	@PostMapping(consumes = MediaType.TEXT_XML_VALUE)
 	public ResponseEntity<Void> save(@RequestBody String xml) {		
-		this.zahtevService.add(xml);
+		this.zahtevService.retrieve(xml);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	

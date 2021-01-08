@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.fuseki.MetadataType;
+import com.example.demo.enums.MetadataType;
 import com.example.demo.service.odluka.OdlukaService;
 
 @RestController
@@ -25,7 +25,7 @@ public class OdlukaController {
 			
 	@PostMapping(consumes = MediaType.TEXT_XML_VALUE)
 	public ResponseEntity<Void> save( @RequestBody String xml) {		
-		this.odlukaService.add(xml);
+		this.odlukaService.save(xml);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	

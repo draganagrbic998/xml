@@ -17,8 +17,8 @@ import org.apache.jena.update.UpdateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.example.demo.constants.Constants;
-import com.example.demo.exception.MyException;
+import com.example.demo.common.Constants;
+import com.example.demo.common.MyException;
 
 @Component
 public class FusekiManager {
@@ -31,15 +31,15 @@ public class FusekiManager {
 	public void save(String graphUri, Model model) {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		model.write(out, SparqlUtil.NTRIPLES);
-		String sparqlUpdate = SparqlUtil.insertData(this.authUtilities.getData() + graphUri, out.toString());
-		UpdateRequest update = UpdateFactory.create(sparqlUpdate);
-        UpdateProcessor processor = UpdateExecutionFactory.createRemote(update, this.authUtilities.getUpdate());
+		String sparql = SparqlUtil.insertData(this.authUtilities.getData() + graphUri, out.toString());
+		UpdateRequest request = UpdateFactory.create(sparql);
+        UpdateProcessor processor = UpdateExecutionFactory.createRemote(request, this.authUtilities.getUpdate());
 		processor.execute();
 	}
 	
 	public ResultSet retrieve(String graphUri, String subject) {
-		String sparqlQuery = String.format(this.readFile(QUERY1_PATH), this.authUtilities.getData() + graphUri, subject);
-		QueryExecution query = QueryExecutionFactory.sparqlService(this.authUtilities.getQuery(), sparqlQuery);
+		String sparql = String.format(this.readFile(QUERY1_PATH), this.authUtilities.getData() + graphUri, subject);
+		QueryExecution query = QueryExecutionFactory.sparqlService(this.authUtilities.getQuery(), sparql);
 		ResultSet results = query.execSelect();
 		return results;
 	}

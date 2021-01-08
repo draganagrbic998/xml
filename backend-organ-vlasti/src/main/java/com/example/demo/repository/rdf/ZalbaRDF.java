@@ -5,13 +5,12 @@ import org.apache.jena.rdf.model.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.example.demo.common.Prefixes;
 import com.example.demo.fuseki.FusekiManager;
-import com.example.demo.fuseki.Prefixes;
 
 @Component
 public class ZalbaRDF {
 
-	
 	@Autowired
 	private FusekiManager fusekiManager;
 	

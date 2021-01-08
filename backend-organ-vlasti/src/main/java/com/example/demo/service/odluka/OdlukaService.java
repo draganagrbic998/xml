@@ -15,13 +15,13 @@ import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.xmldb.api.base.ResourceSet;
 
-import com.example.demo.constants.Constants;
-import com.example.demo.constants.Namespaces;
-import com.example.demo.exception.MyException;
-import com.example.demo.fuseki.MetadataType;
+import com.example.demo.common.Constants;
+import com.example.demo.common.MyException;
+import com.example.demo.common.Namespaces;
+import com.example.demo.enums.MetadataType;
+import com.example.demo.enums.StatusZahteva;
+import com.example.demo.enums.TipOdluke;
 import com.example.demo.model.Korisnik;
-import com.example.demo.model.enums.StatusZahteva;
-import com.example.demo.model.enums.TipOdluke;
 import com.example.demo.parser.DOMParser;
 import com.example.demo.parser.XSLTransformer;
 import com.example.demo.repository.rdf.OdlukaRDF;
@@ -51,11 +51,11 @@ public class OdlukaService {
 	private OdlukaMapper odlukaMapper;
 	
 	@Autowired
-	private XSLTransformer xslTransformer;
-	
-	@Autowired
 	private DOMParser domParser;
-	
+
+	@Autowired
+	private XSLTransformer xslTransformer;
+		
 	@Autowired
 	private EmailService emailService;
 	private static final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyy.");
@@ -66,7 +66,7 @@ public class OdlukaService {
 	private static final String XSL_PATH_OBAVESTENJE = Constants.XSL_FOLDER + File.separatorChar + "/obavestenje.xsl";
 	private static final String GEN_PATH = Constants.GEN_FOLDER + File.separatorChar + "odluke" + File.separatorChar;
 
-	public void add(String xml) {
+	public void save(String xml) {
 		Document document = this.odlukaMapper.map(xml);
 		String brojZahteva = document.getElementsByTagNameNS(Namespaces.ODLUKA, "brojZahteva").item(0).getTextContent();
 		Document zahtevDocument = this.zahtevExist.load(brojZahteva);
@@ -91,39 +91,6 @@ public class OdlukaService {
 		}
 	}
 	
-	public void notifyOdluka(Document document) {
-		try {
-			String brojOdluke = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
-			String mejl = document.getElementsByTagNameNS(Namespaces.OSNOVA, "mejl").item(0).getTextContent();
-			String ime = document.getElementsByTagNameNS(Namespaces.OSNOVA, "ime").item(0).getTextContent();
-			String prezime = document.getElementsByTagNameNS(Namespaces.OSNOVA, "prezime").item(0).getTextContent();
-			String naziv = document.getElementsByTagNameNS(Namespaces.OSNOVA, "naziv").item(0).getTextContent();
-			String mesto = document.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(1).getTextContent();
-			String ulica = document.getElementsByTagNameNS(Namespaces.OSNOVA, "ulica").item(1).getTextContent();
-			String broj = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(1).getTextContent();
-			String sediste = ulica + " " + broj + ", " + mesto;
-			String datumZahteva = sdf.format(OdlukaMapper.sdf.parse(document.getElementsByTagNameNS(Namespaces.ODLUKA, "datumZahteva").item(0).getTextContent()));
-			
-			
-			Email email = new Email();
-			email.setTo(mejl);
-			email.setSubject("Odgovor na zahtev za informacije od javnog značaja");
-			String text = "Poštovani/a " + ime + " " + prezime + ", \n\n"
-					+ "Odgovor/i na zahtev za informacijama od javnog značaja koji ste podneli dana " 
-					+ datumZahteva + "nalaze se u linkovima ispod: \n"
-					+ Constants.BACKEND_URL + "/api/odluke/" + brojOdluke + "/html\n"
-					+ Constants.BACKEND_URL + "/api/odluke/" + brojOdluke + "/pdf\n\n"
-					+ "Svako dobro, \n\n"
-					+ naziv + "\n" 
-					+ sediste;
-			email.setText(text);
-			this.emailService.sendEmail(email);
-		}
-		catch(Exception e) {
-			throw new MyException(e);
-		}
-	}
-	
 	public String retrieve() {
 		Korisnik korisnik = this.korisnikService.currentUser();
 		String xpathExp;
@@ -133,7 +100,7 @@ public class OdlukaService {
 		else {
 			xpathExp = String.format("/odluka:Odluka[Gradjanin/Osoba/mejl='%s']", korisnik.getOsoba().getMejl());
 		}
-		ResourceSet resources = this.odlukaExist.list(xpathExp);
+		ResourceSet resources = this.odlukaExist.retrieve(xpathExp);
 		return this.odlukaMapper.map(resources);
 	}
 	
@@ -146,7 +113,7 @@ public class OdlukaService {
 		else {
 			xslPath = XSL_PATH_ODBIJANJE;
 		}
-		ByteArrayOutputStream out = this.xslTransformer.generateHtml(document, xslPath);
+		ByteArrayOutputStream out = this.xslTransformer.generateHtml(this.domParser.buildXml(document), xslPath);
 		return out.toString();
 	}
 	
@@ -160,7 +127,7 @@ public class OdlukaService {
 			else {
 				xslPath = XSL_PATH_ODBIJANJE;
 			}
-			ByteArrayOutputStream out = this.xslTransformer.generateHtml(document, xslPath);
+			ByteArrayOutputStream out = this.xslTransformer.generateHtml(this.domParser.buildXml(document), xslPath);
 			Path file = Paths.get(GEN_PATH + broj + ".html");
 			Files.write(file, out.toByteArray());
 			return new UrlResource(file.toUri());
@@ -180,7 +147,7 @@ public class OdlukaService {
 			else {
 				xslFoPath = XSL_FO_PATH_ODBIJANJE;
 			}
-			ByteArrayOutputStream out = this.xslTransformer.generatePdf(document, xslFoPath);
+			ByteArrayOutputStream out = this.xslTransformer.generatePdf(this.domParser.buildXml(document), xslFoPath);
 			Path file = Paths.get(GEN_PATH + broj + ".pdf");
 			Files.write(file, out.toByteArray());
 			return new UrlResource(file.toUri());
@@ -203,6 +170,38 @@ public class OdlukaService {
 			Path file = Paths.get(GEN_PATH + broj + "_metadata." + type);
 			Files.write(file, out.toByteArray());
 			return new UrlResource(file.toUri());
+		}
+		catch(Exception e) {
+			throw new MyException(e);
+		}
+	}
+	
+	private void notifyOdluka(Document document) {
+		try {
+			String brojOdluke = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
+			String mejl = document.getElementsByTagNameNS(Namespaces.OSNOVA, "mejl").item(0).getTextContent();
+			String ime = document.getElementsByTagNameNS(Namespaces.OSNOVA, "ime").item(0).getTextContent();
+			String prezime = document.getElementsByTagNameNS(Namespaces.OSNOVA, "prezime").item(0).getTextContent();
+			String naziv = document.getElementsByTagNameNS(Namespaces.OSNOVA, "naziv").item(0).getTextContent();
+			String mesto = document.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(1).getTextContent();
+			String ulica = document.getElementsByTagNameNS(Namespaces.OSNOVA, "ulica").item(1).getTextContent();
+			String broj = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(1).getTextContent();
+			String sediste = ulica + " " + broj + ", " + mesto;
+			String datumZahteva = sdf.format(OdlukaMapper.sdf.parse(document.getElementsByTagNameNS(Namespaces.ODLUKA, "datumZahteva").item(0).getTextContent()));
+			
+			Email email = new Email();
+			email.setTo(mejl);
+			email.setSubject("Odgovor na zahtev za informacije od javnog značaja");
+			String text = "Poštovani/a " + ime + " " + prezime + ", \n\n"
+					+ "Odgovor/i na zahtev za informacijama od javnog značaja koji ste podneli dana " 
+					+ datumZahteva + " nalaze se u linkovima ispod: \n"
+					+ Constants.BACKEND_URL + "/api/odluke/" + brojOdluke + "/html\n"
+					+ Constants.BACKEND_URL + "/api/odluke/" + brojOdluke + "/pdf\n\n"
+					+ "Svako dobro, \n"
+					+ naziv + "\n" 
+					+ sediste;
+			email.setText(text);
+			this.emailService.sendEmail(email);
 		}
 		catch(Exception e) {
 			throw new MyException(e);

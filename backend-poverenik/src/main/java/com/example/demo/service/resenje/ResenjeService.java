@@ -13,11 +13,12 @@ import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.xmldb.api.base.ResourceSet;
 
-import com.example.demo.constants.Constants;
-import com.example.demo.constants.Namespaces;
-import com.example.demo.exception.MyException;
+import com.example.demo.common.Constants;
+import com.example.demo.common.MyException;
+import com.example.demo.common.Namespaces;
+import com.example.demo.enums.StatusZalbe;
 import com.example.demo.model.Korisnik;
-import com.example.demo.model.enums.StatusZalbe;
+import com.example.demo.parser.DOMParser;
 import com.example.demo.parser.XSLTransformer;
 import com.example.demo.repository.xml.ResenjeExist;
 import com.example.demo.repository.xml.ZalbaExist;
@@ -39,6 +40,9 @@ public class ResenjeService {
 	
 	@Autowired
 	private ResenjeMapper resenjeMapper;
+	
+	@Autowired
+	private DOMParser domParser;
 
 	@Autowired
 	private XSLTransformer xslTransformer;
@@ -69,20 +73,20 @@ public class ResenjeService {
 		else {
 			xpathExp = String.format("/resenje:Resenje[resenje:PodaciZahteva/mejl='%s']", korisnik.getOsoba().getMejl());
 		}		
-		ResourceSet resouces = this.resenjeExist.list(xpathExp);
+		ResourceSet resouces = this.resenjeExist.retrieve(xpathExp);
 		return this.resenjeMapper.map(resouces);		
 	}
 	
 	public String generateHtml(String broj) {
 		Document document = this.resenjeExist.load(broj);
-		ByteArrayOutputStream out = this.xslTransformer.generateHtml(document, XSL_PATH);
+		ByteArrayOutputStream out = this.xslTransformer.generateHtml(this.domParser.buildXml(document), XSL_PATH);
 		return out.toString();
 	}
 	
 	public Resource generatePdf(String broj) {
 		try {
 			Document document = this.resenjeExist.load(broj);
-			ByteArrayOutputStream out = this.xslTransformer.generatePdf(document, XSL_FO_PATH);
+			ByteArrayOutputStream out = this.xslTransformer.generatePdf(this.domParser.buildXml(document), XSL_FO_PATH);
 			Path file = Paths.get(GEN_PATH + broj + ".pdf");
 			Files.write(file, out.toByteArray());
 			return new UrlResource(file.toUri());

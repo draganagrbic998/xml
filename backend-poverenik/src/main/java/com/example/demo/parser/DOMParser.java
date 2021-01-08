@@ -4,27 +4,22 @@ import static org.apache.xerces.jaxp.JAXPConstants.JAXP_SCHEMA_LANGUAGE;
 import static org.apache.xerces.jaxp.JAXPConstants.W3C_XML_SCHEMA;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
-import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 
-import com.example.demo.exception.MyException;
+import com.example.demo.common.MyException;
 
 @Component
 public class DOMParser {
@@ -43,33 +38,37 @@ public class DOMParser {
 		this.transformerFactory = TransformerFactory.newInstance();
 	}
 	
-	public Document emptyDocument() throws ParserConfigurationException {
-		DocumentBuilder builder = this.builderFactory.newDocumentBuilder();
-		return builder.newDocument();
+	public Document emptyDocument() {
+		try {
+			DocumentBuilder builder = this.builderFactory.newDocumentBuilder();
+			return builder.newDocument();
+		}
+		catch(Exception e) {
+			throw new MyException(e);
+		}
 	}
 	
-	public Document buildDocument(String xml) throws ParserConfigurationException, SAXException, IOException {
-		DocumentBuilder builder = this.builderFactory.newDocumentBuilder();
-		return builder.parse(new InputSource(new StringReader(xml)));
+	public Document buildDocument(String xml) {
+		try {
+			DocumentBuilder builder = this.builderFactory.newDocumentBuilder();
+			return builder.parse(new InputSource(new StringReader(xml)));
+		}
+		catch(Exception e) {
+			throw new MyException(e);
+		}
 	}
 	
-	public Document buildDocumentFromFile(String path) throws ParserConfigurationException, SAXException, IOException {
-		DocumentBuilder builder = this.builderFactory.newDocumentBuilder();
-		return builder.parse(new File(path));
+	public Document buildDocumentFromFile(String path) {
+		try {
+			DocumentBuilder builder = this.builderFactory.newDocumentBuilder();
+			return builder.parse(new File(path));
+		}
+		catch(Exception e) {
+			throw new MyException(e);
+		}
 	}
 	
-	public String buildXml(Document document) throws TransformerException {
-		StringWriter string = new StringWriter();
-		Transformer transformer = this.transformerFactory.newTransformer();
-		transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
-		transformer.setOutputProperty(OutputKeys.METHOD, "xml");
-		transformer.setOutputProperty(OutputKeys.INDENT, "yes");	
-		transformer.setOutputProperty(OutputKeys.ENCODING, "utf-8");
-		transformer.transform(new DOMSource(document), new StreamResult(string));
-		return string.toString();
-	}
-	
-	public String buildXmlFromNode(Node document) {
+	public String buildXml(Document document) {
 		try {
 			StringWriter string = new StringWriter();
 			Transformer transformer = this.transformerFactory.newTransformer();
@@ -83,7 +82,10 @@ public class DOMParser {
 		catch(Exception e) {
 			throw new MyException(e);
 		}
-
 	}
-	
+
+	public TransformerFactory getTransformerFactory() {
+		return transformerFactory;
+	}
+
 }
