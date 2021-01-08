@@ -1,8 +1,11 @@
 package com.example.demo.service.zalba;
 
+import java.io.StringReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
@@ -16,10 +19,12 @@ import org.xmldb.api.modules.XMLResource;
 import com.example.demo.constants.Constants;
 import com.example.demo.constants.Namespaces;
 import com.example.demo.exception.MyException;
+import com.example.demo.fuseki.Prefixes;
 import com.example.demo.model.enums.StatusZalbe;
 import com.example.demo.model.enums.TipZalbe;
 import com.example.demo.parser.DOMParser;
 import com.example.demo.parser.JAXBParser;
+import com.example.demo.parser.XSLTransformer;
 import com.example.demo.service.KorisnikService;
 import com.example.demo.ws.utils.SOAPService;
 import com.example.demo.ws.utils.TipDokumenta;
@@ -38,6 +43,9 @@ public class ZalbaMapper {
 	
 	@Autowired
 	private SOAPService soapService;
+	
+	@Autowired
+	private XSLTransformer xslTransformer;
 		
 	public static final SimpleDateFormat sdf = new SimpleDateFormat(Constants.DATE_FORMAT);
 	
@@ -119,7 +127,7 @@ public class ZalbaMapper {
 		}
 	}
 	
-	public String map(Document document) {
+	public String mapToDoc(Document document) {
 		try {
 			return this.domParser.buildXml(document);
 		}
@@ -134,6 +142,56 @@ public class ZalbaMapper {
 			return TipZalbe.cutanje;
 		}
 		return TipZalbe.odluka;
+	}
+
+	public Model map(Document document) {
+		try {
+			Element zalba = (Element) document.getElementsByTagNameNS(Namespaces.ZALBA, "Zahtev").item(0);
+			zalba.setAttribute("xmlns:pred", Prefixes.PREDIKAT);
+			zalba.setAttribute("xmlns:xs", Namespaces.XS);
+
+			zalba.setAttribute("about", Prefixes.ZAHTEV_PREFIX + zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent());
+			zalba.setAttribute("rel", "pred:podneo");
+			zalba.setAttribute("href", Prefixes.KORISNIK_PREFIX + this.korisnikService.currentUser().getOsoba().getMejl());
+			
+			((Element) zalba.getElementsByTagNameNS(Namespaces.ZALBA, "tipZalbe").item(0)).setAttribute("property", "pred:tip");
+			((Element) zalba.getElementsByTagNameNS(Namespaces.ZALBA, "tipZalbe").item(0)).setAttribute("datatype", "xs:string");
+
+			String tipZalbe = ((Element) zalba.getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").item(0)).getAttributeNS(Namespaces.XSI, "type") + "";
+			if (tipZalbe.contains("TZalbaOdluka")) {
+				Element brojOdluke = (Element) zalba.getElementsByTagNameNS(Namespaces.ZALBA, "brojZOdluke").item(0);
+				brojOdluke.setAttribute("rel", "pred:odluka");
+				brojOdluke.setAttribute("href", Prefixes.ODLUKA_PREFIX + brojOdluke.getTextContent());			
+			}
+			
+			((Element) zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0)).setAttribute("property", "pred:datum");
+			((Element) zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0)).setAttribute("datatype", "xs:string");
+			
+			((Element) zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(0)).setAttribute("property", "pred:mesto");
+			((Element) zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(0)).setAttribute("datatype", "xs:string");
+
+			((Element) zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(1)).setAttribute("property", "pred:izdatoU");
+			((Element) zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(1)).setAttribute("datatype", "xs:string");
+
+			((Element) zalba.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0)).setAttribute("property", "pred:status");
+			((Element) zalba.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0)).setAttribute("datatype", "xs:string");
+
+			
+			Element brojZahteva = (Element) zalba.getElementsByTagNameNS(Namespaces.ZALBA, "brojZahteva").item(0);
+			brojZahteva.setAttribute("rel", "pred:zahtev");
+			brojZahteva.setAttribute("href", Prefixes.ZAHTEV_PREFIX + brojZahteva.getTextContent());
+			
+			
+			String result = this.xslTransformer.generateMetadata(this.domParser.buildXml(document)).toString();
+			Model model = ModelFactory.createDefaultModel();
+			model.setNsPrefix("pred", Prefixes.PREDIKAT);
+			model.read(new StringReader(result), null);
+			
+			return model;
+		}
+		catch(Exception e) {
+			throw new MyException(e);
+		}
 	}
 	
 }

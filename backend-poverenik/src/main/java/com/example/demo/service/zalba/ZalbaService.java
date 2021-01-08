@@ -8,6 +8,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
 
+import org.apache.jena.rdf.model.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -27,6 +28,7 @@ import com.example.demo.model.enums.StatusZalbe;
 import com.example.demo.model.enums.TipZalbe;
 import com.example.demo.parser.DOMParser;
 import com.example.demo.parser.XSLTransformer;
+import com.example.demo.repository.rdf.ZalbaRDF;
 import com.example.demo.repository.xml.ZalbaExist;
 import com.example.demo.service.KorisnikService;
 import com.example.demo.ws.utils.SOAPService;
@@ -46,6 +48,9 @@ public class ZalbaService {
 	private ZalbaMapper zalbaMapper;
 	
 	@Autowired
+	private ZalbaRDF zalbaRDF;
+	
+	@Autowired
 	private DOMParser domParser;
 	
 	@Autowired
@@ -63,6 +68,8 @@ public class ZalbaService {
 	public void save(String xml) {
 		Document document = this.zalbaMapper.map(xml);
 		this.zalbaExist.save(null, document);
+		Model model = this.zalbaMapper.map(document);
+		this.zalbaRDF.save(model);
 	}
 
 	public String retrieve() {
@@ -157,7 +164,7 @@ public class ZalbaService {
 	public void prosledi(String broj) {
 		Document document = this.zalbaExist.load(broj);
 		document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.prosledjeno + "");
-		this.soapService.sendSOAPMessage(this.zalbaMapper.map(document), TipDokumenta.zalba);
+		this.soapService.sendSOAPMessage(this.zalbaMapper.mapToDoc(document), TipDokumenta.zalba);
 		
 		Element zalba = (Element) document.getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").item(0);
 		Node datumProsledjivanja = document.createElementNS(Namespaces.ZALBA, "zalba:datumProsledjivanja");
