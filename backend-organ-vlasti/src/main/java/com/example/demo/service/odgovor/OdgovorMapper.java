@@ -33,8 +33,8 @@ public class OdgovorMapper {
 	public Document map(String xml) {
 		Document document = this.domParser.buildDocument(xml);
 		Element odgovor = (Element) document.getElementsByTagNameNS(Namespaces.ODGOVOR, "Odgovor").item(0);
-		String brojZalbe = odgovor.getElementsByTagNameNS(Namespaces.ODGOVOR, "brojZalbe").item(0).getTextContent();
-		Element zalba = (Element) this.zalbaExist.load(brojZalbe).getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").item(0);
+		String broj = odgovor.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
+		Element zalba = (Element) this.zalbaExist.load(broj).getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").item(0);
 		DocumentFragment documentFragment = document.createDocumentFragment();
 		
 		Node datum = document.createElementNS(Namespaces.OSNOVA, "datum");
@@ -42,7 +42,6 @@ public class OdgovorMapper {
 		Element osoba = (Element) document.importNode(zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "Osoba").item(0), true);
 		Element organVlasti = (Element) document.importNode(zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "OrganVlasti").item(0), true);		
 		osoba.getElementsByTagNameNS(Namespaces.OSNOVA, "potpis").item(0).setTextContent(this.korisnikService.currentUser().getOsoba().getPotpis());
-		documentFragment.appendChild(document.createElementNS(Namespaces.OSNOVA, "broj"));			
 		documentFragment.appendChild(datum);
 		documentFragment.appendChild(osoba);
 		documentFragment.appendChild(organVlasti);

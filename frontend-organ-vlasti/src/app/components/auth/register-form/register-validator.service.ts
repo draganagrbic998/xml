@@ -9,7 +9,7 @@ export class RegisterValidatorService {
   constructor() { }
 
   ponovljenaLozinka(): ValidatorFn{
-    return (control: AbstractControl): null | ValidationErrors => {
+    return (control: AbstractControl): ValidationErrors => {
       let ponovljenaLozinkaValid = true;
       if (control.parent && control.parent.get('lozinka').value !== control.value){
         ponovljenaLozinkaValid = false;

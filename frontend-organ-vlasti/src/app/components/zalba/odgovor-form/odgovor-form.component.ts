@@ -2,7 +2,7 @@ import { AfterViewInit, Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { SNACKBAR_CLOSE, SNACKBAR_ERROR, SNACKBAR_ERROR_OPTIONS, SNACKBAR_SUCCESS_OPTIONS } from 'src/app/constants/snackbar';
-import { Odgovor } from 'src/app/models/odluka';
+import { Odgovor } from 'src/app/models/odgovor';
 import { XonomyService } from 'src/app/services/xonomy/xonomy.service';
 import { ZalbaService } from 'src/app/services/zalba/zalba.service';
 

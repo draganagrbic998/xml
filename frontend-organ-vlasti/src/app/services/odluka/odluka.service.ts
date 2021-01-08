@@ -28,7 +28,8 @@ export class OdlukaService {
   private odbijanjeToXml(brojZahteva: string, odbijanje: Odbijanje): string{
 
     return `
-      <odluka:Odluka xmlns="${OSNOVA}"
+      <odluka:Odluka
+      xmlns="${OSNOVA}"
       xmlns:odluka="${ODLUKA}"
       xmlns:xsi="${XSI}"
       xsi:type="TOdbijanje">
@@ -42,7 +43,8 @@ export class OdlukaService {
   private obavestenjeToXml(brojZahteva: string, obavestenje: Obavestenje): string{
 
     return `
-      <odluka:Odluka xmlns="${OSNOVA}"
+      <odluka:Odluka
+      xmlns="${OSNOVA}"
       xmlns:odluka="${ODLUKA}"
       xmlns:xsi="${XSI}"
       xsi:type="TObavestenje">

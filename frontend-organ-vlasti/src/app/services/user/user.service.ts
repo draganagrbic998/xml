@@ -48,13 +48,13 @@ export class UserService {
 
   private xmlToProfil(xml: string): Profil{
     const parser = new DOMParser();
-    const document = parser.parseFromString(xml, 'text/xml');
+    const profil = parser.parseFromString(xml, 'text/xml');
     return {
-      token: document.getElementsByTagName('token')[0].textContent,
-      uloga: document.getElementsByTagName('uloga')[0].textContent,
-      mejl: document.getElementsByTagName('mejl')[0].textContent,
-      ime: document.getElementsByTagName('ime')[0].textContent,
-      prezime: document.getElementsByTagName('prezime')[0].textContent
+      token: profil.getElementsByTagName('token')[0].textContent,
+      uloga: profil.getElementsByTagName('uloga')[0].textContent,
+      mejl: profil.getElementsByTagName('mejl')[0].textContent,
+      ime: profil.getElementsByTagName('ime')[0].textContent,
+      prezime: profil.getElementsByTagName('prezime')[0].textContent
     };
   }
 

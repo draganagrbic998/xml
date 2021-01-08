@@ -20,7 +20,11 @@ export class HtmlViewerComponent implements OnInit {
     private route: ActivatedRoute
   ) { }
 
-  html: string;
+  html = `
+    <div style="height: 100%; width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+      <h1>GREŠKA PRILIKOM UČITAVANJA DOKUMENTA!!</h1>
+    </div>
+  `;
   fetchPending =  true;
 
   ngOnInit(): void {

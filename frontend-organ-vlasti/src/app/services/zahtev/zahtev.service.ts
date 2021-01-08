@@ -3,11 +3,10 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Zahtev } from 'src/app/models/zahtev';
 import { environment } from 'src/environments/environment';
-import { KORISNIK, OSNOVA, PREDIKAT, ZAHTEV } from 'src/app/constants/namespaces';
+import { OSNOVA, ZAHTEV } from 'src/app/constants/namespaces';
 import { ZahtevDTO } from 'src/app/models/zahtevDTO';
 import { map } from 'rxjs/operators';
 import { XonomyService } from '../xonomy/xonomy.service';
-import { AuthService } from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +15,7 @@ export class ZahtevService {
 
   constructor(
     private http: HttpClient,
-    private xonomyService: XonomyService,
-    private authService: AuthService
+    private xonomyService: XonomyService
   ) { }
 
   private readonly API_ZAHTEVI = `${environment.baseUrl}/${environment.apiZahtevi}`;
@@ -52,9 +50,9 @@ export class ZahtevService {
 
     for (let i = 0; i < zahtevi.length; ++i){
       zahteviDTO.push({
+        tipZahteva: zahtevi.item(i).getElementsByTagNameNS(ZAHTEV, 'tipZahteva')[0].textContent,
         broj: zahtevi.item(i).getElementsByTagNameNS(OSNOVA, 'broj')[0].textContent,
         datum: zahtevi.item(i).getElementsByTagNameNS(OSNOVA, 'datum')[0].textContent,
-        tipZahteva: zahtevi.item(i).getElementsByTagNameNS(ZAHTEV, 'tipZahteva')[0].textContent,
         status: zahtevi.item(i).getElementsByTagNameNS(ZAHTEV, 'status')[0].textContent
       });
     }
