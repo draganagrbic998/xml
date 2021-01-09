@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<rdf:RDF
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+	xml:base="https://github.com/draganagrbic998/xml/#">
+
+	<rdfs:Class rdf:ID="Zalba"/>
+
+	<rdfs:Property rdf:ID="datum">
+		<rdfs:domain rdf:resource="#Zalba"/>
+	</rdfs:Property>
+	
+	<rdfs:Property rdf:ID="mesto">
+		<rdfs:domain rdf:resource="#Zalba"/>
+	</rdfs:Property>
+	
+	<rdfs:Property rdf:ID="tip">
+		<rdfs:domain rdf:resource="#Zalba"/>
+	</rdfs:Property>
+	
+	<rdfs:Property rdf:ID="podneo">
+		<rdfs:domain rdf:resource="#Zalba"/>
+	</rdfs:Property>
+	
+	<rdfs:Property rdf:ID="izdatoU">
+		<rdfs:domain rdf:resource="#Zalba"/>
+	</rdfs:Property>
+	
+	<rdfs:Property rdf:ID="zahtev">
+		<rdfs:domain rdf:resource="#Zalba"/>
+	</rdfs:Property>
+	
+	<rdfs:Property rdf:ID="odluka">
+		<rdfs:domain rdf:resource="#Zalba"/>
+	</rdfs:Property>
+</rdf:RDF>

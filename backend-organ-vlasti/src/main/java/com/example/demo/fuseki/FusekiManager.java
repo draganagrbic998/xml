@@ -9,7 +9,11 @@ import java.nio.file.Paths;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.query.ResultSet;
+import org.apache.jena.rdf.model.InfModel;
 import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.reasoner.ValidityReport;
+import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.update.UpdateExecutionFactory;
 import org.apache.jena.update.UpdateFactory;
 import org.apache.jena.update.UpdateProcessor;
@@ -28,7 +32,18 @@ public class FusekiManager {
 	
 	private static final String QUERY1_PATH = Constants.SPARQL_FOLDER + File.separatorChar + "query1.rq";
 	
-	public void save(String graphUri, Model model) {
+	public void save(String graphUri, Model model, String rdfsPath) {
+		Model schema = RDFDataMgr.loadModel(rdfsPath);
+		InfModel infmodel = ModelFactory.createRDFSModel(schema, model);
+		ValidityReport validity = infmodel.validate();
+		if (validity.isValid()) {
+		    System.out.println("OK");
+		} 
+		else {
+		    System.out.println("Conflicts");
+		}
+
+		
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		model.write(out, SparqlUtil.NTRIPLES);
 		String sparql = SparqlUtil.insertData(this.authUtilities.getData() + graphUri, out.toString());

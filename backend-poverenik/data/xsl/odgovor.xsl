@@ -132,16 +132,12 @@ xmlns:odgovor="https://github.com/draganagrbic998/xml/odgovor">
 				            <xsl:apply-templates select="osnova:Detalji"></xsl:apply-templates>
 		               	</span>
 						<span class="line">
-						&#160;
 		                </span>
 						<span class="line">
-						&#160;
 		                </span>				
 						<span class="line">
-						&#160;
 		                </span>				
 						<span class="line">
-						&#160;
 		                </span>				
 		            </p>
 		            

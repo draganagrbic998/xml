@@ -1,6 +1,6 @@
-<zalba:Zalba xmlns:zalba="https://github.com/draganagrbic998/xml/zalba" xmlns="https://github.com/draganagrbic998/xml/osnova" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="zalba:TZalbaCutanje">
+<zalba:Zalba xmlns:zalba="https://github.com/draganagrbic998/xml/zalba" xmlns="https://github.com/draganagrbic998/xml/osnova" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="zalba:TZalbaOdluka">
         
-    <broj>1</broj>
+    <broj>2</broj>
     <datum>2021-01-09</datum>
     <Gradjanin>
         <Osoba>
@@ -25,13 +25,12 @@
     </OrganVlasti>
     <Detalji>some text <bold>some bold text</bold> some text <italic>some italic text</italic> some text</Detalji>
     <zalba:datumProsledjivanja>2021-01-09</zalba:datumProsledjivanja>
-    <zalba:status>prosledjeno</zalba:status>
+    <zalba:status>odgovoreno</zalba:status>
     <zalba:PodaciZahteva>
         <broj>2</broj>
 	    <datum>2021-01-09</datum>
         <Detalji>some text <bold>some bold text</bold> some text <italic>some italic text</italic> some text</Detalji>
     </zalba:PodaciZahteva>
-    <zalba:tipCutanja>nije postupio u celosti</zalba:tipCutanja>
     <zalba:PodaciOdluke>
         <broj>2</broj>
         <datum>2021-01-09</datum>

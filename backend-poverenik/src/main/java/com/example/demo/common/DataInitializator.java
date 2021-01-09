@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import com.example.demo.exist.ExistManager;
 import com.example.demo.fuseki.FusekiManager;
 import com.example.demo.parser.DOMParser;
+import com.example.demo.repository.rdf.OdgovorRDF;
 import com.example.demo.repository.rdf.ZalbaRDF;
 import com.example.demo.repository.xml.KorisnikExist;
 import com.example.demo.repository.xml.OdgovorExist;
@@ -34,6 +35,9 @@ public class DataInitializator {
 	private static final String ZALBA_ODLUKA1 = Constants.INIT_FOLDER + "zalba_odluka1.xml";
 	private static final String ZALBA_CUTANJE1 = Constants.INIT_FOLDER + "zalba_cutanje1.xml";
 	private static final String ZALBE = Constants.INIT_FOLDER + "zalbe.nt";
+	private static final String ODGOVOR1 = Constants.INIT_FOLDER + "odgovor1.xml";
+	private static final String ODGOVOR2 = Constants.INIT_FOLDER + "odgovor2.xml";
+	private static final String ODGOVORI = Constants.INIT_FOLDER + "odgovori.nt";
 
 	@EventListener(ContextRefreshedEvent.class)
 	public void dataInit() {
@@ -50,12 +54,17 @@ public class DataInitializator {
 		this.existManager.save(ZalbaExist.ZALBA_COLLECTION, "2", this.domParser.buildDocumentFromFile(ZALBA_ODLUKA1), ZalbaExist.ZALBA_SCHEMA);
 		this.existManager.save(ZalbaExist.ZALBA_COLLECTION, "3", this.domParser.buildDocumentFromFile(ZALBA_CUTANJE1), ZalbaExist.ZALBA_SCHEMA);
 
+		this.existManager.save(OdgovorExist.ODGOVOR_COLLECTION, "1", this.domParser.buildDocumentFromFile(ODGOVOR1), OdgovorExist.ODGOVOR_SCHEMA);
+		this.existManager.save(OdgovorExist.ODGOVOR_COLLECTION, "2", this.domParser.buildDocumentFromFile(ODGOVOR2), OdgovorExist.ODGOVOR_SCHEMA);
+
 		
 		this.fusekiManager.dropAll();
 		Model model = ModelFactory.createDefaultModel();
 		model.read(ZALBE);
 		this.fusekiManager.save(ZalbaRDF.GRAPH_URI, model);
-		
+		model.removeAll();
+		model.read(ODGOVORI);
+		this.fusekiManager.save(OdgovorRDF.GRAPH_URI, model);
 
 	}
 	
