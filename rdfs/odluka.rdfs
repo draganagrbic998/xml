@@ -28,6 +28,5 @@
 		
 	<rdfs:Property rdf:ID="zahtev">
 		<rdfs:domain rdf:resource="#Odluka"/>
-		<rdfs:range rdf:resource="#Zahtev"/>
 	</rdfs:Property>
 </rdf:RDF>
