@@ -32,17 +32,17 @@ public class ZahtevPortImpl implements Zahtev {
     private static final Logger LOG = Logger.getLogger(ZahtevPortImpl.class.getName());
 
     /* (non-Javadoc)
-     * @see com.example.demo.ws.zahtev.Zahtev#createZahtev(java.lang.String createZahtevRequest)*
+     * @see com.example.demo.ws.zahtev.Zahtev#getZahtev(java.lang.String getZahtevRequest)*
      */
     
     @Autowired
     private ZahtevService zahtevService;
     
-    public java.lang.String createZahtev(java.lang.String createZahtevRequest) {
-        LOG.info("Executing operation createZahtev");
-        System.out.println(createZahtevRequest);
+    public java.lang.String getZahtev(java.lang.String getZahtevRequest) {
+        LOG.info("Executing operation getZahtev");
+        System.out.println(getZahtevRequest);
         try {
-            java.lang.String _return = this.zahtevService.load(createZahtevRequest);
+            java.lang.String _return = this.zahtevService.load(getZahtevRequest);
             return _return;
         } catch (java.lang.Exception ex) {
             ex.printStackTrace();

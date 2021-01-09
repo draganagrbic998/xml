@@ -19,9 +19,9 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 public interface Odluka {
 
     @WebMethod
-    @WebResult(name = "createOdlukaResponse", targetNamespace = "http://demo.example.com/ws/odluka", partName = "createOdlukaResponse")
-    public java.lang.String createOdluka(
-        @WebParam(partName = "createOdlukaRequest", name = "createOdlukaRequest", targetNamespace = "http://demo.example.com/ws/odluka")
-        java.lang.String createOdlukaRequest
+    @WebResult(name = "getOdlukaResponse", targetNamespace = "http://demo.example.com/ws/odluka", partName = "getOdlukaResponse")
+    public java.lang.String getOdluka(
+        @WebParam(partName = "getOdlukaRequest", name = "getOdlukaRequest", targetNamespace = "http://demo.example.com/ws/odluka")
+        java.lang.String getOdlukaRequest
     );
 }

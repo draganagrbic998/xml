@@ -24,8 +24,8 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _CreateZahtevRequest_QNAME = new QName("http://demo.example.com/ws/zahtev", "createZahtevRequest");
-    private final static QName _CreateZahtevResponse_QNAME = new QName("http://demo.example.com/ws/zahtev", "createZahtevResponse");
+    private final static QName _GetZahtevRequest_QNAME = new QName("http://demo.example.com/ws/zahtev", "getZahtevRequest");
+    private final static QName _GetZahtevResponse_QNAME = new QName("http://demo.example.com/ws/zahtev", "getZahtevResponse");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: com.example.demo.ws.zahtev
@@ -42,9 +42,9 @@ public class ObjectFactory {
      * @return
      *     the new instance of {@link JAXBElement }{@code <}{@link String }{@code >}
      */
-    @XmlElementDecl(namespace = "http://demo.example.com/ws/zahtev", name = "createZahtevRequest")
-    public JAXBElement<String> createCreateZahtevRequest(String value) {
-        return new JAXBElement<String>(_CreateZahtevRequest_QNAME, String.class, null, value);
+    @XmlElementDecl(namespace = "http://demo.example.com/ws/zahtev", name = "getZahtevRequest")
+    public JAXBElement<String> createGetZahtevRequest(String value) {
+        return new JAXBElement<String>(_GetZahtevRequest_QNAME, String.class, null, value);
     }
 
     /**
@@ -55,9 +55,9 @@ public class ObjectFactory {
      * @return
      *     the new instance of {@link JAXBElement }{@code <}{@link String }{@code >}
      */
-    @XmlElementDecl(namespace = "http://demo.example.com/ws/zahtev", name = "createZahtevResponse")
-    public JAXBElement<String> createCreateZahtevResponse(String value) {
-        return new JAXBElement<String>(_CreateZahtevResponse_QNAME, String.class, null, value);
+    @XmlElementDecl(namespace = "http://demo.example.com/ws/zahtev", name = "getZahtevResponse")
+    public JAXBElement<String> createGetZahtevResponse(String value) {
+        return new JAXBElement<String>(_GetZahtevResponse_QNAME, String.class, null, value);
     }
 
 }

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="OdlukaService"
+	targetNamespace="http://demo.example.com/ws/odluka"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:tns="http://demo.example.com/ws/odluka"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+	<wsdl:types>
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+			xmlns="http://demo.example.com/ws/odluka"
+			attributeFormDefault="unqualified" elementFormDefault="unqualified"
+			targetNamespace="http://demo.example.com/ws/odluka">
+			<xs:element name="createOdlukaRequest" type="xs:string" />
+			<xs:element name="createOdlukaResponse" type="xs:string" />
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="createOdlukaRequest">
+		<wsdl:part name="createOdlukaRequest" element="tns:createOdlukaRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="createOdlukaResponse">
+		<wsdl:part name="createOdlukaResponse" element="tns:createOdlukaResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="Odluka">
+		<wsdl:operation name="createOdluka">
+			<wsdl:input name="createOdlukaRequest" message="tns:createOdlukaRequest">
+			</wsdl:input>
+			<wsdl:output name="createOdlukaResponse" message="tns:createOdlukaResponse">
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="OdlukaServiceSoapBinding"
+		type="tns:Odluka">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="createOdluka">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="createOdlukaRequest">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="createOdlukaResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="OdlukaService">
+		<wsdl:port name="OdlukaPort"
+			binding="tns:OdlukaServiceSoapBinding">
+			<soap:address
+				location="http://localhost:8082/OdlukaPort" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

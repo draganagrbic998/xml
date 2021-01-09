@@ -33,17 +33,17 @@ public class OdlukaPortImpl implements Odluka {
     private static final Logger LOG = Logger.getLogger(OdlukaPortImpl.class.getName());
 
     /* (non-Javadoc)
-     * @see com.example.demo.ws.odluka.Odluka#createOdluka(java.lang.String createOdlukaRequest)*
+     * @see com.example.demo.ws.odluka.Odluka#getOdluka(java.lang.String getOdlukaRequest)*
      */
     
     @Autowired
     private OdlukaService odlukaService;
     
-    public java.lang.String createOdluka(java.lang.String createOdlukaRequest) {
-        LOG.info("Executing operation createOdluka");
-        System.out.println(createOdlukaRequest);
+    public java.lang.String getOdluka(java.lang.String getOdlukaRequest) {
+        LOG.info("Executing operation getOdluka");
+        System.out.println(getOdlukaRequest);
         try {
-            java.lang.String _return = this.odlukaService.load(createOdlukaRequest);
+            java.lang.String _return = this.odlukaService.load(getOdlukaRequest);
             return _return;
         } catch (java.lang.Exception ex) {
             ex.printStackTrace();

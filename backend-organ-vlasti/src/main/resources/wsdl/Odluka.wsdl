@@ -10,23 +10,23 @@
 			xmlns="http://demo.example.com/ws/odluka"
 			attributeFormDefault="unqualified" elementFormDefault="unqualified"
 			targetNamespace="http://demo.example.com/ws/odluka">
-			<xs:element name="createOdlukaRequest" type="xs:string" />
-			<xs:element name="createOdlukaResponse" type="xs:string" />
+			<xs:element name="getOdlukaRequest" type="xs:string" />
+			<xs:element name="getOdlukaResponse" type="xs:string" />
 		</xs:schema>
 	</wsdl:types>
-	<wsdl:message name="createOdlukaRequest">
-		<wsdl:part name="createOdlukaRequest" element="tns:createOdlukaRequest">
+	<wsdl:message name="getOdlukaRequest">
+		<wsdl:part name="getOdlukaRequest" element="tns:getOdlukaRequest">
 		</wsdl:part>
 	</wsdl:message>
-	<wsdl:message name="createOdlukaResponse">
-		<wsdl:part name="createOdlukaResponse" element="tns:createOdlukaResponse">
+	<wsdl:message name="getOdlukaResponse">
+		<wsdl:part name="getOdlukaResponse" element="tns:getOdlukaResponse">
 		</wsdl:part>
 	</wsdl:message>
 	<wsdl:portType name="Odluka">
-		<wsdl:operation name="createOdluka">
-			<wsdl:input name="createOdlukaRequest" message="tns:createOdlukaRequest">
+		<wsdl:operation name="getOdluka">
+			<wsdl:input name="getOdlukaRequest" message="tns:getOdlukaRequest">
 			</wsdl:input>
-			<wsdl:output name="createOdlukaResponse" message="tns:createOdlukaResponse">
+			<wsdl:output name="getOdlukaResponse" message="tns:getOdlukaResponse">
 			</wsdl:output>
 		</wsdl:operation>
 	</wsdl:portType>
@@ -34,12 +34,12 @@
 		type="tns:Odluka">
 		<soap:binding style="document"
 			transport="http://schemas.xmlsoap.org/soap/http" />
-		<wsdl:operation name="createOdluka">
+		<wsdl:operation name="getOdluka">
 			<soap:operation soapAction="" style="document" />
-			<wsdl:input name="createOdlukaRequest">
+			<wsdl:input name="getOdlukaRequest">
 				<soap:body use="literal" />
 			</wsdl:input>
-			<wsdl:output name="createOdlukaResponse">
+			<wsdl:output name="getOdlukaResponse">
 				<soap:body use="literal" />
 			</wsdl:output>
 		</wsdl:operation>
