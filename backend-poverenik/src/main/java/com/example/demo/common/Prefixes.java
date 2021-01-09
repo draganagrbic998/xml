@@ -2,8 +2,8 @@ package com.example.demo.common;
 
 public class Prefixes {
 
-	public static final String BASE_PREFIX1 = "http://github.com/draganagrbic998/xml/sluzbenik";
-	public static final String BASE_PREFIX2 = "http://github.com/draganagrbic998/xml/poverenik";
+	public static final String BASE_PREFIX1 = "https://github.com/draganagrbic998/xml/sluzbenik";
+	public static final String BASE_PREFIX2 = "https://github.com/draganagrbic998/xml/poverenik";
 	
 	public static final String PREDIKAT = BASE_PREFIX2 + "/predicate/";
 	public static final String KORISNIK_PREFIX = BASE_PREFIX2 + "/korisnik/";

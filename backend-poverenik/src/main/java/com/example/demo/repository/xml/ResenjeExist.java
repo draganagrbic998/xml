@@ -14,18 +14,19 @@ public class ResenjeExist {
 	@Autowired
 	private ExistManager existManager;
 	
-	public static final String RESENJA_COLLECTION = Constants.COLLECTIONS_PREFIX + "/resenja";
+	public static final String RESENJE_COLLECTION = Constants.COLLECTIONS_PREFIX + "/resenja";
+	public static final String RESENJE_SCHEMA = Constants.XSD_FOLDER + "resenje.xsd";
 	
 	public void save(String documentId, Document document) {
-		this.existManager.save(RESENJA_COLLECTION, documentId, document);
+		this.existManager.save(RESENJE_COLLECTION, documentId, document, RESENJE_SCHEMA);
 	}
 	
 	public ResourceSet retrieve(String xpathExp) {
-		return this.existManager.retrieve(RESENJA_COLLECTION, xpathExp);
+		return this.existManager.retrieve(RESENJE_COLLECTION, xpathExp);
 	}
 	
 	public Document load(String documentId) {
-		return this.existManager.load(RESENJA_COLLECTION, documentId);
+		return this.existManager.load(RESENJE_COLLECTION, documentId);
 	}
 	
 }

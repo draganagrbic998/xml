@@ -115,9 +115,6 @@ public class ZahtevMapper {
 		((Element) zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(1)).setAttribute("property", "pred:izdatoU");
 		((Element) zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(1)).setAttribute("datatype", "xs:string");
 
-		((Element) zahtev.getElementsByTagNameNS(Namespaces.ZAHTEV, "status").item(0)).setAttribute("property", "pred:status");
-		((Element) zahtev.getElementsByTagNameNS(Namespaces.ZAHTEV, "status").item(0)).setAttribute("datatype", "xs:string");
-
 		String result = this.xslTransformer.generateMetadata(this.domParser.buildXml(document)).toString();
 		Model model = ModelFactory.createDefaultModel();
 		model.setNsPrefix("pred", Prefixes.PREDIKAT);

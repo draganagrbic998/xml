@@ -18,12 +18,16 @@ import org.xmldb.api.modules.XPathQueryService;
 
 import com.example.demo.common.MyException;
 import com.example.demo.common.Namespaces;
+import com.example.demo.parser.SchemaValidator;
 
 @Component
 public class ExistManager {
 
 	@Autowired
 	private ExistAuthentication authUtilities;
+	
+	@Autowired
+	private SchemaValidator schemaValidator;
 	
 	@SuppressWarnings("deprecation")
 	public void createConnection() {
@@ -38,33 +42,18 @@ public class ExistManager {
 		}
 	}
 	
-	public String getDocumentId(String collectionId) {
-		Collection collection = null;
-		try { 
-			this.createConnection();
-			collection = this.getCollection(collectionId, 0);
-			String[] array = collection.listResources();
-			return (Arrays.asList(array).stream().mapToInt(str -> Integer.parseInt(str)).max().orElse(0) + 1) + "";
-		}
-		catch(Exception e) {
-			throw new MyException(e);
-		}
-		finally {
-			try {
-				collection.close();
-			}
-			catch(Exception e) {
-				throw new MyException(e);
-			}
-		}
-	}
-	
-	public String save(String collectionId, String documentId, Document document) {
+	public String save(String collectionId, String documentId, Document document, String schemaPath) {
 		Collection collection = null;
 		XMLResource resource = null;
 		try { 
 			this.createConnection();
 			collection = this.getCollection(collectionId, 0);
+			if (documentId == null) {
+				String[] array = collection.listResources();
+				documentId = (Arrays.asList(array).stream().mapToInt(str -> Integer.parseInt(str)).max().orElse(0) + 1) + "";
+				document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).setTextContent(documentId);
+			}
+			this.schemaValidator.validate(document, schemaPath);
 			resource = (XMLResource) collection.createResource(documentId, XMLResource.RESOURCE_TYPE);
 			resource.setContentAsDOM(document);
 			collection.storeResource(resource);

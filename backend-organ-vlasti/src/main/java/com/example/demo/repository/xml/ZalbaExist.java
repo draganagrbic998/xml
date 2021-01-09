@@ -6,9 +6,7 @@ import org.w3c.dom.Document;
 import org.xmldb.api.base.ResourceSet;
 
 import com.example.demo.common.Constants;
-import com.example.demo.common.Namespaces;
 import com.example.demo.exist.ExistManager;
-import com.example.demo.parser.SchemaValidator;
 
 @Repository
 public class ZalbaExist {
@@ -16,20 +14,12 @@ public class ZalbaExist {
 	@Autowired
 	private ExistManager existManager;
 	
-	@Autowired
-	private SchemaValidator schemaValidator;
-	
 	public static final String ZALBA_COLLECTION = Constants.COLLECTIONS_PREFIX + "/zalbe";
 	public static final String ZALBA_SCHEMA = Constants.XSD_FOLDER + "zalba.xsd";
 
 	
 	public void save(String documentId, Document document) {
-		if (documentId == null) {
-			documentId = this.existManager.getDocumentId(ZALBA_COLLECTION);
-			document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).setTextContent(documentId);
-		}
-		this.schemaValidator.validate(document, ZALBA_SCHEMA);
-		this.existManager.save(ZALBA_COLLECTION, documentId, document);
+		this.existManager.save(ZALBA_COLLECTION, documentId, document, ZALBA_SCHEMA);
 	}
 	
 	public Document load(String documentId) {

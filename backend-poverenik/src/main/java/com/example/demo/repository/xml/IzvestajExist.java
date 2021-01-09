@@ -17,7 +17,7 @@ public class IzvestajExist {
 	public static final String IZVESTAJI_COLLECTION = Constants.COLLECTIONS_PREFIX + "/izvestaji";
 	
 	public void save(String documentId, Document document) {
-		this.existManager.save(IZVESTAJI_COLLECTION, documentId, document);
+		//this.existManager.save(IZVESTAJI_COLLECTION, documentId, document);
 	}
 	
 	public ResourceSet retrieve(String xpathExp) {

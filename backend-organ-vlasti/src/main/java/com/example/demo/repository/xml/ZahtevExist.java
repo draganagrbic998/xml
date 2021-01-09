@@ -6,29 +6,19 @@ import org.w3c.dom.Document;
 import org.xmldb.api.base.ResourceSet;
 
 import com.example.demo.common.Constants;
-import com.example.demo.common.Namespaces;
 import com.example.demo.exist.ExistManager;
-import com.example.demo.parser.SchemaValidator;
 
 @Repository
 public class ZahtevExist {
 
 	@Autowired
 	private ExistManager existManager;
-	
-	@Autowired
-	private SchemaValidator schemaValidator;
-		
+			
 	public static final String ZAHTEV_COLLECTION = Constants.COLLECTIONS_PREFIX + "/zahtevi";
 	public static final String ZAHTEV_SCHEMA = Constants.XSD_FOLDER + "zahtev.xsd";
 	
 	public void save(String documentId, Document document) {
-		if (documentId == null) {
-			documentId = this.existManager.getDocumentId(ZAHTEV_COLLECTION);
-			document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).setTextContent(documentId);			
-		}
-		this.schemaValidator.validate(document, ZAHTEV_SCHEMA);
-		this.existManager.save(ZAHTEV_COLLECTION, documentId, document);
+		this.existManager.save(ZAHTEV_COLLECTION, documentId, document, ZAHTEV_SCHEMA);
 	}
 
 	public Document load(String documentId) {

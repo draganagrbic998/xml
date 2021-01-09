@@ -23,12 +23,13 @@ export class ZalbaService {
 
   private zalbaCutanjeToXml(zalba: ZalbaCutanje): string{
     let result;
-    if (zalba.tipCutanja === 'nije postupio u celosti'){
+    if (zalba.tipCutanja !== 'nije postupio u celosti'){
       result = `
       ${zalba.detalji}
       <zalba:PodaciZahteva>
         <broj>${zalba.brojDokumenta}</broj>
       </zalba:PodaciZahteva>
+      <zalba:tipCutanja>${zalba.tipCutanja}</zalba:tipCutanja>
     `;
     }
     else{
@@ -37,6 +38,7 @@ export class ZalbaService {
       <zalba:PodaciZahteva>
         <broj></broj>
       </zalba:PodaciZahteva>
+      <zalba:tipCutanja>${zalba.tipCutanja}</zalba:tipCutanja>
       <zalba:PodaciOdluke>
         <broj>${zalba.brojDokumenta}</broj>
       </zalba:PodaciOdluke>
@@ -49,7 +51,6 @@ export class ZalbaService {
       xmlns:xsi="${XSI}"
       xsi:type="zalba:TZalbaCutanje">
         ${result}
-        <zalba:tipCutanja>${zalba.tipCutanja}</zalba:tipCutanja>
       </zalba:Zalba>
     `;
 

@@ -81,4 +81,5 @@
             </xs:element>
         </xs:sequence>
     </xs:complexType>
+    <xs:element name="Resenje" type="resenje:TResenje"/>
 </xs:schema>

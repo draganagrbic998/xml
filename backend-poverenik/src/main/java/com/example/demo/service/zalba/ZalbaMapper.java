@@ -150,9 +150,6 @@ public class ZalbaMapper {
 
 		((Element) zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(1)).setAttribute("property", "pred:izdatoU");
 		((Element) zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(1)).setAttribute("datatype", "xs:string");
-
-		((Element) zalba.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0)).setAttribute("property", "pred:status");
-		((Element) zalba.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0)).setAttribute("datatype", "xs:string");
 		
 		Element brojZahteva = (Element) ((Element) document.getElementsByTagNameNS(Namespaces.ZALBA, "PodaciZahteva").item(0)).getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0);
 		brojZahteva.setAttribute("rel", "pred:zahtev");
