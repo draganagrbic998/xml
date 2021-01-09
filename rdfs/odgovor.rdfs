@@ -12,7 +12,6 @@
 	
 	<rdfs:Property rdf:ID="zalba">
 		<rdfs:domain rdf:resource="#Odgovor"/>
-		<rdfs:range rdf:resource="#Zalbu"/>
 	</rdfs:Property>
 	
 	<rdfs:Property rdf:ID="izdatoU">
