@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { RESENJE } from 'src/app/constants/namespaces';
 
 declare const Xonomy: any;
 
@@ -113,22 +114,27 @@ export class XonomyService {
     const zakoni = document.getElementsByTagName('zakon');
     for (let i = 0; i < zakoni.length; ++i){
       zakoni.item(i).removeAttribute('xml:space');
+      zakoni.item(i).setAttribute('xmlns', RESENJE);
     }
     const pasusi = document.getElementsByTagName('Pasus');
     for (let i = 0; i < pasusi.length; ++i){
       pasusi.item(i).removeAttribute('xml:space');
+      pasusi.item(i).setAttribute('xmlns', RESENJE);
     }
     const odluke = document.getElementsByTagName('Odluka');
     for (let i = 0; i < odluke.length; ++i){
       odluke.item(i).removeAttribute('xml:space');
+      odluke.item(i).setAttribute('xmlns', RESENJE);
     }
     const dispozitive = document.getElementsByTagName('Dispozitiva');
     for (let i = 0; i < dispozitive.length; ++i){
       dispozitive.item(i).removeAttribute('xml:space');
+      dispozitive.item(i).setAttribute('xmlns', RESENJE);
     }
     const obrazlozenja = document.getElementsByTagName('Obrazlozenje');
     for (let i = 0; i < obrazlozenja.length; ++i){
       obrazlozenja.item(i).removeAttribute('xml:space');
+      obrazlozenja.item(i).setAttribute('xmlns', RESENJE);
     }
 
     return serializer.serializeToString(document);

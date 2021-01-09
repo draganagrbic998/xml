@@ -22,12 +22,12 @@ export class ResenjeService {
 
   private resenjeToXml(brojZalbe, resenje: Resenje): string{
     return `
-      <Resenje xmlns="${RESENJE}"
-      xmlns:osnova="${OSNOVA}">
-        <brojZalbe>${brojZalbe}</brojZalbe>
-        <status>${resenje.status}</status>
+      <resenje:Resenje xmlns="${OSNOVA}"
+      xmlns:resenje="${RESENJE}">
+        <resenje:brojZalbe>${brojZalbe}</resenje:brojZalbe>
+        <resenje:status>${resenje.status}</resenje:status>
         ${resenje.odluka}
-      </Resenje>
+      </resenje:Resenje>
     `;
 
   }

@@ -21,8 +21,7 @@
                         <xs:complexType>
                             <xs:sequence>
                                 <xs:element minOccurs="1" name="datumOdbrane" type="xs:date"/>
-                                <xs:element minOccurs="1" name="odgovorOdbrane"
-                                    type="osnova:TRequiredString"/>
+                                <xs:element ref="osnova:Detalji"/>
                             </xs:sequence>
                         </xs:complexType>
                     </xs:element>
@@ -45,7 +44,7 @@
                                         <xs:restriction base="xs:string">
                                             <xs:enumeration value="cutanje"/>
                                             <xs:enumeration value="delimicnost"/>
-                                            <xs:enumeration value="odbijanje"/>
+                                            <xs:enumeration value="odluka"/>
                                         </xs:restriction>
                                     </xs:simpleType>
                                 </xs:element>
@@ -64,7 +63,7 @@
     <xs:complexType name="TPasusi">
         <xs:sequence>
             <xs:element maxOccurs="unbounded" name="Pasus" minOccurs="0">
-                <xs:complexType>
+                <xs:complexType mixed="true">
                     <xs:sequence maxOccurs="unbounded" minOccurs="0">
                         <xs:element name="zakon">
                             <xs:complexType>

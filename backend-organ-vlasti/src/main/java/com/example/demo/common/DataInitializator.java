@@ -37,6 +37,10 @@ public class DataInitializator {
 	private static final String ZAHTEVI = Constants.INIT_FOLDER + "zahtevi.nt";
 	private static final String ODLUKE = Constants.INIT_FOLDER + "odluke.nt";
 	private static final String ZALBE = Constants.INIT_FOLDER + "zalbe.nt";
+	private static final String RESENJA = Constants.INIT_FOLDER + "resenja.nt";
+	private static final String RESENJE1 = Constants.INIT_FOLDER + "resenje1.xml";
+	private static final String RESENJE2 = Constants.INIT_FOLDER + "resenje2.xml";
+	private static final String RESENJE3 = Constants.INIT_FOLDER + "resenje3.xml";
 
 	@Autowired
 	private ExistManager existManager;
@@ -74,8 +78,10 @@ public class DataInitializator {
 		this.existManager.save(ZalbaExist.ZALBA_COLLECTION, "2", this.domParser.buildDocumentFromFile(ZALBA_ODLUKA1), ZalbaExist.ZALBA_SCHEMA);
 		this.existManager.save(ZalbaExist.ZALBA_COLLECTION, "3", this.domParser.buildDocumentFromFile(ZALBA_CUTANJE1), ZalbaExist.ZALBA_SCHEMA);
 
+		this.existManager.save(ResenjeExist.RESENJE_COLLECTION, "1", this.domParser.buildDocumentFromFile(RESENJE1), ResenjeExist.RESENJE_SCHEMA);
+		this.existManager.save(ResenjeExist.RESENJE_COLLECTION, "2", this.domParser.buildDocumentFromFile(RESENJE2), ResenjeExist.RESENJE_SCHEMA);
+		this.existManager.save(ResenjeExist.RESENJE_COLLECTION, "3", this.domParser.buildDocumentFromFile(RESENJE3), ResenjeExist.RESENJE_SCHEMA);
 
-		
 		this.fusekiManager.dropAll();
 		Model model = ModelFactory.createDefaultModel();
 		model.read(ZAHTEVI);
@@ -86,7 +92,7 @@ public class DataInitializator {
 		model.removeAll();
 		model.read(ZALBE);
 		this.fusekiManager.save(ZalbaRDF.GRAPH_URI, model, ZalbaRDF.ZALBA_RDFS);
-		
+		//dodaj rdfs za resenje
 	}
 	
 }

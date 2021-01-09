@@ -31,13 +31,7 @@ public class ResenjeService {
 	
 	@Autowired
 	private ResenjeExist resenjeExist;
-	
-	@Autowired
-	private ZalbaExist zalbaExist;
 
-	@Autowired
-	private KorisnikService korisnikService;
-	
 	@Autowired
 	private ResenjeMapper resenjeMapper;
 	
@@ -46,34 +40,14 @@ public class ResenjeService {
 
 	@Autowired
 	private XSLTransformer xslTransformer;
-	
-	@Autowired
-	private SOAPService soapService;
 
 	private static final String XSL_PATH = Constants.XSL_FOLDER + "/resenje.xsl";
 	private static final String XSL_FO_PATH = Constants.XSL_FOLDER + "/resenje_fo.xsl";
 	private static final String GEN_PATH = Constants.GEN_FOLDER + File.separatorChar + "resenja" + File.separatorChar;
 	
-	public void add(String xml) {
-		Document document = this.resenjeMapper.map(xml);
-		String brojZalbe = document.getElementsByTagNameNS(Namespaces.RESENJE, "brojZalbe").item(0).getTextContent();
-		Document zalbaDocument = this.zalbaExist.load(brojZalbe);
-		zalbaDocument.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.reseno + "");
-		this.zalbaExist.save(brojZalbe, zalbaDocument);
-		this.resenjeExist.save(null, document);
-		this.soapService.sendSOAPMessage(this.domParser.buildXml(document), TipDokumenta.resenje);
-	}
-	
 	public String retrieve() {
-		Korisnik korisnik = this.korisnikService.currentUser();
-		String xpathExp = null;
-		if (korisnik.getUloga().equals(Constants.POVERENIK)) {
-			xpathExp = "/resenje:Resenje";
-		}
-		else {
-			xpathExp = String.format("/resenje:Resenje[resenje:PodaciZahteva/mejl='%s']", korisnik.getOsoba().getMejl());
-		}		
-		ResourceSet resouces = this.resenjeExist.retrieve(xpathExp);
+		//zabrani gradjaninu poziv ove metode
+		ResourceSet resouces = this.resenjeExist.retrieve("/resenje:Resenje");
 		return this.resenjeMapper.map(resouces);		
 	}
 	

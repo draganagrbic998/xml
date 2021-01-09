@@ -25,7 +25,7 @@
     </OrganVlasti>
     <Detalji>some text <bold>some bold text</bold> some text <italic>some italic text</italic> some text</Detalji>
     <zalba:datumProsledjivanja>2021-01-09</zalba:datumProsledjivanja>
-    <zalba:status>odgovoreno</zalba:status>
+    <zalba:status>reseno</zalba:status>
     <zalba:PodaciZahteva>
         <broj>2</broj>
 	    <datum>2021-01-09</datum>

@@ -38,6 +38,10 @@ public class DataInitializator {
 	private static final String ODGOVOR1 = Constants.INIT_FOLDER + "odgovor1.xml";
 	private static final String ODGOVOR2 = Constants.INIT_FOLDER + "odgovor2.xml";
 	private static final String ODGOVORI = Constants.INIT_FOLDER + "odgovori.nt";
+	private static final String RESENJA = Constants.INIT_FOLDER + "resenja.nt";
+	private static final String RESENJE1 = Constants.INIT_FOLDER + "resenje1.xml";
+	private static final String RESENJE2 = Constants.INIT_FOLDER + "resenje2.xml";
+	private static final String RESENJE3 = Constants.INIT_FOLDER + "resenje3.xml";
 
 	@EventListener(ContextRefreshedEvent.class)
 	public void dataInit() {
@@ -57,7 +61,10 @@ public class DataInitializator {
 		this.existManager.save(OdgovorExist.ODGOVOR_COLLECTION, "1", this.domParser.buildDocumentFromFile(ODGOVOR1), OdgovorExist.ODGOVOR_SCHEMA);
 		this.existManager.save(OdgovorExist.ODGOVOR_COLLECTION, "2", this.domParser.buildDocumentFromFile(ODGOVOR2), OdgovorExist.ODGOVOR_SCHEMA);
 
-		
+		this.existManager.save(ResenjeExist.RESENJE_COLLECTION, "1", this.domParser.buildDocumentFromFile(RESENJE1), ResenjeExist.RESENJE_SCHEMA);
+		this.existManager.save(ResenjeExist.RESENJE_COLLECTION, "2", this.domParser.buildDocumentFromFile(RESENJE2), ResenjeExist.RESENJE_SCHEMA);
+		this.existManager.save(ResenjeExist.RESENJE_COLLECTION, "3", this.domParser.buildDocumentFromFile(RESENJE3), ResenjeExist.RESENJE_SCHEMA);
+
 		this.fusekiManager.dropAll();
 		Model model = ModelFactory.createDefaultModel();
 		model.read(ZALBE);
@@ -65,6 +72,7 @@ public class DataInitializator {
 		model.removeAll();
 		model.read(ODGOVORI);
 		this.fusekiManager.save(OdgovorRDF.GRAPH_URI, model);
+		//dodaj rdfs za resenja
 
 	}
 	

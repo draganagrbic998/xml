@@ -77,14 +77,19 @@ public class ResenjeMapper {
 		Element zalba = (Element) zalbaDocument.getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").item(0);
 		DocumentFragment documentFragment = document.createDocumentFragment();
 		
-		Node datum = document.createElementNS(Namespaces.OSNOVA, "osnova:datum");
+		Node datum = document.createElementNS(Namespaces.OSNOVA, "datum");
 		datum.setTextContent(sdf.format(new Date()));
-		documentFragment.appendChild(document.createElementNS(Namespaces.OSNOVA, "osnova:broj"));
+		documentFragment.appendChild(document.createElementNS(Namespaces.OSNOVA, "broj"));
 		documentFragment.appendChild(datum);
 		resenje.insertBefore(documentFragment, document.getElementsByTagNameNS(Namespaces.RESENJE, "status").item(0));
 		Document odgovor = this.odgovorExist.load(zalbaBroj);
 		if (odgovor != null) {
-			resenje.appendChild(document.importNode(odgovor.getElementsByTagNameNS(Namespaces.ODGOVOR, "Odgovor").item(0), true));
+			Element resenjeOdgovor = document.createElementNS(Namespaces.RESENJE, "Odbrana");
+			Element datumOdbrane = document.createElementNS(Namespaces.RESENJE, "datumOdbrane");
+			datumOdbrane.setTextContent(odgovor.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).getTextContent());
+			resenjeOdgovor.appendChild(datumOdbrane);
+			resenjeOdgovor.appendChild(document.importNode(odgovor.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0), true));
+			resenje.insertBefore(resenjeOdgovor, document.getElementsByTagNameNS(Namespaces.RESENJE, "Odluka").item(0));
 		}
 					
 		resenje.appendChild(document.importNode(this.jaxbParser.marshal(this.korisnikService.currentUser().getOsoba()).getElementsByTagNameNS(Namespaces.OSNOVA, "Osoba").item(0), true));
@@ -121,13 +126,7 @@ public class ResenjeMapper {
 			resenje.appendChild(podaciOdlukeResenje);
 		}
 		
-		System.out.println(this.domParser.buildXml(document));
-
 		return document;
-	}
-	
-	public String map(Document document) {
-		return this.domParser.buildXml(document);
 	}
 	
 }

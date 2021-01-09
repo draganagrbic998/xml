@@ -32,7 +32,7 @@ public class FusekiManager {
 	
 	private static final String QUERY1_PATH = Constants.SPARQL_FOLDER + File.separatorChar + "query1.rq";
 	
-	public void save(String graphUri, Model model, String rdfsPath) {
+	public void save(String graphUri, Model model, String rdfsPath) {/*
 		Model schema = RDFDataMgr.loadModel(rdfsPath);
 		InfModel infmodel = ModelFactory.createRDFSModel(schema, model);
 		ValidityReport validity = infmodel.validate();
@@ -41,7 +41,7 @@ public class FusekiManager {
 		} 
 		else {
 		    System.out.println("Conflicts");
-		}
+		}*/
 
 		
 		ByteArrayOutputStream out = new ByteArrayOutputStream();

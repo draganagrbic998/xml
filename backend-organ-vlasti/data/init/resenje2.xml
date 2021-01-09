@@ -1,0 +1,63 @@
+<resenje:Resenje xmlns="https://github.com/draganagrbic998/xml/osnova" xmlns:resenje="https://github.com/draganagrbic998/xml/resenje">
+        
+	<broj>2</broj>
+	<datum>2021-01-09</datum>
+	<resenje:status>odobreno</resenje:status>
+    <resenje:Odbrana>
+		<resenje:datumOdbrane>2021-01-09</resenje:datumOdbrane>
+		<Detalji>some text <bold>some bold text</bold> some text <italic>some italic text</italic> some text</Detalji>
+	</resenje:Odbrana>
+    <Odluka xmlns="https://github.com/draganagrbic998/xml/resenje">
+		<Dispozitiva xmlns="https://github.com/draganagrbic998/xml/resenje">
+			<Pasus xmlns="https://github.com/draganagrbic998/xml/resenje">tekst prvog pasusua, blablabla...
+				<zakon xmlns="https://github.com/draganagrbic998/xml/resenje"> pozivam se na neki zakon, blablabla... </zakon>
+				onda jos malo nesto pricam, blablabla...<zakon xmlns="https://github.com/draganagrbic998/xml/resenje"> i onda se jos jednom pozovem na neki zakon, blablabla...</zakon>
+			</Pasus>
+			<Pasus xmlns="https://github.com/draganagrbic998/xml/resenje">tekst drugog pasusa, blablabla...
+				<zakon xmlns="https://github.com/draganagrbic998/xml/resenje"> pozovem se na neki zakon, blablabla... </zakon>
+				onda jos malo nesto pricam, blablabla...<zakon xmlns="https://github.com/draganagrbic998/xml/resenje"> i onda se jos jednom pozovem na neki zakon, blablabla...</zakon>
+			</Pasus>
+		</Dispozitiva>
+		<Obrazlozenje xmlns="https://github.com/draganagrbic998/xml/resenje">
+			<Pasus xmlns="https://github.com/draganagrbic998/xml/resenje">tekst prvog pasusa, blablabla...
+				<zakon xmlns="https://github.com/draganagrbic998/xml/resenje"> pozovem se na neki zakon, blablabla... </zakon>
+				onda jos nesto malo pricam, blablabla...<zakon xmlns="https://github.com/draganagrbic998/xml/resenje"> i onda se jos jednom pozovem na neki zakon, blablabla...</zakon>
+			</Pasus>
+			<Pasus xmlns="https://github.com/draganagrbic998/xml/resenje">tekst drugog pasusa, blablabla...
+				<zakon xmlns="https://github.com/draganagrbic998/xml/resenje"> pozovem se na neki zakon, blablabla... </zakon>
+				onda jos nesto malo pricam, blablabla...<zakon xmlns="https://github.com/draganagrbic998/xml/resenje"> i onda se jos jednom pozovem na neki zakon, blablabla...</zakon>
+			</Pasus>
+		</Obrazlozenje>
+	</Odluka>
+    <Osoba>
+		<mejl>poverenik@gmail.com</mejl>
+		<ime>Djokica</ime>
+		<prezime>Djokic</prezime>
+		<potpis>757272859077776977757767</potpis>
+	</Osoba>
+	<OrganVlasti>
+       	<naziv>Naziv organa vlasti</naziv>
+       	<Adresa>
+            <mesto>Novi Sad</mesto>
+            <ulica>Lasla Gala</ulica>
+            <broj>23</broj>
+        </Adresa>
+    </OrganVlasti>
+	<resenje:PodaciZahteva>
+		<broj>2</broj>
+		<datum>2021-01-09</datum>
+		<Detalji>some text <bold>some bold text</bold> some text <italic>some italic text</italic> some text</Detalji>
+	</resenje:PodaciZahteva>
+	<resenje:PodaciZalbe>
+		<resenje:tipZalbe>odluka</resenje:tipZalbe>
+		<resenje:brojZalbe>2</resenje:brojZalbe>
+		<resenje:datumZalbe>2021-01-09</resenje:datumZalbe>
+		<resenje:datumProsledjivanja>2021-01-09</resenje:datumProsledjivanja>
+	</resenje:PodaciZalbe>
+	<resenje:PodaciOdluke>
+		<broj>2</broj>
+		<datum>2021-01-09</datum>
+		<Detalji>some text <bold>some bold text</bold> some text <italic>some italic text</italic> some text</Detalji>
+	</resenje:PodaciOdluke>
+	
+</resenje:Resenje>

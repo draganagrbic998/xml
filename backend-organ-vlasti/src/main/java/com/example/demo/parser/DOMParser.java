@@ -54,6 +54,7 @@ public class DOMParser {
 			return builder.parse(new InputSource(new StringReader(xml)));
 		}
 		catch(Exception e) {
+			e.printStackTrace();
 			throw new MyException(e);
 		}
 	}
