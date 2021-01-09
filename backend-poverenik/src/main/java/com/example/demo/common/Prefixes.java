@@ -10,8 +10,8 @@ public class Prefixes {
 	public static final String ZALBA_PREFIX = BASE_PREFIX2 + "/zalba/";
 	public static final String ZAHTEV_PREFIX = BASE_PREFIX1 + "/zahtev/";
 	public static final String ODLUKA_PREFIX = BASE_PREFIX1 + "/odluka/";
+	public static final String RESENJE_PREFIX = BASE_PREFIX2 + "/resenje/";
 	public static final String ODGOVOR_PREFIX = BASE_PREFIX2 + "/odgovor/";
-
 	public static final String IZVESTAJ_PREFIX = BASE_PREFIX2 + "/izvestaj/";
 
 }

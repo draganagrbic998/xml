@@ -69,7 +69,6 @@ public class SOAPService {
 
 		}
 		catch(Exception e) {
-			e.printStackTrace();
 			throw new MyException(e);
 		}
 	}

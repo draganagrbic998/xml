@@ -1,15 +1,17 @@
 package com.example.demo.service.resenje;
 
+import java.io.StringReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentFragment;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import org.xmldb.api.base.ResourceIterator;
 import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.modules.XMLResource;
@@ -17,8 +19,10 @@ import org.xmldb.api.modules.XMLResource;
 import com.example.demo.common.Constants;
 import com.example.demo.common.MyException;
 import com.example.demo.common.Namespaces;
+import com.example.demo.common.Prefixes;
 import com.example.demo.parser.DOMParser;
 import com.example.demo.parser.JAXBParser;
+import com.example.demo.parser.XSLTransformer;
 import com.example.demo.repository.xml.OdgovorExist;
 import com.example.demo.repository.xml.ZalbaExist;
 import com.example.demo.service.KorisnikService;
@@ -41,6 +45,9 @@ public class ResenjeMapper {
 
 	@Autowired
 	private JAXBParser jaxbParser;
+	
+	@Autowired
+	private XSLTransformer xslTransformer;
 	
 	private static final SimpleDateFormat sdf = new SimpleDateFormat(Constants.DATE_FORMAT);
 	
@@ -96,37 +103,83 @@ public class ResenjeMapper {
 		resenje.appendChild(document.importNode(zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "OrganVlasti").item(0), true));
 		
 		Element podaciZahteva = (Element) zalba.getElementsByTagNameNS(Namespaces.ZALBA, "PodaciZahteva").item(0);
-		Node podaciZahtevaResenje = document.createElementNS(Namespaces.RESENJE, "PodaciZahteva");
+		Element podaciZahtevaResenje = document.createElementNS(Namespaces.RESENJE, "PodaciZahteva");
 		podaciZahtevaResenje.appendChild(document.importNode(podaciZahteva.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0), true));
 		podaciZahtevaResenje.appendChild(document.importNode(podaciZahteva.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
 		podaciZahtevaResenje.appendChild(document.importNode(podaciZahteva.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0), true));
-		resenje.appendChild(podaciZahtevaResenje);
+
+
+		resenje.appendChild(document.importNode(podaciZahtevaResenje, true));
 		
-		Node podaciZalbe = document.createElementNS(Namespaces.RESENJE, "PodaciZalbe");
-		Node tipZalbe = document.createElementNS(Namespaces.RESENJE, "tipZalbe");
+		Node podaciZalbe = document.createElementNS(Namespaces.RESENJE, "resenje:PodaciZalbe");
+		Node tipZalbe = document.createElementNS(Namespaces.RESENJE, "resenje:tipZalbe");
 		tipZalbe.setTextContent(ZalbaMapper.getTipZalbe(zalbaDocument) + "");
 		podaciZalbe.appendChild(tipZalbe);
-		Node brojZalbe = document.createElementNS(Namespaces.RESENJE, "brojZalbe");
+		Node brojZalbe = document.createElementNS(Namespaces.RESENJE, "resenje:brojZalbe");
 		brojZalbe.setTextContent(zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent());
 		podaciZalbe.appendChild(brojZalbe);
-		Node datumZalbe = document.createElementNS(Namespaces.RESENJE, "datumZalbe");
+		Node datumZalbe = document.createElementNS(Namespaces.RESENJE, "resenje:datumZalbe");
 		datumZalbe.setTextContent(zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).getTextContent());
 		podaciZalbe.appendChild(datumZalbe);
-		Node datumProsledjivanja = document.createElementNS(Namespaces.RESENJE, "datumProsledjivanja");
+		Node datumProsledjivanja = document.createElementNS(Namespaces.RESENJE, "resenje:datumProsledjivanja");
 		datumProsledjivanja.setTextContent(zalba.getElementsByTagNameNS(Namespaces.ZALBA, "datumProsledjivanja").item(0).getTextContent());
 		podaciZalbe.appendChild(datumProsledjivanja);
 		resenje.appendChild(podaciZalbe);
 		
 		if (zalba.getElementsByTagNameNS(Namespaces.ZALBA, "PodaciOdluke").getLength() > 0) {
 			Element podaciOdluke = (Element) zalba.getElementsByTagNameNS(Namespaces.ZALBA, "PodaciOdluke").item(0);
-			Node podaciOdlukeResenje = document.createElementNS(Namespaces.RESENJE, "PodaciOdluke");
+			Element podaciOdlukeResenje = document.createElementNS(Namespaces.RESENJE, "PodaciOdluke");
+			
 			podaciOdlukeResenje.appendChild(document.importNode(podaciOdluke.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0), true));
 			podaciOdlukeResenje.appendChild(document.importNode(podaciOdluke.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
 			podaciOdlukeResenje.appendChild(document.importNode(podaciOdluke.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0), true));
-			resenje.appendChild(podaciOdlukeResenje);
+
+			resenje.appendChild(document.importNode(podaciOdlukeResenje, true));
 		}
 		
 		return document;
+	}
+	
+
+	
+	
+	public Model mapToModel(Document document) {
+		Element resenje = (Element) document.getElementsByTagNameNS(Namespaces.RESENJE, "Resenje").item(0);
+		resenje.setAttribute("xmlns:xs", Namespaces.XS);
+		resenje.setAttribute("xmlns:pred", Prefixes.PREDIKAT);
+		resenje.setAttribute("about", Prefixes.RESENJE_PREFIX + resenje.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent());
+		
+		resenje.setAttribute("rel", "pred:izdao");
+		resenje.setAttribute("href", Prefixes.KORISNIK_PREFIX + this.korisnikService.currentUser().getOsoba().getMejl());
+		
+		((Element) resenje.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0)).setAttribute("property", "pred:datum");
+		((Element) resenje.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0)).setAttribute("datatype", "xs:string");
+		
+		((Element) resenje.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(0)).setAttribute("property", "pred:mesto");
+		((Element) resenje.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(0)).setAttribute("datatype", "xs:string");
+
+		((Element) resenje.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(0)).setAttribute("property", "pred:izdatoU");
+		((Element) resenje.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(0)).setAttribute("datatype", "xs:string");
+		
+		Element brojZahteva = (Element) ((Element) document.getElementsByTagNameNS(Namespaces.RESENJE, "PodaciZahteva").item(0)).getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0);
+		brojZahteva.setAttribute("rel", "pred:zahtev");
+		brojZahteva.setAttribute("href", Prefixes.ZAHTEV_PREFIX + brojZahteva.getTextContent());
+		
+		Element brojZalbe = (Element) ((Element) document.getElementsByTagNameNS(Namespaces.RESENJE, "PodaciZalbe").item(0)).getElementsByTagNameNS(Namespaces.RESENJE, "brojZalbe").item(0);
+		brojZalbe.setAttribute("rel", "pred:zalba");
+		brojZalbe.setAttribute("href", Prefixes.ZALBA_PREFIX + brojZalbe.getTextContent());
+		
+		if (resenje.getElementsByTagNameNS(Namespaces.RESENJE, "PodaciOdluke").getLength() > 0) {
+			Element brojOdluke = (Element) ((Element) document.getElementsByTagNameNS(Namespaces.RESENJE, "PodaciOdluke").item(0)).getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0);
+			brojOdluke.setAttribute("rel", "pred:odluka");
+			brojOdluke.setAttribute("href", Prefixes.ODLUKA_PREFIX + brojOdluke.getTextContent());			
+		}
+		
+		String result = this.xslTransformer.generateMetadata(this.domParser.buildXml(document)).toString();
+		Model model = ModelFactory.createDefaultModel();
+		model.setNsPrefix("pred", Prefixes.PREDIKAT);
+		model.read(new StringReader(result), null);
+		return model;
 	}
 	
 }
