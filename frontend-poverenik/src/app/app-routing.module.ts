@@ -16,12 +16,14 @@ import {
   RESENJE_FORM,
   RESENJE_LIST,
   HTML_PATH,
-  PDF_PATH
+  PDF_PATH,
+  ODGOVOR_LIST
  } from './constants/router';
 import { GradjaninGuard } from './guard/gradjanin/gradjanin.guard';
 import { PoverenikGuard } from './guard/poverenik/poverenik.guard';
 import { HtmlViewerComponent } from './components/main/html-viewer/html-viewer.component';
 import { PdfViewerComponent } from './components/main/pdf-viewer/pdf-viewer.component';
+import { OdgovorListComponent } from './components/zalba/odgovor-list/odgovor-list.component';
 
 const routes: Routes = [
   {
@@ -45,6 +47,10 @@ const routes: Routes = [
   {
     path: ZALBA_LIST,
     component: ZalbaListComponent
+  },
+  {
+    path: ODGOVOR_LIST,
+    component: OdgovorListComponent
   },
   {
     path: RESENJE_FORM,

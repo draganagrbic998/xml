@@ -79,13 +79,13 @@ public class DataInitializator {
 		this.fusekiManager.dropAll();
 		Model model = ModelFactory.createDefaultModel();
 		model.read(ZAHTEVI);
-		this.fusekiManager.save(ZahtevRDF.GRAPH_URI, model);
+		this.fusekiManager.save(ZahtevRDF.GRAPH_URI, model, ZahtevRDF.ZAHTEV_RDFS);
 		model.removeAll();
 		model.read(ODLUKE);
-		this.fusekiManager.save(OdlukaRDF.GRAPH_URI, model);
+		this.fusekiManager.save(OdlukaRDF.GRAPH_URI, model, OdlukaRDF.ODLUKA_RDFS);
 		model.removeAll();
 		model.read(ZALBE);
-		this.fusekiManager.save(ZalbaRDF.GRAPH_URI, model);
+		this.fusekiManager.save(ZalbaRDF.GRAPH_URI, model, ZalbaRDF.ZALBA_RDFS);
 		
 	}
 	

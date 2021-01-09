@@ -1,0 +1,21 @@
+{
+  "head": {
+    "vars": [ "predicate" , "object" ]
+  } ,
+  "results": {
+    "bindings": [
+      {
+        "predicate": { "type": "uri" , "value": "https://github.com/draganagrbic998/xml/poverenik/predicate/zalba" } ,
+        "object": { "type": "uri" , "value": "https://github.com/draganagrbic998/xml/poverenik/zalba/2" }
+      } ,
+      {
+        "predicate": { "type": "uri" , "value": "https://github.com/draganagrbic998/xml/poverenik/predicate/datum" } ,
+        "object": { "type": "literal" , "value": "2021-01-09" }
+      } ,
+      {
+        "predicate": { "type": "uri" , "value": "https://github.com/draganagrbic998/xml/poverenik/predicate/izdatoU" } ,
+        "object": { "type": "literal" , "value": "Novi Sad" }
+      }
+    ]
+  }
+}

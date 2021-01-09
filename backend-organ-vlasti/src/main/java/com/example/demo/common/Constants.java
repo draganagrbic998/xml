@@ -18,6 +18,7 @@ public class Constants {
 	public static final String GRDDL_XSL = DATA_FOLDER + File.separatorChar + "grddl.xsl";
 	public static final String FOP_CONF = DATA_FOLDER + File.separatorChar + "fop.conf";
 	public static final String COLLECTIONS_PREFIX = "/db/database";
+	public static final String RDFS_FOLDER = DATA_FOLDER + File.separatorChar + "rdfs" + File.separatorChar;
 	
 	public static final String DATE_FORMAT = "yyyy-MM-dd";
 	

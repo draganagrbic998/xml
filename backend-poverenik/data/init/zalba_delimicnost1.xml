@@ -25,15 +25,15 @@
     </OrganVlasti>
     <Detalji>some text <bold>some bold text</bold> some text <italic>some italic text</italic> some text</Detalji>
     <zalba:datumProsledjivanja>2021-01-09</zalba:datumProsledjivanja>
-    <zalba:status>prosledjeno</zalba:status>
+    <zalba:status>odgovoreno</zalba:status>
     <zalba:PodaciZahteva>
-        <broj>2</broj>
+        <broj>1</broj>
         <datum>2021-01-09</datum>
         <Detalji>some text <bold>some bold text</bold> some text <italic>some italic text</italic> some text</Detalji>
     </zalba:PodaciZahteva>
     <zalba:tipCutanja>nije postupio u celosti</zalba:tipCutanja>
     <zalba:PodaciOdluke>
-        <broj>2</broj>
+        <broj>1</broj>
         <datum>2021-01-09</datum>
         <Detalji>some text <bold>some bold text</bold> some text <italic>some italic text</italic> some text</Detalji>
     </zalba:PodaciOdluke>

@@ -2,28 +2,28 @@
 <rdf:RDF
 	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-	xml:base="https://github.com/draganagrbic998/xml/#">
+	xml:base="https://github.com/draganagrbic998/xml/sluzbenik/#">
 
-	<rdfs:Class rdf:ID="Zahtev"/>
+	<rdfs:Class rdf:ID="zahtev"/>
 
 	<rdfs:Property rdf:ID="datum">
-		<rdfs:domain rdf:resource="#Zahtev"/>
+		<rdfs:domain rdf:resource="#zahtev"/>
 	</rdfs:Property>
 	
 	<rdfs:Property rdf:ID="mesto">
-		<rdfs:domain rdf:resource="#Zahtev"/>
+		<rdfs:domain rdf:resource="#zahtev"/>
 	</rdfs:Property>
 	
 	<rdfs:Property rdf:ID="tip">
-		<rdfs:domain rdf:resource="#Zahtev"/>
+		<rdfs:domain rdf:resource="#zahtev"/>
 	</rdfs:Property>
 	
 	<rdfs:Property rdf:ID="podneo">
-		<rdfs:domain rdf:resource="#Zahtev"/>
+		<rdfs:domain rdf:resource="#zahtev"/>
 	</rdfs:Property>
 	
 	<rdfs:Property rdf:ID="izdatoU">
-		<rdfs:domain rdf:resource="#Zahtev"/>
+		<rdfs:domain rdf:resource="#zahtev"/>
 	</rdfs:Property>
 	
 </rdf:RDF>

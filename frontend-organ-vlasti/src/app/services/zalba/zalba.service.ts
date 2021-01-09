@@ -21,13 +21,13 @@ export class ZalbaService {
   private readonly API_ZALBE = `${environment.baseUrl}/${environment.apiZalbe}`;
   private readonly API_ODGOVORI = `${environment.baseUrl}/${environment.apiOdgovori}`;
 
-  private odgovorToXml(brojZahteva: string, odgovor: Odgovor): string{
+  private odgovorToXml(brojZalbe: string, odgovor: Odgovor): string{
 
     return `
       <odgovor:Odgovor
       xmlns="${OSNOVA}"
       xmlns:odgovor="${ODGOVOR}">
-        <broj>${brojZahteva}</broj>
+        <broj>${brojZalbe}</broj>
         ${odgovor.detalji}
       </odgovor:Odgovor>
     `;
@@ -36,8 +36,7 @@ export class ZalbaService {
 
   private xmlToZalbe(xml: string): ZalbaDTO[]{
     const parser = new DOMParser();
-    const document = parser.parseFromString(xml, 'text/xml');
-    const zalbe = document.getElementsByTagNameNS(ZALBA, 'Zalba');
+    const zalbe = parser.parseFromString(xml, 'text/xml').getElementsByTagNameNS(ZALBA, 'Zalba');
     const zalbeDTO: ZalbaDTO[] = [];
 
     for (let i = 0; i < zalbe.length; ++i){
