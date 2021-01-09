@@ -1,28 +1,32 @@
 <mat-toolbar color="primary" class="mat-elevation-z24">
     <span>
         <button 
+        matTooltip="Žalba na ćutanje organa vlasti"
         *ngIf="!auth && uloga==='gradjanin'"
-        mat-icon-button
+        mat-button
         [routerLink]="'/zalba-cutanje-form'">
-            <mat-icon matTooltip="Žalba na ćutanje organa vlasti">add</mat-icon>
+            Podnesi žalbu na ćutanje
         </button>
         <button 
+        matTooltip="Žalba na odluku organa vlasti"
         *ngIf="!auth && uloga==='gradjanin'"
-        mat-icon-button
+        mat-button
         [routerLink]="'/zalba-odluka-form'">
-            <mat-icon matTooltip="Žalba na odluku organa vlasti">add</mat-icon>
+            Podnesi žalbu na odluku
         </button>
         <button 
+        matTooltip="Lista podnetih žalbi"
         *ngIf="!auth"
-        mat-icon-button
+        mat-button
         [routerLink]="'/zalba-list'">
-            <mat-icon matTooltip="Lista podnetih žalbi">list</mat-icon>
+            Žalbe
         </button>
         <button 
+        matTooltip="Lista izdatih rešenja"
         *ngIf="!auth"
-        mat-icon-button
+        mat-button
         [routerLink]="'/resenje-list'">
-            <mat-icon matTooltip="Lista izdatih rešenja">list</mat-icon>
+            Rešenja
         </button>
     </span>
     <span class="details">

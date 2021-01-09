@@ -12,15 +12,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.service.odgovor.OdgovorService;
 
 @RestController
-@RequestMapping(value = "/api/odgovori")
+@RequestMapping(value = "/api/odgovori", consumes = MediaType.TEXT_XML_VALUE)
 public class OdgovorController {
 	
 	@Autowired
 	private OdgovorService odgovorService;
 	
-	@PostMapping(consumes = MediaType.TEXT_XML_VALUE)
+	@PostMapping
 	public ResponseEntity<Void> save( @RequestBody String xml) {		
-		this.odgovorService.add(xml);
+		this.odgovorService.save(xml);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 

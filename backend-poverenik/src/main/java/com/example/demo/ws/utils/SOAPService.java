@@ -12,18 +12,12 @@ import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPFactory;
 import javax.xml.soap.SOAPMessage;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.w3c.dom.Document;
 
-import com.example.demo.exception.MyException;
-import com.example.demo.parser.DOMParser;
+import com.example.demo.common.MyException;
 
 @Service
 public class SOAPService {
-	
-	@Autowired
-	private DOMParser domParser;
 	
 	private MessageFactory messageFactory;
 	private SOAPFactory soapFactory;
@@ -36,7 +30,8 @@ public class SOAPService {
 		this.soapConnectionFactory = SOAPConnectionFactory.newInstance();
 	}
 	
-	public void sendSOAPMessage(Document document, TipDokumenta tipDokumenta) {
+	
+	public String sendSOAPMessage(String xml, TipDokumenta tipDokumenta) {
 		try {
 			SOAPMessage message = this.messageFactory.createMessage();
 			SOAPBody body = message.getSOAPBody();
@@ -47,17 +42,34 @@ public class SOAPService {
 				name = this.soapFactory.createName(SOAPConstants.CREATE_ZALBA_ELEMENT, "m", SOAPConstants.CREATE_ZALBA_NAMESPACE);
 				endpoint = new URL(SOAPConstants.CREATE_ZALBA_SERVICE);
 			}
-			else {
+			else if (tipDokumenta.equals(TipDokumenta.resenje)) {
 				name = this.soapFactory.createName(SOAPConstants.CREATE_RESENJE_ELEMENT, "m", SOAPConstants.CREATE_RESENJE_NAMESPACE);
 				endpoint = new URL(SOAPConstants.CREATE_RESENJE_SERVICE);
 			}
+			else if (tipDokumenta.equals(TipDokumenta.zahtev)) {
+				name = this.soapFactory.createName(SOAPConstants.GET_ZAHTEV_ELEMENT, "m", SOAPConstants.GET_ZAHTEV_NAMESPACE);
+				endpoint = new URL(SOAPConstants.GET_ZAHTEV_SERVICE);
+			}
+			else {
+				name = this.soapFactory.createName(SOAPConstants.GET_ODLUKA_ELEMENT, "m", SOAPConstants.GET_ODLUKA_NAMESPACE);
+				endpoint = new URL(SOAPConstants.GET_ODLUKA_SERVICE);
+			}
+			
 
 			SOAPElement symbol = body.addChildElement(name);
-			symbol.addTextNode(this.domParser.buildXml(document));
+			symbol.addTextNode(xml);
 			SOAPConnection connection = this.soapConnectionFactory.createConnection();
-			connection.call(message, endpoint);
+			SOAPMessage response = connection.call(message, endpoint);
+			try {
+				return response.getSOAPBody().getTextContent();
+			}
+			catch(Exception e) {
+				return null;
+			}
+
 		}
 		catch(Exception e) {
+			e.printStackTrace();
 			throw new MyException(e);
 		}
 	}

@@ -24,8 +24,8 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _CreateOdlukaRequest_QNAME = new QName("http://demo.example.com/ws/odluka", "createOdlukaRequest");
-    private final static QName _CreateOdlukaResponse_QNAME = new QName("http://demo.example.com/ws/odluka", "createOdlukaResponse");
+    private final static QName _GetOdlukaRequest_QNAME = new QName("http://demo.example.com/ws/odluka", "getOdlukaRequest");
+    private final static QName _GetOdlukaResponse_QNAME = new QName("http://demo.example.com/ws/odluka", "getOdlukaResponse");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: com.example.demo.ws.odluka
@@ -42,9 +42,9 @@ public class ObjectFactory {
      * @return
      *     the new instance of {@link JAXBElement }{@code <}{@link String }{@code >}
      */
-    @XmlElementDecl(namespace = "http://demo.example.com/ws/odluka", name = "createOdlukaRequest")
-    public JAXBElement<String> createCreateOdlukaRequest(String value) {
-        return new JAXBElement<String>(_CreateOdlukaRequest_QNAME, String.class, null, value);
+    @XmlElementDecl(namespace = "http://demo.example.com/ws/odluka", name = "getOdlukaRequest")
+    public JAXBElement<String> createGetOdlukaRequest(String value) {
+        return new JAXBElement<String>(_GetOdlukaRequest_QNAME, String.class, null, value);
     }
 
     /**
@@ -55,9 +55,9 @@ public class ObjectFactory {
      * @return
      *     the new instance of {@link JAXBElement }{@code <}{@link String }{@code >}
      */
-    @XmlElementDecl(namespace = "http://demo.example.com/ws/odluka", name = "createOdlukaResponse")
-    public JAXBElement<String> createCreateOdlukaResponse(String value) {
-        return new JAXBElement<String>(_CreateOdlukaResponse_QNAME, String.class, null, value);
+    @XmlElementDecl(namespace = "http://demo.example.com/ws/odluka", name = "getOdlukaResponse")
+    public JAXBElement<String> createGetOdlukaResponse(String value) {
+        return new JAXBElement<String>(_GetOdlukaResponse_QNAME, String.class, null, value);
     }
 
 }

@@ -9,7 +9,7 @@ export class ZahtevValidatorService {
   constructor() { }
 
   tipDostave(): ValidatorFn{
-    return (control: AbstractControl): null | ValidationErrors => {
+    return (control: AbstractControl): ValidationErrors => {
       let tipDostaveValid = true;
       if (control.parent && control.parent.get('tipZahteva').value === 'dostava' && !control.value){
         tipDostaveValid = false;
@@ -19,7 +19,7 @@ export class ZahtevValidatorService {
   }
 
   opisDostave(): ValidatorFn{
-    return (control: AbstractControl): null | ValidationErrors => {
+    return (control: AbstractControl): ValidationErrors => {
       let opisDostaveValid = true;
       if (control.parent && control.parent.get('tipZahteva').value === 'dostava' &&
       control.parent.get('tipDostave').value === 'ostalo' && !control.value){

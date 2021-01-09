@@ -16,23 +16,16 @@ import org.apache.fop.apps.FOUserAgent;
 import org.apache.fop.apps.Fop;
 import org.apache.fop.apps.FopFactory;
 import org.apache.fop.apps.MimeConstants;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.w3c.dom.Document;
 
-import com.example.demo.constants.Constants;
-import com.example.demo.exception.MyException;
+import com.example.demo.common.Constants;
+import com.example.demo.common.MyException;
 
 @Component
 public class XSLTransformer {
 
 	private TransformerFactory transformerFactory;
-	
-	@Autowired
-	private DOMParser domParser;
-	
-	private static final String GRDDL_FILE = Constants.DATA_FOLDER + File.separatorChar + "grddl.xsl";
-	
+			
 	public XSLTransformer() {
 		super();
 		this.transformerFactory = TransformerFactory.newInstance();
@@ -42,7 +35,7 @@ public class XSLTransformer {
 		try {
 			StreamSource in = new StreamSource(new StringReader(xml));
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
-			Transformer transformer = this.transformerFactory.newTransformer(new StreamSource(new File(GRDDL_FILE)));
+			Transformer transformer = this.transformerFactory.newTransformer(new StreamSource(new File(Constants.GRDDL_XSL)));
 			transformer.setOutputProperty("{http://xml.apache.org/xalan}indent-amount", "2");
 			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 			StreamResult output = new StreamResult(out);
@@ -54,9 +47,9 @@ public class XSLTransformer {
 		}
 	}
 	
-	public ByteArrayOutputStream generateHtml(Document document, String xslPath) {
+	public ByteArrayOutputStream generateHtml(String xml, String xslPath) {
 		try {
-			StreamSource in = new StreamSource(new StringReader(this.domParser.buildXml(document)));
+			StreamSource in = new StreamSource(new StringReader(xml));
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 			Transformer transformer = this.transformerFactory.newTransformer(new StreamSource(new File(xslPath)));
 			transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
@@ -72,9 +65,9 @@ public class XSLTransformer {
 		}
 	}
 		
-	public ByteArrayOutputStream generatePdf(Document document, String xslFoPath) {
+	public ByteArrayOutputStream generatePdf(String xml, String xslFoPath) {
 		try {
-			StreamSource in = new StreamSource(new StringReader(this.domParser.buildXml(document)));
+			StreamSource in = new StreamSource(new StringReader(xml));
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 			Transformer transformer = this.transformerFactory.newTransformer(new StreamSource(new File(xslFoPath)));
 			FopFactory foFactory = FopFactory.newInstance(new File(Constants.FOP_CONF));

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.w3c.dom.Document;
 
-import com.example.demo.constants.Constants;
+import com.example.demo.common.Constants;
 import com.example.demo.exist.ExistManager;
 
 @Repository

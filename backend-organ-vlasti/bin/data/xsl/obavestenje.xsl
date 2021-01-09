@@ -103,7 +103,7 @@ xmlns:odluka="https://github.com/draganagrbic998/xml/odluka">
 						<div>&#160;</div>
 					</div>
 					
-					<br></br>
+					<br>&#160;</br>
 				
 					<div class="flex center">
 						<div>
@@ -122,7 +122,7 @@ xmlns:odluka="https://github.com/draganagrbic998/xml/odluka">
 						<div>&#160;</div>
 					</div>
 					
-					<br></br><br></br>
+					<br>&#160;</br><br>&#160;</br>
 	        
 					<p class="center bold big">
 						О Б А В Е Ш Т Е Њ Е
@@ -134,7 +134,7 @@ xmlns:odluka="https://github.com/draganagrbic998/xml/odluka">
 						тражену информацију и о изради копије
 					</p>
 					
-					<br></br>
+					<br>&#160;</br>
 					
 					<p class="indent">
 						На основу члана 16. ст. 1. Закона о слободном приступу информацијама од јавног значаја, 
@@ -164,7 +164,7 @@ xmlns:odluka="https://github.com/draganagrbic998/xml/odluka">
 						(опис тражене информације)
 					</p>
 					
-					<br></br>
+					<br>&#160;</br>
 					
 					<p>
 						обавештавамо вас да дана
@@ -206,13 +206,13 @@ xmlns:odluka="https://github.com/draganagrbic998/xml/odluka">
 						можете извршити увид у документ/е у коме је садржана тражена информација. 				
 					</p>
 				
-					<br></br>
+					<br>&#160;</br>
 					
 					<p class="indent">
 						Том приликом, на ваш захтев, може вам се издати и копија документа са траженом информацијом.
 					</p>
 					
-					<br></br>
+					<br>&#160;</br>
 					
 					<p>
 						Трошкови су утврђени Уредбом Владе Републике Србије („Сл. гласник РС“, бр. 8/06), и то: 
@@ -221,7 +221,7 @@ xmlns:odluka="https://github.com/draganagrbic998/xml/odluka">
 						претварање једне стране документа из физичког у електронски облик – 30 динара.
 					</p>
 					
-					<br></br>
+					<br>&#160;</br>
 					
 					<p class="indent">
 						Износ укупних трошкова израде копије документа по вашем захтеву износи
@@ -233,7 +233,7 @@ xmlns:odluka="https://github.com/draganagrbic998/xml/odluka">
 						(из Правилника о условима и начину вођења рачуна – „Сл. гласник РС“, 20/07... 40/10). 
 					</p>
 					
-					<br></br><br></br>
+					<br>&#160;</br><br>&#160;</br>
 					
 					<div class="flex">
 						<div>
@@ -248,11 +248,11 @@ xmlns:odluka="https://github.com/draganagrbic998/xml/odluka">
 							</p>
 						</div>
 						<div>
-							<br></br>
+							<br>&#160;</br>
 							<p>
 								(М.П.)
 							</p>
-							<br></br>
+							<br>&#160;</br>
 							<p class="underline center" style="margin-left: 100px; margin-right: 20px;">
 								<xsl:value-of select="osnova:Gradjanin/osnova:Osoba/osnova:potpis"></xsl:value-of>
 							</p>

@@ -38,7 +38,7 @@ export class ResenjeFormComponent implements AfterViewInit {
     this.resenjeService.save(this.route.snapshot.params.brojZalbe, resenje).subscribe(
       () => {
         this.savePending = false;
-        this.snackBar.open('Rešenje uspešno poslato!', SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);
+        this.snackBar.open('Rešenje poslato!', SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);
       },
       () => {
         this.savePending = false;

@@ -77,4 +77,11 @@
             </xs:choice>
         </xs:complexType>
     </xs:element>
+    <xs:complexType name="TPodaci">
+        <xs:sequence>
+            <xs:element name="broj"/>
+            <xs:element name="datum"/>
+            <xs:element ref="osnova:Detalji"/>
+        </xs:sequence>
+    </xs:complexType>
 </xs:schema>

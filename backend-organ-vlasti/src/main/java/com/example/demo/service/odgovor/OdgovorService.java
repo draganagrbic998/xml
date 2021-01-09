@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 
-import com.example.demo.constants.Namespaces;
-import com.example.demo.model.enums.StatusZalbe;
+import com.example.demo.common.Namespaces;
+import com.example.demo.enums.StatusZalbe;
 import com.example.demo.repository.xml.ZalbaExist;
 import com.example.demo.ws.utils.SOAPService;
 import com.example.demo.ws.utils.TipDokumenta;
@@ -14,15 +14,15 @@ import com.example.demo.ws.utils.TipDokumenta;
 public class OdgovorService {
 
 	@Autowired
-	private ZalbaExist zalbaExist;
+	private OdgovorMapper odgovorMapper;
 
 	@Autowired
-	private OdgovorMapper odgovorMapper;
+	private ZalbaExist zalbaExist;
 	
 	@Autowired
 	private SOAPService soapService;
 			
-	public void add(String xml) {
+	public void save(String xml) {
 		Document document = this.odgovorMapper.map(xml);
 		String brojZalbe = document.getElementsByTagNameNS(Namespaces.ODGOVOR, "brojZalbe").item(0).getTextContent();
 		Document zalbaDocument = this.zalbaExist.load(brojZalbe);

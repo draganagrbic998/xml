@@ -19,13 +19,9 @@ export class ZahtevListComponent implements AfterViewInit {
   ) { }
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  columns: string[] = ['datum', 'status', 'dokumenti', 'akcije', 'metapodaci'];
+  columns: string[] = ['tipZahteva', 'datum', 'status', 'dokumenti', 'akcije', 'metapodaci'];
   zahtevi: MatTableDataSource<ZahtevDTO> = new MatTableDataSource<ZahtevDTO>([]);
   fetchPending = true;
-
-  get uloga(): string{
-    return this.authService.getUser()?.uloga;
-  }
 
   xmlMetadata(broj: string): void{
     window.open(`//localhost:8081/${environment.apiZahtevi}/${broj}/metadata/xml`, '_blank');
@@ -33,6 +29,15 @@ export class ZahtevListComponent implements AfterViewInit {
 
   jsonMetadata(broj: string): void{
     window.open(`//localhost:8081/${environment.apiZahtevi}/${broj}/metadata/json`, '_blank');
+  }
+
+  convertDate(date: string): string{
+    const array: string[] = date.split('-');
+    return `${array[2]}.${array[1]}.${array[0]}.`;
+  }
+
+  get uloga(): string{
+    return this.authService.getUser()?.uloga;
   }
 
   ngAfterViewInit(): void {

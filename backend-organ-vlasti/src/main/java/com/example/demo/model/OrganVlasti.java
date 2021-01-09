@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import com.example.demo.constants.Namespaces;
+import com.example.demo.common.Namespaces;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "OrganVlasti", namespace = Namespaces.OSNOVA)

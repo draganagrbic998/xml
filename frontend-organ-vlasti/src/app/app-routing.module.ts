@@ -11,16 +11,16 @@ import { ZahtevListComponent } from './components/zahtev/zahtev-list/zahtev-list
 import {
   LOGIN_PATH,
   REGISTER_PATH,
-  ZAHTEV_LIST_PATH,
-  ZAHTEV_FORM_PATH,
+  ZAHTEV_LIST,
+  ZAHTEV_FORM,
   OBAVESTENJE_FORM,
-  ODLUKA_LIST_PATH,
+  ODLUKA_LIST,
   HTML_PATH,
   PDF_PATH,
   ODBIJANJE_FORM,
-  ODGOVOR_PATH,
-  ZALBA_LIST_PATH,
-  RESENJE_LIST_PATH
+  ODGOVOR_FORM,
+  ZALBA_LIST,
+  RESENJE_LIST
 } from './constants/router';
 import { GradjaninGuard } from './guard/gradjanin/gradjanin.guard';
 import { SluzbenikGuard } from './guard/sluzbenik/sluzbenik.guard';
@@ -39,12 +39,12 @@ const routes: Routes = [
     component: RegisterFormComponent
   },
   {
-    path: ZAHTEV_FORM_PATH,
+    path: ZAHTEV_FORM,
     component: ZahtevFormComponent,
     canActivate: [GradjaninGuard]
   },
   {
-    path: ZAHTEV_LIST_PATH,
+    path: ZAHTEV_LIST,
     component: ZahtevListComponent
   },
   {
@@ -58,21 +58,21 @@ const routes: Routes = [
     canActivate: [SluzbenikGuard]
   },
   {
-    path: ODLUKA_LIST_PATH,
+    path: ODLUKA_LIST,
     component: OdlukaListComponent
   },
   {
-    path: ZALBA_LIST_PATH,
+    path: ZALBA_LIST,
     component: ZalbaListComponent,
     canActivate: [SluzbenikGuard]
   },
   {
-    path: RESENJE_LIST_PATH,
+    path: RESENJE_LIST,
     component: ResenjeListComponent,
-      canActivate: [SluzbenikGuard]
+    canActivate: [SluzbenikGuard]
   },
   {
-    path: ODGOVOR_PATH,
+    path: ODGOVOR_FORM,
     component: OdgovorFormComponent,
     canActivate: [SluzbenikGuard]
   },

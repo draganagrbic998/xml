@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 
-import com.example.demo.exception.MyException;
+import com.example.demo.common.MyException;
 import com.example.demo.parser.DOMParser;
 
 @Service
@@ -56,6 +56,7 @@ public class SOAPService {
 			symbol.addTextNode(this.domParser.buildXml(document));
 			SOAPConnection connection = this.soapConnectionFactory.createConnection();
 			connection.call(message, endpoint);
+
 		}
 		catch(Exception e) {
 			throw new MyException(e);

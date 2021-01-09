@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 import org.w3c.dom.Document;
 import org.xmldb.api.base.ResourceSet;
 
-import com.example.demo.constants.Constants;
+import com.example.demo.common.Constants;
 import com.example.demo.exist.ExistManager;
 
 @Repository

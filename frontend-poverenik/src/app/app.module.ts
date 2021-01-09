@@ -44,6 +44,7 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 @NgModule({
   declarations: [
     AppComponent,
+    SafeHtmlPipe,
     LoginFormComponent,
     ToolbarComponent,
     FormContainerComponent,
@@ -57,17 +58,16 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
     ResenjeListComponent,
     PreloaderComponent,
     HtmlViewerComponent,
-    PdfViewerComponent,
-    SafeHtmlPipe
+    PdfViewerComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    AppRoutingModule,
 
     MatToolbarModule,
     MatCardModule,

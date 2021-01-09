@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.example.demo.ws.odluka.OdlukaPortImpl;
 import com.example.demo.ws.resenje.ResenjePortImpl;
+import com.example.demo.ws.zahtev.ZahtevPortImpl;
 import com.example.demo.ws.zalba.ZalbaPortImpl;
 
 @Configuration
@@ -23,13 +25,33 @@ public class EndpointConfig {
 	@Autowired
 	private ResenjePortImpl crpi;
 	
+	@Autowired
+	private ZahtevPortImpl zpi;
+	
+	@Autowired
+	private OdlukaPortImpl opi;
+	
 	@Bean
 	public Endpoint createZalbaEndpoint() {
 		EndpointImpl endpoint = new EndpointImpl(bus, czpi);
 		endpoint.publish("/createZalba");
 		return endpoint;
 	}
+	
+	@Bean
+	public Endpoint getZahtevEndpoint() {
+		EndpointImpl endpoint = new EndpointImpl(bus, zpi);
+		endpoint.publish("/getZahtev");
+		return endpoint;
+	}
 
+	@Bean
+	public Endpoint getOdlukaEndpoint() {
+		EndpointImpl endpoint = new EndpointImpl(bus, opi);
+		endpoint.publish("/getOdluka");
+		return endpoint;
+	}
+	
 	@Bean
 	public Endpoint createResenjeEndpoint() {
 		EndpointImpl endpoint = new EndpointImpl(bus, crpi);

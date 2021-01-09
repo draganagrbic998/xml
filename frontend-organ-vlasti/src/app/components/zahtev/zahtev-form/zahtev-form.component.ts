@@ -48,7 +48,7 @@ export class ZahtevFormComponent implements AfterViewInit {
     this.zahtevService.save(zahtev).subscribe(
       () => {
         this.savePending = false;
-        this.snackBar.open('Zahtev uspešno poslat!', SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);
+        this.snackBar.open('Zahtev poslat!', SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);
       },
       () => {
         this.savePending = false;

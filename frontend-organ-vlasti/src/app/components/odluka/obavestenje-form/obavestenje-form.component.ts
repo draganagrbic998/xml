@@ -42,7 +42,7 @@ export class ObavestenjeFormComponent implements AfterViewInit {
     this.odlukaService.saveObavestenje(this.route.snapshot.params.brojZahteva, obavestenje).subscribe(
       () => {
         this.savePending = false;
-        this.snackBar.open('Obaveštenje uspešno poslato!', SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);
+        this.snackBar.open('Obaveštenje poslato!', SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);
       },
       () => {
         this.savePending = false;

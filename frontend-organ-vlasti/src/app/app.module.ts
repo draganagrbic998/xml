@@ -23,6 +23,9 @@ import { PreloaderComponent } from './components/layout/preloader/preloader.comp
 import { HtmlViewerComponent } from './components/main/html-viewer/html-viewer.component';
 import { PdfViewerComponent } from './components/main/pdf-viewer/pdf-viewer.component';
 import { OdbijanjeFormComponent } from './components/odluka/odbijanje-form/odbijanje-form.component';
+import { ZalbaListComponent } from './components/zalba/zalba-list/zalba-list.component';
+import { ResenjeListComponent } from './components/resenje/resenje-list/resenje-list.component';
+import { OdgovorFormComponent } from './components/zalba/odgovor-form/odgovor-form.component';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
@@ -39,13 +42,11 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
-import { ZalbaListComponent } from './components/zalba/zalba-list/zalba-list.component';
-import { ResenjeListComponent } from './components/resenje/resenje-list/resenje-list.component';
-import { OdgovorFormComponent } from './components/zalba/odgovor-form/odgovor-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    SafeHtmlPipe,
     ZahtevFormComponent,
     LoginFormComponent,
     ToolbarComponent,
@@ -57,7 +58,6 @@ import { OdgovorFormComponent } from './components/zalba/odgovor-form/odgovor-fo
     ObavestenjeFormComponent,
     OdlukaListComponent,
     PreloaderComponent,
-    SafeHtmlPipe,
     HtmlViewerComponent,
     PdfViewerComponent,
     OdbijanjeFormComponent,
@@ -67,12 +67,12 @@ import { OdgovorFormComponent } from './components/zalba/odgovor-form/odgovor-fo
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    AppRoutingModule,
 
     MatToolbarModule,
     MatCardModule,

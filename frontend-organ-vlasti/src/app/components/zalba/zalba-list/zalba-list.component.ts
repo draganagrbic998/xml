@@ -4,6 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ZalbaDTO } from 'src/app/models/zalbaDTO';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ZalbaService } from 'src/app/services/zalba/zalba.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-zalba-list',
@@ -22,8 +23,21 @@ export class ZalbaListComponent implements AfterViewInit {
   zalbe: MatTableDataSource<ZalbaDTO> = new MatTableDataSource<ZalbaDTO>([]);
   fetchPending = true;
 
+  xmlMetadata(broj: string): void{
+    window.open(`//localhost:8081/${environment.apiZalbe}/${broj}/metadata/xml`, '_blank');
+  }
+
+  jsonMetadata(broj: string): void{
+    window.open(`//localhost:8081/${environment.apiZahtevi}/${broj}/metadata/json`, '_blank');
+  }
+
   get uloga(): string{
     return this.authService.getUser()?.uloga;
+  }
+
+  convertDate(date: string): string{
+    const array: string[] = date.split('-');
+    return `${array[2]}.${array[1]}.${array[0]}.`;
   }
 
   ngAfterViewInit(): void {

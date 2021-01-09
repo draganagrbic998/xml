@@ -26,8 +26,7 @@ export class ResenjeService {
       resenja.push({
         broj: document[key].getElementsByTagNameNS(OSNOVA, 'broj')[0].textContent,
         datum: document[key].getElementsByTagNameNS(OSNOVA, 'datum')[0].textContent,
-        status: document[key].getElementsByTagNameNS(RESENJE, 'status')[0].textContent,
-        organVlasti: document[key].getElementsByTagNameNS(OSNOVA, 'naziv')[0].textContent,
+        status: document[key].getElementsByTagNameNS(RESENJE, 'status')[0].textContent
       });
     }
 

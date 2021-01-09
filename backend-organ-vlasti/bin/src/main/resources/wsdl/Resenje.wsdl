@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<wsdl:definitions name="CreateResenjeService"
+<wsdl:definitions name="ResenjeService"
 	targetNamespace="http://demo.example.com/ws/resenje"
 	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
 	xmlns:tns="http://demo.example.com/ws/resenje"
@@ -17,14 +17,14 @@
 		<wsdl:part name="createResenje" element="tns:createResenje">
 		</wsdl:part>
 	</wsdl:message>
-	<wsdl:portType name="CreateResenje">
+	<wsdl:portType name="Resenje">
 		<wsdl:operation name="createResenje">
 			<wsdl:input name="createResenje" message="tns:createResenje">
 			</wsdl:input>
 		</wsdl:operation>
 	</wsdl:portType>
-	<wsdl:binding name="CreateResenjeServiceSoapBinding"
-		type="tns:CreateResenje">
+	<wsdl:binding name="ResenjeServiceSoapBinding"
+		type="tns:Resenje">
 		<soap:binding style="document"
 			transport="http://schemas.xmlsoap.org/soap/http" />
 		<wsdl:operation name="createResenje">
@@ -34,11 +34,11 @@
 			</wsdl:input>
 		</wsdl:operation>
 	</wsdl:binding>
-	<wsdl:service name="CreateResenjeService">
-		<wsdl:port name="CreateResenjePort"
-			binding="tns:CreateResenjeServiceSoapBinding">
+	<wsdl:service name="ResenjeService">
+		<wsdl:port name="ResenjePort"
+			binding="tns:ResenjeServiceSoapBinding">
 			<soap:address
-				location="http://localhost:8081/CreateResenjePort" />
+				location="http://localhost:8081/ResenjePort" />
 		</wsdl:port>
 	</wsdl:service>
 </wsdl:definitions>

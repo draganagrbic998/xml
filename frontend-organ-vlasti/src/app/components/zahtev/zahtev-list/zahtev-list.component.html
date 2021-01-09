@@ -1,5 +1,4 @@
-<app-preloader *ngIf="fetchPending">
-</app-preloader>
+<app-preloader *ngIf="fetchPending"></app-preloader>
 
 <div class="root">
 
@@ -7,10 +6,15 @@
 
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="zahtevi">
+
+      <ng-container matColumnDef="tipZahteva">
+        <th mat-header-cell *matHeaderCellDef>Tip zahteva</th>
+        <td mat-cell *matCellDef="let zahtev"> {{zahtev.tipZahteva}} </td>
+      </ng-container>
     
       <ng-container matColumnDef="datum">
         <th mat-header-cell *matHeaderCellDef>Datum podnošenja</th>
-        <td mat-cell *matCellDef="let zahtev"> {{zahtev.datum}} </td>
+        <td mat-cell *matCellDef="let zahtev"> {{convertDate(zahtev.datum)}} </td>
       </ng-container>
   
       <ng-container matColumnDef="status">
@@ -21,8 +25,16 @@
       <ng-container matColumnDef="dokumenti">
         <th mat-header-cell *matHeaderCellDef>Dokumenti</th>
         <td mat-cell *matCellDef="let zahtev">
-          <a [routerLink]="'/html/zahtevi/' + zahtev.broj">preuzmi html</a><br>
-          <a [routerLink]="'/pdf/zahtevi/' + zahtev.broj">preuzmi pdf</a>
+          <a [routerLink]="'/html/zahtevi/' + zahtev.broj">HTML</a><br>
+          <a [routerLink]="'/pdf/zahtevi/' + zahtev.broj">PDF</a>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="metapodaci">
+        <th mat-header-cell *matHeaderCellDef>Metapodaci</th>
+        <td mat-cell *matCellDef="let zahtev">
+          <a (click)="xmlMetadata(zahtev.broj)" href="/zahtev-list">XML</a><br>
+          <a (click)="jsonMetadata(zahtev.broj)" href="/zahtev-list">JSON</a>
         </td>
       </ng-container>
 
@@ -45,15 +57,6 @@
             </span>
         </td>
       </ng-container>
-
-      <ng-container matColumnDef="metapodaci">
-        <th mat-header-cell *matHeaderCellDef>Metapodaci</th>
-        <td mat-cell *matCellDef="let zahtev">
-          <a (click)="xmlMetadata(zahtev.broj)" href="/zahtev-list">preuzmi xml</a><br>
-          <a (click)="jsonMetadata(zahtev.broj)" href="/zahtev-list">preuzmi json</a>
-        </td>
-      </ng-container>
-
     
       <tr mat-header-row *matHeaderRowDef="columns"></tr>
       <tr mat-row *matRowDef="let row; columns: columns;"></tr>
@@ -62,5 +65,4 @@
     </table>
     <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
   </div>
-  
 </div>

@@ -2,6 +2,6 @@ package com.example.demo.ws.utils;
 
 public enum TipDokumenta {
 	
-	zalba, resenje;
+	zalba, resenje, odluka, zahtev;
 
 }

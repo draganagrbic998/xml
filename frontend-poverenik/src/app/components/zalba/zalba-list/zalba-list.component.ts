@@ -6,6 +6,7 @@ import { SNACKBAR_CLOSE, SNACKBAR_ERROR, SNACKBAR_ERROR_OPTIONS, SNACKBAR_SUCCES
 import { ZalbaDTO } from 'src/app/models/zalbaDTO';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ZalbaService } from 'src/app/services/zalba/zalba.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-zalba-list',
@@ -21,7 +22,7 @@ export class ZalbaListComponent implements AfterViewInit {
   ) { }
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  columns: string[] = ['tipZalbe', 'datum', 'dokumenti', 'akcije', 'odgovor'];
+  columns: string[] = ['tipZalbe', 'datum', 'status', 'dokumenti', 'metapodaci', 'odgovor', 'akcije'];
   zalbe: MatTableDataSource<ZalbaDTO> = new MatTableDataSource<ZalbaDTO>([]);
   fetchPending = true;
   sendPending = false;
@@ -30,39 +31,53 @@ export class ZalbaListComponent implements AfterViewInit {
     return this.authService.getUser()?.uloga;
   }
 
+  xmlMetadata(broj: string): void{
+    window.open(`//localhost:8082/${environment.apiZalbe}/${broj}/metadata/xml`, '_blank');
+  }
+
+  jsonMetadata(broj: string): void{
+    window.open(`//localhost:8082/${environment.apiZalbe}/${broj}/metadata/json`, '_blank');
+  }
+
+  convertDate(date: string): string{
+    const array: string[] = date.split('-');
+    return `${array[2]}.${array[1]}.${array[0]}.`;
+  }
+
+  canOdustati(zalba: ZalbaDTO): boolean{
+    return zalba.status === 'cekanje' || zalba.status === 'prosledjeno' || zalba.status === 'odgovoreno';
+  }
+
   canResiti(zalba: ZalbaDTO): boolean {
     if (zalba.status === 'odgovoreno') {
       return true;
     }
 
-    if (zalba.status !== 'cekanje' && ((new Date()).getTime() - zalba.datumProsledjivanja) / 86400000 > 15) {
+    /*
+    if (zalba.status !== 'prosledjeno' && ((new Date()).getTime() - zalba.datumProsledjivanja) / 86400000 > 15) {
+      return true;
+    }*/
+
+    if (zalba.status === 'prosledjeno'){
       return true;
     }
 
     return false;
   }
 
-  canObustaviti(zalba: ZalbaDTO): boolean{
-    return zalba.status === 'odustato';
-  }
-
-  obustavi(zalba: ZalbaDTO): void{
+  prosledi(zalba: ZalbaDTO): void{
     this.sendPending = true;
-    this.zalbaService.obustavi(zalba.broj).subscribe(
+    this.zalbaService.prosledi(zalba.broj).subscribe(
       () => {
-        zalba.status = 'obustavljeno';
+        zalba.status = 'prosledjeno';
         this.sendPending = false;
-        this.snackBar.open('Žalba obustavljena!', SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);
+        this.snackBar.open('Žalba prosledjena!', SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);
       },
       () => {
         this.sendPending = false;
         this.snackBar.open(SNACKBAR_ERROR, SNACKBAR_CLOSE, SNACKBAR_ERROR_OPTIONS);
       }
     );
-  }
-
-  canOdustati(zalba: ZalbaDTO): boolean{
-    return zalba.status === 'cekanje' || zalba.status === 'prosledjeno' || zalba.status === 'odgovoreno';
   }
 
   odustani(zalba: ZalbaDTO): void{
@@ -80,13 +95,13 @@ export class ZalbaListComponent implements AfterViewInit {
     );
   }
 
-  prosledi(zalba: ZalbaDTO): void{
+  obustavi(zalba: ZalbaDTO): void{
     this.sendPending = true;
-    this.zalbaService.prosledi(zalba.broj).subscribe(
+    this.zalbaService.obustavi(zalba.broj).subscribe(
       () => {
-        zalba.status = 'prosledjeno';
+        zalba.status = 'obustavljeno';
         this.sendPending = false;
-        this.snackBar.open('Žalba prosledjena!', SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);
+        this.snackBar.open('Žalba obustavljena!', SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);
       },
       () => {
         this.sendPending = false;

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ODGOVOR, OSNOVA, ZALBA } from 'src/app/constants/namespaces';
-import { Odgovor } from 'src/app/models/odluka';
+import { Odgovor } from 'src/app/models/odgovor';
 import { ZalbaDTO } from 'src/app/models/zalbaDTO';
 import { environment } from 'src/environments/environment';
 import { XonomyService } from '../xonomy/xonomy.service';
@@ -24,9 +24,10 @@ export class ZalbaService {
   private odgovorToXml(brojZahteva: string, odgovor: Odgovor): string{
 
     return `
-      <odgovor:Odgovor xmlns="${OSNOVA}"
+      <odgovor:Odgovor
+      xmlns="${OSNOVA}"
       xmlns:odgovor="${ODGOVOR}">
-        <odgovor:brojZalbe>${brojZahteva}</odgovor:brojZalbe>
+        <broj>${brojZahteva}</broj>
         ${odgovor.detalji}
       </odgovor:Odgovor>
     `;
@@ -35,20 +36,20 @@ export class ZalbaService {
 
   private xmlToZalbe(xml: string): ZalbaDTO[]{
     const parser = new DOMParser();
-    const document = parser.parseFromString(xml, 'text/xml').getElementsByTagNameNS(ZALBA, 'Zalba');
-    const zalbe: ZalbaDTO[] = [];
+    const document = parser.parseFromString(xml, 'text/xml');
+    const zalbe = document.getElementsByTagNameNS(ZALBA, 'Zalba');
+    const zalbeDTO: ZalbaDTO[] = [];
 
-    for (const key of Object.keys(document)){
-      zalbe.push({
-        tipZalbe: document[key].getElementsByTagNameNS(ZALBA, 'tipZalbe')[0].textContent,
-        broj: document[key].getElementsByTagNameNS(OSNOVA, 'broj')[0].textContent,
-        datum: document[key].getElementsByTagNameNS(OSNOVA, 'datum')[0].textContent,
-        organVlasti: document[key].getElementsByTagNameNS(OSNOVA, 'naziv')[0].textContent,
-        status: document[key].getElementsByTagNameNS(ZALBA, 'status')[0].textContent
+    for (let i = 0; i < zalbe.length; ++i){
+      zalbeDTO.push({
+        tipZalbe: zalbe.item(i).getElementsByTagNameNS(ZALBA, 'tipZalbe')[0].textContent,
+        broj: zalbe.item(i).getElementsByTagNameNS(OSNOVA, 'broj')[0].textContent,
+        datum: zalbe.item(i).getElementsByTagNameNS(OSNOVA, 'datum')[0].textContent,
+        status: zalbe.item(i).getElementsByTagNameNS(ZALBA, 'status')[0].textContent
       });
     }
 
-    return zalbe;
+    return zalbeDTO;
   }
 
   list(): Observable<ZalbaDTO[]>{

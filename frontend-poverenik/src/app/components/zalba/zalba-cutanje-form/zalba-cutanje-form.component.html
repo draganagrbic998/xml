@@ -24,20 +24,6 @@
                     Broj zahteva je obavezan!
                 </mat-error>    
             </mat-form-field>
-            <mat-form-field> 
-                <mat-label>Datum podnošenja zahteva: </mat-label>
-                <input 
-                matInput 
-                autocomplete="off"
-                formControlName="datumZahteva" 
-                placeholder="Unesite datum podnošenja zahteva"
-                [matDatepicker]="datumZahteva">
-                <mat-datepicker-toggle matSuffix [for]="datumZahteva"></mat-datepicker-toggle>
-                <mat-datepicker #datumZahteva></mat-datepicker>
-                <mat-error>
-                    Datum podnošenja zahteva je obavezan!
-                </mat-error>    
-            </mat-form-field>            
             <mat-form-field>
                 <mat-label>Tip ćutanja: </mat-label>
                 <mat-select formControlName="tipCutanja">
@@ -52,7 +38,7 @@
                     </mat-option>
                 </mat-select>                
             </mat-form-field>
-            <mat-form-field>
+            <mat-form-field *ngIf="zalbaDelimicnost()">
                 <mat-label>Broj odluke</mat-label>
                 <input 
                 matInput 

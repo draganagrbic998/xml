@@ -17,8 +17,8 @@ import org.xmldb.api.modules.CollectionManagementService;
 import org.xmldb.api.modules.XMLResource;
 import org.xmldb.api.modules.XPathQueryService;
 
-import com.example.demo.constants.Namespaces;
-import com.example.demo.exception.MyException;
+import com.example.demo.common.MyException;
+import com.example.demo.common.Namespaces;
 
 @Component
 public class ExistManager {

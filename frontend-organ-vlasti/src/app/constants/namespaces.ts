@@ -5,6 +5,3 @@ export const ODLUKA = 'https://github.com/draganagrbic998/xml/odluka';
 export const ZALBA = 'https://github.com/draganagrbic998/xml/zalba';
 export const RESENJE = 'https://github.com/draganagrbic998/xml/resenje';
 export const ODGOVOR = 'https://github.com/draganagrbic998/xml/odgovor';
-
-export const PREDIKAT = 'http://github.com/draganagrbic998/xml/predicate/';
-export const KORISNIK = 'http://github.com/draganagrbic998/xml/korisnik';

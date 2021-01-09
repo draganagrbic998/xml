@@ -8,6 +8,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
 
+import org.apache.jena.query.ResultSet;
+import org.apache.jena.query.ResultSetFormatter;
 import org.apache.jena.rdf.model.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -20,19 +22,18 @@ import org.xmldb.api.base.ResourceIterator;
 import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.modules.XMLResource;
 
-import com.example.demo.constants.Constants;
-import com.example.demo.constants.Namespaces;
-import com.example.demo.exception.MyException;
+import com.example.demo.common.Constants;
+import com.example.demo.common.MyException;
+import com.example.demo.common.Namespaces;
+import com.example.demo.enums.MetadataType;
+import com.example.demo.enums.StatusZalbe;
+import com.example.demo.enums.TipZalbe;
 import com.example.demo.model.Korisnik;
-import com.example.demo.model.enums.StatusZalbe;
-import com.example.demo.model.enums.TipZalbe;
 import com.example.demo.parser.DOMParser;
 import com.example.demo.parser.XSLTransformer;
 import com.example.demo.repository.rdf.ZalbaRDF;
 import com.example.demo.repository.xml.ZalbaExist;
 import com.example.demo.service.KorisnikService;
-import com.example.demo.service.email.Email;
-import com.example.demo.service.email.EmailService;
 import com.example.demo.ws.utils.SOAPService;
 import com.example.demo.ws.utils.TipDokumenta;
 import com.example.demo.ws.zalbepodaci.data.ZalbePodaciData;
@@ -45,13 +46,13 @@ public class ZalbaService {
 
 	@Autowired
 	private KorisnikService korisnikService;
-	
-	@Autowired
-	private ZalbaMapper zalbaMapper;
-	
+		
 	@Autowired
 	private ZalbaRDF zalbaRDF;
 	
+	@Autowired
+	private ZalbaMapper zalbaMapper;
+
 	@Autowired
 	private DOMParser domParser;
 	
@@ -61,9 +62,6 @@ public class ZalbaService {
 	@Autowired
 	private SOAPService soapService;
 	
-	@Autowired
-	private EmailService emailService;
-
 	private static final String XSL_PATH_CUTANJE = Constants.XSL_FOLDER + File.separatorChar + "/zalba_cutanje.xsl";
 	private static final String XSL_FO_PATH_CUTANJE = Constants.XSL_FOLDER + File.separatorChar + "zalba_cutanje_fo.xsl";
 	private static final String XSL_PATH_ODLUKA = Constants.XSL_FOLDER + File.separatorChar + "/zalba_odluka.xsl";
@@ -89,6 +87,82 @@ public class ZalbaService {
 		return this.zalbaMapper.map(resources);
 	}
 
+	public String generateHtml(String broj) {
+		Document document = this.zalbaExist.load(broj);
+		String xslPath;
+		if (ZalbaMapper.getTipZalbe(document).equals(TipZalbe.odluka)) {
+			xslPath = XSL_PATH_ODLUKA;
+		} else {
+			xslPath = XSL_PATH_CUTANJE;
+		}
+		ByteArrayOutputStream out = this.xslTransformer.generateHtml(this.domParser.buildXml(document), xslPath);
+		return out.toString();
+	}
+
+	public Resource generatePdf(String broj) {
+		try {
+			Document document = this.zalbaExist.load(broj);
+			String xslFoPath;
+			if (ZalbaMapper.getTipZalbe(document).equals(TipZalbe.cutanje)) {
+				xslFoPath = XSL_FO_PATH_ODLUKA;
+			} 
+			else {
+				xslFoPath = XSL_FO_PATH_CUTANJE;
+			}
+			ByteArrayOutputStream out = this.xslTransformer.generatePdf(this.domParser.buildXml(document), xslFoPath);
+			Path file = Paths.get(GEN_PATH + broj + ".pdf");
+			Files.write(file, out.toByteArray());
+			return new UrlResource(file.toUri());
+		}
+		catch(Exception e) {
+			throw new MyException(e);
+		}
+	}
+	
+	public Resource generateMetadata(String broj, MetadataType type) {
+		try {
+			ResultSet results = this.zalbaRDF.retrieve(broj);
+			ByteArrayOutputStream out = new ByteArrayOutputStream();
+			if (type.equals(MetadataType.xml)) {
+				ResultSetFormatter.outputAsXML(out, results);
+			}
+			else {
+				ResultSetFormatter.outputAsJSON(out, results);
+			}
+			Path file = Paths.get(GEN_PATH + broj + "_metadata." + type);
+			Files.write(file, out.toByteArray());
+			return new UrlResource(file.toUri());
+		}
+		catch(Exception e) {
+			throw new MyException(e);
+		}
+	}
+	
+	public void odustani(String broj) {
+		Document document = this.zalbaExist.load(broj);
+		document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.odustato + "");
+		this.zalbaExist.save(broj, document);
+		//dodaj slanje mejla
+	}
+	
+	public void obustavi(String broj) {
+		Document document = this.zalbaExist.load(broj);
+		document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.obustaljveno + "");
+		this.zalbaExist.save(broj, document);
+	}
+
+	public void prosledi(String broj) {
+		Document document = this.zalbaExist.load(broj);
+		document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.prosledjeno + "");
+		this.soapService.sendSOAPMessage(this.domParser.buildXml(document), TipDokumenta.zalba);
+		
+		Element zalba = (Element) document.getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").item(0);
+		Node datumProsledjivanja = document.createElementNS(Namespaces.ZALBA, "zalba:datumProsledjivanja");
+		datumProsledjivanja.setTextContent(ZalbaMapper.sdf.format(new Date()));
+		zalba.insertBefore(datumProsledjivanja, document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0));
+		this.zalbaExist.save(broj, document);
+	}
+	
 	public ZalbePodaciData retrieveZalbePodaci() {
 		try {
 			String xpathExp = "/zalba:Zalba";
@@ -106,6 +180,8 @@ public class ZalbaService {
 				TipZalbe tipZalbe = ZalbaMapper.getTipZalbe(document);
 				if (tipZalbe.equals(TipZalbe.cutanje))
 					cutanja++;
+				else if (tipZalbe.equals(TipZalbe.delimicnost))
+					delimicnosti++;
 				else
 					odbijanja++;
 			}
@@ -120,66 +196,5 @@ public class ZalbaService {
 			throw new MyException(e);
 		}
 	}
-
-	public String generateHtml(String broj) {
-		Document document = this.zalbaExist.load(broj);
-		String xslPath;
-		if (ZalbaMapper.getTipZalbe(document).equals(TipZalbe.cutanje)) {
-			xslPath = XSL_PATH_CUTANJE;
-		} else {
-			xslPath = XSL_PATH_ODLUKA;
-		}
-		ByteArrayOutputStream out = this.xslTransformer.generateHtml(document, xslPath);
-		return out.toString();
-	}
-
-	public Resource generatePdf(String broj) {
-		try {
-			Document document = this.zalbaExist.load(broj);
-			String xslFoPath;
-			if (ZalbaMapper.getTipZalbe(document).equals(TipZalbe.cutanje)) {
-				xslFoPath = XSL_FO_PATH_CUTANJE;
-			} 
-			else {
-				xslFoPath = XSL_FO_PATH_ODLUKA;
-			}
-			ByteArrayOutputStream out = this.xslTransformer.generatePdf(document, xslFoPath);
-			Path file = Paths.get(GEN_PATH + broj + ".pdf");
-			Files.write(file, out.toByteArray());
-			return new UrlResource(file.toUri());
-		}
-		catch(Exception e) {
-			throw new MyException(e);
-		}
-	}
 	
-	public void odustani(String broj) {
-		Document document = this.zalbaExist.load(broj);
-		document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.odustato + "");
-		this.zalbaExist.save(broj, document);
-		//dodaj slanje mejla
-		//Email email = new Email();
-		//email.setTo(this.korisnikService.currentUser().getOsoba().getMejl());
-		//email.setSubject("Odustaja od žalbe");
-
-	}
-	
-	public void obustavi(String broj) {
-		Document document = this.zalbaExist.load(broj);
-		document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.obustaljveno + "");
-		this.zalbaExist.save(broj, document);
-	}
-
-	public void prosledi(String broj) {
-		Document document = this.zalbaExist.load(broj);
-		document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.prosledjeno + "");
-		this.soapService.sendSOAPMessage(document, TipDokumenta.zalba);
-		
-		Element zalba = (Element) document.getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").item(0);
-		Node datumProsledjivanja = document.createElementNS(Namespaces.ZALBA, "zalba:datumProsledjivanja");
-		datumProsledjivanja.setTextContent(ZalbaMapper.sdf.format(new Date()));
-		zalba.insertBefore(datumProsledjivanja, document.getElementsByTagNameNS(Namespaces.ZALBA, "datumZahteva").item(0));
-		this.zalbaExist.save(broj, document);
-	}
-
 }

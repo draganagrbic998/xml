@@ -13,8 +13,8 @@ import javax.xml.bind.annotation.XmlType;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.example.demo.constants.Constants;
-import com.example.demo.constants.Namespaces;
+import com.example.demo.common.Constants;
+import com.example.demo.common.Namespaces;
 
 @SuppressWarnings("serial")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -74,7 +74,7 @@ public class Korisnik implements UserDetails {
 	public boolean isEnabled() {
 		return this.aktivan;
 	}
-	
+
 	public boolean isAktivan() {
 		return aktivan;
 	}
