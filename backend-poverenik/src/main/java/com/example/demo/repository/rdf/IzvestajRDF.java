@@ -9,19 +9,17 @@ import com.example.demo.common.Prefixes;
 import com.example.demo.fuseki.FusekiManager;
 
 @Component
-public class ZalbaRDF {
-
+public class IzvestajRDF {
 	@Autowired
 	private FusekiManager fusekiManager;
 
-	public static final String GRAPH_URI = "/zalbe";
+	public static final String GRAPH_URI = "/izvestaji";
 
 	public void save(Model model) {
 		this.fusekiManager.save(GRAPH_URI, model);
 	}
 
 	public ResultSet retrieve(String broj) {
-		return this.fusekiManager.retrieve(GRAPH_URI, Prefixes.ZALBA_PREFIX + broj);
+		return this.fusekiManager.retrieve(GRAPH_URI, Prefixes.IZVESTAJ_PREFIX + broj);
 	}
-
 }
