@@ -4,13 +4,35 @@
 	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
 	xml:base="https://github.com/draganagrbic998/xml/#">
 
-	<rdfs:Class rdf:ID="Zalba">
-		<rdfs:subClassOf rdf:resource="#DokumentSaZahtevom"/>
-	</rdfs:Class>
+	<rdfs:Class rdf:ID="Zalba"/>
 
-	<rdfs:Property rdf:ID="podnesenoObavestenje">
+	<rdfs:Property rdf:ID="datum">
 		<rdfs:domain rdf:resource="#Zalba"/>
-		<rdfs:range rdf:resource="#Obavestenje"/>
 	</rdfs:Property>
 	
+	<rdfs:Property rdf:ID="mesto">
+		<rdfs:domain rdf:resource="#Zalba"/>
+	</rdfs:Property>
+	
+	<rdfs:Property rdf:ID="tip">
+		<rdfs:domain rdf:resource="#Zalba"/>
+	</rdfs:Property>
+	
+	<rdfs:Property rdf:ID="podneo">
+		<rdfs:domain rdf:resource="#Zalba"/>
+	</rdfs:Property>
+	
+	<rdfs:Property rdf:ID="izdatoU">
+		<rdfs:domain rdf:resource="#Zalba"/>
+	</rdfs:Property>
+	
+	<rdfs:Property rdf:ID="zahtev">
+		<rdfs:domain rdf:resource="#Zalba"/>
+		<rdfs:range rdf:resource="#Zahtev"/>
+	</rdfs:Property>
+	
+	<rdfs:Property rdf:ID="odluka">
+		<rdfs:domain rdf:resource="#Zalba"/>
+		<rdfs:range rdf:resource="#Odluka"/>
+	</rdfs:Property>
 </rdf:RDF>
