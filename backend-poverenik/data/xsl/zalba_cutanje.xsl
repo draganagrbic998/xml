@@ -152,7 +152,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 					
 					<p class="details">
 						<span class="line">
-							<xsl:copy-of select="osnova:Detalji"></xsl:copy-of>
+				            <xsl:apply-templates select="osnova:Detalji"></xsl:apply-templates>
 		               	</span>
 						<span class="line">
 						
@@ -229,7 +229,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 						<xsl:variable name="dan" select="substring-after(substring-after(osnova:datum, '-'), '-')"></xsl:variable>
 						<xsl:variable name="mesec" select="substring-before(substring-after(osnova:datum, '-'), '-')"></xsl:variable>
 						<xsl:variable name="godina" select="substring(substring-before(osnova:datum, '-'), 3, 2)"></xsl:variable>
-						У <span class="dotted">&#160;<xsl:variable select="osnova:Gradjanin/osnova:Adresa/osnova:mesto"></xsl:variable>&#160;</span>,
+						У <span class="dotted">&#160;<xsl:value-of select="osnova:Gradjanin/osnova:Adresa/osnova:mesto"></xsl:value-of>&#160;</span>,
 						дана 
 						<span class="dotted">
 							<xsl:value-of select="concat($dan, concat('.', concat($mesec, '.')))"></xsl:value-of>
@@ -248,5 +248,13 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 		</html>
 	
 	</xsl:template>
+	
+    <xsl:template match="osnova:bold">
+        <b><xsl:apply-templates select="@*|node()"></xsl:apply-templates></b>
+    </xsl:template>
+    
+    <xsl:template match="osnova:italic">
+        <i><xsl:apply-templates select="@*|node()"></xsl:apply-templates></i>
+    </xsl:template>
 
 </xsl:stylesheet>

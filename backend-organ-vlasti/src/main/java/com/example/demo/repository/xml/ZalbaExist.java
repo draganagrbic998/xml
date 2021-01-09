@@ -14,18 +14,20 @@ public class ZalbaExist {
 	@Autowired
 	private ExistManager existManager;
 	
-	public static final String ZALBE_COLLECTION = Constants.COLLECTIONS_PREFIX + "/zalbe";
+	public static final String ZALBA_COLLECTION = Constants.COLLECTIONS_PREFIX + "/zalbe";
+	public static final String ZALBA_SCHEMA = Constants.XSD_FOLDER + "zalba.xsd";
+
 	
 	public void save(String documentId, Document document) {
-		this.existManager.save(ZALBE_COLLECTION, documentId, document);
+		this.existManager.save(ZALBA_COLLECTION, documentId, document, ZALBA_SCHEMA);
 	}
 	
 	public Document load(String documentId) {
-		return this.existManager.load(ZALBE_COLLECTION, documentId);
+		return this.existManager.load(ZALBA_COLLECTION, documentId);
 	}
 
 	public ResourceSet retrieve(String xpathExp) {
-		return this.existManager.retrieve(ZALBE_COLLECTION, xpathExp);
+		return this.existManager.retrieve(ZALBA_COLLECTION, xpathExp);
 	}
 		
 }

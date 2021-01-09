@@ -34,14 +34,6 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="OrganVlasti">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="naziv" type="osnova:TRequiredString"/>
-                <xs:element ref="osnova:Adresa"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
     <xs:element name="Korisnik">
         <xs:complexType>
             <xs:sequence>
@@ -52,9 +44,17 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
+    <xs:element name="OrganVlasti">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="naziv" type="osnova:TRequiredString"/>
+                <xs:element ref="osnova:Adresa"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
     <xs:complexType name="TDokument">
         <xs:sequence>
-            <xs:element name="broj" type="osnova:TRequiredString"/>
+            <xs:element name="broj" type="xs:positiveInteger"/>
             <xs:element name="datum" type="xs:date"/>
         </xs:sequence>
     </xs:complexType>
@@ -64,14 +64,16 @@
                 <xs:sequence>
                     <xs:element ref="osnova:Gradjanin"/>
                     <xs:element ref="osnova:OrganVlasti"/>
-                    <xs:element name="Detalji">
-                        <xs:complexType mixed="true">
-                            <xs:choice maxOccurs="unbounded" minOccurs="0">
-                                <xs:element name="bold" type="osnova:TRequiredString"/>
-                                <xs:element name="italic" type="osnova:TRequiredString"/>
-                            </xs:choice>
-                        </xs:complexType>
-                    </xs:element>
+                    <xs:element ref="osnova:Detalji"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TPodaci">
+        <xs:complexContent>
+            <xs:extension base="osnova:TDokument">
+                <xs:sequence>
+                    <xs:element ref="osnova:Detalji"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>

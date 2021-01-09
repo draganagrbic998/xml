@@ -12,12 +12,12 @@ public class SOAPConstants {
 	public static final String CREATE_RESENJE_ELEMENT = "createResenje";
 	
 	public static final String GET_ZAHTEV_NAMESPACE = "http://demo.example.com/ws/zahtev";
-	public static final String GET_ZAHTEV_ELEMENT = "createZahtevRequest";
-	public static final String GET_ZAHTEV_SERVICE = "http://localhost:8081/ws/createZahtev";
+	public static final String GET_ZAHTEV_ELEMENT = "getZahtevRequest";
+	public static final String GET_ZAHTEV_SERVICE = "http://localhost:8081/ws/getZahtev";
 
 	public static final String GET_ODLUKA_NAMESPACE = "http://demo.example.com/ws/odluka";
-	public static final String GET_ODLUKA_ELEMENT = "createOdlukaRequest";
-	public static final String GET_ODLUKA_SERVICE = "http://localhost:8081/ws/createOdluka";
+	public static final String GET_ODLUKA_ELEMENT = "getOdlukaRequest";
+	public static final String GET_ODLUKA_SERVICE = "http://localhost:8081/ws/getOdluka";
 
 
 }

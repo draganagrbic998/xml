@@ -106,13 +106,17 @@ export class XonomyService {
     for (let i = 0; i < italics.length; ++i){
       italics.item(i).removeAttribute('xml:space');
     }
+    const detalji = document.getElementsByTagName('Detalji');
+    for (let i = 0; i < detalji.length; ++i){
+      detalji.item(i).removeAttribute('xml:space');
+    }
     const zakoni = document.getElementsByTagName('zakon');
     for (let i = 0; i < zakoni.length; ++i){
       zakoni.item(i).removeAttribute('xml:space');
     }
-    const detalji = document.getElementsByTagName('Detalji');
-    for (let i = 0; i < detalji.length; ++i){
-      detalji.item(i).removeAttribute('xml:space');
+    const pasusi = document.getElementsByTagName('Pasus');
+    for (let i = 0; i < pasusi.length; ++i){
+      pasusi.item(i).removeAttribute('xml:space');
     }
     const odluke = document.getElementsByTagName('Odluka');
     for (let i = 0; i < odluke.length; ++i){
@@ -125,10 +129,6 @@ export class XonomyService {
     const obrazlozenja = document.getElementsByTagName('Obrazlozenje');
     for (let i = 0; i < obrazlozenja.length; ++i){
       obrazlozenja.item(i).removeAttribute('xml:space');
-    }
-    const pasusi = document.getElementsByTagName('Pasus');
-    for (let i = 0; i < pasusi.length; ++i){
-      pasusi.item(i).removeAttribute('xml:space');
     }
 
     return serializer.serializeToString(document);

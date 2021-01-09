@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
-    targetNamespace="https://github.com/draganagrbic998/xml/odgovor"
+    targetNamespace="https://github.com/draganagrbic998/xml/odluka"
     xmlns:osnova="https://github.com/draganagrbic998/xml/osnova"
-    xmlns:odgovor="https://github.com/draganagrbic998/xml/odgovor">
+    xmlns:odgovor="https://github.com/draganagrbic998/xml/odluka">
     <xs:import namespace="https://github.com/draganagrbic998/xml/osnova" schemaLocation="osnova.xsd"/>
     <xs:complexType name="TOdluka" abstract="true">
         <xs:complexContent>
@@ -25,14 +25,14 @@
                                 <xs:element name="pocetak">
                                     <xs:simpleType>
                                         <xs:restriction base="xs:string">
-                                            <xs:enumeration value="\d{1,2}:\d{1,2}"/>
+                                            <xs:pattern value="\d{1,2}:\d{1,2}"/>
                                         </xs:restriction>
                                     </xs:simpleType>
                                 </xs:element>
                                 <xs:element name="kraj">
                                     <xs:simpleType>
                                         <xs:restriction base="xs:string">
-                                            <xs:enumeration value="\d{1,2}:\d{1,2}"/>
+                                            <xs:pattern value="\d{1,2}:\d{1,2}"/>
                                         </xs:restriction>
                                     </xs:simpleType>
                                 </xs:element>

@@ -24,7 +24,7 @@ public class OdgovorService {
 			
 	public void save(String xml) {
 		Document document = this.odgovorMapper.map(xml);
-		String brojZalbe = document.getElementsByTagNameNS(Namespaces.ODGOVOR, "brojZalbe").item(0).getTextContent();
+		String brojZalbe = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
 		Document zalbaDocument = this.zalbaExist.load(brojZalbe);
 		zalbaDocument.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.odgovoreno + "");
 		this.zalbaExist.save(brojZalbe, zalbaDocument);

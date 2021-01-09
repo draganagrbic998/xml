@@ -22,19 +22,27 @@ export class ZalbaService {
   private readonly API_ZALBE = `${environment.baseUrl}/${environment.apiZalbe}`;
 
   private zalbaCutanjeToXml(zalba: ZalbaCutanje): string{
-    let result = `
+    let result;
+    if (zalba.tipCutanja !== 'nije postupio u celosti'){
+      result = `
       ${zalba.detalji}
       <zalba:PodaciZahteva>
-        <broj>${zalba.brojZahteva}</broj>
+        <broj>${zalba.brojDokumenta}</broj>
       </zalba:PodaciZahteva>
       <zalba:tipCutanja>${zalba.tipCutanja}</zalba:tipCutanja>
     `;
-    if (zalba.brojOdluke){
-      result += `
-        <zalba:PodaciOdluke>
-          <broj>${zalba.brojOdluke}</broj>
-        </zalba:PodaciOdluke>
-      `;
+    }
+    else{
+      result = `
+      ${zalba.detalji}
+      <zalba:PodaciZahteva>
+        <broj></broj>
+      </zalba:PodaciZahteva>
+      <zalba:tipCutanja>${zalba.tipCutanja}</zalba:tipCutanja>
+      <zalba:PodaciOdluke>
+        <broj>${zalba.brojDokumenta}</broj>
+      </zalba:PodaciOdluke>
+    `;
     }
     return `
       <zalba:Zalba
@@ -56,10 +64,10 @@ export class ZalbaService {
     xmlns:xsi="${XSI}" xsi:type="zalba:TZalbaOdluka">
       ${zalba.detalji}
       <zalba:PodaciZahteva>
-        <broj>${zalba.brojZahteva}</broj>
+        <broj></broj>
       </zalba:PodaciZahteva>
       <zalba:PodaciOdluke>
-      <broj>${zalba.brojZahteva}</broj>
+      <broj>${zalba.brojOdluke}</broj>
       </zalba:PodaciOdluke>
     </zalba:Zalba>
   `;

@@ -42,6 +42,7 @@ public class OdlukaMapper {
 	private XSLTransformer xslTransformer;
 
 	public static final SimpleDateFormat sdf = new SimpleDateFormat(Constants.DATE_FORMAT);
+	public static final SimpleDateFormat sdf2 = new SimpleDateFormat("dd.MM.yyy.");
 		
 	public Document map(String xml) {
 		Document document = this.domParser.buildDocument(xml);
@@ -64,6 +65,14 @@ public class OdlukaMapper {
 		Node datumZahteva = document.createElementNS(Namespaces.ODLUKA, "odluka:datumZahteva");
 		datumZahteva.setTextContent(zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).getTextContent());
 		odluka.insertBefore(datumZahteva, odluka.getElementsByTagNameNS(Namespaces.ODLUKA, "brojZahteva").item(0));
+		
+		try {
+			String datumUvida = sdf.format(sdf2.parse(document.getElementsByTagNameNS(Namespaces.ODLUKA, "datumUvida").item(0).getTextContent()));
+			document.getElementsByTagNameNS(Namespaces.ODLUKA, "datumUvida").item(0).setTextContent(datumUvida);
+		}
+		catch(Exception e) {
+			;
+		}
 		return document;
 	}
 	

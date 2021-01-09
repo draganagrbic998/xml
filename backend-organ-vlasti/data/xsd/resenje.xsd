@@ -17,12 +17,11 @@
                             </xs:restriction>
                         </xs:simpleType>
                     </xs:element>
-                    <xs:element name="Odbrana">
+                    <xs:element name="Odbrana" minOccurs="0">
                         <xs:complexType>
                             <xs:sequence>
-                                <xs:element name="datumSlanja" type="xs:date"/>
-                                <xs:element minOccurs="0" name="datumOdbrane" type="xs:date"/>
-                                <xs:element minOccurs="0" name="odgovorOdbrane"
+                                <xs:element minOccurs="1" name="datumOdbrane" type="xs:date"/>
+                                <xs:element minOccurs="1" name="odgovorOdbrane"
                                     type="osnova:TRequiredString"/>
                             </xs:sequence>
                         </xs:complexType>
@@ -37,32 +36,26 @@
                     </xs:element>
                     <xs:element ref="osnova:Osoba"/>
                     <xs:element ref="osnova:OrganVlasti"/>
-                    <xs:element name="PodaciZahteva">
+                    <xs:element name="PodaciZahteva" type="osnova:TPodaci"> </xs:element>
+                    <xs:element name="PodaciZalbe">
                         <xs:complexType>
                             <xs:sequence>
-                                <xs:element name="mejl" type="osnova:TRequiredString"/>
-                                <xs:element name="datumZahteva" type="xs:date"/>
-                                <xs:element name="datumZalbe" type="xs:date"/>
-                                <xs:element ref="osnova:Detalji"/>
-                            </xs:sequence>
-                        </xs:complexType>
-                    </xs:element>
-                    <xs:element name="PodaciOdgovora" minOccurs="0">
-                        <xs:complexType>
-                            <xs:sequence>
-                                <xs:element name="tipOdgovora">
+                                <xs:element name="tipZalbe">
                                     <xs:simpleType>
                                         <xs:restriction base="xs:string">
-                                            <xs:enumeration value="obavestenje"/>
+                                            <xs:enumeration value="cutanje"/>
+                                            <xs:enumeration value="delimicnost"/>
                                             <xs:enumeration value="odbijanje"/>
                                         </xs:restriction>
                                     </xs:simpleType>
                                 </xs:element>
-                                <xs:element name="brojOdgovora" type="osnova:TRequiredString"/>
-                                <xs:element name="datumOdgovora" type="xs:date"/>
-                                <xs:element ref="osnova:Detalji"/>
+                                <xs:element name="brojZalbe" type="xs:positiveInteger"/>
+                                <xs:element name="datumZalbe" type="xs:date"/>
+                                <xs:element name="datumProsledjivanja" type="xs:date"/>
                             </xs:sequence>
                         </xs:complexType>
+                    </xs:element>
+                    <xs:element name="PodaciOdluke" minOccurs="0" type="osnova:TPodaci">
                     </xs:element>
                 </xs:sequence>
             </xs:extension>
@@ -88,4 +81,5 @@
             </xs:element>
         </xs:sequence>
     </xs:complexType>
+    <xs:element name="Resenje" type="resenje:TResenje"/>
 </xs:schema>

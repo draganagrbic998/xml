@@ -14,19 +14,20 @@ public class OdgovorExist {
 	@Autowired
 	private ExistManager existManager;
 
-	public static final String ODGOVORI_COLLECTION = Constants.COLLECTIONS_PREFIX + "/odgovori";
+	public static final String ODGOVOR_COLLECTION = Constants.COLLECTIONS_PREFIX + "/odgovori";
+	public static final String ODGOVOR_SCHEMA = Constants.XSD_FOLDER + "odgovor.xsd";
 	
 	public void save(String documentId, Document document) {
-		this.existManager.save(ODGOVORI_COLLECTION, documentId, document);
+		this.existManager.save(ODGOVOR_COLLECTION, documentId, document, ODGOVOR_SCHEMA);
 	}
 	
 	public ResourceSet retrieve(String xpathExp) {
-		return this.existManager.retrieve(ODGOVORI_COLLECTION, xpathExp);
+		return this.existManager.retrieve(ODGOVOR_COLLECTION, xpathExp);
 	}
 	
 	public Document load(String documentId) {
 		try {
-			return this.existManager.load(ODGOVORI_COLLECTION, documentId);
+			return this.existManager.load(ODGOVOR_COLLECTION, documentId);
 		}
 		catch(Exception e) {
 			return null;

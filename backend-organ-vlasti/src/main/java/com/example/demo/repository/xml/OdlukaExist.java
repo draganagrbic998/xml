@@ -13,19 +13,20 @@ public class OdlukaExist {
 
 	@Autowired
 	private ExistManager existManager;
-	
-	public static final String ODLUKE_COLLECTION = Constants.COLLECTIONS_PREFIX + "/odluke";
+		
+	public static final String ODLUKA_COLLECTION = Constants.COLLECTIONS_PREFIX + "/odluke";
+	public static final String ODLUKA_SCHEMA = Constants.XSD_FOLDER + "odluka.xsd";
 	
 	public String save(String documentId, Document document) {
-		return this.existManager.save(ODLUKE_COLLECTION, documentId, document);
+		return this.existManager.save(ODLUKA_COLLECTION, documentId, document, ODLUKA_SCHEMA);
 	}
 
 	public Document load(String documentId) {
-		return this.existManager.load(ODLUKE_COLLECTION, documentId);
+		return this.existManager.load(ODLUKA_COLLECTION, documentId);
 	}
 	
 	public ResourceSet retrieve(String xpathExp) {
-		return this.existManager.retrieve(ODLUKE_COLLECTION, xpathExp);
+		return this.existManager.retrieve(ODLUKA_COLLECTION, xpathExp);
 	}
 	
 }

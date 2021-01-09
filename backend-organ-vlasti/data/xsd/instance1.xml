@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odgovor:Odluka xmlns:osnova="https://github.com/draganagrbic998/xml/osnova"
+ xmlns:odgovor="https://github.com/draganagrbic998/xml/odluka"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="https://github.com/draganagrbic998/xml/odluka file:/C:/Users/Dragana/Desktop/projekti/xml/backend-organ-vlasti/data/xsd/odluka.xsd" xsi:type="odgovor:TObavestenje">
+    <osnova:broj>1554036745</osnova:broj>
+    <osnova:datum>2021-07-05</osnova:datum>
+    <osnova:Gradjanin>
+        <osnova:Osoba>
+            <osnova:mejl>dlj0xMaRZLMO_B</osnova:mejl>
+            <osnova:ime>oJQ5pfOrARMBgYNfQyg5.Aq6zIJ7</osnova:ime>
+            <osnova:prezime>f</osnova:prezime>
+            <osnova:potpis>80828984738272708782657877728571727783907184799087846884679074728467786581657289677282886982678587778572</osnova:potpis>
+        </osnova:Osoba>
+        <osnova:Adresa>
+            <osnova:mesto>T4yozlHy71anQq2jlRxBtHndBHHUY</osnova:mesto>
+            <osnova:ulica>u3EKZLj0.056SQOJHsgABc2Ms</osnova:ulica>
+            <osnova:broj>UWCj28Jg_bziaxkkuT</osnova:broj>
+        </osnova:Adresa>
+    </osnova:Gradjanin>
+    <osnova:OrganVlasti>
+        <osnova:naziv>Bb5fIlNInz7JFi8EK</osnova:naziv>
+        <osnova:Adresa>
+            <osnova:mesto>QXoN3R2PAI1WhpFnaIR0UXpUivE9</osnova:mesto>
+            <osnova:ulica>gaT11zavjBjS</osnova:ulica>
+            <osnova:broj>bpSj</osnova:broj>
+        </osnova:Adresa>
+    </osnova:OrganVlasti>
+    <osnova:Detalji/>
+    <odgovor:datumZahteva>2022-12-07</odgovor:datumZahteva>
+    <odgovor:brojZahteva>237847374</odgovor:brojZahteva>
+    <odgovor:Uvid>
+        <odgovor:datumUvida>2022-09-02</odgovor:datumUvida>
+        <odgovor:pocetak>\d{1,2}:\d{1,2}</odgovor:pocetak>
+        <odgovor:kraj>\d{1,2}:\d{1,2}</odgovor:kraj>
+        <odgovor:kancelarija>h4il4VgB-D</odgovor:kancelarija>
+    </odgovor:Uvid>
+    <odgovor:kopija>2115201034</odgovor:kopija>
+</odgovor:Odluka>

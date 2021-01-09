@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
-    targetNamespace="http://github.com/draganagrbic998/xml/odgovor"
-    xmlns:odgovor="http://github.com/draganagrbic998/xml/odgovor"
+    targetNamespace="https://github.com/draganagrbic998/xml/odgovor"
+    xmlns:odgovor="https://github.com/draganagrbic998/xml/odgovor"
     xmlns:osnova="https://github.com/draganagrbic998/xml/osnova">
     <xs:import namespace="https://github.com/draganagrbic998/xml/osnova" schemaLocation="osnova.xsd"/>
     <xs:complexType name="TOdgovor">
@@ -16,4 +16,5 @@
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
+    <xs:element name="Odgovor" type="odgovor:TOdgovor"/>
 </xs:schema>

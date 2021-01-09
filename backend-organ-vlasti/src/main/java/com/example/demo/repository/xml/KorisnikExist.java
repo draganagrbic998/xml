@@ -12,15 +12,16 @@ public class KorisnikExist {
 
 	@Autowired
 	private ExistManager existManager;
-		
-	public static final String KORISNICI_COLLECTION = Constants.COLLECTIONS_PREFIX + "/korisnici";
+			
+	public static final String KORISNIK_COLLECTION = Constants.COLLECTIONS_PREFIX + "/korisnici";
+	public static final String KORISNIK_SCHEMA = Constants.XSD_FOLDER + "osnova.xsd";
 	
 	public void save(String documentId, Document document) {
-		this.existManager.save(KORISNICI_COLLECTION, documentId, document);
+		this.existManager.save(KORISNIK_COLLECTION, documentId, document, KORISNIK_SCHEMA);
 	}
 	
 	public Document load(String documentId) {
-		return this.existManager.load(KORISNICI_COLLECTION, documentId);
+		return this.existManager.load(KORISNIK_COLLECTION, documentId);
 	}
 		
 }

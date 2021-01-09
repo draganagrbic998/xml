@@ -5,7 +5,6 @@ import { SNACKBAR_CLOSE, SNACKBAR_ERROR, SNACKBAR_ERROR_OPTIONS, SNACKBAR_SUCCES
 import { ZalbaCutanje } from 'src/app/models/zalba-cutanje';
 import { XonomyService } from 'src/app/services/xonomy/xonomy.service';
 import { ZalbaService } from 'src/app/services/zalba/zalba.service';
-import { ZalbaValidatorService } from './zalba-validator.service';
 
 declare const Xonomy: any;
 
@@ -18,7 +17,6 @@ export class ZalbaCutanjeFormComponent implements AfterViewInit {
 
   constructor(
     private zalbaService: ZalbaService,
-    private zalbaValidator: ZalbaValidatorService,
     private xonomyService: XonomyService,
     private snackBar: MatSnackBar
   ) { }
@@ -26,12 +24,11 @@ export class ZalbaCutanjeFormComponent implements AfterViewInit {
   savePending = false;
   zalbaForm: FormGroup = new FormGroup({
     naziv: new FormControl('', [Validators.required, Validators.pattern(new RegExp('\\S'))]),
-    brojZahteva: new FormControl('', [Validators.required, Validators.pattern(/^[0-9]\d*$/)]),
-    brojOdluke: new FormControl('', [Validators.pattern(/^[0-9]\d*$/), this.zalbaValidator.brojOdluke()]),
+    brojDokumenta: new FormControl('', [Validators.required, Validators.pattern(/^[0-9]\d*$/)]),
     tipCutanja: new FormControl('nije postupio', [Validators.required]),
   });
 
-  zalbaDelimicnost(): boolean{
+  get zalbaDelimicnost(): boolean{
     return this.zalbaForm.value.tipCutanja === 'nije postupio u celosti';
   }
 
@@ -59,12 +56,6 @@ export class ZalbaCutanjeFormComponent implements AfterViewInit {
     const detaljiEditor = document.getElementById('detaljiEditor');
     const detaljiSpecifikacija = this.xonomyService.detaljiSpecifikacija;
     Xonomy.render(detaljiXml, detaljiEditor, detaljiSpecifikacija);
-
-    this.zalbaForm.get('tipCutanja').valueChanges.subscribe(
-      () => {
-        this.zalbaForm.get('brojOdluke').updateValueAndValidity();
-      }
-    );
   }
 
 }

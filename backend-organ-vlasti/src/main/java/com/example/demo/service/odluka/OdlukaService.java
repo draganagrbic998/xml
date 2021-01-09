@@ -30,7 +30,6 @@ import com.example.demo.repository.xml.ZahtevExist;
 import com.example.demo.service.KorisnikService;
 import com.example.demo.service.email.Email;
 import com.example.demo.service.email.EmailService;
-import com.ibm.icu.text.SimpleDateFormat;
 
 @Service
 public class OdlukaService {
@@ -58,7 +57,6 @@ public class OdlukaService {
 		
 	@Autowired
 	private EmailService emailService;
-	private static final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyy.");
 
 	private static final String XSL_FO_PATH_ODBIJANJE = Constants.XSL_FOLDER + File.separatorChar + "odbijanje_fo.xsl";
 	private static final String XSL_PATH_ODBIJANJE = Constants.XSL_FOLDER + File.separatorChar + "/odbijanje.xsl";
@@ -187,7 +185,7 @@ public class OdlukaService {
 			String ulica = document.getElementsByTagNameNS(Namespaces.OSNOVA, "ulica").item(1).getTextContent();
 			String broj = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(1).getTextContent();
 			String sediste = ulica + " " + broj + ", " + mesto;
-			String datumZahteva = sdf.format(OdlukaMapper.sdf.parse(document.getElementsByTagNameNS(Namespaces.ODLUKA, "datumZahteva").item(0).getTextContent()));
+			String datumZahteva = OdlukaMapper.sdf2.format(OdlukaMapper.sdf.parse(document.getElementsByTagNameNS(Namespaces.ODLUKA, "datumZahteva").item(0).getTextContent()));
 			
 			Email email = new Email();
 			email.setTo(mejl);

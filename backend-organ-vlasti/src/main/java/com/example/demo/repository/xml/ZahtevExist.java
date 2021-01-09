@@ -13,19 +13,20 @@ public class ZahtevExist {
 
 	@Autowired
 	private ExistManager existManager;
-		
-	public static final String ZAHTEVI_COLLECTION = Constants.COLLECTIONS_PREFIX + "/zahtevi";
+			
+	public static final String ZAHTEV_COLLECTION = Constants.COLLECTIONS_PREFIX + "/zahtevi";
+	public static final String ZAHTEV_SCHEMA = Constants.XSD_FOLDER + "zahtev.xsd";
 	
 	public void save(String documentId, Document document) {
-		this.existManager.save(ZAHTEVI_COLLECTION, documentId, document);
+		this.existManager.save(ZAHTEV_COLLECTION, documentId, document, ZAHTEV_SCHEMA);
 	}
 
 	public Document load(String documentId) {
-		return this.existManager.load(ZAHTEVI_COLLECTION, documentId);
+		return this.existManager.load(ZAHTEV_COLLECTION, documentId);
 	}
 	
 	public ResourceSet retrieve(String xpathExp) {
-		return this.existManager.retrieve(ZAHTEVI_COLLECTION, xpathExp);
+		return this.existManager.retrieve(ZAHTEV_COLLECTION, xpathExp);
 	}
 	
 }

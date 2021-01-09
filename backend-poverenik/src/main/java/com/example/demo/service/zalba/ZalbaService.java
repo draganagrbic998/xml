@@ -103,7 +103,7 @@ public class ZalbaService {
 		try {
 			Document document = this.zalbaExist.load(broj);
 			String xslFoPath;
-			if (ZalbaMapper.getTipZalbe(document).equals(TipZalbe.cutanje)) {
+			if (ZalbaMapper.getTipZalbe(document).equals(TipZalbe.odluka)) {
 				xslFoPath = XSL_FO_PATH_ODLUKA;
 			} 
 			else {
