@@ -6,6 +6,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import org.apache.jena.query.ResultSet;
+import org.apache.jena.query.ResultSetFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -16,10 +18,12 @@ import org.xmldb.api.base.ResourceSet;
 import com.example.demo.common.Constants;
 import com.example.demo.common.MyException;
 import com.example.demo.common.Namespaces;
+import com.example.demo.enums.MetadataType;
 import com.example.demo.enums.StatusZalbe;
 import com.example.demo.model.Korisnik;
 import com.example.demo.parser.DOMParser;
 import com.example.demo.parser.XSLTransformer;
+import com.example.demo.repository.rdf.ResenjeRDF;
 import com.example.demo.repository.xml.ResenjeExist;
 import com.example.demo.repository.xml.ZalbaExist;
 import com.example.demo.service.KorisnikService;
@@ -37,6 +41,9 @@ public class ResenjeService {
 
 	@Autowired
 	private KorisnikService korisnikService;
+	
+	@Autowired
+	private ResenjeRDF resenjeRDF;
 	
 	@Autowired
 	private ResenjeMapper resenjeMapper;
@@ -61,6 +68,7 @@ public class ResenjeService {
 		zalbaDocument.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.reseno + "");
 		this.zalbaExist.save(brojZalbe, zalbaDocument);
 		this.resenjeExist.save(null, document);
+		this.resenjeRDF.save(this.resenjeMapper.mapToModel(document));
 		this.soapService.sendSOAPMessage(this.resenjeMapper.map(document), TipDokumenta.resenje);
 	}
 	
@@ -88,6 +96,25 @@ public class ResenjeService {
 			Document document = this.resenjeExist.load(broj);
 			ByteArrayOutputStream out = this.xslTransformer.generatePdf(this.domParser.buildXml(document), XSL_FO_PATH);
 			Path file = Paths.get(GEN_PATH + broj + ".pdf");
+			Files.write(file, out.toByteArray());
+			return new UrlResource(file.toUri());
+		}
+		catch(Exception e) {
+			throw new MyException(e);
+		}
+	}
+	
+	public Resource generateMetadata(String broj, MetadataType type) {
+		try {
+			ResultSet results = this.resenjeRDF.retrieve(broj);
+			ByteArrayOutputStream out = new ByteArrayOutputStream();
+			if (type.equals(MetadataType.xml)) {
+				ResultSetFormatter.outputAsXML(out, results);
+			}
+			else {
+				ResultSetFormatter.outputAsJSON(out, results);
+			}
+			Path file = Paths.get(GEN_PATH + broj + "_metadata." + type);
 			Files.write(file, out.toByteArray());
 			return new UrlResource(file.toUri());
 		}
