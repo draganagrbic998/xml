@@ -96,7 +96,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 						<xsl:variable name="godinaOdluke" select="substring-before(zalba:PodaciOdluke/osnova:datum, '-')"></xsl:variable>
 						Број 
 						<fo:inline border-bottom="1px dotted black">
-							<xsl:value-of select="zalba:PodaciOdluke/osnova:brojOdluke"></xsl:value-of>
+							<xsl:value-of select="zalba:PodaciOdluke/osnova:broj"></xsl:value-of>
 						</fo:inline> 
 						од 
 						<fo:inline border-bottom="1px dotted black">
@@ -123,7 +123,9 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
                		</fo:block>
                		
            			<fo:block>
-						<xsl:value-of select="osnova:Detalji"></xsl:value-of>
+				        <xsl:copy>
+				            <xsl:apply-templates select="osnova:Detalji"></xsl:apply-templates>
+				        </xsl:copy>
 					</fo:block>					
 					<fo:block-container position="absolute" top="11.2cm">
               			<fo:block border-bottom="1px dotted black">
@@ -165,7 +167,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 										&#160;
 										&#160;
 									</fo:block>
-									У <fo:inline border-bottom="1px dotted black">&#160;<xsl:variable select="osnova:Gradjanin/osnova:Adresa/osnova:mesto"></xsl:variable>&#160;</fo:inline>,
+									У <fo:inline border-bottom="1px dotted black">&#160;<xsl:value-of select="osnova:Gradjanin/osnova:Adresa/osnova:mesto"></xsl:value-of>&#160;</fo:inline>,
 								</fo:block>
 								<fo:block margin-top="5px">
 									дана 
@@ -250,4 +252,13 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
             </fo:page-sequence>
         </fo:root>
     </xsl:template>
+    
+    <xsl:template match="osnova:bold">
+        <fo:inline font-weight="bold"><xsl:apply-templates select="@*|node()"></xsl:apply-templates></fo:inline>
+    </xsl:template>
+    
+    <xsl:template match="osnova:italic">
+        <fo:inline font-style="italic"><xsl:apply-templates select="@*|node()"></xsl:apply-templates></fo:inline>
+    </xsl:template>
+    
 </xsl:stylesheet>

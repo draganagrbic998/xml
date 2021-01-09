@@ -8,7 +8,6 @@ import org.exist.xmldb.EXistResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.Database;
@@ -39,17 +38,33 @@ public class ExistManager {
 		}
 	}
 	
+	public String getDocumentId(String collectionId) {
+		Collection collection = null;
+		try { 
+			this.createConnection();
+			collection = this.getCollection(collectionId, 0);
+			String[] array = collection.listResources();
+			return (Arrays.asList(array).stream().mapToInt(str -> Integer.parseInt(str)).max().orElse(0) + 1) + "";
+		}
+		catch(Exception e) {
+			throw new MyException(e);
+		}
+		finally {
+			try {
+				collection.close();
+			}
+			catch(Exception e) {
+				throw new MyException(e);
+			}
+		}
+	}
+	
 	public String save(String collectionId, String documentId, Document document) {
 		Collection collection = null;
 		XMLResource resource = null;
 		try { 
 			this.createConnection();
 			collection = this.getCollection(collectionId, 0);
-			if (documentId == null) {
-				String[] array = collection.listResources();
-				documentId = (Arrays.asList(array).stream().mapToInt(str -> Integer.parseInt(str)).max().orElse(0) + 1) + "";
-				((Element) document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0)).setTextContent(documentId);
-			}
 			resource = (XMLResource) collection.createResource(documentId, XMLResource.RESOURCE_TYPE);
 			resource.setContentAsDOM(document);
 			collection.storeResource(resource);
@@ -99,9 +114,9 @@ public class ExistManager {
 			XPathQueryService xpathService = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
 			xpathService.setProperty(OutputKeys.INDENT, "yes");
 			xpathService.setNamespace("", Namespaces.OSNOVA);
+			xpathService.setNamespace("odgovor", Namespaces.ODGOVOR);
 			xpathService.setNamespace("zalba", Namespaces.ZALBA);
 			xpathService.setNamespace("resenje", Namespaces.RESENJE);
-			xpathService.setNamespace("odgovor", Namespaces.ODGOVOR);
 			return xpathService.query(xpathExp);
 		} 
 		catch(Exception e) {

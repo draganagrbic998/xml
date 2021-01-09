@@ -26,12 +26,11 @@ export class ZalbaCutanjeFormComponent implements AfterViewInit {
   savePending = false;
   zalbaForm: FormGroup = new FormGroup({
     naziv: new FormControl('', [Validators.required, Validators.pattern(new RegExp('\\S'))]),
-    brojZahteva: new FormControl('', [Validators.required, Validators.pattern(/^[0-9]\d*$/)]),
-    brojOdluke: new FormControl('', [Validators.pattern(/^[0-9]\d*$/), this.zalbaValidator.brojOdluke()]),
+    brojDokumenta: new FormControl('', [Validators.required, Validators.pattern(/^[0-9]\d*$/)]),
     tipCutanja: new FormControl('nije postupio', [Validators.required]),
   });
 
-  zalbaDelimicnost(): boolean{
+  get zalbaDelimicnost(): boolean{
     return this.zalbaForm.value.tipCutanja === 'nije postupio u celosti';
   }
 

@@ -27,10 +27,10 @@ export class ZahtevService {
       <zahtev:tipZahteva>${zahtev.tipZahteva}</zahtev:tipZahteva>
     `;
     if (zahtev.tipZahteva === 'dostava'){
-      xml += '<zahtev:tipDostave>${zahtev.tipDostave}</zahtev:tipDostave>';
+      xml += `<zahtev:tipDostave>${zahtev.tipDostave}</zahtev:tipDostave>`;
     }
     if (zahtev.tipDostave === 'ostalo'){
-      xml += '<zahtev:opisDostave>${zahtev.opisDostave}</zahtev:opisDostave>';
+      xml += `<zahtev:opisDostave>${zahtev.opisDostave}</zahtev:opisDostave>`;
     }
 
     return `

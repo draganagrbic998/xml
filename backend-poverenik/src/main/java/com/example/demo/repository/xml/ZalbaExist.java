@@ -6,7 +6,9 @@ import org.w3c.dom.Document;
 import org.xmldb.api.base.ResourceSet;
 
 import com.example.demo.common.Constants;
+import com.example.demo.common.Namespaces;
 import com.example.demo.exist.ExistManager;
+import com.example.demo.parser.SchemaValidator;
 
 @Repository
 public class ZalbaExist {
@@ -14,18 +16,27 @@ public class ZalbaExist {
 	@Autowired
 	private ExistManager existManager;
 	
-	public static final String ZALBE_COLLECTION = Constants.COLLECTIONS_PREFIX + "/zalbe";
+	@Autowired
+	private SchemaValidator schemaValidator;
+	
+	public static final String ZALBA_COLLECTION = Constants.COLLECTIONS_PREFIX + "/zalbe";
+	public static final String ZALBA_SCHEMA = Constants.XSD_FOLDER + "zalba.xsd";
 	
 	public void save(String documentId, Document document) {
-		this.existManager.save(ZALBE_COLLECTION, documentId, document);
+		if (documentId == null) {
+			documentId = this.existManager.getDocumentId(ZALBA_COLLECTION);
+			document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).setTextContent(documentId);
+		}
+		this.schemaValidator.validate(document, ZALBA_SCHEMA);
+		this.existManager.save(ZALBA_COLLECTION, documentId, document);
 	}
 	
 	public ResourceSet retrieve(String xpathExp) {
-		return this.existManager.retrieve(ZALBE_COLLECTION, xpathExp);
+		return this.existManager.retrieve(ZALBA_COLLECTION, xpathExp);
 	}
 	
 	public Document load(String documentId) {
-		return this.existManager.load(ZALBE_COLLECTION, documentId);
+		return this.existManager.load(ZALBA_COLLECTION, documentId);
 	}
 	
 }

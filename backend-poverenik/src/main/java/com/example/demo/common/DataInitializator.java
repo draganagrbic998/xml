@@ -32,12 +32,12 @@ public class DataInitializator {
 
 	@EventListener(ContextRefreshedEvent.class)
 	public void dataInit() {
-		this.existManager.dropCollection(KorisnikExist.KORISNICI_COLLECTION);
-		this.existManager.dropCollection(ZalbaExist.ZALBE_COLLECTION);
+		this.existManager.dropCollection(KorisnikExist.KORISNIK_COLLECTION);
+		this.existManager.dropCollection(ZalbaExist.ZALBA_COLLECTION);
 		this.existManager.dropCollection(ResenjeExist.RESENJA_COLLECTION);
 		this.existManager.dropCollection(OdgovorExist.ODGOVORI_COLLECTION);
-		this.existManager.save(KorisnikExist.KORISNICI_COLLECTION, "poverenik@gmail.com", this.domParser.buildDocumentFromFile(POVERENIK1));
-		this.existManager.save(KorisnikExist.KORISNICI_COLLECTION, "draganaasd@gmail.com", this.domParser.buildDocumentFromFile(GRADJANIN1));
+		this.existManager.save(KorisnikExist.KORISNIK_COLLECTION, "poverenik@gmail.com", this.domParser.buildDocumentFromFile(POVERENIK1));
+		this.existManager.save(KorisnikExist.KORISNIK_COLLECTION, "draganaasd@gmail.com", this.domParser.buildDocumentFromFile(GRADJANIN1));
 
 		this.fusekiManager.dropAll();
 	}

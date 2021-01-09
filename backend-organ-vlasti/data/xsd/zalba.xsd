@@ -8,15 +8,21 @@
         <xs:complexContent>
             <xs:extension base="osnova:TPodnosenje">
                 <xs:sequence>
+                    <xs:element minOccurs="0" name="datumProsledjivanja" type="xs:date"/>
                     <xs:element name="status">
                         <xs:simpleType>
                             <xs:restriction base="xs:string">
                                 <xs:enumeration value="cekanje"/>
+                                <xs:enumeration value="prosledjeno"/>
                                 <xs:enumeration value="odgovoreno"/>
+                                <xs:enumeration value="odustato"/>
+                                <xs:enumeration value="ispravljeno"/>
+                                <xs:enumeration value="obustavljeno"/>
+                                <xs:enumeration value="reseno"/>
                             </xs:restriction>
                         </xs:simpleType>
                     </xs:element>
-                    <xs:element name="datumZahteva" type="xs:date"/>
+                    <xs:element name="PodaciZahteva" type="osnova:TPodaci"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
@@ -34,6 +40,7 @@
                             </xs:restriction>
                         </xs:simpleType>
                     </xs:element>
+                    <xs:element minOccurs="0" name="PodaciOdluke" type="osnova:TPodaci"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
@@ -42,8 +49,7 @@
         <xs:complexContent>
             <xs:extension base="zalba:TZalba">
                 <xs:sequence>
-                    <xs:element name="brojOdluke" type="osnova:TRequiredString"/>
-                    <xs:element name="datumOdluke" type="xs:date"/>
+                    <xs:element name="PodaciOdluke" type="osnova:TPodaci"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>

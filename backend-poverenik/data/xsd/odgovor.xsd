@@ -6,11 +6,8 @@
     <xs:import namespace="https://github.com/draganagrbic998/xml/osnova" schemaLocation="osnova.xsd"/>
     <xs:complexType name="TOdgovor">
         <xs:complexContent>
-            <xs:extension base="osnova:TDokument">
+            <xs:extension base="osnova:TPodnosenje">
                 <xs:sequence>
-                    <xs:element ref="osnova:Osoba"/>
-                    <xs:element ref="osnova:OrganVlasti"/>
-                    <xs:element ref="osnova:Detalji"/>
                     <xs:element name="datumZalbe" type="xs:date"/>
                 </xs:sequence>
             </xs:extension>

@@ -74,7 +74,7 @@ xmlns:odluka="https://github.com/draganagrbic998/xml/odluka">
 						назив и седиште органа власти
 					</p>
 					
-					<br>&#160;</br><br>&#160;</br>
+					<br></br><br></br>
 					
 					<p class="center bold big">
 						РЕШЕЊЕ О ОДБИЈАЊУ ЗАХТЕВА
@@ -98,7 +98,7 @@ xmlns:odluka="https://github.com/draganagrbic998/xml/odluka">
 						године.
 					</p>
 					
-					<br>&#160;</br><br>&#160;</br>
+					<br></br><br></br>
 					
 					<div class="flex" style="margin-left: 80px; margin-right: 80px;">
 						<xsl:variable name="osoba" select="osnova:Gradjanin/osnova:Osoba"></xsl:variable>
@@ -116,7 +116,7 @@ xmlns:odluka="https://github.com/draganagrbic998/xml/odluka">
 						Име, презиме и адреса тражиоца информација од јавног значаја
 					</p>
 					
-					<br>&#160;</br><br>&#160;</br>
+					<br></br><br></br>
 					
 					<p class="indent">
 						Орган власти 
@@ -141,20 +141,16 @@ xmlns:odluka="https://github.com/draganagrbic998/xml/odluka">
 				            <xsl:apply-templates select="osnova:Detalji"></xsl:apply-templates>
 		               	</span>
 						<span class="line">
-						&#160;
 		                </span>
 						<span class="line">
-						&#160;
 		                </span>				
 						<span class="line">
-						&#160;
 		                </span>				
 						<span class="line">
-						&#160;
 		                </span>				
 		            </p>
 		            
-		            <br>&#160;</br><br>&#160;</br><br>&#160;</br><br>&#160;</br>
+		            <br></br><br></br><br></br><br></br>
 		            
 		            <div class="flex">
 		            	<div>&#160;</div>

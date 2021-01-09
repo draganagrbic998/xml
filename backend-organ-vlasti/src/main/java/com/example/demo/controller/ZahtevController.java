@@ -26,7 +26,7 @@ public class ZahtevController {
 				
 	@PostMapping(consumes = MediaType.TEXT_XML_VALUE)
 	public ResponseEntity<Void> save(@RequestBody String xml) {		
-		this.zahtevService.retrieve(xml);
+		this.zahtevService.save(xml);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	

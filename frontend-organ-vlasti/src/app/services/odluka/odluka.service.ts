@@ -22,7 +22,7 @@ export class OdlukaService {
   private readonly API_ODLUKE = `${environment.baseUrl}/${environment.apiOdluke}`;
 
   private dateToString(date: Date): string {
-    return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+    return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}.`;
   }
 
   private odbijanjeToXml(brojZahteva: string, odbijanje: Odbijanje): string{
@@ -32,7 +32,7 @@ export class OdlukaService {
       xmlns="${OSNOVA}"
       xmlns:odluka="${ODLUKA}"
       xmlns:xsi="${XSI}"
-      xsi:type="TOdbijanje">
+      xsi:type="odluka:TOdbijanje">
         ${odbijanje.detalji}
         <odluka:brojZahteva>${brojZahteva}</odluka:brojZahteva>
       </odluka:Odluka>
@@ -47,16 +47,16 @@ export class OdlukaService {
       xmlns="${OSNOVA}"
       xmlns:odluka="${ODLUKA}"
       xmlns:xsi="${XSI}"
-      xsi:type="TObavestenje">
+      xsi:type="odluka:TObavestenje">
         ${obavestenje.detalji}
+        <odluka:brojZahteva>${brojZahteva}</odluka:brojZahteva>
         <odluka:Uvid>
-          <odluka:datumUvida>${this.dateToString(obavestenje.datumUvida)}</odluka:datumUvida>
+        <odluka:datumUvida>${this.dateToString(obavestenje.datumUvida)}</odluka:datumUvida>
           <odluka:pocetak>${obavestenje.pocetak}</odluka:pocetak>
           <odluka:kraj>${obavestenje.kraj}</odluka:kraj>
           <odluka:kancelarija>${obavestenje.kancelarija}</odluka:kancelarija>
         </odluka:Uvid>
         <odluka:kopija>${obavestenje.kopija}</odluka:kopija>
-        <odluka:brojZahteva>${brojZahteva}</odluka:brojZahteva>
       </odluka:Odluka>
     `;
 

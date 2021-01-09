@@ -1,7 +1,6 @@
 export interface ZalbaCutanje{
     detalji: string;
-    brojZahteva: number;
+    brojDokumenta: number;
     tipCutanja: string;
-    brojOdluke?: number;
 }
 

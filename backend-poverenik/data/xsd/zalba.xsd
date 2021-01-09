@@ -13,7 +13,12 @@
                         <xs:simpleType>
                             <xs:restriction base="xs:string">
                                 <xs:enumeration value="cekanje"/>
+                                <xs:enumeration value="prosledjeno"/>
                                 <xs:enumeration value="odgovoreno"/>
+                                <xs:enumeration value="odustato"/>
+                                <xs:enumeration value="ispravljeno"/>
+                                <xs:enumeration value="obustavljeno"/>
+                                <xs:enumeration value="reseno"/>
                             </xs:restriction>
                         </xs:simpleType>
                     </xs:element>

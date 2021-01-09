@@ -51,7 +51,7 @@ public class ZahtevService {
 	private static final String XSL_FO_PATH = Constants.XSL_FOLDER + File.separatorChar + "zahtev_fo.xsl";
 	private static final String GEN_PATH = Constants.GEN_FOLDER + File.separatorChar + "zahtevi" + File.separatorChar;
 	
-	public void retrieve(String xml) {
+	public void save(String xml) {
 		Document document = this.zahtevMapper.map(xml);
 		this.zahtevExist.save(null, document);
 		Model model = this.zahtevMapper.map(document);

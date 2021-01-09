@@ -1,5 +1,9 @@
 package com.example.demo.service;
 
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -11,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-import com.example.demo.common.Constants;
 import com.example.demo.common.EmailTakenException;
 import com.example.demo.model.Korisnik;
 import com.example.demo.parser.DOMParser;
@@ -100,7 +103,10 @@ public class KorisnikService implements UserDetailsService {
 		if (this.loadUserByUsername(korisnik.getOsoba().getMejl()) != null) {
 			throw new EmailTakenException();
 		}
-		korisnik.getOsoba().setPotpis(Constants.TEST_POTPIS);
+		Random random = ThreadLocalRandom.current();
+		byte[] bytes = new byte[256];
+		random.nextBytes(bytes);
+		korisnik.getOsoba().setPotpis(Base64.encodeBase64String(bytes));
 		korisnik.setAktivan(true);
 		korisnik.setLozinka(this.passwordEncoder.encode(korisnik.getLozinka()));
 		this.save(korisnik);

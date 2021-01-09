@@ -14,14 +14,18 @@
                 </mat-error>
             </mat-form-field>
             <mat-form-field>
-                <mat-label>Broj zahteva</mat-label>
+                <mat-label>
+                    {{zalbaDelimicnost ? 'Broj odluke' : 'Broj zahteva'}}
+                </mat-label>
                 <input 
                 matInput 
                 autocomplete="off"
-                formControlName="brojZahteva"
-                placeholder="Unesite broj zahteva">
+                formControlName="brojDokumenta"
+                [placeholder]="zalbaDelimicnost ? 'Unesite broj odluke' : 'Unesite broj zahteva'">
                 <mat-error>
-                    Broj zahteva je obavezan!
+                    {{
+                        zalbaDelimicnost ? 'Broj odluke je obavezan!' : 'Broj zahteva je obavezan!'
+                    }}
                 </mat-error>    
             </mat-form-field>
             <mat-form-field>
@@ -37,17 +41,6 @@
                         nije postupio u celosti
                     </mat-option>
                 </mat-select>                
-            </mat-form-field>
-            <mat-form-field *ngIf="zalbaDelimicnost()">
-                <mat-label>Broj odluke</mat-label>
-                <input 
-                matInput 
-                autocomplete="off"
-                formControlName="brojOdluke"
-                placeholder="Unesite broj odluke">
-                <mat-error>
-                    Broj odluke je obavezan!
-                </mat-error>    
             </mat-form-field>
             <div id="detaljiEditor"></div>
         </div>    

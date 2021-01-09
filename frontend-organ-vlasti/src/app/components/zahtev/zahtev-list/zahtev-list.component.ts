@@ -19,7 +19,7 @@ export class ZahtevListComponent implements AfterViewInit {
   ) { }
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  columns: string[] = ['tipZahteva', 'datum', 'status', 'dokumenti', 'akcije', 'metapodaci'];
+  columns: string[] = ['tipZahteva', 'datum', 'status', 'dokumenti', 'metapodaci', 'akcije'];
   zahtevi: MatTableDataSource<ZahtevDTO> = new MatTableDataSource<ZahtevDTO>([]);
   fetchPending = true;
 

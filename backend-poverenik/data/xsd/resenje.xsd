@@ -35,7 +35,7 @@
                         </xs:complexType>
                     </xs:element>
                     <xs:element ref="osnova:Osoba"/>
-                    <xs:element name="organVlasti"/>
+                    <xs:element ref="osnova:OrganVlasti"/>
                     <xs:element name="PodaciZahteva" type="osnova:TPodaci"> </xs:element>
                     <xs:element name="PodaciZalbe">
                         <xs:complexType>

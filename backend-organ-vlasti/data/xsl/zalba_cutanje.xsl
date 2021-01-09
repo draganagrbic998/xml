@@ -152,7 +152,11 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 					
 					<p class="details">
 						<span class="line">
-							<xsl:copy-of select="osnova:Detalji"></xsl:copy-of>
+					        <xsl:copy>
+						        <xsl:copy>
+						            <xsl:apply-templates select="osnova:Detalji"></xsl:apply-templates>
+						        </xsl:copy>
+					        </xsl:copy>
 		               	</span>
 						<span class="line">
 						
@@ -248,5 +252,13 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 		</html>
 	
 	</xsl:template>
+	
+    <xsl:template match="osnova:bold">
+        <b><xsl:apply-templates select="@*|node()"></xsl:apply-templates></b>
+    </xsl:template>
+    
+    <xsl:template match="osnova:italic">
+        <i><xsl:apply-templates select="@*|node()"></xsl:apply-templates></i>
+    </xsl:template>
 
 </xsl:stylesheet>

@@ -10,7 +10,7 @@ public class Constants {
 	public static final String GRADJANIN = "gradjanin";
 	
 	public static final String DATA_FOLDER = "data";
-	public static final String XSD_FOLDER = DATA_FOLDER + File.separatorChar + "xsd";
+	public static final String XSD_FOLDER = DATA_FOLDER + File.separatorChar + "xsd" + File.separatorChar;
 	public static final String XSL_FOLDER = DATA_FOLDER + File.separatorChar + "xsl";
 	public static final String INIT_FOLDER = DATA_FOLDER + File.separatorChar + "init";
 	public static final String GEN_FOLDER = DATA_FOLDER + File.separatorChar + "gen";
@@ -20,6 +20,5 @@ public class Constants {
 	public static final String COLLECTIONS_PREFIX = "/db/database";
 	
 	public static final String DATE_FORMAT = "yyyy-MM-dd";
-	public static final String TEST_POTPIS = "TEST POTPIS";
 	
 }
