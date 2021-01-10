@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.enums.MetadataTip;
 import com.example.demo.service.OdgovorService;
+import com.example.demo.transformer.OdgovorTransformer;
 
 @RestController
 @RequestMapping(value = "/api/odgovori")
@@ -21,19 +22,22 @@ public class OdgovorController {
 	@Autowired
 	private OdgovorService odgovorService;
 	
+	@Autowired
+	private OdgovorTransformer odgovorTransformer;
+	
 	@GetMapping(produces = MediaType.TEXT_XML_VALUE)
-	public ResponseEntity<String> list() {
+	public ResponseEntity<String> retrieve() {
 		return new ResponseEntity<>(this.odgovorService.retrieve(), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/{broj}", produces = "text/html; charset=utf-8")
 	public ResponseEntity<String> html(@PathVariable String broj) {
-		return new ResponseEntity<>(this.odgovorService.generateHtml(broj), HttpStatus.OK);
+		return new ResponseEntity<>(this.odgovorTransformer.html(broj), HttpStatus.OK);
 	}
-
+	
 	@GetMapping(value = "/{broj}/pdf", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-	public ResponseEntity<Object> pdf(@PathVariable String broj) {
-		Resource resource = this.odgovorService.generatePdf(broj);
+	public ResponseEntity<Object> generatePdf(@PathVariable String broj) {
+		Resource resource = this.odgovorTransformer.generatePdf(broj);
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
 				.body(resource);
@@ -41,7 +45,7 @@ public class OdgovorController {
 	
 	@GetMapping(value = "/{broj}/metadata/xml", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<Object> xmlMetadata(@PathVariable String broj) {
-		Resource resource = this.odgovorService.generateMetadata(broj, MetadataTip.xml);
+		Resource resource = this.odgovorTransformer.generateMetadata(broj, MetadataTip.xml);
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
 				.body(resource);
@@ -49,11 +53,10 @@ public class OdgovorController {
 	
 	@GetMapping(value = "/{broj}/metadata/json", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<Object> jsonMetadata(@PathVariable String broj) {
-		Resource resource = this.odgovorService.generateMetadata(broj, MetadataTip.json);
+		Resource resource = this.odgovorTransformer.generateMetadata(broj, MetadataTip.json);
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
 				.body(resource);
 	}
-
 	
 }

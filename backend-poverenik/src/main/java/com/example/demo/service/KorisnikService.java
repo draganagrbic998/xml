@@ -46,7 +46,7 @@ public class KorisnikService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) {
 		try {
-			return this.load(username);
+			return (Korisnik) this.jaxbParser.unmarshal(this.korisnikExist.load(username), Korisnik.class);
 		}
 		catch(Exception e) {
 			return null;
@@ -61,21 +61,13 @@ public class KorisnikService implements UserDetailsService {
 			return null;
 		}
 	}
-	
-	public void save(Korisnik korisnik) {
-		this.korisnikExist.save(korisnik.getOsoba().getMejl(), this.jaxbParser.marshal(korisnik));			
-	}
-	
-	public Korisnik load(String email) {
-		return (Korisnik) this.jaxbParser.unmarshal(this.korisnikExist.load(email), Korisnik.class);
-	}
-	
+		
 	public String login(String xml) {
-		Document prijavaDocument = this.domParser.buildDocument(xml);
-		String email = prijavaDocument.getElementsByTagName("mejl").item(0).getTextContent();
-		String password = prijavaDocument.getElementsByTagName("lozinka").item(0).getTextContent();
+		Document loginDocument = this.domParser.buildDocument(xml);
+		String email = loginDocument.getElementsByTagName("mejl").item(0).getTextContent();
+		String password = loginDocument.getElementsByTagName("lozinka").item(0).getTextContent();
 		this.authManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
-		Korisnik korisnik = this.load(email);
+		Korisnik korisnik = (Korisnik) this.loadUserByUsername(email);
 		Document profilDocument = this.domParser.emptyDocument();
 		Node profil = profilDocument.createElement("Profil");
 		profilDocument.appendChild(profil);
@@ -109,7 +101,7 @@ public class KorisnikService implements UserDetailsService {
 		korisnik.getOsoba().setPotpis(Base64.encodeBase64String(bytes));
 		korisnik.setAktivan(true);
 		korisnik.setLozinka(this.passwordEncoder.encode(korisnik.getLozinka()));
-		this.save(korisnik);
+		this.korisnikExist.update(korisnik.getOsoba().getMejl(), this.jaxbParser.marshal(korisnik));			
 	}
 		
 }

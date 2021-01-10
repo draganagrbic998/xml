@@ -6,6 +6,7 @@ import org.w3c.dom.Document;
 import org.xmldb.api.base.ResourceSet;
 
 import com.example.demo.mapper.IzvestajMapper;
+import com.example.demo.repository.rdf.IzvestajRDF;
 import com.example.demo.repository.xml.IzvestajExist;
 import com.example.demo.ws.utils.SOAPService;
 import com.example.demo.ws.utils.SOAPDocument;
@@ -17,6 +18,9 @@ public class IzvestajService implements ServiceInterface {
 	private IzvestajExist izvestajExist;
 	
 	@Autowired
+	private IzvestajRDF izvestajRDF;
+	
+	@Autowired
 	private IzvestajMapper izvestajMapper;
 
 	@Autowired
@@ -26,6 +30,7 @@ public class IzvestajService implements ServiceInterface {
 	public void add(String xml) {
 		Document document = this.izvestajMapper.map(xml);
 		this.izvestajExist.add(document);
+		this.izvestajRDF.add(this.izvestajMapper.map(document));
 		this.soapService.sendSOAPMessage(document, SOAPDocument.izvestaj);		
 	}
 

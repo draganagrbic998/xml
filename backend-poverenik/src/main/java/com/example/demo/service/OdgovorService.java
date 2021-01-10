@@ -1,62 +1,53 @@
 package com.example.demo.service;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
-import org.apache.jena.query.ResultSet;
-import org.apache.jena.query.ResultSetFormatter;
-import org.apache.jena.rdf.model.Model;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.xmldb.api.base.ResourceSet;
 
 import com.example.demo.common.Constants;
-import com.example.demo.common.MyException;
 import com.example.demo.common.Namespaces;
-import com.example.demo.enums.MetadataTip;
 import com.example.demo.enums.StatusZalbe;
 import com.example.demo.mapper.OdgovorMapper;
 import com.example.demo.model.Korisnik;
-import com.example.demo.parser.DOMParser;
-import com.example.demo.parser.XSLTransformer;
 import com.example.demo.repository.rdf.OdgovorRDF;
 import com.example.demo.repository.xml.OdgovorExist;
-import com.example.demo.repository.xml.ZalbaExist;
 
 @Service
-public class OdgovorService {
-	
+public class OdgovorService implements ServiceInterface {
+
 	@Autowired
 	private OdgovorExist odgovorExist;
 	
 	@Autowired
-	private ZalbaExist zalbaExist;
-	
+	private OdgovorRDF odgovorRDF;
+
 	@Autowired
 	private OdgovorMapper odgovorMapper;
 	
 	@Autowired
-	private DOMParser domParser;
-	
-	@Autowired
-	private OdgovorRDF odgovorRDF;
-	
-	@Autowired
-	private XSLTransformer xslTransformer;
-	
-	@Autowired
 	private KorisnikService korisnikService;
-	
-	private static final String XSL_PATH = Constants.XSL_FOLDER + "odgovor.xsl";
-	private static final String XSL_FO_PATH = Constants.XSL_FOLDER + "odgovor_fo.xsl";
-	private static final String GEN_PATH = Constants.GEN_FOLDER + "odgovori" + File.separatorChar;
-	
+
+	@Autowired
+	private ZalbaService zalbaService;
+		
+	@Override
+	public void add(String xml) {
+		Document document = this.odgovorMapper.map(xml);
+		this.odgovorExist.add(document);
+		this.odgovorRDF.add(this.odgovorMapper.map(document));
+		String brojZalbe = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
+		Document zalbaDocument = this.zalbaService.load(brojZalbe);
+		zalbaDocument.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.odgovoreno + "");
+		this.zalbaService.update(brojZalbe, zalbaDocument);
+	}
+
+	@Override
+	public void update(String documentId, Document document) {
+		this.odgovorExist.update(documentId, document);
+	}
+
+	@Override
 	public String retrieve() {
 		Korisnik korisnik = this.korisnikService.currentUser();
 		String xpathExp;
@@ -69,54 +60,10 @@ public class OdgovorService {
 		ResourceSet resources = this.odgovorExist.retrieve(xpathExp);
 		return this.odgovorMapper.map(resources);
 	}
-	
-	public void save(String xml) {
-		Document document = this.odgovorMapper.map(xml);
-		this.odgovorExist.save(null, document);
-		String brojZalbe = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
-		Document zalbaDocument = this.zalbaExist.load(brojZalbe);
-		zalbaDocument.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.odgovoreno + "");
-		this.zalbaExist.save(brojZalbe, zalbaDocument);
-		Model model = this.odgovorMapper.map(document);
-		this.odgovorRDF.save(model);
-	}
-	
-	public String generateHtml(String broj) {
-		Document document = this.odgovorExist.load(broj);
-		ByteArrayOutputStream out = this.xslTransformer.generateHtml(this.domParser.buildXml(document), XSL_PATH);
-		return out.toString();
-	}
-	
-	public Resource generatePdf(String broj) {
-		try {
-			Document document = this.odgovorExist.load(broj);
-			ByteArrayOutputStream out = this.xslTransformer.generatePdf(this.domParser.buildXml(document), XSL_FO_PATH);
-			Path file = Paths.get(GEN_PATH + broj + ".pdf");
-			Files.write(file, out.toByteArray());
-			return new UrlResource(file.toUri());
-		}
-		catch(Exception e) {
-			throw new MyException(e);
-		}
+
+	@Override
+	public Document load(String documentId) {
+		return this.odgovorExist.load(documentId);
 	}
 
-	public Resource generateMetadata(String broj, MetadataTip type) {
-		try {
-			ResultSet results = this.odgovorRDF.retrieve(broj);
-			ByteArrayOutputStream out = new ByteArrayOutputStream();
-			if (type.equals(MetadataTip.xml)) {
-				ResultSetFormatter.outputAsXML(out, results);
-			}
-			else {
-				ResultSetFormatter.outputAsJSON(out, results);
-			}
-			Path file = Paths.get(GEN_PATH + broj + "_metadata." + type);
-			Files.write(file, out.toByteArray());
-			return new UrlResource(file.toUri());
-		}
-		catch(Exception e) {
-			throw new MyException(e);
-		}
-	}
-	
 }

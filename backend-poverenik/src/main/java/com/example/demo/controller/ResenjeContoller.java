@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.enums.MetadataTip;
 import com.example.demo.service.ResenjeService;
+import com.example.demo.transformer.ResenjeTransformer;
 
 import org.springframework.core.io.Resource;
 
@@ -23,6 +24,9 @@ public class ResenjeContoller {
 
 	@Autowired
 	private ResenjeService resenjeService;
+	
+	@Autowired
+	private ResenjeTransformer resenjeTransformer;
 			
 	@PostMapping(consumes = MediaType.TEXT_XML_VALUE)
 	public ResponseEntity<Void> save(@RequestBody String xml) {		
@@ -31,18 +35,18 @@ public class ResenjeContoller {
 	}
 	
 	@GetMapping(produces = MediaType.TEXT_XML_VALUE)
-	public ResponseEntity<String> list() {
+	public ResponseEntity<String> retrieve() {
 		return new ResponseEntity<>(this.resenjeService.retrieve(), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/{broj}", produces = "text/html; charset=utf-8")
 	public ResponseEntity<String> html(@PathVariable String broj) {
-		return new ResponseEntity<>(this.resenjeService.generateHtml(broj), HttpStatus.OK);
+		return new ResponseEntity<>(this.resenjeTransformer.html(broj), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/{broj}/pdf", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-	public ResponseEntity<Object> pdf(@PathVariable String broj) {
-		Resource resource = this.resenjeService.generatePdf(broj);
+	public ResponseEntity<Object> generatePdf(@PathVariable String broj) {
+		Resource resource = this.resenjeTransformer.generatePdf(broj);
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
 				.body(resource);
@@ -50,7 +54,7 @@ public class ResenjeContoller {
 	
 	@GetMapping(value = "/{broj}/metadata/xml", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<Object> xmlMetadata(@PathVariable String broj) {
-		Resource resource = this.resenjeService.generateMetadata(broj, MetadataTip.xml);
+		Resource resource = this.resenjeTransformer.generateMetadata(broj, MetadataTip.xml);
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
 				.body(resource);
@@ -58,7 +62,7 @@ public class ResenjeContoller {
 	
 	@GetMapping(value = "/{broj}/metadata/json", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<Object> jsonMetadata(@PathVariable String broj) {
-		Resource resource = this.resenjeService.generateMetadata(broj, MetadataTip.json);
+		Resource resource = this.resenjeTransformer.generateMetadata(broj, MetadataTip.json);
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
 				.body(resource);

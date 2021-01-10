@@ -20,7 +20,7 @@ import com.example.demo.parser.DOMParser;
 import com.example.demo.parser.XSLTransformer;
 
 @Component
-public class OdgovorMapper {
+public class OdgovorMapper implements MapperInterface {
 
 	@Autowired
 	private DOMParser domParser;
@@ -28,10 +28,12 @@ public class OdgovorMapper {
 	@Autowired
 	private XSLTransformer xslTransformer;
 
+	@Override
 	public Document map(String xml) {
 		return this.domParser.buildDocument(xml);
 	}
-	
+
+	@Override
 	public String map(ResourceSet resources) {
 		try {
 			Document odgovoriDocument = this.domParser.emptyDocument();
@@ -55,7 +57,8 @@ public class OdgovorMapper {
 			throw new MyException(e);
 		}
 	}
-	
+
+	@Override
 	public Model map(Document document) {
 		Element odgovor = (Element) document.getElementsByTagNameNS(Namespaces.ODGOVOR, "Odgovor").item(0);
 		String broj = odgovor.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
@@ -63,13 +66,11 @@ public class OdgovorMapper {
 		odgovor.setAttribute("xmlns:xs", Namespaces.XS);
 		odgovor.setAttribute("xmlns:pred", Prefixes.PREDIKAT);
 		odgovor.setAttribute("about", Prefixes.ODGOVOR_PREFIX + broj);
-		
 		odgovor.setAttribute("rel", "pred:zalba");
 		odgovor.setAttribute("href", Prefixes.ZALBA_PREFIX + broj);
 		
 		((Element) odgovor.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0)).setAttribute("property", "pred:datum");
 		((Element) odgovor.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0)).setAttribute("datatype", "xs:string");
-		
 		((Element) odgovor.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(0)).setAttribute("property", "pred:izdatoU");
 		((Element) odgovor.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(0)).setAttribute("datatype", "xs:string");
 

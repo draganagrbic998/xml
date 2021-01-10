@@ -13,43 +13,47 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.enums.MetadataTip;
 import com.example.demo.service.IzvestajService;
+import com.example.demo.transformer.IzvestajTransformer;
 
 @RestController
-@RequestMapping(value = "/api/izvestaji")
+@RequestMapping(value = "/api/izvestaji", consumes = MediaType.TEXT_XML_VALUE)
 public class IzvestajController {
-
+	
 	@Autowired
 	private IzvestajService izvestajService;
-
+	
+	@Autowired
+	private IzvestajTransformer izvestajTransformer;
+	
 	@GetMapping(produces = MediaType.TEXT_XML_VALUE)
-	public ResponseEntity<String> list() {
+	public ResponseEntity<String> retrieve() {
 		return new ResponseEntity<>(this.izvestajService.retrieve(), HttpStatus.OK);
 	}
-
+	
 	@GetMapping(value = "/{broj}", produces = "text/html; charset=utf-8")
 	public ResponseEntity<String> html(@PathVariable String broj) {
-		return new ResponseEntity<>(this.izvestajService.generateHtml(broj), HttpStatus.OK);
+		return new ResponseEntity<>(this.izvestajTransformer.html(broj), HttpStatus.OK);
 	}
-
+	
 	@GetMapping(value = "/{broj}/pdf", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-	public ResponseEntity<Object> pdf(@PathVariable String broj) {
-		Resource resource = this.izvestajService.generatePdf(broj);
+	public ResponseEntity<Object> generatePdf(@PathVariable String broj) {
+		Resource resource = this.izvestajTransformer.generatePdf(broj);
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
 				.body(resource);
 	}
-
+	
 	@GetMapping(value = "/{broj}/metadata/xml", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<Object> xmlMetadata(@PathVariable String broj) {
-		Resource resource = this.izvestajService.generateMetadata(broj, MetadataTip.xml);
+		Resource resource = this.izvestajTransformer.generateMetadata(broj, MetadataTip.xml);
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
 				.body(resource);
 	}
-
+	
 	@GetMapping(value = "/{broj}/metadata/json", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<Object> jsonMetadata(@PathVariable String broj) {
-		Resource resource = this.izvestajService.generateMetadata(broj, MetadataTip.json);
+		Resource resource = this.izvestajTransformer.generateMetadata(broj, MetadataTip.json);
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
 				.body(resource);

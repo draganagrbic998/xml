@@ -24,7 +24,7 @@ public class EndpointConfig {
 	private IzvestajPortImpl ipi;
 
 	@Bean
-	public Endpoint createZalbaEndpoint() {
+	public Endpoint createOdgovorEndpoint() {
 		EndpointImpl endpoint = new EndpointImpl(bus, opi);
 		endpoint.publish("/createOdgovor");
 		return endpoint;

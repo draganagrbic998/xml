@@ -30,10 +30,10 @@ public class OdlukaService implements ServiceInterface {
 	private OdlukaMapper odlukaMapper;
 
 	@Autowired
-	private ZahtevService zahtevService;
+	private KorisnikService korisnikService;
 
 	@Autowired
-	private KorisnikService korisnikService;
+	private ZahtevService zahtevService;
 	
 	@Autowired
 	private EmailService emailService;

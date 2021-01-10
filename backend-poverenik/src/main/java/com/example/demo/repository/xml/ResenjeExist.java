@@ -9,7 +9,7 @@ import com.example.demo.common.Constants;
 import com.example.demo.exist.ExistManager;
 
 @Repository
-public class ResenjeExist {
+public class ResenjeExist implements ExistInterface {
 
 	@Autowired
 	private ExistManager existManager;
@@ -17,16 +17,24 @@ public class ResenjeExist {
 	public static final String RESENJE_COLLECTION = Constants.COLLECTIONS_PREFIX + "/resenja";
 	public static final String RESENJE_SCHEMA = Constants.XSD_FOLDER + "resenje.xsd";
 	
-	public void save(String documentId, Document document) {
+	@Override
+	public void add(Document document) {
+		this.existManager.save(RESENJE_COLLECTION, null, document, RESENJE_SCHEMA);
+	}
+	
+	@Override
+	public void update(String documentId, Document document) {
 		this.existManager.save(RESENJE_COLLECTION, documentId, document, RESENJE_SCHEMA);
 	}
 	
-	public ResourceSet retrieve(String xpathExp) {
-		return this.existManager.retrieve(RESENJE_COLLECTION, xpathExp);
-	}
-	
+	@Override
 	public Document load(String documentId) {
 		return this.existManager.load(RESENJE_COLLECTION, documentId);
+	}
+	
+	@Override
+	public ResourceSet retrieve(String xpathExp) {
+		return this.existManager.retrieve(RESENJE_COLLECTION, xpathExp);
 	}
 	
 }

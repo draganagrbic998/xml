@@ -12,18 +12,18 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.service.KorisnikService;
 
 @RestController
-@RequestMapping(value = "/auth", consumes = MediaType.TEXT_XML_VALUE)
+@RequestMapping(value = "/auth")
 public class AuthController {
 			
 	@Autowired
 	private KorisnikService korisnikService;
 	
-	@PostMapping(value = "/login", produces = MediaType.TEXT_XML_VALUE)
+	@PostMapping(value = "/login", consumes = MediaType.TEXT_XML_VALUE, produces = MediaType.TEXT_XML_VALUE)
 	public ResponseEntity<String> login(@RequestBody String xml) {
 		return new ResponseEntity<>(this.korisnikService.login(xml), HttpStatus.OK);
 	}
 	
-	@PostMapping(value = "/register")
+	@PostMapping(value = "/register", consumes = MediaType.TEXT_XML_VALUE)
 	public ResponseEntity<Void> register(@RequestBody String xml) {
 		this.korisnikService.register(xml);
 		return new ResponseEntity<>(HttpStatus.OK);

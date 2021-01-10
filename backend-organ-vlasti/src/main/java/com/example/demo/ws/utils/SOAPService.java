@@ -36,7 +36,7 @@ public class SOAPService {
 		this.soapConnectionFactory = SOAPConnectionFactory.newInstance();
 	}
 	
-	public void sendSOAPMessage(Document document, SOAPDocument soapDocument) {
+	public String sendSOAPMessage(Document document, SOAPDocument soapDocument) {
 		try {
 			SOAPMessage message = this.messageFactory.createMessage();
 			SOAPBody body = message.getSOAPBody();
@@ -55,7 +55,13 @@ public class SOAPService {
 			SOAPElement element = body.addChildElement(name);
 			element.addTextNode(this.domParser.buildXml(document));
 			SOAPConnection connection = this.soapConnectionFactory.createConnection();
-			connection.call(message, endpoint);
+			SOAPMessage response = connection.call(message, endpoint);
+			try {
+				return response.getSOAPBody().getTextContent();
+			}
+			catch(Exception e) {
+				return null;
+			}
 
 		}
 		catch(Exception e) {

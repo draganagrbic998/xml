@@ -19,7 +19,7 @@ public class OdgovorPortImpl implements Odgovor {
     public void createOdgovor(java.lang.String createOdgovor) {
         LOG.info("Executing operation createOdgovor");
         try {
-            this.odgovorService.save(createOdgovor);
+            this.odgovorService.add(createOdgovor);
         } 
         catch (java.lang.Exception ex) {
             ex.printStackTrace();

@@ -12,12 +12,18 @@ import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPFactory;
 import javax.xml.soap.SOAPMessage;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.w3c.dom.Document;
 
 import com.example.demo.common.MyException;
+import com.example.demo.parser.DOMParser;
 
 @Service
 public class SOAPService {
+	
+	@Autowired
+	private DOMParser domParser;
 	
 	private MessageFactory messageFactory;
 	private SOAPFactory soapFactory;
@@ -30,33 +36,37 @@ public class SOAPService {
 		this.soapConnectionFactory = SOAPConnectionFactory.newInstance();
 	}
 	
-	public String sendSOAPMessage(String xml, TipDokumenta tipDokumenta) {
+	public String sendSOAPMessage(String brojDokumenta, Document document, SOAPDocument tipDokumenta) {
 		try {
 			SOAPMessage message = this.messageFactory.createMessage();
 			SOAPBody body = message.getSOAPBody();
-			
 			Name name = null;
 			URL endpoint = null;
-			if (tipDokumenta.equals(TipDokumenta.zalba)) {
+			String request;
+			
+			if (tipDokumenta.equals(SOAPDocument.zalba)) {
 				name = this.soapFactory.createName(SOAPConstants.CREATE_ZALBA_ELEMENT, "m", SOAPConstants.CREATE_ZALBA_NAMESPACE);
 				endpoint = new URL(SOAPConstants.CREATE_ZALBA_SERVICE);
+				request = this.domParser.buildXml(document);
 			}
-			else if (tipDokumenta.equals(TipDokumenta.resenje)) {
+			else if (tipDokumenta.equals(SOAPDocument.resenje)) {
 				name = this.soapFactory.createName(SOAPConstants.CREATE_RESENJE_ELEMENT, "m", SOAPConstants.CREATE_RESENJE_NAMESPACE);
 				endpoint = new URL(SOAPConstants.CREATE_RESENJE_SERVICE);
+				request = this.domParser.buildXml(document);
 			}
-			else if (tipDokumenta.equals(TipDokumenta.zahtev)) {
+			else if (tipDokumenta.equals(SOAPDocument.zahtev)) {
 				name = this.soapFactory.createName(SOAPConstants.GET_ZAHTEV_ELEMENT, "m", SOAPConstants.GET_ZAHTEV_NAMESPACE);
 				endpoint = new URL(SOAPConstants.GET_ZAHTEV_SERVICE);
+				request = brojDokumenta;
 			}
 			else {
 				name = this.soapFactory.createName(SOAPConstants.GET_ODLUKA_ELEMENT, "m", SOAPConstants.GET_ODLUKA_NAMESPACE);
 				endpoint = new URL(SOAPConstants.GET_ODLUKA_SERVICE);
+				request = brojDokumenta;
 			}
-			
 
-			SOAPElement symbol = body.addChildElement(name);
-			symbol.addTextNode(xml);
+			SOAPElement element = body.addChildElement(name);
+			element.addTextNode(request);
 			SOAPConnection connection = this.soapConnectionFactory.createConnection();
 			SOAPMessage response = connection.call(message, endpoint);
 			try {

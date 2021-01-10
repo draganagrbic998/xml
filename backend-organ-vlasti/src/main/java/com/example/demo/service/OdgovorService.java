@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-import org.apache.jena.rdf.model.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
@@ -36,8 +35,7 @@ public class OdgovorService implements ServiceInterface {
 	public void add(String xml) {
 		Document document = this.odgovorMapper.map(xml);
 		this.odgovorExist.add(document);
-		Model model = this.odgovorMapper.map(document);
-		this.odgovorRDF.add(model);
+		this.odgovorRDF.add(this.odgovorMapper.map(document));
 		String brojZalbe = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
 		Document zalbaDocument = this.zalbaService.load(brojZalbe);
 		zalbaDocument.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.odgovoreno + "");

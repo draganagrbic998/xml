@@ -15,15 +15,17 @@ import com.example.demo.common.Namespaces;
 import com.example.demo.parser.DOMParser;
 
 @Component
-public class IzvestajMapper {
+public class IzvestajMapper implements MapperInterface {
 
 	@Autowired
 	private DOMParser domParser;
 
-	public Document map(String xml) {
-		return this.domParser.buildDocument(xml);
+	@Override
+	public Document map(String godina) {
+		return this.domParser.buildDocument(godina);
 	}
 
+	@Override
 	public String map(ResourceSet resources) {
 		try {
 			Document izvestajiDocument = this.domParser.emptyDocument();
@@ -42,14 +44,16 @@ public class IzvestajMapper {
 			}
 
 			return this.domParser.buildXml(izvestajiDocument);
-		}
-		catch(Exception e) {
+		} 
+		catch (Exception e) {
 			throw new MyException(e);
 		}
 	}
-	
+
+	@Override
 	public Model map(Document document) {
 		Model model = ModelFactory.createDefaultModel();
 		return model;
 	}
+	
 }

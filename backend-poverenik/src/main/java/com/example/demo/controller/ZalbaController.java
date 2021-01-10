@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.enums.MetadataTip;
 import com.example.demo.service.ZalbaService;
+import com.example.demo.transformer.ZalbaTransformer;
 
 @RestController
 @RequestMapping(value = "/api/zalbe")
@@ -22,34 +23,37 @@ public class ZalbaController {
 
 	@Autowired
 	private ZalbaService zalbaService;
-
+	
+	@Autowired
+	private ZalbaTransformer zalbaTransformer;
+			
 	@PostMapping(consumes = MediaType.TEXT_XML_VALUE)
-	public ResponseEntity<Void> save(@RequestBody String xml) {
-		this.zalbaService.save(xml);
+	public ResponseEntity<Void> save(@RequestBody String xml) {		
+		this.zalbaService.add(xml);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
-
+	
 	@GetMapping(produces = MediaType.TEXT_XML_VALUE)
-	public ResponseEntity<String> list() {
+	public ResponseEntity<String> retrieve() {
 		return new ResponseEntity<>(this.zalbaService.retrieve(), HttpStatus.OK);
 	}
-
+	
 	@GetMapping(value = "/{broj}", produces = "text/html; charset=utf-8")
 	public ResponseEntity<String> html(@PathVariable String broj) {
-		return new ResponseEntity<>(this.zalbaService.generateHtml(broj), HttpStatus.OK);
+		return new ResponseEntity<>(this.zalbaTransformer.html(broj), HttpStatus.OK);
 	}
-
+	
 	@GetMapping(value = "/{broj}/pdf", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-	public ResponseEntity<Object> pdf(@PathVariable String broj) {
-		Resource resource = this.zalbaService.generatePdf(broj);
+	public ResponseEntity<Object> generatePdf(@PathVariable String broj) {
+		Resource resource = this.zalbaTransformer.generatePdf(broj);
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
 				.body(resource);
 	}
-
+	
 	@GetMapping(value = "/{broj}/metadata/xml", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<Object> xmlMetadata(@PathVariable String broj) {
-		Resource resource = this.zalbaService.generateMetadata(broj, MetadataTip.xml);
+		Resource resource = this.zalbaTransformer.generateMetadata(broj, MetadataTip.xml);
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
 				.body(resource);
@@ -57,16 +61,10 @@ public class ZalbaController {
 	
 	@GetMapping(value = "/{broj}/metadata/json", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<Object> jsonMetadata(@PathVariable String broj) {
-		Resource resource = this.zalbaService.generateMetadata(broj, MetadataTip.json);
+		Resource resource = this.zalbaTransformer.generateMetadata(broj, MetadataTip.json);
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
 				.body(resource);
-	}
-
-	@PostMapping(value = "/prosledi/{broj}")
-	public ResponseEntity<Void> prosledi(@PathVariable String broj) {
-		this.zalbaService.prosledi(broj);
-		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@PostMapping(value = "/odustani/{broj}")
@@ -78,6 +76,12 @@ public class ZalbaController {
 	@PostMapping(value = "/obustavi/{broj}")
 	public ResponseEntity<Void> obustavi(@PathVariable String broj) {
 		this.zalbaService.obustavi(broj);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/prosledi/{broj}")
+	public ResponseEntity<Void> prosledi(@PathVariable String broj) {
+		this.zalbaService.prosledi(broj);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	

@@ -29,10 +29,10 @@ import com.example.demo.service.KorisnikService;
 public class OdlukaMapper implements MapperInterface {
 
 	@Autowired
-	private ZahtevExist zahtevExist;
+	private KorisnikService korisnikService;
 
 	@Autowired
-	private KorisnikService korisnikService;
+	private ZahtevExist zahtevExist;
 
 	@Autowired
 	private DOMParser domParser;

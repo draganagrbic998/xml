@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-import org.apache.jena.rdf.model.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
@@ -31,8 +30,7 @@ public class ZahtevService implements ServiceInterface {
 	public void add(String xml) {
 		Document document = this.zahtevMapper.map(xml);
 		this.zahtevExist.add(document);
-		Model model = this.zahtevMapper.map(document);
-		this.zahtevRDF.add(model);		
+		this.zahtevRDF.add(this.zahtevMapper.map(document));		
 	}
 
 	@Override

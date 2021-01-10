@@ -28,11 +28,11 @@ import com.example.demo.service.KorisnikService;
 public class OdgovorMapper implements MapperInterface {
 
 	@Autowired
-	private ZalbaExist zalbaExist;
-	
-	@Autowired
 	private KorisnikService korisnikService;
 
+	@Autowired
+	private ZalbaExist zalbaExist;
+	
 	@Autowired
 	private DOMParser domParser;
 	

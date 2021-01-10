@@ -19,7 +19,7 @@ public class IzvestajPortImpl implements Izvestaj {
 	public void createIzvestaj(java.lang.String createIzvestaj) {
 		LOG.info("Executing operation createIzvestaj");
 		try {
-			this.izvestajService.save(createIzvestaj);
+			this.izvestajService.add(createIzvestaj);
 		} 
 		catch (java.lang.Exception ex) {
 			ex.printStackTrace();
