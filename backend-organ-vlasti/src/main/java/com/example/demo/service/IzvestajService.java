@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.xmldb.api.base.ResourceSet;
+import org.xmldb.api.base.XMLDBException;
 
 import com.example.demo.mapper.IzvestajMapper;
 import com.example.demo.repository.rdf.IzvestajRDF;
@@ -16,10 +17,10 @@ public class IzvestajService implements ServiceInterface {
 
 	@Autowired
 	private IzvestajExist izvestajExist;
-	
+
 	@Autowired
 	private IzvestajRDF izvestajRDF;
-	
+
 	@Autowired
 	private IzvestajMapper izvestajMapper;
 
@@ -27,11 +28,18 @@ public class IzvestajService implements ServiceInterface {
 	private SOAPService soapService;
 
 	@Override
-	public void add(String xml) {
-		Document document = this.izvestajMapper.map(xml);
-		this.izvestajExist.add(document);
-		this.izvestajRDF.add(this.izvestajMapper.map(document));
-		this.soapService.sendSOAPMessage(document, SOAPDocument.izvestaj);		
+	public void add(String godina) {
+		Document document = this.izvestajMapper.map(godina);
+		
+		try {
+			if (this.izvestajExist.retrieve("/izvestaj:Izvestaj[godina = " + godina + "]").getSize() == 0) {
+				this.izvestajExist.add(document);
+				//this.izvestajRDF.add(this.izvestajMapper.map(document));
+				this.soapService.sendSOAPMessage(document, SOAPDocument.izvestaj);
+			}
+		} catch (XMLDBException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

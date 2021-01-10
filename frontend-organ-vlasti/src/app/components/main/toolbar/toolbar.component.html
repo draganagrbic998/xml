@@ -35,6 +35,13 @@
         [routerLink]="'/resenje-list'">
             Rešenja
         </button>
+        <button 
+        matTooltip="Lista podnetih izveštaja"
+        *ngIf="!auth && uloga === 'sluzbenik'"
+        mat-button
+        [routerLink]="'/izvestaj-list'">
+            Izveštaji
+        </button>
     </span>
     <span class="details">
         <button 
