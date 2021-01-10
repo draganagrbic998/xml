@@ -21,7 +21,6 @@ import org.springframework.core.io.Resource;
 
 @RestController
 @RequestMapping(value = "/api/resenja")
-@PreAuthorize("isAuthenticated()")
 public class ResenjeContoller {
 
 	@Autowired
@@ -38,17 +37,19 @@ public class ResenjeContoller {
 	}
 	
 	@GetMapping(produces = MediaType.TEXT_XML_VALUE)
+	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<String> retrieve() {
 		return new ResponseEntity<>(this.resenjeService.retrieve(), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/{broj}", produces = "text/html; charset=utf-8")
+	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<String> html(@PathVariable String broj) {
 		return new ResponseEntity<>(this.resenjeTransformer.html(broj), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/{broj}/pdf", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-	public ResponseEntity<Object> generatePdf(@PathVariable String broj) {
+	public ResponseEntity<Resource> generatePdf(@PathVariable String broj) {
 		Resource resource = this.resenjeTransformer.generatePdf(broj);
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
@@ -56,7 +57,7 @@ public class ResenjeContoller {
 	}
 	
 	@GetMapping(value = "/{broj}/metadata/xml", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-	public ResponseEntity<Object> xmlMetadata(@PathVariable String broj) {
+	public ResponseEntity<Resource> xmlMetadata(@PathVariable String broj) {
 		Resource resource = this.resenjeTransformer.generateMetadata(broj, MetadataTip.xml);
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
@@ -64,7 +65,7 @@ public class ResenjeContoller {
 	}
 	
 	@GetMapping(value = "/{broj}/metadata/json", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-	public ResponseEntity<Object> jsonMetadata(@PathVariable String broj) {
+	public ResponseEntity<Resource> jsonMetadata(@PathVariable String broj) {
 		Resource resource = this.resenjeTransformer.generateMetadata(broj, MetadataTip.json);
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")

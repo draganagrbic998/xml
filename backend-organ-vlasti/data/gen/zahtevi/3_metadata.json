@@ -1,0 +1,29 @@
+{
+  "head": {
+    "vars": [ "predicate" , "object" ]
+  } ,
+  "results": {
+    "bindings": [
+      {
+        "predicate": { "type": "uri" , "value": "https://github.com/draganagrbic998/xml/sluzbenik/predikat/mesto" } ,
+        "object": { "type": "literal" , "value": "Novi Sad" }
+      } ,
+      {
+        "predicate": { "type": "uri" , "value": "https://github.com/draganagrbic998/xml/sluzbenik/predikat/tip" } ,
+        "object": { "type": "literal" , "value": "obavestenje" }
+      } ,
+      {
+        "predicate": { "type": "uri" , "value": "https://github.com/draganagrbic998/xml/sluzbenik/predikat/izdatoU" } ,
+        "object": { "type": "literal" , "value": "Novi Sad" }
+      } ,
+      {
+        "predicate": { "type": "uri" , "value": "https://github.com/draganagrbic998/xml/sluzbenik/predikat/datum" } ,
+        "object": { "type": "literal" , "value": "2021-01-10" }
+      } ,
+      {
+        "predicate": { "type": "uri" , "value": "https://github.com/draganagrbic998/xml/sluzbenik/predikat/podneo" } ,
+        "object": { "type": "uri" , "value": "https://github.com/draganagrbic998/xml/sluzbenik/korisnik/draganaasd@gmail.com" }
+      }
+    ]
+  }
+}

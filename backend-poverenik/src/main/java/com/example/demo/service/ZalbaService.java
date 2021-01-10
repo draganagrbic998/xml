@@ -10,6 +10,7 @@ import org.w3c.dom.Node;
 import org.xmldb.api.base.ResourceSet;
 
 import com.example.demo.common.Constants;
+import com.example.demo.common.MyException;
 import com.example.demo.common.Namespaces;
 import com.example.demo.enums.StatusZalbe;
 import com.example.demo.mapper.ZalbaMapper;
@@ -68,10 +69,18 @@ public class ZalbaService implements ServiceInterface {
 	}
 	
 	public void odustani(String broj) {
-		Document document = this.zalbaExist.load(broj);
-		document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.odustato + "");
-		this.zalbaExist.update(broj, document);
-		// dodaj slanje mejla
+		try {
+			Document document = this.zalbaExist.load(broj);
+			document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.odustato + "");
+			this.zalbaExist.update(broj, document);
+			String imePrezime = document.getElementsByTagNameNS(Namespaces.OSNOVA, "ime").item(0).getTextContent() 
+					+ " " + document.getElementsByTagNameNS(Namespaces.OSNOVA, "prezime").item(0).getTextContent();
+			String datumZalbe = Constants.sdf2.format(Constants.sdf.parse(document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).getTextContent()));
+			this.korisnikService.notifyOdustajanje(imePrezime, datumZalbe);
+		}
+		catch(Exception e) {
+			throw new MyException(e);
+		}
 	}
 
 	public void obustavi(String broj) {
