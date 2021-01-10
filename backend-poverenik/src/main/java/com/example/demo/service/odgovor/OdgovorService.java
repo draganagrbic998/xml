@@ -53,9 +53,9 @@ public class OdgovorService {
 	@Autowired
 	private KorisnikService korisnikService;
 	
-	private static final String XSL_PATH = Constants.XSL_FOLDER + File.separatorChar + "odgovor.xsl";
-	private static final String XSL_FO_PATH = Constants.XSL_FOLDER + File.separatorChar + "odgovor_fo.xsl";
-	private static final String GEN_PATH = Constants.GEN_FOLDER + File.separatorChar + "odgovori" + File.separatorChar;
+	private static final String XSL_PATH = Constants.XSL_FOLDER + "odgovor.xsl";
+	private static final String XSL_FO_PATH = Constants.XSL_FOLDER + "odgovor_fo.xsl";
+	private static final String GEN_PATH = Constants.GEN_FOLDER + "odgovori" + File.separatorChar;
 	
 	public String retrieve() {
 		Korisnik korisnik = this.korisnikService.currentUser();

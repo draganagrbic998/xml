@@ -42,9 +42,9 @@ public class IzvestajService {
 	@Autowired
 	private XSLTransformer xslTransformer;
 
-	private static final String XSL_PATH = Constants.XSL_FOLDER + File.separatorChar + "izvestaj.xsl";
-	private static final String XSL_FO_PATH = Constants.XSL_FOLDER + File.separatorChar + "izvestaj_fo.xsl";
-	private static final String GEN_PATH = Constants.GEN_FOLDER + File.separatorChar + "izvestaji" + File.separatorChar;
+	private static final String XSL_PATH = Constants.XSL_FOLDER + "izvestaj.xsl";
+	private static final String XSL_FO_PATH = Constants.XSL_FOLDER + "izvestaj_fo.xsl";
+	private static final String GEN_PATH = Constants.GEN_FOLDER + "izvestaji" + File.separatorChar;
 
 	public void save(String xml) {
 		Document document = this.izvestajMapper.map(xml);

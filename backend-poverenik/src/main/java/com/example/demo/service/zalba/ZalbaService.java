@@ -62,11 +62,11 @@ public class ZalbaService {
 	@Autowired
 	private SOAPService soapService;
 	
-	private static final String XSL_PATH_CUTANJE = Constants.XSL_FOLDER + File.separatorChar + "/zalba_cutanje.xsl";
-	private static final String XSL_FO_PATH_CUTANJE = Constants.XSL_FOLDER + File.separatorChar + "zalba_cutanje_fo.xsl";
-	private static final String XSL_PATH_ODLUKA = Constants.XSL_FOLDER + File.separatorChar + "/zalba_odluka.xsl";
-	private static final String XSL_FO_PATH_ODLUKA = Constants.XSL_FOLDER + File.separatorChar + "/zalba_odluka_fo.xsl";
-	private static final String GEN_PATH = Constants.GEN_FOLDER + File.separatorChar + "zalbe" + File.separatorChar;
+	private static final String XSL_PATH_CUTANJE = Constants.XSL_FOLDER + "zalba_cutanje.xsl";
+	private static final String XSL_FO_PATH_CUTANJE = Constants.XSL_FOLDER + "zalba_cutanje_fo.xsl";
+	private static final String XSL_PATH_ODLUKA = Constants.XSL_FOLDER + "zalba_odluka.xsl";
+	private static final String XSL_FO_PATH_ODLUKA = Constants.XSL_FOLDER + "zalba_odluka_fo.xsl";
+	private static final String GEN_PATH = Constants.GEN_FOLDER + "zalbe" + File.separatorChar;
 
 	public void save(String xml) {
 		Document document = this.zalbaMapper.map(xml);

@@ -59,7 +59,7 @@ public class ResenjeService {
 
 	private static final String XSL_PATH = Constants.XSL_FOLDER + "/resenje.xsl";
 	private static final String XSL_FO_PATH = Constants.XSL_FOLDER + "/resenje_fo.xsl";
-	private static final String GEN_PATH = Constants.GEN_FOLDER + File.separatorChar + "resenja" + File.separatorChar;
+	private static final String GEN_PATH = Constants.GEN_FOLDER + "resenja" + File.separatorChar;
 	
 	public void add(String xml) {
 		Document document = this.resenjeMapper.map(xml);
