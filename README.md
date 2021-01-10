@@ -13,4 +13,6 @@ Napomene:
 4. Port frontenda organa vlasti - 4200
 5. Port frontenda poverenika - 4201 (pokrece se komandom ng serve --port 4201)
 6. Port tomcat servera sa bazama - 8080
-
+7. email sluzbenika: sluzbenik@gmail.com, lozinka: asd
+8. email poverenika: poverenik.javni.znacaj@gmail.com, lozinka: asd
+9. email gradjanina: draganaasd@gmail.com, lozinka: asd
