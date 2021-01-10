@@ -72,6 +72,7 @@ public class OdlukaMapper implements MapperInterface {
 		catch (Exception e) {
 			;
 		}
+		
 		return document;
 	}
 
