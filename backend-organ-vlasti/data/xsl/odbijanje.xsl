@@ -157,7 +157,7 @@ xmlns:odluka="https://github.com/draganagrbic998/xml/odluka">
 		            	<div>&#160;</div>
 		            	<div>
 							<p class="underline center" style="margin-left: 100px; margin-right: 20px;">
-								<xsl:value-of select="osnova:Gradjanin/osnova:Osoba/osnova:potpis"></xsl:value-of>
+								&#160;
 							</p>
 							<p>
 								(потпис овлашћеног лица, односно руководиоца органа)

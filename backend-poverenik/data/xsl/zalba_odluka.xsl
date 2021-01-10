@@ -120,7 +120,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 						<xsl:variable name="godinaOdluke" select="substring-before(zalba:PodaciOdluke/osnova:datum, '-')"></xsl:variable>
 						Број 
 						<span class="dotted">
-							<xsl:value-of select="zalba:PodaciOdluke/osnova:broj"></xsl:value-of>
+							<xsl:value-of select="zalba:PodaciOdluke/osnova:brojOdluke"></xsl:value-of>
 						</span> 
 						од 
 						<span class="dotted">
@@ -146,7 +146,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 	
 					<p class="details">
 						<span class="line">
-				            <xsl:apply-templates select="osnova:Detalji"></xsl:apply-templates>
+							<xsl:copy-of select="osnova:Detalji"></xsl:copy-of>
 		               	</span>
 						<span class="line">
 						
@@ -210,7 +210,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 								други подаци за контакт
 							</p>
 							<p class="dotted" style="margin-top: 5px;">
-								<xsl:value-of select="$osoba/osnova:potpis"></xsl:value-of>
+								&#160;
 							</p>
 							<p>
 								потпис
@@ -232,8 +232,10 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 							Ако жалбу изјављује на овом обрасцу, додатно образложење може  посебно приложити.					
 						</li>
 						<li>
-							Уз жалбу обавезно приложити копију поднетог захтева и доказ о његовој предаји-упућивању 
-							органу као и копију одлуке органа која се оспорава жалбом.					
+							<xsl:variable name="zahtev_link" select="concat('http://localhost:4200/html/zahtevi/', zalba:PodaciZahteva/osnova:broj)"></xsl:variable>
+							<xsl:variable name="odluka_link" select="concat('http://localhost:4200/html/odluke/', zalba:PodaciOdluke/osnova:broj)"></xsl:variable>
+							Уз жалбу обавезно приложити <a href="{$zahtev_link}">копију поднетог захтева</a> и доказ о његовој предаји-упућивању 
+							органу као и <a href="{$odluka_link}">копију одлуке органа</a> која се оспорава жалбом.					
 						</li>
 					</ul>
 					
@@ -245,13 +247,5 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 		</html>
 	
 	</xsl:template>
-	
-    <xsl:template match="osnova:bold">
-        <b><xsl:apply-templates select="@*|node()"></xsl:apply-templates></b>
-    </xsl:template>
-    
-    <xsl:template match="osnova:italic">
-        <i><xsl:apply-templates select="@*|node()"></xsl:apply-templates></i>
-    </xsl:template>
 
 </xsl:stylesheet>

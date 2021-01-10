@@ -210,7 +210,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 								други подаци за контакт
 							</p>
 							<p class="dotted" style="margin-top: 5px;">
-								<xsl:value-of select="$osoba/osnova:potpis"></xsl:value-of>
+								&#160;
 							</p>
 							<p>
 								потпис

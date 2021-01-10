@@ -268,7 +268,7 @@ xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev">
 									други подаци за контакт
 								</fo:block>
 								<fo:block border-bottom="0.2mm solid black" margin-top="5px">
-									<xsl:value-of select="$osoba/osnova:potpis"></xsl:value-of>
+									&#160;
 								</fo:block>
 								<fo:block font-size="10px">
 									Потпис

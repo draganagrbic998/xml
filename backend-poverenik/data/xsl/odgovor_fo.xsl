@@ -124,7 +124,7 @@ xmlns:odgovor="https://github.com/draganagrbic998/xml/odgovor">
 							</fo:inline-container>
 							<fo:inline-container inline-progression-dimension="70%">
 								<fo:block text-align="center" border-bottom="0.2mm solid black" margin-left="100px" margin-right="20px">
-									<xsl:value-of select="osnova:Osoba/osnova:potpis"></xsl:value-of>
+									&#160;
 								</fo:block>
 								<fo:block text-align="right">
 									(потпис овлашћеног лица, односно руководиоца органа)

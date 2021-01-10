@@ -122,26 +122,26 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 					</fo:block>
 					
 					<fo:block>
-			            <xsl:apply-templates select="osnova:Detalji"></xsl:apply-templates>
+						<xsl:value-of select="osnova:Detalji"></xsl:value-of>
 					</fo:block>					
-					<fo:block-container position="absolute" top="12.2cm">
+					<fo:block-container position="absolute" top="11.7cm">
+              			<fo:block border-bottom="1px dotted black">
+              			</fo:block>
+              		</fo:block-container>
+              		<fo:block-container position="absolute" top="12.2cm">
               			<fo:block border-bottom="1px dotted black">
               			</fo:block>
               		</fo:block-container>
               		<fo:block-container position="absolute" top="12.7cm">
               			<fo:block border-bottom="1px dotted black">
-              			</fo:block>
+	           			</fo:block>              			
               		</fo:block-container>
               		<fo:block-container position="absolute" top="13.2cm">
               			<fo:block border-bottom="1px dotted black">
 	           			</fo:block>              			
               		</fo:block-container>
-              		<fo:block-container position="absolute" top="13.7cm">
-              			<fo:block border-bottom="1px dotted black">
-	           			</fo:block>              			
-              		</fo:block-container>
 
-					<fo:block-container position="absolute" top="13.7cm">
+					<fo:block-container position="absolute" top="13.2cm">
 					
 						<fo:block text-align="center">
 							(опис тражене информације)
@@ -181,7 +181,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 									Подносилац жалбе / Име и презиме
 								</fo:block>
 								<fo:block border-bottom="1px dotted black" margin-top="5px">
-									<xsl:value-of select="$osoba/osnova:potpis"></xsl:value-of>
+									&#160;
 								</fo:block>
 								<fo:block>
 									потпис
@@ -199,7 +199,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 									други подаци за контакт
 								</fo:block>
 								<fo:block border-bottom="1px dotted black" margin-top="5px">
-									<xsl:value-of select="$osoba/osnova:potpis"></xsl:value-of>
+									&#160;
 								</fo:block>
 								<fo:block>
 									Потпис
@@ -215,7 +215,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 							<xsl:variable name="dan" select="substring-after(substring-after(osnova:datum, '-'), '-')"></xsl:variable>
 							<xsl:variable name="mesec" select="substring-before(substring-after(osnova:datum, '-'), '-')"></xsl:variable>
 							<xsl:variable name="godina" select="substring(substring-before(osnova:datum, '-'), 3, 2)"></xsl:variable>
-							У<fo:inline border-bottom="1px dotted black">&#160;<xsl:value-of select="osnova:Gradjanin/osnova:Adresa/osnova:mesto"></xsl:value-of>&#160;</fo:inline>, 
+							У<fo:inline border-bottom="1px dotted black">&#160;<xsl:variable select="osnova:Gradjanin/osnova:Adresa/osnova:mesto"></xsl:variable>&#160;</fo:inline>, 
 							дана
 							<fo:inline border-bottom="1px dotted black">
 								<xsl:value-of select="concat($dan, concat('.', concat($mesec, '.')))"></xsl:value-of>
@@ -233,13 +233,4 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
             </fo:page-sequence>
         </fo:root>
     </xsl:template>
-    
-    <xsl:template match="osnova:bold">
-        <fo:inline font-weight="bold"><xsl:apply-templates select="@*|node()"></xsl:apply-templates></fo:inline>
-    </xsl:template>
-    
-    <xsl:template match="osnova:italic">
-        <fo:inline font-style="italic"><xsl:apply-templates select="@*|node()"></xsl:apply-templates></fo:inline>
-    </xsl:template>
-    
 </xsl:stylesheet>
