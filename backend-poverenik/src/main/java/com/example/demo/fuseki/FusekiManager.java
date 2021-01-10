@@ -1,7 +1,6 @@
 package com.example.demo.fuseki;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -26,7 +25,7 @@ public class FusekiManager {
 	@Autowired
 	private FusekiAuthentication authUtilities;
 	
-	private static final String QUERY1_PATH = Constants.SPARQL_FOLDER + File.separatorChar + "query1.rq";
+	private static final String QUERY1_PATH = Constants.SPARQL_FOLDER + "query1.rq";
 	
 	public void save(String graphUri, Model model) {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();

@@ -20,27 +20,27 @@ public class EndpointConfig {
 	private Bus bus;
 	
 	@Autowired
-	private ZalbaPortImpl czpi;
+	private ZalbaPortImpl zlpi;
 	
 	@Autowired
-	private ResenjePortImpl crpi;
+	private ResenjePortImpl rpi;
 	
 	@Autowired
-	private ZahtevPortImpl zpi;
+	private ZahtevPortImpl zhpi;
 	
 	@Autowired
 	private OdlukaPortImpl opi;
 	
 	@Bean
 	public Endpoint createZalbaEndpoint() {
-		EndpointImpl endpoint = new EndpointImpl(bus, czpi);
+		EndpointImpl endpoint = new EndpointImpl(bus, zlpi);
 		endpoint.publish("/createZalba");
 		return endpoint;
 	}
 	
 	@Bean
 	public Endpoint getZahtevEndpoint() {
-		EndpointImpl endpoint = new EndpointImpl(bus, zpi);
+		EndpointImpl endpoint = new EndpointImpl(bus, zhpi);
 		endpoint.publish("/getZahtev");
 		return endpoint;
 	}
@@ -54,7 +54,7 @@ public class EndpointConfig {
 	
 	@Bean
 	public Endpoint createResenjeEndpoint() {
-		EndpointImpl endpoint = new EndpointImpl(bus, crpi);
+		EndpointImpl endpoint = new EndpointImpl(bus, rpi);
 		endpoint.publish("/createResenje");
 		return endpoint;
 	}

@@ -14,14 +14,14 @@ public class ZalbaRDF {
 	@Autowired
 	private FusekiManager fusekiManager;
 
-	public static final String GRAPH_URI = "/zalbe";
+	public static final String ZALBA_GRAPH = "/zalbe";
 
 	public void save(Model model) {
-		this.fusekiManager.save(GRAPH_URI, model);
+		this.fusekiManager.save(ZALBA_GRAPH, model);
 	}
 
 	public ResultSet retrieve(String broj) {
-		return this.fusekiManager.retrieve(GRAPH_URI, Prefixes.ZALBA_PREFIX + broj);
+		return this.fusekiManager.retrieve(ZALBA_GRAPH, Prefixes.ZALBA_PREFIX + broj);
 	}
 
 }

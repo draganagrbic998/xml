@@ -12,10 +12,10 @@ public class OdgovorRDF {
 	@Autowired
 	private FusekiManager fusekiManager;
 
-	public static final String GRAPH_URI = "/odgovori";
+	public static final String ODGOVOR_GRAPH = "/odgovori";
 
 	public void save(Model model) {
-		this.fusekiManager.save(GRAPH_URI, model, null);
+		this.fusekiManager.save(ODGOVOR_GRAPH, model);
 	}
 
 }

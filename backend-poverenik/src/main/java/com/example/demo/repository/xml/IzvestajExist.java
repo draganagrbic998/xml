@@ -25,12 +25,7 @@ public class IzvestajExist {
 	}
 	
 	public Document load(String documentId) {
-		try {
-			return this.existManager.load(IZVESTAJI_COLLECTION, documentId);
-		}
-		catch(Exception e) {
-			return null;
-		}
+		return this.existManager.load(IZVESTAJI_COLLECTION, documentId);
 	}
 	
 }

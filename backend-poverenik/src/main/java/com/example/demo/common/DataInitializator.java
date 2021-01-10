@@ -31,14 +31,17 @@ public class DataInitializator {
 	
 	private static final String POVERENIK1 = Constants.INIT_FOLDER + "poverenik1.xml";
 	private static final String GRADJANIN1 = Constants.INIT_FOLDER + "gradjanin1.xml";
+	
 	private static final String ZALBA_DELIMICNOST1 = Constants.INIT_FOLDER + "zalba_delimicnost1.xml";
 	private static final String ZALBA_ODLUKA1 = Constants.INIT_FOLDER + "zalba_odluka1.xml";
 	private static final String ZALBA_CUTANJE1 = Constants.INIT_FOLDER + "zalba_cutanje1.xml";
 	private static final String ZALBE = Constants.INIT_FOLDER + "zalbe.nt";
+	
 	private static final String ODGOVOR1 = Constants.INIT_FOLDER + "odgovor1.xml";
 	private static final String ODGOVOR2 = Constants.INIT_FOLDER + "odgovor2.xml";
 	private static final String ODGOVORI = Constants.INIT_FOLDER + "odgovori.nt";
-	private static final String RESENJA = Constants.INIT_FOLDER + "resenja.nt";
+	
+	//private static final String RESENJA = Constants.INIT_FOLDER + "resenja.nt";
 	private static final String RESENJE1 = Constants.INIT_FOLDER + "resenje1.xml";
 	private static final String RESENJE2 = Constants.INIT_FOLDER + "resenje2.xml";
 	private static final String RESENJE3 = Constants.INIT_FOLDER + "resenje3.xml";
@@ -49,7 +52,6 @@ public class DataInitializator {
 		this.existManager.dropCollection(ZalbaExist.ZALBA_COLLECTION);
 		this.existManager.dropCollection(ResenjeExist.RESENJE_COLLECTION);
 		this.existManager.dropCollection(OdgovorExist.ODGOVOR_COLLECTION);
-		
 		
 		this.existManager.save(KorisnikExist.KORISNIK_COLLECTION, "poverenik@gmail.com", this.domParser.buildDocumentFromFile(POVERENIK1), KorisnikExist.KORISNIK_SCHEMA);
 		this.existManager.save(KorisnikExist.KORISNIK_COLLECTION, "draganaasd@gmail.com", this.domParser.buildDocumentFromFile(GRADJANIN1), KorisnikExist.KORISNIK_SCHEMA);
@@ -68,10 +70,10 @@ public class DataInitializator {
 		this.fusekiManager.dropAll();
 		Model model = ModelFactory.createDefaultModel();
 		model.read(ZALBE);
-		this.fusekiManager.save(ZalbaRDF.GRAPH_URI, model);
+		this.fusekiManager.save(ZalbaRDF.ZALBA_GRAPH, model);
 		model.removeAll();
 		model.read(ODGOVORI);
-		this.fusekiManager.save(OdgovorRDF.GRAPH_URI, model);
+		this.fusekiManager.save(OdgovorRDF.ODGOVOR_GRAPH, model);
 		//dodaj rdfs za resenja
 
 	}

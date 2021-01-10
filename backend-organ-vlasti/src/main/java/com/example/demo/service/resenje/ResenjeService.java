@@ -15,16 +15,9 @@ import org.xmldb.api.base.ResourceSet;
 
 import com.example.demo.common.Constants;
 import com.example.demo.common.MyException;
-import com.example.demo.common.Namespaces;
-import com.example.demo.enums.StatusZalbe;
-import com.example.demo.model.Korisnik;
 import com.example.demo.parser.DOMParser;
 import com.example.demo.parser.XSLTransformer;
 import com.example.demo.repository.xml.ResenjeExist;
-import com.example.demo.repository.xml.ZalbaExist;
-import com.example.demo.service.KorisnikService;
-import com.example.demo.ws.utils.SOAPService;
-import com.example.demo.ws.utils.TipDokumenta;
 
 @Service
 public class ResenjeService {
@@ -41,9 +34,9 @@ public class ResenjeService {
 	@Autowired
 	private XSLTransformer xslTransformer;
 
-	private static final String XSL_PATH = Constants.XSL_FOLDER + "/resenje.xsl";
-	private static final String XSL_FO_PATH = Constants.XSL_FOLDER + "/resenje_fo.xsl";
-	private static final String GEN_PATH = Constants.GEN_FOLDER + File.separatorChar + "resenja" + File.separatorChar;
+	private static final String XSL_PATH = Constants.XSL_FOLDER + "resenje.xsl";
+	private static final String XSL_FO_PATH = Constants.XSL_FOLDER + "resenje_fo.xsl";
+	private static final String GEN_PATH = Constants.GEN_FOLDER + "resenja" + File.separatorChar;
 	
 	public String retrieve() {
 		//zabrani gradjaninu poziv ove metode

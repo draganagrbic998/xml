@@ -28,21 +28,25 @@ public class DataInitializator {
 	private static final String ORGAN_VLASTI1 = Constants.INIT_FOLDER + "organ_vlasti1.xml";
 	private static final String SLUZBENIK1 = Constants.INIT_FOLDER + "sluzbenik1.xml";
 	private static final String GRADJANIN1 = Constants.INIT_FOLDER + "gradjanin1.xml";
+	
 	private static final String ZAHTEV_UVID1 = Constants.INIT_FOLDER + "zahtev_uvid1.xml";
 	private static final String ZAHTEV_KOPIJA1 = Constants.INIT_FOLDER + "zahtev_kopija1.xml";
 	private static final String ZAHTEV_OBAVESTENJE1 = Constants.INIT_FOLDER + "zahtev_obavestenje1.xml";
+	private static final String ZAHTEVI = Constants.INIT_FOLDER + "zahtevi.nt";
+	
 	private static final String OBAVESTENJE1 = Constants.INIT_FOLDER + "obavestenje1.xml";
 	private static final String ODBIJANJE1 = Constants.INIT_FOLDER + "odbijanje1.xml";
+	private static final String ODLUKE = Constants.INIT_FOLDER + "odluke.nt";
+	
 	private static final String ZALBA_DELIMICNOST1 = Constants.INIT_FOLDER + "zalba_delimicnost1.xml";
 	private static final String ZALBA_ODLUKA1 = Constants.INIT_FOLDER + "zalba_odluka1.xml";
 	private static final String ZALBA_CUTANJE1 = Constants.INIT_FOLDER + "zalba_cutanje1.xml";
-	private static final String ZAHTEVI = Constants.INIT_FOLDER + "zahtevi.nt";
-	private static final String ODLUKE = Constants.INIT_FOLDER + "odluke.nt";
 	private static final String ZALBE = Constants.INIT_FOLDER + "zalbe.nt";
-	private static final String RESENJA = Constants.INIT_FOLDER + "resenja.nt";
+	
 	private static final String RESENJE1 = Constants.INIT_FOLDER + "resenje1.xml";
 	private static final String RESENJE2 = Constants.INIT_FOLDER + "resenje2.xml";
 	private static final String RESENJE3 = Constants.INIT_FOLDER + "resenje3.xml";
+	//private static final String RESENJA = Constants.INIT_FOLDER + "resenja.nt";
 
 	private static final String ODGOVOR1 = Constants.INIT_FOLDER + "odgovor1.xml";
 	private static final String ODGOVOR2 = Constants.INIT_FOLDER + "odgovor2.xml";
@@ -65,17 +69,16 @@ public class DataInitializator {
 		this.existManager.dropCollection(OdlukaExist.ODLUKA_COLLECTION);
 		this.existManager.dropCollection(ZalbaExist.ZALBA_COLLECTION);
 		this.existManager.dropCollection(ResenjeExist.RESENJE_COLLECTION);
+		this.existManager.dropCollection(OdgovorExist.ODGOVOR_COLLECTION);
 		
 		
 		this.existManager.save(OrganVlastiExist.ORGAN_VLASTI_COLLECTION, "1", this.domParser.buildDocumentFromFile(ORGAN_VLASTI1), KorisnikExist.KORISNIK_SCHEMA);
-		
 		this.existManager.save(KorisnikExist.KORISNIK_COLLECTION, "sluzbenik@gmail.com", this.domParser.buildDocumentFromFile(SLUZBENIK1), KorisnikExist.KORISNIK_SCHEMA);
 		this.existManager.save(KorisnikExist.KORISNIK_COLLECTION, "draganaasd@gmail.com", this.domParser.buildDocumentFromFile(GRADJANIN1), KorisnikExist.KORISNIK_SCHEMA);
 		
 		this.existManager.save(ZahtevExist.ZAHTEV_COLLECTION, "1", this.domParser.buildDocumentFromFile(ZAHTEV_UVID1), ZahtevExist.ZAHTEV_SCHEMA);
 		this.existManager.save(ZahtevExist.ZAHTEV_COLLECTION, "2", this.domParser.buildDocumentFromFile(ZAHTEV_KOPIJA1), ZahtevExist.ZAHTEV_SCHEMA);
 		this.existManager.save(ZahtevExist.ZAHTEV_COLLECTION, "3", this.domParser.buildDocumentFromFile(ZAHTEV_OBAVESTENJE1), ZahtevExist.ZAHTEV_SCHEMA);
-		
 		
 		this.existManager.save(OdlukaExist.ODLUKA_COLLECTION, "1", this.domParser.buildDocumentFromFile(OBAVESTENJE1), OdlukaExist.ODLUKA_SCHEMA);
 		this.existManager.save(OdlukaExist.ODLUKA_COLLECTION, "2", this.domParser.buildDocumentFromFile(ODBIJANJE1), OdlukaExist.ODLUKA_SCHEMA);
@@ -94,18 +97,18 @@ public class DataInitializator {
 		this.fusekiManager.dropAll();
 		Model model = ModelFactory.createDefaultModel();
 		model.read(ZAHTEVI);
-		this.fusekiManager.save(ZahtevRDF.GRAPH_URI, model, ZahtevRDF.ZAHTEV_RDFS);
+		this.fusekiManager.save(ZahtevRDF.ZAHTEV_GRAPH, model);
 		model.removeAll();
 		model.read(ODLUKE);
-		this.fusekiManager.save(OdlukaRDF.GRAPH_URI, model, OdlukaRDF.ODLUKA_RDFS);
+		this.fusekiManager.save(OdlukaRDF.ODLUKA_GRAPH, model);
 		model.removeAll();
 		model.read(ZALBE);
-		this.fusekiManager.save(ZalbaRDF.GRAPH_URI, model, ZalbaRDF.ZALBA_RDFS);
+		this.fusekiManager.save(ZalbaRDF.ZALBA_GRAPH, model);
 		model.removeAll();
 		model.read(ODGOVORI);
-		this.fusekiManager.save(OdgovorRDF.GRAPH_URI, model, null);
-
+		this.fusekiManager.save(OdgovorRDF.ODGOVOR_GRAPH, model);
 		//dodaj rdfs za resenje
+		
 	}
 	
 }

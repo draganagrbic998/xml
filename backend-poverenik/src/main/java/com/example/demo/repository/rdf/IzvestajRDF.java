@@ -13,13 +13,13 @@ public class IzvestajRDF {
 	@Autowired
 	private FusekiManager fusekiManager;
 
-	public static final String GRAPH_URI = "/izvestaji";
+	public static final String IZVESTAJ_GRAPH = "/izvestaji";
 
 	public void save(Model model) {
-		this.fusekiManager.save(GRAPH_URI, model);
+		this.fusekiManager.save(IZVESTAJ_GRAPH, model);
 	}
 
 	public ResultSet retrieve(String broj) {
-		return this.fusekiManager.retrieve(GRAPH_URI, Prefixes.IZVESTAJ_PREFIX + broj);
+		return this.fusekiManager.retrieve(IZVESTAJ_GRAPH, Prefixes.IZVESTAJ_PREFIX + broj);
 	}
 }

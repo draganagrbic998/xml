@@ -1,6 +1,6 @@
 export interface OdlukaDTO{
     tipOdluke: string;
-    broj: string;
+    broj: number;
     datum: string;
     datumZahteva: string;
 }

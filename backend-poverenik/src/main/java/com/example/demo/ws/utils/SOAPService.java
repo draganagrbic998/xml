@@ -30,7 +30,6 @@ public class SOAPService {
 		this.soapConnectionFactory = SOAPConnectionFactory.newInstance();
 	}
 	
-	
 	public String sendSOAPMessage(String xml, TipDokumenta tipDokumenta) {
 		try {
 			SOAPMessage message = this.messageFactory.createMessage();

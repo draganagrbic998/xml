@@ -1,7 +1,6 @@
 package com.example.demo.service.odgovor;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 
 import org.apache.jena.rdf.model.Model;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +42,7 @@ public class OdgovorService {
 	@Autowired
 	private DOMParser domParser;
 	
-	private static final String XSL_PATH = Constants.XSL_FOLDER + File.separatorChar + "odgovor.xsl";
+	private static final String XSL_PATH = Constants.XSL_FOLDER + "odgovor.xsl";
 			
 	public void save(String xml) {
 		Document document = this.odgovorMapper.map(xml);

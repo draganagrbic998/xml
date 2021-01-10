@@ -16,7 +16,6 @@ public class ZalbaExist {
 	
 	public static final String ZALBA_COLLECTION = Constants.COLLECTIONS_PREFIX + "/zalbe";
 	public static final String ZALBA_SCHEMA = Constants.XSD_FOLDER + "zalba.xsd";
-
 	
 	public void save(String documentId, Document document) {
 		this.existManager.save(ZALBA_COLLECTION, documentId, document, ZALBA_SCHEMA);

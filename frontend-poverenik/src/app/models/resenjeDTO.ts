@@ -1,5 +1,5 @@
 export interface ResenjeDTO{
-    broj: string;
+    broj: number;
     datum: string;
     status: string;
 }

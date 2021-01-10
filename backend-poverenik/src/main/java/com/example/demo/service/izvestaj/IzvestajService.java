@@ -72,7 +72,8 @@ public class IzvestajService {
 			Path file = Paths.get(GEN_PATH + broj + ".pdf");
 			Files.write(file, out.toByteArray());
 			return new UrlResource(file.toUri());
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			throw new MyException(e);
 		}
 	}
@@ -83,13 +84,15 @@ public class IzvestajService {
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 			if (type.equals(MetadataType.xml)) {
 				ResultSetFormatter.outputAsXML(out, results);
-			} else {
+			} 
+			else {
 				ResultSetFormatter.outputAsJSON(out, results);
 			}
 			Path file = Paths.get(GEN_PATH + broj + "_metadata." + type);
 			Files.write(file, out.toByteArray());
 			return new UrlResource(file.toUri());
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			throw new MyException(e);
 		}
 	}

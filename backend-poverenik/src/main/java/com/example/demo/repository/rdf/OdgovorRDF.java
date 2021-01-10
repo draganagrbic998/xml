@@ -14,14 +14,14 @@ public class OdgovorRDF {
 	@Autowired
 	private FusekiManager fusekiManager;
 
-	public static final String GRAPH_URI = "/odgovori";
+	public static final String ODGOVOR_GRAPH = "/odgovori";
 
 	public void save(Model model) {
-		this.fusekiManager.save(GRAPH_URI, model);
+		this.fusekiManager.save(ODGOVOR_GRAPH, model);
 	}
 
 	public ResultSet retrieve(String broj) {
-		return this.fusekiManager.retrieve(GRAPH_URI, Prefixes.ODGOVOR_PREFIX + broj);
+		return this.fusekiManager.retrieve(ODGOVOR_GRAPH, Prefixes.ODGOVOR_PREFIX + broj);
 	}
 
 }

@@ -5,7 +5,6 @@ import org.apache.jena.rdf.model.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.example.demo.common.Constants;
 import com.example.demo.common.Prefixes;
 import com.example.demo.fuseki.FusekiManager;
 
@@ -15,15 +14,14 @@ public class ZahtevRDF {
 	@Autowired
 	private FusekiManager fusekiManager;
 	
-	public static final String GRAPH_URI = "/zahtevi";
-	public static final String ZAHTEV_RDFS = Constants.RDFS_FOLDER + "zahtev.rdf";
+	public static final String ZAHTEV_GRAPH = "/zahtevi";
 	
 	public void save(Model model) {
-		this.fusekiManager.save(GRAPH_URI, model, ZAHTEV_RDFS);
+		this.fusekiManager.save(ZAHTEV_GRAPH, model);
 	}
 	
 	public ResultSet retrieve(String broj) {
-		return this.fusekiManager.retrieve(GRAPH_URI, Prefixes.ZAHTEV_PREFIX + broj);
+		return this.fusekiManager.retrieve(ZAHTEV_GRAPH, Prefixes.ZAHTEV_PREFIX + broj);
 	}
 	
 }

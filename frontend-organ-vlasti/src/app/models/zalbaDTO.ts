@@ -1,6 +1,6 @@
 export interface ZalbaDTO{
     tipZalbe: string;
-    broj: string;
+    broj: number;
     datum: string;
     status: string;
 }

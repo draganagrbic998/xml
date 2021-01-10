@@ -47,9 +47,9 @@ public class ZahtevService {
 	@Autowired
 	private XSLTransformer xslTransformer;
 	
-	private static final String XSL_PATH = Constants.XSL_FOLDER + File.separatorChar + "zahtev.xsl";
-	private static final String XSL_FO_PATH = Constants.XSL_FOLDER + File.separatorChar + "zahtev_fo.xsl";
-	private static final String GEN_PATH = Constants.GEN_FOLDER + File.separatorChar + "zahtevi" + File.separatorChar;
+	private static final String XSL_PATH = Constants.XSL_FOLDER + "zahtev.xsl";
+	private static final String XSL_FO_PATH = Constants.XSL_FOLDER + "zahtev_fo.xsl";
+	private static final String GEN_PATH = Constants.GEN_FOLDER + "zahtevi" + File.separatorChar;
 	
 	public void save(String xml) {
 		Document document = this.zahtevMapper.map(xml);

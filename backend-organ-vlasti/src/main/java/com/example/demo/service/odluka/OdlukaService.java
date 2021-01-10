@@ -58,11 +58,11 @@ public class OdlukaService {
 	@Autowired
 	private EmailService emailService;
 
-	private static final String XSL_FO_PATH_ODBIJANJE = Constants.XSL_FOLDER + File.separatorChar + "odbijanje_fo.xsl";
-	private static final String XSL_PATH_ODBIJANJE = Constants.XSL_FOLDER + File.separatorChar + "/odbijanje.xsl";
-	private static final String XSL_FO_PATH_OBAVESTENJE = Constants.XSL_FOLDER + File.separatorChar + "obavestenje_fo.xsl";
-	private static final String XSL_PATH_OBAVESTENJE = Constants.XSL_FOLDER + File.separatorChar + "/obavestenje.xsl";
-	private static final String GEN_PATH = Constants.GEN_FOLDER + File.separatorChar + "odluke" + File.separatorChar;
+	private static final String XSL_FO_PATH_ODBIJANJE = Constants.XSL_FOLDER + "odbijanje_fo.xsl";
+	private static final String XSL_PATH_ODBIJANJE = Constants.XSL_FOLDER + "odbijanje.xsl";
+	private static final String XSL_FO_PATH_OBAVESTENJE = Constants.XSL_FOLDER + "obavestenje_fo.xsl";
+	private static final String XSL_PATH_OBAVESTENJE = Constants.XSL_FOLDER + "obavestenje.xsl";
+	private static final String GEN_PATH = Constants.GEN_FOLDER + "odluke" + File.separatorChar;
 
 	public void save(String xml) {
 		Document document = this.odlukaMapper.map(xml);

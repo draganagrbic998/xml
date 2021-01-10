@@ -17,11 +17,11 @@ public class EndpointConfig {
 	private Bus bus;
 	
 	@Autowired
-	private OdgovorPortImpl copi;
+	private OdgovorPortImpl opi;
 		
 	@Bean
 	public Endpoint createZalbaEndpoint() {
-		EndpointImpl endpoint = new EndpointImpl(bus, copi);
+		EndpointImpl endpoint = new EndpointImpl(bus, opi);
 		endpoint.publish("/createOdgovor");
 		return endpoint;
 	}

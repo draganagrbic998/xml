@@ -8,7 +8,6 @@ import java.nio.file.Paths;
 
 import org.apache.jena.query.ResultSet;
 import org.apache.jena.query.ResultSetFormatter;
-import org.apache.jena.rdf.model.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
@@ -56,14 +55,11 @@ public class IzvestajService {
 
 	private static final String XSL_PATH = Constants.XSL_FOLDER + File.separatorChar + "izvestaj.xsl";
 	private static final String XSL_FO_PATH = Constants.XSL_FOLDER + File.separatorChar + "izvestaj_fo.xsl";
-	private static final String GEN_PATH = Constants.GEN_FOLDER + File.separatorChar + "izvestaji" + File.separatorChar;
+	private static final String GEN_PATH = Constants.GEN_FOLDER + "izvestaji" + File.separatorChar;
 
 	public void save(String xml) throws XMLDBException {
 		Document document = this.izvestajMapper.map(xml);
 		this.izvestajExist.save(null, document);
-		// Model model = this.izvestajMapper.map(document);
-		// this.izvestajRDF.save(model);
-
 		this.soapService.sendSOAPMessage(document, TipDokumenta.izvestaj);
 	}
 

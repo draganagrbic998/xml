@@ -1,6 +1,6 @@
 export interface ZahtevDTO{
     tipZahteva: string;
-    broj: string;
+    broj: number;
     datum: string;
     status: string;
 }

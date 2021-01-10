@@ -83,9 +83,5 @@ public class DOMParser {
 			throw new MyException(e);
 		}
 	}
-
-	public TransformerFactory getTransformerFactory() {
-		return transformerFactory;
-	}
-
+	
 }

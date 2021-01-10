@@ -62,7 +62,8 @@ public class OdgovorService {
 		String xpathExp;
 		if (korisnik.getUloga().equals(Constants.POVERENIK)) {
 			xpathExp = "/odgovor:Odgovor";
-		} else {
+		} 
+		else {
 			xpathExp = String.format("/odgovor:Odgovor[Osoba/mejl='%s']", korisnik.getOsoba().getMejl());
 		}
 		ResourceSet resources = this.odgovorExist.retrieve(xpathExp);

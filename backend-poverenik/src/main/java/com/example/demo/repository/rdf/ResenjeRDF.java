@@ -14,14 +14,14 @@ public class ResenjeRDF {
 	@Autowired
 	private FusekiManager fusekiManager;
 
-	public static final String GRAPH_URI = "/resenja";
+	public static final String RESENJE_GRAPH = "/resenja";
 
 	public void save(Model model) {
-		this.fusekiManager.save(GRAPH_URI, model);
+		this.fusekiManager.save(RESENJE_GRAPH, model);
 	}
 
 	public ResultSet retrieve(String broj) {
-		return this.fusekiManager.retrieve(GRAPH_URI, Prefixes.RESENJE_PREFIX + broj);
+		return this.fusekiManager.retrieve(RESENJE_GRAPH, Prefixes.RESENJE_PREFIX + broj);
 	}
 
 }

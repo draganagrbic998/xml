@@ -54,7 +54,6 @@ public class DOMParser {
 			return builder.parse(new InputSource(new StringReader(xml)));
 		}
 		catch(Exception e) {
-			e.printStackTrace();
 			throw new MyException(e);
 		}
 	}
@@ -83,10 +82,6 @@ public class DOMParser {
 		catch(Exception e) {
 			throw new MyException(e);
 		}
-	}
-
-	public TransformerFactory getTransformerFactory() {
-		return transformerFactory;
 	}
 
 }

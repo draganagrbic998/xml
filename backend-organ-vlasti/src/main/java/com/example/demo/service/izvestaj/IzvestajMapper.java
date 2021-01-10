@@ -1,6 +1,5 @@
 package com.example.demo.service.izvestaj;
 
-import java.io.StringReader;
 import java.util.Date;
 
 import org.apache.jena.rdf.model.Model;
@@ -18,9 +17,7 @@ import org.xmldb.api.modules.XMLResource;
 import com.example.demo.common.Constants;
 import com.example.demo.common.MyException;
 import com.example.demo.common.Namespaces;
-import com.example.demo.common.Prefixes;
 import com.example.demo.parser.DOMParser;
-import com.example.demo.parser.XSLTransformer;
 import com.example.demo.repository.xml.OdlukaExist;
 import com.example.demo.repository.xml.ZahtevExist;
 import com.example.demo.repository.xml.ZalbaExist;
@@ -40,9 +37,6 @@ public class IzvestajMapper {
 
 	@Autowired
 	private DOMParser domParser;
-
-	@Autowired
-	private XSLTransformer xslTransformer;
 
 	private static final SimpleDateFormat sdf = new SimpleDateFormat(Constants.DATE_FORMAT);
 
