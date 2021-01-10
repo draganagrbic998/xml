@@ -90,12 +90,12 @@ const routes: Routes = [
   {
     path: PDF_PATH,
     component: PdfViewerComponent
-  },/*
+  },
   {
     path: '**',
     pathMatch: 'full',
     redirectTo: LOGIN_PATH
-  }*/
+  }
 ];
 
 @NgModule({
