@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<sparql xmlns="http://www.w3.org/2005/sparql-results#">
+  <head>
+    <variable name="predicate"/>
+    <variable name="object"/>
+  </head>
+  <results>
+    <result>
+      <binding name="predicate">
+        <uri>https://github.com/draganagrbic998/xml/sluzbenik/predikat/godina</uri>
+      </binding>
+      <binding name="object">
+        <literal>2020</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="predicate">
+        <uri>https://github.com/draganagrbic998/xml/sluzbenik/predikat/datum</uri>
+      </binding>
+      <binding name="object">
+        <literal>2021-01-10</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="predicate">
+        <uri>https://github.com/draganagrbic998/xml/sluzbenik/predikat/podneo</uri>
+      </binding>
+      <binding name="object">
+        <uri>https://github.com/draganagrbic998/xml/sluzbenik/korisnik/sluzbenik@gmail.com</uri>
+      </binding>
+    </result>
+  </results>
+</sparql>

@@ -12,6 +12,7 @@ import com.example.demo.fuseki.FusekiManager;
 import com.example.demo.parser.DOMParser;
 import com.example.demo.repository.rdf.OdgovorRDF;
 import com.example.demo.repository.rdf.ZalbaRDF;
+import com.example.demo.repository.xml.IzvestajExist;
 import com.example.demo.repository.xml.KorisnikExist;
 import com.example.demo.repository.xml.OdgovorExist;
 import com.example.demo.repository.xml.ResenjeExist;
@@ -52,7 +53,8 @@ public class DataInitializator {
 		this.existManager.dropCollection(ZalbaExist.ZALBA_COLLECTION);
 		this.existManager.dropCollection(ResenjeExist.RESENJE_COLLECTION);
 		this.existManager.dropCollection(OdgovorExist.ODGOVOR_COLLECTION);
-		
+		this.existManager.dropCollection(IzvestajExist.IZVESTAJ_COLLECTION);
+
 		this.existManager.save(KorisnikExist.KORISNIK_COLLECTION, "poverenik@gmail.com", this.domParser.buildDocumentFromFile(POVERENIK1), KorisnikExist.KORISNIK_SCHEMA);
 		this.existManager.save(KorisnikExist.KORISNIK_COLLECTION, "draganaasd@gmail.com", this.domParser.buildDocumentFromFile(GRADJANIN1), KorisnikExist.KORISNIK_SCHEMA);
 

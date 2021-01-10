@@ -1,0 +1,21 @@
+{
+  "head": {
+    "vars": [ "predicate" , "object" ]
+  } ,
+  "results": {
+    "bindings": [
+      {
+        "predicate": { "type": "uri" , "value": "https://github.com/draganagrbic998/xml/sluzbenik/predikat/godina" } ,
+        "object": { "type": "literal" , "value": "2020" }
+      } ,
+      {
+        "predicate": { "type": "uri" , "value": "https://github.com/draganagrbic998/xml/sluzbenik/predikat/datum" } ,
+        "object": { "type": "literal" , "value": "2021-01-10" }
+      } ,
+      {
+        "predicate": { "type": "uri" , "value": "https://github.com/draganagrbic998/xml/sluzbenik/predikat/podneo" } ,
+        "object": { "type": "uri" , "value": "https://github.com/draganagrbic998/xml/sluzbenik/korisnik/sluzbenik@gmail.com" }
+      }
+    ]
+  }
+}

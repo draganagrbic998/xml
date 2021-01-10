@@ -25,7 +25,7 @@ public class IzvestajService implements ServiceInterface {
 	public void add(String xml) {
 		Document document = this.izvestajMapper.map(xml);
 		this.izvestajExist.add(document);
-		//this.izvestajRDF.add(this.izvestajMapper.map(document));
+		this.izvestajRDF.add(this.izvestajMapper.map(document));
 	}
 
 	@Override

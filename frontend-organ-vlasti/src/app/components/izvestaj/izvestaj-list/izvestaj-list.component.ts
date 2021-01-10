@@ -32,11 +32,11 @@ export class IzvestajListComponent implements AfterViewInit {
   });
 
   xmlMetadata(broj: string): void{
-    window.open(`//localhost:8082/${environment.apiIzvestaji}/${broj}/metadata/xml`, '_blank');
+    window.open(`//localhost:8081/${environment.apiIzvestaji}/${broj}/metadata/xml`, '_blank');
   }
 
   jsonMetadata(broj: string): void{
-    window.open(`//localhost:8082/${environment.apiIzvestaji}/${broj}/metadata/json`, '_blank');
+    window.open(`//localhost:8081/${environment.apiIzvestaji}/${broj}/metadata/json`, '_blank');
   }
 
   get uloga(): string{

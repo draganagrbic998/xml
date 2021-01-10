@@ -35,7 +35,7 @@ public class IzvestajService implements ServiceInterface {
 			if (this.izvestajExist.retrieve("/izvestaj:Izvestaj[izvestaj:godina = " + godina + "]").getSize() == 0) {
 				this.izvestajExist.add(document);
 				this.soapService.sendSOAPMessage(document, SOAPDocument.izvestaj);
-				//this.izvestajRDF.add(this.izvestajMapper.map(document));
+				this.izvestajRDF.add(this.izvestajMapper.map(document));
 			}
 		} catch (XMLDBException e) {
 			e.printStackTrace();

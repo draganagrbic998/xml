@@ -1,5 +1,6 @@
 package com.example.demo.mapper;
 
+import java.io.StringReader;
 import java.util.Date;
 
 import org.apache.jena.rdf.model.Model;
@@ -16,8 +17,10 @@ import org.xmldb.api.modules.XMLResource;
 import com.example.demo.common.Constants;
 import com.example.demo.common.MyException;
 import com.example.demo.common.Namespaces;
+import com.example.demo.common.Prefixes;
 import com.example.demo.parser.DOMParser;
 import com.example.demo.parser.JAXBParser;
+import com.example.demo.parser.XSLTransformer;
 import com.example.demo.repository.xml.OdlukaExist;
 import com.example.demo.repository.xml.ZahtevExist;
 import com.example.demo.repository.xml.ZalbaExist;
@@ -43,6 +46,9 @@ public class IzvestajMapper implements MapperInterface {
 
 	@Autowired
 	private JAXBParser jaxbParser;
+	
+	@Autowired
+	private XSLTransformer xslTransformer;
 
 	@Override
 	public Document map(String godina) {
@@ -183,7 +189,23 @@ public class IzvestajMapper implements MapperInterface {
 
 	@Override
 	public Model map(Document document) {
+		Element izvestaj = (Element) document.getElementsByTagNameNS(Namespaces.IZVESTAJ, "Izvestaj").item(0);
+		izvestaj.setAttribute("xmlns:xs", Namespaces.XS);
+		izvestaj.setAttribute("xmlns:pred", Prefixes.PREDIKAT);
+		izvestaj.setAttribute("about", Prefixes.IZVESTAJ_PREFIX + izvestaj.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent());
+		izvestaj.setAttribute("rel", "pred:podneo");
+		izvestaj.setAttribute("href", Prefixes.KORISNIK_PREFIX + this.korisnikService.currentUser().getOsoba().getMejl());
+				
+		((Element) izvestaj.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0)).setAttribute("property", "pred:datum");
+		((Element) izvestaj.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0)).setAttribute("datatype", "xs:string");
+
+		((Element) izvestaj.getElementsByTagNameNS(Namespaces.IZVESTAJ, "godina").item(0)).setAttribute("property", "pred:godina");
+		((Element) izvestaj.getElementsByTagNameNS(Namespaces.IZVESTAJ, "godina").item(0)).setAttribute("datatype", "xs:string");
+
+		String result = this.xslTransformer.generateMetadata(this.domParser.buildXml(document)).toString();
 		Model model = ModelFactory.createDefaultModel();
+		model.setNsPrefix("pred", Prefixes.PREDIKAT);
+		model.read(new StringReader(result), null);
 		return model;
 	}
 
