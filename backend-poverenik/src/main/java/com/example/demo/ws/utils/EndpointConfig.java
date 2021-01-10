@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.example.demo.ws.izvestaj.IzvestajPortImpl;
 import com.example.demo.ws.odgovor.OdgovorPortImpl;
 
 @Configuration
@@ -15,15 +16,24 @@ public class EndpointConfig {
 
 	@Autowired
 	private Bus bus;
-	
+
 	@Autowired
 	private OdgovorPortImpl opi;
-		
+
+	@Autowired
+	private IzvestajPortImpl ipi;
+
 	@Bean
 	public Endpoint createZalbaEndpoint() {
 		EndpointImpl endpoint = new EndpointImpl(bus, opi);
 		endpoint.publish("/createOdgovor");
 		return endpoint;
 	}
-	
+
+	@Bean
+	public Endpoint createIzvestajEndpoint() {
+		EndpointImpl endpoint = new EndpointImpl(bus, ipi);
+		endpoint.publish("/createIzvestaj");
+		return endpoint;
+	}
 }

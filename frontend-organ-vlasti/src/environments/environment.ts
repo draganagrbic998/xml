@@ -10,6 +10,7 @@ export const environment = {
   apiOdluke: 'api/odluke',
   apiZalbe: 'api/zalbe',
   apiResenja: 'api/resenja',
+  apiIzvestaji: 'api/izvestaji',
   apiOdgovori: 'api/odgovori'
 };
 
