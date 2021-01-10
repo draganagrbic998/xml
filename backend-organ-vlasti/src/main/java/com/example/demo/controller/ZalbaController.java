@@ -17,7 +17,6 @@ import com.example.demo.transformer.ZalbaTransformer;
 
 @RestController
 @RequestMapping(value = "/api/zalbe")
-@PreAuthorize("hasAuthority('sluzbenik')")
 public class ZalbaController {
 
 	@Autowired
@@ -27,17 +26,19 @@ public class ZalbaController {
 	private ZalbaTransformer zalbaTransformer;
 
 	@GetMapping(produces = MediaType.TEXT_XML_VALUE)
+	@PreAuthorize("hasAuthority('sluzbenik')")
 	public ResponseEntity<String> retrieve() {
 		return new ResponseEntity<>(this.zalbaService.retrieve(), HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/{broj}", produces = "text/html; charset=utf-8")
+	@PreAuthorize("hasAuthority('sluzbenik')")
 	public ResponseEntity<String> html(@PathVariable String broj) {
 		return new ResponseEntity<>(this.zalbaTransformer.html(broj), HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/{broj}/pdf", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-	public ResponseEntity<Object> generatePdf(@PathVariable String broj) {
+	public ResponseEntity<Resource> generatePdf(@PathVariable String broj) {
 		Resource resource = this.zalbaTransformer.generatePdf(broj);
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")

@@ -17,7 +17,6 @@ import com.example.demo.transformer.OdgovorTransformer;
 
 @RestController
 @RequestMapping(value = "/api/odgovori")
-@PreAuthorize("hasAuthority('sluzbenik')")
 public class OdgovorController {
 	
 	@Autowired
@@ -27,12 +26,14 @@ public class OdgovorController {
 	private OdgovorTransformer odgovorTransformer;
 	
 	@PostMapping(consumes = MediaType.TEXT_XML_VALUE)
+	@PreAuthorize("hasAuthority('sluzbenik')")
 	public ResponseEntity<Void> add( @RequestBody String xml) {		
 		this.odgovorService.add(xml);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
 	@GetMapping(value = "/{broj}", produces = "text/html; charset=utf-8")
+	@PreAuthorize("hasAuthority('sluzbenik')")
 	public ResponseEntity<String> html(@PathVariable String broj) {
 		return new ResponseEntity<>(this.odgovorTransformer.html(broj), HttpStatus.OK);
 	}
