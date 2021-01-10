@@ -6,6 +6,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +20,7 @@ import com.example.demo.transformer.OdlukaTransformer;
 
 @RestController
 @RequestMapping(value = "/api/odluke")
+@PreAuthorize("isAuthenticated()")
 public class OdlukaController {
 	
 	@Autowired
@@ -28,6 +30,7 @@ public class OdlukaController {
 	private OdlukaTransformer odlukaTransfomer;
 			
 	@PostMapping(consumes = MediaType.TEXT_XML_VALUE)
+	@PreAuthorize("hasAuthority('sluzbenik')")
 	public ResponseEntity<Void> add( @RequestBody String xml) {		
 		this.odlukaService.add(xml);
 		return new ResponseEntity<>(HttpStatus.CREATED);

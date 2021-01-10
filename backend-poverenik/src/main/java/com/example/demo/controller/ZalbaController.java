@@ -6,6 +6,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +20,7 @@ import com.example.demo.transformer.ZalbaTransformer;
 
 @RestController
 @RequestMapping(value = "/api/zalbe")
+@PreAuthorize("isAuthenticated()")
 public class ZalbaController {
 
 	@Autowired
@@ -28,7 +30,8 @@ public class ZalbaController {
 	private ZalbaTransformer zalbaTransformer;
 			
 	@PostMapping(consumes = MediaType.TEXT_XML_VALUE)
-	public ResponseEntity<Void> save(@RequestBody String xml) {		
+	@PreAuthorize("hasAuthority('gradjanin')")
+	public ResponseEntity<Void> add(@RequestBody String xml) {		
 		this.zalbaService.add(xml);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
@@ -68,18 +71,21 @@ public class ZalbaController {
 	}
 
 	@PostMapping(value = "/odustani/{broj}")
+	@PreAuthorize("hasAuthority('gradjanin')")
 	public ResponseEntity<Void> odustani(@PathVariable String broj){
 		this.zalbaService.odustani(broj);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@PostMapping(value = "/obustavi/{broj}")
+	@PreAuthorize("hasAuthority('poverenik')")
 	public ResponseEntity<Void> obustavi(@PathVariable String broj) {
 		this.zalbaService.obustavi(broj);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@PostMapping(value = "/prosledi/{broj}")
+	@PreAuthorize("hasAuthority('poverenik')")
 	public ResponseEntity<Void> prosledi(@PathVariable String broj) {
 		this.zalbaService.prosledi(broj);
 		return new ResponseEntity<>(HttpStatus.OK);
