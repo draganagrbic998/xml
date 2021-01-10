@@ -69,9 +69,11 @@ public class ResenjeMapper implements MapperInterface {
 		
 		((Element) resenje.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0)).setAttribute("property", "pred:datum");
 		((Element) resenje.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0)).setAttribute("datatype", "xs:string");
-		((Element) resenje.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(0)).setAttribute("property", "pred:mesto");
+		((Element) resenje.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(0)).setAttribute("property", "pred:izdatoU");
 		((Element) resenje.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(0)).setAttribute("datatype", "xs:string");
-		
+		((Element) resenje.getElementsByTagNameNS(Namespaces.RESENJE, "status").item(0)).setAttribute("property", "pred:tip");
+		((Element) resenje.getElementsByTagNameNS(Namespaces.RESENJE, "status").item(0)).setAttribute("datatype", "xs:string");
+
 		Element brojZahteva = (Element) ((Element) document.getElementsByTagNameNS(Namespaces.RESENJE, "PodaciZahteva").item(0)).getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0);
 		brojZahteva.setAttribute("rel", "pred:zahtev");
 		brojZahteva.setAttribute("href", Prefixes.ZAHTEV_PREFIX + brojZahteva.getTextContent());
