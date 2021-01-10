@@ -33,20 +33,18 @@
       <ng-container matColumnDef="metapodaci">
         <th mat-header-cell *matHeaderCellDef>Metapodaci</th>
         <td mat-cell *matCellDef="let zalba">
-          <a (click)="xmlMetadata(zalba.broj)" href="/zalba-list">XML</a><br>
-          <a (click)="jsonMetadata(zalba.broj)" href="/zalba-list">JSON</a>
+          <a *ngIf="true" (click)="xmlMetadata(zalba.broj)">XML</a><br>
+          <a *ngIf="true" (click)="jsonMetadata(zalba.broj)">JSON</a>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="akcije">
         <th mat-header-cell *matHeaderCellDef>Akcije</th>
         <td mat-cell *matCellDef="let zalba">
-          <button 
+          <a 
           *ngIf="zalba.status === 'prosledjeno' && uloga === 'sluzbenik'"
           [routerLink]="'/odgovor-form/' + zalba.broj"
-          mat-raised-button 
-          color="primary"
-          >Odgovori</button>
+          >Odgovori</a>
           </td>
       </ng-container>
     
