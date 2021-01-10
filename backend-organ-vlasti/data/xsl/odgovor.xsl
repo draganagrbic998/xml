@@ -2,9 +2,9 @@
 <xsl:stylesheet 
 xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0"
 xmlns:osnova="https://github.com/draganagrbic998/xml/osnova"
-xmlns:odluka="https://github.com/draganagrbic998/xml/odluka">
+xmlns:odgovor="https://github.com/draganagrbic998/xml/odgovor">
 
-	<xsl:template match="/odluka:Odluka">
+	<xsl:template match="/odgovor:Odgovor">
 	
 		<html>
 			
@@ -77,64 +77,54 @@ xmlns:odluka="https://github.com/draganagrbic998/xml/odluka">
 					<br></br><br></br>
 					
 					<p class="center bold big">
-						РЕШЕЊЕ О ОДБИЈАЊУ ЗАХТЕВА
+						ОДГОВОР НА ЖАЛБУ
 					</p>
 					<p class="center bold big">
-						ЗА ПРИСТУП ИНФОРМАЦИЈАМА ОД ЈАВНОГ ЗНАЧАЈА
+						ЗБОГ УСКРАЋЕНОГ ПРАВА ЗА ПРИСТУП ИНФОРМАЦИЈАМА ОД ЈАВНОГ ЗНАЧАЈА
 					</p>
 					
+					<p>
+						<xsl:variable name="danZalbe" select="substring-after(substring-after(odgovor:datumZalbe, '-'), '-')"></xsl:variable>
+						<xsl:variable name="mesecZalbe" select="substring-before(substring-after(odgovor:datumZalbe, '-'), '-')"></xsl:variable>
+						<xsl:variable name="godinaZalbe" select="substring-before(odgovor:datumZalbe, '-')"></xsl:variable>
+						Број жалбе: 
+						<span class="underline">
+							<xsl:value-of select="osnova:broj"></xsl:value-of>
+						</span> 
+						, поднешена дана
+						<span class="underline">
+							<xsl:value-of select="concat($danZalbe, concat('.', concat($mesecZalbe, concat('.', concat($godinaZalbe, '.')))))"></xsl:value-of>
+						</span> 
+						године.
+					</p>				
 					<p>
 						<xsl:variable name="dan" select="substring-after(substring-after(osnova:datum, '-'), '-')"></xsl:variable>
 						<xsl:variable name="mesec" select="substring-before(substring-after(osnova:datum, '-'), '-')"></xsl:variable>
 						<xsl:variable name="godina" select="substring-before(osnova:datum, '-')"></xsl:variable>
-						Број решења: 
-						<span class="underline">
-							<xsl:value-of select="osnova:broj"></xsl:value-of>
-						</span> 
-						, издат дана
-						<span class="underline">
+	            		Датум одговора органа власти:
+	            		<span class="underline">
 							<xsl:value-of select="concat($dan, concat('.', concat($mesec, concat('.', concat($godina, '.')))))"></xsl:value-of>
-						</span> 
-						године.
-					</p>
-					
-					<br></br><br></br>
-					
-					<div class="flex" style="margin-left: 80px; margin-right: 80px;">
-						<xsl:variable name="osoba" select="osnova:Gradjanin/osnova:Osoba"></xsl:variable>
-						(<span class="center dotted" style="flex: 1;">
-							<xsl:value-of select="concat($osoba/osnova:ime, concat(' ', $osoba/osnova:prezime))"></xsl:value-of>
-						</span>
-					</div>
-					<div class="flex" style="margin-left: 100px; margin-right: 100px;">
-						<xsl:variable name="adresa" select="osnova:Gradjanin/osnova:Adresa"></xsl:variable>
-						<span class="center dotted" style="flex: 1;">
-							<xsl:value-of select="concat($adresa/osnova:ulica, concat(' ', $adresa/osnova:broj, concat(', ', $adresa/osnova:mesto)))"></xsl:value-of>
-						</span>)
-					</div>
-					<p class="center">
-						Име, презиме и адреса тражиоца информација од јавног значаја
-					</p>
+	            		</span>
+					</p>	
 					
 					<br></br><br></br>
 					
 					<p class="indent">
-						<xsl:variable name="zahtev_link" select="concat('http://localhost:4200/html/zahtevi/', odluka:brojZahteva)"></xsl:variable>
 						Орган власти 
 						<span class="underline"><xsl:value-of select="osnova:OrganVlasti/osnova:naziv"></xsl:value-of></span>
-						издаје решење о одбијању <a href="{$zahtev_link}">захтева за информацијама од јавног значаја</a>, које је 
+						подноси одговор на жалбу против ускраћеног права за информацијама од јавног значаја, коју је
 						<span class="underline">
-							<xsl:variable name="osoba" select="osnova:Gradjanin/osnova:Osoba"></xsl:variable>
+							<xsl:variable name="osoba" select="osnova:Osoba"></xsl:variable>
 							<xsl:value-of select="concat($osoba/osnova:ime, concat(' ', $osoba/osnova:prezime))"></xsl:value-of>
 						</span>
 						поднео/ла дана 
 						<span class="underline">
-							<xsl:variable name="danZahteva" select="substring-after(substring-after(odluka:datumZahteva, '-'), '-')"></xsl:variable>
-							<xsl:variable name="mesecZahteva" select="substring-before(substring-after(odluka:datumZahteva, '-'), '-')"></xsl:variable>
-							<xsl:variable name="godinaZahteva" select="substring-before(odluka:datumZahteva, '-')"></xsl:variable>
-							<xsl:value-of select="concat($danZahteva, concat('.', concat($mesecZahteva, concat('.', concat($godinaZahteva, '.')))))"></xsl:value-of>
+							<xsl:variable name="danZalbe" select="substring-after(substring-after(odgovor:datumZalbe, '-'), '-')"></xsl:variable>
+							<xsl:variable name="mesecZalbe" select="substring-before(substring-after(odgovor:datumZalbe, '-'), '-')"></xsl:variable>
+							<xsl:variable name="godinaZalbe" select="substring-before(odgovor:datumZalbe, '-')"></xsl:variable>
+							<xsl:value-of select="concat($danZalbe, concat('.', concat($mesecZalbe, concat('.', concat($godinaZalbe, '.')))))"></xsl:value-of>
 						</span>
-						Обраложење одбијања захтева је следеће:
+						Одговор органа власти на поднету жалбу је следећи:
 					</p>
 					
 					<p class="details">
@@ -152,12 +142,12 @@ xmlns:odluka="https://github.com/draganagrbic998/xml/odluka">
 		            </p>
 		            
 		            <br></br><br></br><br></br><br></br>
-		            
+		            		            
 		            <div class="flex">
 		            	<div>&#160;</div>
 		            	<div>
 							<p class="underline center" style="margin-left: 100px; margin-right: 20px;">
-								<xsl:value-of select="osnova:Gradjanin/osnova:Osoba/osnova:potpis"></xsl:value-of>
+								<xsl:value-of select="osnova:Osoba/osnova:potpis"></xsl:value-of>
 							</p>
 							<p>
 								(потпис овлашћеног лица, односно руководиоца органа)

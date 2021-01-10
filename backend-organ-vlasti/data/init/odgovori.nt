@@ -1,0 +1,7 @@
+<https://github.com/draganagrbic998/xml/poverenik/odgovor/2> <https://github.com/draganagrbic998/xml/poverenik/predicate/datum> "2021-01-09" .
+<https://github.com/draganagrbic998/xml/poverenik/odgovor/2> <https://github.com/draganagrbic998/xml/poverenik/predicate/izdatoU> "Novi Sad" .
+<https://github.com/draganagrbic998/xml/poverenik/odgovor/2> <https://github.com/draganagrbic998/xml/poverenik/predicate/zalba> <https://github.com/draganagrbic998/xml/poverenik/zalba/2> .
+
+<https://github.com/draganagrbic998/xml/poverenik/odgovor/1> <https://github.com/draganagrbic998/xml/poverenik/predicate/datum> "2021-01-09" .
+<https://github.com/draganagrbic998/xml/poverenik/odgovor/1> <https://github.com/draganagrbic998/xml/poverenik/predicate/izdatoU> "Novi Sad" .
+<https://github.com/draganagrbic998/xml/poverenik/odgovor/1> <https://github.com/draganagrbic998/xml/poverenik/predicate/zalba> <https://github.com/draganagrbic998/xml/poverenik/zalba/1> .

@@ -1,12 +1,10 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ODGOVOR, OSNOVA, ZALBA } from 'src/app/constants/namespaces';
-import { Odgovor } from 'src/app/models/odgovor';
+import { OSNOVA, ZALBA } from 'src/app/constants/namespaces';
 import { ZalbaDTO } from 'src/app/models/zalbaDTO';
 import { environment } from 'src/environments/environment';
-import { XonomyService } from '../xonomy/xonomy.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,25 +12,10 @@ import { XonomyService } from '../xonomy/xonomy.service';
 export class ZalbaService {
 
   constructor(
-    private http: HttpClient,
-    private xonomyService: XonomyService
+    private http: HttpClient
   ) { }
 
   private readonly API_ZALBE = `${environment.baseUrl}/${environment.apiZalbe}`;
-  private readonly API_ODGOVORI = `${environment.baseUrl}/${environment.apiOdgovori}`;
-
-  private odgovorToXml(brojZalbe: string, odgovor: Odgovor): string{
-
-    return `
-      <odgovor:Odgovor
-      xmlns="${OSNOVA}"
-      xmlns:odgovor="${ODGOVOR}">
-        <broj>${brojZalbe}</broj>
-        ${odgovor.detalji}
-      </odgovor:Odgovor>
-    `;
-
-  }
 
   private xmlToZalbe(xml: string): ZalbaDTO[]{
     const parser = new DOMParser();
@@ -59,12 +42,6 @@ export class ZalbaService {
 
   view(broj: string): Observable<string>{
     return this.http.get<string>(`${this.API_ZALBE}/${broj}`, {responseType: 'text' as 'json'});
-  }
-
-  saveOdgovor(broj: string, odgovor: Odgovor): Observable<null>{
-    odgovor.detalji = this.xonomyService.removeXmlSpace(odgovor.detalji);
-    const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
-    return this.http.post<null>(this.API_ODGOVORI, this.odgovorToXml(broj, odgovor), options);
   }
 
 }

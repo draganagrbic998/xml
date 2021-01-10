@@ -137,8 +137,9 @@ xmlns:odluka="https://github.com/draganagrbic998/xml/odluka">
 					<br></br>
 					
 					<p class="indent">
+						<xsl:variable name="zahtev_link" select="concat('http://localhost:4200/html/zahtevi/', odluka:brojZahteva)"></xsl:variable>
 						На основу члана 16. ст. 1. Закона о слободном приступу информацијама од јавног значаја, 
-						поступајући по вашем захтеву за слободан приступ информацијама од
+						поступајући по вашем <a href="{$zahtev_link}">захтеву за слободан приступ информацијама</a> од
 						<span class="underline">
 							<xsl:variable name="danZahteva" select="substring-after(substring-after(odluka:datumZahteva, '-'), '-')"></xsl:variable>
 							<xsl:variable name="mesecZahteva" select="substring-before(substring-after(odluka:datumZahteva, '-'), '-')"></xsl:variable>

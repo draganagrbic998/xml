@@ -10,10 +10,12 @@ import org.springframework.stereotype.Component;
 import com.example.demo.exist.ExistManager;
 import com.example.demo.fuseki.FusekiManager;
 import com.example.demo.parser.DOMParser;
+import com.example.demo.repository.rdf.OdgovorRDF;
 import com.example.demo.repository.rdf.OdlukaRDF;
 import com.example.demo.repository.rdf.ZahtevRDF;
 import com.example.demo.repository.rdf.ZalbaRDF;
 import com.example.demo.repository.xml.KorisnikExist;
+import com.example.demo.repository.xml.OdgovorExist;
 import com.example.demo.repository.xml.OdlukaExist;
 import com.example.demo.repository.xml.OrganVlastiExist;
 import com.example.demo.repository.xml.ResenjeExist;
@@ -41,6 +43,10 @@ public class DataInitializator {
 	private static final String RESENJE1 = Constants.INIT_FOLDER + "resenje1.xml";
 	private static final String RESENJE2 = Constants.INIT_FOLDER + "resenje2.xml";
 	private static final String RESENJE3 = Constants.INIT_FOLDER + "resenje3.xml";
+
+	private static final String ODGOVOR1 = Constants.INIT_FOLDER + "odgovor1.xml";
+	private static final String ODGOVOR2 = Constants.INIT_FOLDER + "odgovor2.xml";
+	private static final String ODGOVORI = Constants.INIT_FOLDER + "odgovori.nt";
 
 	@Autowired
 	private ExistManager existManager;
@@ -82,6 +88,9 @@ public class DataInitializator {
 		this.existManager.save(ResenjeExist.RESENJE_COLLECTION, "2", this.domParser.buildDocumentFromFile(RESENJE2), ResenjeExist.RESENJE_SCHEMA);
 		this.existManager.save(ResenjeExist.RESENJE_COLLECTION, "3", this.domParser.buildDocumentFromFile(RESENJE3), ResenjeExist.RESENJE_SCHEMA);
 
+		this.existManager.save(OdgovorExist.ODGOVOR_COLLECTION, "1", this.domParser.buildDocumentFromFile(ODGOVOR1), OdgovorExist.ODGOVOR_SCHEMA);
+		this.existManager.save(OdgovorExist.ODGOVOR_COLLECTION, "2", this.domParser.buildDocumentFromFile(ODGOVOR2), OdgovorExist.ODGOVOR_SCHEMA);
+
 		this.fusekiManager.dropAll();
 		Model model = ModelFactory.createDefaultModel();
 		model.read(ZAHTEVI);
@@ -92,6 +101,10 @@ public class DataInitializator {
 		model.removeAll();
 		model.read(ZALBE);
 		this.fusekiManager.save(ZalbaRDF.GRAPH_URI, model, ZalbaRDF.ZALBA_RDFS);
+		model.removeAll();
+		model.read(ODGOVORI);
+		this.fusekiManager.save(OdgovorRDF.GRAPH_URI, model, null);
+
 		//dodaj rdfs za resenje
 	}
 	

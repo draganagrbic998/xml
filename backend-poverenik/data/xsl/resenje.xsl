@@ -65,6 +65,11 @@ xmlns:resenje="https://github.com/draganagrbic998/xml/resenje">
 					<xsl:variable name="mesecOdluke" select="substring-before(substring-after($podaciOdluke/osnova:datum, '-'), '-')"></xsl:variable>
 					<xsl:variable name="godinaOdluke" select="substring-before($podaciOdluke/osnova:datum, '-')"></xsl:variable>
 	
+					<xsl:variable name="zahtev_link" select="concat('http://localhost:4200/html/zahtevi/', resenje:PodaciZahteva/osnova:broj)"></xsl:variable>
+					<xsl:variable name="odluka_link" select="concat('http://localhost:4200/html/odluke/', resenje:PodaciOdluke/osnova:broj)"></xsl:variable>
+					<xsl:variable name="zalba_link" select="concat('http://localhost:4200/html/zalbe/', resenje:PodaciZalbe/resenje:brojZalbe)"></xsl:variable>
+					<xsl:variable name="odgovor_link" select="concat('http://localhost:4200/html/odgovori/', resenje:PodaciZalbe/resenje:brojZalbe)"></xsl:variable>
+
 					<div class="flex">
 						<div>
 							Решење
@@ -198,17 +203,17 @@ xmlns:resenje="https://github.com/draganagrbic998/xml/resenje">
 						<xsl:value-of select="concat($danZahteva, concat('.', concat($mesecZahteva, concat('.', concat($godinaZahteva, '.')))))"></xsl:value-of>										
 							године за приступ информацијама од јавног значаја.
 						<xsl:if test="not($podaciOdluke)">
-							Уз жалбу је приложена копија поднетог захтева са доказом о предаји органу власти.
+							Уз жалбу је приложена <a href="{$zahtev_link}">копија поднетог захтева</a> са доказом о предаји органу власти.
 						</xsl:if>
 						<xsl:if test="$podaciZalbe/resenje:tipZalbe = 'delimicnost'">
 							У жалби је навео да му предметним обавештењем орган власти није доставио тражене информације, 
 							па предлаже да Повереник уважи његову жалбу и наложи да му се доставе тражене информације. 
-							У прилогу је доставио копије захтева и ожалбеног обавештења.
+							У прилогу је доставио <a href="{$zahtev_link}">копије захтева</a> и <a href="{$odluka_link}">ожалбеног обавештења</a>.
 						</xsl:if>
 						<xsl:if test="$podaciZalbe/resenje:tipZalbe = 'odluka'">
 							У жалби је навео да му је издатим решењем за одбијање захтева ускраћено уставно право 
 							на информације од јавног значаја и зато захтева од Повереника да наложи доставу
-							тражене информације. У прилогу је доставио копије захтева и издатог решења о одбијању захтева.
+							тражене информације. У прилогу је доставио <a href="{$zahtev_link}">копије захтева</a> и <a href="{$odluka_link}">издатог решења о одбијању захтева</a>.
 						</xsl:if>
 					</p>
 					
@@ -216,7 +221,7 @@ xmlns:resenje="https://github.com/draganagrbic998/xml/resenje">
 						<xsl:variable name="danProsledjivanja" select="substring-after(substring-after($podaciZalbe/resenje:datumProsledjivanja, '-'), '-')"></xsl:variable>
 						<xsl:variable name="mesecProsledjivanja" select="substring-before(substring-after($podaciZalbe/resenje:datumProsledjivanja, '-'), '-')"></xsl:variable>
 						<xsl:variable name="godinaProsledjivanja" select="substring-before($podaciZalbe/resenje:datumProsledjivanja, '-')"></xsl:variable>
-						Поступајући по жалби, Повереник је дана 					
+						Поступајући по <a href="{$zalba_link}">жалби</a>, Повереник је дана 					
 						<xsl:value-of select="concat($danProsledjivanja, concat('.', concat($mesecProsledjivanja, concat('.', concat($godinaProsledjivanja, '.')))))"></xsl:value-of>					
 						године упутио исту на изјашњење органу
 						<xsl:value-of select="$organVlasti"></xsl:value-of>,
@@ -236,7 +241,7 @@ xmlns:resenje="https://github.com/draganagrbic998/xml/resenje">
 								<xsl:variable name="danOdbrane" select="substring-after(substring-after(resenje:Odbrana/resenje:datumOdbrane, '-'), '-')"></xsl:variable>
 								<xsl:variable name="mesecOdbrane" select="substring-before(substring-after(resenje:Odbrana/resenje:datumOdbrane, '-'), '-')"></xsl:variable>
 								<xsl:variable name="godinaOdbrane" select="substring-before(resenje:Odbrana/resenje:datumOdbrane, '-')"></xsl:variable>
-								У одговору на жалбу од 
+								У <a href="{$odgovor_link}">одговору на жалбу</a> од 
 								<xsl:value-of select="concat($danOdbrane, concat('.', concat($mesecOdbrane, concat('.', concat($godinaOdbrane, '.')))))"></xsl:value-of>					
 								године, орган власти се изјаснио следећим ставом:
 								<xsl:apply-templates select="resenje:Odbrana/osnova:Detalji"></xsl:apply-templates>.

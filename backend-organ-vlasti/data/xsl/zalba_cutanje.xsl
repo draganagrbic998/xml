@@ -180,11 +180,18 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 						траженој/им  информацији/ма.
 					</p>
 					<p class="indent">
-						Као доказ , уз жалбу достављам копију захтева са доказом о предаји органу власти.
+						<xsl:variable name="zahtev_link" select="concat('http://localhost:4200/html/zahtevi/', zalba:PodaciZahteva/osnova:broj)"></xsl:variable>
+						Као доказ , уз жалбу достављам <a href="{$zahtev_link}">копију захтева</a> са доказом о предаји органу власти.
 					</p>
 					<p class="indent">
-						<b>Напомена:</b> Код жалбе  због непоступању по захтеву у целости, треба приложити и 
-						добијени одговор органа власти.
+						<xsl:variable name="odluka_link" select="concat('http://localhost:4200/html/odluke/', zalba:PodaciOdluke/osnova:broj)"></xsl:variable>
+						<b>Напомена:</b> Код жалбе  због непоступању по захтеву у целости, треба приложити и добијени 
+						<xsl:if test="zalba:PodaciOdluke">
+							<a href="{$odluka_link}">одговор органа власти.</a>
+						</xsl:if>
+						<xsl:if test="not(zalba:PodaciOdluke)">
+							одговор органа власти.
+						</xsl:if>
 					</p>
 					
 					<br></br><br></br>
@@ -233,7 +240,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 						<xsl:variable name="dan" select="substring-after(substring-after(osnova:datum, '-'), '-')"></xsl:variable>
 						<xsl:variable name="mesec" select="substring-before(substring-after(osnova:datum, '-'), '-')"></xsl:variable>
 						<xsl:variable name="godina" select="substring(substring-before(osnova:datum, '-'), 3, 2)"></xsl:variable>
-						У <span class="dotted">&#160;<xsl:variable select="osnova:Gradjanin/osnova:Adresa/osnova:mesto"></xsl:variable>&#160;</span>,
+						У <span class="dotted">&#160;<xsl:value-of select="osnova:Gradjanin/osnova:Adresa/osnova:mesto"></xsl:value-of>&#160;</span>,
 						дана 
 						<span class="dotted">
 							<xsl:value-of select="concat($dan, concat('.', concat($mesec, '.')))"></xsl:value-of>

@@ -3,8 +3,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { SNACKBAR_CLOSE, SNACKBAR_ERROR, SNACKBAR_ERROR_OPTIONS, SNACKBAR_SUCCESS_OPTIONS } from 'src/app/constants/snackbar';
 import { Odgovor } from 'src/app/models/odgovor';
+import { OdgovorService } from 'src/app/services/odgovor/odgovor.service';
 import { XonomyService } from 'src/app/services/xonomy/xonomy.service';
-import { ZalbaService } from 'src/app/services/zalba/zalba.service';
 
 declare const Xonomy: any;
 
@@ -16,7 +16,7 @@ declare const Xonomy: any;
 export class OdgovorFormComponent implements AfterViewInit {
 
   constructor(
-    private odgovorService: ZalbaService,
+    private odgovorService: OdgovorService,
     private xonomyService: XonomyService,
     private snackBar: MatSnackBar,
     private route: ActivatedRoute
@@ -27,7 +27,7 @@ export class OdgovorFormComponent implements AfterViewInit {
   save(): void{
     const odgovor: Odgovor = {detalji: Xonomy.harvest()};
     this.savePending = true;
-    this.odgovorService.saveOdgovor(this.route.snapshot.params.brojZalbe, odgovor).subscribe(
+    this.odgovorService.save(this.route.snapshot.params.brojZalbe, odgovor).subscribe(
       () => {
         this.savePending = false;
         this.snackBar.open('Odgovor poslat!', SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);

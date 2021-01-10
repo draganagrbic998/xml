@@ -1,0 +1,13 @@
+<https://github.com/draganagrbic998/xml/poverenik/resenje/4>
+        <https://github.com/draganagrbic998/xml/poverenik/predicate/datum>
+                "2021-01-10" ;
+        <https://github.com/draganagrbic998/xml/poverenik/predicate/izdao>
+                <https://github.com/draganagrbic998/xml/poverenik/korisnik/poverenik@gmail.com> ;
+        <https://github.com/draganagrbic998/xml/poverenik/predicate/izdatoU>
+                "Novi Sad" ;
+        <https://github.com/draganagrbic998/xml/poverenik/predicate/odluka>
+                <https://github.com/draganagrbic998/xml/sluzbenik/odluka/1> ;
+        <https://github.com/draganagrbic998/xml/poverenik/predicate/zahtev>
+                <https://github.com/draganagrbic998/xml/sluzbenik/zahtev/1> ;
+        <https://github.com/draganagrbic998/xml/poverenik/predicate/zalba>
+                <https://github.com/draganagrbic998/xml/poverenik/zalba/1> .
