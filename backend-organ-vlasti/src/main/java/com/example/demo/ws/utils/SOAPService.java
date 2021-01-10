@@ -48,8 +48,8 @@ public class SOAPService {
 				endpoint = new URL(SOAPConstants.CREATE_ODGOVOR_SERVICE);
 			}
 			else {
-				name = this.soapFactory.createName(SOAPConstants.CREATE_ODGOVOR_ELEMENT, "m", SOAPConstants.CREATE_ODGOVOR_NAMESPACE);
-				endpoint = new URL(SOAPConstants.CREATE_ODGOVOR_SERVICE);
+				name = this.soapFactory.createName(SOAPConstants.CREATE_IZVESTAJ_ELEMENT, "m", SOAPConstants.CREATE_IZVESTAJ_NAMESPACE);
+				endpoint = new URL(SOAPConstants.CREATE_IZVESTAJ_SERVICE);
 			}
 
 			SOAPElement symbol = body.addChildElement(name);

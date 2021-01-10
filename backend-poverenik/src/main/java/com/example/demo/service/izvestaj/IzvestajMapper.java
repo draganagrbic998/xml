@@ -37,7 +37,7 @@ public class IzvestajMapper {
 				Node izvestaj = izvestajiDocument.createElementNS(Namespaces.IZVESTAJ, "Izvestaj");
 				izvestaj.appendChild(izvestajiDocument.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0), true));
 				izvestaj.appendChild(izvestajiDocument.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
-				izvestaj.appendChild(izvestajiDocument.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "OrganVlasti").item(0), true));
+				izvestaj.appendChild(izvestajiDocument.importNode(document.getElementsByTagNameNS(Namespaces.IZVESTAJ, "godina").item(0), true));
 				izvestaji.appendChild(izvestaj);
 			}
 

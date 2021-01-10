@@ -31,58 +31,62 @@ public class OdlukaMapper {
 
 	@Autowired
 	private ZahtevExist zahtevExist;
-	
+
 	@Autowired
 	private KorisnikService korisnikService;
 
 	@Autowired
 	private DOMParser domParser;
-	
+
 	@Autowired
 	private XSLTransformer xslTransformer;
 
 	public static final SimpleDateFormat sdf = new SimpleDateFormat(Constants.DATE_FORMAT);
 	public static final SimpleDateFormat sdf2 = new SimpleDateFormat("dd.MM.yyy.");
-		
+
 	public Document map(String xml) {
 		Document document = this.domParser.buildDocument(xml);
 		Element odluka = (Element) document.getElementsByTagNameNS(Namespaces.ODLUKA, "Odluka").item(0);
 		String brojZahteva = odluka.getElementsByTagNameNS(Namespaces.ODLUKA, "brojZahteva").item(0).getTextContent();
-		Element zahtev = (Element) this.zahtevExist.load(brojZahteva).getElementsByTagNameNS(Namespaces.ZAHTEV, "Zahtev").item(0);
+		Element zahtev = (Element) this.zahtevExist.load(brojZahteva)
+				.getElementsByTagNameNS(Namespaces.ZAHTEV, "Zahtev").item(0);
 		DocumentFragment documentFragment = document.createDocumentFragment();
-		
+
 		Node datum = document.createElementNS(Namespaces.OSNOVA, "datum");
 		datum.setTextContent(sdf.format(new Date()));
-		Element gradjanin = (Element) document.importNode(zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "Gradjanin").item(0), true);
-		Element organVlasti = (Element) document.importNode(zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "OrganVlasti").item(0), true);		
-		gradjanin.getElementsByTagNameNS(Namespaces.OSNOVA, "potpis").item(0).setTextContent(this.korisnikService.currentUser().getOsoba().getPotpis());
-		documentFragment.appendChild(document.createElementNS(Namespaces.OSNOVA, "broj"));			
+		Element gradjanin = (Element) document
+				.importNode(zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "Gradjanin").item(0), true);
+		Element organVlasti = (Element) document
+				.importNode(zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "OrganVlasti").item(0), true);
+		gradjanin.getElementsByTagNameNS(Namespaces.OSNOVA, "potpis").item(0)
+				.setTextContent(this.korisnikService.currentUser().getOsoba().getPotpis());
+		documentFragment.appendChild(document.createElementNS(Namespaces.OSNOVA, "broj"));
 		documentFragment.appendChild(datum);
 		documentFragment.appendChild(gradjanin);
 		documentFragment.appendChild(organVlasti);
-		odluka.insertBefore(documentFragment, document.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0));	
+		odluka.insertBefore(documentFragment, document.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0));
 
 		Node datumZahteva = document.createElementNS(Namespaces.ODLUKA, "odluka:datumZahteva");
 		datumZahteva.setTextContent(zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).getTextContent());
 		odluka.insertBefore(datumZahteva, odluka.getElementsByTagNameNS(Namespaces.ODLUKA, "brojZahteva").item(0));
-		
+
 		try {
-			String datumUvida = sdf.format(sdf2.parse(document.getElementsByTagNameNS(Namespaces.ODLUKA, "datumUvida").item(0).getTextContent()));
+			String datumUvida = sdf.format(sdf2
+					.parse(document.getElementsByTagNameNS(Namespaces.ODLUKA, "datumUvida").item(0).getTextContent()));
 			document.getElementsByTagNameNS(Namespaces.ODLUKA, "datumUvida").item(0).setTextContent(datumUvida);
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			;
 		}
 		return document;
 	}
-	
+
 	public String map(ResourceSet resources) {
 		try {
 			Document odlukeDocument = this.domParser.emptyDocument();
 			Node odluke = odlukeDocument.createElementNS(Namespaces.ODLUKA, "Odluke");
 			odlukeDocument.appendChild(odluke);
 			ResourceIterator it = resources.getIterator();
-			
+
 			while (it.hasMoreResources()) {
 				XMLResource resource = (XMLResource) it.nextResource();
 				Document document = this.domParser.buildDocument(resource.getContent().toString());
@@ -90,28 +94,31 @@ public class OdlukaMapper {
 				Node tipOdluke = odlukeDocument.createElementNS(Namespaces.ODLUKA, "tipOdluke");
 				tipOdluke.setTextContent(getTipOdluke(document) + "");
 				odluka.appendChild(tipOdluke);
-				odluka.appendChild(odlukeDocument.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0), true));
-				odluka.appendChild(odlukeDocument.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
-				odluka.appendChild(odlukeDocument.importNode(document.getElementsByTagNameNS(Namespaces.ODLUKA, "datumZahteva").item(0), true));
+				odluka.appendChild(odlukeDocument
+						.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0), true));
+				odluka.appendChild(odlukeDocument
+						.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
+				odluka.appendChild(odlukeDocument
+						.importNode(document.getElementsByTagNameNS(Namespaces.ODLUKA, "datumZahteva").item(0), true));
 				odluke.appendChild(odluka);
 			}
-			
+
 			return this.domParser.buildXml(odlukeDocument);
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			throw new MyException(e);
 		}
 	}
-	
+
 	public Model map(Document document) {
 		Element odluka = (Element) document.getElementsByTagNameNS(Namespaces.ODLUKA, "Odluka").item(0);
 		odluka.setAttribute("xmlns:xs", Namespaces.XS);
 		odluka.setAttribute("xmlns:pred", Prefixes.PREDIKAT);
-		odluka.setAttribute("about", Prefixes.ODLUKA_PREFIX + odluka.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent());
-		
+		odluka.setAttribute("about", Prefixes.ODLUKA_PREFIX
+				+ odluka.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent());
+
 		odluka.setAttribute("rel", "pred:izdao");
 		odluka.setAttribute("href", Prefixes.KORISNIK_PREFIX + this.korisnikService.currentUser().getOsoba().getMejl());
-		
+
 		Element brojZahteva = (Element) odluka.getElementsByTagNameNS(Namespaces.ODLUKA, "brojZahteva").item(0);
 		brojZahteva.setAttribute("rel", "pred:zahtev");
 		brojZahteva.setAttribute("href", Prefixes.ZAHTEV_PREFIX + brojZahteva.getTextContent());
@@ -119,31 +126,40 @@ public class OdlukaMapper {
 		Node tipOdluke = document.createElementNS(Namespaces.ODLUKA, "tipOdluke");
 		tipOdluke.setTextContent(getTipOdluke(document) + "");
 		odluka.appendChild(tipOdluke);
-		((Element) odluka.getElementsByTagNameNS(Namespaces.ODLUKA, "tipOdluke").item(0)).setAttribute("property", "pred:tip");
-		((Element) odluka.getElementsByTagNameNS(Namespaces.ODLUKA, "tipOdluke").item(0)).setAttribute("datatype", "xs:string");
+		((Element) odluka.getElementsByTagNameNS(Namespaces.ODLUKA, "tipOdluke").item(0)).setAttribute("property",
+				"pred:tip");
+		((Element) odluka.getElementsByTagNameNS(Namespaces.ODLUKA, "tipOdluke").item(0)).setAttribute("datatype",
+				"xs:string");
 
-		((Element) odluka.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0)).setAttribute("property", "pred:datum");
-		((Element) odluka.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0)).setAttribute("datatype", "xs:string");
-		
-		((Element) odluka.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(0)).setAttribute("property", "pred:mesto");
-		((Element) odluka.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(0)).setAttribute("datatype", "xs:string");
+		((Element) odluka.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0)).setAttribute("property",
+				"pred:datum");
+		((Element) odluka.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0)).setAttribute("datatype",
+				"xs:string");
 
-		((Element) odluka.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(1)).setAttribute("property", "pred:izdatoU");
-		((Element) odluka.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(1)).setAttribute("datatype", "xs:string");
+		((Element) odluka.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(0)).setAttribute("property",
+				"pred:mesto");
+		((Element) odluka.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(0)).setAttribute("datatype",
+				"xs:string");
+
+		((Element) odluka.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(1)).setAttribute("property",
+				"pred:izdatoU");
+		((Element) odluka.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(1)).setAttribute("datatype",
+				"xs:string");
 
 		String result = this.xslTransformer.generateMetadata(this.domParser.buildXml(document)).toString();
 		Model model = ModelFactory.createDefaultModel();
 		model.setNsPrefix("pred", Prefixes.PREDIKAT);
-		model.read(new StringReader(result), null);			
+		model.read(new StringReader(result), null);
 		return model;
 	}
-	
+
 	public static TipOdluke getTipOdluke(Document document) {
-		String tipOdluke = ((Element) document.getElementsByTagNameNS(Namespaces.ODLUKA, "Odluka").item(0)).getAttributeNS(Namespaces.XSI, "type");
+		String tipOdluke = ((Element) document.getElementsByTagNameNS(Namespaces.ODLUKA, "Odluka").item(0))
+				.getAttributeNS(Namespaces.XSI, "type");
 		if (tipOdluke.contains("TObavestenje")) {
 			return TipOdluke.obavestenje;
 		}
 		return TipOdluke.odbijanje;
 	}
-	
+
 }
