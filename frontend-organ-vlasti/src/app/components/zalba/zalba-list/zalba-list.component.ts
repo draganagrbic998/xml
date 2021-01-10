@@ -44,7 +44,6 @@ export class ZalbaListComponent implements AfterViewInit {
     this.zalbe.paginator = this.paginator;
     this.zalbaService.list().subscribe(
       (zalbe: ZalbaDTO[]) => {
-        console.log(zalbe);
         this.zalbe = new MatTableDataSource<ZalbaDTO>(zalbe);
         this.fetchPending = false;
       },

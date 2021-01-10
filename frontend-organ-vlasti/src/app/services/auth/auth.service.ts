@@ -8,7 +8,7 @@ export class AuthService {
 
   constructor() { }
 
-  private readonly STORAGE_KEY = 'user';
+  private readonly STORAGE_KEY = 'sluzbenik';
 
   saveUser(profil: Profil): void{
     localStorage.setItem(this.STORAGE_KEY, JSON.stringify(profil));

@@ -35,12 +35,12 @@ public class OdgovorService implements ServiceInterface {
 	public void add(String xml) {
 		Document document = this.odgovorMapper.map(xml);
 		this.odgovorExist.add(document);
-		this.odgovorRDF.add(this.odgovorMapper.map(document));
 		String brojZalbe = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
 		Document zalbaDocument = this.zalbaService.load(brojZalbe);
 		zalbaDocument.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.odgovoreno + "");
 		this.zalbaService.update(brojZalbe, zalbaDocument);
-		this.soapService.sendSOAPMessage(document, SOAPDocument.odgovor);		
+		this.soapService.sendSOAPMessage(document, SOAPDocument.odgovor);	
+		this.odgovorRDF.add(this.odgovorMapper.map(document));
 	}
 
 	@Override

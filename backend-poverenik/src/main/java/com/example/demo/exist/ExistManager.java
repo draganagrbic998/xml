@@ -60,6 +60,7 @@ public class ExistManager {
 			return documentId;
 		}
 		catch(Exception e) {
+			e.printStackTrace();
 			throw new MyException(e);
 		}
 		finally {
@@ -68,6 +69,7 @@ public class ExistManager {
 				((EXistResource) resource).freeResources();
 			}
 			catch(Exception e) {
+				e.printStackTrace();
 				throw new MyException(e);
 			}
 		}

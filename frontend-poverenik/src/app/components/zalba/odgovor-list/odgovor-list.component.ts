@@ -38,7 +38,6 @@ export class OdgovorListComponent implements AfterViewInit {
     this.odgovori.paginator = this.paginator;
     this.odgovorService.list().subscribe(
       (odgovori: OdgovorDTO[]) => {
-        console.log(odgovori);
         this.odgovori = new MatTableDataSource<OdgovorDTO>(odgovori);
         this.fetchPending = false;
       },

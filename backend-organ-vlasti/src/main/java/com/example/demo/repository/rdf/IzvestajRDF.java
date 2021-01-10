@@ -5,6 +5,7 @@ import org.apache.jena.rdf.model.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.example.demo.common.Prefixes;
 import com.example.demo.fuseki.FusekiManager;
 
 @Repository
@@ -22,7 +23,7 @@ public class IzvestajRDF implements RDFInterface {
 
 	@Override
 	public ResultSet retrieve(String subject) {
-		return this.fusekiManager.retrieve(IZVESTAJ_GRAPH, subject);
+		return this.fusekiManager.retrieve(IZVESTAJ_GRAPH, Prefixes.IZVESTAJ_PREFIX + subject);
 	}
 	
 }

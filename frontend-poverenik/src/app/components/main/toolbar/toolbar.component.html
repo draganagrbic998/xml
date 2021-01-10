@@ -37,7 +37,7 @@
         </button>
         <button 
         matTooltip="Lista godišnjih izveštaja"
-        *ngIf="!auth"
+        *ngIf="!auth && uloga === 'poverenik'"
         mat-button
         [routerLink]="'/izvestaj-list'">
             Izveštaji

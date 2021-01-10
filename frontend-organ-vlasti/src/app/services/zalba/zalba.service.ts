@@ -40,7 +40,7 @@ export class ZalbaService {
     );
   }
 
-  view(broj: number): Observable<string>{
+  view(broj: string): Observable<string>{
     return this.http.get<string>(`${this.API_ZALBE}/${broj}`, {responseType: 'text' as 'json'});
   }
 

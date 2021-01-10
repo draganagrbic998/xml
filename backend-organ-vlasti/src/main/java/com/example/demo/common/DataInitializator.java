@@ -71,10 +71,12 @@ public class DataInitializator {
 		this.existManager.dropCollection(ResenjeExist.RESENJE_COLLECTION);
 		this.existManager.dropCollection(OdgovorExist.ODGOVOR_COLLECTION);
 		
+		
 		this.existManager.save(OrganVlastiExist.ORGAN_VLASTI_COLLECTION, "1", this.domParser.buildDocumentFromFile(ORGAN_VLASTI1), KorisnikExist.KORISNIK_SCHEMA);
 		this.existManager.save(KorisnikExist.KORISNIK_COLLECTION, "sluzbenik@gmail.com", this.domParser.buildDocumentFromFile(SLUZBENIK1), KorisnikExist.KORISNIK_SCHEMA);
 		this.existManager.save(KorisnikExist.KORISNIK_COLLECTION, "draganaasd@gmail.com", this.domParser.buildDocumentFromFile(GRADJANIN1), KorisnikExist.KORISNIK_SCHEMA);
 		
+		/*
 		this.existManager.save(ZahtevExist.ZAHTEV_COLLECTION, "1", this.domParser.buildDocumentFromFile(ZAHTEV_UVID1), ZahtevExist.ZAHTEV_SCHEMA);
 		this.existManager.save(ZahtevExist.ZAHTEV_COLLECTION, "2", this.domParser.buildDocumentFromFile(ZAHTEV_KOPIJA1), ZahtevExist.ZAHTEV_SCHEMA);
 		this.existManager.save(ZahtevExist.ZAHTEV_COLLECTION, "3", this.domParser.buildDocumentFromFile(ZAHTEV_OBAVESTENJE1), ZahtevExist.ZAHTEV_SCHEMA);
@@ -92,14 +94,10 @@ public class DataInitializator {
 
 		this.existManager.save(OdgovorExist.ODGOVOR_COLLECTION, "1", this.domParser.buildDocumentFromFile(ODGOVOR1), OdgovorExist.ODGOVOR_SCHEMA);
 		this.existManager.save(OdgovorExist.ODGOVOR_COLLECTION, "2", this.domParser.buildDocumentFromFile(ODGOVOR2), OdgovorExist.ODGOVOR_SCHEMA);
+*/
+		this.fusekiManager.dropAll();
 
-		try {
-			this.fusekiManager.dropAll();
-		}
-		catch(Exception e) {
-			;
-		}
-		
+		/*
 		Model model = ModelFactory.createDefaultModel();
 		model.read(ZAHTEVI);
 		this.fusekiManager.save(ZahtevRDF.ZAHTEV_GRAPH, model);
@@ -111,7 +109,7 @@ public class DataInitializator {
 		this.fusekiManager.save(ZalbaRDF.ZALBA_GRAPH, model);
 		model.removeAll();
 		model.read(ODGOVORI);
-		this.fusekiManager.save(OdgovorRDF.ODGOVOR_GRAPH, model);
+		this.fusekiManager.save(OdgovorRDF.ODGOVOR_GRAPH, model);*/
 		//dodaj rdfs za resenje
 		
 	}

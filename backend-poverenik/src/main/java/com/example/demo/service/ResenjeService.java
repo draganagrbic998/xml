@@ -40,12 +40,12 @@ public class ResenjeService implements ServiceInterface {
 	public void add(String xml) {
 		Document document = this.resenjeMapper.map(xml);
 		this.resenjeExist.add(document);
-		this.resenjeRDF.add(this.resenjeMapper.map(document));
 		String brojZalbe = document.getElementsByTagNameNS(Namespaces.RESENJE, "brojZalbe").item(0).getTextContent();
 		Document zalbaDocument = this.zalbaService.load(brojZalbe);
 		zalbaDocument.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.reseno + "");
 		this.zalbaService.update(brojZalbe, zalbaDocument);
 		this.soapService.sendSOAPMessage(null, document, SOAPDocument.resenje);
+		this.resenjeRDF.add(this.resenjeMapper.map(document));
 	}
 
 	@Override
