@@ -75,7 +75,6 @@ public class DataInitializator {
 		model.read(ODGOVORI);
 		this.fusekiManager.save(OdgovorRDF.ODGOVOR_GRAPH, model);
 		//dodaj rdfs za resenja
-
 	}
 	
 }
