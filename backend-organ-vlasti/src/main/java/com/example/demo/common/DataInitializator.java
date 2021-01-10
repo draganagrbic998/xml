@@ -94,7 +94,7 @@ public class DataInitializator {
 		this.existManager.save(OdgovorExist.ODGOVOR_COLLECTION, "1", this.domParser.buildDocumentFromFile(ODGOVOR1), OdgovorExist.ODGOVOR_SCHEMA);
 		this.existManager.save(OdgovorExist.ODGOVOR_COLLECTION, "2", this.domParser.buildDocumentFromFile(ODGOVOR2), OdgovorExist.ODGOVOR_SCHEMA);
 
-		this.fusekiManager.dropAll();
+		//this.fusekiManager.dropAll();
 		Model model = ModelFactory.createDefaultModel();
 		model.read(ZAHTEVI);
 		this.fusekiManager.save(ZahtevRDF.ZAHTEV_GRAPH, model);

@@ -25,7 +25,7 @@ export class ZalbaService {
     for (let i = 0; i < zalbe.length; ++i){
       zalbeDTO.push({
         tipZalbe: zalbe.item(i).getElementsByTagNameNS(ZALBA, 'tipZalbe')[0].textContent,
-        broj: zalbe.item(i).getElementsByTagNameNS(OSNOVA, 'broj')[0].textContent,
+        broj: +zalbe.item(i).getElementsByTagNameNS(OSNOVA, 'broj')[0].textContent,
         datum: zalbe.item(i).getElementsByTagNameNS(OSNOVA, 'datum')[0].textContent,
         status: zalbe.item(i).getElementsByTagNameNS(ZALBA, 'status')[0].textContent
       });
@@ -40,7 +40,7 @@ export class ZalbaService {
     );
   }
 
-  view(broj: string): Observable<string>{
+  view(broj: number): Observable<string>{
     return this.http.get<string>(`${this.API_ZALBE}/${broj}`, {responseType: 'text' as 'json'});
   }
 

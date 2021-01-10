@@ -67,7 +67,7 @@ public class DataInitializator {
 		this.existManager.save(ResenjeExist.RESENJE_COLLECTION, "2", this.domParser.buildDocumentFromFile(RESENJE2), ResenjeExist.RESENJE_SCHEMA);
 		this.existManager.save(ResenjeExist.RESENJE_COLLECTION, "3", this.domParser.buildDocumentFromFile(RESENJE3), ResenjeExist.RESENJE_SCHEMA);
 
-		this.fusekiManager.dropAll();
+		//this.fusekiManager.dropAll();
 		Model model = ModelFactory.createDefaultModel();
 		model.read(ZALBE);
 		this.fusekiManager.save(ZalbaRDF.ZALBA_GRAPH, model);

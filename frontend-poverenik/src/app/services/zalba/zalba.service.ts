@@ -89,7 +89,7 @@ export class ZalbaService {
 
       zalbeDTO.push({
         tipZalbe: zalbe.item(i).getElementsByTagNameNS(ZALBA, 'tipZalbe')[0].textContent,
-        broj: zalbe.item(i).getElementsByTagNameNS(OSNOVA, 'broj')[0].textContent,
+        broj: +zalbe.item(i).getElementsByTagNameNS(OSNOVA, 'broj')[0].textContent,
         datum: zalbe.item(i).getElementsByTagNameNS(OSNOVA, 'datum')[0].textContent,
         status: zalbe.item(i).getElementsByTagNameNS(ZALBA, 'status')[0].textContent,
         datumProsledjivanja
@@ -117,21 +117,21 @@ export class ZalbaService {
     );
   }
 
-  view(broj: string): Observable<string>{
+  view(broj: number): Observable<string>{
     return this.http.get<string>(`${this.API_ZALBE}/${broj}`, {responseType: 'text' as 'json'});
   }
 
-  prosledi(broj: string): Observable<null>{
+  prosledi(broj: number): Observable<null>{
     const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
     return this.http.post<null>(`${this.API_ZALBE}/prosledi/${broj}`, options);
   }
 
-  odustani(broj: string): Observable<null>{
+  odustani(broj: number): Observable<null>{
     const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
     return this.http.post<null>(`${this.API_ZALBE}/odustani/${broj}`, options);
   }
 
-  obustavi(broj: string): Observable<null>{
+  obustavi(broj: number): Observable<null>{
     const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
     return this.http.post<null>(`${this.API_ZALBE}/obustavi/${broj}`, options);
   }

@@ -24,7 +24,7 @@ export class ResenjeService {
 
     for (const key of Object.keys(document)){
       resenja.push({
-        broj: document[key].getElementsByTagNameNS(OSNOVA, 'broj')[0].textContent,
+        broj: +document[key].getElementsByTagNameNS(OSNOVA, 'broj')[0].textContent,
         datum: document[key].getElementsByTagNameNS(OSNOVA, 'datum')[0].textContent,
         status: document[key].getElementsByTagNameNS(RESENJE, 'status')[0].textContent
       });
@@ -39,7 +39,7 @@ export class ResenjeService {
     );
   }
 
-  view(broj: string): Observable<string>{
+  view(broj: number): Observable<string>{
     return this.http.get<string>(`${this.API_RESENJA}/${broj}`, {responseType: 'text' as 'json'});
   }
 

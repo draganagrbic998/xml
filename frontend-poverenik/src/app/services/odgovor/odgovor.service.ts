@@ -33,7 +33,7 @@ export class OdgovorService {
     return odgovoriDTO;
   }
 
-  view(broj: string): Observable<string>{
+  view(broj: number): Observable<string>{
     return this.http.get<string>(`${this.API_ODGOVORI}/${broj}`, {responseType: 'text' as 'json'});
   }
 

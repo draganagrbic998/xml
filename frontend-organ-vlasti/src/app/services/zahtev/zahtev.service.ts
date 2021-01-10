@@ -51,7 +51,7 @@ export class ZahtevService {
     for (let i = 0; i < zahtevi.length; ++i){
       zahteviDTO.push({
         tipZahteva: zahtevi.item(i).getElementsByTagNameNS(ZAHTEV, 'tipZahteva')[0].textContent,
-        broj: zahtevi.item(i).getElementsByTagNameNS(OSNOVA, 'broj')[0].textContent,
+        broj: +zahtevi.item(i).getElementsByTagNameNS(OSNOVA, 'broj')[0].textContent,
         datum: zahtevi.item(i).getElementsByTagNameNS(OSNOVA, 'datum')[0].textContent,
         status: zahtevi.item(i).getElementsByTagNameNS(ZAHTEV, 'status')[0].textContent
       });
@@ -72,7 +72,7 @@ export class ZahtevService {
     );
   }
 
-  view(broj: string): Observable<string>{
+  view(broj: number): Observable<string>{
     return this.http.get<string>(`${this.API_ZAHTEVI}/${broj}`, {responseType: 'text' as 'json'});
   }
 

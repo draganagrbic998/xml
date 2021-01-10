@@ -18,7 +18,7 @@ export class OdgovorService {
 
   private readonly API_ODGOVORI = `${environment.baseUrl}/${environment.apiOdgovori}`;
 
-  private odgovorToXml(brojZalbe: string, odgovor: Odgovor): string{
+  private odgovorToXml(brojZalbe: number, odgovor: Odgovor): string{
 
     return `
       <odgovor:Odgovor
@@ -31,11 +31,11 @@ export class OdgovorService {
 
   }
 
-  view(broj: string): Observable<string>{
+  view(broj: number): Observable<string>{
     return this.http.get<string>(`${this.API_ODGOVORI}/${broj}`, {responseType: 'text' as 'json'});
   }
 
-  save(broj: string, odgovor: Odgovor): Observable<null>{
+  save(broj: number, odgovor: Odgovor): Observable<null>{
     odgovor.detalji = this.xonomyService.removeXmlSpace(odgovor.detalji);
     const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
     return this.http.post<null>(this.API_ODGOVORI, this.odgovorToXml(broj, odgovor), options);

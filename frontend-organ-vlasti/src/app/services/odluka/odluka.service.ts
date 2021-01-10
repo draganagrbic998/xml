@@ -25,7 +25,7 @@ export class OdlukaService {
     return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}.`;
   }
 
-  private odbijanjeToXml(brojZahteva: string, odbijanje: Odbijanje): string{
+  private odbijanjeToXml(brojZahteva: number, odbijanje: Odbijanje): string{
 
     return `
       <odluka:Odluka
@@ -40,7 +40,7 @@ export class OdlukaService {
 
   }
 
-  private obavestenjeToXml(brojZahteva: string, obavestenje: Obavestenje): string{
+  private obavestenjeToXml(brojZahteva: number, obavestenje: Obavestenje): string{
 
     return `
       <odluka:Odluka
@@ -70,7 +70,7 @@ export class OdlukaService {
     for (let i = 0; i < odluke.length; ++i){
       odlukeDTO.push({
         tipOdluke: odluke.item(i).getElementsByTagNameNS(ODLUKA, 'tipOdluke')[0].textContent,
-        broj: odluke.item(i).getElementsByTagNameNS(OSNOVA, 'broj')[0].textContent,
+        broj: +odluke.item(i).getElementsByTagNameNS(OSNOVA, 'broj')[0].textContent,
         datum: odluke.item(i).getElementsByTagNameNS(OSNOVA, 'datum')[0].textContent,
         datumZahteva: odluke.item(i).getElementsByTagNameNS(ODLUKA, 'datumZahteva')[0].textContent,
       });
@@ -79,13 +79,13 @@ export class OdlukaService {
     return odlukeDTO;
   }
 
-  saveObavestenje(brojZahteva: string, obavestenje: Obavestenje): Observable<null>{
+  saveObavestenje(brojZahteva: number, obavestenje: Obavestenje): Observable<null>{
     obavestenje.detalji = this.xonomyService.removeXmlSpace(obavestenje.detalji);
     const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
     return this.http.post<null>(this.API_ODLUKE, this.obavestenjeToXml(brojZahteva, obavestenje), options);
   }
 
-  saveOdbijanje(brojZahteva: string, odbijanje: Odbijanje): Observable<null>{
+  saveOdbijanje(brojZahteva: number, odbijanje: Odbijanje): Observable<null>{
     odbijanje.detalji = this.xonomyService.removeXmlSpace(odbijanje.detalji);
     const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
     return this.http.post<null>(this.API_ODLUKE, this.odbijanjeToXml(brojZahteva, odbijanje), options);
@@ -97,7 +97,7 @@ export class OdlukaService {
     );
   }
 
-  view(broj: string): Observable<string>{
+  view(broj: number): Observable<string>{
     return this.http.get<string>(`${this.API_ODLUKE}/${broj}`, {responseType: 'text' as 'json'});
   }
 
