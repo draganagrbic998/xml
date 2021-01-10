@@ -1,7 +1,7 @@
 <zahtev:Zahtev xmlns="https://github.com/draganagrbic998/xml/osnova" xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev">
         
     <broj>2</broj>
-    <datum>2021-01-09</datum>
+    <datum>2021-01-10</datum>
     <Gradjanin>
         <Osoba>
             <mejl>draganaasd@gmail.com</mejl>
@@ -16,14 +16,15 @@
         </Adresa>
     </Gradjanin>
     <OrganVlasti>
-        <naziv>Naziv organa vlasti</naziv>
-        <Adresa>
-            <mesto>Novi Sad</mesto>
-            <ulica>Lasla Gala</ulica>
-            <broj>23</broj>
-        </Adresa>
-    </OrganVlasti>
-    <Detalji>some text <bold>some bold text</bold> some text <italic>some italic text</italic> some text</Detalji>
+	    <naziv>Naziv organa vlasti</naziv>
+	    <Adresa>
+	        <mesto>Novi Sad</mesto>
+	        <ulica>Lasla Gala</ulica>
+	        <broj>23</broj>
+	    </Adresa>
+	</OrganVlasti>
+	<Detalji>some text <bold>some bold text</bold> some text <italic>some italic text</italic> some text</Detalji>    
     <zahtev:tipZahteva>kopija</zahtev:tipZahteva>
-    <zahtev:status>cekanje</zahtev:status>
+    <zahtev:status>odbijeno</zahtev:status>
+    
 </zahtev:Zahtev>

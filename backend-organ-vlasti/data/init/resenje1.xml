@@ -1,29 +1,15 @@
 <resenje:Resenje xmlns="https://github.com/draganagrbic998/xml/osnova" xmlns:resenje="https://github.com/draganagrbic998/xml/resenje">
         
 	<broj>1</broj>
-	<datum>2021-01-09</datum>
+	<datum>2021-01-10</datum>
 	<resenje:status>odobreno</resenje:status>
-    <Odluka xmlns="https://github.com/draganagrbic998/xml/resenje">
-		<Dispozitiva xmlns="https://github.com/draganagrbic998/xml/resenje">
-			<Pasus xmlns="https://github.com/draganagrbic998/xml/resenje">tekst prvog pasusua, blablabla...
-				<zakon xmlns="https://github.com/draganagrbic998/xml/resenje"> pozivam se na neki zakon, blablabla... </zakon>
-				onda jos malo nesto pricam, blablabla...<zakon xmlns="https://github.com/draganagrbic998/xml/resenje"> i onda se jos jednom pozovem na neki zakon, blablabla...</zakon>
-			</Pasus>
-			<Pasus xmlns="https://github.com/draganagrbic998/xml/resenje">tekst drugog pasusa, blablabla...
-				<zakon xmlns="https://github.com/draganagrbic998/xml/resenje"> pozovem se na neki zakon, blablabla... </zakon>
-				onda jos malo nesto pricam, blablabla...<zakon xmlns="https://github.com/draganagrbic998/xml/resenje"> i onda se jos jednom pozovem na neki zakon, blablabla...</zakon>
-			</Pasus>
-		</Dispozitiva>
-		<Obrazlozenje xmlns="https://github.com/draganagrbic998/xml/resenje">
-			<Pasus xmlns="https://github.com/draganagrbic998/xml/resenje">tekst prvog pasusa, blablabla...
-				<zakon xmlns="https://github.com/draganagrbic998/xml/resenje"> pozovem se na neki zakon, blablabla... </zakon>
-				onda jos nesto malo pricam, blablabla...<zakon xmlns="https://github.com/draganagrbic998/xml/resenje"> i onda se jos jednom pozovem na neki zakon, blablabla...</zakon>
-			</Pasus>
-			<Pasus xmlns="https://github.com/draganagrbic998/xml/resenje">tekst drugog pasusa, blablabla...
-				<zakon xmlns="https://github.com/draganagrbic998/xml/resenje"> pozovem se na neki zakon, blablabla... </zakon>
-				onda jos nesto malo pricam, blablabla...<zakon xmlns="https://github.com/draganagrbic998/xml/resenje"> i onda se jos jednom pozovem na neki zakon, blablabla...</zakon>
-			</Pasus>
-		</Obrazlozenje>
+    <Odbrana xmlns="https://github.com/draganagrbic998/xml/resenje">
+		<datumOdbrane>2021-01-10</datumOdbrane>
+		<Detalji>some text <bold>some bold text</bold> some text <italic>some italic text</italic> some text</Detalji>
+	</Odbrana>
+	<Odluka xmlns="https://github.com/draganagrbic998/xml/resenje">
+		<Dispozitiva/>
+		<Obrazlozenje/>
 	</Odluka>
     <Osoba>
 		<mejl>poverenik@gmail.com</mejl>
@@ -32,28 +18,27 @@
 		<potpis>757272859077776977757767</potpis>
 	</Osoba>
 	<OrganVlasti>
-       	<naziv>Naziv organa vlasti</naziv>
-       	<Adresa>
-            <mesto>Novi Sad</mesto>
-            <ulica>Lasla Gala</ulica>
-            <broj>23</broj>
-        </Adresa>
-    </OrganVlasti>
-	<resenje:PodaciZahteva>
+	    <naziv>Naziv organa vlasti</naziv>
+	    <Adresa>
+	        <mesto>Novi Sad</mesto>
+	        <ulica>Lasla Gala</ulica>
+	        <broj>23</broj>
+	    </Adresa>
+	</OrganVlasti>
+	<PodaciZahteva>
 		<broj>1</broj>
-		<datum>2021-01-09</datum>
+		<datum>2021-01-10</datum>
 		<Detalji>some text <bold>some bold text</bold> some text <italic>some italic text</italic> some text</Detalji>
-	</resenje:PodaciZahteva>
+	</PodaciZahteva>
 	<resenje:PodaciZalbe>
 		<resenje:tipZalbe>delimicnost</resenje:tipZalbe>
 		<resenje:brojZalbe>1</resenje:brojZalbe>
-		<resenje:datumZalbe>2021-01-09</resenje:datumZalbe>
-		<resenje:datumProsledjivanja>2021-01-09</resenje:datumProsledjivanja>
+		<resenje:datumZalbe>2021-01-10</resenje:datumZalbe>
+		<resenje:datumProsledjivanja>2021-01-10</resenje:datumProsledjivanja>
 	</resenje:PodaciZalbe>
-	<resenje:PodaciOdluke>
-		<broj>1</broj>
-		<datum>2021-01-09</datum>
+	<PodaciOdluke xmlns="https://github.com/draganagrbic998/xml/resenje">
+		<broj xmlns="https://github.com/draganagrbic998/xml/osnova">1</broj>
+		<datum>2021-01-10</datum>
 		<Detalji>some text <bold>some bold text</bold> some text <italic>some italic text</italic> some text</Detalji>
-	</resenje:PodaciOdluke>
-	
+	</PodaciOdluke>
 </resenje:Resenje>

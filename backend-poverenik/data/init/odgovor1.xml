@@ -1,20 +1,20 @@
 <odgovor:Odgovor xmlns="https://github.com/draganagrbic998/xml/osnova" xmlns:odgovor="https://github.com/draganagrbic998/xml/odgovor">
 	<broj>1</broj>
-	<datum>2021-01-09</datum>
+	<datum>2021-01-10</datum>
 	<Osoba>
-	    <mejl>draganaasd@gmail.com</mejl>
-	    <ime>Dragana</ime>
-	    <prezime>Grbic</prezime>
-	    <potpis>757272859077776977757767</potpis>
-    </Osoba>
+		<mejl>draganaasd@gmail.com</mejl>
+		<ime>Dragana</ime>
+		<prezime>Grbic</prezime>
+		<potpis>757272859077776977757767</potpis>
+	</Osoba>
 	<OrganVlasti>
-        <naziv>Naziv organa vlasti</naziv>
-        <Adresa>
-            <mesto>Novi Sad</mesto>
-            <ulica>Lasla Gala</ulica>
-            <broj>23</broj>
-        </Adresa>
-    </OrganVlasti>
+		<naziv>Naziv organa vlasti</naziv>
+		<Adresa>
+			<mesto>Novi Sad</mesto>
+			<ulica>Lasla Gala</ulica>
+			<broj>23</broj>
+		</Adresa>
+	</OrganVlasti>
 	<Detalji>some text <bold>some bold text</bold> some text <italic>some italic text</italic> some text</Detalji>
-    <odgovor:datumZalbe>2021-01-09</odgovor:datumZalbe>
+	<odgovor:datumZalbe>2021-01-10</odgovor:datumZalbe>
 </odgovor:Odgovor>

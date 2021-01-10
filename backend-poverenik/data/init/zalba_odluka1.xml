@@ -1,7 +1,7 @@
 <zalba:Zalba xmlns:zalba="https://github.com/draganagrbic998/xml/zalba" xmlns="https://github.com/draganagrbic998/xml/osnova" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="zalba:TZalbaOdluka">
-        
+    
     <broj>2</broj>
-    <datum>2021-01-09</datum>
+    <datum>2021-01-10</datum>
     <Gradjanin>
         <Osoba>
             <mejl>draganaasd@gmail.com</mejl>
@@ -16,25 +16,25 @@
         </Adresa>
     </Gradjanin>
     <OrganVlasti>
-        <naziv>Naziv organa vlasti</naziv>
-        <Adresa>
-            <mesto>Novi Sad</mesto>
-            <ulica>Lasla Gala</ulica>
-            <broj>23</broj>
-        </Adresa>
-    </OrganVlasti>
-    <Detalji>some text <bold>some bold text</bold> some text <italic>some italic text</italic> some text</Detalji>
-    <zalba:datumProsledjivanja>2021-01-09</zalba:datumProsledjivanja>
-    <zalba:status>reseno</zalba:status>
+	    <naziv>Naziv organa vlasti</naziv>
+	    <Adresa>
+	        <mesto>Novi Sad</mesto>
+	        <ulica>Lasla Gala</ulica>
+	        <broj>23</broj>
+	    </Adresa>
+	</OrganVlasti>
+	<Detalji>some text <bold>some bold text</bold> some text <italic>some italic text</italic> some text</Detalji>
+    <zalba:datumProsledjivanja>2021-01-10</zalba:datumProsledjivanja>
+	<zalba:status>prosledjeno</zalba:status>
     <zalba:PodaciZahteva>
-        <broj>2</broj>
-	    <datum>2021-01-09</datum>
-        <Detalji>some text <bold>some bold text</bold> some text <italic>some italic text</italic> some text</Detalji>
+	    <broj>2</broj>
+	    <datum>2021-01-10</datum>
+		<Detalji>some text <bold>some bold text</bold> some text <italic>some italic text</italic> some text</Detalji>
     </zalba:PodaciZahteva>
     <zalba:PodaciOdluke>
-        <broj>2</broj>
-        <datum>2021-01-09</datum>
-        <Detalji>some text <bold>some bold text</bold> some text <italic>some italic text</italic> some text</Detalji>
+	    <broj>2</broj>
+	    <datum>2021-01-10</datum>
+		<Detalji>some text <bold>some bold text</bold> some text <italic>some italic text</italic> some text</Detalji>
     </zalba:PodaciOdluke>
     
 </zalba:Zalba>

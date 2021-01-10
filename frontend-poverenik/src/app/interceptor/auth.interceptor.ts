@@ -19,6 +19,7 @@ export class AuthInterceptor implements HttpInterceptor {
     if (!this.authService.getUser()){
       return next.handle(request);
     }
+    console.log(this.authService.getUser());
     request = request.clone({
       setHeaders: {
         Authorization: this.authService.getUser().token

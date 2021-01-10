@@ -18,14 +18,10 @@ import com.example.demo.common.Namespaces;
 import com.example.demo.common.Prefixes;
 import com.example.demo.parser.DOMParser;
 import com.example.demo.parser.XSLTransformer;
-import com.example.demo.service.KorisnikService;
 
 @Component
 public class ResenjeMapper implements MapperInterface {
 	
-	@Autowired
-	private KorisnikService korisnikService;
-
 	@Autowired
 	private DOMParser domParser;
 	
@@ -69,7 +65,7 @@ public class ResenjeMapper implements MapperInterface {
 		resenje.setAttribute("xmlns:pred", Prefixes.PREDIKAT);
 		resenje.setAttribute("about", Prefixes.RESENJE_PREFIX + resenje.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent());
 		resenje.setAttribute("rel", "pred:izdao");
-		resenje.setAttribute("href", Prefixes.KORISNIK_PREFIX + this.korisnikService.currentUser().getOsoba().getMejl());
+		resenje.setAttribute("href", Prefixes.KORISNIK_PREFIX + resenje.getElementsByTagNameNS(Namespaces.OSNOVA, "mejl").item(0).getTextContent());
 		
 		((Element) resenje.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0)).setAttribute("property", "pred:datum");
 		((Element) resenje.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0)).setAttribute("datatype", "xs:string");
