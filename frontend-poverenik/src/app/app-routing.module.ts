@@ -7,6 +7,7 @@ import { ZalbaListComponent } from './components/zalba/zalba-list/zalba-list.com
 import { ZalbaOdlukaFormComponent } from './components/zalba/zalba-odluka-form/zalba-odluka-form.component';
 import { ResenjeFormComponent } from './components/resenje/resenje-form/resenje-form.component';
 import { ResenjeListComponent } from './components/resenje/resenje-list/resenje-list.component';
+import { IzvestajListComponent } from './components/izvestaj/izvestaj-list/izvestaj-list.component';
 import {
   LOGIN_PATH,
   REGISTER_PATH,
@@ -15,6 +16,7 @@ import {
   ZALBA_ODLUKA_FORM,
   RESENJE_FORM,
   RESENJE_LIST,
+  IZVESTAJ_LIST,
   HTML_PATH,
   PDF_PATH,
   ODGOVOR_LIST
@@ -60,6 +62,11 @@ const routes: Routes = [
   {
     path: RESENJE_LIST,
     component: ResenjeListComponent
+  },
+  {
+    path: IZVESTAJ_LIST,
+    component: IzvestajListComponent,
+    canActivate: [PoverenikGuard]
   },
   {
     path: HTML_PATH,

@@ -40,22 +40,28 @@
     </table>
     <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 
-    <app-center-container>
-      <form [formGroup]="izvestajForm">
-      <mat-form-field>
-        <input
-        matInput
-        autocomplete="off"
-        placeholder="Godina"
-        formControlName="godina">
-      </mat-form-field>
-      </form>
-      <button 
-      *ngIf="!savePending"
-      mat-raised-button 
-      color="primary"
-      (click)="save()">Podnesi izveštaj</button>
-      <app-spinner-button *ngIf="savePending"></app-spinner-button>
-    </app-center-container>
+    <span class="podnosenjeSpan">
+      <span>
+        <form [formGroup]="izvestajForm">
+          <div [class.disabled]="savePending">
+            <mat-form-field>
+              <input
+              matInput
+              autocomplete="off"
+              placeholder="Godina"
+              formControlName="godina">
+            </mat-form-field>
+          </div>
+        </form>
+      </span>
+      <span>
+        <button 
+        *ngIf="!savePending"
+        mat-raised-button 
+        color="primary"
+        (click)="save()">Podnesi izveštaj</button>
+        <app-spinner-button *ngIf="savePending"></app-spinner-button>
+      </span>
+    </span>
   </div>
 </div>

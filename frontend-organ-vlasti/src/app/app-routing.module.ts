@@ -20,7 +20,8 @@ import {
   ODBIJANJE_FORM,
   ODGOVOR_FORM,
   ZALBA_LIST,
-  RESENJE_LIST
+  RESENJE_LIST,
+  IZVESTAJ_LIST
 } from './constants/router';
 import { GradjaninGuard } from './guard/gradjanin/gradjanin.guard';
 import { SluzbenikGuard } from './guard/sluzbenik/sluzbenik.guard';
@@ -28,6 +29,7 @@ import { OdbijanjeFormComponent } from './components/odluka/odbijanje-form/odbij
 import { OdgovorFormComponent } from './components/zalba/odgovor-form/odgovor-form.component';
 import { ZalbaListComponent } from './components/zalba/zalba-list/zalba-list.component';
 import { ResenjeListComponent } from './components/resenje/resenje-list/resenje-list.component';
+import { IzvestajListComponent } from './components/izvestaj/izvestaj-list/izvestaj-list.component';
 
 const routes: Routes = [
   {
@@ -69,6 +71,11 @@ const routes: Routes = [
   {
     path: RESENJE_LIST,
     component: ResenjeListComponent,
+    canActivate: [SluzbenikGuard]
+  },
+  {
+    path: IZVESTAJ_LIST,
+    component: IzvestajListComponent,
     canActivate: [SluzbenikGuard]
   },
   {

@@ -28,7 +28,7 @@ export class IzvestajListComponent implements AfterViewInit {
   fetchPending = true;
   savePending = false;
   izvestajForm: FormGroup = new FormGroup({
-    godina: new FormControl('', [Validators.required, Validators.pattern(/^[0-9]\d{4}$/)])
+    godina: new FormControl('', [Validators.required, Validators.pattern(/^[0-9]\d+$/)])
   });
 
   xmlMetadata(broj: string): void{
@@ -47,7 +47,7 @@ export class IzvestajListComponent implements AfterViewInit {
     if (this.izvestajForm.invalid){
       return;
     }
-    const godina: string = this.izvestajForm.value;
+    const godina: string = this.izvestajForm.controls.godina.value;
     this.savePending = true;
     this.izvestajService.save(godina).subscribe(
       () => {

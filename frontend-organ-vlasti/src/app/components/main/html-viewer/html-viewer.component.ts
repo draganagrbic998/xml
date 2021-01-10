@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { IzvestajService } from 'src/app/services/izvestaj/izvestaj.service';
 import { OdgovorService } from 'src/app/services/odgovor/odgovor.service';
 import { OdlukaService } from 'src/app/services/odluka/odluka.service';
 import { ResenjeService } from 'src/app/services/resenje/resenje.service';
@@ -18,6 +19,7 @@ export class HtmlViewerComponent implements OnInit {
     private odlukaService: OdlukaService,
     private zalbaService: ZalbaService,
     private odgovorService: OdgovorService,
+    private izvestajService: IzvestajService,
     private resenjeService: ResenjeService,
     private route: ActivatedRoute
   ) { }
@@ -43,6 +45,9 @@ export class HtmlViewerComponent implements OnInit {
     }
     else if (dokument === 'odgovori'){
       service = this.odgovorService;
+    }
+    else if (dokument === 'izvestaji'){
+      service = this.izvestajService;
     }
     else{
       service = this.resenjeService;
