@@ -8,21 +8,21 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.fuseki.FusekiManager;
 
 @Repository
-public class ZalbaRDF implements RDFInterface {
+public class ResenjeRDF implements RDFInterface {
 
 	@Autowired
 	private FusekiManager fusekiManager;
 	
-	public static final String ZALBA_GRAPH = "/zalbe";
+	public static final String RESENJE_GRAPH = "/resenja";
 
 	@Override
 	public void add(Model model) {
-		this.fusekiManager.save(ZALBA_GRAPH, model);
+		this.fusekiManager.save(RESENJE_GRAPH, model);
 	}
 
 	@Override
 	public ResultSet retrieve(String subject) {
-		return this.fusekiManager.retrieve(ZALBA_GRAPH, subject);
+		return this.fusekiManager.retrieve(RESENJE_GRAPH, subject);
 	}
-
+	
 }

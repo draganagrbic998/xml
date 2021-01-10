@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.xmldb.api.base.XMLDBException;
 
 import com.example.demo.enums.MetadataType;
-import com.example.demo.service.izvestaj.IzvestajService;
+import com.example.demo.service.IzvestajService;
+import com.example.demo.transformer.IzvestajTransformer;
 
 @RestController
 @RequestMapping(value = "/api/izvestaji", consumes = MediaType.TEXT_XML_VALUE)
@@ -23,25 +24,28 @@ public class IzvestajController {
 	@Autowired
 	private IzvestajService izvestajService;
 	
+	@Autowired
+	private IzvestajTransformer izvestajTransformer;
+	
 	@PostMapping(value = "/{godina}")
-	public ResponseEntity<Void> obustavi(@PathVariable String godina) throws XMLDBException {
-		this.izvestajService.save(godina);
+	public ResponseEntity<Void> add(@PathVariable String godina) throws XMLDBException {
+		this.izvestajService.add(godina);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
 	@GetMapping(produces = MediaType.TEXT_XML_VALUE)
-	public ResponseEntity<String> list() {
+	public ResponseEntity<String> retrieve() {
 		return new ResponseEntity<>(this.izvestajService.retrieve(), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/{broj}", produces = "text/html; charset=utf-8")
 	public ResponseEntity<String> html(@PathVariable String broj) {
-		return new ResponseEntity<>(this.izvestajService.generateHtml(broj), HttpStatus.OK);
+		return new ResponseEntity<>(this.izvestajTransformer.html(broj), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/{broj}/pdf", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-	public ResponseEntity<Object> pdf(@PathVariable String broj) {
-		Resource resource = this.izvestajService.generatePdf(broj);
+	public ResponseEntity<Object> generatePdf(@PathVariable String broj) {
+		Resource resource = this.izvestajTransformer.generatePdf(broj);
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
 				.body(resource);
@@ -49,7 +53,7 @@ public class IzvestajController {
 	
 	@GetMapping(value = "/{broj}/metadata/xml", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<Object> xmlMetadata(@PathVariable String broj) {
-		Resource resource = this.izvestajService.generateMetadata(broj, MetadataType.xml);
+		Resource resource = this.izvestajTransformer.generateMetadata(broj, MetadataType.xml);
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
 				.body(resource);
@@ -57,7 +61,7 @@ public class IzvestajController {
 	
 	@GetMapping(value = "/{broj}/metadata/json", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<Object> jsonMetadata(@PathVariable String broj) {
-		Resource resource = this.izvestajService.generateMetadata(broj, MetadataType.json);
+		Resource resource = this.izvestajTransformer.generateMetadata(broj, MetadataType.json);
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
 				.body(resource);

@@ -6,7 +6,8 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.example.demo.service.odluka.OdlukaService;
+import com.example.demo.parser.DOMParser;
+import com.example.demo.service.OdlukaService;
 
 @javax.jws.WebService(
                       serviceName = "OdlukaService",
@@ -23,10 +24,13 @@ public class OdlukaPortImpl implements Odluka {
     @Autowired
     private OdlukaService odlukaService;
     
+    @Autowired
+    private DOMParser domParser;
+    
     public java.lang.String getOdluka(java.lang.String getOdlukaRequest) {
         LOG.info("Executing operation getOdluka");
         try {
-            java.lang.String _return = this.odlukaService.load(getOdlukaRequest);
+            java.lang.String _return = this.domParser.buildXml(this.odlukaService.load(getOdlukaRequest));
             return _return;
         } catch (java.lang.Exception ex) {
             ex.printStackTrace();

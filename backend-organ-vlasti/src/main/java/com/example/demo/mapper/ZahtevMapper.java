@@ -1,4 +1,4 @@
-package com.example.demo.service.zahtev;
+package com.example.demo.mapper;
 
 import java.io.StringReader;
 import java.util.Date;
@@ -25,10 +25,9 @@ import com.example.demo.parser.JAXBParser;
 import com.example.demo.parser.XSLTransformer;
 import com.example.demo.service.KorisnikService;
 import com.example.demo.service.OrganVlastiService;
-import com.ibm.icu.text.SimpleDateFormat;
 
 @Component
-public class ZahtevMapper {
+public class ZahtevMapper implements MapperInterface {
 	
 	@Autowired
 	private KorisnikService korisnikService;
@@ -45,31 +44,32 @@ public class ZahtevMapper {
 	@Autowired
 	private XSLTransformer xslTransformer;
 
-	private static final SimpleDateFormat sdf = new SimpleDateFormat(Constants.DATE_FORMAT);
-	
+	@Override
 	public Document map(String xml) {
 		Document document = this.domParser.buildDocument(xml);
 		Element zahtev = (Element) document.getElementsByTagNameNS(Namespaces.ZAHTEV, "Zahtev").item(0);
 		DocumentFragment documentFragment = document.createDocumentFragment();
 		
 		Node datum = document.createElementNS(Namespaces.OSNOVA, "datum");
-		datum.setTextContent(sdf.format(new Date()));
+		datum.setTextContent(Constants.sdf.format(new Date()));
 		Element korisnik = (Element) this.jaxbParser.marshal(this.korisnikService.currentUser()).getElementsByTagNameNS(Namespaces.OSNOVA, "Korisnik").item(0);
 		Node gradjanin = document.createElementNS(Namespaces.OSNOVA, "Gradjanin");
 		gradjanin.appendChild(document.importNode(korisnik.getElementsByTagNameNS(Namespaces.OSNOVA, "Osoba").item(0), true));
 		gradjanin.appendChild(document.importNode(korisnik.getElementsByTagNameNS(Namespaces.OSNOVA, "Adresa").item(0), true));
-		Node organVlasti = document.importNode(this.jaxbParser.marshal(this.organVlastiService.load()).getElementsByTagNameNS(Namespaces.OSNOVA, "OrganVlasti").item(0), true);
+		Node organVlasti = document.importNode(this.organVlastiService.load().getElementsByTagNameNS(Namespaces.OSNOVA, "OrganVlasti").item(0), true);
 		documentFragment.appendChild(document.createElementNS(Namespaces.OSNOVA, "broj"));
 		documentFragment.appendChild(datum);
 		documentFragment.appendChild(gradjanin);
 		documentFragment.appendChild(organVlasti);
 		zahtev.insertBefore(documentFragment, document.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0));
+		
 		Node status = document.createElementNS(Namespaces.ZAHTEV, "zahtev:status");
 		status.setTextContent(StatusZahteva.cekanje + "");
 		zahtev.appendChild(status);
 		return document;
 	}
-	
+
+	@Override
 	public String map(ResourceSet resources) {
 		try {
 			Document zahteviDocument = this.domParser.emptyDocument();
@@ -87,31 +87,30 @@ public class ZahtevMapper {
 				zahtev.appendChild(zahteviDocument.importNode(document.getElementsByTagNameNS(Namespaces.ZAHTEV, "status").item(0), true));
 				zahtevi.appendChild(zahtev);			
 			}
+			
 			return this.domParser.buildXml(zahteviDocument);
 		}
 		catch(Exception e) {
 			throw new MyException(e);
 		}
 	}
-	
+
+	@Override
 	public Model map(Document document) {
 		Element zahtev = (Element) document.getElementsByTagNameNS(Namespaces.ZAHTEV, "Zahtev").item(0);
 		zahtev.setAttribute("xmlns:xs", Namespaces.XS);
 		zahtev.setAttribute("xmlns:pred", Prefixes.PREDIKAT);
 		zahtev.setAttribute("about", Prefixes.ZAHTEV_PREFIX + zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent());
-		
 		zahtev.setAttribute("rel", "pred:podneo");
 		zahtev.setAttribute("href", Prefixes.KORISNIK_PREFIX + this.korisnikService.currentUser().getOsoba().getMejl());
 		
 		((Element) zahtev.getElementsByTagNameNS(Namespaces.ZAHTEV, "tipZahteva").item(0)).setAttribute("property", "pred:tip");
 		((Element) zahtev.getElementsByTagNameNS(Namespaces.ZAHTEV, "tipZahteva").item(0)).setAttribute("datatype", "xs:string");
-
 		((Element) zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0)).setAttribute("property", "pred:datum");
 		((Element) zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0)).setAttribute("datatype", "xs:string");
 		
 		((Element) zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(0)).setAttribute("property", "pred:mesto");
 		((Element) zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(0)).setAttribute("datatype", "xs:string");
-
 		((Element) zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(1)).setAttribute("property", "pred:izdatoU");
 		((Element) zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(1)).setAttribute("datatype", "xs:string");
 
@@ -121,5 +120,5 @@ public class ZahtevMapper {
 		model.read(new StringReader(result), null);
 		return model;
 	}
-	
+
 }

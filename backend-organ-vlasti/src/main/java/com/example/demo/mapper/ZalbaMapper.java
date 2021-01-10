@@ -1,4 +1,4 @@
-package com.example.demo.service.zalba;
+package com.example.demo.mapper;
 
 import java.io.StringReader;
 
@@ -22,14 +22,22 @@ import com.example.demo.parser.DOMParser;
 import com.example.demo.parser.XSLTransformer;
 
 @Component
-public class ZalbaMapper {
+public class ZalbaMapper implements MapperInterface {
 
 	@Autowired
 	private DOMParser domParser;
 	
 	@Autowired
 	private XSLTransformer xslTransformer;
-	
+
+	@Override
+	public Document map(String xml) {
+		Document document = this.domParser.buildDocument(xml);
+		document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.prosledjeno + "");
+		return this.domParser.buildDocument(xml);
+	}
+
+	@Override
 	public String map(ResourceSet resources) {
 		try {
 			Document zalbeDocument = this.domParser.emptyDocument();
@@ -56,34 +64,27 @@ public class ZalbaMapper {
 			throw new MyException(e);
 		}
 	}
-	
-	public Document map(String xml) {
-		Document document = this.domParser.buildDocument(xml);
-		document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.prosledjeno + "");
-		return this.domParser.buildDocument(xml);
-	}
-		
+
+	@Override
 	public Model map(Document document) {
 		Element zalba = (Element) document.getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").item(0);
 		zalba.setAttribute("xmlns:xs", Namespaces.XS);
 		zalba.setAttribute("xmlns:pred", Prefixes.PREDIKAT);
 		zalba.setAttribute("about", Prefixes.ZALBA_PREFIX + zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent());
-		
 		zalba.setAttribute("rel", "pred:podneo");
 		zalba.setAttribute("href", Prefixes.KORISNIK_PREFIX + zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "mejl").item(0).getTextContent());
 		
 		Node tipZalbe = document.createElementNS(Namespaces.ZALBA, "tipZalbe");
 		tipZalbe.setTextContent(getTipZalbe(document) + "");
 		zalba.appendChild(tipZalbe);
+		
 		((Element) zalba.getElementsByTagNameNS(Namespaces.ZALBA, "tipZalbe").item(0)).setAttribute("property", "pred:tip");
 		((Element) zalba.getElementsByTagNameNS(Namespaces.ZALBA, "tipZalbe").item(0)).setAttribute("datatype", "xs:string");
-		
 		((Element) zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0)).setAttribute("property", "pred:datum");
 		((Element) zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0)).setAttribute("datatype", "xs:string");
 		
 		((Element) zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(0)).setAttribute("property", "pred:mesto");
 		((Element) zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(0)).setAttribute("datatype", "xs:string");
-
 		((Element) zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(1)).setAttribute("property", "pred:izdatoU");
 		((Element) zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(1)).setAttribute("datatype", "xs:string");
 		

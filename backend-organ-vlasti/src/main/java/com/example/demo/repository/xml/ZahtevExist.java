@@ -9,7 +9,7 @@ import com.example.demo.common.Constants;
 import com.example.demo.exist.ExistManager;
 
 @Repository
-public class ZahtevExist {
+public class ZahtevExist implements ExistInterface {
 
 	@Autowired
 	private ExistManager existManager;
@@ -17,14 +17,22 @@ public class ZahtevExist {
 	public static final String ZAHTEV_COLLECTION = Constants.COLLECTIONS_PREFIX + "/zahtevi";
 	public static final String ZAHTEV_SCHEMA = Constants.XSD_FOLDER + "zahtev.xsd";
 	
-	public void save(String documentId, Document document) {
+	@Override
+	public void add(Document document) {
+		this.existManager.save(ZAHTEV_COLLECTION, null, document, ZAHTEV_SCHEMA);
+	}
+	
+	@Override
+	public void update(String documentId, Document document) {
 		this.existManager.save(ZAHTEV_COLLECTION, documentId, document, ZAHTEV_SCHEMA);
 	}
-
+	
+	@Override
 	public Document load(String documentId) {
 		return this.existManager.load(ZAHTEV_COLLECTION, documentId);
 	}
 	
+	@Override
 	public ResourceSet retrieve(String xpathExp) {
 		return this.existManager.retrieve(ZAHTEV_COLLECTION, xpathExp);
 	}

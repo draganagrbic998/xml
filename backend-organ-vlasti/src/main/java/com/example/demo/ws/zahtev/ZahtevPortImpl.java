@@ -5,7 +5,8 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.example.demo.service.zahtev.ZahtevService;
+import com.example.demo.parser.DOMParser;
+import com.example.demo.service.ZahtevService;
 
 @javax.jws.WebService(
                       serviceName = "ZahtevService",
@@ -21,10 +22,13 @@ public class ZahtevPortImpl implements Zahtev {
     @Autowired
     private ZahtevService zahtevService;
     
+    @Autowired
+    private DOMParser domParser;
+    
     public java.lang.String getZahtev(java.lang.String getZahtevRequest) {
         LOG.info("Executing operation getZahtev");
         try {
-            java.lang.String _return = this.zahtevService.load(getZahtevRequest);
+            java.lang.String _return = this.domParser.buildXml(this.zahtevService.load(getZahtevRequest));
             return _return;
         } 
         catch (java.lang.Exception ex) {

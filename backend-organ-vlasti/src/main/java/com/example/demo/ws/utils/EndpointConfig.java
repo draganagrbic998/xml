@@ -39,6 +39,13 @@ public class EndpointConfig {
 	}
 	
 	@Bean
+	public Endpoint createResenjeEndpoint() {
+		EndpointImpl endpoint = new EndpointImpl(bus, rpi);
+		endpoint.publish("/createResenje");
+		return endpoint;
+	}
+	
+	@Bean
 	public Endpoint getZahtevEndpoint() {
 		EndpointImpl endpoint = new EndpointImpl(bus, zhpi);
 		endpoint.publish("/getZahtev");
@@ -49,13 +56,6 @@ public class EndpointConfig {
 	public Endpoint getOdlukaEndpoint() {
 		EndpointImpl endpoint = new EndpointImpl(bus, opi);
 		endpoint.publish("/getOdluka");
-		return endpoint;
-	}
-	
-	@Bean
-	public Endpoint createResenjeEndpoint() {
-		EndpointImpl endpoint = new EndpointImpl(bus, rpi);
-		endpoint.publish("/createResenje");
 		return endpoint;
 	}
 	

@@ -36,14 +36,14 @@ public class SOAPService {
 		this.soapConnectionFactory = SOAPConnectionFactory.newInstance();
 	}
 	
-	public void sendSOAPMessage(Document document, TipDokumenta tipDokumenta) {
+	public void sendSOAPMessage(Document document, SOAPDocument soapDocument) {
 		try {
 			SOAPMessage message = this.messageFactory.createMessage();
 			SOAPBody body = message.getSOAPBody();
-			
 			Name name = null;
 			URL endpoint = null;
-			if (tipDokumenta.equals(TipDokumenta.odgovor)) {
+			
+			if (soapDocument.equals(SOAPDocument.odgovor)) {
 				name = this.soapFactory.createName(SOAPConstants.CREATE_ODGOVOR_ELEMENT, "m", SOAPConstants.CREATE_ODGOVOR_NAMESPACE);
 				endpoint = new URL(SOAPConstants.CREATE_ODGOVOR_SERVICE);
 			}
@@ -52,8 +52,8 @@ public class SOAPService {
 				endpoint = new URL(SOAPConstants.CREATE_IZVESTAJ_SERVICE);
 			}
 
-			SOAPElement symbol = body.addChildElement(name);
-			symbol.addTextNode(this.domParser.buildXml(document));
+			SOAPElement element = body.addChildElement(name);
+			element.addTextNode(this.domParser.buildXml(document));
 			SOAPConnection connection = this.soapConnectionFactory.createConnection();
 			connection.call(message, endpoint);
 
