@@ -8,7 +8,8 @@ export const environment = {
   apiAuth: 'auth',
   apiZalbe: 'api/zalbe',
   apiResenja: 'api/resenja',
-  apiOdgovori: 'api/odgovori'
+  apiOdgovori: 'api/odgovori',
+  apiIzvestaji: 'api/izvestaji'
 };
 
 /*

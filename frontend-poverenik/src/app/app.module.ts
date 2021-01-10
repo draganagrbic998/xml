@@ -41,6 +41,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { OdgovorListComponent } from './components/zalba/odgovor-list/odgovor-list.component';
+import { IzvestajListComponent } from './components/izvestaj/izvestaj-list/izvestaj-list.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { OdgovorListComponent } from './components/zalba/odgovor-list/odgovor-li
     PreloaderComponent,
     HtmlViewerComponent,
     PdfViewerComponent,
-    OdgovorListComponent
+    OdgovorListComponent,
+    IzvestajListComponent
   ],
   imports: [
     BrowserModule,
