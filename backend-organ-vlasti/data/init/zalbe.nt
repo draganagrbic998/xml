@@ -1,22 +1,22 @@
-<https://github.com/draganagrbic998/xml/sluzbenik/zalba/1> <https://github.com/draganagrbic998/xml/sluzbenik/predicate/datum> "2021-01-09" .
-<https://github.com/draganagrbic998/xml/sluzbenik/zalba/1> <https://github.com/draganagrbic998/xml/sluzbenik/predicate/izdatoU> "Novi Sad" .
-<https://github.com/draganagrbic998/xml/sluzbenik/zalba/1> <https://github.com/draganagrbic998/xml/sluzbenik/predicate/mesto> "Novi Sad" .
-<https://github.com/draganagrbic998/xml/sluzbenik/zalba/1> <https://github.com/draganagrbic998/xml/sluzbenik/predicate/odluka> <https://github.com/draganagrbic998/xml/sluzbenik/odluka/1> .
-<https://github.com/draganagrbic998/xml/sluzbenik/zalba/1> <https://github.com/draganagrbic998/xml/sluzbenik/predicate/podneo> <https://github.com/draganagrbic998/xml/sluzbenik/korisnik/draganaasd@gmail.com> .
-<https://github.com/draganagrbic998/xml/sluzbenik/zalba/1> <https://github.com/draganagrbic998/xml/sluzbenik/predicate/tip> "delimicnost" .
-<https://github.com/draganagrbic998/xml/sluzbenik/zalba/1> <https://github.com/draganagrbic998/xml/sluzbenik/predicate/zahtev> <https://github.com/draganagrbic998/xml/sluzbenik/zahtev/1> .
+<https://github.com/draganagrbic998/xml/sluzbenik/zalba/1> <https://github.com/draganagrbic998/xml/sluzbenik/predikat/datum> "2021-01-09" .
+<https://github.com/draganagrbic998/xml/sluzbenik/zalba/1> <https://github.com/draganagrbic998/xml/sluzbenik/predikat/izdatoU> "Novi Sad" .
+<https://github.com/draganagrbic998/xml/sluzbenik/zalba/1> <https://github.com/draganagrbic998/xml/sluzbenik/predikat/mesto> "Novi Sad" .
+<https://github.com/draganagrbic998/xml/sluzbenik/zalba/1> <https://github.com/draganagrbic998/xml/sluzbenik/predikat/odluka> <https://github.com/draganagrbic998/xml/sluzbenik/odluka/1> .
+<https://github.com/draganagrbic998/xml/sluzbenik/zalba/1> <https://github.com/draganagrbic998/xml/sluzbenik/predikat/podneo> <https://github.com/draganagrbic998/xml/sluzbenik/korisnik/draganaasd@gmail.com> .
+<https://github.com/draganagrbic998/xml/sluzbenik/zalba/1> <https://github.com/draganagrbic998/xml/sluzbenik/predikat/tip> "delimicnost" .
+<https://github.com/draganagrbic998/xml/sluzbenik/zalba/1> <https://github.com/draganagrbic998/xml/sluzbenik/predikat/zahtev> <https://github.com/draganagrbic998/xml/sluzbenik/zahtev/1> .
 
-<https://github.com/draganagrbic998/xml/sluzbenik/zalba/2> <https://github.com/draganagrbic998/xml/sluzbenik/predicate/datum> "2021-01-09" .
-<https://github.com/draganagrbic998/xml/sluzbenik/zalba/2> <https://github.com/draganagrbic998/xml/sluzbenik/predicate/izdatoU> "Novi Sad" .
-<https://github.com/draganagrbic998/xml/sluzbenik/zalba/2> <https://github.com/draganagrbic998/xml/sluzbenik/predicate/mesto> "Novi Sad" .
-<https://github.com/draganagrbic998/xml/sluzbenik/zalba/2> <https://github.com/draganagrbic998/xml/sluzbenik/predicate/odluka> <https://github.com/draganagrbic998/xml/sluzbenik/odluka/2> .
-<https://github.com/draganagrbic998/xml/sluzbenik/zalba/2> <https://github.com/draganagrbic998/xml/sluzbenik/predicate/podneo> <https://github.com/draganagrbic998/xml/sluzbenik/korisnik/draganaasd@gmail.com> .
-<https://github.com/draganagrbic998/xml/sluzbenik/zalba/2> <https://github.com/draganagrbic998/xml/sluzbenik/predicate/tip> "odluka" .
-<https://github.com/draganagrbic998/xml/sluzbenik/zalba/2> <https://github.com/draganagrbic998/xml/sluzbenik/predicate/zahtev> <https://github.com/draganagrbic998/xml/sluzbenik/zahtev/2> .
+<https://github.com/draganagrbic998/xml/sluzbenik/zalba/2> <https://github.com/draganagrbic998/xml/sluzbenik/predikat/datum> "2021-01-09" .
+<https://github.com/draganagrbic998/xml/sluzbenik/zalba/2> <https://github.com/draganagrbic998/xml/sluzbenik/predikat/izdatoU> "Novi Sad" .
+<https://github.com/draganagrbic998/xml/sluzbenik/zalba/2> <https://github.com/draganagrbic998/xml/sluzbenik/predikat/mesto> "Novi Sad" .
+<https://github.com/draganagrbic998/xml/sluzbenik/zalba/2> <https://github.com/draganagrbic998/xml/sluzbenik/predikat/odluka> <https://github.com/draganagrbic998/xml/sluzbenik/odluka/2> .
+<https://github.com/draganagrbic998/xml/sluzbenik/zalba/2> <https://github.com/draganagrbic998/xml/sluzbenik/predikat/podneo> <https://github.com/draganagrbic998/xml/sluzbenik/korisnik/draganaasd@gmail.com> .
+<https://github.com/draganagrbic998/xml/sluzbenik/zalba/2> <https://github.com/draganagrbic998/xml/sluzbenik/predikat/tip> "odluka" .
+<https://github.com/draganagrbic998/xml/sluzbenik/zalba/2> <https://github.com/draganagrbic998/xml/sluzbenik/predikat/zahtev> <https://github.com/draganagrbic998/xml/sluzbenik/zahtev/2> .
 
-<https://github.com/draganagrbic998/xml/sluzbenik/zalba/3> <https://github.com/draganagrbic998/xml/sluzbenik/predicate/datum> "2021-01-09" .
-<https://github.com/draganagrbic998/xml/sluzbenik/zalba/3> <https://github.com/draganagrbic998/xml/sluzbenik/predicate/izdatoU> "Novi Sad" .
-<https://github.com/draganagrbic998/xml/sluzbenik/zalba/3> <https://github.com/draganagrbic998/xml/sluzbenik/predicate/mesto> "Novi Sad" .
-<https://github.com/draganagrbic998/xml/sluzbenik/zalba/3> <https://github.com/draganagrbic998/xml/sluzbenik/predicate/podneo> <https://github.com/draganagrbic998/xml/sluzbenik/korisnik/draganaasd@gmail.com> .
-<https://github.com/draganagrbic998/xml/sluzbenik/zalba/3> <https://github.com/draganagrbic998/xml/sluzbenik/predicate/tip> "cutanje" .
-<https://github.com/draganagrbic998/xml/sluzbenik/zalba/3> <https://github.com/draganagrbic998/xml/sluzbenik/predicate/zahtev> <https://github.com/draganagrbic998/xml/sluzbenik/zahtev/3> .
+<https://github.com/draganagrbic998/xml/sluzbenik/zalba/3> <https://github.com/draganagrbic998/xml/sluzbenik/predikat/datum> "2021-01-09" .
+<https://github.com/draganagrbic998/xml/sluzbenik/zalba/3> <https://github.com/draganagrbic998/xml/sluzbenik/predikat/izdatoU> "Novi Sad" .
+<https://github.com/draganagrbic998/xml/sluzbenik/zalba/3> <https://github.com/draganagrbic998/xml/sluzbenik/predikat/mesto> "Novi Sad" .
+<https://github.com/draganagrbic998/xml/sluzbenik/zalba/3> <https://github.com/draganagrbic998/xml/sluzbenik/predikat/podneo> <https://github.com/draganagrbic998/xml/sluzbenik/korisnik/draganaasd@gmail.com> .
+<https://github.com/draganagrbic998/xml/sluzbenik/zalba/3> <https://github.com/draganagrbic998/xml/sluzbenik/predikat/tip> "cutanje" .
+<https://github.com/draganagrbic998/xml/sluzbenik/zalba/3> <https://github.com/draganagrbic998/xml/sluzbenik/predikat/zahtev> <https://github.com/draganagrbic998/xml/sluzbenik/zahtev/3> .

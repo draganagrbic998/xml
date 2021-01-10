@@ -41,10 +41,10 @@ public class DataInitializator {
 	private static final String ODGOVOR2 = Constants.INIT_FOLDER + "odgovor2.xml";
 	private static final String ODGOVORI = Constants.INIT_FOLDER + "odgovori.nt";
 	
-	//private static final String RESENJA = Constants.INIT_FOLDER + "resenja.nt";
 	private static final String RESENJE1 = Constants.INIT_FOLDER + "resenje1.xml";
 	private static final String RESENJE2 = Constants.INIT_FOLDER + "resenje2.xml";
 	private static final String RESENJE3 = Constants.INIT_FOLDER + "resenje3.xml";
+	//private static final String RESENJA = Constants.INIT_FOLDER + "resenja.nt";
 
 	@EventListener(ContextRefreshedEvent.class)
 	public void dataInit() {
@@ -60,12 +60,12 @@ public class DataInitializator {
 		this.existManager.save(ZalbaExist.ZALBA_COLLECTION, "2", this.domParser.buildDocumentFromFile(ZALBA_ODLUKA1), ZalbaExist.ZALBA_SCHEMA);
 		this.existManager.save(ZalbaExist.ZALBA_COLLECTION, "3", this.domParser.buildDocumentFromFile(ZALBA_CUTANJE1), ZalbaExist.ZALBA_SCHEMA);
 
-		this.existManager.save(OdgovorExist.ODGOVOR_COLLECTION, "1", this.domParser.buildDocumentFromFile(ODGOVOR1), OdgovorExist.ODGOVOR_SCHEMA);
-		this.existManager.save(OdgovorExist.ODGOVOR_COLLECTION, "2", this.domParser.buildDocumentFromFile(ODGOVOR2), OdgovorExist.ODGOVOR_SCHEMA);
-
 		this.existManager.save(ResenjeExist.RESENJE_COLLECTION, "1", this.domParser.buildDocumentFromFile(RESENJE1), ResenjeExist.RESENJE_SCHEMA);
 		this.existManager.save(ResenjeExist.RESENJE_COLLECTION, "2", this.domParser.buildDocumentFromFile(RESENJE2), ResenjeExist.RESENJE_SCHEMA);
 		this.existManager.save(ResenjeExist.RESENJE_COLLECTION, "3", this.domParser.buildDocumentFromFile(RESENJE3), ResenjeExist.RESENJE_SCHEMA);
+
+		this.existManager.save(OdgovorExist.ODGOVOR_COLLECTION, "1", this.domParser.buildDocumentFromFile(ODGOVOR1), OdgovorExist.ODGOVOR_SCHEMA);
+		this.existManager.save(OdgovorExist.ODGOVOR_COLLECTION, "2", this.domParser.buildDocumentFromFile(ODGOVOR2), OdgovorExist.ODGOVOR_SCHEMA);
 
 		try {
 			this.fusekiManager.dropAll();
@@ -73,6 +73,7 @@ public class DataInitializator {
 		catch(Exception e) {
 			;
 		}
+		
 		Model model = ModelFactory.createDefaultModel();
 		model.read(ZALBE);
 		this.fusekiManager.save(ZalbaRDF.ZALBA_GRAPH, model);
@@ -80,6 +81,7 @@ public class DataInitializator {
 		model.read(ODGOVORI);
 		this.fusekiManager.save(OdgovorRDF.ODGOVOR_GRAPH, model);
 		//dodaj rdfs za resenja
+		
 	}
 	
 }

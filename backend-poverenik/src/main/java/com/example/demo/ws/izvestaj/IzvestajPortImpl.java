@@ -5,7 +5,7 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.example.demo.service.izvestaj.IzvestajService;
+import com.example.demo.service.IzvestajService;
 
 @javax.jws.WebService(serviceName = "IzvestajService", portName = "IzvestajPort", targetNamespace = "http://demo.example.com/ws/izvestaj", wsdlLocation = "classpath:wsdl/Izvestaj.wsdl", endpointInterface = "com.example.demo.ws.izvestaj.Izvestaj")
 @Component

@@ -1,6 +1,6 @@
 package com.example.demo.enums;
 
-public enum MetadataType {
+public enum MetadataTip {
 	
 	xml, json;
 

@@ -16,7 +16,7 @@ import org.w3c.dom.Document;
 
 import com.example.demo.common.Constants;
 import com.example.demo.common.MyException;
-import com.example.demo.enums.MetadataType;
+import com.example.demo.enums.MetadataTip;
 import com.example.demo.enums.TipZalbe;
 import com.example.demo.mapper.ZalbaMapper;
 import com.example.demo.parser.DOMParser;
@@ -102,11 +102,11 @@ public class ZalbaTransformer implements TransformerInterface {
 	}
 	
 	@Override
-	public Resource generateMetadata(String documentId, MetadataType type) {
+	public Resource generateMetadata(String documentId, MetadataTip type) {
 		try {
 			ResultSet results = this.zalbaRDF.retrieve(documentId);
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
-			if (type.equals(MetadataType.xml)) {
+			if (type.equals(MetadataTip.xml)) {
 				ResultSetFormatter.outputAsXML(out, results);
 			}
 			else {

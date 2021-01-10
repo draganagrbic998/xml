@@ -1,13 +1,13 @@
-<https://github.com/draganagrbic998/xml/sluzbenik/odluka/2> <https://github.com/draganagrbic998/xml/sluzbenik/predicate/datum> "2021-01-09" .
-<https://github.com/draganagrbic998/xml/sluzbenik/odluka/2> <https://github.com/draganagrbic998/xml/sluzbenik/predicate/izdao> <https://github.com/draganagrbic998/xml/sluzbenik/korisnik/sluzbenik@gmail.com> .
-<https://github.com/draganagrbic998/xml/sluzbenik/odluka/2> <https://github.com/draganagrbic998/xml/sluzbenik/predicate/izdatoU> "Novi Sad".
-<https://github.com/draganagrbic998/xml/sluzbenik/odluka/2> <https://github.com/draganagrbic998/xml/sluzbenik/predicate/mesto> "Novi Sad" .
-<https://github.com/draganagrbic998/xml/sluzbenik/odluka/2> <https://github.com/draganagrbic998/xml/sluzbenik/predicate/tip> "odbijanje" .
-<https://github.com/draganagrbic998/xml/sluzbenik/odluka/2> <https://github.com/draganagrbic998/xml/sluzbenik/predicate/zahtev> <https://github.com/draganagrbic998/xml/sluzbenik/zahtev/1> .
+<https://github.com/draganagrbic998/xml/sluzbenik/odluka/2> <https://github.com/draganagrbic998/xml/sluzbenik/predikat/datum> "2021-01-09" .
+<https://github.com/draganagrbic998/xml/sluzbenik/odluka/2> <https://github.com/draganagrbic998/xml/sluzbenik/predikat/izdao> <https://github.com/draganagrbic998/xml/sluzbenik/korisnik/sluzbenik@gmail.com> .
+<https://github.com/draganagrbic998/xml/sluzbenik/odluka/2> <https://github.com/draganagrbic998/xml/sluzbenik/predikat/izdatoU> "Novi Sad".
+<https://github.com/draganagrbic998/xml/sluzbenik/odluka/2> <https://github.com/draganagrbic998/xml/sluzbenik/predikat/mesto> "Novi Sad" .
+<https://github.com/draganagrbic998/xml/sluzbenik/odluka/2> <https://github.com/draganagrbic998/xml/sluzbenik/predikat/tip> "odbijanje" .
+<https://github.com/draganagrbic998/xml/sluzbenik/odluka/2> <https://github.com/draganagrbic998/xml/sluzbenik/predikat/zahtev> <https://github.com/draganagrbic998/xml/sluzbenik/zahtev/1> .
 
-<https://github.com/draganagrbic998/xml/sluzbenik/odluka/1> <https://github.com/draganagrbic998/xml/sluzbenik/predicate/datum> "2021-01-09" .
-<https://github.com/draganagrbic998/xml/sluzbenik/odluka/1> <https://github.com/draganagrbic998/xml/sluzbenik/predicate/izdao> <https://github.com/draganagrbic998/xml/sluzbenik/korisnik/sluzbenik@gmail.com> .
-<https://github.com/draganagrbic998/xml/sluzbenik/odluka/1> <https://github.com/draganagrbic998/xml/sluzbenik/predicate/izdatoU> "Novi Sad" .
-<https://github.com/draganagrbic998/xml/sluzbenik/odluka/1> <https://github.com/draganagrbic998/xml/sluzbenik/predicate/mesto> "Novi Sad" .
-<https://github.com/draganagrbic998/xml/sluzbenik/odluka/1> <https://github.com/draganagrbic998/xml/sluzbenik/predicate/tip> "obavestenje" .
-<https://github.com/draganagrbic998/xml/sluzbenik/odluka/1> <https://github.com/draganagrbic998/xml/sluzbenik/predicate/zahtev> <https://github.com/draganagrbic998/xml/sluzbenik/zahtev/2> .
+<https://github.com/draganagrbic998/xml/sluzbenik/odluka/1> <https://github.com/draganagrbic998/xml/sluzbenik/predikat/datum> "2021-01-09" .
+<https://github.com/draganagrbic998/xml/sluzbenik/odluka/1> <https://github.com/draganagrbic998/xml/sluzbenik/predikat/izdao> <https://github.com/draganagrbic998/xml/sluzbenik/korisnik/sluzbenik@gmail.com> .
+<https://github.com/draganagrbic998/xml/sluzbenik/odluka/1> <https://github.com/draganagrbic998/xml/sluzbenik/predikat/izdatoU> "Novi Sad" .
+<https://github.com/draganagrbic998/xml/sluzbenik/odluka/1> <https://github.com/draganagrbic998/xml/sluzbenik/predikat/mesto> "Novi Sad" .
+<https://github.com/draganagrbic998/xml/sluzbenik/odluka/1> <https://github.com/draganagrbic998/xml/sluzbenik/predikat/tip> "obavestenje" .
+<https://github.com/draganagrbic998/xml/sluzbenik/odluka/1> <https://github.com/draganagrbic998/xml/sluzbenik/predikat/zahtev> <https://github.com/draganagrbic998/xml/sluzbenik/zahtev/2> .

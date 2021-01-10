@@ -1,4 +1,4 @@
-package com.example.demo.service.izvestaj;
+package com.example.demo.mapper;
 
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;

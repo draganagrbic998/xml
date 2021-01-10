@@ -4,7 +4,7 @@ import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.example.demo.service.zalba.ZalbaService;
+import com.example.demo.service.ZalbaService;
 
 
 @javax.jws.WebService(

@@ -1,4 +1,4 @@
-package com.example.demo.service.resenje;
+package com.example.demo.mapper;
 
 import java.io.StringReader;
 import java.text.SimpleDateFormat;
@@ -26,7 +26,6 @@ import com.example.demo.parser.XSLTransformer;
 import com.example.demo.repository.xml.OdgovorExist;
 import com.example.demo.repository.xml.ZalbaExist;
 import com.example.demo.service.KorisnikService;
-import com.example.demo.service.zalba.ZalbaMapper;
 
 @Component
 public class ResenjeMapper {

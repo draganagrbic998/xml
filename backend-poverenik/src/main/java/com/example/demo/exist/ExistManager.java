@@ -103,9 +103,10 @@ public class ExistManager {
 			XPathQueryService xpathService = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
 			xpathService.setProperty(OutputKeys.INDENT, "yes");
 			xpathService.setNamespace("", Namespaces.OSNOVA);
-			xpathService.setNamespace("odgovor", Namespaces.ODGOVOR);
 			xpathService.setNamespace("zalba", Namespaces.ZALBA);
 			xpathService.setNamespace("resenje", Namespaces.RESENJE);
+			xpathService.setNamespace("odgovor", Namespaces.ODGOVOR);
+			xpathService.setNamespace("izvestaj", Namespaces.IZVESTAJ);
 			return xpathService.query(xpathExp);
 		} 
 		catch(Exception e) {

@@ -25,7 +25,7 @@ public class FusekiManager {
 	@Autowired
 	private FusekiAuthentication authUtilities;
 	
-	private static final String QUERY1_PATH = Constants.SPARQL_FOLDER + "query1.rq";
+	private static final String QUERY1 = Constants.SPARQL_FOLDER + "query1.rq";
 	
 	public void save(String graphUri, Model model) {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -37,7 +37,7 @@ public class FusekiManager {
 	}
 	
 	public ResultSet retrieve(String graphUri, String subject) {
-		String sparql = String.format(this.readFile(QUERY1_PATH), this.authUtilities.getData() + graphUri, subject);
+		String sparql = String.format(this.readFile(QUERY1), this.authUtilities.getData() + graphUri, subject);
 		QueryExecution query = QueryExecutionFactory.sparqlService(this.authUtilities.getQuery(), sparql);
 		ResultSet results = query.execSelect();
 		return results;

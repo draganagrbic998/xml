@@ -1,4 +1,4 @@
-package com.example.demo.service.izvestaj;
+package com.example.demo.service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -18,7 +18,8 @@ import org.xmldb.api.base.ResourceSet;
 
 import com.example.demo.common.Constants;
 import com.example.demo.common.MyException;
-import com.example.demo.enums.MetadataType;
+import com.example.demo.enums.MetadataTip;
+import com.example.demo.mapper.IzvestajMapper;
 import com.example.demo.parser.DOMParser;
 import com.example.demo.parser.XSLTransformer;
 import com.example.demo.repository.rdf.IzvestajRDF;
@@ -78,11 +79,11 @@ public class IzvestajService {
 		}
 	}
 
-	public Resource generateMetadata(String broj, MetadataType type) {
+	public Resource generateMetadata(String broj, MetadataTip type) {
 		try {
 			ResultSet results = this.izvestajRDF.retrieve(broj);
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
-			if (type.equals(MetadataType.xml)) {
+			if (type.equals(MetadataTip.xml)) {
 				ResultSetFormatter.outputAsXML(out, results);
 			} 
 			else {

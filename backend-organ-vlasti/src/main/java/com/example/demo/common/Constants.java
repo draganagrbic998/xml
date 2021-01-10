@@ -10,7 +10,6 @@ public class Constants {
 	public static final String FRONTEND_URL = "http://localhost:4200";
 	public static final String SLUZBENIK = "sluzbenik";
 	public static final String GRADJANIN = "gradjanin";
-	public static final String COLLECTIONS_PREFIX = "/db/database";
 
 	public static final String DATA_FOLDER = "data" + File.separatorChar;
 	public static final String XSD_FOLDER = DATA_FOLDER + "xsd" + File.separatorChar;
@@ -18,11 +17,11 @@ public class Constants {
 	public static final String INIT_FOLDER = DATA_FOLDER + "init" + File.separatorChar;
 	public static final String GEN_FOLDER = DATA_FOLDER + "gen" + File.separatorChar;
 	public static final String SPARQL_FOLDER = DATA_FOLDER + "sparql" + File.separatorChar;
+	public static final String RDFS_FOLDER = DATA_FOLDER + "rdfs" + File.separatorChar;
 	
+	public static final String COLLECTIONS_PREFIX = "/db/database";
 	public static final String GRDDL_XSL = DATA_FOLDER + "grddl.xsl";
 	public static final String FOP_CONF = DATA_FOLDER + "fop.conf";
-	public static final String RDFS_FOLDER = DATA_FOLDER + "rdfs/";
-	
 	public static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	public static final SimpleDateFormat sdf2 = new SimpleDateFormat("dd.MM.yyy.");
 

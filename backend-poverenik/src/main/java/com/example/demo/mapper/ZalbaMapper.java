@@ -1,4 +1,4 @@
-package com.example.demo.service.zalba;
+package com.example.demo.mapper;
 
 import java.io.StringReader;
 import java.text.SimpleDateFormat;

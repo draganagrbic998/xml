@@ -71,7 +71,6 @@ public class DataInitializator {
 		this.existManager.dropCollection(ResenjeExist.RESENJE_COLLECTION);
 		this.existManager.dropCollection(OdgovorExist.ODGOVOR_COLLECTION);
 		
-		
 		this.existManager.save(OrganVlastiExist.ORGAN_VLASTI_COLLECTION, "1", this.domParser.buildDocumentFromFile(ORGAN_VLASTI1), KorisnikExist.KORISNIK_SCHEMA);
 		this.existManager.save(KorisnikExist.KORISNIK_COLLECTION, "sluzbenik@gmail.com", this.domParser.buildDocumentFromFile(SLUZBENIK1), KorisnikExist.KORISNIK_SCHEMA);
 		this.existManager.save(KorisnikExist.KORISNIK_COLLECTION, "draganaasd@gmail.com", this.domParser.buildDocumentFromFile(GRADJANIN1), KorisnikExist.KORISNIK_SCHEMA);
@@ -100,6 +99,7 @@ public class DataInitializator {
 		catch(Exception e) {
 			;
 		}
+		
 		Model model = ModelFactory.createDefaultModel();
 		model.read(ZAHTEVI);
 		this.fusekiManager.save(ZahtevRDF.ZAHTEV_GRAPH, model);

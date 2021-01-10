@@ -1,4 +1,4 @@
-package com.example.demo.service.odgovor;
+package com.example.demo.service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -19,15 +19,15 @@ import org.xmldb.api.base.ResourceSet;
 import com.example.demo.common.Constants;
 import com.example.demo.common.MyException;
 import com.example.demo.common.Namespaces;
-import com.example.demo.enums.MetadataType;
+import com.example.demo.enums.MetadataTip;
 import com.example.demo.enums.StatusZalbe;
+import com.example.demo.mapper.OdgovorMapper;
 import com.example.demo.model.Korisnik;
 import com.example.demo.parser.DOMParser;
 import com.example.demo.parser.XSLTransformer;
 import com.example.demo.repository.rdf.OdgovorRDF;
 import com.example.demo.repository.xml.OdgovorExist;
 import com.example.demo.repository.xml.ZalbaExist;
-import com.example.demo.service.KorisnikService;
 
 @Service
 public class OdgovorService {
@@ -100,11 +100,11 @@ public class OdgovorService {
 		}
 	}
 
-	public Resource generateMetadata(String broj, MetadataType type) {
+	public Resource generateMetadata(String broj, MetadataTip type) {
 		try {
 			ResultSet results = this.odgovorRDF.retrieve(broj);
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
-			if (type.equals(MetadataType.xml)) {
+			if (type.equals(MetadataTip.xml)) {
 				ResultSetFormatter.outputAsXML(out, results);
 			}
 			else {
