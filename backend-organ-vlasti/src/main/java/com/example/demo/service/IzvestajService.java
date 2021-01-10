@@ -32,7 +32,7 @@ public class IzvestajService implements ServiceInterface {
 		Document document = this.izvestajMapper.map(godina);
 		
 		try {
-			if (this.izvestajExist.retrieve("/izvestaj:Izvestaj[godina = " + godina + "]").getSize() == 0) {
+			if (this.izvestajExist.retrieve("/izvestaj:Izvestaj[izvestaj:godina = " + godina + "]").getSize() == 0) {
 				this.izvestajExist.add(document);
 				//this.izvestajRDF.add(this.izvestajMapper.map(document));
 				this.soapService.sendSOAPMessage(document, SOAPDocument.izvestaj);

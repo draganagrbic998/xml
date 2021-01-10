@@ -16,7 +16,7 @@ import com.example.demo.service.IzvestajService;
 import com.example.demo.transformer.IzvestajTransformer;
 
 @RestController
-@RequestMapping(value = "/api/izvestaji", consumes = MediaType.TEXT_XML_VALUE)
+@RequestMapping(value = "/api/izvestaji")
 public class IzvestajController {
 	
 	@Autowired
