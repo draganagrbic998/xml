@@ -1,7 +1,7 @@
 package com.example.demo.service;
 
-import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
+import java.nio.ByteBuffer;
+import java.util.UUID;
 
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +14,19 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+import org.xmldb.api.modules.XMLResource;
 
+import com.example.demo.common.Constants;
 import com.example.demo.common.EmailTakenException;
+import com.example.demo.common.MyException;
+import com.example.demo.common.Namespaces;
 import com.example.demo.model.Korisnik;
 import com.example.demo.parser.DOMParser;
 import com.example.demo.parser.JAXBParser;
 import com.example.demo.repository.xml.KorisnikExist;
 import com.example.demo.security.TokenUtils;
+import com.example.demo.service.email.Email;
+import com.example.demo.service.email.EmailService;
 
 @Service
 public class KorisnikService implements UserDetailsService {
@@ -42,6 +48,12 @@ public class KorisnikService implements UserDetailsService {
 		
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private OrganVlastiService organVlastiService;
+	
+	@Autowired
+	private EmailService emailService;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) {
@@ -95,13 +107,54 @@ public class KorisnikService implements UserDetailsService {
 		if (this.loadUserByUsername(korisnik.getOsoba().getMejl()) != null) {
 			throw new EmailTakenException();
 		}
-		Random random = ThreadLocalRandom.current();
-		byte[] bytes = new byte[256];
-		random.nextBytes(bytes);
-		korisnik.getOsoba().setPotpis(Base64.encodeBase64String(bytes));
-		korisnik.setAktivan(true);
+		korisnik.getOsoba().setPotpis(this.generatePotpis());
+		korisnik.setAktivan(false);
 		korisnik.setLozinka(this.passwordEncoder.encode(korisnik.getLozinka()));
 		this.korisnikExist.update(korisnik.getOsoba().getMejl(), this.jaxbParser.marshal(korisnik));			
+		this.sendActivationEmail(korisnik.getOsoba().getMejl(), korisnik.getOsoba().getPotpis());
+	}
+	
+	public void activate(String potpis) {
+		try {
+			String xpathExp = String.format("/Korisnik[Osoba/potpis='%s']", potpis);
+			XMLResource resource = (XMLResource) this.korisnikExist.retrieve(xpathExp).getIterator().nextResource();
+			Korisnik korisnik = (Korisnik) this.jaxbParser.unmarshal(this.domParser.buildDocument(resource.getContent().toString()), Korisnik.class);
+			korisnik.setAktivan(true);
+			this.korisnikExist.update(korisnik.getOsoba().getMejl(), this.jaxbParser.marshal(korisnik));
+		}
+		catch(Exception e) {
+			throw new MyException(e);
+		}
+	}
+	
+	private String generatePotpis() {
+        UUID uuid = UUID.randomUUID();
+        byte[] bytes = ByteBuffer.wrap(new byte[256])
+                .putLong(uuid.getMostSignificantBits())
+                .putLong(uuid.getLeastSignificantBits())
+                .array();
+        return Base64.encodeBase64String(bytes);
+	}
+	
+	private void sendActivationEmail(String mejl, String potpis) {
+		Document organVlasti = this.organVlastiService.load();
+		String naziv = organVlasti.getElementsByTagNameNS(Namespaces.OSNOVA, "naziv").item(0).getTextContent();
+		String mesto = organVlasti.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(0).getTextContent();
+		String ulica = organVlasti.getElementsByTagNameNS(Namespaces.OSNOVA, "ulica").item(0).getTextContent();
+		String broj = organVlasti.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
+		String sediste = ulica + " " + broj + ", " + mesto;
+		
+		Email email = new Email();
+		email.setTo(mejl);
+		email.setSubject("Aktivacija naloga");
+		String text = "Uspešno ste se registrovali na portal organa vlasti " + naziv
+				+ ". \nKlikon na link ispod možete aktivirati svoj nalog: \n"
+				+ Constants.BACKEND_URL + "/auth/activate/" + potpis + "\n\n"
+				+ "Svako dobro, \n"
+				+ naziv + "\n" 
+				+ sediste;
+		email.setText(text);
+		this.emailService.sendEmail(email);
 	}
 		
 }
