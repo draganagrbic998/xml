@@ -21,8 +21,8 @@ public class IzvestajMapper implements MapperInterface {
 	private DOMParser domParser;
 
 	@Override
-	public Document map(String godina) {
-		return this.domParser.buildDocument(godina);
+	public Document map(String xml) {
+		return this.domParser.buildDocument(xml);
 	}
 
 	@Override

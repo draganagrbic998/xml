@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="https://github.com/draganagrbic998/xml/izvestaj"
+    xmlns:izvestaj="https://github.com/draganagrbic998/xml/izvestaj"
+    xmlns:osnova="https://github.com/draganagrbic998/xml/osnova">
+    <xs:import namespace="https://github.com/draganagrbic998/xml/osnova" schemaLocation="osnova.xsd"/>
+    <xs:complexType name="TIzvestaj">
+        <xs:complexContent>
+            <xs:extension base="osnova:TDokument">
+                <xs:sequence>
+                    <xs:element ref="osnova:Osoba"/>
+                    <xs:element name="godina" type="osnova:TGodina"/>
+                    <xs:element name="brojZahteva" type="xs:nonNegativeInteger"/>
+                    <xs:element name="brojZahtevaObavestenje" type="xs:nonNegativeInteger"/>
+                    <xs:element name="brojZahtevaUvid" type="xs:nonNegativeInteger"/>
+                    <xs:element name="brojZahtevaKopija" type="xs:nonNegativeInteger"/>
+                    <xs:element name="brojZahtevaDostava" type="xs:nonNegativeInteger"/>
+                    <xs:element name="brojZahtevaPosta" type="xs:nonNegativeInteger"/>
+                    <xs:element name="brojZahtevaEmail" type="xs:nonNegativeInteger"/>
+                    <xs:element name="brojZahtevaFaks" type="xs:nonNegativeInteger"/>
+                    <xs:element name="brojZahtevaOstalo" type="xs:nonNegativeInteger"/>
+                    <xs:element name="brojOdluka" type="xs:nonNegativeInteger"/>
+                    <xs:element name="brojOdlukaOdobreno" type="xs:nonNegativeInteger"/>
+                    <xs:element name="brojOdlukaOdbijeno" type="xs:nonNegativeInteger"/>
+                    <xs:element name="brojZalbi" type="xs:nonNegativeInteger"/>
+                    <xs:element name="brojZalbiCutanje" type="xs:nonNegativeInteger"/>
+                    <xs:element name="brojZalbiDelimicnost" type="xs:nonNegativeInteger"/>
+                    <xs:element name="brojZalbiOdluka" type="xs:nonNegativeInteger"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="Izvestaj" type="izvestaj:TIzvestaj"/>
+</xs:schema>

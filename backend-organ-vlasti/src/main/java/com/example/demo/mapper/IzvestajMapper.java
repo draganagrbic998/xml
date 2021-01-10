@@ -17,12 +17,17 @@ import com.example.demo.common.Constants;
 import com.example.demo.common.MyException;
 import com.example.demo.common.Namespaces;
 import com.example.demo.parser.DOMParser;
+import com.example.demo.parser.JAXBParser;
 import com.example.demo.repository.xml.OdlukaExist;
 import com.example.demo.repository.xml.ZahtevExist;
 import com.example.demo.repository.xml.ZalbaExist;
+import com.example.demo.service.KorisnikService;
 
 @Component
 public class IzvestajMapper implements MapperInterface {
+
+	@Autowired
+	private KorisnikService korisnikService;
 
 	@Autowired
 	private ZahtevExist zahtevExist;
@@ -36,13 +41,14 @@ public class IzvestajMapper implements MapperInterface {
 	@Autowired
 	private DOMParser domParser;
 
+	@Autowired
+	private JAXBParser jaxbParser;
+
 	@Override
 	public Document map(String godina) {
 		try {
-			Document document = this.domParser.emptyDocument();
-			Element izvestaj = document.createElement("izvestaj:Izvestaj");
-			izvestaj.setAttribute("xmlns", Namespaces.OSNOVA);
-			izvestaj.setAttribute("xmlns:izvestaj", Namespaces.IZVESTAJ);
+			Document document = this.domParser.buildDocument(Constants.IZVESTAJ_STUB);
+			Element izvestaj = (Element) document.getElementsByTagNameNS(Namespaces.IZVESTAJ, "Izvestaj").item(0);
 
 			Node godinaNode = document.createElementNS(Namespaces.IZVESTAJ, "izvestaj:godina");
 			godinaNode.setTextContent(godina);
@@ -52,6 +58,11 @@ public class IzvestajMapper implements MapperInterface {
 
 			izvestaj.appendChild(document.createElementNS(Namespaces.OSNOVA, "broj"));
 			izvestaj.appendChild(datum);
+
+			Document osobaDocument = jaxbParser.marshal(this.korisnikService.currentUser());
+			izvestaj.appendChild(document
+					.importNode(osobaDocument.getElementsByTagNameNS(Namespaces.OSNOVA, "Osoba").item(0), true));
+
 			izvestaj.appendChild(godinaNode);
 
 			Node bzNode = document.createElementNS(Namespaces.IZVESTAJ, "izvestaj:brojZahteva");
@@ -135,8 +146,6 @@ public class IzvestajMapper implements MapperInterface {
 			izvestaj.appendChild(bzcutNode);
 			izvestaj.appendChild(bzdelNode);
 			izvestaj.appendChild(bzodlNode);
-
-			document.appendChild(izvestaj);
 
 			System.out.println(this.domParser.buildXml(document));
 			return document;
