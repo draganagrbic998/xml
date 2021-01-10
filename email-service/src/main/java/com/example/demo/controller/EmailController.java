@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.service.EmailService;
 
 @RestController
-@RequestMapping(value = "/email", consumes = MediaType.TEXT_XML_VALUE, produces = MediaType.TEXT_XML_VALUE)
+@RequestMapping(value = "/email")
 public class EmailController {
 	
 	@Autowired
 	private EmailService emailService;
 	
-	@PostMapping
+	@PostMapping(consumes = MediaType.TEXT_XML_VALUE)
 	public ResponseEntity<Void> sendEmail(@RequestBody String xml) {
 		this.emailService.sendEmail(xml);
 		return new ResponseEntity<>(HttpStatus.OK);
