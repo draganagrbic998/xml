@@ -22,7 +22,7 @@ import com.example.demo.repository.xml.ZalbaExist;
 
 @Component
 public class DataInitializator {
-	
+
 	private static final String POVERENIK1 = Constants.INIT_FOLDER + "poverenik1.xml";
 	private static final String GRADJANIN1 = Constants.INIT_FOLDER + "gradjanin1.xml";
 
@@ -72,7 +72,7 @@ public class DataInitializator {
 	    this.existManager.save(ResenjeExist.RESENJE_COLLECTION, "1", this.domParser.buildDocumentFromFile(RESENJE1), ResenjeExist.RESENJE_SCHEMA);
 	    this.existManager.save(ResenjeExist.RESENJE_COLLECTION, "2", this.domParser.buildDocumentFromFile(RESENJE2), ResenjeExist.RESENJE_SCHEMA);
 	    this.existManager.save(ResenjeExist.RESENJE_COLLECTION, "3", this.domParser.buildDocumentFromFile(RESENJE3), ResenjeExist.RESENJE_SCHEMA);
-						
+		
 		Model model = ModelFactory.createDefaultModel();
 		model.add(this.xslTransformer.generateMetadata(this.domParser.buildDocumentFromFile(ZALBA_DELIMICNOST1)));
 		model.add(this.xslTransformer.generateMetadata(this.domParser.buildDocumentFromFile(ZALBA_ODLUKA1)));
@@ -91,5 +91,5 @@ public class DataInitializator {
 		this.fusekiManager.save(ResenjeRDF.RESENJE_GRAPH, model);
 
 	}
-	
+
 }

@@ -91,8 +91,22 @@ xmlns:izvestaj="https://github.com/draganagrbic998/xml/izvestaj">
 					<xsl:variable name="brojZalbiDelimicnost" select="izvestaj:brojZalbiDelimicnost"></xsl:variable>
 					<xsl:variable name="brojZalbiOdluka" select="izvestaj:brojZalbiOdluka"></xsl:variable>
 					
+					<xsl:variable name="sedisteMesto" select="osnova:OrganVlasti/osnova:Adresa/osnova:mesto"></xsl:variable>
+					<xsl:variable name="sedisteUlica" select="osnova:OrganVlasti/osnova:Adresa/osnova:ulica"></xsl:variable>
+					<xsl:variable name="sedisteBroj" select="osnova:OrganVlasti/osnova:Adresa/osnova:broj"></xsl:variable>
+					<xsl:variable name="sediste" select="concat($sedisteUlica, concat(' ', concat($sedisteBroj, concat(', ', $sedisteMesto))))"></xsl:variable>
+
 					<div class="flex center">
 						<div>
+							<p class="underline">
+								<xsl:value-of select="osnova:OrganVlasti/osnova:naziv"></xsl:value-of>
+							</p>
+							<p class="underline">
+								<xsl:value-of select="$sediste"></xsl:value-of>
+							</p>
+							<p>
+								(назив и седиште органа)
+							</p>
 							<div class="center flex">
 								<div style="text-align: left;">
 									<p>
@@ -162,10 +176,10 @@ xmlns:izvestaj="https://github.com/draganagrbic998/xml/izvestaj">
 									<td>/</td>
 								</xsl:when>
 								<xsl:otherwise>
-									<td><xsl:value-of select="format-number(xs:decimal($brojZahtevaObavestenje div $brojZahteva * 100), '####0.00')"></xsl:value-of></td>
-									<td><xsl:value-of select="format-number(xs:decimal($brojZahtevaUvid div $brojZahteva * 100), '####0.00')"></xsl:value-of></td>
-									<td><xsl:value-of select="format-number(xs:decimal($brojZahtevaKopija div $brojZahteva * 100), '####0.00')"></xsl:value-of></td>
-									<td><xsl:value-of select="format-number(xs:decimal($brojZahtevaDostava div $brojZahteva * 100), '####0.00')"></xsl:value-of></td>
+									<td><xsl:value-of select="format-number($brojZahtevaObavestenje div $brojZahteva * 100, '####0.00')"></xsl:value-of></td>
+									<td><xsl:value-of select="format-number($brojZahtevaUvid div $brojZahteva * 100, '####0.00')"></xsl:value-of></td>
+									<td><xsl:value-of select="format-number($brojZahtevaKopija div $brojZahteva * 100, '####0.00')"></xsl:value-of></td>
+									<td><xsl:value-of select="format-number($brojZahtevaDostava div $brojZahteva * 100, '####0.00')"></xsl:value-of></td>
 									<td>100</td>
 								</xsl:otherwise>
 							</xsl:choose>
@@ -205,10 +219,10 @@ xmlns:izvestaj="https://github.com/draganagrbic998/xml/izvestaj">
 									<td>/</td>
 								</xsl:when>
 								<xsl:otherwise>
-									<td><xsl:value-of select="format-number(xs:decimal($brojZahtevaPosta div $brojZahtevaDostava * 100), '####0.00')"></xsl:value-of></td>
-									<td><xsl:value-of select="format-number(xs:decimal($brojZahtevaEmail div $brojZahtevaDostava * 100), '####0.00')"></xsl:value-of></td>
-									<td><xsl:value-of select="format-number(xs:decimal($brojZahtevaFaks div $brojZahtevaDostava * 100), '####0.00')"></xsl:value-of></td>
-									<td><xsl:value-of select="format-number(xs:decimal($brojZahtevaOstalo div $brojZahtevaDostava * 100), '####0.00')"></xsl:value-of></td>
+									<td><xsl:value-of select="format-number($brojZahtevaPosta div $brojZahtevaDostava * 100, '####0.00')"></xsl:value-of></td>
+									<td><xsl:value-of select="format-number($brojZahtevaEmail div $brojZahtevaDostava * 100, '####0.00')"></xsl:value-of></td>
+									<td><xsl:value-of select="format-number($brojZahtevaFaks div $brojZahtevaDostava * 100, '####0.00')"></xsl:value-of></td>
+									<td><xsl:value-of select="format-number($brojZahtevaOstalo div $brojZahtevaDostava * 100, '####0.00')"></xsl:value-of></td>
 								</xsl:otherwise>
 							</xsl:choose>
 						</tr>
@@ -247,9 +261,9 @@ xmlns:izvestaj="https://github.com/draganagrbic998/xml/izvestaj">
 									<td>/</td>
 								</xsl:when>
 								<xsl:otherwise>
-									<td><xsl:value-of select="format-number(xs:decimal($brojZalbiCutanje div $brojZalbi * 100), '####0.00')"></xsl:value-of></td>
-									<td><xsl:value-of select="format-number(xs:decimal($brojZalbiDelimicnost div $brojZalbi * 100), '####0.00')"></xsl:value-of></td>
-									<td><xsl:value-of select="format-number(xs:decimal($brojZalbiOdluka div $brojZalbi * 100), '####0.00')"></xsl:value-of></td>
+									<td><xsl:value-of select="format-number($brojZalbiCutanje div $brojZalbi * 100, '####0.00')"></xsl:value-of></td>
+									<td><xsl:value-of select="format-number($brojZalbiDelimicnost div $brojZalbi * 100, '####0.00')"></xsl:value-of></td>
+									<td><xsl:value-of select="format-number($brojZalbiOdluka div $brojZalbi * 100, '####0.00')"></xsl:value-of></td>
 									<td>100</td>
 								</xsl:otherwise>
 							</xsl:choose>
@@ -266,18 +280,28 @@ xmlns:izvestaj="https://github.com/draganagrbic998/xml/izvestaj">
 					
 					<p class="indent">
 						Укупан број <b>решења о захтевима</b>, којима је захтев усвојен или одбијен је 
-						<b><xsl:value-of select="$brojOdluka"></xsl:value-of></b>, што представља 
-						<b><xsl:value-of select="format-number(xs:decimal($brojOdluka div $brojZahteva * 100), '####0.00')"></xsl:value-of>%</b>
-						од укупног броја поднетих захтева.
+						<b><xsl:value-of select="$brojOdluka"></xsl:value-of></b>
+						<xsl:choose>
+							<xsl:when test="$brojZahteva = 0">
+								.
+							</xsl:when>
+							<xsl:otherwise>
+								, што представља 
+								<b><xsl:value-of select="format-number($brojOdluka div $brojZahteva * 100, '####0.00')"></xsl:value-of>%</b>
+								од укупног броја поднетих захтева.
+							</xsl:otherwise>
+						</xsl:choose>
 					</p>
 					
 					<p class="indent">
-						Од тога, <b>усвојено</b>, односно делимично усвојених захтева је 
-						<b><xsl:value-of select="$brojOdlukaOdobreno"></xsl:value-of></b> 
-						(<xsl:value-of select="format-number(xs:decimal($brojOdlukaOdobreno div $brojOdluka * 100), '####0.00')"></xsl:value-of>%),
-						док је <b>одбијених</b> захтева 
-						<b><xsl:value-of select="$brojOdlukaOdbijeno"></xsl:value-of></b> 
-						(<xsl:value-of select="format-number(xs:decimal($brojOdlukaOdbijeno div $brojOdluka * 100), '####0.00')"></xsl:value-of>%).
+						<xsl:if test="$brojOdluka != 0">
+							Од тога, <b>усвојено</b>, односно делимично усвојених захтева је 
+							<b><xsl:value-of select="$brojOdlukaOdobreno"></xsl:value-of></b> 
+							(<xsl:value-of select="format-number($brojOdlukaOdobreno div $brojOdluka * 100, '####0.00')"></xsl:value-of>%),
+							док је <b>одбијених</b> захтева 
+							<b><xsl:value-of select="$brojOdlukaOdbijeno"></xsl:value-of></b> 
+							(<xsl:value-of select="format-number($brojOdlukaOdbijeno div $brojOdluka * 100, '####0.00')"></xsl:value-of>%).
+						</xsl:if>
 					</p>
 					
 					<br></br><br></br>
