@@ -37,10 +37,25 @@ xmlns:izvestaj="https://github.com/draganagrbic998/xml/izvestaj">
 					<xsl:variable name="brojZalbiCutanje" select="izvestaj:brojZalbiCutanje"></xsl:variable>
 					<xsl:variable name="brojZalbiDelimicnost" select="izvestaj:brojZalbiDelimicnost"></xsl:variable>
 					<xsl:variable name="brojZalbiOdluka" select="izvestaj:brojZalbiOdluka"></xsl:variable>
-										
+
+					<xsl:variable name="sedisteMesto" select="osnova:OrganVlasti/osnova:Adresa/osnova:mesto"></xsl:variable>
+					<xsl:variable name="sedisteUlica" select="osnova:OrganVlasti/osnova:Adresa/osnova:ulica"></xsl:variable>
+					<xsl:variable name="sedisteBroj" select="osnova:OrganVlasti/osnova:Adresa/osnova:broj"></xsl:variable>
+					<xsl:variable name="sediste" select="concat($sedisteUlica, concat(' ', concat($sedisteBroj, concat(', ', $sedisteMesto))))"></xsl:variable>
+
 					<fo:block text-align="center">
                			
                			<fo:inline-container inline-progression-dimension="40%">
+               				
+               				<fo:block border-bottom="0.2mm solid black">
+								<xsl:value-of select="osnova:OrganVlasti/osnova:naziv"></xsl:value-of>
+               				</fo:block>
+               				<fo:block border-bottom="0.2mm solid black">
+								<xsl:value-of select="$sediste"></xsl:value-of>
+               				</fo:block>
+               				<fo:block>
+               					(назив и седиште органа)
+               				</fo:block>
                				
                				<fo:block>
          				         <fo:inline-container inline-progression-dimension="40%">
@@ -134,10 +149,10 @@ xmlns:izvestaj="https://github.com/draganagrbic998/xml/izvestaj">
 									    	<fo:table-cell border="0.3mm solid black"><fo:block>/</fo:block></fo:table-cell>
 										</xsl:when>
 										<xsl:otherwise>
-									    	<fo:table-cell border="0.3mm solid black"><fo:block><xsl:value-of select="format-number(xs:decimal($brojZahtevaObavestenje div $brojZahteva * 100), '####0.00')"></xsl:value-of></fo:block></fo:table-cell>
-									    	<fo:table-cell border="0.3mm solid black"><fo:block><xsl:value-of select="format-number(xs:decimal($brojZahtevaUvid div $brojZahteva * 100), '####0.00')"></xsl:value-of></fo:block></fo:table-cell>
-									    	<fo:table-cell border="0.3mm solid black"><fo:block><xsl:value-of select="format-number(xs:decimal($brojZahtevaKopija div $brojZahteva * 100), '####0.00')"></xsl:value-of></fo:block></fo:table-cell>
-									    	<fo:table-cell border="0.3mm solid black"><fo:block><xsl:value-of select="format-number(xs:decimal($brojZahtevaDostava div $brojZahteva * 100), '####0.00')"></xsl:value-of></fo:block></fo:table-cell>
+									    	<fo:table-cell border="0.3mm solid black"><fo:block><xsl:value-of select="format-number($brojZahtevaObavestenje div $brojZahteva * 100, '####0.00')"></xsl:value-of></fo:block></fo:table-cell>
+									    	<fo:table-cell border="0.3mm solid black"><fo:block><xsl:value-of select="format-number($brojZahtevaUvid div $brojZahteva * 100, '####0.00')"></xsl:value-of></fo:block></fo:table-cell>
+									    	<fo:table-cell border="0.3mm solid black"><fo:block><xsl:value-of select="format-number($brojZahtevaKopija div $brojZahteva * 100, '####0.00')"></xsl:value-of></fo:block></fo:table-cell>
+									    	<fo:table-cell border="0.3mm solid black"><fo:block><xsl:value-of select="format-number($brojZahtevaDostava div $brojZahteva * 100, '####0.00')"></xsl:value-of></fo:block></fo:table-cell>
 									    	<fo:table-cell border="0.3mm solid black"><fo:block>100</fo:block></fo:table-cell>
 										</xsl:otherwise>
 								</xsl:choose>
@@ -197,10 +212,10 @@ xmlns:izvestaj="https://github.com/draganagrbic998/xml/izvestaj">
 									    	<fo:table-cell border="0.3mm solid black"><fo:block>/</fo:block></fo:table-cell>
 										</xsl:when>
 										<xsl:otherwise>
-									    	<fo:table-cell border="0.3mm solid black"><fo:block><xsl:value-of select="format-number(xs:decimal($brojZahtevaPosta div $brojZahtevaDostava * 100), '####0.00')"></xsl:value-of></fo:block></fo:table-cell>
-									    	<fo:table-cell border="0.3mm solid black"><fo:block><xsl:value-of select="format-number(xs:decimal($brojZahtevaEmail div $brojZahtevaDostava * 100), '####0.00')"></xsl:value-of></fo:block></fo:table-cell>
-									    	<fo:table-cell border="0.3mm solid black"><fo:block><xsl:value-of select="format-number(xs:decimal($brojZahtevaFaks div $brojZahtevaDostava * 100), '####0.00')"></xsl:value-of></fo:block></fo:table-cell>
-									    	<fo:table-cell border="0.3mm solid black"><fo:block><xsl:value-of select="format-number(xs:decimal($brojZahtevaOstalo div $brojZahtevaDostava * 100), '####0.00')"></xsl:value-of></fo:block></fo:table-cell>
+									    	<fo:table-cell border="0.3mm solid black"><fo:block><xsl:value-of select="format-number($brojZahtevaPosta div $brojZahtevaDostava * 100, '####0.00')"></xsl:value-of></fo:block></fo:table-cell>
+									    	<fo:table-cell border="0.3mm solid black"><fo:block><xsl:value-of select="format-number($brojZahtevaEmail div $brojZahtevaDostava * 100, '####0.00')"></xsl:value-of></fo:block></fo:table-cell>
+									    	<fo:table-cell border="0.3mm solid black"><fo:block><xsl:value-of select="format-number($brojZahtevaFaks div $brojZahtevaDostava * 100, '####0.00')"></xsl:value-of></fo:block></fo:table-cell>
+									    	<fo:table-cell border="0.3mm solid black"><fo:block><xsl:value-of select="format-number($brojZahtevaOstalo div $brojZahtevaDostava * 100, '####0.00')"></xsl:value-of></fo:block></fo:table-cell>
 										</xsl:otherwise>
 								</xsl:choose>
 							  	</fo:table-row>
@@ -259,12 +274,12 @@ xmlns:izvestaj="https://github.com/draganagrbic998/xml/izvestaj">
 									    	<fo:table-cell border="0.3mm solid black"><fo:block>/</fo:block></fo:table-cell>
 										</xsl:when>
 										<xsl:otherwise>
-									    	<fo:table-cell border="0.3mm solid black"><fo:block><xsl:value-of select="format-number(xs:decimal($brojZalbiCutanje div $brojZalbi * 100), '####0.00')"></xsl:value-of></fo:block></fo:table-cell>
-									    	<fo:table-cell border="0.3mm solid black"><fo:block><xsl:value-of select="format-number(xs:decimal($brojZalbiDelimicnost div $brojZalbi * 100), '####0.00')"></xsl:value-of></fo:block></fo:table-cell>
-									    	<fo:table-cell border="0.3mm solid black"><fo:block><xsl:value-of select="format-number(xs:decimal($brojZalbiOdluka div $brojZalbi * 100), '####0.00')"></xsl:value-of></fo:block></fo:table-cell>
+									    	<fo:table-cell border="0.3mm solid black"><fo:block><xsl:value-of select="format-number($brojZalbiCutanje div $brojZalbi * 100, '####0.00')"></xsl:value-of></fo:block></fo:table-cell>
+									    	<fo:table-cell border="0.3mm solid black"><fo:block><xsl:value-of select="format-number($brojZalbiDelimicnost div $brojZalbi * 100, '####0.00')"></xsl:value-of></fo:block></fo:table-cell>
+									    	<fo:table-cell border="0.3mm solid black"><fo:block><xsl:value-of select="format-number($brojZalbiOdluka div $brojZalbi * 100, '####0.00')"></xsl:value-of></fo:block></fo:table-cell>
 									    	<fo:table-cell border="0.3mm solid black"><fo:block>100</fo:block></fo:table-cell>
 										</xsl:otherwise>
-								</xsl:choose>
+									</xsl:choose>
 							  	</fo:table-row>
 							</fo:table-body>
 						</fo:table>
@@ -288,18 +303,27 @@ xmlns:izvestaj="https://github.com/draganagrbic998/xml/izvestaj">
 	               		
 					<fo:block text-indent="40px">
 						Укупан број <fo:inline font-weight="bold">решења о захтевима</fo:inline>, којима је захтев усвојен или одбијен је 
-						<fo:inline font-weight="bold"><xsl:value-of select="$brojOdluka"></xsl:value-of></fo:inline>, што представља 
-						<fo:inline font-weight="bold"><xsl:value-of select="format-number(xs:decimal($brojOdluka div $brojZahteva * 100), '####0.00')"></xsl:value-of>%</fo:inline>
-						од укупног броја поднетих захтева.
+						<fo:inline font-weight="bold"><xsl:value-of select="$brojOdluka"></xsl:value-of></fo:inline>
+						<xsl:choose>
+							<xsl:when test="$brojZahteva = 0">
+								.
+							</xsl:when>
+							<xsl:otherwise>
+								, што представља <fo:inline font-weight="bold"><xsl:value-of select="format-number($brojOdluka div $brojZahteva * 100, '####0.00')"></xsl:value-of>%</fo:inline>
+								од укупног броја поднетих захтева.
+							</xsl:otherwise>
+						</xsl:choose>
 					</fo:block>
 					
 					<fo:block text-indent="40px">
-						Од тога, <fo:inline font-weight="bold">усвојено</fo:inline>, односно делимично усвојених захтева је 
-						<fo:inline font-weight="bold"><xsl:value-of select="$brojOdlukaOdobreno"></xsl:value-of></fo:inline> 
-						(<xsl:value-of select="format-number(xs:decimal($brojOdlukaOdobreno div $brojOdluka * 100), '####0.00')"></xsl:value-of>%),
-						док је <fo:inline font-weight="bold">одбијених</fo:inline> захтева 
-						<fo:inline font-weight="bold"><xsl:value-of select="$brojOdlukaOdbijeno"></xsl:value-of></fo:inline> 
-						(<xsl:value-of select="format-number(xs:decimal($brojOdlukaOdbijeno div $brojOdluka * 100), '####0.00')"></xsl:value-of>%).
+						<xsl:if test="$brojOdluka != 0">
+							Од тога, <fo:inline font-weight="bold">усвојено</fo:inline>, односно делимично усвојених захтева је 
+							<fo:inline font-weight="bold"><xsl:value-of select="$brojOdlukaOdobreno"></xsl:value-of></fo:inline> 
+							(<xsl:value-of select="format-number($brojOdlukaOdobreno div $brojOdluka * 100, '####0.00')"></xsl:value-of>%),
+							док је <fo:inline font-weight="bold">одбијених</fo:inline> захтева 
+							<fo:inline font-weight="bold"><xsl:value-of select="$brojOdlukaOdbijeno"></xsl:value-of></fo:inline> 
+							(<xsl:value-of select="format-number($brojOdlukaOdbijeno div $brojOdluka * 100, '####0.00')"></xsl:value-of>%).
+						</xsl:if>
 					</fo:block>
 
                		<fo:block>
