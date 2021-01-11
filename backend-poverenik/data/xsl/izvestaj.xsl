@@ -91,6 +91,33 @@ xmlns:izvestaj="https://github.com/draganagrbic998/xml/izvestaj">
 					<xsl:variable name="brojZalbiDelimicnost" select="izvestaj:brojZalbiDelimicnost"></xsl:variable>
 					<xsl:variable name="brojZalbiOdluka" select="izvestaj:brojZalbiOdluka"></xsl:variable>
 					
+					<div class="flex center">
+						<div>
+							<div class="center flex">
+								<div style="text-align: left;">
+									<p>
+										Број предмета:
+									</p>
+									<p>
+										Датум:
+									</p>
+								</div>
+								<div>
+									<p class="underline" style="min-width: 120px;">
+										<xsl:value-of select="osnova:broj"></xsl:value-of>
+									</p>
+									<p class="underline" style="min-width: 120px;">
+										<xsl:variable name="dan" select="substring-after(substring-after(osnova:datum, '-'), '-')"></xsl:variable>
+										<xsl:variable name="mesec" select="substring-before(substring-after(osnova:datum, '-'), '-')"></xsl:variable>
+										<xsl:variable name="godina" select="substring-before(osnova:datum, '-')"></xsl:variable>
+										<xsl:value-of select="concat($dan, concat('.', concat($mesec, concat('.', concat($godina, '.')))))"></xsl:value-of>
+									</p>
+								</div>
+							</div>
+						</div>
+						<div>&#160;</div>
+					</div>
+					
 					<br></br>
 	        
 					<p class="center bold big">
@@ -110,11 +137,11 @@ xmlns:izvestaj="https://github.com/draganagrbic998/xml/izvestaj">
 					
 					<table>
 						<tr>
-							<th>Тип захтева </th>
-							<th>обавештење</th>
-							<th>увид</th>
-							<th>копија</th>
-							<th>достава</th>
+							<th>Тип захтева</th>
+							<th>Обавештење</th>
+							<th>Увид</th>
+							<th>Копија</th>
+							<th>Достава</th>
 							<th>Укупно</th>
 						</tr>
 						<tr>
@@ -148,7 +175,7 @@ xmlns:izvestaj="https://github.com/draganagrbic998/xml/izvestaj">
 					<br></br><br></br>
 					
 					<p class="center bold medium">
-						2. Подаци о доставама
+						2. ПОДАЦИ О ДОСТАВАМА
 					</p>
 					
 					<br></br>
@@ -197,10 +224,10 @@ xmlns:izvestaj="https://github.com/draganagrbic998/xml/izvestaj">
 					
 					<table>
 						<tr>
-							<th>Жалба на </th>
-							<th>ћутање</th>
-							<th>делимичност</th>
-							<th>одбијање</th>
+							<th>Тип жалбе</th>
+							<th>Ћутање</th>
+							<th>Делимичност</th>
+							<th>Одбијање</th>
 							<th>Укупно</th>
 						</tr>
 						<tr>
