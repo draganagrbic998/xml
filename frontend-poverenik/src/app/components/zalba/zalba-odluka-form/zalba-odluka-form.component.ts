@@ -1,4 +1,4 @@
-import { AfterViewChecked, AfterViewInit, Component } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SNACKBAR_CLOSE, SNACKBAR_ERROR, SNACKBAR_ERROR_OPTIONS, SNACKBAR_SUCCESS_OPTIONS } from 'src/app/constants/snackbar';
@@ -13,7 +13,7 @@ declare const Xonomy: any;
   templateUrl: './zalba-odluka-form.component.html',
   styleUrls: ['./zalba-odluka-form.component.sass']
 })
-export class ZalbaOdlukaFormComponent implements AfterViewInit, AfterViewChecked {
+export class ZalbaOdlukaFormComponent implements AfterViewInit {
 
   constructor(
     private zalbaService: ZalbaService,
@@ -47,13 +47,6 @@ export class ZalbaOdlukaFormComponent implements AfterViewInit, AfterViewChecked
   }
 
   ngAfterViewInit(): void{
-    const detaljiXml = '<Detalji></Detalji>';
-    const detaljiEditor = document.getElementById('detaljiEditor');
-    const detaljiSpecifikacija = this.xonomyService.detaljiSpecifikacija;
-    Xonomy.render(detaljiXml, detaljiEditor, detaljiSpecifikacija);
-  }
-
-  ngAfterViewChecked(): void{
     const detaljiXml = '<Detalji></Detalji>';
     const detaljiEditor = document.getElementById('detaljiEditor');
     const detaljiSpecifikacija = this.xonomyService.detaljiSpecifikacija;
