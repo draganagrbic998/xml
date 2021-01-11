@@ -8,6 +8,7 @@ import { IzvestajDTO } from 'src/app/models/izvestajDTO';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { IzvestajService } from 'src/app/services/izvestaj/izvestaj.service';
 import { environment } from 'src/environments/environment';
+import { IzvestajValidatorService } from './izvestaj-validator.service';
 
 @Component({
   selector: 'app-izvestaj-list',
@@ -18,6 +19,7 @@ export class IzvestajListComponent implements AfterViewInit {
 
   constructor(
     private izvestajService: IzvestajService,
+    private izvestajValidator: IzvestajValidatorService,
     private authService: AuthService,
     private snackBar: MatSnackBar
   ) { }
@@ -28,7 +30,7 @@ export class IzvestajListComponent implements AfterViewInit {
   fetchPending = true;
   savePending = false;
   izvestajForm: FormGroup = new FormGroup({
-    godina: new FormControl('', [Validators.required, Validators.pattern(/^[0-9]\d+$/)])
+    godina: new FormControl('', [Validators.required, Validators.pattern(/^[0-9]\d+$/), this.izvestajValidator.godina()])
   });
 
   xmlMetadata(broj: string): void{

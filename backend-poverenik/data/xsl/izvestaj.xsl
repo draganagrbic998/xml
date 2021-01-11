@@ -174,6 +174,7 @@ xmlns:izvestaj="https://github.com/draganagrbic998/xml/izvestaj">
 									<td>/</td>
 									<td>/</td>
 									<td>/</td>
+									<td>/</td>
 								</xsl:when>
 								<xsl:otherwise>
 									<td><xsl:value-of select="format-number($brojZahtevaObavestenje div $brojZahteva * 100, '####0.00')"></xsl:value-of></td>

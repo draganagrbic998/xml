@@ -74,69 +74,69 @@ public class IzvestajMapper implements MapperInterface {
 			izvestaj.insertBefore(documentFragment, izvestaj.getElementsByTagNameNS(Namespaces.IZVESTAJ, "godina").item(0));
 
 			Node bzNode = document.createElementNS(Namespaces.IZVESTAJ, "izvestaj:brojZahteva");
-			bzNode.setTextContent(this.zahtevExist.retrieve("/zahtev:Zahtev").getSize() + "");
+			bzNode.setTextContent(this.zahtevExist.retrieve("/zahtev:Zahtev/datum[contains(text(), \"" + godina + "\")]").getSize() + "");
 			
 			izvestaj.setAttribute("about", Prefixes.IZVESTAJ_PREFIX + broj.getTextContent());
 			izvestaj.setAttribute("href", Prefixes.KORISNIK_PREFIX + this.korisnikService.currentUser().getOsoba().getMejl());
 
 			Node bzoNode = document.createElementNS(Namespaces.IZVESTAJ, "izvestaj:brojZahtevaObavestenje");
 			bzoNode.setTextContent(
-					this.zahtevExist.retrieve("/zahtev:Zahtev[zahtev:tipZahteva = 'obavestenje']").getSize() + "");
+					this.zahtevExist.retrieve("/zahtev:Zahtev[zahtev:tipZahteva = 'obavestenje']/datum[contains(text(), \"" + godina + "\")]").getSize() + "");
 
 			Node bzuNode = document.createElementNS(Namespaces.IZVESTAJ, "izvestaj:brojZahtevaUvid");
 			bzuNode.setTextContent(
-					this.zahtevExist.retrieve("/zahtev:Zahtev[zahtev:tipZahteva = 'uvid']").getSize() + "");
+					this.zahtevExist.retrieve("/zahtev:Zahtev[zahtev:tipZahteva = 'uvid']/datum[contains(text(), \"" + godina + "\")]").getSize() + "");
 
 			Node bzkNode = document.createElementNS(Namespaces.IZVESTAJ, "izvestaj:brojZahtevaKopija");
 			bzkNode.setTextContent(
-					(this.zahtevExist.retrieve("/zahtev:Zahtev[zahtev:tipZahteva = 'kopija']").getSize() + ""));
+					(this.zahtevExist.retrieve("/zahtev:Zahtev[zahtev:tipZahteva = 'kopija']/datum[contains(text(), \"" + godina + "\")]").getSize() + ""));
 
 			Node bzdNode = document.createElementNS(Namespaces.IZVESTAJ, "izvestaj:brojZahtevaDostava");
 			bzdNode.setTextContent(
-					this.zahtevExist.retrieve("/zahtev:Zahtev[zahtev:tipZahteva = 'dostava']").getSize() + "");
+					this.zahtevExist.retrieve("/zahtev:Zahtev[zahtev:tipZahteva = 'dostava']/datum[contains(text(), \"" + godina + "\")]").getSize() + "");
 
 			Node bzpNode = document.createElementNS(Namespaces.IZVESTAJ, "izvestaj:brojZahtevaPosta");
 			bzpNode.setTextContent(
-					this.zahtevExist.retrieve("/zahtev:Zahtev[zahtev:tipDostave = 'posta']").getSize() + "");
+					this.zahtevExist.retrieve("/zahtev:Zahtev[zahtev:tipDostave = 'posta']/datum[contains(text(), \"" + godina + "\")]").getSize() + "");
 
 			Node bzeNode = document.createElementNS(Namespaces.IZVESTAJ, "izvestaj:brojZahtevaEmail");
 			bzeNode.setTextContent(
-					this.zahtevExist.retrieve("/zahtev:Zahtev[zahtev:tipDostave = 'email']").getSize() + "");
+					this.zahtevExist.retrieve("/zahtev:Zahtev[zahtev:tipDostave = 'email']/datum[contains(text(), \"" + godina + "\")]").getSize() + "");
 
 			Node bzfNode = document.createElementNS(Namespaces.IZVESTAJ, "izvestaj:brojZahtevaFaks");
 			bzfNode.setTextContent(
-					this.zahtevExist.retrieve("/zahtev:Zahtev[zahtev:tipDostave = 'faks']").getSize() + "");
+					this.zahtevExist.retrieve("/zahtev:Zahtev[zahtev:tipDostave = 'faks']/datum[contains(text(), \"" + godina + "\")]").getSize() + "");
 
 			Node bzosNode = document.createElementNS(Namespaces.IZVESTAJ, "izvestaj:brojZahtevaOstalo");
 			bzosNode.setTextContent(
-					this.zahtevExist.retrieve("/zahtev:Zahtev[zahtev:tipDostave = 'ostalo']").getSize() + "");
+					this.zahtevExist.retrieve("/zahtev:Zahtev[zahtev:tipDostave = 'ostalo']/datum[contains(text(), \"" + godina + "\")]").getSize() + "");
 
 			Node boNode = document.createElementNS(Namespaces.IZVESTAJ, "izvestaj:brojOdluka");
-			boNode.setTextContent(this.odlukaExist.retrieve("/odluka:Odluka").getSize() + "");
+			boNode.setTextContent(this.odlukaExist.retrieve("/odluka:Odluka/datum[contains(text(), \"" + godina + "\")]").getSize() + "");
 
 			Node bopriNode = document.createElementNS(Namespaces.IZVESTAJ, "izvestaj:brojOdlukaOdobreno");
 			bopriNode.setTextContent(
-					this.odlukaExist.retrieve("/odluka:Odluka[@xsi:type='odluka:TObavestenje']").getSize() + "");
+					this.odlukaExist.retrieve("/odluka:Odluka[@xsi:type='odluka:TObavestenje']/datum[contains(text(), \"" + godina + "\")]").getSize() + "");
 
 			Node boodbNode = document.createElementNS(Namespaces.IZVESTAJ, "izvestaj:brojOdlukaOdbijeno");
 			boodbNode.setTextContent(
-					this.odlukaExist.retrieve("/odluka:Odluka[@xsi:type='odluka:TOdbijanje']").getSize() + "");
+					this.odlukaExist.retrieve("/odluka:Odluka[@xsi:type='odluka:TOdbijanje']/datum[contains(text(), \"" + godina + "\")]").getSize() + "");
 
 			Node bzalNode = document.createElementNS(Namespaces.IZVESTAJ, "izvestaj:brojZalbi");
-			bzalNode.setTextContent(this.zalbaExist.retrieve("/zalba:Zalba").getSize() + "");
+			bzalNode.setTextContent(this.zalbaExist.retrieve("/zalba:Zalba/datum[contains(text(), \"" + godina + "\")]").getSize() + "");
 
 			Node bzcutNode = document.createElementNS(Namespaces.IZVESTAJ, "izvestaj:brojZalbiCutanje");
 			bzcutNode.setTextContent(
-					this.zalbaExist.retrieve("/zalba:Zalba[zalba:tipCutanja = 'nije postupio']").getSize() + "");
+					this.zalbaExist.retrieve("/zalba:Zalba[zalba:tipCutanja = 'nije postupio']/datum[contains(text(), \"" + godina + "\")]").getSize() + "");
 
 			Node bzdelNode = document.createElementNS(Namespaces.IZVESTAJ, "izvestaj:brojZalbiDelimicnost");
 			bzdelNode.setTextContent(
-					this.zalbaExist.retrieve("/zalba:Zalba[zalba:tipCutanja = 'nije postupio u celosti']").getSize()
+					this.zalbaExist.retrieve("/zalba:Zalba[zalba:tipCutanja = 'nije postupio u celosti']/datum[contains(text(), \"" + godina + "\")]").getSize()
 							+ "");
 
 			Node bzodlNode = document.createElementNS(Namespaces.IZVESTAJ, "izvestaj:brojZalbiOdluka");
 			bzodlNode.setTextContent(
-					this.zalbaExist.retrieve("/zalba:Zalba[@xsi:type='zalba:TZalbaOdluka']").getSize() + "");
+					this.zalbaExist.retrieve("/zalba:Zalba[@xsi:type='zalba:TZalbaOdluka']/datum[contains(text(), \"" + godina + "\")]").getSize() + "");
 
 			izvestaj.appendChild(bzNode);
 			izvestaj.appendChild(bzoNode);
