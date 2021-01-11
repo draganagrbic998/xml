@@ -42,27 +42,29 @@ public class SOAPService {
 			SOAPBody body = message.getSOAPBody();
 			Name name = null;
 			URL endpoint = null;
-			String request;
+			String request = "";
+			if (brojDokumenta != null) {
+				request = brojDokumenta;
+			}
+			else if (document != null) {
+				request = this.domParser.buildXml(document);
+			}
 			
 			if (tipDokumenta.equals(SOAPDocument.zalba)) {
 				name = this.soapFactory.createName(SOAPConstants.CREATE_ZALBA_ELEMENT, "m", SOAPConstants.CREATE_ZALBA_NAMESPACE);
 				endpoint = new URL(SOAPConstants.CREATE_ZALBA_SERVICE);
-				request = this.domParser.buildXml(document);
 			}
 			else if (tipDokumenta.equals(SOAPDocument.resenje)) {
 				name = this.soapFactory.createName(SOAPConstants.CREATE_RESENJE_ELEMENT, "m", SOAPConstants.CREATE_RESENJE_NAMESPACE);
 				endpoint = new URL(SOAPConstants.CREATE_RESENJE_SERVICE);
-				request = this.domParser.buildXml(document);
 			}
 			else if (tipDokumenta.equals(SOAPDocument.zahtev)) {
 				name = this.soapFactory.createName(SOAPConstants.GET_ZAHTEV_ELEMENT, "m", SOAPConstants.GET_ZAHTEV_NAMESPACE);
 				endpoint = new URL(SOAPConstants.GET_ZAHTEV_SERVICE);
-				request = brojDokumenta;
 			}
 			else {
 				name = this.soapFactory.createName(SOAPConstants.GET_ODLUKA_ELEMENT, "m", SOAPConstants.GET_ODLUKA_NAMESPACE);
 				endpoint = new URL(SOAPConstants.GET_ODLUKA_SERVICE);
-				request = brojDokumenta;
 			}
 
 			SOAPElement element = body.addChildElement(name);

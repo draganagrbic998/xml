@@ -12,6 +12,7 @@ import com.example.demo.enums.StatusZahteva;
 import com.example.demo.enums.TipOdluke;
 import com.example.demo.mapper.OdlukaMapper;
 import com.example.demo.model.Korisnik;
+import com.example.demo.parser.XSLTransformer;
 import com.example.demo.repository.rdf.OdlukaRDF;
 import com.example.demo.repository.xml.OdlukaExist;
 import com.example.demo.service.email.Email;
@@ -38,6 +39,9 @@ public class OdlukaService implements ServiceInterface {
 	@Autowired
 	private EmailService emailService;
 
+	@Autowired
+	private XSLTransformer xslTransformer;
+	
 	@Override
 	public void add(String xml) {
 		Document document = this.odlukaMapper.map(xml);
@@ -50,7 +54,7 @@ public class OdlukaService implements ServiceInterface {
 			zahtevDocument.getElementsByTagNameNS(Namespaces.ZAHTEV, "status").item(0).setTextContent(StatusZahteva.odbijeno + "");
 		}
 		this.odlukaExist.add(document);
-		this.odlukaRDF.add(this.odlukaMapper.map(document));
+		this.odlukaRDF.add(this.xslTransformer.generateMetadata(document));
 		this.zahtevService.update(brojZahteva, zahtevDocument);
 		this.notifyOdluka(document);		
 	}

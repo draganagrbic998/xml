@@ -9,7 +9,17 @@
             <xs:extension base="osnova:TDokument">
                 <xs:sequence>
                     <xs:element ref="osnova:Osoba"/>
-                    <xs:element name="godina" type="osnova:TGodina"/>
+                    <xs:element ref="osnova:OrganVlasti"/>
+                    <xs:element name="godina">
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="osnova:TGodina">
+                                    <xs:attribute name="property" type="osnova:TRequiredString"/>
+                                    <xs:attribute name="datatype" type="osnova:TRequiredString"/>
+                                </xs:extension>
+                            </xs:simpleContent>
+                        </xs:complexType>
+                    </xs:element>
                     <xs:element name="brojZahteva" type="xs:nonNegativeInteger"/>
                     <xs:element name="brojZahtevaObavestenje" type="xs:nonNegativeInteger"/>
                     <xs:element name="brojZahtevaUvid" type="xs:nonNegativeInteger"/>

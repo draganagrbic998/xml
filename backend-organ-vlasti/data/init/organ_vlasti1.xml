@@ -2,7 +2,7 @@
 <OrganVlasti xmlns="https://github.com/draganagrbic998/xml/osnova">
     <naziv>Naziv organa vlasti</naziv>
     <Adresa>
-        <mesto>Novi Sad</mesto>
+        <mesto property="pred:izdatoU" datatype="xs:string">Novi Sad</mesto>
         <ulica>Lasla Gala</ulica>
         <broj>23</broj>
     </Adresa>

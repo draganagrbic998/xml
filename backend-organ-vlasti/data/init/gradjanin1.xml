@@ -9,7 +9,7 @@
         <potpis>757272859077776977757767</potpis>
     </Osoba>
     <Adresa>
-    	<mesto>Novi Sad</mesto>
+    	<mesto property="pred:mesto" datatype="xs:string">Novi Sad</mesto>
     	<ulica>Lasla Gala</ulica>
     	<broj>23</broj>
     </Adresa>

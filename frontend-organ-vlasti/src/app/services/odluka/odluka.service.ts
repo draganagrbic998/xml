@@ -2,12 +2,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ODLUKA, OSNOVA, XSI } from 'src/app/constants/namespaces';
+import { ODLUKA, OSNOVA, XS, XSI } from 'src/app/constants/namespaces';
 import { Obavestenje } from 'src/app/models/obavestenje';
 import { OdlukaDTO } from 'src/app/models/odlukaDTO';
 import { Odbijanje } from 'src/app/models/odbijanje';
 import { environment } from 'src/environments/environment';
 import { XonomyService } from '../xonomy/xonomy.service';
+import { AuthService } from '../auth/auth.service';
+import { KORISNIK, PREDIKAT, ZAHTEV } from 'src/app/constants/prefixes';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +18,8 @@ export class OdlukaService {
 
   constructor(
     private http: HttpClient,
-    private xonomyService: XonomyService
+    private xonomyService: XonomyService,
+    private authService: AuthService
   ) { }
 
   private readonly API_ODLUKE = `${environment.baseUrl}/${environment.apiOdluke}`;
@@ -29,12 +32,18 @@ export class OdlukaService {
 
     return `
       <odluka:Odluka
+      xmlns:xs="${XS}"
+      xmlns:pred="${PREDIKAT}"
       xmlns="${OSNOVA}"
       xmlns:odluka="${ODLUKA}"
       xmlns:xsi="${XSI}"
-      xsi:type="odluka:TOdbijanje">
+      xsi:type="odluka:TOdbijanje"
+      rel="pred:izdao"
+      about=""
+      href="${KORISNIK}${this.authService.getUser().mejl}">
+        <datum property="pred:datum" datatype="xs:string">${this.dateToString(new Date())}</datum>
         ${odbijanje.detalji}
-        <odluka:brojZahteva>${brojZahteva}</odluka:brojZahteva>
+        <odluka:brojZahteva rel="pred:zahtev" href="${ZAHTEV}${brojZahteva}">${brojZahteva}</odluka:brojZahteva>
       </odluka:Odluka>
     `;
 
@@ -44,12 +53,18 @@ export class OdlukaService {
 
     return `
       <odluka:Odluka
+      xmlns:xs="${XS}"
+      xmlns:pred="${PREDIKAT}"
       xmlns="${OSNOVA}"
       xmlns:odluka="${ODLUKA}"
       xmlns:xsi="${XSI}"
-      xsi:type="odluka:TObavestenje">
+      xsi:type="odluka:TObavestenje"
+      rel="pred:izdao"
+      about=""
+      href="${KORISNIK}${this.authService.getUser().mejl}">
+        <datum property="pred:datum" datatype="xs:string">${this.dateToString(new Date())}</datum>
         ${obavestenje.detalji}
-        <odluka:brojZahteva>${brojZahteva}</odluka:brojZahteva>
+        <odluka:brojZahteva rel="pred:zahtev" href="${ZAHTEV}${brojZahteva}">${brojZahteva}</odluka:brojZahteva>
         <odluka:Uvid>
         <odluka:datumUvida>${this.dateToString(obavestenje.datumUvida)}</odluka:datumUvida>
           <odluka:pocetak>${obavestenje.pocetak}</odluka:pocetak>

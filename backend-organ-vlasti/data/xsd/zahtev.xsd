@@ -9,14 +9,14 @@
             <xs:extension base="osnova:TPodnosenje">
                 <xs:sequence>
                     <xs:element name="tipZahteva">
-                        <xs:simpleType>
-                            <xs:restriction base="xs:string">
-                                <xs:enumeration value="obavestenje"/>
-                                <xs:enumeration value="uvid"/>
-                                <xs:enumeration value="kopija"/>
-                                <xs:enumeration value="dostava"/>
-                            </xs:restriction>
-                        </xs:simpleType>
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="osnova:TRequiredString">
+                                    <xs:attribute name="property" type="osnova:TRequiredString"/>
+                                    <xs:attribute name="datatype" type="osnova:TRequiredString"/>
+                                </xs:extension>
+                            </xs:simpleContent>
+                        </xs:complexType>
                     </xs:element>
                     <xs:element minOccurs="0" name="tipDostave">
                         <xs:simpleType>

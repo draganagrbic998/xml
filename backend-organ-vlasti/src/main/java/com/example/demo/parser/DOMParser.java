@@ -84,4 +84,8 @@ public class DOMParser {
 		}
 	}
 
+	public TransformerFactory getTransformerFactory() {
+		return transformerFactory;
+	}
+
 }

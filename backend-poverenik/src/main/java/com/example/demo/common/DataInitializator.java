@@ -59,6 +59,7 @@ public class DataInitializator {
 		this.existManager.save(KorisnikExist.KORISNIK_COLLECTION, "poverenik.javni.znacaj@gmail.com", this.domParser.buildDocumentFromFile(POVERENIK1), KorisnikExist.KORISNIK_SCHEMA);
 		this.existManager.save(KorisnikExist.KORISNIK_COLLECTION, "draganaasd@gmail.com", this.domParser.buildDocumentFromFile(GRADJANIN1), KorisnikExist.KORISNIK_SCHEMA);
 
+		/*
 		this.existManager.save(ZalbaExist.ZALBA_COLLECTION, "1", this.domParser.buildDocumentFromFile(ZALBA_DELIMICNOST1), ZalbaExist.ZALBA_SCHEMA);
 		this.existManager.save(ZalbaExist.ZALBA_COLLECTION, "2", this.domParser.buildDocumentFromFile(ZALBA_ODLUKA1), ZalbaExist.ZALBA_SCHEMA);
 		this.existManager.save(ZalbaExist.ZALBA_COLLECTION, "3", this.domParser.buildDocumentFromFile(ZALBA_CUTANJE1), ZalbaExist.ZALBA_SCHEMA);
@@ -69,8 +70,8 @@ public class DataInitializator {
 		this.existManager.save(ResenjeExist.RESENJE_COLLECTION, "1", this.domParser.buildDocumentFromFile(RESENJE1), ResenjeExist.RESENJE_SCHEMA);
 		this.existManager.save(ResenjeExist.RESENJE_COLLECTION, "2", this.domParser.buildDocumentFromFile(RESENJE2), ResenjeExist.RESENJE_SCHEMA);
 		this.existManager.save(ResenjeExist.RESENJE_COLLECTION, "3", this.domParser.buildDocumentFromFile(RESENJE3), ResenjeExist.RESENJE_SCHEMA);
-
-		this.fusekiManager.dropAll();
+*/
+		this.fusekiManager.dropAll();/*
 		Model model = ModelFactory.createDefaultModel();
 		model.read(ZALBE);
 		this.fusekiManager.save(ZalbaRDF.ZALBA_GRAPH, model);
@@ -79,7 +80,7 @@ public class DataInitializator {
 		this.fusekiManager.save(OdgovorRDF.ODGOVOR_GRAPH, model);
 		model.removeAll();
 		model.read(RESENJA);
-		this.fusekiManager.save(ResenjeRDF.RESENJE_GRAPH, model);
+		this.fusekiManager.save(ResenjeRDF.RESENJE_GRAPH, model);*/
 		
 	}
 	

@@ -1,10 +1,7 @@
 package com.example.demo.mapper;
 
-import java.io.StringReader;
 import java.util.Date;
 
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
@@ -19,10 +16,11 @@ import com.example.demo.common.Constants;
 import com.example.demo.common.MyException;
 import com.example.demo.common.Namespaces;
 import com.example.demo.common.Prefixes;
+import com.example.demo.exist.ExistManager;
 import com.example.demo.parser.DOMParser;
-import com.example.demo.parser.JAXBParser;
-import com.example.demo.parser.XSLTransformer;
+import com.example.demo.repository.xml.KorisnikExist;
 import com.example.demo.repository.xml.OdgovorExist;
+import com.example.demo.repository.xml.ResenjeExist;
 import com.example.demo.repository.xml.ZalbaExist;
 import com.example.demo.service.KorisnikService;
 
@@ -40,27 +38,25 @@ public class ResenjeMapper implements MapperInterface {
 	
 	@Autowired
 	private DOMParser domParser;
-	
+
 	@Autowired
-	private JAXBParser jaxbParser;
-	
+	private KorisnikExist korisnikExist;
+
 	@Autowired
-	private XSLTransformer xslTransformer;
+	private ExistManager existManager;
 	
 	@Override
 	public Document map(String xml) {
 		Document document = this.domParser.buildDocument(xml);
 		Element resenje = (Element) document.getElementsByTagNameNS(Namespaces.RESENJE, "Resenje").item(0);
 		String zalbaBroj = resenje.getElementsByTagNameNS(Namespaces.RESENJE, "brojZalbe").item(0).getTextContent();
-		resenje.removeChild(document.getElementsByTagNameNS(Namespaces.RESENJE, "brojZalbe").item(0));
 		Document zalbaDocument = this.zalbaExist.load(zalbaBroj);
-		DocumentFragment documentFragment = document.createDocumentFragment();
 		
-		Node datum = document.createElementNS(Namespaces.OSNOVA, "datum");
+		Node broj = document.createElementNS(Namespaces.OSNOVA, "broj");
+		broj.setTextContent(this.existManager.nextDocumentId(ResenjeExist.RESENJE_COLLECTION));
+		Node datum = document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0);
 		datum.setTextContent(Constants.sdf.format(new Date()));
-		documentFragment.appendChild(document.createElementNS(Namespaces.OSNOVA, "broj"));
-		documentFragment.appendChild(datum);
-		resenje.insertBefore(documentFragment, document.getElementsByTagNameNS(Namespaces.RESENJE, "status").item(0));
+		resenje.insertBefore(broj, datum);
 		
 		Document odgovor = this.odgovorExist.load(zalbaBroj);
 		if (odgovor != null) {
@@ -72,41 +68,44 @@ public class ResenjeMapper implements MapperInterface {
 			resenje.insertBefore(resenjeOdgovor, document.getElementsByTagNameNS(Namespaces.RESENJE, "Odluka").item(0));
 		}
 					
-		resenje.appendChild(document.importNode(this.jaxbParser.marshal(this.korisnikService.currentUser().getOsoba()).getElementsByTagNameNS(Namespaces.OSNOVA, "Osoba").item(0), true));
-		resenje.appendChild(document.importNode(zalbaDocument.getElementsByTagNameNS(Namespaces.OSNOVA, "OrganVlasti").item(0), true));
-		resenje.getElementsByTagNameNS(Namespaces.OSNOVA, "mejl").item(0).setTextContent(zalbaDocument.getElementsByTagNameNS(Namespaces.OSNOVA, "mejl").item(0).getTextContent());
+		DocumentFragment documentFragment = document.createDocumentFragment();
+		Element osoba = (Element) this.korisnikExist.load(this.korisnikService.currentUser().getOsoba().getMejl()).getElementsByTagNameNS(Namespaces.OSNOVA, "Osoba").item(0);
+		osoba.getElementsByTagNameNS(Namespaces.OSNOVA, "mejl").item(0).setTextContent(zalbaDocument.getElementsByTagNameNS(Namespaces.OSNOVA, "mejl").item(0).getTextContent());
+		documentFragment.appendChild(document.importNode(osoba, true));
+		documentFragment.appendChild(document.importNode(zalbaDocument.getElementsByTagNameNS(Namespaces.OSNOVA, "OrganVlasti").item(0), true));
+		Element podaciZahteva = (Element) document.getElementsByTagNameNS(Namespaces.RESENJE, "PodaciZahteva").item(0);
+		resenje.insertBefore(documentFragment, podaciZahteva);
 		
-		Element podaciZahteva = (Element) zalbaDocument.getElementsByTagNameNS(Namespaces.ZALBA, "PodaciZahteva").item(0);
-		Element podaciZahtevaResenje = document.createElementNS(Namespaces.RESENJE, "resenje:PodaciZahteva");
-		podaciZahtevaResenje.appendChild(document.importNode(podaciZahteva.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0), true));
-		podaciZahtevaResenje.appendChild(document.importNode(podaciZahteva.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
-		podaciZahtevaResenje.appendChild(document.importNode(podaciZahteva.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0), true));
-		resenje.appendChild(document.importNode(podaciZahtevaResenje, true));
+		Element podaciZahtevaZalba = (Element) zalbaDocument.getElementsByTagNameNS(Namespaces.ZALBA, "PodaciZahteva").item(0);
+		podaciZahteva.appendChild(document.importNode(podaciZahtevaZalba.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0), true));
+		podaciZahteva.appendChild(document.importNode(podaciZahtevaZalba.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
+		podaciZahteva.appendChild(document.importNode(podaciZahtevaZalba.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0), true));
+		podaciZahteva.setAttribute("href", Prefixes.ZAHTEV_PREFIX + podaciZahtevaZalba.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent());
 		
-		Node podaciZalbe = document.createElementNS(Namespaces.RESENJE, "resenje:PodaciZalbe");
+		Element podaciZalbe = (Element) document.getElementsByTagNameNS(Namespaces.RESENJE, "PodaciZalbe").item(0);
 		Node tipZalbe = document.createElementNS(Namespaces.RESENJE, "resenje:tipZalbe");
 		tipZalbe.setTextContent(ZalbaMapper.getTipZalbe(zalbaDocument) + "");
-		podaciZalbe.appendChild(tipZalbe);
-		Node brojZalbe = document.createElementNS(Namespaces.RESENJE, "resenje:brojZalbe");
-		brojZalbe.setTextContent(zalbaDocument.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent());
-		podaciZalbe.appendChild(brojZalbe);
+		podaciZalbe.insertBefore(tipZalbe, podaciZalbe.getElementsByTagNameNS(Namespaces.RESENJE, "brojZalbe").item(0));
 		Node datumZalbe = document.createElementNS(Namespaces.RESENJE, "resenje:datumZalbe");
 		datumZalbe.setTextContent(zalbaDocument.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).getTextContent());
 		podaciZalbe.appendChild(datumZalbe);
 		Node datumProsledjivanja = document.createElementNS(Namespaces.RESENJE, "resenje:datumProsledjivanja");
 		datumProsledjivanja.setTextContent(zalbaDocument.getElementsByTagNameNS(Namespaces.ZALBA, "datumProsledjivanja").item(0).getTextContent());
 		podaciZalbe.appendChild(datumProsledjivanja);
-		resenje.appendChild(podaciZalbe);
 		
 		if (zalbaDocument.getElementsByTagNameNS(Namespaces.ZALBA, "PodaciOdluke").getLength() > 0) {
-			Element podaciOdluke = (Element) zalbaDocument.getElementsByTagNameNS(Namespaces.ZALBA, "PodaciOdluke").item(0);
-			Element podaciOdlukeResenje = document.createElementNS(Namespaces.RESENJE, "resenje:PodaciOdluke");
-			podaciOdlukeResenje.appendChild(document.importNode(podaciOdluke.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0), true));
-			podaciOdlukeResenje.appendChild(document.importNode(podaciOdluke.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
-			podaciOdlukeResenje.appendChild(document.importNode(podaciOdluke.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0), true));
-			resenje.appendChild(document.importNode(podaciOdlukeResenje, true));
+			Element podaciOdlukeZalba = (Element) zalbaDocument.getElementsByTagNameNS(Namespaces.ZALBA, "PodaciOdluke").item(0);
+			Element podaciOdluke = (Element) document.getElementsByTagNameNS(Namespaces.RESENJE, "PodaciOdluke").item(0);
+			podaciOdluke.appendChild(document.importNode(podaciOdlukeZalba.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0), true));
+			podaciOdluke.appendChild(document.importNode(podaciOdlukeZalba.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
+			podaciOdluke.appendChild(document.importNode(podaciOdlukeZalba.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0), true));
+			podaciOdluke.setAttribute("href", Prefixes.ODLUKA_PREFIX + podaciOdlukeZalba.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent());
+		}
+		else {
+			resenje.removeChild(resenje.getElementsByTagNameNS(Namespaces.RESENJE, "PodaciOdluke").item(0));
 		}
 		
+		resenje.setAttribute("about", Prefixes.RESENJE_PREFIX + broj.getTextContent());		
 		return document;
 	}
 
@@ -133,42 +132,6 @@ public class ResenjeMapper implements MapperInterface {
 		catch(Exception e) {
 			throw new MyException(e);
 		}
-	}
-
-	@Override
-	public Model map(Document document) {
-		Element resenje = (Element) document.getElementsByTagNameNS(Namespaces.RESENJE, "Resenje").item(0);
-		resenje.setAttribute("xmlns:xs", Namespaces.XS);
-		resenje.setAttribute("xmlns:pred", Prefixes.PREDIKAT);
-		resenje.setAttribute("about", Prefixes.RESENJE_PREFIX + resenje.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent());
-		resenje.setAttribute("rel", "pred:izdao");
-		resenje.setAttribute("href", Prefixes.KORISNIK_PREFIX + this.korisnikService.currentUser().getOsoba().getMejl());
-		
-		((Element) resenje.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0)).setAttribute("property", "pred:datum");
-		((Element) resenje.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0)).setAttribute("datatype", "xs:string");
-		((Element) resenje.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(0)).setAttribute("property", "pred:izdatoU");
-		((Element) resenje.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(0)).setAttribute("datatype", "xs:string");
-		((Element) resenje.getElementsByTagNameNS(Namespaces.RESENJE, "status").item(0)).setAttribute("property", "pred:tip");
-		((Element) resenje.getElementsByTagNameNS(Namespaces.RESENJE, "status").item(0)).setAttribute("datatype", "xs:string");
-
-		Element brojZahteva = (Element) ((Element) document.getElementsByTagNameNS(Namespaces.RESENJE, "PodaciZahteva").item(0)).getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0);
-		brojZahteva.setAttribute("rel", "pred:zahtev");
-		brojZahteva.setAttribute("href", Prefixes.ZAHTEV_PREFIX + brojZahteva.getTextContent());
-		Element brojZalbe = (Element) ((Element) document.getElementsByTagNameNS(Namespaces.RESENJE, "PodaciZalbe").item(0)).getElementsByTagNameNS(Namespaces.RESENJE, "brojZalbe").item(0);
-		brojZalbe.setAttribute("rel", "pred:zalba");
-		brojZalbe.setAttribute("href", Prefixes.ZALBA_PREFIX + brojZalbe.getTextContent());
-		
-		if (resenje.getElementsByTagNameNS(Namespaces.RESENJE, "PodaciOdluke").getLength() > 0) {
-			Element brojOdluke = (Element) ((Element) document.getElementsByTagNameNS(Namespaces.RESENJE, "PodaciOdluke").item(0)).getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0);
-			brojOdluke.setAttribute("rel", "pred:odluka");
-			brojOdluke.setAttribute("href", Prefixes.ODLUKA_PREFIX + brojOdluke.getTextContent());			
-		}
-		
-		String result = this.xslTransformer.generateMetadata(this.domParser.buildXml(document)).toString();
-		Model model = ModelFactory.createDefaultModel();
-		model.setNsPrefix("pred", Prefixes.PREDIKAT);
-		model.read(new StringReader(result), null);
-		return model;
 	}
 	
 }

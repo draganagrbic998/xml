@@ -10,6 +10,7 @@ import com.example.demo.common.Namespaces;
 import com.example.demo.enums.StatusZalbe;
 import com.example.demo.mapper.OdgovorMapper;
 import com.example.demo.model.Korisnik;
+import com.example.demo.parser.XSLTransformer;
 import com.example.demo.repository.rdf.OdgovorRDF;
 import com.example.demo.repository.xml.OdgovorExist;
 
@@ -30,16 +31,19 @@ public class OdgovorService implements ServiceInterface {
 
 	@Autowired
 	private ZalbaService zalbaService;
+	
+	@Autowired
+	private XSLTransformer xslTransformer;
 		
 	@Override
 	public void add(String xml) {
 		Document document = this.odgovorMapper.map(xml);
 		this.odgovorExist.add(document);
+		this.odgovorRDF.add(this.xslTransformer.generateMetadata(document));
 		String brojZalbe = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
 		Document zalbaDocument = this.zalbaService.load(brojZalbe);
 		zalbaDocument.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.odgovoreno + "");
 		this.zalbaService.update(brojZalbe, zalbaDocument);
-		this.odgovorRDF.add(this.odgovorMapper.map(document));
 	}
 
 	@Override

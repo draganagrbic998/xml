@@ -8,6 +8,7 @@ import org.xmldb.api.base.ResourceSet;
 import com.example.demo.common.Constants;
 import com.example.demo.mapper.ZahtevMapper;
 import com.example.demo.model.Korisnik;
+import com.example.demo.parser.XSLTransformer;
 import com.example.demo.repository.rdf.ZahtevRDF;
 import com.example.demo.repository.xml.ZahtevExist;
 
@@ -25,12 +26,15 @@ public class ZahtevService implements ServiceInterface {
 
 	@Autowired
 	private KorisnikService korisnikService;
-			
+	
+	@Autowired
+	private XSLTransformer xslTransformer;
+		
 	@Override
 	public void add(String xml) {
 		Document document = this.zahtevMapper.map(xml);
 		this.zahtevExist.add(document);
-		this.zahtevRDF.add(this.zahtevMapper.map(document));		
+		this.zahtevRDF.add(this.xslTransformer.generateMetadata(document));		
 	}
 
 	@Override

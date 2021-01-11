@@ -42,18 +42,37 @@ public class ExistManager {
 		}
 	}
 	
+	public String nextDocumentId(String collectionId) {
+		Collection collection = null;
+		try { 
+			this.createConnection();
+			collection = this.getCollection(collectionId, 0);
+			String[] array = collection.listResources();
+			return (Arrays.asList(array).stream().mapToInt(str -> Integer.parseInt(str)).max().orElse(0) + 1) + "";
+		}
+		catch(Exception e) {
+			throw new MyException(e);
+		}
+		finally {
+			try {
+				collection.close();
+			}
+			catch(Exception e) {
+				throw new MyException(e);
+			}
+		}
+	}
+	
 	public String save(String collectionId, String documentId, Document document, String schemaPath) {
 		Collection collection = null;
 		XMLResource resource = null;
 		try { 
 			this.createConnection();
 			collection = this.getCollection(collectionId, 0);
-			if (documentId == null) {
-				String[] array = collection.listResources();
-				documentId = (Arrays.asList(array).stream().mapToInt(str -> Integer.parseInt(str)).max().orElse(0) + 1) + "";
-				document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).setTextContent(documentId);
-			}
 			this.schemaValidator.validate(document, schemaPath);
+			if (documentId == null) {
+				documentId = this.nextDocumentId(collectionId);
+			}
 			resource = (XMLResource) collection.createResource(documentId, XMLResource.RESOURCE_TYPE);
 			resource.setContentAsDOM(document);
 			collection.storeResource(resource);

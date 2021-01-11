@@ -1,13 +1,11 @@
 package com.example.demo.mapper;
 
-import java.io.StringReader;
 import java.util.Date;
 
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
+import org.w3c.dom.DocumentFragment;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.xmldb.api.base.ResourceIterator;
@@ -18,13 +16,15 @@ import com.example.demo.common.Constants;
 import com.example.demo.common.MyException;
 import com.example.demo.common.Namespaces;
 import com.example.demo.common.Prefixes;
+import com.example.demo.exist.ExistManager;
 import com.example.demo.parser.DOMParser;
-import com.example.demo.parser.JAXBParser;
-import com.example.demo.parser.XSLTransformer;
+import com.example.demo.repository.xml.IzvestajExist;
+import com.example.demo.repository.xml.KorisnikExist;
 import com.example.demo.repository.xml.OdlukaExist;
 import com.example.demo.repository.xml.ZahtevExist;
 import com.example.demo.repository.xml.ZalbaExist;
 import com.example.demo.service.KorisnikService;
+import com.example.demo.service.OrganVlastiService;
 
 @Component
 public class IzvestajMapper implements MapperInterface {
@@ -45,10 +45,13 @@ public class IzvestajMapper implements MapperInterface {
 	private DOMParser domParser;
 
 	@Autowired
-	private JAXBParser jaxbParser;
+	private KorisnikExist korisnikExist;
 	
 	@Autowired
-	private XSLTransformer xslTransformer;
+	private OrganVlastiService organVlastiService;
+	
+	@Autowired
+	private ExistManager existManager;
 
 	@Override
 	public Document map(String godina) {
@@ -56,23 +59,25 @@ public class IzvestajMapper implements MapperInterface {
 			Document document = this.domParser.buildDocument(Constants.IZVESTAJ_STUB);
 			Element izvestaj = (Element) document.getElementsByTagNameNS(Namespaces.IZVESTAJ, "Izvestaj").item(0);
 
-			Node godinaNode = document.createElementNS(Namespaces.IZVESTAJ, "izvestaj:godina");
-			godinaNode.setTextContent(godina);
-
-			Node datum = document.createElementNS(Namespaces.OSNOVA, "datum");
+			Node broj = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0);
+			broj.setTextContent(this.existManager.nextDocumentId(IzvestajExist.IZVESTAJ_COLLECTION));
+			
+			Node datum = document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0);
 			datum.setTextContent(Constants.sdf.format(new Date()));
 
-			izvestaj.appendChild(document.createElementNS(Namespaces.OSNOVA, "broj"));
-			izvestaj.appendChild(datum);
-
-			Document osobaDocument = jaxbParser.marshal(this.korisnikService.currentUser());
-			izvestaj.appendChild(document
-					.importNode(osobaDocument.getElementsByTagNameNS(Namespaces.OSNOVA, "Osoba").item(0), true));
-
-			izvestaj.appendChild(godinaNode);
+			Node godinaNode = document.getElementsByTagNameNS(Namespaces.IZVESTAJ, "godina").item(0);
+			godinaNode.setTextContent(godina);
+			
+			DocumentFragment documentFragment = document.createDocumentFragment();
+			documentFragment.appendChild(document.importNode(this.korisnikExist.load(this.korisnikService.currentUser().getOsoba().getMejl()).getElementsByTagNameNS(Namespaces.OSNOVA, "Osoba").item(0), true));
+			documentFragment.appendChild(document.importNode(this.organVlastiService.load().getElementsByTagNameNS(Namespaces.OSNOVA, "OrganVlasti").item(0), true));
+			izvestaj.insertBefore(documentFragment, izvestaj.getElementsByTagNameNS(Namespaces.IZVESTAJ, "godina").item(0));
 
 			Node bzNode = document.createElementNS(Namespaces.IZVESTAJ, "izvestaj:brojZahteva");
 			bzNode.setTextContent(this.zahtevExist.retrieve("/zahtev:Zahtev").getSize() + "");
+			
+			izvestaj.setAttribute("about", Prefixes.IZVESTAJ_PREFIX + broj.getTextContent());
+			izvestaj.setAttribute("href", Prefixes.KORISNIK_PREFIX + this.korisnikService.currentUser().getOsoba().getMejl());
 
 			Node bzoNode = document.createElementNS(Namespaces.IZVESTAJ, "izvestaj:brojZahtevaObavestenje");
 			bzoNode.setTextContent(
@@ -153,9 +158,10 @@ public class IzvestajMapper implements MapperInterface {
 			izvestaj.appendChild(bzdelNode);
 			izvestaj.appendChild(bzodlNode);
 
-			System.out.println(this.domParser.buildXml(document));
 			return document;
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
 			throw new MyException(e);
 		}
 	}
@@ -185,28 +191,6 @@ public class IzvestajMapper implements MapperInterface {
 		} catch (Exception e) {
 			throw new MyException(e);
 		}
-	}
-
-	@Override
-	public Model map(Document document) {
-		Element izvestaj = (Element) document.getElementsByTagNameNS(Namespaces.IZVESTAJ, "Izvestaj").item(0);
-		izvestaj.setAttribute("xmlns:xs", Namespaces.XS);
-		izvestaj.setAttribute("xmlns:pred", Prefixes.PREDIKAT);
-		izvestaj.setAttribute("about", Prefixes.IZVESTAJ_PREFIX + izvestaj.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent());
-		izvestaj.setAttribute("rel", "pred:podneo");
-		izvestaj.setAttribute("href", Prefixes.KORISNIK_PREFIX + this.korisnikService.currentUser().getOsoba().getMejl());
-				
-		((Element) izvestaj.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0)).setAttribute("property", "pred:datum");
-		((Element) izvestaj.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0)).setAttribute("datatype", "xs:string");
-
-		((Element) izvestaj.getElementsByTagNameNS(Namespaces.IZVESTAJ, "godina").item(0)).setAttribute("property", "pred:godina");
-		((Element) izvestaj.getElementsByTagNameNS(Namespaces.IZVESTAJ, "godina").item(0)).setAttribute("datatype", "xs:string");
-
-		String result = this.xslTransformer.generateMetadata(this.domParser.buildXml(document)).toString();
-		Model model = ModelFactory.createDefaultModel();
-		model.setNsPrefix("pred", Prefixes.PREDIKAT);
-		model.read(new StringReader(result), null);
-		return model;
 	}
 
 }

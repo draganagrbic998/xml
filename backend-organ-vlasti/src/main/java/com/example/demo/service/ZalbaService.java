@@ -6,6 +6,7 @@ import org.w3c.dom.Document;
 import org.xmldb.api.base.ResourceSet;
 
 import com.example.demo.mapper.ZalbaMapper;
+import com.example.demo.parser.XSLTransformer;
 import com.example.demo.repository.rdf.ZalbaRDF;
 import com.example.demo.repository.xml.ZalbaExist;
 
@@ -20,12 +21,15 @@ public class ZalbaService implements ServiceInterface {
 
 	@Autowired
 	private ZalbaRDF zalbaRDF;
+	
+	@Autowired
+	private XSLTransformer xslTransformer;
 
 	@Override
 	public void add(String xml) {
 		Document document = this.zalbaMapper.map(xml);
 		this.zalbaExist.update(this.zalbaMapper.getBroj(document), document);
-		this.zalbaRDF.add(this.zalbaMapper.map(document));		
+		this.zalbaRDF.add(this.xslTransformer.generateMetadata(document));		
 	}
 
 	@Override

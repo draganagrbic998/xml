@@ -25,7 +25,16 @@
     <xs:element name="Adresa">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="mesto" type="osnova:TRequiredString"/>
+                <xs:element name="mesto">
+                    <xs:complexType>
+                        <xs:simpleContent>
+                            <xs:extension base="osnova:TRequiredString">
+                                <xs:attribute name="property" type="osnova:TRequiredString"/>
+                                <xs:attribute name="datatype" type="osnova:TRequiredString"/>
+                            </xs:extension>
+                        </xs:simpleContent>
+                    </xs:complexType>
+                </xs:element>
                 <xs:element name="ulica" type="osnova:TRequiredString"/>
                 <xs:element name="broj" type="osnova:TRequiredString"/>
             </xs:sequence>
@@ -57,11 +66,32 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:complexType name="TDokument">
+    <xs:complexType name="TDokument" abstract="true">
         <xs:sequence>
-            <xs:element name="broj" type="xs:positiveInteger"/>
-            <xs:element name="datum" type="xs:date"/>
+            <xs:element name="broj">
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xs:positiveInteger">
+                            <xs:attribute name="rel" type="osnova:TRequiredString"/>
+                            <xs:attribute name="href" type="osnova:TRequiredString"/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="datum">
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xs:date">
+                            <xs:attribute name="property" type="osnova:TRequiredString"/>
+                            <xs:attribute name="datatype" type="osnova:TRequiredString"/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
         </xs:sequence>
+        <xs:attribute name="about" type="osnova:TRequiredString"/>
+        <xs:attribute name="rel" type="osnova:TRequiredString"/>
+        <xs:attribute name="href" type="osnova:TRequiredString"/>
     </xs:complexType>
     <xs:complexType name="TPodnosenje">
         <xs:complexContent>

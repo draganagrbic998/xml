@@ -3,10 +3,12 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Zahtev } from 'src/app/models/zahtev';
 import { environment } from 'src/environments/environment';
-import { OSNOVA, ZAHTEV } from 'src/app/constants/namespaces';
+import { OSNOVA, XS, ZAHTEV } from 'src/app/constants/namespaces';
 import { ZahtevDTO } from 'src/app/models/zahtevDTO';
 import { map } from 'rxjs/operators';
 import { XonomyService } from '../xonomy/xonomy.service';
+import { AuthService } from '../auth/auth.service';
+import { KORISNIK, PREDIKAT } from 'src/app/constants/prefixes';
 
 @Injectable({
   providedIn: 'root'
@@ -15,16 +17,21 @@ export class ZahtevService {
 
   constructor(
     private http: HttpClient,
-    private xonomyService: XonomyService
+    private xonomyService: XonomyService,
+    private authService: AuthService
   ) { }
 
   private readonly API_ZAHTEVI = `${environment.baseUrl}/${environment.apiZahtevi}`;
+
+  private dateToString(date: Date): string {
+    return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}.`;
+  }
 
   private zahtevToXml(zahtev: Zahtev): string{
 
     let xml = `
       ${zahtev.detalji}
-      <zahtev:tipZahteva>${zahtev.tipZahteva}</zahtev:tipZahteva>
+      <zahtev:tipZahteva property="pred:tip" datatype="xs:string">${zahtev.tipZahteva}</zahtev:tipZahteva>
     `;
     if (zahtev.tipZahteva === 'dostava'){
       xml += `<zahtev:tipDostave>${zahtev.tipDostave}</zahtev:tipDostave>`;
@@ -36,7 +43,13 @@ export class ZahtevService {
     return `
       <zahtev:Zahtev
       xmlns="${OSNOVA}"
-      xmlns:zahtev="${ZAHTEV}">
+      xmlns:zahtev="${ZAHTEV}"
+      xmlns:xs="${XS}"
+      xmlns:pred="${PREDIKAT}"
+      about=""
+      rel="pred:podneo"
+      href="${KORISNIK}${this.authService.getUser().mejl}">
+        <datum property="pred:datum" datatype="xs:string">${this.dateToString(new Date())}</datum>
         ${xml}
       </zahtev:Zahtev>
     `;

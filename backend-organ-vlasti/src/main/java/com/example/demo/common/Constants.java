@@ -25,7 +25,17 @@ public class Constants {
 	public static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	public static final SimpleDateFormat sdf2 = new SimpleDateFormat("dd.MM.yyy.");
 
-	public static final String IZVESTAJ_STUB = "<izvestaj:Izvestaj xmlns=\"" + Namespaces.OSNOVA
-			+ "\" xmlns:izvestaj=\"" + Namespaces.IZVESTAJ + "\" xmlns:xsi=\"" + Namespaces.XSI
-			+ "\" xsi:type=\"izvestaj:TIzvestaj\"></izvestaj:Izvestaj>";
+	public static final String IZVESTAJ_STUB = "<izvestaj:Izvestaj xmlns=\"" 
+			+ Namespaces.OSNOVA
+			+ "\" xmlns:izvestaj=\"" 
+			+ Namespaces.IZVESTAJ 
+			+ "\" xmlns:pred=\""
+			+ Prefixes.PREDIKAT
+			+ "\" xmlns:xs=\""
+			+ Namespaces.XS
+			+ "\" about=\"\" rel=\"pred:podneo\" href=\"\">"
+			+ "<broj></broj>"
+			+ "<datum property=\"pred:datum\" datatype=\"xs:string\"></datum>"
+			+ "<izvestaj:godina property=\"pred:godina\" datatype=\"xs:string\"></izvestaj:godina>"
+			+ "</izvestaj:Izvestaj>";
 }

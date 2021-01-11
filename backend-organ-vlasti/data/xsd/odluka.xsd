@@ -9,7 +9,16 @@
             <xs:extension base="osnova:TPodnosenje">
                 <xs:sequence>
                     <xs:element name="datumZahteva" type="xs:date"/>
-                    <xs:element name="brojZahteva" type="xs:positiveInteger"/>
+                    <xs:element name="brojZahteva">
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="xs:positiveInteger">
+                                    <xs:attribute name="rel" type="osnova:TRequiredString"/>
+                                    <xs:attribute name="href" type="osnova:TRequiredString"/>
+                                </xs:extension>
+                            </xs:simpleContent>
+                        </xs:complexType>
+                    </xs:element>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>

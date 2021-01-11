@@ -2,11 +2,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { OSNOVA, XSI, ZALBA } from 'src/app/constants/namespaces';
+import { OSNOVA, XS, XSI, ZALBA } from 'src/app/constants/namespaces';
+import { KORISNIK, PREDIKAT, ZAHTEV, ODLUKA } from 'src/app/constants/prefixes';
 import { ZalbaCutanje } from 'src/app/models/zalba-cutanje';
 import { ZalbaOdluka } from 'src/app/models/zalba-odluka';
 import { ZalbaDTO } from 'src/app/models/zalbaDTO';
 import { environment } from 'src/environments/environment';
+import { AuthService } from '../auth/auth.service';
 import { XonomyService } from '../xonomy/xonomy.service';
 
 @Injectable({
@@ -16,10 +18,15 @@ export class ZalbaService {
 
   constructor(
     private http: HttpClient,
-    private xonomyService: XonomyService
+    private xonomyService: XonomyService,
+    private authService: AuthService
   ) { }
 
   private readonly API_ZALBE = `${environment.baseUrl}/${environment.apiZalbe}`;
+
+  private dateToString(date: Date): string {
+    return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}.`;
+  }
 
   private zalbaCutanjeToXml(zalba: ZalbaCutanje): string{
     let result;
@@ -27,7 +34,7 @@ export class ZalbaService {
       result = `
       ${zalba.detalji}
       <zalba:PodaciZahteva>
-        <broj>${zalba.brojDokumenta}</broj>
+        <broj rel="pred:zahtev" href="${ZAHTEV}${zalba.brojDokumenta}">${zalba.brojDokumenta}</broj>
       </zalba:PodaciZahteva>
       <zalba:tipCutanja>${zalba.tipCutanja}</zalba:tipCutanja>
     `;
@@ -36,20 +43,26 @@ export class ZalbaService {
       result = `
       ${zalba.detalji}
       <zalba:PodaciZahteva>
-        <broj></broj>
+        <broj rel="pred:zahtev" href=""></broj>
       </zalba:PodaciZahteva>
       <zalba:tipCutanja>${zalba.tipCutanja}</zalba:tipCutanja>
       <zalba:PodaciOdluke>
-        <broj>${zalba.brojDokumenta}</broj>
+        <broj rel="pred:odluka" href="${ODLUKA}${zalba.brojDokumenta}">${zalba.brojDokumenta}</broj>
       </zalba:PodaciOdluke>
     `;
     }
     return `
       <zalba:Zalba
+      about=""
+      rel="pred:podneo"
+      href="${KORISNIK}${this.authService.getUser().mejl}"
+      xmlns:xs="${XS}"
+      xmlns:pred="${PREDIKAT}"
       xmlns="${OSNOVA}"
       xmlns:zalba="${ZALBA}"
       xmlns:xsi="${XSI}"
       xsi:type="zalba:TZalbaCutanje">
+        <datum property="pred:datum" datatype="xs:string">${this.dateToString(new Date())}</datum>
         ${result}
       </zalba:Zalba>
     `;
@@ -59,15 +72,21 @@ export class ZalbaService {
   private zalbaOdlukaToXml(zalba: ZalbaOdluka): string{
     return `
     <zalba:Zalba
+    about=""
+    rel="pred:podneo"
+    href="${KORISNIK}${this.authService.getUser().mejl}"
+    xmlns:xs="${XS}"
+    xmlns:pred="${PREDIKAT}"
     xmlns="${OSNOVA}"
     xmlns:zalba="${ZALBA}"
     xmlns:xsi="${XSI}" xsi:type="zalba:TZalbaOdluka">
+      <datum property="pred:datum" datatype="xs:string">${this.dateToString(new Date())}</datum>
       ${zalba.detalji}
       <zalba:PodaciZahteva>
-        <broj></broj>
+        <broj rel="pred:zahtev" href=""></broj>
       </zalba:PodaciZahteva>
       <zalba:PodaciOdluke>
-      <broj>${zalba.brojOdluke}</broj>
+        <broj rel="pred:odluka" href="${ODLUKA}${zalba.brojOdluke}">${zalba.brojOdluke}</broj>
       </zalba:PodaciOdluke>
     </zalba:Zalba>
   `;

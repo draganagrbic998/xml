@@ -8,6 +8,7 @@ import org.xmldb.api.base.ResourceSet;
 import com.example.demo.common.Namespaces;
 import com.example.demo.enums.StatusZalbe;
 import com.example.demo.mapper.OdgovorMapper;
+import com.example.demo.parser.XSLTransformer;
 import com.example.demo.repository.rdf.OdgovorRDF;
 import com.example.demo.repository.xml.OdgovorExist;
 import com.example.demo.ws.utils.SOAPService;
@@ -31,16 +32,19 @@ public class OdgovorService implements ServiceInterface {
 	@Autowired
 	private SOAPService soapService;
 	
+	@Autowired
+	private XSLTransformer xslTransformer;
+	
 	@Override
 	public void add(String xml) {
 		Document document = this.odgovorMapper.map(xml);
 		this.odgovorExist.add(document);
+		this.odgovorRDF.add(this.xslTransformer.generateMetadata(document));
 		String brojZalbe = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
 		Document zalbaDocument = this.zalbaService.load(brojZalbe);
 		zalbaDocument.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.odgovoreno + "");
 		this.zalbaService.update(brojZalbe, zalbaDocument);
 		this.soapService.sendSOAPMessage(document, SOAPDocument.odgovor);	
-		this.odgovorRDF.add(this.odgovorMapper.map(document));
 	}
 
 	@Override

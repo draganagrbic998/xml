@@ -15,6 +15,7 @@ import com.example.demo.common.Namespaces;
 import com.example.demo.enums.StatusZalbe;
 import com.example.demo.mapper.ZalbaMapper;
 import com.example.demo.model.Korisnik;
+import com.example.demo.parser.XSLTransformer;
 import com.example.demo.repository.rdf.ZalbaRDF;
 import com.example.demo.repository.xml.ZalbaExist;
 import com.example.demo.ws.utils.SOAPDocument;
@@ -37,12 +38,15 @@ public class ZalbaService implements ServiceInterface {
 	
 	@Autowired
 	private SOAPService soapService;
+	
+	@Autowired
+	private XSLTransformer xslTransformer;
 
 	@Override
 	public void add(String xml) {
 		Document document = this.zalbaMapper.map(xml);
 		this.zalbaExist.add(document);
-		this.zalbaRDF.add(this.zalbaMapper.map(document));
+		this.zalbaRDF.add(this.xslTransformer.generateMetadata(document));
 	}
 
 	@Override

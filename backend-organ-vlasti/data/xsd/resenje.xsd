@@ -10,12 +10,14 @@
             <xs:extension base="osnova:TDokument">
                 <xs:sequence>
                     <xs:element name="status">
-                        <xs:simpleType>
-                            <xs:restriction base="xs:string">
-                                <xs:enumeration value="odobreno"/>
-                                <xs:enumeration value="odbijeno"/>
-                            </xs:restriction>
-                        </xs:simpleType>
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="osnova:TRequiredString">
+                                    <xs:attribute name="property" type="osnova:TRequiredString"/>
+                                    <xs:attribute name="datatype" type="osnova:TRequiredString"/>
+                                </xs:extension>
+                            </xs:simpleContent>
+                        </xs:complexType>
                     </xs:element>
                     <xs:element name="Odbrana" minOccurs="0">
                         <xs:complexType>
@@ -48,7 +50,18 @@
                                         </xs:restriction>
                                     </xs:simpleType>
                                 </xs:element>
-                                <xs:element name="brojZalbe" type="xs:positiveInteger"/>
+                                <xs:element name="brojZalbe">
+                                    <xs:complexType>
+                                        <xs:simpleContent>
+                                            <xs:extension base="xs:positiveInteger">
+                                                <xs:attribute name="rel"
+                                                  type="osnova:TRequiredString"/>
+                                                <xs:attribute name="href"
+                                                  type="osnova:TRequiredString"/>
+                                            </xs:extension>
+                                        </xs:simpleContent>
+                                    </xs:complexType>
+                                </xs:element>
                                 <xs:element name="datumZalbe" type="xs:date"/>
                                 <xs:element name="datumProsledjivanja" type="xs:date"/>
                             </xs:sequence>
