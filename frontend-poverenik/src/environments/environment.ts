@@ -7,8 +7,8 @@ export const environment = {
   baseUrl: 'http://localhost:8082',
   apiAuth: 'auth',
   apiZalbe: 'api/zalbe',
-  apiResenja: 'api/resenja',
   apiOdgovori: 'api/odgovori',
+  apiResenja: 'api/resenja',
   apiIzvestaji: 'api/izvestaji'
 };
 

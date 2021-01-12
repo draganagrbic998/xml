@@ -89,7 +89,7 @@ public class ZalbaService implements ServiceInterface {
 
 	public void obustavi(String broj) {
 		Document document = this.zalbaExist.load(broj);
-		document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.obustaljveno + "");
+		document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.obustavljeno + "");
 		this.zalbaExist.update(broj, document);
 	}
 

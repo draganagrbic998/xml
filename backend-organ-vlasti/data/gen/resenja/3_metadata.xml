@@ -7,7 +7,7 @@
   <results>
     <result>
       <binding name="predicate">
-        <uri>https://github.com/draganagrbic998/xml/sluzbenik/predikat/tip</uri>
+        <uri>https://github.com/draganagrbic998/xml/predikat/tip</uri>
       </binding>
       <binding name="object">
         <literal>odbijeno</literal>
@@ -15,7 +15,7 @@
     </result>
     <result>
       <binding name="predicate">
-        <uri>https://github.com/draganagrbic998/xml/sluzbenik/predikat/izdatoU</uri>
+        <uri>https://github.com/draganagrbic998/xml/predikat/izdatoU</uri>
       </binding>
       <binding name="object">
         <literal>Novi Sad</literal>
@@ -23,34 +23,34 @@
     </result>
     <result>
       <binding name="predicate">
-        <uri>https://github.com/draganagrbic998/xml/sluzbenik/predikat/datum</uri>
+        <uri>https://github.com/draganagrbic998/xml/predikat/zahtev</uri>
       </binding>
       <binding name="object">
-        <literal>2021-01-10</literal>
+        <uri>https://github.com/draganagrbic998/xml/zahtev/3</uri>
       </binding>
     </result>
     <result>
       <binding name="predicate">
-        <uri>https://github.com/draganagrbic998/xml/sluzbenik/predikat/zahtev</uri>
+        <uri>https://github.com/draganagrbic998/xml/predikat/datum</uri>
       </binding>
       <binding name="object">
-        <uri>https://github.com/draganagrbic998/xml/sluzbenik/zahtev/3</uri>
+        <literal>2021-01-11</literal>
       </binding>
     </result>
     <result>
       <binding name="predicate">
-        <uri>https://github.com/draganagrbic998/xml/sluzbenik/predikat/izdao</uri>
+        <uri>https://github.com/draganagrbic998/xml/predikat/podneo</uri>
       </binding>
       <binding name="object">
-        <uri>https://github.com/draganagrbic998/xml/sluzbenik/korisnik/draganaasd@gmail.com</uri>
+        <uri>https://github.com/draganagrbic998/xml/korisnik/poverenik.javni.znacaj@gmail.com</uri>
       </binding>
     </result>
     <result>
       <binding name="predicate">
-        <uri>https://github.com/draganagrbic998/xml/sluzbenik/predikat/zalba</uri>
+        <uri>https://github.com/draganagrbic998/xml/predikat/zalba</uri>
       </binding>
       <binding name="object">
-        <uri>https://github.com/draganagrbic998/xml/sluzbenik/zalba/3</uri>
+        <uri>https://github.com/draganagrbic998/xml/zalba/3</uri>
       </binding>
     </result>
   </results>

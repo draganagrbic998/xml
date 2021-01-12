@@ -25,7 +25,6 @@ public class SchemaValidator {
 			this.schemaFactory.newSchema(new File(path)).newValidator().validate(new DOMSource(document));
 		}
 		catch(Exception e) {
-			e.printStackTrace();
 			throw new MyException(e);
 		}
 	}

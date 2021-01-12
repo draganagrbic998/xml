@@ -48,4 +48,8 @@ public class OdgovorMapper implements MapperInterface {
 		}
 	}
 	
+	public String getBroj(Document document) {
+		return document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
+	}
+	
 }

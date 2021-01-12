@@ -117,7 +117,8 @@ export class ZalbaListComponent implements AfterViewInit {
         this.zalbe = new MatTableDataSource<ZalbaDTO>(zalbe);
         this.fetchPending = false;
       },
-      () => {
+      (e) => {
+        console.log(e);
         this.fetchPending = false;
       }
     );

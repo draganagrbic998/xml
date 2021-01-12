@@ -99,7 +99,7 @@ export class ZalbaService {
 
     for (let i = 0; i < zalbe.length; ++i){
       let datumProsledjivanja;
-      if (zalbe.item(i).getElementsByTagNameNS(ZALBA, 'status')[0].textContent === 'cekanje'){
+      if (zalbe.item(i).getElementsByTagNameNS(ZALBA, 'datumProsledjivanja').length === 0){
         datumProsledjivanja = Date.now();
       }
       else{

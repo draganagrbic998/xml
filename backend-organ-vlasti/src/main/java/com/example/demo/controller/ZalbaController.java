@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.enums.MetadataTip;
 import com.example.demo.service.ZalbaService;
 import com.example.demo.transformer.ZalbaTransformer;
 
@@ -26,20 +27,36 @@ public class ZalbaController {
 	private ZalbaTransformer zalbaTransformer;
 
 	@GetMapping(produces = MediaType.TEXT_XML_VALUE)
-	@PreAuthorize("hasAuthority('sluzbenik')")
+	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<String> retrieve() {
 		return new ResponseEntity<>(this.zalbaService.retrieve(), HttpStatus.OK);
 	}
-
+	
 	@GetMapping(value = "/{broj}", produces = "text/html; charset=utf-8")
-	@PreAuthorize("hasAuthority('sluzbenik')")
+	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<String> html(@PathVariable String broj) {
 		return new ResponseEntity<>(this.zalbaTransformer.html(broj), HttpStatus.OK);
 	}
-
+	
 	@GetMapping(value = "/{broj}/pdf", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<Resource> generatePdf(@PathVariable String broj) {
 		Resource resource = this.zalbaTransformer.generatePdf(broj);
+		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+				.body(resource);
+	}
+	
+	@GetMapping(value = "/{broj}/metadata/xml", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	public ResponseEntity<Resource> xmlMetadata(@PathVariable String broj) {
+		Resource resource = this.zalbaTransformer.generateMetadata(broj, MetadataTip.xml);
+		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+				.body(resource);
+	}
+	
+	@GetMapping(value = "/{broj}/metadata/json", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	public ResponseEntity<Resource> jsonMetadata(@PathVariable String broj) {
+		Resource resource = this.zalbaTransformer.generateMetadata(broj, MetadataTip.json);
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
 				.body(resource);

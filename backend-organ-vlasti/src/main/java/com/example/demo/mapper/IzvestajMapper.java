@@ -73,12 +73,12 @@ public class IzvestajMapper implements MapperInterface {
 			documentFragment.appendChild(document.importNode(this.organVlastiService.load().getElementsByTagNameNS(Namespaces.OSNOVA, "OrganVlasti").item(0), true));
 			izvestaj.insertBefore(documentFragment, izvestaj.getElementsByTagNameNS(Namespaces.IZVESTAJ, "godina").item(0));
 
-			Node bzNode = document.createElementNS(Namespaces.IZVESTAJ, "izvestaj:brojZahteva");
-			bzNode.setTextContent(this.zahtevExist.retrieve("/zahtev:Zahtev/datum[contains(text(), \"" + godina + "\")]").getSize() + "");
-			
 			izvestaj.setAttribute("about", Prefixes.IZVESTAJ_PREFIX + broj.getTextContent());
 			izvestaj.setAttribute("href", Prefixes.KORISNIK_PREFIX + this.korisnikService.currentUser().getOsoba().getMejl());
 
+			Node bzNode = document.createElementNS(Namespaces.IZVESTAJ, "izvestaj:brojZahteva");
+			bzNode.setTextContent(this.zahtevExist.retrieve("/zahtev:Zahtev/datum[contains(text(), \"" + godina + "\")]").getSize() + "");
+			
 			Node bzoNode = document.createElementNS(Namespaces.IZVESTAJ, "izvestaj:brojZahtevaObavestenje");
 			bzoNode.setTextContent(
 					this.zahtevExist.retrieve("/zahtev:Zahtev[zahtev:tipZahteva = 'obavestenje']/datum[contains(text(), \"" + godina + "\")]").getSize() + "");
@@ -161,7 +161,6 @@ public class IzvestajMapper implements MapperInterface {
 			return document;
 		} 
 		catch (Exception e) {
-			e.printStackTrace();
 			throw new MyException(e);
 		}
 	}
@@ -188,7 +187,8 @@ public class IzvestajMapper implements MapperInterface {
 			}
 
 			return this.domParser.buildXml(izvestajiDocument);
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			throw new MyException(e);
 		}
 	}

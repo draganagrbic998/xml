@@ -45,6 +45,8 @@ public class OdlukaService implements ServiceInterface {
 	@Override
 	public void add(String xml) {
 		Document document = this.odlukaMapper.map(xml);
+		this.odlukaExist.add(document);
+		this.odlukaRDF.add(this.xslTransformer.generateMetadata(document));
 		String brojZahteva = document.getElementsByTagNameNS(Namespaces.ODLUKA, "brojZahteva").item(0).getTextContent();
 		Document zahtevDocument = this.zahtevService.load(brojZahteva);
 		if (OdlukaMapper.getTipOdluke(document).equals(TipOdluke.obavestenje)) {
@@ -53,8 +55,6 @@ public class OdlukaService implements ServiceInterface {
 		else {
 			zahtevDocument.getElementsByTagNameNS(Namespaces.ZAHTEV, "status").item(0).setTextContent(StatusZahteva.odbijeno + "");
 		}
-		this.odlukaExist.add(document);
-		this.odlukaRDF.add(this.xslTransformer.generateMetadata(document));
 		this.zahtevService.update(brojZahteva, zahtevDocument);
 		this.notifyOdluka(document);		
 	}

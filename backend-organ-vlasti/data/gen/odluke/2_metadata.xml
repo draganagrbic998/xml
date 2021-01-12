@@ -5,5 +5,45 @@
     <variable name="object"/>
   </head>
   <results>
+    <result>
+      <binding name="predicate">
+        <uri>https://github.com/draganagrbic998/xml/predikat/izdatoU</uri>
+      </binding>
+      <binding name="object">
+        <literal>Novi Sad</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="predicate">
+        <uri>https://github.com/draganagrbic998/xml/predikat/izdao</uri>
+      </binding>
+      <binding name="object">
+        <uri>https://github.com/draganagrbic998/xml/korisnik/sluzbenik@gmail.com</uri>
+      </binding>
+    </result>
+    <result>
+      <binding name="predicate">
+        <uri>https://github.com/draganagrbic998/xml/predikat/zahtev</uri>
+      </binding>
+      <binding name="object">
+        <uri>https://github.com/draganagrbic998/xml/zahtev/2</uri>
+      </binding>
+    </result>
+    <result>
+      <binding name="predicate">
+        <uri>https://github.com/draganagrbic998/xml/predikat/datum</uri>
+      </binding>
+      <binding name="object">
+        <literal>2021-01-11</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="predicate">
+        <uri>https://github.com/draganagrbic998/xml/predikat/mesto</uri>
+      </binding>
+      <binding name="object">
+        <literal>Novi Sad</literal>
+      </binding>
+    </result>
   </results>
 </sparql>

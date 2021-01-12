@@ -23,6 +23,8 @@ import { ResenjeListComponent } from './components/resenje/resenje-list/resenje-
 import { PreloaderComponent } from './components/layout/preloader/preloader.component';
 import { HtmlViewerComponent } from './components/main/html-viewer/html-viewer.component';
 import { PdfViewerComponent } from './components/main/pdf-viewer/pdf-viewer.component';
+import { OdgovorListComponent } from './components/zalba/odgovor-list/odgovor-list.component';
+import { IzvestajListComponent } from './components/izvestaj/izvestaj-list/izvestaj-list.component';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
@@ -40,8 +42,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
-import { OdgovorListComponent } from './components/zalba/odgovor-list/odgovor-list.component';
-import { IzvestajListComponent } from './components/izvestaj/izvestaj-list/izvestaj-list.component';
 
 @NgModule({
   declarations: [

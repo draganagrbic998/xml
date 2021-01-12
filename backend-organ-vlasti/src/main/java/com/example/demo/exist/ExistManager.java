@@ -71,6 +71,7 @@ public class ExistManager {
 			collection = this.getCollection(collectionId, 0);
 			this.schemaValidator.validate(document, schemaPath);
 			if (documentId == null) {
+				System.out.println("USLA");
 				documentId = this.nextDocumentId(collectionId);
 			}
 			resource = (XMLResource) collection.createResource(documentId, XMLResource.RESOURCE_TYPE);

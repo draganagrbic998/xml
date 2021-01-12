@@ -10,7 +10,7 @@
         <uri>https://github.com/draganagrbic998/xml/predikat/tip</uri>
       </binding>
       <binding name="object">
-        <literal>obavestenje</literal>
+        <literal>uvid</literal>
       </binding>
     </result>
     <result>

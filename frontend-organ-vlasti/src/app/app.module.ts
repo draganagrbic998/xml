@@ -26,6 +26,7 @@ import { OdbijanjeFormComponent } from './components/odluka/odbijanje-form/odbij
 import { ZalbaListComponent } from './components/zalba/zalba-list/zalba-list.component';
 import { ResenjeListComponent } from './components/resenje/resenje-list/resenje-list.component';
 import { OdgovorFormComponent } from './components/zalba/odgovor-form/odgovor-form.component';
+import { IzvestajListComponent } from './components/izvestaj/izvestaj-list/izvestaj-list.component';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
@@ -42,7 +43,6 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
-import { IzvestajListComponent } from './components/izvestaj/izvestaj-list/izvestaj-list.component';
 
 @NgModule({
   declarations: [

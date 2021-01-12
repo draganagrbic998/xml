@@ -23,8 +23,6 @@ import org.w3c.dom.Document;
 
 import com.example.demo.common.Constants;
 import com.example.demo.common.MyException;
-import com.example.demo.common.Namespaces;
-import com.example.demo.common.Prefixes;
 
 @Component
 public class XSLTransformer {
@@ -42,8 +40,6 @@ public class XSLTransformer {
 			StreamResult output = new StreamResult(out);
 			transformer.transform(in, output);
 			Model model = ModelFactory.createDefaultModel();
-			model.setNsPrefix("pred", Prefixes.PREDIKAT);
-			model.setNsPrefix("xs", Namespaces.XS);
 			model.read(new StringReader(out.toString()), null);
 			return model;
 		}
