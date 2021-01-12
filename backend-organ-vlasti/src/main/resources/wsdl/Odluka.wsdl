@@ -12,10 +12,15 @@
 			targetNamespace="http://demo.example.com/ws/odluka">
 			<xs:element name="getOdlukaRequest" type="xs:string" />
 			<xs:element name="getOdlukaResponse" type="xs:string" />
+			<xs:element name="getOdlukaViewResponse" type="xs:base64Binary" />
 		</xs:schema>
 	</wsdl:types>
 	<wsdl:message name="getOdlukaRequest">
 		<wsdl:part name="getOdlukaRequest" element="tns:getOdlukaRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getOdlukaViewResponse">
+		<wsdl:part name="getOdlukaViewResponse" element="tns:getOdlukaViewResponse">
 		</wsdl:part>
 	</wsdl:message>
 	<wsdl:message name="getOdlukaResponse">
@@ -29,6 +34,12 @@
 			<wsdl:output name="getOdlukaResponse" message="tns:getOdlukaResponse">
 			</wsdl:output>
 		</wsdl:operation>
+		<wsdl:operation name="getOdlukaView">
+			<wsdl:input name="getOdlukaRequest" message="tns:getOdlukaRequest">
+			</wsdl:input>
+			<wsdl:output name="getOdlukaViewResponse" message="tns:getOdlukaViewResponse">
+			</wsdl:output>
+		</wsdl:operation>
 	</wsdl:portType>
 	<wsdl:binding name="OdlukaServiceSoapBinding"
 		type="tns:Odluka">
@@ -40,6 +51,15 @@
 				<soap:body use="literal" />
 			</wsdl:input>
 			<wsdl:output name="getOdlukaResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getOdlukaView">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="getOdlukaRequest">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="getOdlukaViewResponse">
 				<soap:body use="literal" />
 			</wsdl:output>
 		</wsdl:operation>

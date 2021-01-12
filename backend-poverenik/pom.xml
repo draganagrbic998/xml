@@ -138,6 +138,14 @@
 									</extraargs>
 									<wsdlLocation>classpath:wsdl/Izvestaj.wsdl</wsdlLocation>
 								</wsdlOption>
+								<wsdlOption>
+									<wsdl>${basedir}/src/main/resources/wsdl/Zalba.wsdl</wsdl>
+									<extraargs>
+										<extraarg>-impl</extraarg>
+										<extraarg>-verbose</extraarg>
+									</extraargs>
+									<wsdlLocation>classpath:wsdl/Zalba.wsdl</wsdlLocation>
+								</wsdlOption>
 							</wsdlOptions>
 						</configuration>
 						<goals>
