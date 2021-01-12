@@ -26,14 +26,14 @@ public class EndpointConfig {
 	@Bean
 	public Endpoint createOdgovorEndpoint() {
 		EndpointImpl endpoint = new EndpointImpl(bus, opi);
-		endpoint.publish("/createOdgovor");
+		endpoint.publish("/odgovor");
 		return endpoint;
 	}
 
 	@Bean
 	public Endpoint createIzvestajEndpoint() {
 		EndpointImpl endpoint = new EndpointImpl(bus, ipi);
-		endpoint.publish("/createIzvestaj");
+		endpoint.publish("/izvestaj");
 		return endpoint;
 	}
 }

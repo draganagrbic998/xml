@@ -18,4 +18,11 @@ public interface Odluka {
         @WebParam(partName = "getOdlukaRequest", name = "getOdlukaRequest", targetNamespace = "http://demo.example.com/ws/odluka")
         java.lang.String getOdlukaRequest
     );
+    
+    @WebMethod
+    @WebResult(name = "getOdlukaViewResponse", targetNamespace = "http://demo.example.com/ws/odluka", partName = "getOdlukaViewResponse")
+    public byte[] getOdlukaView(
+        @WebParam(partName = "getOdlukaViewRequest", name = "getOdlukaViewRequest", targetNamespace = "http://demo.example.com/ws/odluka")
+        java.lang.String getOdlukaViewRequest
+    );
 }

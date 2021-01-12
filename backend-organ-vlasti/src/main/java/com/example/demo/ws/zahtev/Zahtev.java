@@ -18,4 +18,11 @@ public interface Zahtev {
         @WebParam(partName = "getZahtevRequest", name = "getZahtevRequest", targetNamespace = "http://demo.example.com/ws/zahtev")
         java.lang.String getZahtevRequest
     );
+    
+    @WebMethod
+    @WebResult(name = "getZahtevViewResponse", targetNamespace = "http://demo.example.com/ws/zahtev", partName = "getZahtevViewResponse")
+    public byte[] getZahtevView(
+        @WebParam(partName = "getZahtevViewRequest", name = "getZahtevViewRequest", targetNamespace = "http://demo.example.com/ws/zahtev")
+        java.lang.String getZahtevViewRequest
+    );
 }

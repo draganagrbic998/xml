@@ -51,20 +51,20 @@ public class SOAPService {
 			}
 			
 			if (tipDokumenta.equals(SOAPDocument.zalba)) {
-				name = this.soapFactory.createName(SOAPConstants.CREATE_ZALBA_ELEMENT, "m", SOAPConstants.CREATE_ZALBA_NAMESPACE);
-				endpoint = new URL(SOAPConstants.CREATE_ZALBA_SERVICE);
+				name = this.soapFactory.createName(SOAPConstants.CREATE_ZALBA_ELEMENT, "m", SOAPConstants.ZALBA_NAMESPACE);
+				endpoint = new URL(SOAPConstants.ZALBA_SERVICE);
 			}
 			else if (tipDokumenta.equals(SOAPDocument.resenje)) {
-				name = this.soapFactory.createName(SOAPConstants.CREATE_RESENJE_ELEMENT, "m", SOAPConstants.CREATE_RESENJE_NAMESPACE);
-				endpoint = new URL(SOAPConstants.CREATE_RESENJE_SERVICE);
+				name = this.soapFactory.createName(SOAPConstants.CREATE_RESENJE_ELEMENT, "m", SOAPConstants.RESENJE_NAMESPACE);
+				endpoint = new URL(SOAPConstants.RESENJE_SERVICE);
 			}
 			else if (tipDokumenta.equals(SOAPDocument.zahtev)) {
-				name = this.soapFactory.createName(SOAPConstants.GET_ZAHTEV_ELEMENT, "m", SOAPConstants.GET_ZAHTEV_NAMESPACE);
-				endpoint = new URL(SOAPConstants.GET_ZAHTEV_SERVICE);
+				name = this.soapFactory.createName(SOAPConstants.GET_ZAHTEV_ELEMENT, "m", SOAPConstants.ZAHTEV_NAMESPACE);
+				endpoint = new URL(SOAPConstants.ZAHTEV_SERVICE);
 			}
 			else {
-				name = this.soapFactory.createName(SOAPConstants.GET_ODLUKA_ELEMENT, "m", SOAPConstants.GET_ODLUKA_NAMESPACE);
-				endpoint = new URL(SOAPConstants.GET_ODLUKA_SERVICE);
+				name = this.soapFactory.createName(SOAPConstants.GET_ODLUKA_ELEMENT, "m", SOAPConstants.ODLUKA_NAMESPACE);
+				endpoint = new URL(SOAPConstants.ODLUKA_SERVICE);
 			}
 
 			SOAPElement element = body.addChildElement(name);

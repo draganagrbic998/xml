@@ -12,6 +12,7 @@
 			targetNamespace="http://demo.example.com/ws/zahtev">
 			<xs:element name="getZahtevRequest" type="xs:string" />
 			<xs:element name="getZahtevResponse" type="xs:string" />
+			<xs:element name="getZahtevViewRequest" type="xs:string" />
 			<xs:element name="getZahtevViewResponse" type="xs:base64Binary" />
 		</xs:schema>
 	</wsdl:types>
@@ -21,6 +22,10 @@
 	</wsdl:message>
 	<wsdl:message name="getZahtevResponse">
 		<wsdl:part name="getZahtevResponse" element="tns:getZahtevResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getZahtevViewRequest">
+		<wsdl:part name="getZahtevViewRequest" element="tns:getZahtevViewRequest">
 		</wsdl:part>
 	</wsdl:message>
 	<wsdl:message name="getZahtevViewResponse">
@@ -35,7 +40,7 @@
 			</wsdl:output>
 		</wsdl:operation>
 		<wsdl:operation name="getZahtevView">
-			<wsdl:input name="getZahtevRequest" message="tns:getZahtevRequest">
+			<wsdl:input name="getZahtevViewRequest" message="tns:getZahtevViewRequest">
 			</wsdl:input>
 			<wsdl:output name="getZahtevViewResponse" message="tns:getZahtevViewResponse">
 			</wsdl:output>
@@ -56,7 +61,7 @@
 		</wsdl:operation>
 		<wsdl:operation name="getZahtevView">
 			<soap:operation soapAction="" style="document" />
-			<wsdl:input name="getZahtevRequest">
+			<wsdl:input name="getZahtevViewRequest">
 				<soap:body use="literal" />
 			</wsdl:input>
 			<wsdl:output name="getZahtevViewResponse">
