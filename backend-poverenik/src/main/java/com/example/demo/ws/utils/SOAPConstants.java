@@ -13,11 +13,13 @@ public class SOAPConstants {
 	public static final String ZAHTEV_SERVICE = "http://localhost:8081/ws/zahtev";
 	public static final String ZAHTEV_NAMESPACE = "http://demo.example.com/ws/zahtev";
 	public static final String GET_ZAHTEV_ELEMENT = "getZahtevRequest";
-	public static final String GET_ZAHTEV_VIEW_ELEMENT = "getZahtevViewRequest";
+	public static final String GET_ZAHTEV_HTML_ELEMENT = "getZahtevHtmlRequest";
+	public static final String GET_ZAHTEV_PDF_ELEMENT = "getZahtevPdfRequest";
 
 	public static final String ODLUKA_SERVICE = "http://localhost:8081/ws/odluka";
 	public static final String ODLUKA_NAMESPACE = "http://demo.example.com/ws/odluka";
 	public static final String GET_ODLUKA_ELEMENT = "getOdlukaRequest";
-	public static final String GET_ODLUKA_VIEW_ELEMENT = "getOdlukaViewRequest";
+	public static final String GET_ODLUKA_HTML_ELEMENT = "getOdlukaHtmlRequest";
+	public static final String GET_ODLUKA_PDF_ELEMENT = "getOdlukaPdfRequest";
 
 }

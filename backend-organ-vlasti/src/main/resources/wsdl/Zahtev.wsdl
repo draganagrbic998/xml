@@ -12,8 +12,10 @@
 			targetNamespace="http://demo.example.com/ws/zahtev">
 			<xs:element name="getZahtevRequest" type="xs:string" />
 			<xs:element name="getZahtevResponse" type="xs:string" />
-			<xs:element name="getZahtevViewRequest" type="xs:string" />
-			<xs:element name="getZahtevViewResponse" type="xs:string" />
+			<xs:element name="getZahtevHtmlRequest" type="xs:string" />
+			<xs:element name="getZahtevHtmlResponse" type="xs:string" />
+			<xs:element name="getZahtevPdfRequest" type="xs:string" />
+			<xs:element name="getZahtevPdfResponse" type="xs:base64Binary" />
 		</xs:schema>
 	</wsdl:types>
 	<wsdl:message name="getZahtevRequest">
@@ -24,12 +26,20 @@
 		<wsdl:part name="getZahtevResponse" element="tns:getZahtevResponse">
 		</wsdl:part>
 	</wsdl:message>
-	<wsdl:message name="getZahtevViewRequest">
-		<wsdl:part name="getZahtevViewRequest" element="tns:getZahtevViewRequest">
+	<wsdl:message name="getZahtevHtmlRequest">
+		<wsdl:part name="getZahtevHtmlRequest" element="tns:getZahtevHtmlRequest">
 		</wsdl:part>
 	</wsdl:message>
-	<wsdl:message name="getZahtevViewResponse">
-		<wsdl:part name="getZahtevViewResponse" element="tns:getZahtevViewResponse">
+	<wsdl:message name="getZahtevHtmlResponse">
+		<wsdl:part name="getZahtevHtmlResponse" element="tns:getZahtevHtmlResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getZahtevPdfRequest">
+		<wsdl:part name="getZahtevPdfRequest" element="tns:getZahtevPdfRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getZahtevPdfResponse">
+		<wsdl:part name="getZahtevPdfResponse" element="tns:getZahtevPdfResponse">
 		</wsdl:part>
 	</wsdl:message>
 	<wsdl:portType name="Zahtev">
@@ -39,10 +49,16 @@
 			<wsdl:output name="getZahtevResponse" message="tns:getZahtevResponse">
 			</wsdl:output>
 		</wsdl:operation>
-		<wsdl:operation name="getZahtevView">
-			<wsdl:input name="getZahtevViewRequest" message="tns:getZahtevViewRequest">
+		<wsdl:operation name="getZahtevHtml">
+			<wsdl:input name="getZahtevHtmlRequest" message="tns:getZahtevHtmlRequest">
 			</wsdl:input>
-			<wsdl:output name="getZahtevViewResponse" message="tns:getZahtevViewResponse">
+			<wsdl:output name="getZahtevHtmlResponse" message="tns:getZahtevHtmlResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getZahtevPdf">
+			<wsdl:input name="getZahtevPdfRequest" message="tns:getZahtevPdfRequest">
+			</wsdl:input>
+			<wsdl:output name="getZahtevPdfResponse" message="tns:getZahtevPdfResponse">
 			</wsdl:output>
 		</wsdl:operation>
 	</wsdl:portType>
@@ -59,12 +75,21 @@
 				<soap:body use="literal" />
 			</wsdl:output>
 		</wsdl:operation>
-		<wsdl:operation name="getZahtevView">
+		<wsdl:operation name="getZahtevHtml">
 			<soap:operation soapAction="" style="document" />
-			<wsdl:input name="getZahtevViewRequest">
+			<wsdl:input name="getZahtevHtmlRequest">
 				<soap:body use="literal" />
 			</wsdl:input>
-			<wsdl:output name="getZahtevViewResponse">
+			<wsdl:output name="getZahtevHtmlResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getZahtevPdf">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="getZahtevPdfRequest">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="getZahtevPdfResponse">
 				<soap:body use="literal" />
 			</wsdl:output>
 		</wsdl:operation>

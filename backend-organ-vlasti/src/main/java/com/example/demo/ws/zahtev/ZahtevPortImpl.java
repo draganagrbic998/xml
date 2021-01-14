@@ -20,15 +20,15 @@ public class ZahtevPortImpl implements Zahtev {
 
 	@Autowired
 	private DOMParser domParser;
-	
+
 	@Autowired
 	private ZahtevTransformer zahtevTransformer;
 
 	public java.lang.String getZahtev(java.lang.String getZahtevRequest) {
 		LOG.info("Executing operation getZahtev");
 		try {
-			String documentId = this.domParser.buildDocument(getZahtevRequest)
-					.getElementsByTagName("broj").item(0).getTextContent();
+			String documentId = this.domParser.buildDocument(getZahtevRequest).getElementsByTagName("broj").item(0)
+					.getTextContent();
 			java.lang.String _return = this.domParser.buildXml(this.zahtevService.load(documentId));
 			return _return;
 		} catch (java.lang.Exception ex) {
@@ -37,18 +37,30 @@ public class ZahtevPortImpl implements Zahtev {
 		}
 	}
 
-	public java.lang.String getZahtevView(java.lang.String getZahtevViewRequest) {
+	public java.lang.String getZahtevHtml(java.lang.String getZahtevHtmlRequest) {
 		LOG.info("Executing operation getZahtevView");
-		System.out.println(getZahtevViewRequest);
+		System.out.println(getZahtevHtmlRequest);
 		try {
-			String documentId = this.domParser.buildDocument(getZahtevViewRequest)
-					.getElementsByTagName("broj").item(0).getTextContent();
-			java.lang.String _return = this.zahtevTransformer.html(documentId);
-			return _return;
+			String documentId = this.domParser.buildDocument(getZahtevHtmlRequest).getElementsByTagName("broj").item(0)
+					.getTextContent();
+			return this.zahtevTransformer.html(documentId);
 		} catch (java.lang.Exception ex) {
 			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		}
 	}
 
+	public byte[] getZahtevPdf(java.lang.String getZahtevPdfRequest) {
+		LOG.info("Executing operation getZahtevPdf");
+		System.out.println(getZahtevPdfRequest);
+		try {
+			String documentId = this.domParser.buildDocument(getZahtevPdfRequest).getElementsByTagName("broj").item(0)
+					.getTextContent();
+			return this.zahtevTransformer.plainPdf(documentId);
+		} catch (java.lang.Exception ex) {
+			ex.printStackTrace();
+			throw new RuntimeException(ex);
+		}
+
+	}
 }
