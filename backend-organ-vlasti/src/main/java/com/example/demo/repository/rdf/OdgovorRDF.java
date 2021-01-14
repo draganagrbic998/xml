@@ -26,4 +26,14 @@ public class OdgovorRDF implements RDFInterface {
 		return this.fusekiManager.retrieve(ODGOVOR_GRAPH, Namespaces.ODGOVOR + "/" + subject);
 	}
 
+	@Override
+	public void update(String graphUri, Model model, String subject) {
+		this.fusekiManager.update(graphUri, model, subject);
+	}
+
+	@Override
+	public void delete(String graphUri, String subject) {
+		this.fusekiManager.delete(graphUri, subject);
+	}
+
 }

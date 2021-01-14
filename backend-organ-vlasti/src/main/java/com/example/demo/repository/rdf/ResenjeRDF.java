@@ -13,7 +13,7 @@ public class ResenjeRDF implements RDFInterface {
 
 	@Autowired
 	private FusekiManager fusekiManager;
-	
+
 	public static final String RESENJE_GRAPH = "/resenja";
 
 	@Override
@@ -25,5 +25,15 @@ public class ResenjeRDF implements RDFInterface {
 	public ResultSet retrieve(String subject) {
 		return this.fusekiManager.retrieve(RESENJE_GRAPH, Namespaces.RESENJE + "/" + subject);
 	}
-	
+
+	@Override
+	public void update(String graphUri, Model model, String subject) {
+		this.fusekiManager.update(graphUri, model, subject);
+	}
+
+	@Override
+	public void delete(String graphUri, String subject) {
+		this.fusekiManager.delete(graphUri, subject);
+	}
+
 }

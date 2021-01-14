@@ -25,5 +25,15 @@ public class OdlukaRDF implements RDFInterface {
 	public ResultSet retrieve(String subject) {
 		return this.fusekiManager.retrieve(ODLUKA_GRAPH, Namespaces.ODLUKA + "/" + subject);
 	}
+
+	@Override
+	public void update(String graphUri, Model model, String subject) {
+		this.fusekiManager.update(graphUri, model, subject);
+	}
+
+	@Override
+	public void delete(String graphUri, String subject) {
+		this.fusekiManager.delete(graphUri, subject);
+	}
 	
 }

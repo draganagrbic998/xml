@@ -13,7 +13,7 @@ public class ZalbaRDF implements RDFInterface {
 
 	@Autowired
 	private FusekiManager fusekiManager;
-	
+
 	public static final String ZALBA_GRAPH = "/zalbe";
 
 	@Override
@@ -24,6 +24,16 @@ public class ZalbaRDF implements RDFInterface {
 	@Override
 	public ResultSet retrieve(String subject) {
 		return this.fusekiManager.retrieve(ZALBA_GRAPH, Namespaces.ZALBA + "/" + subject);
+	}
+
+	@Override
+	public void update(String graphUri, Model model, String subject) {
+		this.fusekiManager.update(graphUri, model, subject);
+	}
+
+	@Override
+	public void delete(String graphUri, String subject) {
+		this.fusekiManager.delete(graphUri, subject);
 	}
 
 }

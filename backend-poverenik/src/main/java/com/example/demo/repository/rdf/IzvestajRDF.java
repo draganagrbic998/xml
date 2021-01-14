@@ -14,7 +14,7 @@ public class IzvestajRDF implements RDFInterface {
 
 	@Autowired
 	private FusekiManager fusekiManager;
-	
+
 	public static final String IZVESTAJ_GRAPH = "/izvestaji";
 
 	@Override
@@ -28,9 +28,19 @@ public class IzvestajRDF implements RDFInterface {
 	}
 
 	@Override
+	public void update(String graphUri, Model model, String subject) {
+		this.fusekiManager.update(graphUri, model, subject);
+	}
+
+	@Override
+	public void delete(String graphUri, String subject) {
+		this.fusekiManager.delete(graphUri, subject);
+	}
+
+	@Override
 	public String search(Pretraga pretraga) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 }

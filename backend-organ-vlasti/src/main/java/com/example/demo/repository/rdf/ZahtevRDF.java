@@ -16,10 +16,10 @@ public class ZahtevRDF implements RDFInterface {
 
 	@Autowired
 	private FusekiManager fusekiManager;
-	
+
 	@Autowired
 	private FusekiAuthentication authUtilities;
-	
+
 	public static final String ZAHTEV_GRAPH = "/zahtevi";
 	private static final String ZAHTEV_SEARCH = Constants.SPARQL_FOLDER + "zahtev.rq";
 
@@ -32,18 +32,23 @@ public class ZahtevRDF implements RDFInterface {
 	public ResultSet retrieve(String subject) {
 		return this.fusekiManager.retrieve(ZAHTEV_GRAPH, Namespaces.ZAHTEV + "/" + subject);
 	}
-	
-	//dodaj interfejs za pretragu
-	public String search(ZahtevSearch search) {
-		return this.fusekiManager.search(
-				String.format(FusekiManager.readFile(ZAHTEV_SEARCH), 
-				this.authUtilities.getData() + ZAHTEV_GRAPH, 
-				Namespaces.PREDIKAT + "datum",
-				Namespaces.PREDIKAT + "mesto",
-				Namespaces.PREDIKAT + "tip",
-				Namespaces.PREDIKAT + "status",
-				search.getDatum(), search.getMesto(), 
-				search.getTip(), search.getStanje()));
+
+	@Override
+	public void update(String graphUri, Model model, String subject) {
+		this.fusekiManager.update(graphUri, model, subject);
 	}
-	
+
+	@Override
+	public void delete(String graphUri, String subject) {
+		this.fusekiManager.delete(graphUri, subject);
+	}
+
+	// dodaj interfejs za pretragu
+	public String search(ZahtevSearch search) {
+		return this.fusekiManager.search(String.format(FusekiManager.readFile(ZAHTEV_SEARCH),
+				this.authUtilities.getData() + ZAHTEV_GRAPH, Namespaces.PREDIKAT + "datum",
+				Namespaces.PREDIKAT + "mesto", Namespaces.PREDIKAT + "tip", Namespaces.PREDIKAT + "status",
+				search.getDatum(), search.getMesto(), search.getTip(), search.getStanje()));
+	}
+
 }

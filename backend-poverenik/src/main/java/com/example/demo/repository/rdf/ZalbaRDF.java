@@ -17,10 +17,10 @@ public class ZalbaRDF implements RDFInterface {
 
 	@Autowired
 	private FusekiManager fusekiManager;
-	
+
 	@Autowired
 	private FusekiAuthentication authUtilities;
-	
+
 	public static final String ZALBA_GRAPH = "/zalbe";
 	private static final String ZALBA_AND_SEARCH = Constants.SPARQL_FOLDER + "zalba_and.rq";
 	private static final String ZALBA_OR_SEARCH = Constants.SPARQL_FOLDER + "zalba_or.rq";
@@ -36,19 +36,24 @@ public class ZalbaRDF implements RDFInterface {
 	}
 
 	@Override
+	public void update(String graphUri, Model model, String subject) {
+		this.fusekiManager.update(graphUri, model, subject);
+	}
+
+	@Override
+	public void delete(String graphUri, String subject) {
+		this.fusekiManager.delete(graphUri, subject);
+	}
+
+	@Override
 	public String search(Pretraga pretraga) {
 		ZalbaPretraga zalbaPretraga = (ZalbaPretraga) pretraga;
-		return this.fusekiManager.search(
-				String.format(FusekiManager.readFile(zalbaPretraga.getOperacija().equals("and") ? ZALBA_AND_SEARCH : ZALBA_OR_SEARCH), 
-				this.authUtilities.getData() + ZALBA_GRAPH, 
-				Namespaces.PREDIKAT + "datum",
-				Namespaces.PREDIKAT + "mesto",
-				Namespaces.PREDIKAT + "izdatoU",
-				Namespaces.PREDIKAT + "organVlasti",
-				Namespaces.PREDIKAT + "tip",
-				Namespaces.PREDIKAT + "stanje",
-				zalbaPretraga.getDatum(), zalbaPretraga.getMesto(), 
-				zalbaPretraga.getMestoIzdavanja(), zalbaPretraga.getOrganVlasti(),
+		return this.fusekiManager.search(String.format(
+				FusekiManager.readFile(zalbaPretraga.getOperacija().equals("and") ? ZALBA_AND_SEARCH : ZALBA_OR_SEARCH),
+				this.authUtilities.getData() + ZALBA_GRAPH, Namespaces.PREDIKAT + "datum",
+				Namespaces.PREDIKAT + "mesto", Namespaces.PREDIKAT + "izdatoU", Namespaces.PREDIKAT + "organVlasti",
+				Namespaces.PREDIKAT + "tip", Namespaces.PREDIKAT + "stanje", zalbaPretraga.getDatum(),
+				zalbaPretraga.getMesto(), zalbaPretraga.getMestoIzdavanja(), zalbaPretraga.getOrganVlasti(),
 				zalbaPretraga.getTip(), zalbaPretraga.getStanje()));
 	}
 
