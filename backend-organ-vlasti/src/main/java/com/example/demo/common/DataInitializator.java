@@ -125,6 +125,7 @@ public class DataInitializator {
 		model.add(this.xslTransformer.generateMetadata(this.domParser.buildDocumentFromFile(RESENJE3)));
 		this.fusekiManager.save(ResenjeRDF.RESENJE_GRAPH, model);
 
+		this.fusekiManager.delete(ResenjeRDF.RESENJE_GRAPH, "https://github.com/draganagrbic998/xml/resenje/3");
 	}
 
 }

@@ -10,7 +10,7 @@ public class SparqlUtil {
 	
 	private static final String UPDATE_TEMPLATE_NAMED_GRAPH = "INSERT DATA { GRAPH <%1$s> { %2$s } }";
 	
-	private static final String DELETE_TEMPLATE_NAMED_GRAPH = "DELETE WHERE { GRAPH <%1$s> { %2$s ?predicate ?object } }";
+	private static final String DELETE_TEMPLATE_NAMED_GRAPH = "DELETE WHERE { GRAPH <%1$s> { <%2$s> ?predicate ?object } }";
 
 	private static final String SELECT_NAMED_GRAPH_TEMPLATE = "SELECT * FROM <%1$s> WHERE { %2$s }";
 	
