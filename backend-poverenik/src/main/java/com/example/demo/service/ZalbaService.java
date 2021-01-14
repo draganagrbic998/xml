@@ -16,6 +16,7 @@ import com.example.demo.enums.StatusZalbe;
 import com.example.demo.mapper.ZalbaMapper;
 import com.example.demo.model.Korisnik;
 import com.example.demo.model.ZalbaPretraga;
+import com.example.demo.parser.DOMParser;
 import com.example.demo.parser.JAXBParser;
 import com.example.demo.parser.XSLTransformer;
 import com.example.demo.repository.rdf.ZalbaRDF;
@@ -46,6 +47,9 @@ public class ZalbaService implements ServiceInterface {
 	
 	@Autowired
 	private JAXBParser jaxbParser;
+	
+	@Autowired
+	private DOMParser domParser;
 
 	@Override
 	public void add(String xml) {
@@ -79,13 +83,20 @@ public class ZalbaService implements ServiceInterface {
 	
 	public void odustani(String broj) {
 		try {
+			boolean propagate = false;
 			Document document = this.zalbaExist.load(broj);
+			if (!document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).getTextContent().equals(StatusZalbe.cekanje + "")) {
+				propagate = true;
+			}
 			document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.odustato + "");
 			this.zalbaExist.update(broj, document);
 			String imePrezime = document.getElementsByTagNameNS(Namespaces.OSNOVA, "ime").item(0).getTextContent() 
 					+ " " + document.getElementsByTagNameNS(Namespaces.OSNOVA, "prezime").item(0).getTextContent();
 			String datumZalbe = Constants.sdf2.format(Constants.sdf.parse(document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).getTextContent()));
 			this.korisnikService.notifyOdustajanje(imePrezime, datumZalbe);
+			if (propagate) {
+				this.soapService.sendSOAPMessage(this.domParser.buildDocument("<broj>" + broj + "</broj>"), SOAPDocument.zalba_odustani);
+			}
 		}
 		catch(Exception e) {
 			throw new MyException(e);
@@ -96,6 +107,7 @@ public class ZalbaService implements ServiceInterface {
 		Document document = this.zalbaExist.load(broj);
 		document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.obustavljeno + "");
 		this.zalbaExist.update(broj, document);
+		this.soapService.sendSOAPMessage(this.domParser.buildDocument("<broj>" + broj + "</broj>"), SOAPDocument.zalba_obustavi);
 	}
 
 	public void prosledi(String broj) {

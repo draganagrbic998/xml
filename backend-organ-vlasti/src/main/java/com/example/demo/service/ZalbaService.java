@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.xmldb.api.base.ResourceSet;
 
+import com.example.demo.common.Namespaces;
+import com.example.demo.enums.StatusZalbe;
 import com.example.demo.mapper.ZalbaMapper;
 import com.example.demo.parser.XSLTransformer;
 import com.example.demo.repository.rdf.ZalbaRDF;
@@ -46,6 +48,20 @@ public class ZalbaService implements ServiceInterface {
 	@Override
 	public Document load(String documentId) {
 		return this.zalbaExist.load(documentId);
+	}
+	
+	public void odustani(String broj) {
+		Document document = this.zalbaExist.load(broj);
+		document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.odustato + "");
+		this.zalbaExist.update(broj, document);
+		//slanje mejla
+	}
+
+	public void obustavi(String broj) {
+		Document document = this.zalbaExist.load(broj);
+		document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.obustavljeno + "");
+		this.zalbaExist.update(broj, document);
+		//slanje mejla
 	}
 	
 }
