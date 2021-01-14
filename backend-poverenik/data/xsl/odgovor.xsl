@@ -106,9 +106,12 @@ xmlns:odgovor="https://github.com/draganagrbic998/xml/odgovor">
 					<br></br><br></br>
 					
 					<p class="indent">
+						<xsl:variable name="zalba_link" select="concat('http://localhost:4201/html/zalbe/', osnova:broj)"></xsl:variable>
 						Орган власти 
 						<span class="underline"><xsl:value-of select="osnova:OrganVlasti/osnova:naziv"></xsl:value-of></span>
-						подноси одговор на жалбу против ускраћеног права за информацијама од јавног значаја, коју је
+						подноси одговор на
+						<a href="{$zalba_link}">жалбу против ускраћеног права за информацијама од јавног значаја</a>
+						, коју је
 						<span class="underline">
 							<xsl:variable name="osoba" select="osnova:Osoba"></xsl:variable>
 							<xsl:value-of select="concat($osoba/osnova:ime, concat(' ', $osoba/osnova:prezime))"></xsl:value-of>

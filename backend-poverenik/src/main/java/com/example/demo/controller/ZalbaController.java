@@ -41,6 +41,12 @@ public class ZalbaController {
 		return new ResponseEntity<>(this.zalbaService.retrieve(), HttpStatus.OK);
 	}
 	
+	@PostMapping(value = "advanced_search", consumes = MediaType.TEXT_XML_VALUE, produces = MediaType.TEXT_XML_VALUE)
+	@PreAuthorize("hasAuthority('poverenik')")
+	public ResponseEntity<String> advancedSearch(@RequestBody String xml) {
+		return new ResponseEntity<>(this.zalbaService.advancedSearch(xml), HttpStatus.OK);
+	}
+	
 	@GetMapping(value = "/{broj}", produces = "text/html; charset=utf-8")
 	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<String> html(@PathVariable String broj) {

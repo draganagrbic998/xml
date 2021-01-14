@@ -1,0 +1,15 @@
+SELECT * FROM <%s> WHERE {
+  ?doc <%s> ?datum .
+  ?doc <%s> ?mesto .
+  ?doc <%s> ?izdatoU .
+  ?doc <%s> ?organVlasti .
+  ?doc <%s> ?tip .
+  ?doc <%s> ?stanje .
+  FILTER( CONTAINS(UCASE(str(?datum)), UCASE("%s"))
+    && CONTAINS(UCASE(str(?mesto)), UCASE("%s"))
+    && CONTAINS(UCASE(str(?izdatoU)), UCASE("%s"))
+    && CONTAINS(UCASE(str(?organVlasti)), UCASE("%s"))
+    && CONTAINS(UCASE(str(?tip)), UCASE("%s"))
+    && CONTAINS(UCASE(str(?stanje)), UCASE("%s"))
+  ) .
+} 

@@ -91,7 +91,19 @@ xmlns:odluka="https://github.com/draganagrbic998/xml/odluka">
 					<fo:block text-indent="40px">
 						Орган власти 
 						<fo:inline border-bottom="1px solid black"><xsl:value-of select="osnova:OrganVlasti/osnova:naziv"></xsl:value-of></fo:inline>
-						издаје решење о одбијању захтева за информацијама од јавног значаја, које је 
+						издаје решење о одбијању
+												
+						<fo:basic-link>
+               				<xsl:attribute name="external-destination">
+               					<xsl:value-of select="concat('http://localhost:4200/pdf/zahtevi/', odluka:brojZahteva)"></xsl:value-of>
+               				</xsl:attribute>
+               				<xsl:attribute name="color">
+								blue
+               				</xsl:attribute>
+               				захтева за информацијама од јавног значаја
+               			</fo:basic-link>
+						
+						, које је 
 						<fo:inline border-bottom="underline">
 							<xsl:variable name="osoba" select="osnova:Gradjanin/osnova:Osoba"></xsl:variable>
 							<xsl:value-of select="concat($osoba/osnova:ime, concat(' ', $osoba/osnova:prezime))"></xsl:value-of>

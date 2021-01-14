@@ -73,7 +73,19 @@ xmlns:odgovor="https://github.com/draganagrbic998/xml/odgovor">
 					<fo:block text-indent="40px">
 						Орган власти 
 						<fo:inline border-bottom="1px solid black"><xsl:value-of select="osnova:OrganVlasti/osnova:naziv"></xsl:value-of></fo:inline>
-						подноси одговор на жалбу против ускраћеног права за информацијама од јавног значаја, коју је
+						подноси одговор на
+						
+						<fo:basic-link>
+               				<xsl:attribute name="external-destination">
+               					<xsl:value-of select="concat('http://localhost:4201/html/zalbe/', osnova:broj)"></xsl:value-of>
+               				</xsl:attribute>
+               				<xsl:attribute name="color">
+								blue
+               				</xsl:attribute>
+							жалбу против ускраћеног права за информацијама од јавног значаја
+               			</fo:basic-link>
+												
+						, коју је
 						<fo:inline border-bottom="underline">
 							<xsl:variable name="osoba" select="osnova:Osoba"></xsl:variable>
 							<xsl:value-of select="concat($osoba/osnova:ime, concat(' ', $osoba/osnova:prezime))"></xsl:value-of>

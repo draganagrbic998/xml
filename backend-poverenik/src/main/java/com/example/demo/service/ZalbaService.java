@@ -15,6 +15,8 @@ import com.example.demo.common.Namespaces;
 import com.example.demo.enums.StatusZalbe;
 import com.example.demo.mapper.ZalbaMapper;
 import com.example.demo.model.Korisnik;
+import com.example.demo.model.ZalbaPretraga;
+import com.example.demo.parser.JAXBParser;
 import com.example.demo.parser.XSLTransformer;
 import com.example.demo.repository.rdf.ZalbaRDF;
 import com.example.demo.repository.xml.ZalbaExist;
@@ -41,6 +43,9 @@ public class ZalbaService implements ServiceInterface {
 	
 	@Autowired
 	private XSLTransformer xslTransformer;
+	
+	@Autowired
+	private JAXBParser jaxbParser;
 
 	@Override
 	public void add(String xml) {
@@ -102,6 +107,14 @@ public class ZalbaService implements ServiceInterface {
 		zalba.insertBefore(datumProsledjivanja, document.getElementsByTagNameNS(Namespaces.ZALBA, "PodaciZahteva").item(0));
 		this.zalbaExist.update(broj, document);
 		this.soapService.sendSOAPMessage(null, document, SOAPDocument.zalba);
+	}
+
+	@Override
+	public String advancedSearch(String xml) {
+		ZalbaPretraga search = (ZalbaPretraga) this.jaxbParser.unmarshalFromXml(xml, ZalbaPretraga.class);
+		String xpathExp = String.format("/zalba:Zalba[%s]", this.zalbaRDF.search(search));
+		ResourceSet resources = this.zalbaExist.retrieve(xpathExp);
+		return this.zalbaMapper.map(resources);
 	}
 	
 }

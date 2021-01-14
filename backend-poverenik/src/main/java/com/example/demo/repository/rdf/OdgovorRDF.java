@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.example.demo.common.Namespaces;
 import com.example.demo.fuseki.FusekiManager;
+import com.example.demo.model.Pretraga;
 
 @Repository
 public class OdgovorRDF implements RDFInterface {
@@ -24,6 +25,12 @@ public class OdgovorRDF implements RDFInterface {
 	@Override
 	public ResultSet retrieve(String subject) {
 		return this.fusekiManager.retrieve(ODGOVOR_GRAPH, Namespaces.ODGOVOR + "/" + subject);
+	}
+
+	@Override
+	public String search(Pretraga pretraga) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

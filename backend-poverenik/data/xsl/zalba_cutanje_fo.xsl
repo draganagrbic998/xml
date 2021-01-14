@@ -156,11 +156,39 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 						</fo:block>
 						
 						<fo:block text-indent="40px">
-							Као доказ , уз жалбу достављам копију захтева са доказом о предаји органу власти.
+							Као доказ , уз жалбу достављам
+							
+							<fo:basic-link>
+	               				<xsl:attribute name="external-destination">
+	               					<xsl:value-of select="concat('http://localhost:4201/pdf/zahtevi/', zalba:PodaciZahteva/osnova:broj)"></xsl:value-of>
+	               				</xsl:attribute>
+	               				<xsl:attribute name="color">
+									blue
+	               				</xsl:attribute>
+								копију захтева
+	               			</fo:basic-link>
+														
+							са доказом о предаји органу власти.
 						</fo:block>
 						
 						<fo:block text-indent="40px">
-							<fo:inline font-weight="bold">Напомена:</fo:inline> Код жалбе због непоступању по захтеву у целости, треба приложити и добијени одговор органа власти.
+							<fo:inline font-weight="bold">Напомена:</fo:inline> Код жалбе због непоступању по захтеву у целости, треба приложити и добијени 
+							
+							<xsl:if test="zalba:PodaciOdluke">
+							<fo:basic-link>
+	               				<xsl:attribute name="external-destination">
+	               					<xsl:value-of select="concat('http://localhost:4201/pdf/odluke/', zalba:PodaciOdluke/osnova:broj)"></xsl:value-of>
+	               				</xsl:attribute>
+	               				<xsl:attribute name="color">
+									blue
+	               				</xsl:attribute>
+								одговор органа власти.
+	               			</fo:basic-link>
+							</xsl:if>
+							<xsl:if test="not(zalba:PodaciOdluke)">
+								одговор органа власти.
+							</xsl:if>
+
 						</fo:block>
 						
 						<fo:block linefeed-treatment="preserve">

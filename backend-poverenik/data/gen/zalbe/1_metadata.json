@@ -5,8 +5,24 @@
   "results": {
     "bindings": [
       {
+        "predicate": { "type": "uri" , "value": "https://github.com/draganagrbic998/xml/predikat/stanje" } ,
+        "object": { "type": "literal" , "value": "reseno" }
+      } ,
+      {
+        "predicate": { "type": "uri" , "value": "https://github.com/draganagrbic998/xml/predikat/organVlasti" } ,
+        "object": { "type": "literal" , "value": "Naziv organa vlasti" }
+      } ,
+      {
+        "predicate": { "type": "uri" , "value": "https://github.com/draganagrbic998/xml/predikat/tip" } ,
+        "object": { "type": "literal" , "value": "delimicnost" }
+      } ,
+      {
         "predicate": { "type": "uri" , "value": "https://github.com/draganagrbic998/xml/predikat/izdatoU" } ,
         "object": { "type": "literal" , "value": "Novi Sad" }
+      } ,
+      {
+        "predicate": { "type": "uri" , "value": "https://github.com/draganagrbic998/xml/predikat/vlasnik" } ,
+        "object": { "type": "uri" , "value": "https://github.com/draganagrbic998/xml/korisnik/draganaasd@gmail.com" }
       } ,
       {
         "predicate": { "type": "uri" , "value": "https://github.com/draganagrbic998/xml/predikat/odluka" } ,
@@ -18,11 +34,7 @@
       } ,
       {
         "predicate": { "type": "uri" , "value": "https://github.com/draganagrbic998/xml/predikat/datum" } ,
-        "object": { "type": "literal" , "value": "2021-01-11" }
-      } ,
-      {
-        "predicate": { "type": "uri" , "value": "https://github.com/draganagrbic998/xml/predikat/podneo" } ,
-        "object": { "type": "uri" , "value": "https://github.com/draganagrbic998/xml/korisnik/draganaasd@gmail.com" }
+        "object": { "type": "literal" , "value": "2021-01-13" }
       } ,
       {
         "predicate": { "type": "uri" , "value": "https://github.com/draganagrbic998/xml/predikat/mesto" } ,

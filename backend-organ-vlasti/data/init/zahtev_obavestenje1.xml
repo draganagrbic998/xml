@@ -15,14 +15,14 @@
     </Adresa>
     </Gradjanin>
     <OrganVlasti>
-	    <naziv datatype="xs:string" property="pred:organVlasti">Naziv organa vlasti</naziv>
-	    <Adresa>
-	        <mesto datatype="xs:string" property="pred:izdatoU">Novi Sad</mesto>
-	        <ulica>Lasla Gala</ulica>
-	        <broj>23</broj>
-	    </Adresa>
-	</OrganVlasti>
+    <naziv datatype="xs:string" property="pred:organVlasti">Naziv organa vlasti</naziv>
+    <Adresa>
+        <mesto datatype="xs:string" property="pred:izdatoU">Novi Sad</mesto>
+        <ulica>Lasla Gala</ulica>
+        <broj>23</broj>
+    </Adresa>
+</OrganVlasti>
     <Detalji/>
     <zahtev:status datatype="xs:string" property="pred:status">cekanje</zahtev:status>
-	<zahtev:tipZahteva datatype="xs:string" property="pred:tip">obavestenje</zahtev:tipZahteva>
+<zahtev:tipZahteva datatype="xs:string" property="pred:tip">obavestenje</zahtev:tipZahteva>
 </zahtev:Zahtev>

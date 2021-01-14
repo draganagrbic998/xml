@@ -107,7 +107,21 @@ xmlns:odluka="https://github.com/draganagrbic998/xml/odluka">
                		
                		<fo:block text-indent="40px">
 	               		На основу члана 16. ст. 1. Закона о слободном приступу информацијама од јавног значаја, 
-	               		поступајући по вашем захтеву за слободан приступ информацијама од
+	               		поступајући по вашем
+	               		
+	               		захтеву за слободан приступ информацијама
+	               		
+						<fo:basic-link>
+               				<xsl:attribute name="external-destination">
+               					<xsl:value-of select="concat('http://localhost:4200/pdf/zahtevi/', odluka:brojZahteva)"></xsl:value-of>
+               				</xsl:attribute>
+               				<xsl:attribute name="color">
+								blue
+               				</xsl:attribute>
+               				захтева за информацијама од јавног значаја
+               			</fo:basic-link>
+	               		
+	               		од
 	               		<fo:inline border-bottom="0.2mm solid black">
 							<xsl:variable name="danZahteva" select="substring-after(substring-after(odluka:datumZahteva, '-'), '-')"></xsl:variable>
 							<xsl:variable name="mesecZahteva" select="substring-before(substring-after(odluka:datumZahteva, '-'), '-')"></xsl:variable>

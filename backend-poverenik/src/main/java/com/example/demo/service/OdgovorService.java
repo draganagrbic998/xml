@@ -70,4 +70,10 @@ public class OdgovorService implements ServiceInterface {
 		return this.odgovorExist.load(documentId);
 	}
 
+	@Override
+	public String advancedSearch(String xml) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -15,6 +15,10 @@ export class ToolbarComponent implements OnInit {
     private router: Router
   ) { }
 
+  drawerToggle(): void{
+    this.authService.announceDrawerToggle();
+  }
+
   get uloga(): string{
     return this.authService.getUser()?.uloga;
   }

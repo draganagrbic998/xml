@@ -15,21 +15,21 @@
     </Adresa>
     </Gradjanin>
     <OrganVlasti>
-	    <naziv datatype="xs:string" property="pred:organVlasti">Naziv organa vlasti</naziv>
-	    <Adresa>
-	        <mesto datatype="xs:string" property="pred:izdatoU">Novi Sad</mesto>
-	        <ulica>Lasla Gala</ulica>
-	        <broj>23</broj>
-	    </Adresa>
-	</OrganVlasti>
+    <naziv datatype="xs:string" property="pred:organVlasti">Naziv organa vlasti</naziv>
+    <Adresa>
+        <mesto datatype="xs:string" property="pred:izdatoU">Novi Sad</mesto>
+        <ulica>Lasla Gala</ulica>
+        <broj>23</broj>
+    </Adresa>
+</OrganVlasti>
     <Detalji/>
     <odluka:brojZahteva href="https://github.com/draganagrbic998/xml/zahtev/1" rel="pred:zahtev">1</odluka:brojZahteva>
 	<odluka:datumZahteva>2021-01-13</odluka:datumZahteva>
-	<odluka:Uvid>
-	    <odluka:datumUvida>2020-02-02</odluka:datumUvida>
-	    <odluka:pocetak>12:12</odluka:pocetak>
-	    <odluka:kraj>14:14</odluka:kraj>
-	    <odluka:kancelarija>asd</odluka:kancelarija>
-    </odluka:Uvid>
+<odluka:Uvid>
+          <odluka:datumUvida>2020-02-02</odluka:datumUvida>
+            <odluka:pocetak>12:12</odluka:pocetak>
+            <odluka:kraj>14:14</odluka:kraj>
+            <odluka:kancelarija>as</odluka:kancelarija>
+        </odluka:Uvid>
     <odluka:kopija>123</odluka:kopija>
 </odluka:Odluka>

@@ -42,6 +42,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { SpacerContainerComponent } from './components/layout/spacer-container/spacer-container.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +64,8 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
     HtmlViewerComponent,
     PdfViewerComponent,
     OdgovorListComponent,
-    IzvestajListComponent
+    IzvestajListComponent,
+    SpacerContainerComponent
   ],
   imports: [
     BrowserModule,
@@ -88,7 +91,8 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
     MatTooltipModule,
     MatTableModule,
     MatPaginatorModule,
-    NgxExtendedPdfViewerModule
+    NgxExtendedPdfViewerModule,
+    MatSidenavModule
   ],
   providers: [
     {

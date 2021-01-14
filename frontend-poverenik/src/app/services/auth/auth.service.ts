@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 import { Profil } from 'src/app/models/profil';
 
 @Injectable({
@@ -9,6 +10,13 @@ export class AuthService {
   constructor() { }
 
   private readonly STORAGE_KEY = 'poverenik';
+
+  private drawerToggle: Subject<null> = new Subject();
+  drawerToggle$: Observable<null> = this.drawerToggle.asObservable();
+
+  announceDrawerToggle(): void{
+    this.drawerToggle.next();
+  }
 
   saveUser(profil: Profil): void{
     localStorage.setItem(this.STORAGE_KEY, JSON.stringify(profil));

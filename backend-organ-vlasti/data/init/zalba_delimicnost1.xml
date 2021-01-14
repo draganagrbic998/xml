@@ -15,25 +15,25 @@
     </Adresa>
     </Gradjanin>
     <OrganVlasti>
-	    <naziv datatype="xs:string" property="pred:organVlasti">Naziv organa vlasti</naziv>
-	    <Adresa>
-	        <mesto datatype="xs:string" property="pred:izdatoU">Novi Sad</mesto>
-	        <ulica>Lasla Gala</ulica>
-	        <broj>23</broj>
-	    </Adresa>
-	</OrganVlasti>
+    <naziv datatype="xs:string" property="pred:organVlasti">Naziv organa vlasti</naziv>
+    <Adresa>
+        <mesto datatype="xs:string" property="pred:izdatoU">Novi Sad</mesto>
+        <ulica>Lasla Gala</ulica>
+        <broj>23</broj>
+    </Adresa>
+</OrganVlasti>
     <Detalji/>
-    <zalba:status>reseno</zalba:status>
+    <zalba:status datatype="xs:string" property="pred:stanje">reseno</zalba:status>
 	<zalba:datumProsledjivanja>2021-01-13</zalba:datumProsledjivanja>
-	<zalba:PodaciZahteva href="https://github.com/draganagrbic998/xml/zahtev/1" rel="pred:zahtev">
+<zalba:PodaciZahteva href="https://github.com/draganagrbic998/xml/zahtev/1" rel="pred:zahtev">
 		<broj>1</broj>
 		<datum>2021-01-13</datum>
-		<Detalji/>
+	<Detalji/>
     </zalba:PodaciZahteva>
 	<zalba:tipCutanja>nije postupio u celosti</zalba:tipCutanja>
 	<zalba:PodaciOdluke href="https://github.com/draganagrbic998/xml/odluka/1" rel="pred:odluka">
 		<broj>1</broj>
 		<datum>2021-01-13</datum>
-		<Detalji/>
+	<Detalji/>
     </zalba:PodaciOdluke>
 </zalba:Zalba>

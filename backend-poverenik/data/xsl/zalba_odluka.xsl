@@ -228,8 +228,8 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 							Ако жалбу изјављује на овом обрасцу, додатно образложење може  посебно приложити.					
 						</li>
 						<li>
-							<xsl:variable name="zahtev_link" select="concat('http://localhost:4200/html/zahtevi/', zalba:PodaciZahteva/osnova:broj)"></xsl:variable>
-							<xsl:variable name="odluka_link" select="concat('http://localhost:4200/html/odluke/', zalba:PodaciOdluke/osnova:broj)"></xsl:variable>
+							<xsl:variable name="zahtev_link" select="concat('http://localhost:4201/html/zahtevi/', zalba:PodaciZahteva/osnova:broj)"></xsl:variable>
+							<xsl:variable name="odluka_link" select="concat('http://localhost:4201/html/odluke/', zalba:PodaciOdluke/osnova:broj)"></xsl:variable>
 							Уз жалбу обавезно приложити <a href="{$zahtev_link}">копију поднетог захтева</a> и доказ о његовој предаји-упућивању 
 							органу као и <a href="{$odluka_link}">копију одлуке органа</a> која се оспорава жалбом.					
 						</li>

@@ -1,5 +1,7 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatDrawer } from '@angular/material/sidenav';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { SNACKBAR_CLOSE, SNACKBAR_ERROR, SNACKBAR_ERROR_OPTIONS, SNACKBAR_SUCCESS_OPTIONS } from 'src/app/constants/snackbar';
@@ -22,10 +24,34 @@ export class ZalbaListComponent implements AfterViewInit {
   ) { }
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatDrawer) drawer: MatDrawer;
   columns: string[] = ['tipZalbe', 'datum', 'status', 'dokumenti', 'metapodaci', 'akcije'];
   zalbe: MatTableDataSource<ZalbaDTO> = new MatTableDataSource<ZalbaDTO>([]);
   fetchPending = true;
   sendPending = false;
+
+  naprednaForma: FormGroup = new FormGroup({
+    operacija: new FormControl(''),
+    datum: new FormControl(''),
+    mesto: new FormControl(''),
+    mestoIzdavanja: new FormControl(''),
+    organVlasti: new FormControl(''),
+    tip: new FormControl(''),
+    stanje: new FormControl('')
+  });
+
+  naprednaPretraga(): void{
+    this.fetchPending = true;
+    this.zalbaService.advancedSearch(this.naprednaForma.value).subscribe(
+      (zalbe: ZalbaDTO[]) => {
+        this.zalbe = new MatTableDataSource<ZalbaDTO>(zalbe);
+        this.fetchPending = false;
+      },
+      () => {
+        this.fetchPending = false;
+      }
+    );
+  }
 
   get uloga(): string{
     return this.authService.getUser()?.uloga;
@@ -117,11 +143,14 @@ export class ZalbaListComponent implements AfterViewInit {
         this.zalbe = new MatTableDataSource<ZalbaDTO>(zalbe);
         this.fetchPending = false;
       },
-      (e) => {
-        console.log(e);
+      () => {
         this.fetchPending = false;
       }
     );
+
+    this.authService.drawerToggle$.subscribe(() => {
+      this.drawer.toggle();
+    });
   }
 
 }

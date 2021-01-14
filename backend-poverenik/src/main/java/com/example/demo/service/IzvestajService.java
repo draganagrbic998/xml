@@ -48,4 +48,10 @@ public class IzvestajService implements ServiceInterface {
 		return this.izvestajExist.load(documentId);
 	}
 
+	@Override
+	public String advancedSearch(String xml) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

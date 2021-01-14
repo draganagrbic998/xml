@@ -8,5 +8,6 @@ public interface ServiceInterface {
 	public void update(String documentId, Document document);
 	public String retrieve();
 	public Document load(String documentId);
+	public String advancedSearch(String xml);
 
 }

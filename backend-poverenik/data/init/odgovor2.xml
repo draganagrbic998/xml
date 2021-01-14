@@ -9,12 +9,12 @@
     </Osoba>
     <OrganVlasti>
     <naziv datatype="xs:string" property="pred:organVlasti">Naziv organa vlasti</naziv>
-	    <Adresa>
-	        <mesto datatype="xs:string" property="pred:izdatoU">Novi Sad</mesto>
-	        <ulica>Lasla Gala</ulica>
-	        <broj>23</broj>
-	    </Adresa>
-	</OrganVlasti>
+    <Adresa>
+        <mesto datatype="xs:string" property="pred:izdatoU">Novi Sad</mesto>
+        <ulica>Lasla Gala</ulica>
+        <broj>23</broj>
+    </Adresa>
+</OrganVlasti>
     <Detalji/>
     <odgovor:datumZalbe>2021-01-13</odgovor:datumZalbe>
 </odgovor:Odgovor>

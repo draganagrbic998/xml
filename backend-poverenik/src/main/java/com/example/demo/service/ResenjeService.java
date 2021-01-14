@@ -109,5 +109,11 @@ public class ResenjeService implements ServiceInterface {
 			throw new MyException(e);
 		}
 	}
+
+	@Override
+	public String advancedSearch(String xml) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

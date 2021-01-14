@@ -65,10 +65,10 @@ xmlns:resenje="https://github.com/draganagrbic998/xml/resenje">
 					<xsl:variable name="mesecOdluke" select="substring-before(substring-after($podaciOdluke/osnova:datum, '-'), '-')"></xsl:variable>
 					<xsl:variable name="godinaOdluke" select="substring-before($podaciOdluke/osnova:datum, '-')"></xsl:variable>
 	
-					<xsl:variable name="zahtev_link" select="concat('http://localhost:4200/html/zahtevi/', resenje:PodaciZahteva/osnova:broj)"></xsl:variable>
-					<xsl:variable name="odluka_link" select="concat('http://localhost:4200/html/odluke/', resenje:PodaciOdluke/osnova:broj)"></xsl:variable>
-					<xsl:variable name="zalba_link" select="concat('http://localhost:4200/html/zalbe/', resenje:PodaciZalbe/resenje:brojZalbe)"></xsl:variable>
-					<xsl:variable name="odgovor_link" select="concat('http://localhost:4200/html/odgovori/', resenje:PodaciZalbe/resenje:brojZalbe)"></xsl:variable>
+					<xsl:variable name="zahtev_link" select="concat('http://localhost:4201/html/zahtevi/', resenje:PodaciZahteva/osnova:broj)"></xsl:variable>
+					<xsl:variable name="odluka_link" select="concat('http://localhost:4201/html/odluke/', resenje:PodaciOdluke/osnova:broj)"></xsl:variable>
+					<xsl:variable name="zalba_link" select="concat('http://localhost:4201/html/zalbe/', resenje:PodaciZalbe/resenje:brojZalbe)"></xsl:variable>
+					<xsl:variable name="odgovor_link" select="concat('http://localhost:4201/html/odgovori/', resenje:PodaciZalbe/resenje:brojZalbe)"></xsl:variable>
 
 					<div class="flex">
 						<div>

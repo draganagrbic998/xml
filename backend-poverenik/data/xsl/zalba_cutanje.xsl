@@ -169,11 +169,11 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 						траженој/им  информацији/ма.
 					</p>
 					<p class="indent">
-						<xsl:variable name="zahtev_link" select="concat('http://localhost:4200/html/zahtevi/', zalba:PodaciZahteva/osnova:broj)"></xsl:variable>
+						<xsl:variable name="zahtev_link" select="concat('http://localhost:4201/html/zahtevi/', zalba:PodaciZahteva/osnova:broj)"></xsl:variable>
 						Као доказ , уз жалбу достављам <a href="{$zahtev_link}">копију захтева</a> са доказом о предаји органу власти.
 					</p>
 					<p class="indent">
-						<xsl:variable name="odluka_link" select="concat('http://localhost:4200/html/odluke/', zalba:PodaciOdluke/osnova:broj)"></xsl:variable>
+						<xsl:variable name="odluka_link" select="concat('http://localhost:4201/html/odluke/', zalba:PodaciOdluke/osnova:broj)"></xsl:variable>
 						<b>Напомена:</b> Код жалбе  због непоступању по захтеву у целости, треба приложити и добијени 
 						<xsl:if test="zalba:PodaciOdluke">
 							<a href="{$odluka_link}">одговор органа власти.</a>

@@ -237,9 +237,31 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
                					</fo:list-item-label>
                					<fo:list-item-body start-indent="body-start()">
                						<fo:block>
-               							Уз жалбу обавезно приложити копију поднетог захтева и 
-               							доказ о његовој предаји-упућивању органу као и копију одлуке 
-               							органа која се оспорава жалбом.
+               							Уз жалбу обавезно приложити
+               							
+										<fo:basic-link>
+				               				<xsl:attribute name="external-destination">
+				               					<xsl:value-of select="concat('http://localhost:4200/pdf/zahtevi/', zalba:PodaciZahteva/osnova:broj)"></xsl:value-of>
+				               				</xsl:attribute>
+				               				<xsl:attribute name="color">
+												blue
+				               				</xsl:attribute>
+											копију поднетог захтева
+				               			</fo:basic-link>
+               							               							
+               							и доказ о његовој предаји-упућивању органу као и
+               							
+										<fo:basic-link>
+				               				<xsl:attribute name="external-destination">
+				               					<xsl:value-of select="concat('http://localhost:4200/pdf/odluke/', zalba:PodaciOdluke/osnova:broj)"></xsl:value-of>
+				               				</xsl:attribute>
+				               				<xsl:attribute name="color">
+												blue
+				               				</xsl:attribute>
+	               							копију одлуке органа
+				               			</fo:basic-link>
+               							               							
+               							која се оспорава жалбом.
                						</fo:block>
                					</fo:list-item-body>
                				</fo:list-item>
