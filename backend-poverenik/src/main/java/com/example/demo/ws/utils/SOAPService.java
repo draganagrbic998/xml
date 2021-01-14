@@ -36,19 +36,12 @@ public class SOAPService {
 		this.soapConnectionFactory = SOAPConnectionFactory.newInstance();
 	}
 	
-	public String sendSOAPMessage(String brojDokumenta, Document document, SOAPDocument tipDokumenta) {
+	public String sendSOAPMessage(Document document, SOAPDocument tipDokumenta) {
 		try {
 			SOAPMessage message = this.messageFactory.createMessage();
 			SOAPBody body = message.getSOAPBody();
 			Name name = null;
 			URL endpoint = null;
-			String request = "";
-			if (brojDokumenta != null) {
-				request = brojDokumenta;
-			}
-			else if (document != null) {
-				request = this.domParser.buildXml(document);
-			}
 			
 			if (tipDokumenta.equals(SOAPDocument.zalba)) {
 				name = this.soapFactory.createName(SOAPConstants.CREATE_ZALBA_ELEMENT, "m", SOAPConstants.ZALBA_NAMESPACE);
@@ -62,21 +55,32 @@ public class SOAPService {
 				name = this.soapFactory.createName(SOAPConstants.GET_ZAHTEV_ELEMENT, "m", SOAPConstants.ZAHTEV_NAMESPACE);
 				endpoint = new URL(SOAPConstants.ZAHTEV_SERVICE);
 			}
-			else {
+			else if (tipDokumenta.equals(SOAPDocument.odluka)) {
 				name = this.soapFactory.createName(SOAPConstants.GET_ODLUKA_ELEMENT, "m", SOAPConstants.ODLUKA_NAMESPACE);
+				endpoint = new URL(SOAPConstants.ODLUKA_SERVICE);
+			}
+			else if (tipDokumenta.equals(SOAPDocument.zahtev_view)) {
+				name = this.soapFactory.createName(SOAPConstants.GET_ZAHTEV_VIEW_ELEMENT, "m", SOAPConstants.ZAHTEV_NAMESPACE);
+				endpoint = new URL(SOAPConstants.ZAHTEV_SERVICE);
+			}
+			else {
+				name = this.soapFactory.createName(SOAPConstants.GET_ODLUKA_VIEW_ELEMENT, "m", SOAPConstants.ODLUKA_NAMESPACE);
 				endpoint = new URL(SOAPConstants.ODLUKA_SERVICE);
 			}
 
 			SOAPElement element = body.addChildElement(name);
-			element.addTextNode(request);
+			element.addTextNode(this.domParser.buildXml(document));
 			SOAPConnection connection = this.soapConnectionFactory.createConnection();
 			SOAPMessage response = connection.call(message, endpoint);
+			return "";
+			/*
+			System.out.println(response.getSOAPBody().getTextContent());
 			try {
 				return response.getSOAPBody().getTextContent();
 			}
 			catch(Exception e) {
 				return null;
-			}
+			}*/
 
 		}
 		catch(Exception e) {

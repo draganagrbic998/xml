@@ -55,7 +55,7 @@ public class ResenjeService implements ServiceInterface {
 		Document zalbaDocument = this.zalbaService.load(brojZalbe);
 		zalbaDocument.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.reseno + "");
 		this.zalbaService.update(brojZalbe, zalbaDocument);
-		this.soapService.sendSOAPMessage(null, document, SOAPDocument.resenje);
+		this.soapService.sendSOAPMessage(document, SOAPDocument.resenje);
 		this.notifyResenje(document);
 	}
 

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.example.demo.parser.DOMParser;
 import com.example.demo.service.OdlukaService;
+import com.example.demo.transformer.OdlukaTransformer;
 
 @javax.jws.WebService(
                       serviceName = "OdlukaService",
@@ -27,10 +28,15 @@ public class OdlukaPortImpl implements Odluka {
     @Autowired
     private DOMParser domParser;
     
+    @Autowired
+    private OdlukaTransformer odlukaTransformer;
+    
     public java.lang.String getOdluka(java.lang.String getOdlukaRequest) {
         LOG.info("Executing operation getOdluka");
         try {
-            java.lang.String _return = this.domParser.buildXml(this.odlukaService.load(getOdlukaRequest));
+			String documentId = this.domParser.buildDocument(getOdlukaRequest)
+					.getElementsByTagName("broj").item(0).getTextContent();
+            java.lang.String _return = this.domParser.buildXml(this.odlukaService.load(documentId));
             return _return;
         } catch (java.lang.Exception ex) {
             ex.printStackTrace();
@@ -42,7 +48,17 @@ public class OdlukaPortImpl implements Odluka {
         LOG.info("Executing operation getOdlukaView");
         System.out.println(getOdlukaViewRequest);
         try {
-        	java.lang.String _return = null;
+			String documentId = this.domParser.buildDocument(getOdlukaViewRequest)
+					.getElementsByTagName("broj").item(0).getTextContent();
+			String tip = this.domParser.buildDocument(getOdlukaViewRequest)
+					.getElementsByTagName("tip").item(0).getTextContent();
+			java.lang.String _return;
+			if (tip.equals("html")) {
+				_return = this.odlukaTransformer.html(documentId);
+			}
+			else {
+				_return = this.odlukaTransformer.plainPdf(documentId);
+			}
             return _return;
         } catch (java.lang.Exception ex) {
             ex.printStackTrace();

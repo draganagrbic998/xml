@@ -9,7 +9,9 @@ export const environment = {
   apiZalbe: 'api/zalbe',
   apiOdgovori: 'api/odgovori',
   apiResenja: 'api/resenja',
-  apiIzvestaji: 'api/izvestaji'
+  apiIzvestaji: 'api/izvestaji',
+  apiZahtevi: 'api/zahtevi',
+  apiOdluke: 'api/odluke'
 };
 
 /*

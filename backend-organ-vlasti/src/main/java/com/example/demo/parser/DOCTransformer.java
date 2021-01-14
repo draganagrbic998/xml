@@ -1,6 +1,7 @@
 package com.example.demo.parser;
 
 import java.io.ByteArrayOutputStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -43,12 +44,22 @@ public class DOCTransformer {
 		}
 	}
 	
-	public Resource generatePdf(Document document, String xslPath, String genPath) {
+	public Resource generatePdf(Document document, String xslFoPath, String genPath) {
 		try {
-			ByteArrayOutputStream out = this.xslTransformer.generatePdf(this.domParser.buildXml(document), xslPath);
+			ByteArrayOutputStream out = this.xslTransformer.generatePdf(this.domParser.buildXml(document), xslFoPath);
 			Path file = Paths.get(genPath + document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent() + ".pdf");
 			Files.write(file, out.toByteArray());
 			return new UrlResource(file.toUri());
+		}
+		catch(Exception e) {
+			throw new MyException(e);
+		}
+	}
+	
+	public String plainPdf(Document document, String xslFoPath) {
+		try {
+			ByteArrayOutputStream out = this.xslTransformer.generatePdf(this.domParser.buildXml(document), xslFoPath);
+			return new String(out.toByteArray(), StandardCharsets.UTF_8);
 		}
 		catch(Exception e) {
 			throw new MyException(e);

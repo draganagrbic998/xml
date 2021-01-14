@@ -78,7 +78,7 @@ public class ZalbaMapper implements MapperInterface {
 		if (dto.getElementsByTagNameNS(Namespaces.ZALBA, "brojOdluke").getLength() > 0) {
 			String brojOdluke = dto.getElementsByTagNameNS(Namespaces.ZALBA, "brojOdluke").item(0).getTextContent();
 			Element odluka = (Element) this.domParser.buildDocument(this.soapService
-					.sendSOAPMessage(brojOdluke, null, SOAPDocument.odluka))
+					.sendSOAPMessage(this.domParser.buildDocument(String.format("<pretraga><broj>%s</broj></pretraga>", brojOdluke)), SOAPDocument.odluka))
 					.getElementsByTagNameNS(Namespaces.ODLUKA, "Odluka").item(0);
 			Element podaciOdluke = (Element) document.getElementsByTagNameNS(Namespaces.ZALBA, "PodaciOdluke").item(0);
 			podaciOdluke.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).setTextContent(brojOdluke);
@@ -93,7 +93,7 @@ public class ZalbaMapper implements MapperInterface {
 		}
 		
 		Element zahtev = (Element) this.domParser.buildDocument(this.soapService
-				.sendSOAPMessage(brojZahteva, null, SOAPDocument.zahtev))
+				.sendSOAPMessage(this.domParser.buildDocument(String.format("<pretraga><broj>%s</broj></pretraga>", brojZahteva)), SOAPDocument.zahtev))
 				.getElementsByTagNameNS(Namespaces.ZAHTEV, "Zahtev").item(0);
 		documentFragment.appendChild(document.importNode(zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "OrganVlasti").item(0), true));
 		documentFragment.appendChild(document.importNode(dto.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0), true));

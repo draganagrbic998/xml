@@ -106,7 +106,7 @@ public class ZalbaService implements ServiceInterface {
 		datumProsledjivanja.setTextContent(Constants.sdf.format(new Date()));
 		zalba.insertBefore(datumProsledjivanja, document.getElementsByTagNameNS(Namespaces.ZALBA, "PodaciZahteva").item(0));
 		this.zalbaExist.update(broj, document);
-		this.soapService.sendSOAPMessage(null, document, SOAPDocument.zalba);
+		this.soapService.sendSOAPMessage(document, SOAPDocument.zalba);
 	}
 
 	@Override

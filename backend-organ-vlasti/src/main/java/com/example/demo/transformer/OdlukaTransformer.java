@@ -64,5 +64,13 @@ public class OdlukaTransformer implements TransformerInterface {
 	public Resource generateMetadata(String documentId, MetadataTip type) {
 		return this.docTransformer.generateMetadata(documentId, this.odlukaRDF.retrieve(documentId), type, GEN_PATH);
 	}
+	
+	public String plainPdf(String documentId) {
+		Document document = this.odlukaExist.load(documentId);
+		if (OdlukaMapper.getTipOdluke(document).equals(TipOdluke.obavestenje)) {
+			return this.docTransformer.plainPdf(document, XSL_FO_PATH_OBAVESTENJE);
+		}
+		return this.docTransformer.plainPdf(document, XSL_FO_PATH_ODBIJANJE);
+	}
 
 }
