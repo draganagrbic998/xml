@@ -23,16 +23,27 @@ export class OdgovorService {
     const odgovoriDTO: OdgovorDTO[] = [];
 
     for (let i = 0; i < odgovori.length; ++i){
+      const odgovor = odgovori.item(i);
+      const reference = odgovor.getElementsByTagNameNS(OSNOVA, 'ref');
+      const referenceDTO: Referenca[] = [];
+      // tslint:disable-next-line: prefer-for-of
+      for (let j = 0; j < reference.length; ++j){
+        referenceDTO.push({
+          tip: reference.item(j).getAttribute('tip'),
+          broj: reference.item(j).textContent
+        });
+      }
+
       odgovoriDTO.push({
         broj: +odgovori.item(i).getElementsByTagNameNS(OSNOVA, 'broj')[0].textContent,
         datum: odgovori.item(i).getElementsByTagNameNS(OSNOVA, 'datum')[0].textContent,
         datumZalbe: odgovori.item(i).getElementsByTagNameNS(ODGOVOR, 'datumZalbe')[0].textContent,
+        reference: referenceDTO
       });
     }
 
     return odgovoriDTO;
   }
-
   view(broj: number): Observable<string>{
     return this.http.get<string>(`${this.API_ODGOVORI}/${broj}`, {responseType: 'text' as 'json'});
   }

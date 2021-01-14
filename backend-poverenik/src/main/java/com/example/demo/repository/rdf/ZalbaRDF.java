@@ -1,5 +1,7 @@
 package com.example.demo.repository.rdf;
 
+import java.util.List;
+
 import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.Model;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,9 +46,25 @@ public class ZalbaRDF implements RDFInterface {
 	public void delete(String graphUri, String subject) {
 		this.fusekiManager.delete(graphUri, subject);
 	}
+	
+	public List<Integer> odgovori(String broj) {
+		return this.fusekiManager.search(
+				String.format(FusekiManager.readFile(FusekiManager.REFERENCE_QUERY), 
+				this.authUtilities.getData() + OdgovorRDF.ODGOVOR_GRAPH, 
+				Namespaces.PREDIKAT + "zalba", Namespaces.ZALBA + "/" + broj), Namespaces.ODGOVOR + "/");
+	}
+	
+	public List<Integer> resenja(String broj) {
+		return this.fusekiManager.search(
+				String.format(FusekiManager.readFile(FusekiManager.REFERENCE_QUERY), 
+				this.authUtilities.getData() + ResenjeRDF.RESENJE_GRAPH, 
+				Namespaces.PREDIKAT + "zalba", Namespaces.ZALBA + "/" + broj), Namespaces.RESENJE + "/");
+	}
 
 	@Override
 	public String search(Pretraga pretraga) {
+		return null;
+		/*
 		ZalbaPretraga zalbaPretraga = (ZalbaPretraga) pretraga;
 		return this.fusekiManager.search(String.format(
 				FusekiManager.readFile(zalbaPretraga.getOperacija().equals("and") ? ZALBA_AND_SEARCH : ZALBA_OR_SEARCH),
@@ -54,7 +72,7 @@ public class ZalbaRDF implements RDFInterface {
 				Namespaces.PREDIKAT + "mesto", Namespaces.PREDIKAT + "izdatoU", Namespaces.PREDIKAT + "organVlasti",
 				Namespaces.PREDIKAT + "tip", Namespaces.PREDIKAT + "stanje", zalbaPretraga.getDatum(),
 				zalbaPretraga.getMesto(), zalbaPretraga.getMestoIzdavanja(), zalbaPretraga.getOrganVlasti(),
-				zalbaPretraga.getTip(), zalbaPretraga.getStanje()));
+				zalbaPretraga.getTip(), zalbaPretraga.getStanje()));*/
 	}
 
 }

@@ -29,6 +29,7 @@ export class ZalbaListComponent implements AfterViewInit {
   zalbe: MatTableDataSource<ZalbaDTO> = new MatTableDataSource<ZalbaDTO>([]);
   fetchPending = true;
   sendPending = false;
+  selectedZalba: ZalbaDTO;
 
   naprednaForma: FormGroup = new FormGroup({
     operacija: new FormControl(''),

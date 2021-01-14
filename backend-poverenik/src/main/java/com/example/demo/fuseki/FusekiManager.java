@@ -32,6 +32,7 @@ public class FusekiManager {
 	private FusekiAuthentication authUtilities;
 	
 	private static final String RETRIEVE_QUERY = Constants.SPARQL_FOLDER + "retrieve.rq";
+	public static final String REFERENCE_QUERY = Constants.SPARQL_FOLDER + "reference.rq";
 
 	public void save(String graphUri, Model model) {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -68,10 +69,10 @@ public class FusekiManager {
         processor.execute();
 	}
 	
-	public String search(String sparql) {
+	public List<Integer> search(String sparql, String prefix) {
 		QueryExecution query = QueryExecutionFactory.sparqlService(this.authUtilities.getQuery(), sparql);
 		ResultSet results = query.execSelect();
-		List<Integer> nums = new ArrayList<>();
+		List<Integer> brojevi = new ArrayList<>();
 		while(results.hasNext()) {
 			QuerySolution querySolution = results.next() ;
 			Iterator<String> variableBindings = querySolution.varNames();
@@ -79,23 +80,25 @@ public class FusekiManager {
 		    	String varName = variableBindings.next();
 		    	RDFNode varValue = querySolution.get(varName);
 		    	if (varName.equals("doc")) {
-		    		int value = Integer.parseInt(varValue.toString().replace(Namespaces.ZALBA + "/", ""));
-		    		if (!nums.contains(value)) {
-		    			nums.add(value);
+		    		int value = Integer.parseInt(varValue.toString().replace(prefix, ""));
+		    		if (!brojevi.contains(value)) {
+		    			brojevi.add(value);
 		    		}
 		    	}
 		    }
 		}
+		/*
 		String xpathExp = "(";
-		for (int i = 0; i < nums.size(); ++i) {
+		for (int i = 0; i < brojevi.size(); ++i) {
 			if (i == 0) {
-				xpathExp += "broj = '" + nums.get(i) + "'";
+				xpathExp += "broj = '" + brojevi.get(i) + "'";
 			} else {
-				xpathExp += " or broj = '" + nums.get(i) + "'";
+				xpathExp += " or broj = '" + brojevi.get(i) + "'";
 			}
 		}
 		xpathExp += ")";
-		return xpathExp;
+		return xpathExp;*/
+		return brojevi;
 	}
 	
 	public static String readFile(String path) {

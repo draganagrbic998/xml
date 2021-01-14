@@ -11,12 +11,16 @@ import org.xmldb.api.modules.XMLResource;
 import com.example.demo.common.MyException;
 import com.example.demo.common.Namespaces;
 import com.example.demo.parser.DOMParser;
+import com.example.demo.repository.rdf.OdgovorRDF;
 
 @Component
 public class OdgovorMapper implements MapperInterface {
 
 	@Autowired
 	private DOMParser domParser;
+	
+	@Autowired
+	private OdgovorRDF odgovorRDF;
 	
 	@Override
 	public Document map(String xml) {
@@ -34,10 +38,16 @@ public class OdgovorMapper implements MapperInterface {
 			while (it.hasMoreResources()) {
 				XMLResource resource = (XMLResource) it.nextResource();
 				Document document = this.domParser.buildDocument(resource.getContent().toString());
+				Node broj = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0);
 				Node odgovor = odgovoriDocument.createElementNS(Namespaces.ODGOVOR, "Odgovor");
-				odgovor.appendChild(odgovoriDocument.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0), true));
+				odgovor.appendChild(odgovoriDocument.importNode(broj, true));
 				odgovor.appendChild(odgovoriDocument.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
 				odgovor.appendChild(odgovoriDocument.importNode(document.getElementsByTagNameNS(Namespaces.ODGOVOR, "datumZalbe").item(0), true));
+				
+				Node reference = odgovoriDocument.createElementNS(Namespaces.OSNOVA, "Reference");
+				this.domParser.addReference(odgovoriDocument, reference, this.odgovorRDF.resenja(broj.getTextContent()), "resenja");
+				odgovor.appendChild(reference);
+				
 				odgovori.appendChild(odgovor);
 			}
 

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { OSNOVA, ZALBA } from 'src/app/constants/namespaces';
+import { Referenca } from 'src/app/models/referenca';
 import { ZalbaCutanje } from 'src/app/models/zalba-cutanje';
 import { ZalbaOdluka } from 'src/app/models/zalba-odluka';
 import { ZalbaDTO } from 'src/app/models/zalbaDTO';
@@ -73,20 +74,32 @@ export class ZalbaService {
     const zalbeDTO: ZalbaDTO[] = [];
 
     for (let i = 0; i < zalbe.length; ++i){
+      const zalba = zalbe.item(i);
+      const reference = zalba.getElementsByTagNameNS(OSNOVA, 'ref');
+      const referenceDTO: Referenca[] = [];
+      // tslint:disable-next-line: prefer-for-of
+      for (let j = 0; j < reference.length; ++j){
+        referenceDTO.push({
+          tip: reference.item(j).getAttribute('tip'),
+          broj: reference.item(j).textContent
+        });
+      }
+
       let datumProsledjivanja;
-      if (zalbe.item(i).getElementsByTagNameNS(ZALBA, 'datumProsledjivanja').length === 0){
+      if (zalba.getElementsByTagNameNS(ZALBA, 'datumProsledjivanja').length === 0){
         datumProsledjivanja = Date.now();
       }
       else{
-        datumProsledjivanja = Date.parse(zalbe.item(i).getElementsByTagNameNS(ZALBA, 'datumProsledjivanja')[0].textContent);
+        datumProsledjivanja = Date.parse(zalba.getElementsByTagNameNS(ZALBA, 'datumProsledjivanja')[0].textContent);
       }
 
       zalbeDTO.push({
-        tipZalbe: zalbe.item(i).getElementsByTagNameNS(ZALBA, 'tipZalbe')[0].textContent,
-        broj: +zalbe.item(i).getElementsByTagNameNS(OSNOVA, 'broj')[0].textContent,
-        datum: zalbe.item(i).getElementsByTagNameNS(OSNOVA, 'datum')[0].textContent,
-        status: zalbe.item(i).getElementsByTagNameNS(ZALBA, 'status')[0].textContent,
-        datumProsledjivanja
+        tipZalbe: zalba.getElementsByTagNameNS(ZALBA, 'tipZalbe')[0].textContent,
+        broj: +zalba.getElementsByTagNameNS(OSNOVA, 'broj')[0].textContent,
+        datum: zalba.getElementsByTagNameNS(OSNOVA, 'datum')[0].textContent,
+        status: zalba.getElementsByTagNameNS(ZALBA, 'status')[0].textContent,
+        datumProsledjivanja,
+        reference: referenceDTO
       });
     }
 

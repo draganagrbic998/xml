@@ -19,6 +19,7 @@ import com.example.demo.common.Namespaces;
 import com.example.demo.enums.TipZalbe;
 import com.example.demo.exist.ExistManager;
 import com.example.demo.parser.DOMParser;
+import com.example.demo.repository.rdf.ZalbaRDF;
 import com.example.demo.repository.xml.KorisnikExist;
 import com.example.demo.repository.xml.ZalbaExist;
 import com.example.demo.service.KorisnikService;
@@ -42,6 +43,9 @@ public class ZalbaMapper implements MapperInterface {
 	
 	@Autowired
 	private ExistManager existManager;
+	
+	@Autowired
+	private ZalbaRDF zalbaRDF;
 
 	private static final String STUB_FILE = Constants.STUB_FOLDER + "zalba.xml";
 	
@@ -119,21 +123,29 @@ public class ZalbaMapper implements MapperInterface {
 			while (it.hasMoreResources()) {
 				XMLResource resource = (XMLResource) it.nextResource();
 				Document document = this.domParser.buildDocument(resource.getContent().toString());
+				Node broj = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0);
 				Node zalba = zalbeDocument.createElementNS(Namespaces.ZALBA, "Zalba");
 				Node tipZalbe = zalbeDocument.createElementNS(Namespaces.ZALBA, "tipZalbe");
 				tipZalbe.setTextContent(getTipZalbe(document) + "");
 				zalba.appendChild(tipZalbe);
-				zalba.appendChild(zalbeDocument.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0), true));
+				zalba.appendChild(zalbeDocument.importNode(broj, true));
 				zalba.appendChild(zalbeDocument.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
 				zalba.appendChild(zalbeDocument.importNode(document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0), true));
 				if (document.getElementsByTagNameNS(Namespaces.ZALBA, "datumProsledjivanja").getLength() > 0)
 					zalba.appendChild(zalbeDocument.importNode(document.getElementsByTagNameNS(Namespaces.ZALBA, "datumProsledjivanja").item(0), true));
+				
+				Node reference = zalbeDocument.createElementNS(Namespaces.OSNOVA, "Reference");
+				this.domParser.addReference(zalbeDocument, reference, this.zalbaRDF.odgovori(broj.getTextContent()), "odgovori");
+				this.domParser.addReference(zalbeDocument, reference, this.zalbaRDF.resenja(broj.getTextContent()), "resenja");
+				zalba.appendChild(reference);
+				
 				zalbe.appendChild(zalba);
 			}
 
 			return this.domParser.buildXml(zalbeDocument);
 		}
 		catch(Exception e) {
+			e.printStackTrace();
 			throw new MyException(e);
 		}
 	}

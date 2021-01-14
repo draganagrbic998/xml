@@ -44,6 +44,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { SpacerContainerComponent } from './components/layout/spacer-container/spacer-container.component';
+import { ReferenceListComponent } from './components/main/reference-list/reference-list.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { SpacerContainerComponent } from './components/layout/spacer-container/s
     PdfViewerComponent,
     OdgovorListComponent,
     IzvestajListComponent,
-    SpacerContainerComponent
+    SpacerContainerComponent,
+    ReferenceListComponent
   ],
   imports: [
     BrowserModule,
