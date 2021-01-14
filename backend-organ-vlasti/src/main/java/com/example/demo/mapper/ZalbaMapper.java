@@ -14,12 +14,16 @@ import com.example.demo.common.Namespaces;
 import com.example.demo.enums.StatusZalbe;
 import com.example.demo.enums.TipZalbe;
 import com.example.demo.parser.DOMParser;
+import com.example.demo.repository.rdf.ZalbaRDF;
 
 @Component
 public class ZalbaMapper implements MapperInterface {
 
 	@Autowired
 	private DOMParser domParser;
+	
+	@Autowired
+	private ZalbaRDF zalbaRDF;
 	
 	@Override
 	public Document map(String xml) {
@@ -39,13 +43,20 @@ public class ZalbaMapper implements MapperInterface {
 			while (it.hasMoreResources()) {
 				XMLResource resource = (XMLResource) it.nextResource();
 				Document document = this.domParser.buildDocument(resource.getContent().toString());
+				Node broj = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0);
 				Node zalba = zalbeDocument.createElementNS(Namespaces.ZALBA, "Zalba");
 				Node tipZalbe = zalbeDocument.createElementNS(Namespaces.ZALBA, "tipZalbe");
 				tipZalbe.setTextContent(getTipZalbe(document) + "");
 				zalba.appendChild(tipZalbe);
-				zalba.appendChild(zalbeDocument.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0), true));
+				zalba.appendChild(zalbeDocument.importNode(broj, true));
 				zalba.appendChild(zalbeDocument.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
 				zalba.appendChild(zalbeDocument.importNode(document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0), true));
+				
+				Node reference = zalbeDocument.createElementNS(Namespaces.OSNOVA, "Reference");
+				this.domParser.addReference(zalbeDocument, reference, this.zalbaRDF.odgovori(broj.getTextContent()), "odluke");
+				this.domParser.addReference(zalbeDocument, reference, this.zalbaRDF.resenja(broj.getTextContent()), "resenja");
+				zalba.appendChild(reference);
+
 				zalbe.appendChild(zalba);
 			}
 

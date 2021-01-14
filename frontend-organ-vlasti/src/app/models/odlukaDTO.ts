@@ -1,4 +1,3 @@
-import { MatTableDataSource } from '@angular/material/table';
 import { Referenca } from './referenca';
 
 export interface OdlukaDTO{
@@ -6,5 +5,5 @@ export interface OdlukaDTO{
     broj: number;
     datum: string;
     datumZahteva: string;
-    reference: MatTableDataSource<Referenca>;
+    reference: Referenca[];
 }

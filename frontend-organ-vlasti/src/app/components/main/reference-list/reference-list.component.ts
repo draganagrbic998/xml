@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { Referenca } from 'src/app/models/referenca';
 
 @Component({
@@ -12,9 +12,11 @@ export class ReferenceListComponent implements OnInit {
   constructor() { }
 
   columns: string[] = ['tip', 'dokumenti'];
-  @Input() reference: MatTableDataSource<Referenca>;
+  @Input() reference: Referenca[];
+  referenceList: MatTableDataSource<Referenca>;
 
   ngOnInit(): void {
+    this.referenceList = new MatTableDataSource(this.reference);
   }
 
 }

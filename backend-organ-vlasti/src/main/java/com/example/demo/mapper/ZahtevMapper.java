@@ -111,7 +111,6 @@ public class ZahtevMapper implements MapperInterface {
 			return this.domParser.buildXml(zahteviDocument);
 		}
 		catch(Exception e) {
-			e.printStackTrace();
 			throw new MyException(e);
 		}
 	}
