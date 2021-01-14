@@ -72,15 +72,12 @@ public class SOAPService {
 			element.addTextNode(this.domParser.buildXml(document));
 			SOAPConnection connection = this.soapConnectionFactory.createConnection();
 			SOAPMessage response = connection.call(message, endpoint);
-			return "";
-			/*
-			System.out.println(response.getSOAPBody().getTextContent());
 			try {
 				return response.getSOAPBody().getTextContent();
 			}
 			catch(Exception e) {
 				return null;
-			}*/
+			}
 
 		}
 		catch(Exception e) {

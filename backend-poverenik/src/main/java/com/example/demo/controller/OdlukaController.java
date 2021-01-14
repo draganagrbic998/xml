@@ -15,9 +15,9 @@ import com.example.demo.ws.utils.SOAPDocument;
 import com.example.demo.ws.utils.SOAPService;
 
 @RestController
-@RequestMapping(value = "/api/zahtevi")
-public class ZahtevController {
-	
+@RequestMapping(value = "/api/odluke")
+public class OdlukaController {
+
 	@Autowired
 	private SOAPService soapService;
 	
@@ -28,7 +28,8 @@ public class ZahtevController {
 	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<String> html(@PathVariable String broj) {
 		Document document = this.domParser.buildDocument(String.format("<pregled><broj>%s</broj><tip>html</tip></pregled>", broj));
-		return new ResponseEntity<>(this.soapService.sendSOAPMessage(document, SOAPDocument.zahtev_view), HttpStatus.OK);
+		return new ResponseEntity<>(this.soapService.sendSOAPMessage(document, SOAPDocument.odluka_view), HttpStatus.OK);
 	}
-		
+
+
 }
