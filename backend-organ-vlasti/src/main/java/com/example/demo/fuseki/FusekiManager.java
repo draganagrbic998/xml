@@ -49,6 +49,18 @@ public class FusekiManager {
 		return results;
 	}
 	
+	public void update(String graphUri, Model model, String subject) {
+		this.delete(graphUri, subject);
+		this.save(graphUri, model);
+	}
+	
+	public void delete(String graphUri, String subject) {
+		String sparql = SparqlUtil.deleteData(this.authUtilities.getData() + graphUri, subject);
+		UpdateRequest request = UpdateFactory.create(sparql);
+        UpdateProcessor processor = UpdateExecutionFactory.createRemote(request, this.authUtilities.getUpdate());
+		processor.execute();
+	}
+	
 	public String search(String sparql) {
 		QueryExecution query = QueryExecutionFactory.sparqlService(this.authUtilities.getQuery(), sparql);
 		ResultSet results = query.execSelect();

@@ -10,6 +10,8 @@ public class SparqlUtil {
 	
 	private static final String UPDATE_TEMPLATE_NAMED_GRAPH = "INSERT DATA { GRAPH <%1$s> { %2$s } }";
 	
+	private static final String DELETE_TEMPLATE_NAMED_GRAPH = "DELETE WHERE { GRAPH <%1$s> { %2$s ?predicate ?object } }";
+
 	private static final String SELECT_NAMED_GRAPH_TEMPLATE = "SELECT * FROM <%1$s> WHERE { %2$s }";
 	
 	public static final String NTRIPLES = "N-TRIPLES";
@@ -34,6 +36,10 @@ public class SparqlUtil {
 	
 	public static String selectData(String graphURI, String sparqlCondition) {
 		return String.format(SELECT_NAMED_GRAPH_TEMPLATE, graphURI, sparqlCondition);
+	}
+
+	public static String deleteData(String graphURI, String subject) {
+		return String.format(DELETE_TEMPLATE_NAMED_GRAPH, graphURI, subject);
 	}
 	
 }

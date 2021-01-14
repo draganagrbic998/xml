@@ -32,7 +32,7 @@ public class FusekiManager {
 	private FusekiAuthentication authUtilities;
 	
 	private static final String RETRIEVE_QUERY = Constants.SPARQL_FOLDER + "retrieve.rq";
-	
+
 	public void save(String graphUri, Model model) {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		model.write(out, SparqlUtil.NTRIPLES);
@@ -47,6 +47,18 @@ public class FusekiManager {
 		QueryExecution query = QueryExecutionFactory.sparqlService(this.authUtilities.getQuery(), sparql);
 		ResultSet results = query.execSelect();
 		return results;
+	}
+	
+	public void update(String graphUri, Model model, String subject) {
+		this.delete(graphUri, subject);
+		this.save(graphUri, model);
+	}
+	
+	public void delete(String graphUri, String subject) {
+		String sparql = SparqlUtil.deleteData(this.authUtilities.getData() + graphUri, subject);
+		UpdateRequest request = UpdateFactory.create(sparql);
+        UpdateProcessor processor = UpdateExecutionFactory.createRemote(request, this.authUtilities.getUpdate());
+		processor.execute();
 	}
 	
 	public void dropAll() {
