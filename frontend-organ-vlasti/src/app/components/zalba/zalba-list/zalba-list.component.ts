@@ -22,6 +22,7 @@ export class ZalbaListComponent implements AfterViewInit {
   columns: string[] = ['tipZalbe', 'datum', 'status', 'dokumenti', 'metapodaci', 'akcije'];
   zalbe: MatTableDataSource<ZalbaDTO> = new MatTableDataSource<ZalbaDTO>([]);
   fetchPending = true;
+  selectedZalba: ZalbaDTO;
 
   xmlMetadata(broj: string): void{
     window.open(`//localhost:8081/${environment.apiZalbe}/${broj}/metadata/xml`, '_blank');

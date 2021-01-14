@@ -86,7 +86,7 @@ export class ZahtevService {
         broj: +zahtev.getElementsByTagNameNS(OSNOVA, 'broj')[0].textContent,
         datum: zahtev.getElementsByTagNameNS(OSNOVA, 'datum')[0].textContent,
         status: zahtev.getElementsByTagNameNS(ZAHTEV, 'status')[0].textContent,
-        reference: new MatTableDataSource<Referenca>(referenceDTO)
+        reference: referenceDTO
       });
     }
 

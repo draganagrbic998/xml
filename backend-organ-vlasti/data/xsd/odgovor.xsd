@@ -11,7 +11,16 @@
                     <xs:element ref="osnova:Osoba"/>
                     <xs:element ref="osnova:OrganVlasti"/>
                     <xs:element ref="osnova:Detalji"/>
-                    <xs:element name="datumZalbe" type="xs:date"> </xs:element>
+                    <xs:element name="datumZalbe">
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="xs:date">
+                                    <xs:attribute name="rel" type="osnova:TRequiredString"/>
+                                    <xs:attribute name="href" type="osnova:TRequiredString"/>
+                                </xs:extension>
+                            </xs:simpleContent>
+                        </xs:complexType>
+                    </xs:element>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>

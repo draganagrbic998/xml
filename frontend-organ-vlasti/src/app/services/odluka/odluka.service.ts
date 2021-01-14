@@ -84,7 +84,7 @@ export class OdlukaService {
         broj: +odluke.item(i).getElementsByTagNameNS(OSNOVA, 'broj')[0].textContent,
         datum: odluke.item(i).getElementsByTagNameNS(OSNOVA, 'datum')[0].textContent,
         datumZahteva: odluke.item(i).getElementsByTagNameNS(ODLUKA, 'datumZahteva')[0].textContent,
-        reference: new MatTableDataSource<Referenca>(referenceDTO)
+        reference: referenceDTO
       });
     }
 

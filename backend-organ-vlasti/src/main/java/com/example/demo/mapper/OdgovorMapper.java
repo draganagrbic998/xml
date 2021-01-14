@@ -44,7 +44,8 @@ public class OdgovorMapper implements MapperInterface {
 		documentFragment.appendChild(document.importNode(zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "Osoba").item(0), true));
 		documentFragment.appendChild(document.importNode(zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "OrganVlasti").item(0), true));
 		documentFragment.appendChild(document.importNode(dto.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0), true));
-		Node datumZalbe = document.getElementsByTagNameNS(Namespaces.ODGOVOR, "datumZalbe").item(0);
+		Element datumZalbe = (Element) document.getElementsByTagNameNS(Namespaces.ODGOVOR, "datumZalbe").item(0);
+		datumZalbe.setAttribute("href", Namespaces.ZALBA + "/" + broj);
 		odgovor.insertBefore(documentFragment, datumZalbe);
 		datumZalbe.setTextContent(zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).getTextContent());
 		//osoba.getElementsByTagNameNS(Namespaces.OSNOVA, "potpis").item(0).setTextContent(this.korisnikService.currentUser().getOsoba().getPotpis());

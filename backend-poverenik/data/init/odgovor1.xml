@@ -16,5 +16,5 @@
     </Adresa>
 </OrganVlasti>
     <Detalji/>
-    <odgovor:datumZalbe>2021-01-13</odgovor:datumZalbe>
+    <odgovor:datumZalbe rel="pred:zalba" href="https://github.com/draganagrbic998/xml/zalba/1">2021-01-13</odgovor:datumZalbe>
 </odgovor:Odgovor>

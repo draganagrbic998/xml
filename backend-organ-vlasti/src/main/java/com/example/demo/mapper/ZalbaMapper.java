@@ -53,7 +53,7 @@ public class ZalbaMapper implements MapperInterface {
 				zalba.appendChild(zalbeDocument.importNode(document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0), true));
 				
 				Node reference = zalbeDocument.createElementNS(Namespaces.OSNOVA, "Reference");
-				this.domParser.addReference(zalbeDocument, reference, this.zalbaRDF.odgovori(broj.getTextContent()), "odluke");
+				this.domParser.addReference(zalbeDocument, reference, this.zalbaRDF.odgovori(broj.getTextContent()), "odgovori");
 				this.domParser.addReference(zalbeDocument, reference, this.zalbaRDF.resenja(broj.getTextContent()), "resenja");
 				zalba.appendChild(reference);
 
