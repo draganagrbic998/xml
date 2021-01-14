@@ -10,11 +10,11 @@
 			xmlns="http://demo.example.com/ws/zalba"
 			attributeFormDefault="unqualified" elementFormDefault="unqualified"
 			targetNamespace="http://demo.example.com/ws/zalba">
-			<xs:element name="zalbaId" type="xs:string" />
+			<xs:element name="otkaziZalbu" type="xs:string" />
 		</xs:schema>
 	</wsdl:types>
 	<wsdl:message name="otkaziZalbu">
-		<wsdl:part name="otkaziZalbu" element="tns:zalbaId">
+		<wsdl:part name="otkaziZalbu" element="tns:otkaziZalbu">
 		</wsdl:part>
 	</wsdl:message>
 	<wsdl:portType name="Zalba">
