@@ -39,11 +39,16 @@
       </ng-container>
     
       <tr mat-header-row *matHeaderRowDef="columns"></tr>
-      <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+      <tr mat-row *matRowDef="let odluka; columns: columns;"
+      (click)="selectedOdluka = selectedOdluka === odluka ? null : odluka"
+      [class.marked]="selectedOdluka === odluka"></tr>
       <tr class="mat-row" *matNoDataRow><td class="mat-cell" colspan="5">Nema odluka</td></tr>
     
     </table>
     <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
   </div>
 </div>
-  
+
+<app-reference-list *ngIf="selectedOdluka"
+[reference]="selectedOdluka.reference"></app-reference-list>
+

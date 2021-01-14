@@ -80,7 +80,6 @@ export class ZahtevService {
           broj: reference.item(j).textContent
         });
       }
-      //console.log(referenceDTO);
 
       zahteviDTO.push({
         tipZahteva: zahtev.getElementsByTagNameNS(ZAHTEV, 'tipZahteva')[0].textContent,

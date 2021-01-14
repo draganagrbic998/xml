@@ -20,6 +20,8 @@ export class OdlukaListComponent implements AfterViewInit {
   columns: string[] = ['tipOdluke', 'datum', 'datumZahteva', 'dokumenti', 'metapodaci'];
   odluke: MatTableDataSource<OdlukaDTO> = new MatTableDataSource<OdlukaDTO>([]);
   fetchPending = true;
+  refColumns: string[] = ['tip', 'dokumenti'];
+  selectedOdluka: OdlukaDTO;
 
   xmlMetadata(broj: string): void{
     window.open(`//localhost:8081/${environment.apiOdluke}/${broj}/metadata/xml`, '_blank');

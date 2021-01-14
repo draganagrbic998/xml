@@ -1,7 +1,6 @@
 package com.example.demo.mapper;
 
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -99,9 +98,9 @@ public class ZahtevMapper implements MapperInterface {
 				zahtev.appendChild(zahteviDocument.importNode(document.getElementsByTagNameNS(Namespaces.ZAHTEV, "status").item(0), true));
 			
 				Node reference = zahteviDocument.createElementNS(Namespaces.OSNOVA, "Reference");
-				this.addReference(zahteviDocument, reference, this.zahtevRDF.odluke(broj.getTextContent()), "odluke");
-				this.addReference(zahteviDocument, reference, this.zahtevRDF.zalbe(broj.getTextContent()), "zalbe");
-				this.addReference(zahteviDocument, reference, this.zahtevRDF.resenja(broj.getTextContent()), "resenja");
+				this.domParser.addReference(zahteviDocument, reference, this.zahtevRDF.odluke(broj.getTextContent()), "odluke");
+				this.domParser.addReference(zahteviDocument, reference, this.zahtevRDF.zalbe(broj.getTextContent()), "zalbe");
+				this.domParser.addReference(zahteviDocument, reference, this.zahtevRDF.resenja(broj.getTextContent()), "resenja");
 				zahtev.appendChild(reference);
 
 				zahtevi.appendChild(zahtev);						
@@ -115,17 +114,6 @@ public class ZahtevMapper implements MapperInterface {
 			e.printStackTrace();
 			throw new MyException(e);
 		}
-	}
-	
-	public void addReference(Document document, Node reference, List<Integer> brojevi, String tip) {
-		
-		for (int broj: brojevi) {
-			Element referenca = document.createElementNS(Namespaces.OSNOVA, "ref");
-			referenca.setTextContent(broj + "");
-			referenca.setAttribute("tip", tip);
-			reference.appendChild(referenca);
-		}
-		
 	}
 	
 }

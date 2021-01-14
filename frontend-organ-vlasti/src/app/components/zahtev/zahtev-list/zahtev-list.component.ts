@@ -24,7 +24,6 @@ export class ZahtevListComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatDrawer) drawer: MatDrawer;
   columns: string[] = ['tip', 'datum', 'status', 'dokumenti', 'metapodaci', 'akcije'];
-  refColumns: string[] = ['tip', 'dokumenti'];
   zahtevi: MatTableDataSource<ZahtevDTO> = new MatTableDataSource<ZahtevDTO>([]);
   fetchPending = true;
   selectedZahtev: ZahtevDTO;
@@ -73,8 +72,7 @@ export class ZahtevListComponent implements AfterViewInit {
         this.zahtevi = new MatTableDataSource<ZahtevDTO>(zahtevi);
         this.fetchPending = false;
       },
-      (e) => {
-        console.log(e);
+      () => {
         this.fetchPending = false;
       }
     );

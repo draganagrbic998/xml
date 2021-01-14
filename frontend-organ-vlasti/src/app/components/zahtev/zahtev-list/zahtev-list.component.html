@@ -124,7 +124,7 @@
         <tr mat-header-row *matHeaderRowDef="columns" class="header"></tr>
         <tr mat-row *matRowDef="let zahtev; columns: columns;"
         (click)="selectedZahtev = selectedZahtev === zahtev ? null : zahtev"
-        [class.marked]="selectedZahtev?.broj === zahtev.broj"></tr>
+        [class.marked]="selectedZahtev === zahtev"></tr>
 
         <tr class="mat-row" *matNoDataRow><td class="mat-cell" colspan="6">Nema zahteva</td></tr>
 
@@ -133,33 +133,7 @@
     </div>
   </div>
 
-  <div class="small-div">
-    <div></div>
-    <div class="mat-elevation-z8 small-table" *ngIf="selectedZahtev">
-      <table mat-table [dataSource]="selectedZahtev.reference">
-  
-        <ng-container matColumnDef="tip">
-          <th mat-header-cell *matHeaderCellDef>Tip dokumenta</th>
-          <td mat-cell *matCellDef="let referenca"> {{referenca.tip}} </td>
-        </ng-container>
-      
-        <ng-container matColumnDef="dokumenti">
-          <th mat-header-cell *matHeaderCellDef>Dokumenti</th>
-          <td mat-cell *matCellDef="let referenca">
-            <a [routerLink]="'/html/' + referenca.tip + '/' + referenca.broj">HTML</a><br>
-            <a [routerLink]="'/pdf/' + referenca.tip + '/' + referenca.broj">PDF</a>
-          </td>
-        </ng-container>
-      
-        <tr mat-header-row *matHeaderRowDef="refColumns"></tr>
-        <tr mat-row *matRowDef="let referenca; columns: refColumns;"></tr>
-  
-        <tr class="mat-row" *matNoDataRow><td class="mat-cell" colspan="2">Nema referenci</td></tr>
-  
-      </table>
-  
-    </div>
-  
-  </div>
+  <app-reference-list *ngIf="selectedZahtev"
+  [reference]="selectedZahtev.reference"></app-reference-list>
   
 </mat-drawer-container>

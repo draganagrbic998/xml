@@ -47,6 +47,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { SpacerContainerComponent } from './components/layout/spacer-container/spacer-container.component';
 import { OdgovorListComponent } from './components/zalba/odgovor-list/odgovor-list.component';
+import { ReferenceListComponent } from './components/main/reference-list/reference-list.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +72,8 @@ import { OdgovorListComponent } from './components/zalba/odgovor-list/odgovor-li
     OdgovorFormComponent,
     IzvestajListComponent,
     SpacerContainerComponent,
-    OdgovorListComponent
+    OdgovorListComponent,
+    ReferenceListComponent
   ],
   imports: [
     BrowserModule,

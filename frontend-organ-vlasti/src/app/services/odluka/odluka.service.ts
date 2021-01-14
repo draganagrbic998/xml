@@ -8,6 +8,8 @@ import { OdlukaDTO } from 'src/app/models/odlukaDTO';
 import { Odbijanje } from 'src/app/models/odbijanje';
 import { environment } from 'src/environments/environment';
 import { XonomyService } from '../xonomy/xonomy.service';
+import { Referenca } from 'src/app/models/referenca';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Injectable({
   providedIn: 'root'
@@ -66,11 +68,23 @@ export class OdlukaService {
     const odlukeDTO: OdlukaDTO[] = [];
 
     for (let i = 0; i < odluke.length; ++i){
+      const odluka = odluke.item(i);
+      const reference = odluka.getElementsByTagNameNS(OSNOVA, 'ref');
+      const referenceDTO: Referenca[] = [];
+      // tslint:disable-next-line: prefer-for-of
+      for (let j = 0; j < reference.length; ++j){
+        referenceDTO.push({
+          tip: reference.item(j).getAttribute('tip'),
+          broj: reference.item(j).textContent
+        });
+      }
+
       odlukeDTO.push({
         tipOdluke: odluke.item(i).getElementsByTagNameNS(ODLUKA, 'tipOdluke')[0].textContent,
         broj: +odluke.item(i).getElementsByTagNameNS(OSNOVA, 'broj')[0].textContent,
         datum: odluke.item(i).getElementsByTagNameNS(OSNOVA, 'datum')[0].textContent,
         datumZahteva: odluke.item(i).getElementsByTagNameNS(ODLUKA, 'datumZahteva')[0].textContent,
+        reference: new MatTableDataSource<Referenca>(referenceDTO)
       });
     }
 

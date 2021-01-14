@@ -18,6 +18,7 @@ import com.example.demo.common.Namespaces;
 import com.example.demo.enums.TipOdluke;
 import com.example.demo.exist.ExistManager;
 import com.example.demo.parser.DOMParser;
+import com.example.demo.repository.rdf.OdlukaRDF;
 import com.example.demo.repository.xml.OdlukaExist;
 import com.example.demo.repository.xml.ZahtevExist;
 
@@ -32,6 +33,9 @@ public class OdlukaMapper implements MapperInterface {
 	
 	@Autowired
 	private ExistManager existManager;
+	
+	@Autowired
+	private OdlukaRDF odlukaRDF;
 	
 	private static final String STUB_FILE = Constants.STUB_FOLDER + "odluka.xml";
 
@@ -92,13 +96,20 @@ public class OdlukaMapper implements MapperInterface {
 			while (it.hasMoreResources()) {
 				XMLResource resource = (XMLResource) it.nextResource();
 				Document document = this.domParser.buildDocument(resource.getContent().toString());
+				Node broj = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0);
 				Node odluka = odlukeDocument.createElementNS(Namespaces.ODLUKA, "Odluka");
 				Node tipOdluke = odlukeDocument.createElementNS(Namespaces.ODLUKA, "tipOdluke");
 				tipOdluke.setTextContent(getTipOdluke(document) + "");
 				odluka.appendChild(tipOdluke);
-				odluka.appendChild(odlukeDocument.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0), true));
+				odluka.appendChild(odlukeDocument.importNode(broj, true));
 				odluka.appendChild(odlukeDocument.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
 				odluka.appendChild(odlukeDocument.importNode(document.getElementsByTagNameNS(Namespaces.ODLUKA, "datumZahteva").item(0), true));
+				
+				Node reference = odlukeDocument.createElementNS(Namespaces.OSNOVA, "Reference");
+				this.domParser.addReference(odlukeDocument, reference, this.odlukaRDF.zalbe(broj.getTextContent()), "zalbe");
+				this.domParser.addReference(odlukeDocument, reference, this.odlukaRDF.resenja(broj.getTextContent()), "resenja");
+				odluka.appendChild(reference);
+				
 				odluke.appendChild(odluka);
 			}
 
