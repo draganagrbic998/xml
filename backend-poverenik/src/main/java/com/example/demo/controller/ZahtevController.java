@@ -28,7 +28,7 @@ public class ZahtevController {
 	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<String> html(@PathVariable String broj) {
 		Document document = this.domParser.buildDocument(String.format("<pregled><broj>%s</broj><tip>html</tip></pregled>", broj));
-		return new ResponseEntity<>(this.soapService.sendSOAPMessage(document, SOAPDocument.zahtev_view), HttpStatus.OK);
+		return new ResponseEntity<>(this.soapService.sendSOAPMessage(document, SOAPDocument.zahtev_html), HttpStatus.OK);
 	}
 		
 }
