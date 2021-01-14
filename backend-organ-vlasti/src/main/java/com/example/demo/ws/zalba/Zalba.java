@@ -18,4 +18,18 @@ public interface Zalba {
         @WebParam(partName = "createZalba", name = "createZalba", targetNamespace = "http://demo.example.com/ws/zalba")
         java.lang.String createZalba
     );
+    
+    @WebMethod
+    @Oneway
+    public void odustaniZalba(
+        @WebParam(partName = "odustaniZalba", name = "odustaniZalba", targetNamespace = "http://demo.example.com/ws/zalba")
+        java.lang.String odustaniZalba
+    );
+
+    @WebMethod
+    @Oneway
+    public void obustaviZalba(
+        @WebParam(partName = "obustaviZalba", name = "obustaviZalba", targetNamespace = "http://demo.example.com/ws/zalba")
+        java.lang.String obustaviZalba
+    );
 }

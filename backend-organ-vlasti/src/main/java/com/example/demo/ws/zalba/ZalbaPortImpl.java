@@ -26,5 +26,25 @@ public class ZalbaPortImpl implements Zalba {
 			throw new RuntimeException(ex);
 		}
 	}
+	
+    public void odustaniZalba(java.lang.String odustaniZalba) {
+        LOG.info("Executing operation odustaniZalba");
+        System.out.println(odustaniZalba);
+        try {
+        } catch (java.lang.Exception ex) {
+            ex.printStackTrace();
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public void obustaviZalba(java.lang.String obustaviZalba) {
+        LOG.info("Executing operation obustaviZalba");
+        System.out.println(obustaviZalba);
+        try {
+        } catch (java.lang.Exception ex) {
+            ex.printStackTrace();
+            throw new RuntimeException(ex);
+        }
+    }
 
 }
