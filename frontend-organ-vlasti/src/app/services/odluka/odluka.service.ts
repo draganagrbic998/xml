@@ -80,10 +80,10 @@ export class OdlukaService {
       }
 
       odlukeDTO.push({
-        tipOdluke: odluke.item(i).getElementsByTagNameNS(ODLUKA, 'tipOdluke')[0].textContent,
-        broj: +odluke.item(i).getElementsByTagNameNS(OSNOVA, 'broj')[0].textContent,
-        datum: odluke.item(i).getElementsByTagNameNS(OSNOVA, 'datum')[0].textContent,
-        datumZahteva: odluke.item(i).getElementsByTagNameNS(ODLUKA, 'datumZahteva')[0].textContent,
+        tipOdluke: odluka.getElementsByTagNameNS(ODLUKA, 'tipOdluke')[0].textContent,
+        broj: +odluka.getElementsByTagNameNS(OSNOVA, 'broj')[0].textContent,
+        datum: odluka.getElementsByTagNameNS(OSNOVA, 'datum')[0].textContent,
+        datumZahteva: odluka.getElementsByTagNameNS(ODLUKA, 'datumZahteva')[0].textContent,
         reference: referenceDTO
       });
     }

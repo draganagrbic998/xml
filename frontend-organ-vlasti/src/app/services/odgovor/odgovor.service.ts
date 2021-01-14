@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { ODGOVOR, OSNOVA } from 'src/app/constants/namespaces';
 import { Odgovor } from 'src/app/models/odgovor';
 import { OdgovorDTO } from 'src/app/models/odgovorDTO';
+import { Referenca } from 'src/app/models/referenca';
 import { environment } from 'src/environments/environment';
 import { XonomyService } from '../xonomy/xonomy.service';
 
@@ -49,10 +50,22 @@ export class OdgovorService {
     const odgovoriDTO: OdgovorDTO[] = [];
 
     for (let i = 0; i < odgovori.length; ++i){
+      const odgovor = odgovori.item(i);
+      const reference = odgovor.getElementsByTagNameNS(OSNOVA, 'ref');
+      const referenceDTO: Referenca[] = [];
+      // tslint:disable-next-line: prefer-for-of
+      for (let j = 0; j < reference.length; ++j){
+        referenceDTO.push({
+          tip: reference.item(j).getAttribute('tip'),
+          broj: reference.item(j).textContent
+        });
+      }
+
       odgovoriDTO.push({
         broj: +odgovori.item(i).getElementsByTagNameNS(OSNOVA, 'broj')[0].textContent,
         datum: odgovori.item(i).getElementsByTagNameNS(OSNOVA, 'datum')[0].textContent,
         datumZalbe: odgovori.item(i).getElementsByTagNameNS(ODGOVOR, 'datumZalbe')[0].textContent,
+        reference: referenceDTO
       });
     }
 

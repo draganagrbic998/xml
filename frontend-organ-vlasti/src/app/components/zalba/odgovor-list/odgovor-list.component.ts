@@ -20,6 +20,7 @@ export class OdgovorListComponent implements AfterViewInit {
   columns: string[] = ['broj', 'datum', 'datumZalbe', 'dokumenti', 'metapodaci'];
   odgovori: MatTableDataSource<OdgovorDTO> = new MatTableDataSource<OdgovorDTO>([]);
   fetchPending = true;
+  selectedOdgovor: OdgovorDTO;
 
   convertDate(date: string): string{
     const array: string[] = date.split('-');

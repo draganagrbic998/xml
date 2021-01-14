@@ -36,10 +36,10 @@ export class ZalbaService {
       }
 
       zalbeDTO.push({
-        tipZalbe: zalbe.item(i).getElementsByTagNameNS(ZALBA, 'tipZalbe')[0].textContent,
-        broj: +zalbe.item(i).getElementsByTagNameNS(OSNOVA, 'broj')[0].textContent,
-        datum: zalbe.item(i).getElementsByTagNameNS(OSNOVA, 'datum')[0].textContent,
-        status: zalbe.item(i).getElementsByTagNameNS(ZALBA, 'status')[0].textContent,
+        tipZalbe: zalba.getElementsByTagNameNS(ZALBA, 'tipZalbe')[0].textContent,
+        broj: +zalba.getElementsByTagNameNS(OSNOVA, 'broj')[0].textContent,
+        datum: zalba.getElementsByTagNameNS(OSNOVA, 'datum')[0].textContent,
+        status: zalba.getElementsByTagNameNS(ZALBA, 'status')[0].textContent,
         reference: referenceDTO
       });
     }
