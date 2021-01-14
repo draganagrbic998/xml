@@ -38,11 +38,11 @@ public class OdlukaPortImpl implements Odluka {
         }
     }
 
-    public byte[] getOdlukaView(java.lang.String getOdlukaViewRequest) {
+    public java.lang.String getOdlukaView(java.lang.String getOdlukaViewRequest) {
         LOG.info("Executing operation getOdlukaView");
         System.out.println(getOdlukaViewRequest);
         try {
-            byte[] _return = new byte[0];
+        	java.lang.String _return = null;
             return _return;
         } catch (java.lang.Exception ex) {
             ex.printStackTrace();

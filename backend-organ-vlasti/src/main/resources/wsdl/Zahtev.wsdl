@@ -13,7 +13,7 @@
 			<xs:element name="getZahtevRequest" type="xs:string" />
 			<xs:element name="getZahtevResponse" type="xs:string" />
 			<xs:element name="getZahtevViewRequest" type="xs:string" />
-			<xs:element name="getZahtevViewResponse" type="xs:base64Binary" />
+			<xs:element name="getZahtevViewResponse" type="xs:string" />
 		</xs:schema>
 	</wsdl:types>
 	<wsdl:message name="getZahtevRequest">

@@ -11,15 +11,33 @@
 			attributeFormDefault="unqualified" elementFormDefault="unqualified"
 			targetNamespace="http://demo.example.com/ws/zalba">
 			<xs:element name="createZalba" type="xs:string" />
+			<xs:element name="obustaviZalba" type="xs:string" />
+			<xs:element name="odustaniZalba" type="xs:string" />
 		</xs:schema>
 	</wsdl:types>
 	<wsdl:message name="createZalba">
 		<wsdl:part name="createZalba" element="tns:createZalba">
 		</wsdl:part>
 	</wsdl:message>
+	<wsdl:message name="obustaviZalba">
+		<wsdl:part name="obustaviZalba" element="tns:obustaviZalba">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="odustaniZalba">
+		<wsdl:part name="odustaniZalba" element="tns:odustaniZalba">
+		</wsdl:part>
+	</wsdl:message>
 	<wsdl:portType name="Zalba">
 		<wsdl:operation name="createZalba">
 			<wsdl:input name="createZalba" message="tns:createZalba">
+			</wsdl:input>
+		</wsdl:operation>
+		<wsdl:operation name="obustaviZalba">
+			<wsdl:input name="obustaviZalba" message="tns:obustaviZalba">
+			</wsdl:input>
+		</wsdl:operation>
+		<wsdl:operation name="odustaniZalba">
+			<wsdl:input name="odustaniZalba" message="tns:odustaniZalba">
 			</wsdl:input>
 		</wsdl:operation>
 	</wsdl:portType>
@@ -30,6 +48,18 @@
 		<wsdl:operation name="createZalba">
 			<soap:operation soapAction="" style="document" />
 			<wsdl:input name="createZalba">
+				<soap:body use="literal" />
+			</wsdl:input>
+		</wsdl:operation>
+		<wsdl:operation name="obustaviZalba">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="obustaviZalba">
+				<soap:body use="literal" />
+			</wsdl:input>
+		</wsdl:operation>
+		<wsdl:operation name="odustaniZalba">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="odustaniZalba">
 				<soap:body use="literal" />
 			</wsdl:input>
 		</wsdl:operation>

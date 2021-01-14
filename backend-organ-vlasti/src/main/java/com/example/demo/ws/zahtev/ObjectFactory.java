@@ -33,8 +33,8 @@ public class ObjectFactory {
     }
 
     @XmlElementDecl(namespace = "http://demo.example.com/ws/zahtev", name = "getZahtevViewResponse")
-    public JAXBElement<byte[]> createGetZahtevViewResponse(byte[] value) {
-        return new JAXBElement<byte[]>(_GetZahtevViewResponse_QNAME, byte[].class, null, ((byte[]) value));
+    public JAXBElement<String> createGetZahtevViewResponse(String value) {
+        return new JAXBElement<String>(_GetZahtevViewResponse_QNAME, String.class, null, value);
     }
     
 }

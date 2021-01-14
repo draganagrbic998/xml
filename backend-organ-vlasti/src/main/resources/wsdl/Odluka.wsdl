@@ -13,7 +13,7 @@
 			<xs:element name="getOdlukaRequest" type="xs:string" />
 			<xs:element name="getOdlukaResponse" type="xs:string" />
 			<xs:element name="getOdlukaViewRequest" type="xs:string" />
-			<xs:element name="getOdlukaViewResponse" type="xs:base64Binary" />
+			<xs:element name="getOdlukaViewResponse" type="xs:string" />
 		</xs:schema>
 	</wsdl:types>
 	<wsdl:message name="getOdlukaRequest">

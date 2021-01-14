@@ -31,11 +31,11 @@ public class ZahtevPortImpl implements Zahtev {
 		}
 	}
 
-	public byte[] getZahtevView(java.lang.String getZahtevViewRequest) {
+	public java.lang.String getZahtevView(java.lang.String getZahtevViewRequest) {
 		LOG.info("Executing operation getZahtevView");
 		System.out.println(getZahtevViewRequest);
 		try {
-			byte[] _return = new byte[0];
+			java.lang.String _return = null;
 			return _return;
 		} catch (java.lang.Exception ex) {
 			ex.printStackTrace();
