@@ -48,7 +48,7 @@ public class ZahtevTransformer implements TransformerInterface {
 		return this.docTransformer.generateMetadata(documentId, this.zahtevRDF.retrieve(documentId), type, GEN_PATH);
 	}
 	
-	public String plainPdf(String documentId) {
+	public byte[] plainPdf(String documentId) {
 		return this.docTransformer.plainPdf(this.zahtevExist.load(documentId), XSL_FO_PATH);
 	}
 

@@ -8,21 +8,22 @@ import javax.jws.soap.SOAPBinding;
 import javax.xml.bind.annotation.XmlSeeAlso;
 
 @WebService(targetNamespace = "http://demo.example.com/ws/zahtev", name = "Zahtev")
-@XmlSeeAlso({ObjectFactory.class})
+@XmlSeeAlso({ ObjectFactory.class })
 @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
 public interface Zahtev {
 
-    @WebMethod
-    @WebResult(name = "getZahtevResponse", targetNamespace = "http://demo.example.com/ws/zahtev", partName = "getZahtevResponse")
-    public java.lang.String getZahtev(
-        @WebParam(partName = "getZahtevRequest", name = "getZahtevRequest", targetNamespace = "http://demo.example.com/ws/zahtev")
-        java.lang.String getZahtevRequest
-    );
-    
-    @WebMethod
-    @WebResult(name = "getZahtevViewResponse", targetNamespace = "http://demo.example.com/ws/zahtev", partName = "getZahtevViewResponse")
-    public java.lang.String getZahtevView(
-        @WebParam(partName = "getZahtevViewRequest", name = "getZahtevViewRequest", targetNamespace = "http://demo.example.com/ws/zahtev")
-        java.lang.String getZahtevViewRequest
-    );
+	@WebMethod
+	@WebResult(name = "getZahtevResponse", targetNamespace = "http://demo.example.com/ws/zahtev", partName = "getZahtevResponse")
+	public java.lang.String getZahtev(
+			@WebParam(partName = "getZahtevRequest", name = "getZahtevRequest", targetNamespace = "http://demo.example.com/ws/zahtev") java.lang.String getZahtevRequest);
+
+	@WebMethod
+	@WebResult(name = "getZahtevPdfResponse", targetNamespace = "http://demo.example.com/ws/zahtev", partName = "getZahtevPdfResponse")
+	public byte[] getZahtevPdf(
+			@WebParam(partName = "getZahtevPdfRequest", name = "getZahtevPdfRequest", targetNamespace = "http://demo.example.com/ws/zahtev") java.lang.String getZahtevPdfRequest);
+
+	@WebMethod
+	@WebResult(name = "getZahtevHtmlResponse", targetNamespace = "http://demo.example.com/ws/zahtev", partName = "getZahtevHtmlResponse")
+	public java.lang.String getZahtevHtml(
+			@WebParam(partName = "getZahtevHtmlRequest", name = "getZahtevHtmlRequest", targetNamespace = "http://demo.example.com/ws/zahtev") java.lang.String getZahtevHtmlRequest);
 }

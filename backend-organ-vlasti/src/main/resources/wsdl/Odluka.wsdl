@@ -12,8 +12,10 @@
 			targetNamespace="http://demo.example.com/ws/odluka">
 			<xs:element name="getOdlukaRequest" type="xs:string" />
 			<xs:element name="getOdlukaResponse" type="xs:string" />
-			<xs:element name="getOdlukaViewRequest" type="xs:string" />
-			<xs:element name="getOdlukaViewResponse" type="xs:string" />
+			<xs:element name="getOdlukaHtmlRequest" type="xs:string" />
+			<xs:element name="getOdlukaHtmlResponse" type="xs:string" />
+			<xs:element name="getOdlukaPdfRequest" type="xs:string" />
+			<xs:element name="getOdlukaPdfResponse" type="xs:base64Binary" />
 		</xs:schema>
 	</wsdl:types>
 	<wsdl:message name="getOdlukaRequest">
@@ -24,12 +26,20 @@
 		<wsdl:part name="getOdlukaResponse" element="tns:getOdlukaResponse">
 		</wsdl:part>
 	</wsdl:message>
-	<wsdl:message name="getOdlukaViewRequest">
-		<wsdl:part name="getOdlukaViewRequest" element="tns:getOdlukaViewRequest">
+	<wsdl:message name="getOdlukaHtmlRequest">
+		<wsdl:part name="getOdlukaHtmlRequest" element="tns:getOdlukaHtmlRequest">
 		</wsdl:part>
 	</wsdl:message>
-	<wsdl:message name="getOdlukaViewResponse">
-		<wsdl:part name="getOdlukaViewResponse" element="tns:getOdlukaViewResponse">
+	<wsdl:message name="getOdlukaHtmlResponse">
+		<wsdl:part name="getOdlukaHtmlResponse" element="tns:getOdlukaHtmlResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getOdlukaPdfRequest">
+		<wsdl:part name="getOdlukaPdfRequest" element="tns:getOdlukaPdfRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getOdlukaPdfResponse">
+		<wsdl:part name="getOdlukaPdfResponse" element="tns:getOdlukaPdfResponse">
 		</wsdl:part>
 	</wsdl:message>
 	<wsdl:portType name="Odluka">
@@ -39,10 +49,16 @@
 			<wsdl:output name="getOdlukaResponse" message="tns:getOdlukaResponse">
 			</wsdl:output>
 		</wsdl:operation>
-		<wsdl:operation name="getOdlukaView">
-			<wsdl:input name="getOdlukaViewRequest" message="tns:getOdlukaViewRequest">
+		<wsdl:operation name="getOdlukaHtml">
+			<wsdl:input name="getOdlukaHtmlRequest" message="tns:getOdlukaHtmlRequest">
 			</wsdl:input>
-			<wsdl:output name="getOdlukaViewResponse" message="tns:getOdlukaViewResponse">
+			<wsdl:output name="getOdlukaHtmlResponse" message="tns:getOdlukaHtmlResponse">
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getOdlukaPdf">
+			<wsdl:input name="getOdlukaPdfRequest" message="tns:getOdlukaPdfRequest">
+			</wsdl:input>
+			<wsdl:output name="getOdlukaPdfResponse" message="tns:getOdlukaPdfResponse">
 			</wsdl:output>
 		</wsdl:operation>
 	</wsdl:portType>
@@ -59,12 +75,21 @@
 				<soap:body use="literal" />
 			</wsdl:output>
 		</wsdl:operation>
-		<wsdl:operation name="getOdlukaView">
+		<wsdl:operation name="getOdlukaHtml">
 			<soap:operation soapAction="" style="document" />
-			<wsdl:input name="getOdlukaViewRequest">
+			<wsdl:input name="getOdlukaHtmlRequest">
 				<soap:body use="literal" />
 			</wsdl:input>
-			<wsdl:output name="getOdlukaViewResponse">
+			<wsdl:output name="getOdlukaHtmlResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getOdlukaPdf">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="getOdlukaPdfRequest">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="getOdlukaPdfResponse">
 				<soap:body use="literal" />
 			</wsdl:output>
 		</wsdl:operation>

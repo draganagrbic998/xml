@@ -1,5 +1,13 @@
 package com.example.demo.common;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Base64;
+
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +27,8 @@ import com.example.demo.repository.xml.KorisnikExist;
 import com.example.demo.repository.xml.OdgovorExist;
 import com.example.demo.repository.xml.ResenjeExist;
 import com.example.demo.repository.xml.ZalbaExist;
+import com.example.demo.ws.utils.SOAPDocument;
+import com.example.demo.ws.utils.SOAPService;
 
 @Component
 public class DataInitializator {
@@ -49,8 +59,11 @@ public class DataInitializator {
 	@Autowired
 	private XSLTransformer xslTransformer;
 
+	@Autowired
+	private SOAPService soap;
+	
 	@EventListener(ContextRefreshedEvent.class)
-	public void dataInit() {
+	public void dataInit() throws UnsupportedEncodingException, IOException {
 		
 		this.existManager.dropCollection(KorisnikExist.KORISNIK_COLLECTION);
 		this.existManager.dropCollection(ZalbaExist.ZALBA_COLLECTION);
@@ -90,6 +103,10 @@ public class DataInitializator {
 		model.add(this.xslTransformer.generateMetadata(this.domParser.buildDocumentFromFile(RESENJE3)));
 		this.fusekiManager.save(ResenjeRDF.RESENJE_GRAPH, model);
 
+		String temp = soap.sendSOAPMessage(this.domParser.buildDocument(String.format("<pretraga><broj>%s</broj></pretraga>", 1)), SOAPDocument.zahtev_pdf);
+		byte[] decodedString = Base64.getDecoder().decode(temp);
+		Path file = Paths.get(Constants.GEN_FOLDER + "1.pdf");
+		Files.write(file, decodedString);
 	}
 
 }
