@@ -43,18 +43,7 @@ public class ZahtevPortImpl implements Zahtev {
 		try {
 			String documentId = this.domParser.buildDocument(getZahtevViewRequest)
 					.getElementsByTagName("broj").item(0).getTextContent();
-			String tip = this.domParser.buildDocument(getZahtevViewRequest)
-					.getElementsByTagName("tip").item(0).getTextContent();
-			java.lang.String _return;
-			if (tip.equals("html")) {
-				_return = this.zahtevTransformer.html(documentId);
-			}
-			else {
-				_return = this.domParser.buildXml(this.domParser.buildDocument(String.format("<pdf>%s</pdf>", this.zahtevTransformer.plainPdf(documentId))));
-				System.out.println(_return);
-				_return = "<asd></asd>";
-
-			}
+			java.lang.String _return = this.zahtevTransformer.html(documentId);
 			return _return;
 		} catch (java.lang.Exception ex) {
 			ex.printStackTrace();

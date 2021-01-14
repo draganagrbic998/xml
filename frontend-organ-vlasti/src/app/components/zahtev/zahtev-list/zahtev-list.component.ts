@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDrawer } from '@angular/material/sidenav';
 import { MatTableDataSource } from '@angular/material/table';
+import { Referenca } from 'src/app/models/referenca';
 import { ZahtevDTO } from 'src/app/models/zahtevDTO';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ZahtevService } from 'src/app/services/zahtev/zahtev.service';
@@ -22,9 +23,11 @@ export class ZahtevListComponent implements AfterViewInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatDrawer) drawer: MatDrawer;
-  columns: string[] = ['tipZahteva', 'datum', 'status', 'dokumenti', 'metapodaci', 'akcije'];
+  columns: string[] = ['tip', 'datum', 'status', 'dokumenti', 'metapodaci', 'akcije'];
+  refColumns: string[] = ['tip', 'dokumenti'];
   zahtevi: MatTableDataSource<ZahtevDTO> = new MatTableDataSource<ZahtevDTO>([]);
   fetchPending = true;
+  selectedZahtev: ZahtevDTO;
 
   naprednaForma: FormGroup = new FormGroup({
     datum: new FormControl(''),
@@ -70,7 +73,8 @@ export class ZahtevListComponent implements AfterViewInit {
         this.zahtevi = new MatTableDataSource<ZahtevDTO>(zahtevi);
         this.fetchPending = false;
       },
-      () => {
+      (e) => {
+        console.log(e);
         this.fetchPending = false;
       }
     );

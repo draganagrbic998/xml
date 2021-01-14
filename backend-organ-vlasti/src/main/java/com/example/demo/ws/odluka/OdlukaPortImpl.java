@@ -50,15 +50,7 @@ public class OdlukaPortImpl implements Odluka {
         try {
 			String documentId = this.domParser.buildDocument(getOdlukaViewRequest)
 					.getElementsByTagName("broj").item(0).getTextContent();
-			String tip = this.domParser.buildDocument(getOdlukaViewRequest)
-					.getElementsByTagName("tip").item(0).getTextContent();
-			java.lang.String _return;
-			if (tip.equals("html")) {
-				_return = this.odlukaTransformer.html(documentId);
-			}
-			else {
-				_return = this.odlukaTransformer.plainPdf(documentId);
-			}
+			java.lang.String _return = this.odlukaTransformer.html(documentId);;
             return _return;
         } catch (java.lang.Exception ex) {
             ex.printStackTrace();

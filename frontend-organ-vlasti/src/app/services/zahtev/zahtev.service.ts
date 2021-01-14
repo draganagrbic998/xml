@@ -8,6 +8,8 @@ import { ZahtevDTO } from 'src/app/models/zahtevDTO';
 import { map } from 'rxjs/operators';
 import { XonomyService } from '../xonomy/xonomy.service';
 import { ZahtevPretraga } from 'src/app/models/zahtevPretraga';
+import { Referenca } from 'src/app/models/referenca';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Injectable({
   providedIn: 'root'
@@ -68,11 +70,24 @@ export class ZahtevService {
     const zahteviDTO: ZahtevDTO[] = [];
 
     for (let i = 0; i < zahtevi.length; ++i){
+      const zahtev = zahtevi.item(i);
+      const reference = zahtev.getElementsByTagNameNS(OSNOVA, 'ref');
+      const referenceDTO: Referenca[] = [];
+      // tslint:disable-next-line: prefer-for-of
+      for (let j = 0; j < reference.length; ++j){
+        referenceDTO.push({
+          tip: reference.item(j).getAttribute('tip'),
+          broj: reference.item(j).textContent
+        });
+      }
+      //console.log(referenceDTO);
+
       zahteviDTO.push({
-        tipZahteva: zahtevi.item(i).getElementsByTagNameNS(ZAHTEV, 'tipZahteva')[0].textContent,
-        broj: +zahtevi.item(i).getElementsByTagNameNS(OSNOVA, 'broj')[0].textContent,
-        datum: zahtevi.item(i).getElementsByTagNameNS(OSNOVA, 'datum')[0].textContent,
-        status: zahtevi.item(i).getElementsByTagNameNS(ZAHTEV, 'status')[0].textContent
+        tipZahteva: zahtev.getElementsByTagNameNS(ZAHTEV, 'tipZahteva')[0].textContent,
+        broj: +zahtev.getElementsByTagNameNS(OSNOVA, 'broj')[0].textContent,
+        datum: zahtev.getElementsByTagNameNS(OSNOVA, 'datum')[0].textContent,
+        status: zahtev.getElementsByTagNameNS(ZAHTEV, 'status')[0].textContent,
+        reference: new MatTableDataSource<Referenca>(referenceDTO)
       });
     }
 

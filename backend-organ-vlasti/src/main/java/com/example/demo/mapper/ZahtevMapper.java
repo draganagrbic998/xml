@@ -1,6 +1,7 @@
 package com.example.demo.mapper;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,6 +18,7 @@ import com.example.demo.common.MyException;
 import com.example.demo.common.Namespaces;
 import com.example.demo.exist.ExistManager;
 import com.example.demo.parser.DOMParser;
+import com.example.demo.repository.rdf.ZahtevRDF;
 import com.example.demo.repository.xml.KorisnikExist;
 import com.example.demo.repository.xml.ZahtevExist;
 import com.example.demo.service.KorisnikService;
@@ -39,6 +41,9 @@ public class ZahtevMapper implements MapperInterface {
 	
 	@Autowired
 	private ExistManager existManager;
+	
+	@Autowired
+	private ZahtevRDF zahtevRDF;
 	
 	private static final String STUB_FILE = Constants.STUB_FOLDER + "zahtev.xml";
 	
@@ -86,18 +91,41 @@ public class ZahtevMapper implements MapperInterface {
 			while (it.hasMoreResources()) {
 				XMLResource resource = (XMLResource) it.nextResource();
 				Document document = this.domParser.buildDocument(resource.getContent().toString());
+				Node broj = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0);
 				Node zahtev = zahteviDocument.createElementNS(Namespaces.ZAHTEV, "Zahtev");
 				zahtev.appendChild(zahteviDocument.importNode(document.getElementsByTagNameNS(Namespaces.ZAHTEV, "tipZahteva").item(0), true));
-				zahtev.appendChild(zahteviDocument.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0), true));
+				zahtev.appendChild(zahteviDocument.importNode(broj, true));
 				zahtev.appendChild(zahteviDocument.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
 				zahtev.appendChild(zahteviDocument.importNode(document.getElementsByTagNameNS(Namespaces.ZAHTEV, "status").item(0), true));
-				zahtevi.appendChild(zahtev);			
+			
+				Node reference = zahteviDocument.createElementNS(Namespaces.OSNOVA, "Reference");
+				this.addReference(zahteviDocument, reference, this.zahtevRDF.odluke(broj.getTextContent()), "odluke");
+				this.addReference(zahteviDocument, reference, this.zahtevRDF.zalbe(broj.getTextContent()), "zalbe");
+				this.addReference(zahteviDocument, reference, this.zahtevRDF.resenja(broj.getTextContent()), "resenja");
+				zahtev.appendChild(reference);
+
+				zahtevi.appendChild(zahtev);						
+
 			}
+			
 			
 			return this.domParser.buildXml(zahteviDocument);
 		}
 		catch(Exception e) {
+			e.printStackTrace();
 			throw new MyException(e);
 		}
 	}
+	
+	public void addReference(Document document, Node reference, List<Integer> brojevi, String tip) {
+		
+		for (int broj: brojevi) {
+			Element referenca = document.createElementNS(Namespaces.OSNOVA, "ref");
+			referenca.setTextContent(broj + "");
+			referenca.setAttribute("tip", tip);
+			reference.appendChild(referenca);
+		}
+		
+	}
+	
 }

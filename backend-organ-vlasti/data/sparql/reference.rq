@@ -1,0 +1,3 @@
+SELECT ?doc FROM <%s> WHERE {
+  ?doc <%s> <%s> .
+} 

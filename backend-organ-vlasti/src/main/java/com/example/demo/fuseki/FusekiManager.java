@@ -23,7 +23,6 @@ import org.springframework.stereotype.Component;
 
 import com.example.demo.common.Constants;
 import com.example.demo.common.MyException;
-import com.example.demo.common.Namespaces;
 
 @Component
 public class FusekiManager {
@@ -32,6 +31,7 @@ public class FusekiManager {
 	private FusekiAuthentication authUtilities;
 	
 	private static final String RETRIEVE_QUERY = Constants.SPARQL_FOLDER + "retrieve.rq";
+	public static final String REFERENCE_QUERY = Constants.SPARQL_FOLDER + "reference.rq";
 	
 	public void save(String graphUri, Model model) {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -61,7 +61,7 @@ public class FusekiManager {
 		processor.execute();
 	}
 	
-	public String search(String sparql) {
+	public List<Integer> search(String sparql, String prefix) {
 		QueryExecution query = QueryExecutionFactory.sparqlService(this.authUtilities.getQuery(), sparql);
 		ResultSet results = query.execSelect();
 		List<Integer> brojevi = new ArrayList<>();
@@ -72,13 +72,14 @@ public class FusekiManager {
 		    	String varName = variableBindings.next();
 		    	RDFNode varValue = querySolution.get(varName);
 		    	if (varName.equals("doc")) {
-		    		int value = Integer.parseInt(varValue.toString().replace(Namespaces.ZAHTEV + "/", ""));
+		    		int value = Integer.parseInt(varValue.toString().replace(prefix, ""));
 		    		if (!brojevi.contains(value)) {
 		    			brojevi.add(value);
 		    		}
 		    	}
 		    }
 		}
+		/*
 		String xpathExp = "(";
 		for (int i = 0; i < brojevi.size(); ++i) {
 			if (i == 0) {
@@ -88,7 +89,8 @@ public class FusekiManager {
 			}
 		}
 		xpathExp += ")";
-		return xpathExp;
+		return xpathExp;*/
+		return brojevi;
 	}
 	
 	public void dropAll() {
