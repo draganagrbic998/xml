@@ -4,22 +4,7 @@
   } ,
   "results": {
     "bindings": [
-      {
-        "predicate": { "type": "uri" , "value": "https://github.com/draganagrbic998/xml/predikat/izdatoU" } ,
-        "object": { "type": "literal" , "value": "Novi Sad" }
-      } ,
-      {
-        "predicate": { "type": "uri" , "value": "https://github.com/draganagrbic998/xml/predikat/datum" } ,
-        "object": { "type": "literal" , "value": "2021-01-11" }
-      } ,
-      {
-        "predicate": { "type": "uri" , "value": "https://github.com/draganagrbic998/xml/predikat/podneo" } ,
-        "object": { "type": "uri" , "value": "https://github.com/draganagrbic998/xml/korisnik/sluzbenik@gmail.com" }
-      } ,
-      {
-        "predicate": { "type": "uri" , "value": "https://github.com/draganagrbic998/xml/predikat/zalba" } ,
-        "object": { "type": "uri" , "value": "https://github.com/draganagrbic998/xml/zalba1" }
-      }
+      
     ]
   }
 }

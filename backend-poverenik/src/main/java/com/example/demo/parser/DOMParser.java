@@ -30,7 +30,6 @@ public class DOMParser {
 	public DOMParser() {
 		super();
 		this.builderFactory = DocumentBuilderFactory.newInstance();
-		//this.builderFactory.setValidating(true);
 		this.builderFactory.setNamespaceAware(true);
 		this.builderFactory.setIgnoringComments(true);
 		this.builderFactory.setIgnoringElementContentWhitespace(true);

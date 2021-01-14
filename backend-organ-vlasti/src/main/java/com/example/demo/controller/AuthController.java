@@ -20,7 +20,7 @@ public class AuthController {
 			
 	@Autowired
 	private KorisnikService korisnikService;
-	
+
 	@PostMapping(value = "/login", consumes = MediaType.TEXT_XML_VALUE, produces = MediaType.TEXT_XML_VALUE)
 	public ResponseEntity<String> login(@RequestBody String xml) {
 		return new ResponseEntity<>(this.korisnikService.login(xml), HttpStatus.OK);

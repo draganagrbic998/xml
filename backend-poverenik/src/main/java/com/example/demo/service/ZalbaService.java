@@ -99,7 +99,7 @@ public class ZalbaService implements ServiceInterface {
 		zalba.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.prosledjeno + "");
 		Node datumProsledjivanja = document.createElementNS(Namespaces.ZALBA, "zalba:datumProsledjivanja");
 		datumProsledjivanja.setTextContent(Constants.sdf.format(new Date()));
-		zalba.insertBefore(datumProsledjivanja, document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0));
+		zalba.insertBefore(datumProsledjivanja, document.getElementsByTagNameNS(Namespaces.ZALBA, "PodaciZahteva").item(0));
 		this.zalbaExist.update(broj, document);
 		this.soapService.sendSOAPMessage(null, document, SOAPDocument.zalba);
 	}

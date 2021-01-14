@@ -35,6 +35,11 @@ export class IzvestajListComponent implements AfterViewInit {
     return this.authService.getUser()?.uloga;
   }
 
+  convertDate(date: string): string{
+    const array: string[] = date.split('-');
+    return `${array[2]}.${array[1]}.${array[0]}.`;
+  }
+
   ngAfterViewInit(): void {
     this.izvestaji.paginator = this.paginator;
     this.izvestajService.list().subscribe(

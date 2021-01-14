@@ -39,18 +39,14 @@ xmlns:odluka="https://github.com/draganagrbic998/xml/odluka">
 						text-indent: 40px;
 					}
 					.line{
-						display: block; 
 						height: 17pt; 
-						width: 100%; 
-						border-bottom: 1px solid black;
+						border-bottom: 1px dotted black;
+						word-break: break-all;
 					}
 					.flex{
 						display: flex; 
 						flex-direction: row; 
 						justify-content: space-between;
-					}
-					.details{
-						word-break: break-all;
 					}
 					.big{
 						font-size: 20px;
@@ -149,14 +145,14 @@ xmlns:odluka="https://github.com/draganagrbic998/xml/odluka">
 						год., којим сте тражили увид у документ/е са информацијама о / у вези са:
 					</p>
 					
-					<p class="details">
-						<span class="line">
+					<p>
+						<p class="line">
 				            <xsl:apply-templates select="osnova:Detalji"></xsl:apply-templates>
-		               	</span>
-						<span class="line">
-		                </span>
-						<span class="line">
-		                </span>				
+		               	</p>
+						<p class="line">
+		                </p>
+						<p class="line">
+		                </p>				
 		            </p>
 					
 					<p class="center">

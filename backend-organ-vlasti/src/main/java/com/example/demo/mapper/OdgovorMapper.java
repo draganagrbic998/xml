@@ -15,16 +15,11 @@ import org.xmldb.api.modules.XMLResource;
 import com.example.demo.common.Constants;
 import com.example.demo.common.MyException;
 import com.example.demo.common.Namespaces;
-import com.example.demo.common.Prefixes;
 import com.example.demo.parser.DOMParser;
 import com.example.demo.repository.xml.ZalbaExist;
-import com.example.demo.service.KorisnikService;
 
 @Component
 public class OdgovorMapper implements MapperInterface {
-
-	@Autowired
-	private KorisnikService korisnikService;
 
 	@Autowired
 	private ZalbaExist zalbaExist;
@@ -32,27 +27,28 @@ public class OdgovorMapper implements MapperInterface {
 	@Autowired
 	private DOMParser domParser;
 	
+	private static final String STUB_FILE = Constants.STUB_FOLDER + "odgovor.xml";
+	
 	@Override
 	public Document map(String xml) {
-		Document document = this.domParser.buildDocument(xml);
+		Document dto = this.domParser.buildDocument(xml);
+		String broj = dto.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
+		Document document = this.domParser.buildDocumentFromFile(STUB_FILE);
 		Element odgovor = (Element) document.getElementsByTagNameNS(Namespaces.ODGOVOR, "Odgovor").item(0);
-		String broj = odgovor.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
+		odgovor.setAttribute("about", Namespaces.ODGOVOR + "/" + broj);
 		Element zalba = (Element) this.zalbaExist.load(broj).getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").item(0);
 		DocumentFragment documentFragment = document.createDocumentFragment();
-		
-		Node datum = document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0);
-		datum.setTextContent(Constants.sdf.format(new Date()));
-		Element osoba = (Element) document.importNode(zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "Osoba").item(0), true);
-		osoba.getElementsByTagNameNS(Namespaces.OSNOVA, "potpis").item(0).setTextContent(this.korisnikService.currentUser().getOsoba().getPotpis());
-		Node organVlasti = document.importNode(zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "OrganVlasti").item(0), true);		
-		documentFragment.appendChild(osoba);
-		documentFragment.appendChild(organVlasti);
-		odgovor.insertBefore(documentFragment, document.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0));	
-
+				
+		odgovor.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).setTextContent(broj);
+		odgovor.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).setTextContent(Constants.sdf.format(new Date()));
+		documentFragment.appendChild(document.importNode(zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "Osoba").item(0), true));
+		documentFragment.appendChild(document.importNode(zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "OrganVlasti").item(0), true));
+		documentFragment.appendChild(document.importNode(dto.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0), true));
 		Node datumZalbe = document.getElementsByTagNameNS(Namespaces.ODGOVOR, "datumZalbe").item(0);
+		odgovor.insertBefore(documentFragment, datumZalbe);
 		datumZalbe.setTextContent(zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).getTextContent());
-		odgovor.appendChild(datumZalbe);
-		odgovor.setAttribute("about", Prefixes.ODGOVOR_PREFIX + broj);
+		//osoba.getElementsByTagNameNS(Namespaces.OSNOVA, "potpis").item(0).setTextContent(this.korisnikService.currentUser().getOsoba().getPotpis());
+		odgovor.setAttribute("href", Namespaces.KORISNIK + "/" + zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "mejl").item(0).getTextContent());
 		return document;
 	}
 

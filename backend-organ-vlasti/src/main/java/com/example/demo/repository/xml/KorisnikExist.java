@@ -28,6 +28,11 @@ public class KorisnikExist implements ExistInterface {
 	}
 	
 	@Override
+	public void delete(String documentId) {
+		this.existManager.delete(KORISNIK_COLLECTION, documentId);
+	}
+	
+	@Override
 	public Document load(String documentId) {
 		return this.existManager.load(KORISNIK_COLLECTION, documentId);
 	}

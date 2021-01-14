@@ -206,4 +206,24 @@ public class ExistManager {
 		}
 	}
 	
+	public void delete(String collectionId, String documentId) {
+		this.createConnection();
+		Collection collection = null;
+		try {
+			collection = this.getCollection(collectionId, 0);
+			collection.removeResource(collection.getResource(documentId));
+		}
+		catch(Exception e) {
+			throw new MyException(e);
+		}
+		finally {
+			try {
+				collection.close();
+			}
+			catch(Exception e) {
+				throw new MyException(e);
+			}
+		}
+	}
+	
 }

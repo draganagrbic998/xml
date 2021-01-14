@@ -14,7 +14,7 @@
 
       <ng-container matColumnDef="datum">
         <th mat-header-cell *matHeaderCellDef>Datum podnošenja</th>
-        <td mat-cell *matCellDef="let izvestaj"> {{izvestaj.datum}} </td>
+        <td mat-cell *matCellDef="let izvestaj"> {{convertDate(izvestaj.datum)}} </td>
       </ng-container>
 
       <ng-container matColumnDef="dokumenti">

@@ -125,20 +125,20 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
            			<fo:block>
 						<xsl:value-of select="osnova:Detalji"></xsl:value-of>
 					</fo:block>					
-					<fo:block-container position="absolute" top="11.2cm">
-              			<fo:block border-bottom="1px dotted black">
-              			</fo:block>
-              		</fo:block-container>
-              		<fo:block-container position="absolute" top="11.7cm">
+					<fo:block-container position="absolute" top="11.7cm">
               			<fo:block border-bottom="1px dotted black">
               			</fo:block>
               		</fo:block-container>
               		<fo:block-container position="absolute" top="12.2cm">
               			<fo:block border-bottom="1px dotted black">
+              			</fo:block>
+              		</fo:block-container>
+              		<fo:block-container position="absolute" top="12.7cm">
+              			<fo:block border-bottom="1px dotted black">
 	           			</fo:block>              			
               		</fo:block-container>
 					
-					<fo:block-container position="absolute" top="12.2cm">
+					<fo:block-container position="absolute" top="12.7cm">
 						<fo:block>
 							јер није заснована на Закону о слободном приступу информацијама од јавног значаја.
 						</fo:block>
@@ -165,7 +165,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 										&#160;
 										&#160;
 									</fo:block>
-									У <fo:inline border-bottom="1px dotted black">&#160;<xsl:variable select="osnova:Gradjanin/osnova:Adresa/osnova:mesto"></xsl:variable>&#160;</fo:inline>,
+									У <fo:inline border-bottom="1px dotted black">&#160;<xsl:value-of select="osnova:Gradjanin/osnova:Adresa/osnova:mesto"></xsl:value-of>&#160;</fo:inline>,
 								</fo:block>
 								<fo:block margin-top="5px">
 									дана 

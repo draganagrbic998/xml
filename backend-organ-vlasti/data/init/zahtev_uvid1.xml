@@ -1,8 +1,7 @@
-<zahtev:Zahtev xmlns="https://github.com/draganagrbic998/xml/osnova" xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev" xmlns:pred="https://github.com/draganagrbic998/xml/predikat/" xmlns:xs="http://www.w3.org/2001/XMLSchema#" about="https://github.com/draganagrbic998/xml/zahtev/1" href="https://github.com/draganagrbic998/xml/korisnik/draganaasd@gmail.com" rel="pred:podneo">
-        <broj>1</broj>
-    <datum datatype="xs:string" property="pred:datum">2021-01-11</datum>
-        
-      <Gradjanin>
+<zahtev:Zahtev xmlns="https://github.com/draganagrbic998/xml/osnova" xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev" xmlns:pred="https://github.com/draganagrbic998/xml/predikat/" xmlns:xs="http://www.w3.org/2001/XMLSchema#" about="https://github.com/draganagrbic998/xml/zahtev/1" href="https://github.com/draganagrbic998/xml/korisnik/draganaasd@gmail.com" rel="pred:vlasnik">
+	<broj>1</broj>
+	<datum datatype="xs:string" property="pred:datum">2021-01-13</datum>
+	<Gradjanin>
         <Osoba>
         <mejl>draganaasd@gmail.com</mejl>
         <ime>Dragana</ime>
@@ -16,15 +15,14 @@
     </Adresa>
     </Gradjanin>
     <OrganVlasti>
-    <naziv>Naziv organa vlasti</naziv>
-    <Adresa>
-        <mesto datatype="xs:string" property="pred:izdatoU">Novi Sad</mesto>
-        <ulica>Lasla Gala</ulica>
-        <broj>23</broj>
-    </Adresa>
-</OrganVlasti>
-    <Detalji>some text<bold> some bold text </bold>some text<italic> some italic text </italic>some text</Detalji>
-      <zahtev:tipZahteva datatype="xs:string" property="pred:tip">uvid</zahtev:tipZahteva>
-    
-      <zahtev:status>odobreno</zahtev:status>
+	    <naziv datatype="xs:string" property="pred:organVlasti">Naziv organa vlasti</naziv>
+	    <Adresa>
+	        <mesto datatype="xs:string" property="pred:izdatoU">Novi Sad</mesto>
+	        <ulica>Lasla Gala</ulica>
+	        <broj>23</broj>
+	    </Adresa>
+	</OrganVlasti>
+    <Detalji/>
+    <zahtev:status datatype="xs:string" property="pred:status">odobreno</zahtev:status>
+	<zahtev:tipZahteva datatype="xs:string" property="pred:tip">uvid</zahtev:tipZahteva>
 </zahtev:Zahtev>

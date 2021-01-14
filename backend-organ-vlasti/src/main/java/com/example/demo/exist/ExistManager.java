@@ -71,7 +71,6 @@ public class ExistManager {
 			collection = this.getCollection(collectionId, 0);
 			this.schemaValidator.validate(document, schemaPath);
 			if (documentId == null) {
-				System.out.println("USLA");
 				documentId = this.nextDocumentId(collectionId);
 			}
 			resource = (XMLResource) collection.createResource(documentId, XMLResource.RESOURCE_TYPE);
@@ -193,6 +192,26 @@ public class ExistManager {
 			for (String documentId: collection.listResources()) {
 				collection.removeResource(collection.getResource(documentId));
 			}
+		}
+		catch(Exception e) {
+			throw new MyException(e);
+		}
+		finally {
+			try {
+				collection.close();
+			}
+			catch(Exception e) {
+				throw new MyException(e);
+			}
+		}
+	}
+	
+	public void delete(String collectionId, String documentId) {
+		this.createConnection();
+		Collection collection = null;
+		try {
+			collection = this.getCollection(collectionId, 0);
+			collection.removeResource(collection.getResource(documentId));
 		}
 		catch(Exception e) {
 			throw new MyException(e);

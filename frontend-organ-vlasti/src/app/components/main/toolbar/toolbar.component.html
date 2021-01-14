@@ -1,6 +1,11 @@
 <mat-toolbar color="primary" class="mat-elevation-z24">
     <span>
         <button 
+        mat-icon-button 
+        (click)="drawerToggle()">
+            <mat-icon matTooltip="pretraga">menu</mat-icon>
+        </button>
+        <button 
         matTooltip="Zahtev za informacijama od javnog značaja"
         *ngIf="!auth && uloga === 'gradjanin'"
         mat-button
@@ -27,6 +32,13 @@
         mat-button
         [routerLink]="'/zalba-list'">
             Žalbe
+        </button>
+        <button 
+        matTooltip="Lista odgovora na žalbe"
+        *ngIf="!auth && uloga === 'sluzbenik'"
+        mat-button
+        [routerLink]="'/odgovor-list'">
+            Odgovori
         </button>
         <button 
         matTooltip="Lista izdatih rešenja"

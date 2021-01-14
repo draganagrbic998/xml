@@ -42,7 +42,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+import { SpacerContainerComponent } from './components/layout/spacer-container/spacer-container.component';
+import { OdgovorListComponent } from './components/zalba/odgovor-list/odgovor-list.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +69,9 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
     ZalbaListComponent,
     ResenjeListComponent,
     OdgovorFormComponent,
-    IzvestajListComponent
+    IzvestajListComponent,
+    SpacerContainerComponent,
+    OdgovorListComponent
   ],
   imports: [
     BrowserModule,
@@ -90,6 +96,8 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
     MatMenuModule,
     MatTableModule,
     MatPaginatorModule,
+    MatSidenavModule,
+    MatTooltipModule,
     NgxExtendedPdfViewerModule
   ],
   providers: [

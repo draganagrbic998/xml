@@ -1,0 +1,12 @@
+<izvestaj:Izvestaj
+xmlns="https://github.com/draganagrbic998/xml/osnova"
+xmlns:izvestaj="https://github.com/draganagrbic998/xml/izvestaj"
+xmlns:pred="https://github.com/draganagrbic998/xml/predikat/"
+xmlns:xs="http://www.w3.org/2001/XMLSchema#"
+about=""
+rel="pred:vlasnik"
+href="">
+<broj></broj>
+<datum property="pred:datum" datatype="xs:string"></datum>
+<izvestaj:godina property="pred:godina" datatype="xs:string"></izvestaj:godina>
+</izvestaj:Izvestaj>

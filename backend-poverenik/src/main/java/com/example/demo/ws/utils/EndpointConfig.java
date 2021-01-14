@@ -24,14 +24,14 @@ public class EndpointConfig {
 	private IzvestajPortImpl ipi;
 
 	@Bean
-	public Endpoint createOdgovorEndpoint() {
+	public Endpoint odgovorEndpoint() {
 		EndpointImpl endpoint = new EndpointImpl(bus, opi);
 		endpoint.publish("/odgovor");
 		return endpoint;
 	}
 
 	@Bean
-	public Endpoint createIzvestajEndpoint() {
+	public Endpoint izvestajEndpoint() {
 		EndpointImpl endpoint = new EndpointImpl(bus, ipi);
 		endpoint.publish("/izvestaj");
 		return endpoint;

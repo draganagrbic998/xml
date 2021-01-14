@@ -232,7 +232,7 @@ xmlns:resenje="https://github.com/draganagrbic998/xml/resenje">
 							и затражио да се изјасни о наводима жалбе, посебно о разлозима непоступања у законском 
 							року по поднетом захтеву у складу са одредбама члана 16. ст.1-9. или ст. 10. Закона, 
 							остављајући рок од осам 
-							дана</xsl:if><xsl:if test="resenje:Odbrana/osnova:Detalji">.</xsl:if>	
+							дана</xsl:if>
 	 					<xsl:if test="not(resenje:Odbrana/osnova:Detalji)">
 							, поводом чега није добио одговор.
 						</xsl:if>	

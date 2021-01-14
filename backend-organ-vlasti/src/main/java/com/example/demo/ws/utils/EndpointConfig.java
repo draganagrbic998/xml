@@ -32,28 +32,28 @@ public class EndpointConfig {
 	private OdlukaPortImpl opi;
 	
 	@Bean
-	public Endpoint createZalbaEndpoint() {
+	public Endpoint zalbaEndpoint() {
 		EndpointImpl endpoint = new EndpointImpl(bus, zlpi);
 		endpoint.publish("/zalba");
 		return endpoint;
 	}
 	
 	@Bean
-	public Endpoint createResenjeEndpoint() {
+	public Endpoint resenjeEndpoint() {
 		EndpointImpl endpoint = new EndpointImpl(bus, rpi);
 		endpoint.publish("/resenje");
 		return endpoint;
 	}
 	
 	@Bean
-	public Endpoint getZahtevEndpoint() {
+	public Endpoint zahtevEndpoint() {
 		EndpointImpl endpoint = new EndpointImpl(bus, zhpi);
 		endpoint.publish("/zahtev");
 		return endpoint;
 	}
 
 	@Bean
-	public Endpoint getOdlukaEndpoint() {
+	public Endpoint odlukaEndpoint() {
 		EndpointImpl endpoint = new EndpointImpl(bus, opi);
 		endpoint.publish("/odluka");
 		return endpoint;

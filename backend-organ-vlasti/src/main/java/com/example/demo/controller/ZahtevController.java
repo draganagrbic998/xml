@@ -28,6 +28,12 @@ public class ZahtevController {
 	
 	@Autowired
 	private ZahtevTransformer zahtevTransformer;
+	
+	@PostMapping(value="advanced_search", consumes = MediaType.TEXT_XML_VALUE, produces = MediaType.TEXT_XML_VALUE)
+	@PreAuthorize("hasAuthority('sluzbenik')")
+	public ResponseEntity<String> advancedSearch(@RequestBody String xml) {		
+		return new ResponseEntity<>(this.zahtevService.advancedSearch(xml), HttpStatus.OK);
+	}
 				
 	@PostMapping(consumes = MediaType.TEXT_XML_VALUE)
 	@PreAuthorize("hasAuthority('gradjanin')")

@@ -11,5 +11,8 @@ public class Namespaces {
 	public static final String ODGOVOR = "https://github.com/draganagrbic998/xml/odgovor";
 	public static final String RESENJE = "https://github.com/draganagrbic998/xml/resenje";
 	public static final String IZVESTAJ = "https://github.com/draganagrbic998/xml/izvestaj";
+	
+	public static final String KORISNIK = "https://github.com/draganagrbic998/xml/korisnik";
+	public static final String PREDIKAT = "https://github.com/draganagrbic998/xml/predikat/";
 
 }

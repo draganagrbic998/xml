@@ -8,20 +8,17 @@
         <xs:complexContent>
             <xs:extension base="osnova:TPodnosenje">
                 <xs:sequence>
-                    <xs:element minOccurs="0" name="datumProsledjivanja" type="xs:date"/>
                     <xs:element name="status">
-                        <xs:simpleType>
-                            <xs:restriction base="xs:string">
-                                <xs:enumeration value="cekanje"/>
-                                <xs:enumeration value="prosledjeno"/>
-                                <xs:enumeration value="odgovoreno"/>
-                                <xs:enumeration value="odustato"/>
-                                <xs:enumeration value="ispravljeno"/>
-                                <xs:enumeration value="obustavljeno"/>
-                                <xs:enumeration value="reseno"/>
-                            </xs:restriction>
-                        </xs:simpleType>
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="zalba:TStatus">
+                                    <xs:attribute name="property" type="osnova:TRequiredString"/>
+                                    <xs:attribute name="datatype" type="osnova:TRequiredString"/>
+                                </xs:extension>
+                            </xs:simpleContent>
+                        </xs:complexType>
                     </xs:element>
+                    <xs:element minOccurs="0" name="datumProsledjivanja" type="xs:date"/>
                     <xs:element name="PodaciZahteva" type="osnova:TPodaci"/>
                 </xs:sequence>
             </xs:extension>
@@ -55,4 +52,15 @@
         </xs:complexContent>
     </xs:complexType>
     <xs:element name="Zalba" type="zalba:TZalba"/>
+    <xs:simpleType name="TStatus">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="cekanje"/>
+            <xs:enumeration value="prosledjeno"/>
+            <xs:enumeration value="obavesteno"/>
+            <xs:enumeration value="odgovoreno"/>
+            <xs:enumeration value="odustato"/>
+            <xs:enumeration value="obustavljeno"/>
+            <xs:enumeration value="reseno"/>
+        </xs:restriction>
+    </xs:simpleType>
 </xs:schema>

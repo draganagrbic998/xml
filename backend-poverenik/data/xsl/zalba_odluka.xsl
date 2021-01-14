@@ -36,18 +36,14 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 						text-indent: 40px;
 					}
 					.line{
-						display: inline-block; 
-						height: 13pt; 
-						width: 100%; 
-						border-bottom: 1px dotted black;
+						height: 17pt; 
+						border-bottom: 1px solid black;
+						word-break: break-all;
 					}
 					.flex{
 						display: flex; 
 						flex-direction: row; 
 						justify-content: space-between;
-					}
-					.details{
-						word-break: break-all;
 					}
 					.small{
 						font-size: 13px;
@@ -144,16 +140,16 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 						слободан приступ информацијама од јавног значаја. Oдлуку побијам у целости, односно у делу којим
 					</p>
 	
-					<p class="details">
-						<span class="line">
+					<p>
+						<p class="line">
 							<xsl:copy-of select="osnova:Detalji"></xsl:copy-of>
-		               	</span>
-						<span class="line">
+		               	</p>
+						<p class="line">
 						
-		                </span>
-						<span class="line">
+		                </p>
+						<p class="line">
 						
-		                </span>			
+		                </p>			
 		            </p>				
 					
 					<p>

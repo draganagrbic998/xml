@@ -2,12 +2,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { OSNOVA, RESENJE, XS } from 'src/app/constants/namespaces';
-import { KORISNIK, PREDIKAT, ZALBA } from 'src/app/constants/prefixes';
+import { OSNOVA, RESENJE } from 'src/app/constants/namespaces';
 import { Resenje } from 'src/app/models/resenje';
 import { ResenjeDTO } from 'src/app/models/resenjeDTO';
 import { environment } from 'src/environments/environment';
-import { AuthService } from '../auth/auth.service';
 import { XonomyService } from '../xonomy/xonomy.service';
 
 @Injectable({
@@ -17,36 +15,19 @@ export class ResenjeService {
 
   constructor(
     private http: HttpClient,
-    private xonomyService: XonomyService,
-    private authService: AuthService
+    private xonomyService: XonomyService
   ) { }
 
   private readonly API_RESENJA = `${environment.baseUrl}/${environment.apiResenja}`;
 
-  private dateToString(date: Date): string {
-    return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}.`;
-  }
-
   private resenjeToXml(brojZalbe: number, resenje: Resenje): string{
     return `
       <resenje:Resenje
-      about=""
-      rel="pred:podneo"
-      href="${KORISNIK}${this.authService.getUser().mejl}"
-      xmlns:xs="${XS}"
-      xmlns:pred="${PREDIKAT}"
       xmlns="${OSNOVA}"
       xmlns:resenje="${RESENJE}">
-        <datum property="pred:datum" datatype="xs:string">${this.dateToString(new Date())}</datum>
         <resenje:status property="pred:tip" datatype="xs:string">${resenje.status}</resenje:status>
         ${resenje.odluka}
-        <resenje:PodaciZahteva rel="pred:zahtev" href="">
-        </resenje:PodaciZahteva>
-        <resenje:PodaciZalbe>
-          <resenje:brojZalbe rel="pred:zalba" href="${ZALBA}${brojZalbe}">${brojZalbe}</resenje:brojZalbe>
-        </resenje:PodaciZalbe>
-        <resenje:PodaciOdluke rel="pred:odluka" href="">
-        </resenje:PodaciOdluke>
+        <resenje:brojZalbe>${brojZalbe}</resenje:brojZalbe>
       </resenje:Resenje>
     `;
 

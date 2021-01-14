@@ -6,7 +6,7 @@
     "bindings": [
       {
         "predicate": { "type": "uri" , "value": "https://github.com/draganagrbic998/xml/predikat/tip" } ,
-        "object": { "type": "literal" , "value": "odbijeno" }
+        "object": { "type": "literal" , "value": "odobreno" }
       } ,
       {
         "predicate": { "type": "uri" , "value": "https://github.com/draganagrbic998/xml/predikat/izdatoU" } ,
@@ -19,6 +19,10 @@
       {
         "predicate": { "type": "uri" , "value": "https://github.com/draganagrbic998/xml/predikat/datum" } ,
         "object": { "type": "literal" , "value": "2021-01-11" }
+      } ,
+      {
+        "predicate": { "type": "uri" , "value": "https://github.com/draganagrbic998/xml/predikat/datum" } ,
+        "object": { "type": "literal" , "value": "2021-01-12" }
       } ,
       {
         "predicate": { "type": "uri" , "value": "https://github.com/draganagrbic998/xml/predikat/podneo" } ,

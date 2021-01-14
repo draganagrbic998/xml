@@ -7,10 +7,10 @@
   <results>
     <result>
       <binding name="predicate">
-        <uri>https://github.com/draganagrbic998/xml/predikat/tip</uri>
+        <uri>https://github.com/draganagrbic998/xml/predikat/organVlasti</uri>
       </binding>
       <binding name="object">
-        <literal>odobreno</literal>
+        <literal>Naziv organa vlasti</literal>
       </binding>
     </result>
     <result>
@@ -19,6 +19,14 @@
       </binding>
       <binding name="object">
         <literal>Novi Sad</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="predicate">
+        <uri>https://github.com/draganagrbic998/xml/predikat/vlasnik</uri>
+      </binding>
+      <binding name="object">
+        <uri>https://github.com/draganagrbic998/xml/korisnik/draganaasd@gmail.com</uri>
       </binding>
     </result>
     <result>
@@ -42,15 +50,15 @@
         <uri>https://github.com/draganagrbic998/xml/predikat/datum</uri>
       </binding>
       <binding name="object">
-        <literal>2021-01-11</literal>
+        <literal>2021-01-13</literal>
       </binding>
     </result>
     <result>
       <binding name="predicate">
-        <uri>https://github.com/draganagrbic998/xml/predikat/podneo</uri>
+        <uri>https://github.com/draganagrbic998/xml/predikat/zalba</uri>
       </binding>
       <binding name="object">
-        <uri>https://github.com/draganagrbic998/xml/korisnik/poverenik.javni.znacaj@gmail.com</uri>
+        <literal>delimicnost</literal>
       </binding>
     </result>
     <result>
@@ -59,6 +67,14 @@
       </binding>
       <binding name="object">
         <uri>https://github.com/draganagrbic998/xml/zalba/1</uri>
+      </binding>
+    </result>
+    <result>
+      <binding name="predicate">
+        <uri>https://github.com/draganagrbic998/xml/predikat/status</uri>
+      </binding>
+      <binding name="object">
+        <literal>odobreno</literal>
       </binding>
     </result>
   </results>

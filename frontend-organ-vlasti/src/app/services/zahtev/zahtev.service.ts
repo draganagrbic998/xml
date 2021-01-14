@@ -3,12 +3,11 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Zahtev } from 'src/app/models/zahtev';
 import { environment } from 'src/environments/environment';
-import { OSNOVA, XS, ZAHTEV } from 'src/app/constants/namespaces';
+import { OSNOVA, ZAHTEV } from 'src/app/constants/namespaces';
 import { ZahtevDTO } from 'src/app/models/zahtevDTO';
 import { map } from 'rxjs/operators';
 import { XonomyService } from '../xonomy/xonomy.service';
-import { AuthService } from '../auth/auth.service';
-import { KORISNIK, PREDIKAT } from 'src/app/constants/prefixes';
+import { ZahtevPretraga } from 'src/app/models/zahtevPretraga';
 
 @Injectable({
   providedIn: 'root'
@@ -17,13 +16,15 @@ export class ZahtevService {
 
   constructor(
     private http: HttpClient,
-    private xonomyService: XonomyService,
-    private authService: AuthService
+    private xonomyService: XonomyService
   ) { }
 
   private readonly API_ZAHTEVI = `${environment.baseUrl}/${environment.apiZahtevi}`;
 
   private dateToString(date: Date): string {
+    if (!date){
+      return '';
+    }
     return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}.`;
   }
 
@@ -43,17 +44,22 @@ export class ZahtevService {
     return `
       <zahtev:Zahtev
       xmlns="${OSNOVA}"
-      xmlns:zahtev="${ZAHTEV}"
-      xmlns:xs="${XS}"
-      xmlns:pred="${PREDIKAT}"
-      about=""
-      rel="pred:podneo"
-      href="${KORISNIK}${this.authService.getUser().mejl}">
-        <datum property="pred:datum" datatype="xs:string">${this.dateToString(new Date())}</datum>
+      xmlns:zahtev="${ZAHTEV}">
         ${xml}
       </zahtev:Zahtev>
     `;
 
+  }
+
+  private pretragaToXml(pretraga: ZahtevPretraga): string{
+    return `
+      <pretraga>
+        <datum>${this.dateToString(pretraga.datum)}</datum>
+        <mesto>${pretraga.mesto}</mesto>
+        <tip>${pretraga.tip}</tip>
+        <stanje>${pretraga.stanje}</stanje>
+      </pretraga>
+    `;
   }
 
   private xmlToZahtevi(xml: string): ZahtevDTO[]{
@@ -87,6 +93,13 @@ export class ZahtevService {
 
   view(broj: number): Observable<string>{
     return this.http.get<string>(`${this.API_ZAHTEVI}/${broj}`, {responseType: 'text' as 'json'});
+  }
+
+  advancedSearch(pretraga: ZahtevPretraga): Observable<ZahtevDTO[]>{
+    const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml'), responseType: 'text' as 'json' };
+    return this.http.post<string>(`${this.API_ZAHTEVI}/advanced_search`, this.pretragaToXml(pretraga), options).pipe(
+      map((xml: string) => this.xmlToZahtevi(xml))
+    );
   }
 
 }

@@ -28,6 +28,11 @@ public class OdlukaExist implements ExistInterface {
 	}
 	
 	@Override
+	public void delete(String documentId) {
+		this.existManager.delete(ODLUKA_COLLECTION, documentId);
+	}
+	
+	@Override
 	public Document load(String documentId) {
 		return this.existManager.load(ODLUKA_COLLECTION, documentId);
 	}

@@ -1,11 +1,11 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ODGOVOR, OSNOVA, XS, ZALBA } from 'src/app/constants/namespaces';
-import { KORISNIK, PREDIKAT } from 'src/app/constants/prefixes';
+import { map } from 'rxjs/operators';
+import { ODGOVOR, OSNOVA } from 'src/app/constants/namespaces';
 import { Odgovor } from 'src/app/models/odgovor';
+import { OdgovorDTO } from 'src/app/models/odgovorDTO';
 import { environment } from 'src/environments/environment';
-import { AuthService } from '../auth/auth.service';
 import { XonomyService } from '../xonomy/xonomy.service';
 
 @Injectable({
@@ -15,31 +15,19 @@ export class OdgovorService {
 
   constructor(
     private http: HttpClient,
-    private xonomyService: XonomyService,
-    private authService: AuthService
+    private xonomyService: XonomyService
   ) { }
 
   private readonly API_ODGOVORI = `${environment.baseUrl}/${environment.apiOdgovori}`;
-
-  private dateToString(date: Date): string {
-    return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}.`;
-  }
 
   private odgovorToXml(brojZalbe: number, odgovor: Odgovor): string{
 
     return `
       <odgovor:Odgovor
-      xmlns:xs="${XS}"
-      xmlns:pred="${PREDIKAT}"
-      about=""
-      rel="pred:podneo"
-      href="${KORISNIK}${this.authService.getUser().mejl}"
       xmlns="${OSNOVA}"
       xmlns:odgovor="${ODGOVOR}">
         <broj>${brojZalbe}</broj>
-        <datum property="pred:datum" datatype="xs:string">${this.dateToString(new Date())}</datum>
         ${odgovor.detalji}
-        <odgovor:datumZalbe rel="pred:zalba" href="${ZALBA}${brojZalbe}"></odgovor:datumZalbe>
       </odgovor:Odgovor>
     `;
 
@@ -53,6 +41,28 @@ export class OdgovorService {
     odgovor.detalji = this.xonomyService.removeXmlSpace(odgovor.detalji);
     const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
     return this.http.post<null>(this.API_ODGOVORI, this.odgovorToXml(broj, odgovor), options);
+  }
+
+  xmlToOdgovori(xml: string): OdgovorDTO[]{
+    const parser = new DOMParser();
+    const odgovori = parser.parseFromString(xml, 'text/xml').getElementsByTagNameNS(ODGOVOR, 'Odgovor');
+    const odgovoriDTO: OdgovorDTO[] = [];
+
+    for (let i = 0; i < odgovori.length; ++i){
+      odgovoriDTO.push({
+        broj: +odgovori.item(i).getElementsByTagNameNS(OSNOVA, 'broj')[0].textContent,
+        datum: odgovori.item(i).getElementsByTagNameNS(OSNOVA, 'datum')[0].textContent,
+        datumZalbe: odgovori.item(i).getElementsByTagNameNS(ODGOVOR, 'datumZalbe')[0].textContent,
+      });
+    }
+
+    return odgovoriDTO;
+  }
+
+  list(): Observable<OdgovorDTO[]>{
+    return this.http.get<string>(this.API_ODGOVORI, {responseType: 'text' as 'json'}).pipe(
+      map((xml: string) => this.xmlToOdgovori(xml))
+    );
   }
 
 }

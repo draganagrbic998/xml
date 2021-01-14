@@ -1,68 +1,132 @@
-<app-preloader *ngIf="fetchPending"></app-preloader>
+<mat-drawer-container>
+  <mat-drawer mode="side" #drawer class="mat-elevation-z24">
+    <h3>Napredna pretraga</h3><br>
 
-<div class="root">
+    <form [formGroup]="naprednaForma">
+      <div [class.disabled]="fetchPending">
+        <mat-form-field> 
+          <mat-label>Datum</mat-label>
+          <input 
+          matInput 
+          autocomplete="off"
+          formControlName="datum" 
+          placeholder="Unesite datum"
+          [matDatepicker]="datum">
+          <mat-datepicker-toggle matSuffix [for]="datum"></mat-datepicker-toggle>
+          <mat-datepicker #datum></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Mesto</mat-label>
+          <input 
+          matInput 
+          autocomplete="off"
+          formControlName="mesto"
+          placeholder="Unesite mesto">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Tip zahteva</mat-label>
+          <mat-select formControlName="tip">
+              <mat-option [value]="'obavestenje'">
+                  obaveštenje da li organ poseduje traženu informaciju
+              </mat-option>
+              <mat-option [value]="'uvid'">
+                  uvid u dokument koji sadrži traženu informaciju
+              </mat-option>
+              <mat-option [value]="'kopija'">
+                  kopija dokumenta koji sadrži traženu informaciju
+              </mat-option>
+              <mat-option [value]="'dostava'">
+                  dostava dokumenta koji sadrži traženu informaciju
+              </mat-option>
+          </mat-select>                
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Stanje zahteva</mat-label>
+          <mat-select formControlName="stanje">
+              <mat-option [value]="'cekanje'">
+                čeka se odgovor na zahtev
+              </mat-option>
+              <mat-option [value]="'odobreno'">
+                  zahtev je prihvaćen
+              </mat-option>
+              <mat-option [value]="'odbijeno'">
+                  zahtev je odbijen
+              </mat-option>
+          </mat-select>                
+        </mat-form-field>
+      </div>
+      <app-spacer-container>
+        <span></span>
+        <span>
+          <button 
+          *ngIf="!fetchPending"
+          mat-raised-button 
+          color="primary"
+          (click)="naprednaPretraga()">Pretraži</button>
+          <app-spinner-button *ngIf="fetchPending"></app-spinner-button>
+        </span>
+      </app-spacer-container>
+    </form>
 
-  <h2>Lista podnešenih zahteva</h2><br>
+  </mat-drawer>
+  <app-preloader *ngIf="fetchPending"></app-preloader>
 
-  <div class="mat-elevation-z8">
-    <table mat-table [dataSource]="zahtevi">
+  <div class="root">
 
-      <ng-container matColumnDef="tipZahteva">
-        <th mat-header-cell *matHeaderCellDef>Tip zahteva</th>
-        <td mat-cell *matCellDef="let zahtev"> {{zahtev.tipZahteva}} </td>
-      </ng-container>
+    <h2>Lista podnešenih zahteva</h2><br>
+
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="zahtevi">
+
+        <ng-container matColumnDef="tipZahteva">
+          <th mat-header-cell *matHeaderCellDef>Tip zahteva</th>
+          <td mat-cell *matCellDef="let zahtev"> {{zahtev.tipZahteva}} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="datum">
+          <th mat-header-cell *matHeaderCellDef>Datum podnošenja</th>
+          <td mat-cell *matCellDef="let zahtev"> {{convertDate(zahtev.datum)}} </td>
+        </ng-container>
     
-      <ng-container matColumnDef="datum">
-        <th mat-header-cell *matHeaderCellDef>Datum podnošenja</th>
-        <td mat-cell *matCellDef="let zahtev"> {{convertDate(zahtev.datum)}} </td>
-      </ng-container>
-  
-      <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef>Status</th>
-        <td mat-cell *matCellDef="let zahtev"> {{zahtev.status}} </td>
-      </ng-container>
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let zahtev"> {{zahtev.status}} </td>
+        </ng-container>
 
-      <ng-container matColumnDef="dokumenti">
-        <th mat-header-cell *matHeaderCellDef>Dokumenti</th>
-        <td mat-cell *matCellDef="let zahtev">
-          <a [routerLink]="'/html/zahtevi/' + zahtev.broj">HTML</a><br>
-          <a [routerLink]="'/pdf/zahtevi/' + zahtev.broj">PDF</a>
-        </td>
-      </ng-container>
+        <ng-container matColumnDef="dokumenti">
+          <th mat-header-cell *matHeaderCellDef>Dokumenti</th>
+          <td mat-cell *matCellDef="let zahtev">
+            <a [routerLink]="'/html/zahtevi/' + zahtev.broj">HTML</a><br>
+            <a [routerLink]="'/pdf/zahtevi/' + zahtev.broj">PDF</a>
+          </td>
+        </ng-container>
 
-      <ng-container matColumnDef="metapodaci">
-        <th mat-header-cell *matHeaderCellDef>Metapodaci</th>
-        <td mat-cell *matCellDef="let zahtev">
-          <a *ngIf="true" (click)="xmlMetadata(zahtev.broj)">XML</a><br>
-          <a *ngIf="true" (click)="jsonMetadata(zahtev.broj)">JSON</a>
-        </td>
-      </ng-container>
+        <ng-container matColumnDef="metapodaci">
+          <th mat-header-cell *matHeaderCellDef>Metapodaci</th>
+          <td mat-cell *matCellDef="let zahtev">
+            <a *ngIf="true" (click)="xmlMetadata(zahtev.broj)">XML</a><br>
+            <a *ngIf="true" (click)="jsonMetadata(zahtev.broj)">JSON</a>
+          </td>
+        </ng-container>
 
-      <ng-container matColumnDef="akcije">
-        <th mat-header-cell *matHeaderCellDef>Akcije</th>
-        <td mat-cell *matCellDef="let zahtev">
-            <span class="actions" *ngIf="uloga === 'sluzbenik' && zahtev.status === 'cekanje'">
-              <button 
-              mat-icon-button
-              color="primary"
-              [routerLink]="'/obavestenje-form/' + zahtev.broj">
-                  <mat-icon matTooltip="Dodaj obaveštenje">add</mat-icon>
-              </button>
-              <button 
-              mat-icon-button
-              color="warn"
-              [routerLink]="'/odbijanje-form/' + zahtev.broj">
-                  <mat-icon matTooltip="Odbij zahtev">remove</mat-icon>
-              </button>  
+        <ng-container matColumnDef="akcije">
+          <th mat-header-cell *matHeaderCellDef>Akcije</th>
+          <td mat-cell *matCellDef="let zahtev">
+            <span *ngIf="uloga === 'sluzbenik' && zahtev.status === 'cekanje'">
+              <a [routerLink]="'/obavestenje-form/' + zahtev.broj">
+              Odobri</a><br>
+              <a [routerLink]="'/odbijanje-form/' + zahtev.broj">
+              Odbij</a>  
             </span>
-        </td>
-      </ng-container>
-    
-      <tr mat-header-row *matHeaderRowDef="columns"></tr>
-      <tr mat-row *matRowDef="let row; columns: columns;"></tr>
-      <tr class="mat-row" *matNoDataRow><td class="mat-cell" colspan="6">Nema zahteva</td></tr>
+          </td>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="columns"></tr>
+        <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+        <tr class="mat-row" *matNoDataRow><td class="mat-cell" colspan="6">Nema zahteva</td></tr>
 
-    </table>
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+      </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    </div>
   </div>
-</div>
+</mat-drawer-container>

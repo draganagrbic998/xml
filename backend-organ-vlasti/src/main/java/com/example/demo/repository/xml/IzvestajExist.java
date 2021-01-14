@@ -26,6 +26,11 @@ public class IzvestajExist implements ExistInterface {
 	public void update(String documentId, Document document) {
 		this.existManager.save(IZVESTAJ_COLLECTION, documentId, document, IZVESTAJ_SCHEMA);
 	}
+	
+	@Override
+	public void delete(String documentId) {
+		this.existManager.delete(IZVESTAJ_COLLECTION, documentId);
+	}
 
 	@Override
 	public Document load(String documentId) {

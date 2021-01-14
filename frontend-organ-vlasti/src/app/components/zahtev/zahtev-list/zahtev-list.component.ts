@@ -1,5 +1,7 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatDrawer } from '@angular/material/sidenav';
 import { MatTableDataSource } from '@angular/material/table';
 import { ZahtevDTO } from 'src/app/models/zahtevDTO';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -19,9 +21,30 @@ export class ZahtevListComponent implements AfterViewInit {
   ) { }
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatDrawer) drawer: MatDrawer;
   columns: string[] = ['tipZahteva', 'datum', 'status', 'dokumenti', 'metapodaci', 'akcije'];
   zahtevi: MatTableDataSource<ZahtevDTO> = new MatTableDataSource<ZahtevDTO>([]);
   fetchPending = true;
+
+  naprednaForma: FormGroup = new FormGroup({
+    datum: new FormControl(''),
+    mesto: new FormControl(''),
+    tip: new FormControl(''),
+    stanje: new FormControl('')
+  });
+
+  naprednaPretraga(): void{
+    this.fetchPending = true;
+    this.zahtevService.advancedSearch(this.naprednaForma.value).subscribe(
+      (zahtevi: ZahtevDTO[]) => {
+        this.zahtevi = new MatTableDataSource<ZahtevDTO>(zahtevi);
+        this.fetchPending = false;
+      },
+      () => {
+        this.fetchPending = false;
+      }
+    );
+  }
 
   xmlMetadata(broj: string): void{
     window.open(`//localhost:8081/${environment.apiZahtevi}/${broj}/metadata/xml`, '_blank');
@@ -51,6 +74,10 @@ export class ZahtevListComponent implements AfterViewInit {
         this.fetchPending = false;
       }
     );
+
+    this.authService.drawerToggle$.subscribe(() => {
+      this.drawer.toggle();
+    });
   }
 
 }

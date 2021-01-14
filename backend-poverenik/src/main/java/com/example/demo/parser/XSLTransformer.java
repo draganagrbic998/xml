@@ -23,6 +23,8 @@ import org.w3c.dom.Document;
 
 import com.example.demo.common.Constants;
 import com.example.demo.common.MyException;
+import com.example.demo.common.Namespaces;
+import com.example.demo.mapper.ZalbaMapper;
 
 @Component
 public class XSLTransformer {
@@ -41,6 +43,13 @@ public class XSLTransformer {
 			transformer.transform(in, output);
 			Model model = ModelFactory.createDefaultModel();
 			model.read(new StringReader(out.toString()), null);
+			if (document.getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").getLength() > 0) {
+				String broj = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
+				model.add(model.createStatement(
+						model.createResource(Namespaces.ZALBA + "/" + broj), 
+						model.createProperty(Namespaces.PREDIKAT + "tip"), 
+						model.createLiteral(ZalbaMapper.getTipZalbe(document) + "")));
+			}
 			return model;
 		}
 		catch(Exception e) {

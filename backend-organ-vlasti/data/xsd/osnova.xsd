@@ -15,7 +15,7 @@
     <xs:element name="Osoba">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="mejl" type="osnova:TRequiredString"/>
+                <xs:element name="mejl" type="osnova:TRequiredString"> </xs:element>
                 <xs:element name="ime" type="osnova:TRequiredString"/>
                 <xs:element name="prezime" type="osnova:TRequiredString"/>
                 <xs:element name="potpis" type="xs:base64Binary"/>
@@ -61,7 +61,16 @@
     <xs:element name="OrganVlasti">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="naziv" type="osnova:TRequiredString"/>
+                <xs:element name="naziv">
+                    <xs:complexType>
+                        <xs:simpleContent>
+                            <xs:extension base="osnova:TRequiredString">
+                                <xs:attribute name="property" type="osnova:TRequiredString"/>
+                                <xs:attribute name="datatype" type="osnova:TRequiredString"/>
+                            </xs:extension>
+                        </xs:simpleContent>
+                    </xs:complexType>
+                </xs:element>
                 <xs:element ref="osnova:Adresa"/>
             </xs:sequence>
         </xs:complexType>
@@ -71,10 +80,7 @@
             <xs:element name="broj">
                 <xs:complexType>
                     <xs:simpleContent>
-                        <xs:extension base="xs:positiveInteger">
-                            <xs:attribute name="rel" type="osnova:TRequiredString"/>
-                            <xs:attribute name="href" type="osnova:TRequiredString"/>
-                        </xs:extension>
+                        <xs:extension base="xs:positiveInteger"> </xs:extension>
                     </xs:simpleContent>
                 </xs:complexType>
             </xs:element>
@@ -93,7 +99,7 @@
         <xs:attribute name="rel" type="osnova:TRequiredString"/>
         <xs:attribute name="href" type="osnova:TRequiredString"/>
     </xs:complexType>
-    <xs:complexType name="TPodnosenje">
+    <xs:complexType name="TPodnosenje" abstract="true">
         <xs:complexContent>
             <xs:extension base="osnova:TDokument">
                 <xs:sequence>

@@ -12,7 +12,7 @@
                     <xs:element name="status">
                         <xs:complexType>
                             <xs:simpleContent>
-                                <xs:extension base="osnova:TRequiredString">
+                                <xs:extension base="resenje:TStatus">
                                     <xs:attribute name="property" type="osnova:TRequiredString"/>
                                     <xs:attribute name="datatype" type="osnova:TRequiredString"/>
                                 </xs:extension>
@@ -42,13 +42,16 @@
                         <xs:complexType>
                             <xs:sequence>
                                 <xs:element name="tipZalbe">
-                                    <xs:simpleType>
-                                        <xs:restriction base="xs:string">
-                                            <xs:enumeration value="cutanje"/>
-                                            <xs:enumeration value="delimicnost"/>
-                                            <xs:enumeration value="odluka"/>
-                                        </xs:restriction>
-                                    </xs:simpleType>
+                                    <xs:complexType>
+                                        <xs:simpleContent>
+                                            <xs:extension base="resenje:TZalba">
+                                                <xs:attribute name="property"
+                                                  type="osnova:TRequiredString"/>
+                                                <xs:attribute name="datatype"
+                                                  type="osnova:TRequiredString"/>
+                                            </xs:extension>
+                                        </xs:simpleContent>
+                                    </xs:complexType>
                                 </xs:element>
                                 <xs:element name="brojZalbe">
                                     <xs:complexType>
@@ -94,4 +97,17 @@
         </xs:sequence>
     </xs:complexType>
     <xs:element name="Resenje" type="resenje:TResenje"/>
+    <xs:simpleType name="TStatus">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="odobreno"/>
+            <xs:enumeration value="odbijeno"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TZalba">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="cutanje"/>
+            <xs:enumeration value="delimicnost"/>
+            <xs:enumeration value="odluka"/>
+        </xs:restriction>
+    </xs:simpleType>
 </xs:schema>

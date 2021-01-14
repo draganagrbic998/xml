@@ -9,16 +9,16 @@
         "object": { "type": "literal" , "value": "Novi Sad" }
       } ,
       {
-        "predicate": { "type": "uri" , "value": "https://github.com/draganagrbic998/xml/predikat/odluka" } ,
-        "object": { "type": "uri" , "value": "https://github.com/draganagrbic998/xml/odluka/3" }
-      } ,
-      {
         "predicate": { "type": "uri" , "value": "https://github.com/draganagrbic998/xml/predikat/zahtev" } ,
-        "object": { "type": "uri" , "value": "https://github.com/draganagrbic998/xml/zahtev/3" }
+        "object": { "type": "uri" , "value": "https://github.com/draganagrbic998/xml/zahtev/1" }
       } ,
       {
         "predicate": { "type": "uri" , "value": "https://github.com/draganagrbic998/xml/predikat/datum" } ,
         "object": { "type": "literal" , "value": "2021-01-11" }
+      } ,
+      {
+        "predicate": { "type": "uri" , "value": "https://github.com/draganagrbic998/xml/predikat/datum" } ,
+        "object": { "type": "literal" , "value": "2021-01-12" }
       } ,
       {
         "predicate": { "type": "uri" , "value": "https://github.com/draganagrbic998/xml/predikat/podneo" } ,

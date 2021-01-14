@@ -28,6 +28,11 @@ public class IzvestajExist implements ExistInterface {
 	}
 	
 	@Override
+	public void delete(String documentId) {
+		this.existManager.delete(IZVESTAJ_COLLECTION, documentId);
+	}
+	
+	@Override
 	public Document load(String documentId) {
 		return this.existManager.load(IZVESTAJ_COLLECTION, documentId);
 	}

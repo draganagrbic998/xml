@@ -1,0 +1,12 @@
+<zahtev:Zahtev
+xmlns="https://github.com/draganagrbic998/xml/osnova"
+xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev"
+xmlns:pred="https://github.com/draganagrbic998/xml/predikat/"
+xmlns:xs="http://www.w3.org/2001/XMLSchema#"
+about=""
+rel="pred:vlasnik"
+href="">
+	<broj></broj>
+	<datum property="pred:datum" datatype="xs:string"></datum>
+	<zahtev:status property="pred:status" datatype="xs:string">cekanje</zahtev:status>
+</zahtev:Zahtev>

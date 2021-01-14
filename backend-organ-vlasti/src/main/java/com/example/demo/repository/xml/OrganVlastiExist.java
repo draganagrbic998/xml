@@ -26,6 +26,11 @@ public class OrganVlastiExist implements ExistInterface {
 	public void update(String documentId, Document document) {
 		this.existManager.save(ORGAN_VLASTI_COLLECTION, documentId, document, ORGAN_VLASTI_SCHEMA);		
 	}
+	
+	@Override
+	public void delete(String documentId) {
+		this.existManager.delete(ORGAN_VLASTI_COLLECTION, documentId);
+	}
 
 	@Override
 	public Document load(String documentId) {

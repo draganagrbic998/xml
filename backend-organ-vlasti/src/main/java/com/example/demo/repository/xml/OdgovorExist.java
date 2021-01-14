@@ -28,6 +28,11 @@ public class OdgovorExist implements ExistInterface {
 	}
 	
 	@Override
+	public void delete(String documentId) {
+		this.existManager.delete(ODGOVOR_COLLECTION, documentId);
+	}
+	
+	@Override
 	public Document load(String documentId) {
 		return this.existManager.load(ODGOVOR_COLLECTION, documentId);
 	}

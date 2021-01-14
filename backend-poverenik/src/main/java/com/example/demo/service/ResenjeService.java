@@ -6,6 +6,7 @@ import org.w3c.dom.Document;
 import org.xmldb.api.base.ResourceSet;
 
 import com.example.demo.common.Constants;
+import com.example.demo.common.MyException;
 import com.example.demo.common.Namespaces;
 import com.example.demo.enums.StatusZalbe;
 import com.example.demo.mapper.ResenjeMapper;
@@ -13,6 +14,8 @@ import com.example.demo.model.Korisnik;
 import com.example.demo.parser.XSLTransformer;
 import com.example.demo.repository.rdf.ResenjeRDF;
 import com.example.demo.repository.xml.ResenjeExist;
+import com.example.demo.service.email.Email;
+import com.example.demo.service.email.EmailService;
 import com.example.demo.ws.utils.SOAPDocument;
 import com.example.demo.ws.utils.SOAPService;
 
@@ -39,6 +42,9 @@ public class ResenjeService implements ServiceInterface {
 	
 	@Autowired
 	private XSLTransformer xslTransformer;
+	
+	@Autowired
+	private EmailService emailService;
 
 	@Override
 	public void add(String xml) {
@@ -50,6 +56,7 @@ public class ResenjeService implements ServiceInterface {
 		zalbaDocument.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.reseno + "");
 		this.zalbaService.update(brojZalbe, zalbaDocument);
 		this.soapService.sendSOAPMessage(null, document, SOAPDocument.resenje);
+		this.notifyResenje(document);
 	}
 
 	@Override
@@ -74,6 +81,33 @@ public class ResenjeService implements ServiceInterface {
 	@Override
 	public Document load(String documentId) {
 		return this.resenjeExist.load(documentId);
+	}
+	
+	private void notifyResenje(Document document) {
+		try {
+			String naziv = document.getElementsByTagNameNS(Namespaces.OSNOVA, "naziv").item(0).getTextContent();
+			String datumZalbe = Constants.sdf2.format(Constants.sdf.parse(document.getElementsByTagNameNS(Namespaces.RESENJE, "datumZalbe").item(0).getTextContent()));
+			String brojResenja = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
+			String mejl = document.getElementsByTagNameNS(Namespaces.OSNOVA, "mejl").item(0).getTextContent();
+			String ime = document.getElementsByTagNameNS(Namespaces.OSNOVA, "ime").item(0).getTextContent();
+			String prezime = document.getElementsByTagNameNS(Namespaces.OSNOVA, "prezime").item(0).getTextContent();
+			
+			Email email = new Email();
+			email.setTo(mejl);
+			email.setSubject("Rešenje na žalbu za uskraćeno pravo na pristup informacijama od javnog značaja");
+			String text = "Poštovani/a " + ime + " " + prezime + ", \n\n"
+					+ "Rešenje na žalbu koju ste podneli protiv organa vlasti " + naziv
+					+ " dana " + datumZalbe + " nalazi se u linkovima ispod: \n"
+					+ Constants.BACKEND_URL + "/api/resenja/" + brojResenja + "/html\n"
+					+ Constants.BACKEND_URL + "/api/resenja/" + brojResenja + "/pdf\n\n"
+					+ "Svako dobro, \n"
+					+ "Poverenik za informacije od javnog značaja i zaštitu podataka o ličnosti";
+			email.setText(text);
+			this.emailService.sendEmail(email);
+		}
+		catch(Exception e) {
+			throw new MyException(e);
+		}
 	}
 	
 }

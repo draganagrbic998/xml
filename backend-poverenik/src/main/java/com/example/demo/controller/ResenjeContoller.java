@@ -48,6 +48,14 @@ public class ResenjeContoller {
 		return new ResponseEntity<>(this.resenjeTransformer.html(broj), HttpStatus.OK);
 	}
 	
+	@GetMapping(value = "/{broj}/html", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	public ResponseEntity<Resource> generateHtml(@PathVariable String broj) {
+		Resource resource = this.resenjeTransformer.generateHtml(broj);
+		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+				.body(resource);
+	}
+	
 	@GetMapping(value = "/{broj}/pdf", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<Resource> generatePdf(@PathVariable String broj) {
 		Resource resource = this.resenjeTransformer.generatePdf(broj);

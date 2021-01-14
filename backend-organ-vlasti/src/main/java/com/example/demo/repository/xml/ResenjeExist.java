@@ -28,6 +28,11 @@ public class ResenjeExist implements ExistInterface {
 	}
 	
 	@Override
+	public void delete(String documentId) {
+		this.existManager.delete(RESENJE_COLLECTION, documentId);
+	}
+	
+	@Override
 	public Document load(String documentId) {
 		return this.existManager.load(RESENJE_COLLECTION, documentId);
 	}

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <OrganVlasti xmlns="https://github.com/draganagrbic998/xml/osnova">
-    <naziv>Naziv organa vlasti</naziv>
+    <naziv property="pred:organVlasti" datatype="xs:string">Naziv organa vlasti</naziv>
     <Adresa>
         <mesto property="pred:izdatoU" datatype="xs:string">Novi Sad</mesto>
         <ulica>Lasla Gala</ulica>

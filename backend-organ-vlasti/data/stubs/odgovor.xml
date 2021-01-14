@@ -1,0 +1,12 @@
+<odgovor:Odgovor
+xmlns="https://github.com/draganagrbic998/xml/osnova"
+xmlns:odgovor="https://github.com/draganagrbic998/xml/odgovor"
+xmlns:pred="https://github.com/draganagrbic998/xml/predikat/"
+xmlns:xs="http://www.w3.org/2001/XMLSchema#"
+about=""
+rel="pred:vlasnik"
+href="">
+	<broj></broj>
+	<datum property="pred:datum" datatype="xs:string"></datum>
+	<odgovor:datumZalbe></odgovor:datumZalbe>
+</odgovor:Odgovor>

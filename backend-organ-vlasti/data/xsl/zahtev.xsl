@@ -43,18 +43,14 @@ xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev">
 						text-indent: 40px;
 					}
 					.line{
-						display: block; 
 						height: 17pt; 
-						width: 100%; 
 						border-bottom: 1px solid black;
+						word-break: break-all;
 					}
 					.flex{
 						display: flex; 
 						flex-direction: row; 
 						justify-content: space-between;
-					}
-					.details{
-						word-break: break-all;
 					}
 					.small{
 						font-size: 13px;
@@ -152,15 +148,18 @@ xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev">
 						Овај захтев се односи на следеће информације:
 					</p>
 					
-				<p>
-					<span class="line">
-			            <xsl:apply-templates select="osnova:Detalji"></xsl:apply-templates>
-	               	</span>
-					<span class="line">
-	                </span>
-					<span class="line">
-	                </span>				
-	            </p>
+					<p>
+						<p class="line">
+				            <span style="color: white; border-bottom: 2px solid white;">asdfg</span>
+				            <xsl:apply-templates select="osnova:Detalji"></xsl:apply-templates>
+		               	</p>
+						<p class="line">
+							&#160;&#160;
+		                </p>
+						<p class="line">
+							&#160;&#160;
+		                </p>				
+		            </p>
 	
 					<p class="small">
 						(навести што прецизнији опис информације која се тражи као и 

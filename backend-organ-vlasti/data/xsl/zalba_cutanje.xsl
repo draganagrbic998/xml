@@ -36,18 +36,14 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 						text-indent: 40px;
 					}
 					.line{
-						display: inline-block; 
-						height: 13pt; 
-						width: 100%; 
-						border-bottom: 1px dotted black;
+						height: 17pt; 
+						border-bottom: 1px solid black;
+						word-break: break-all;
 					}
 					.flex{
 						display: flex; 
 						flex-direction: row; 
 						justify-content: space-between;
-					}
-					.details{
-						word-break: break-all;
 					}
 					.small{
 						font-size: 13px;
@@ -150,23 +146,16 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 					од јавног значаја омогући увид- копија документа који садржи информације  о /у вези са :
 					</p>
 					
-					<p class="details">
-						<span class="line">
-					        <xsl:copy>
-						        <xsl:copy>
-						            <xsl:apply-templates select="osnova:Detalji"></xsl:apply-templates>
-						        </xsl:copy>
-					        </xsl:copy>
-		               	</span>
-						<span class="line">
-						
-		                </span>
-						<span class="line">
-						
-		                </span>			
-						<span class="line">
-						
-		                </span>				
+					<p>
+						<p class="line">
+				            <xsl:apply-templates select="osnova:Detalji"></xsl:apply-templates>
+		               	</p>
+						<p class="line">
+		                </p>
+						<p class="line">
+		                </p>			
+						<p class="line">
+		                </p>				
 		            </p>
 					
 					<p class="center">

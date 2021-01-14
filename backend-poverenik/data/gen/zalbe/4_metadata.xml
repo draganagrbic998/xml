@@ -15,18 +15,10 @@
     </result>
     <result>
       <binding name="predicate">
-        <uri>https://github.com/draganagrbic998/xml/predikat/odluka</uri>
-      </binding>
-      <binding name="object">
-        <uri>https://github.com/draganagrbic998/xml/odluka/3</uri>
-      </binding>
-    </result>
-    <result>
-      <binding name="predicate">
         <uri>https://github.com/draganagrbic998/xml/predikat/zahtev</uri>
       </binding>
       <binding name="object">
-        <uri>https://github.com/draganagrbic998/xml/zahtev/3</uri>
+        <uri>https://github.com/draganagrbic998/xml/zahtev/1</uri>
       </binding>
     </result>
     <result>
@@ -35,6 +27,14 @@
       </binding>
       <binding name="object">
         <literal>2021-01-11</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="predicate">
+        <uri>https://github.com/draganagrbic998/xml/predikat/datum</uri>
+      </binding>
+      <binding name="object">
+        <literal>2021-01-12</literal>
       </binding>
     </result>
     <result>

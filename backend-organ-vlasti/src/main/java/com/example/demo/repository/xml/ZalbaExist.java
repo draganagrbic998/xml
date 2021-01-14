@@ -28,6 +28,11 @@ public class ZalbaExist implements ExistInterface {
 	}
 	
 	@Override
+	public void delete(String documentId) {
+		this.existManager.delete(ZALBA_COLLECTION, documentId);
+	}
+	
+	@Override
 	public Document load(String documentId) {
 		return this.existManager.load(ZALBA_COLLECTION, documentId);
 	}

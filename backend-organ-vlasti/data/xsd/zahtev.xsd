@@ -8,6 +8,16 @@
         <xs:complexContent>
             <xs:extension base="osnova:TPodnosenje">
                 <xs:sequence>
+                    <xs:element name="status">
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="zahtev:TStatus">
+                                    <xs:attribute name="property" type="osnova:TRequiredString"/>
+                                    <xs:attribute name="datatype" type="osnova:TRequiredString"/>
+                                </xs:extension>
+                            </xs:simpleContent>
+                        </xs:complexType>
+                    </xs:element>
                     <xs:element name="tipZahteva">
                         <xs:complexType>
                             <xs:simpleContent>
@@ -29,18 +39,16 @@
                         </xs:simpleType>
                     </xs:element>
                     <xs:element minOccurs="0" name="opisDostave" type="osnova:TRequiredString"/>
-                    <xs:element name="status">
-                        <xs:simpleType>
-                            <xs:restriction base="xs:string">
-                                <xs:enumeration value="cekanje"/>
-                                <xs:enumeration value="odobreno"/>
-                                <xs:enumeration value="odbijeno"/>
-                            </xs:restriction>
-                        </xs:simpleType>
-                    </xs:element>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
     <xs:element name="Zahtev" type="zahtev:TZahtev"/>
+    <xs:simpleType name="TStatus">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="cekanje"/>
+            <xs:enumeration value="odobreno"/>
+            <xs:enumeration value="odbijeno"/>
+        </xs:restriction>
+    </xs:simpleType>
 </xs:schema>

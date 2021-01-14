@@ -18,6 +18,7 @@ public class Constants {
 	public static final String GEN_FOLDER = DATA_FOLDER + "gen" + File.separatorChar;
 	public static final String SPARQL_FOLDER = DATA_FOLDER + "sparql" + File.separatorChar;
 	public static final String RDFS_FOLDER = DATA_FOLDER + "rdfs" + File.separatorChar;
+	public static final String STUB_FOLDER = DATA_FOLDER + "stubs" + File.separatorChar;
 	
 	public static final String COLLECTIONS_PREFIX = "/db/database";
 	public static final String GRDDL_XSL = DATA_FOLDER + "grddl.xsl";

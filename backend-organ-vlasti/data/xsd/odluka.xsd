@@ -8,7 +8,6 @@
         <xs:complexContent>
             <xs:extension base="osnova:TPodnosenje">
                 <xs:sequence>
-                    <xs:element name="datumZahteva" type="xs:date"/>
                     <xs:element name="brojZahteva">
                         <xs:complexType>
                             <xs:simpleContent>
@@ -19,6 +18,7 @@
                             </xs:simpleContent>
                         </xs:complexType>
                     </xs:element>
+                    <xs:element name="datumZahteva" type="xs:date"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>

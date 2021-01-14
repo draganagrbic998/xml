@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { LOGIN_PATH, REGISTER_PATH } from 'src/app/constants/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -14,6 +14,10 @@ export class ToolbarComponent implements OnInit {
     private authService: AuthService,
     private router: Router
   ) { }
+
+  drawerToggle(): void{
+    this.authService.announceDrawerToggle();
+  }
 
   get uloga(): string{
     return this.authService.getUser()?.uloga;

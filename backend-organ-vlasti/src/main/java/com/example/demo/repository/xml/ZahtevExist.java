@@ -28,6 +28,11 @@ public class ZahtevExist implements ExistInterface {
 	}
 	
 	@Override
+	public void delete(String documentId) {
+		this.existManager.delete(ZAHTEV_COLLECTION, documentId);
+	}
+	
+	@Override
 	public Document load(String documentId) {
 		return this.existManager.load(ZAHTEV_COLLECTION, documentId);
 	}

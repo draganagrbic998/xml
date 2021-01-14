@@ -8,6 +8,8 @@ import org.xmldb.api.base.ResourceSet;
 import com.example.demo.common.Constants;
 import com.example.demo.mapper.ZahtevMapper;
 import com.example.demo.model.Korisnik;
+import com.example.demo.model.ZahtevSearch;
+import com.example.demo.parser.JAXBParser;
 import com.example.demo.parser.XSLTransformer;
 import com.example.demo.repository.rdf.ZahtevRDF;
 import com.example.demo.repository.xml.ZahtevExist;
@@ -29,6 +31,11 @@ public class ZahtevService implements ServiceInterface {
 	
 	@Autowired
 	private XSLTransformer xslTransformer;
+	
+	@Autowired
+	private JAXBParser jaxbParser;
+	
+	//dodaj interfejs za obicnu/naprednu pretragu
 		
 	@Override
 	public void add(String xml) {
@@ -40,6 +47,13 @@ public class ZahtevService implements ServiceInterface {
 	@Override
 	public void update(String documentId, Document document) {
 		this.zahtevExist.update(documentId, document);
+	}
+	
+	public String advancedSearch(String xml) {
+		ZahtevSearch zahtevSearch = (ZahtevSearch) this.jaxbParser.unmarshalFromXml(xml, ZahtevSearch.class);
+		String xpathExp = String.format("/zahtev:Zahtev[%s]", this.zahtevRDF.search(zahtevSearch));
+		ResourceSet resources = this.zahtevExist.retrieve(xpathExp);
+		return this.zahtevMapper.map(resources);
 	}
 
 	@Override

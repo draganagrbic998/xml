@@ -11,6 +11,8 @@ export const ODLUKA_LIST = 'odluka-list';
 export const ZALBA_LIST = 'zalba-list';
 export const RESENJE_LIST = 'resenje-list';
 export const IZVESTAJ_LIST = 'izvestaj-list';
+
+export const ODGOVOR_LIST = 'odgovor-list';
 export const ODGOVOR_FORM = 'odgovor-form/:brojZalbe';
 
 export const HTML_PATH = 'html/:dokument/:broj';

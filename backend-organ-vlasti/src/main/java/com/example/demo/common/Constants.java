@@ -18,6 +18,7 @@ public class Constants {
 	public static final String GEN_FOLDER = DATA_FOLDER + "gen" + File.separatorChar;
 	public static final String SPARQL_FOLDER = DATA_FOLDER + "sparql" + File.separatorChar;
 	public static final String RDFS_FOLDER = DATA_FOLDER + "rdfs" + File.separatorChar;
+	public static final String STUB_FOLDER = DATA_FOLDER + "stubs" + File.separatorChar;
 
 	public static final String COLLECTIONS_PREFIX = "/db/database";
 	public static final String GRDDL_XSL = DATA_FOLDER + "grddl.xsl";
@@ -25,17 +26,4 @@ public class Constants {
 	public static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	public static final SimpleDateFormat sdf2 = new SimpleDateFormat("dd.MM.yyy.");
 
-	public static final String IZVESTAJ_STUB = "<izvestaj:Izvestaj xmlns=\"" 
-			+ Namespaces.OSNOVA
-			+ "\" xmlns:izvestaj=\"" 
-			+ Namespaces.IZVESTAJ 
-			+ "\" xmlns:pred=\""
-			+ Prefixes.PREDIKAT
-			+ "\" xmlns:xs=\""
-			+ Namespaces.XS
-			+ "\" about=\"\" rel=\"pred:podneo\" href=\"\">"
-			+ "<broj></broj>"
-			+ "<datum property=\"pred:datum\" datatype=\"xs:string\"></datum>"
-			+ "<izvestaj:godina property=\"pred:godina\" datatype=\"xs:string\"></izvestaj:godina>"
-			+ "</izvestaj:Izvestaj>";
 }

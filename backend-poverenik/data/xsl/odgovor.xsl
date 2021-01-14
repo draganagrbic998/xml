@@ -39,18 +39,14 @@ xmlns:odgovor="https://github.com/draganagrbic998/xml/odgovor">
 						text-indent: 40px;
 					}
 					.line{
-						display: block; 
 						height: 17pt; 
-						width: 100%; 
 						border-bottom: 1px dotted black;
+						word-break: break-all;
 					}
 					.flex{
 						display: flex; 
 						flex-direction: row; 
 						justify-content: space-between;
-					}
-					.details{
-						word-break: break-all;
 					}
 					.big{
 						font-size: 20px;
@@ -127,18 +123,18 @@ xmlns:odgovor="https://github.com/draganagrbic998/xml/odgovor">
 						Одговор органа власти на поднету жалбу је следећи:
 					</p>
 					
-					<p class="details">
-						<span class="line">
+					<p>
+						<p class="line">
 				            <xsl:apply-templates select="osnova:Detalji"></xsl:apply-templates>
-		               	</span>
-						<span class="line">
-		                </span>
-						<span class="line">
-		                </span>				
-						<span class="line">
-		                </span>				
-						<span class="line">
-		                </span>				
+		               	</p>
+						<p class="line">
+		                </p>
+						<p class="line">
+		                </p>				
+						<p class="line">
+		                </p>				
+						<p class="line">
+		                </p>				
 		            </p>
 		            
 		            <br></br><br></br><br></br><br></br>
