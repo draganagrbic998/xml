@@ -10,7 +10,7 @@ href="">
 	<datum property="pred:datum" datatype="xs:string"></datum>
 	<resenje:status property="pred:status" datatype="xs:string"></resenje:status>
 	<resenje:PodaciZalbe>
-		<resenje:tipZalbe property="pred:zalba" datatype="xs:string"></resenje:tipZalbe>
+		<resenje:tipZalbe property="pred:tipZalbe" datatype="xs:string"></resenje:tipZalbe>
 		<resenje:brojZalbe rel="pred:zalba" href=""></resenje:brojZalbe>
 		<resenje:datumZalbe></resenje:datumZalbe>
 		<resenje:datumProsledjivanja></resenje:datumProsledjivanja>

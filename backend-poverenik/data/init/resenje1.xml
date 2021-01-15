@@ -30,7 +30,7 @@
 		<Detalji/>
 	    </resenje:PodaciZahteva>
 	<resenje:PodaciZalbe>
-		<resenje:tipZalbe datatype="xs:string" property="pred:zalba">delimicnost</resenje:tipZalbe>
+		<resenje:tipZalbe datatype="xs:string" property="pred:tipZalbe">delimicnost</resenje:tipZalbe>
 		<resenje:brojZalbe href="https://github.com/draganagrbic998/xml/zalba/1" rel="pred:zalba">1</resenje:brojZalbe>
 		<resenje:datumZalbe>2021-01-13</resenje:datumZalbe>
 		<resenje:datumProsledjivanja>2021-01-13</resenje:datumProsledjivanja>

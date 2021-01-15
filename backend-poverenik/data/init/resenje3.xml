@@ -26,7 +26,7 @@
 		<Detalji/>
 	    </resenje:PodaciZahteva>
 	<resenje:PodaciZalbe>
-		<resenje:tipZalbe datatype="xs:string" property="pred:zalba">cutanje</resenje:tipZalbe>
+		<resenje:tipZalbe datatype="xs:string" property="pred:tipZalbe">cutanje</resenje:tipZalbe>
 		<resenje:brojZalbe href="https://github.com/draganagrbic998/xml/zalba/3" rel="pred:zalba">3</resenje:brojZalbe>
 		<resenje:datumZalbe>2021-01-13</resenje:datumZalbe>
 		<resenje:datumProsledjivanja>2021-01-13</resenje:datumProsledjivanja>

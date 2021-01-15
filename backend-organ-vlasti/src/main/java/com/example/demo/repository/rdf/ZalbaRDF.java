@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.w3c.dom.Document;
 
+import com.example.demo.common.Constants;
 import com.example.demo.common.Namespaces;
 import com.example.demo.fuseki.FusekiAuthentication;
 import com.example.demo.fuseki.FusekiManager;
@@ -21,22 +22,23 @@ public class ZalbaRDF implements RDFInterface {
 	private FusekiAuthentication authUtilities;
 
 	public static final String ZALBA_GRAPH = "/zalbe";
+	private static final String ZALBA_SHAPE = Constants.SHAPE_FOLDER + "zalba.ttl";
 
 	@Override
 	public void add(Document document) {
-		this.fusekiManager.add(ZALBA_GRAPH, document);
+		this.fusekiManager.add(ZALBA_GRAPH, document, ZALBA_SHAPE);
 	}
-
+	
 	@Override
 	public void update(String subject, Document document) {
-		this.fusekiManager.update(ZALBA_GRAPH, Namespaces.ZALBA + "/" + subject, document);
+		this.fusekiManager.update(ZALBA_GRAPH, Namespaces.ZALBA + "/" + subject, document, ZALBA_SHAPE);
 	}
 
 	@Override
 	public void delete(String subject) {
 		this.fusekiManager.delete(ZALBA_GRAPH, Namespaces.ZALBA + "/" + subject);
 	}
-
+	
 	@Override
 	public ResultSet retrieve(String subject) {
 		return this.fusekiManager.retrieve(ZALBA_GRAPH, Namespaces.ZALBA + "/" + subject);

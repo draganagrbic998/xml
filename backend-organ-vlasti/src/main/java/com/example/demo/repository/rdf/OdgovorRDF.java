@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.w3c.dom.Document;
 
+import com.example.demo.common.Constants;
 import com.example.demo.common.Namespaces;
 import com.example.demo.fuseki.FusekiAuthentication;
 import com.example.demo.fuseki.FusekiManager;
@@ -21,22 +22,23 @@ public class OdgovorRDF implements RDFInterface {
 	private FusekiAuthentication authUtilities;
 
 	public static final String ODGOVOR_GRAPH = "/odgovori";
+	private static final String ODGOVOR_SHAPE = Constants.SHAPE_FOLDER + "odgovor.ttl";
 
 	@Override
 	public void add(Document document) {
-		this.fusekiManager.add(ODGOVOR_GRAPH, document);
+		this.fusekiManager.add(ODGOVOR_GRAPH, document, ODGOVOR_SHAPE);
 	}
-
+	
 	@Override
 	public void update(String subject, Document document) {
-		this.fusekiManager.update(ODGOVOR_GRAPH, Namespaces.ODGOVOR + "/" + subject, document);
+		this.fusekiManager.update(ODGOVOR_GRAPH, Namespaces.ODGOVOR + "/" + subject, document, ODGOVOR_SHAPE);
 	}
 
 	@Override
 	public void delete(String subject) {
 		this.fusekiManager.delete(ODGOVOR_GRAPH, Namespaces.ODGOVOR + "/" + subject);
 	}
-
+	
 	@Override
 	public ResultSet retrieve(String subject) {
 		return this.fusekiManager.retrieve(ODGOVOR_GRAPH, Namespaces.ODGOVOR + "/" + subject);

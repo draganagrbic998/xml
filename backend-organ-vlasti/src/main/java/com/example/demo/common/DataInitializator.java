@@ -102,23 +102,23 @@ public class DataInitializator {
 		model.add(this.xslTransformer.generateMetadata(this.domParser.buildDocumentFromFile(ZAHTEV_UVID1)));
 		model.add(this.xslTransformer.generateMetadata(this.domParser.buildDocumentFromFile(ZAHTEV_KOPIJA1)));
 		model.add(this.xslTransformer.generateMetadata(this.domParser.buildDocumentFromFile(ZAHTEV_OBAVESTENJE1)));
-		this.fusekiManager.save(ZahtevRDF.ZAHTEV_GRAPH, model);
+		this.fusekiManager.save(ZahtevRDF.ZAHTEV_GRAPH, model, Constants.ZAHTEV_SHAPE);
 		
 		model.removeAll();
 		model.add(this.xslTransformer.generateMetadata(this.domParser.buildDocumentFromFile(OBAVESTENJE1)));
 		model.add(this.xslTransformer.generateMetadata(this.domParser.buildDocumentFromFile(ODBIJANJE1)));
-		this.fusekiManager.save(OdlukaRDF.ODLUKA_GRAPH, model);
+		this.fusekiManager.save(OdlukaRDF.ODLUKA_GRAPH, model, Constants.ODLUKA_SHAPE);
 		
 		model.removeAll();
 		model.add(this.xslTransformer.generateMetadata(this.domParser.buildDocumentFromFile(ZALBA_DELIMICNOST1)));
 		model.add(this.xslTransformer.generateMetadata(this.domParser.buildDocumentFromFile(ZALBA_ODLUKA1)));
 		model.add(this.xslTransformer.generateMetadata(this.domParser.buildDocumentFromFile(ZALBA_CUTANJE1)));
-		this.fusekiManager.save(ZalbaRDF.ZALBA_GRAPH, model);
+		this.fusekiManager.save(ZalbaRDF.ZALBA_GRAPH, model, Constants.ZALBA_SHAPE);
 		
 		model.removeAll();
 		model.add(this.xslTransformer.generateMetadata(this.domParser.buildDocumentFromFile(ODGOVOR1)));
 		model.add(this.xslTransformer.generateMetadata(this.domParser.buildDocumentFromFile(ODGOVOR2)));
-		this.fusekiManager.save(OdgovorRDF.ODGOVOR_GRAPH, model);
+		this.fusekiManager.save(OdgovorRDF.ODGOVOR_GRAPH, model, Constants.ODGOVOR_SHAPE);
 		
 		model.removeAll();
 		model.add(this.xslTransformer.generateMetadata(this.domParser.buildDocumentFromFile(RESENJE1)));
