@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.example.demo.parser.DOMParser;
 import com.example.demo.service.ZalbaService;
 
 @javax.jws.WebService(serviceName = "ZalbaService", portName = "ZalbaPort", targetNamespace = "http://demo.example.com/ws/zalba", wsdlLocation = "classpath:wsdl/Zalba.wsdl", endpointInterface = "com.example.demo.ws.zalba.Zalba")
@@ -15,6 +16,9 @@ public class ZalbaPortImpl implements Zalba {
 
 	@Autowired
 	private ZalbaService zalbaService;
+	
+	@Autowired
+	private DOMParser domParser;
 
 	public void createZalba(java.lang.String createZalba) {
 		LOG.info("Executing operation createZalba");
@@ -31,7 +35,9 @@ public class ZalbaPortImpl implements Zalba {
         LOG.info("Executing operation odustaniZalba");
         System.out.println(odustaniZalba);
         try {
-        } catch (java.lang.Exception ex) {
+        	this.zalbaService.odustani(this.domParser.buildDocument(odustaniZalba).getElementsByTagName("broj").item(0).getTextContent());
+        } 
+        catch (java.lang.Exception ex) {
             ex.printStackTrace();
             throw new RuntimeException(ex);
         }
@@ -41,7 +47,9 @@ public class ZalbaPortImpl implements Zalba {
         LOG.info("Executing operation obustaviZalba");
         System.out.println(obustaviZalba);
         try {
-        } catch (java.lang.Exception ex) {
+        	this.zalbaService.obustavi(this.domParser.buildDocument(obustaviZalba).getElementsByTagName("broj").item(0).getTextContent());
+        } 
+        catch (java.lang.Exception ex) {
             ex.printStackTrace();
             throw new RuntimeException(ex);
         }
