@@ -51,7 +51,6 @@ export class ZalbaOdlukaFormComponent implements AfterViewInit {
     const detaljiEditor = document.getElementById('detaljiEditor2');
     const detaljiSpecifikacija = this.xonomyService.detaljiSpecifikacija;
     Xonomy.render(detaljiXml, detaljiEditor, detaljiSpecifikacija);
-    console.log('zalba odluka');
   }
 
 }

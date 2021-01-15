@@ -40,7 +40,8 @@ public class ZahtevPortImpl implements Zahtev {
 	public java.lang.String getZahtevHtml(java.lang.String getZahtevHtmlRequest) {
 		LOG.info("Executing operation getZahtevView");
 		try {
-			String documentId = this.domParser.buildDocument(getZahtevHtmlRequest).getElementsByTagName("broj").item(0)
+			String documentId = this.domParser.buildDocument(getZahtevHtmlRequest)
+					.getElementsByTagName("broj").item(0)
 					.getTextContent();
 			return this.zahtevTransformer.html(documentId);
 		} catch (java.lang.Exception ex) {
@@ -52,7 +53,8 @@ public class ZahtevPortImpl implements Zahtev {
 	public byte[] getZahtevPdf(java.lang.String getZahtevPdfRequest) {
 		LOG.info("Executing operation getZahtevPdf");
 		try {
-			String documentId = this.domParser.buildDocument(getZahtevPdfRequest).getElementsByTagName("broj").item(0)
+			String documentId = this.domParser.buildDocument(getZahtevPdfRequest)
+					.getElementsByTagName("broj").item(0)
 					.getTextContent();
 			return this.zahtevTransformer.plainPdf(documentId);
 		} catch (java.lang.Exception ex) {
