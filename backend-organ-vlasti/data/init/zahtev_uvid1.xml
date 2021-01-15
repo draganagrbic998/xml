@@ -1,6 +1,6 @@
 <zahtev:Zahtev xmlns="https://github.com/draganagrbic998/xml/osnova" xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev" xmlns:pred="https://github.com/draganagrbic998/xml/predikat/" xmlns:xs="http://www.w3.org/2001/XMLSchema#" about="https://github.com/draganagrbic998/xml/zahtev/1" href="https://github.com/draganagrbic998/xml/korisnik/draganaasd@gmail.com" rel="pred:vlasnik">
 	<broj>1</broj>
-	<datum datatype="xs:string" property="pred:datum">2021-01-13</datum>
+	<datum datatype="xs:string" property="pred:datum">2021-01-15</datum>
 	<Gradjanin>
         <Osoba>
         <mejl>draganaasd@gmail.com</mejl>

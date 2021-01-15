@@ -13,7 +13,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.xmldb.api.modules.XMLResource;
 
 import com.example.demo.common.Constants;
@@ -94,8 +93,8 @@ public class KorisnikService implements UserDetailsService {
 		korisnik.setAktivan(false);
 		korisnik.setLozinka(this.passwordEncoder.encode(korisnik.getLozinka()));
 		Document document = this.jaxbParser.marshal(korisnik);
-		((Element) document.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(0)).setAttribute("property", "pred:mesto");
-		((Element) document.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(0)).setAttribute("datatype", "xs:string");
+		//((Element) document.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(0)).setAttribute("property", "pred:mesto");
+		//((Element) document.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(0)).setAttribute("datatype", "xs:string");
 		this.korisnikExist.update(korisnik.getOsoba().getMejl(), document);			
 		this.sendActivationEmail(korisnik.getOsoba().getMejl(), korisnik.getOsoba().getPotpis());
 	}
@@ -123,9 +122,9 @@ public class KorisnikService implements UserDetailsService {
 	}
 	
 	private void sendActivationEmail(String mejl, String potpis) {
-		Document organVlasti = this.organVlastiService.load();
-		String naziv = organVlasti.getElementsByTagNameNS(Namespaces.OSNOVA, "naziv").item(0).getTextContent();
-		String sediste = organVlasti.getElementsByTagNameNS(Namespaces.OSNOVA, "Adresa").item(0).getTextContent();
+		Document document = this.organVlastiService.load();
+		String naziv = document.getElementsByTagNameNS(Namespaces.OSNOVA, "naziv").item(0).getTextContent();
+		String sediste = document.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(0).getTextContent();
 		
 		Email email = new Email();
 		email.setTo(mejl);

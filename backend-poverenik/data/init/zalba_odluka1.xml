@@ -1,6 +1,6 @@
 <zalba:Zalba xmlns:zalba="https://github.com/draganagrbic998/xml/zalba" xmlns="https://github.com/draganagrbic998/xml/osnova" xmlns:pred="https://github.com/draganagrbic998/xml/predikat/" xmlns:xs="http://www.w3.org/2001/XMLSchema#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" about="https://github.com/draganagrbic998/xml/zalba/2" href="https://github.com/draganagrbic998/xml/korisnik/draganaasd@gmail.com" rel="pred:vlasnik" xsi:type="zalba:TZalbaOdluka">
 	<broj>2</broj>
-	<datum datatype="xs:string" property="pred:datum">2021-01-13</datum>
+	<datum datatype="xs:string" property="pred:datum">2021-01-15</datum>
 	<Gradjanin>
         <Osoba>
         <mejl>draganaasd@gmail.com</mejl>
@@ -23,17 +23,17 @@
     </Adresa>
 </OrganVlasti>
     <Detalji/>
-    <zalba:status datatype="xs:string" property="pred:stanje">reseno</zalba:status>
-	<zalba:datumProsledjivanja>2021-01-13</zalba:datumProsledjivanja>
+    <zalba:status datatype="xs:string" property="pred:status">reseno</zalba:status>
+	<zalba:datumProsledjivanja>2021-01-15</zalba:datumProsledjivanja>
 <zalba:PodaciZahteva href="https://github.com/draganagrbic998/xml/zahtev/2" rel="pred:zahtev">
 		<broj>2</broj>
-		<datum>2021-01-13</datum>
-	<Detalji/>
+		<datum>2021-01-15</datum>
+	
     </zalba:PodaciZahteva>
 	
 	<zalba:PodaciOdluke href="https://github.com/draganagrbic998/xml/odluka/2" rel="pred:odluka">
 		<broj>2</broj>
-		<datum>2021-01-13</datum>
-	<Detalji/>
+		<datum>2021-01-15</datum>
+	
     </zalba:PodaciOdluke>
 </zalba:Zalba>

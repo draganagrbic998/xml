@@ -23,7 +23,7 @@ public class ZahtevRDF implements RDFInterface {
 	private FusekiAuthentication authUtilities;
 
 	public static final String ZAHTEV_GRAPH = "/zahtevi";
-	private static final String ZAHTEV_SHAPE = Constants.SHAPE_FOLDER + "zahtev.ttl";
+	public static final String ZAHTEV_SHAPE = Constants.SHAPE_FOLDER + "zahtev.ttl";
 	//private static final String ZAHTEV_SEARCH = Constants.SPARQL_FOLDER + "zahtev.rq";
 
 	@Override

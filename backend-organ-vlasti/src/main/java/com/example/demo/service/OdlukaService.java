@@ -108,7 +108,7 @@ public class OdlukaService implements ServiceInterface {
 			String datumZahteva = Constants.sdf2.format(Constants.sdf.parse(document.getElementsByTagNameNS(Namespaces.ODLUKA, "datumZahteva").item(0).getTextContent()));
 			String mejl = document.getElementsByTagNameNS(Namespaces.OSNOVA, "mejl").item(0).getTextContent();
 			String naziv = document.getElementsByTagNameNS(Namespaces.OSNOVA, "naziv").item(0).getTextContent();
-			String sediste = document.getElementsByTagNameNS(Namespaces.OSNOVA, "Adresa").item(1).getTextContent();
+			String sediste = document.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(1).getTextContent();
 			//kad izbacis korisnika bice item(0)
 			
 			Email email = new Email();

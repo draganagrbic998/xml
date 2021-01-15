@@ -22,7 +22,7 @@ public class OdlukaRDF implements RDFInterface {
 	private FusekiAuthentication authUtilities;
 	
 	public static final String ODLUKA_GRAPH = "/odluke";
-	private static final String ODLUKA_SHAPE = Constants.SHAPE_FOLDER + "odluka.ttl";
+	public static final String ODLUKA_SHAPE = Constants.SHAPE_FOLDER + "odluka.ttl";
 
 	@Override
 	public void add(Document document) {

@@ -22,7 +22,7 @@ public class ZalbaRDF implements RDFInterface {
 	private FusekiAuthentication authUtilities;
 
 	public static final String ZALBA_GRAPH = "/zalbe";
-	private static final String ZALBA_SHAPE = Constants.SHAPE_FOLDER + "zalba.ttl";
+	public static final String ZALBA_SHAPE = Constants.SHAPE_FOLDER + "zalba.ttl";
 
 	@Override
 	public void add(Document document) {

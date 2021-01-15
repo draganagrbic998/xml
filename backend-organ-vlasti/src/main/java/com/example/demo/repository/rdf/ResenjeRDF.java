@@ -16,7 +16,7 @@ public class ResenjeRDF implements RDFInterface {
 	private FusekiManager fusekiManager;
 
 	public static final String RESENJE_GRAPH = "/resenja";
-	private static final String RESENJE_SHAPE = Constants.SHAPE_FOLDER + "resenje.ttl";
+	public static final String RESENJE_SHAPE = Constants.SHAPE_FOLDER + "resenje.ttl";
 
 	@Override
 	public void add(Document document) {

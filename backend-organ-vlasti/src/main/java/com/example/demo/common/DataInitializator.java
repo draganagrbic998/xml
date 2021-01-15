@@ -1,7 +1,5 @@
 package com.example.demo.common;
 
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
@@ -10,7 +8,6 @@ import org.springframework.stereotype.Component;
 import com.example.demo.exist.ExistManager;
 import com.example.demo.fuseki.FusekiManager;
 import com.example.demo.parser.DOMParser;
-import com.example.demo.parser.XSLTransformer;
 import com.example.demo.repository.rdf.OdgovorRDF;
 import com.example.demo.repository.rdf.OdlukaRDF;
 import com.example.demo.repository.rdf.ResenjeRDF;
@@ -58,9 +55,6 @@ public class DataInitializator {
 
 	@Autowired
 	private DOMParser domParser;
-	
-	@Autowired
-	private XSLTransformer xslTransformer;
 
 	@EventListener(ContextRefreshedEvent.class)
 	public void dataInit() {
@@ -79,7 +73,6 @@ public class DataInitializator {
 		this.existManager.save(KorisnikExist.KORISNIK_COLLECTION, "sluzbenik@gmail.com", this.domParser.buildDocumentFromFile(SLUZBENIK1), KorisnikExist.KORISNIK_SCHEMA);
 		this.existManager.save(KorisnikExist.KORISNIK_COLLECTION, "draganaasd@gmail.com", this.domParser.buildDocumentFromFile(GRADJANIN1), KorisnikExist.KORISNIK_SCHEMA);
 
-		/*
 		this.existManager.save(ZahtevExist.ZAHTEV_COLLECTION, "1", this.domParser.buildDocumentFromFile(ZAHTEV_UVID1), ZahtevExist.ZAHTEV_SCHEMA);
 		this.existManager.save(ZahtevExist.ZAHTEV_COLLECTION, "2", this.domParser.buildDocumentFromFile(ZAHTEV_KOPIJA1), ZahtevExist.ZAHTEV_SCHEMA);
 		this.existManager.save(ZahtevExist.ZAHTEV_COLLECTION, "3", this.domParser.buildDocumentFromFile(ZAHTEV_OBAVESTENJE1), ZahtevExist.ZAHTEV_SCHEMA);
@@ -98,33 +91,24 @@ public class DataInitializator {
 	    this.existManager.save(ResenjeExist.RESENJE_COLLECTION, "2", this.domParser.buildDocumentFromFile(RESENJE2), ResenjeExist.RESENJE_SCHEMA);
 	    this.existManager.save(ResenjeExist.RESENJE_COLLECTION, "3", this.domParser.buildDocumentFromFile(RESENJE3), ResenjeExist.RESENJE_SCHEMA);
 		
-		Model model = ModelFactory.createDefaultModel();
-		model.add(this.xslTransformer.generateMetadata(this.domParser.buildDocumentFromFile(ZAHTEV_UVID1)));
-		model.add(this.xslTransformer.generateMetadata(this.domParser.buildDocumentFromFile(ZAHTEV_KOPIJA1)));
-		model.add(this.xslTransformer.generateMetadata(this.domParser.buildDocumentFromFile(ZAHTEV_OBAVESTENJE1)));
-		this.fusekiManager.save(ZahtevRDF.ZAHTEV_GRAPH, model, Constants.ZAHTEV_SHAPE);
+		this.fusekiManager.add(ZahtevRDF.ZAHTEV_GRAPH, this.domParser.buildDocumentFromFile(ZAHTEV_UVID1), ZahtevRDF.ZAHTEV_SHAPE);
+		this.fusekiManager.add(ZahtevRDF.ZAHTEV_GRAPH, this.domParser.buildDocumentFromFile(ZAHTEV_KOPIJA1), ZahtevRDF.ZAHTEV_SHAPE);
+		this.fusekiManager.add(ZahtevRDF.ZAHTEV_GRAPH, this.domParser.buildDocumentFromFile(ZAHTEV_OBAVESTENJE1), ZahtevRDF.ZAHTEV_SHAPE);
+
+		this.fusekiManager.add(OdlukaRDF.ODLUKA_GRAPH, this.domParser.buildDocumentFromFile(OBAVESTENJE1), OdlukaRDF.ODLUKA_SHAPE);
+		this.fusekiManager.add(OdlukaRDF.ODLUKA_GRAPH, this.domParser.buildDocumentFromFile(ODBIJANJE1), OdlukaRDF.ODLUKA_SHAPE);
+
+		this.fusekiManager.add(ZalbaRDF.ZALBA_GRAPH, this.domParser.buildDocumentFromFile(ZALBA_DELIMICNOST1), ZalbaRDF.ZALBA_SHAPE);
+		this.fusekiManager.add(ZalbaRDF.ZALBA_GRAPH, this.domParser.buildDocumentFromFile(ZALBA_ODLUKA1), ZalbaRDF.ZALBA_SHAPE);
+		this.fusekiManager.add(ZalbaRDF.ZALBA_GRAPH, this.domParser.buildDocumentFromFile(ZALBA_CUTANJE1), ZalbaRDF.ZALBA_SHAPE);
 		
-		model.removeAll();
-		model.add(this.xslTransformer.generateMetadata(this.domParser.buildDocumentFromFile(OBAVESTENJE1)));
-		model.add(this.xslTransformer.generateMetadata(this.domParser.buildDocumentFromFile(ODBIJANJE1)));
-		this.fusekiManager.save(OdlukaRDF.ODLUKA_GRAPH, model, Constants.ODLUKA_SHAPE);
+		this.fusekiManager.add(OdgovorRDF.ODGOVOR_GRAPH, this.domParser.buildDocumentFromFile(ODGOVOR1), OdgovorRDF.ODGOVOR_SHAPE);
+		this.fusekiManager.add(OdgovorRDF.ODGOVOR_GRAPH, this.domParser.buildDocumentFromFile(ODGOVOR2), OdgovorRDF.ODGOVOR_SHAPE);
+
+		this.fusekiManager.add(ResenjeRDF.RESENJE_GRAPH, this.domParser.buildDocumentFromFile(RESENJE1), ResenjeRDF.RESENJE_SHAPE);
+		this.fusekiManager.add(ResenjeRDF.RESENJE_GRAPH, this.domParser.buildDocumentFromFile(RESENJE2), ResenjeRDF.RESENJE_SHAPE);
+		this.fusekiManager.add(ResenjeRDF.RESENJE_GRAPH, this.domParser.buildDocumentFromFile(RESENJE3), ResenjeRDF.RESENJE_SHAPE);
 		
-		model.removeAll();
-		model.add(this.xslTransformer.generateMetadata(this.domParser.buildDocumentFromFile(ZALBA_DELIMICNOST1)));
-		model.add(this.xslTransformer.generateMetadata(this.domParser.buildDocumentFromFile(ZALBA_ODLUKA1)));
-		model.add(this.xslTransformer.generateMetadata(this.domParser.buildDocumentFromFile(ZALBA_CUTANJE1)));
-		this.fusekiManager.save(ZalbaRDF.ZALBA_GRAPH, model, Constants.ZALBA_SHAPE);
-		
-		model.removeAll();
-		model.add(this.xslTransformer.generateMetadata(this.domParser.buildDocumentFromFile(ODGOVOR1)));
-		model.add(this.xslTransformer.generateMetadata(this.domParser.buildDocumentFromFile(ODGOVOR2)));
-		this.fusekiManager.save(OdgovorRDF.ODGOVOR_GRAPH, model, Constants.ODGOVOR_SHAPE);
-		
-		model.removeAll();
-		model.add(this.xslTransformer.generateMetadata(this.domParser.buildDocumentFromFile(RESENJE1)));
-		model.add(this.xslTransformer.generateMetadata(this.domParser.buildDocumentFromFile(RESENJE2)));
-		model.add(this.xslTransformer.generateMetadata(this.domParser.buildDocumentFromFile(RESENJE3)));
-		this.fusekiManager.save(ResenjeRDF.RESENJE_GRAPH, model);*/
 	}
 
 }

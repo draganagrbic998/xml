@@ -1,6 +1,6 @@
 <odluka:Odluka xmlns="https://github.com/draganagrbic998/xml/osnova" xmlns:pred="https://github.com/draganagrbic998/xml/predikat/" xmlns:odluka="https://github.com/draganagrbic998/xml/odluka" xmlns:xs="http://www.w3.org/2001/XMLSchema#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" about="https://github.com/draganagrbic998/xml/odluka/1" href="https://github.com/draganagrbic998/xml/korisnik/draganaasd@gmail.com" rel="pred:vlasnik" xsi:type="odluka:TObavestenje">
 	<broj>1</broj>
-	<datum datatype="xs:string" property="pred:datum">2021-01-13</datum>
+	<datum datatype="xs:string" property="pred:datum">2021-01-15</datum>
 	<Gradjanin>
         <Osoba>
         <mejl>draganaasd@gmail.com</mejl>
@@ -24,12 +24,12 @@
 </OrganVlasti>
     <Detalji/>
     <odluka:brojZahteva href="https://github.com/draganagrbic998/xml/zahtev/1" rel="pred:zahtev">1</odluka:brojZahteva>
-	<odluka:datumZahteva>2021-01-13</odluka:datumZahteva>
+	<odluka:datumZahteva>2021-01-15</odluka:datumZahteva>
 <odluka:Uvid>
           <odluka:datumUvida>2020-02-02</odluka:datumUvida>
             <odluka:pocetak>12:12</odluka:pocetak>
             <odluka:kraj>14:14</odluka:kraj>
-            <odluka:kancelarija>as</odluka:kancelarija>
+            <odluka:kancelarija>asd</odluka:kancelarija>
         </odluka:Uvid>
     <odluka:kopija>123</odluka:kopija>
 </odluka:Odluka>

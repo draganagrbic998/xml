@@ -13,11 +13,9 @@ public class JAXBParser {
 
 	public Object unmarshal(String xml, Class<?> cl) {
 		try {
-			System.out.println(xml);
 			return JAXBContext.newInstance(cl).createUnmarshaller().unmarshal(new StringReader(xml));
 		}
 		catch(Exception e) {
-			e.printStackTrace();
 			throw new MyException(e);
 		}
 	}

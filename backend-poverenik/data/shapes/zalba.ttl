@@ -28,7 +28,7 @@ z:ZalbaShape
 		sh:datatype xsd:string ;
 	] ;
 	sh:property [
-		sh:path prop:stanje ;
+		sh:path prop:status ;
 		sh:minCount 1 ;
 		sh:maxCount 1 ;
 		sh:datatype xsd:string ;

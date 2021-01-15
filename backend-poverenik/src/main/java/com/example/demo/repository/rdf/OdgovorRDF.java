@@ -23,7 +23,7 @@ public class OdgovorRDF implements RDFInterface {
 	private FusekiAuthentication authUtilities;
 
 	public static final String ODGOVOR_GRAPH = "/odgovori";
-	private static final String ODGOVOR_SHAPE = Constants.SHAPE_FOLDER + "odgovor.ttl";
+	public static final String ODGOVOR_SHAPE = Constants.SHAPE_FOLDER + "odgovor.ttl";
 
 	@Override
 	public void add(Document document) {

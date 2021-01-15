@@ -23,7 +23,7 @@ public class ZalbaRDF implements RDFInterface {
 	private FusekiAuthentication authUtilities;
 
 	public static final String ZALBA_GRAPH = "/zalbe";
-	private static final String ZALBA_SHAPE = Constants.SHAPE_FOLDER + "zalba.ttl";
+	public static final String ZALBA_SHAPE = Constants.SHAPE_FOLDER + "zalba.ttl";
 	//private static final String ZALBA_AND_SEARCH = Constants.SPARQL_FOLDER + "zalba_and.rq";
 	//private static final String ZALBA_OR_SEARCH = Constants.SPARQL_FOLDER + "zalba_or.rq";
 

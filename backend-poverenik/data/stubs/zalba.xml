@@ -10,7 +10,7 @@ rel="pred:vlasnik"
 href="">
 	<broj></broj>
 	<datum property="pred:datum" datatype="xs:string"></datum>
-	<zalba:status property="pred:stanje" datatype="xs:string">cekanje</zalba:status>
+	<zalba:status property="pred:status" datatype="xs:string">cekanje</zalba:status>
 	<zalba:PodaciZahteva rel="pred:zahtev" href="">
 		<broj></broj>
 		<datum></datum>
