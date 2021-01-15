@@ -11,9 +11,9 @@ export class ReferenceListComponent implements OnInit {
 
   constructor() { }
 
-  columns: string[] = ['tip', 'dokumenti'];
   @Input() reference: Referenca[];
   referenceList: MatTableDataSource<Referenca>;
+  columns: string[] = ['tip', 'dokumenti'];
 
   ngOnInit(): void {
     this.referenceList = new MatTableDataSource(this.reference);

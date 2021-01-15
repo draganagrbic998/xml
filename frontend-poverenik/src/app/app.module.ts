@@ -25,6 +25,8 @@ import { HtmlViewerComponent } from './components/main/html-viewer/html-viewer.c
 import { PdfViewerComponent } from './components/main/pdf-viewer/pdf-viewer.component';
 import { OdgovorListComponent } from './components/zalba/odgovor-list/odgovor-list.component';
 import { IzvestajListComponent } from './components/izvestaj/izvestaj-list/izvestaj-list.component';
+import { SpacerContainerComponent } from './components/layout/spacer-container/spacer-container.component';
+import { ReferenceListComponent } from './components/main/reference-list/reference-list.component';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
@@ -43,8 +45,6 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { SpacerContainerComponent } from './components/layout/spacer-container/spacer-container.component';
-import { ReferenceListComponent } from './components/main/reference-list/reference-list.component';
 
 @NgModule({
   declarations: [

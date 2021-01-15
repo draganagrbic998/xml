@@ -2,14 +2,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ODLUKA, OSNOVA, XS, XSI } from 'src/app/constants/namespaces';
+import { ODLUKA, OSNOVA } from 'src/app/constants/namespaces';
 import { Obavestenje } from 'src/app/models/obavestenje';
 import { OdlukaDTO } from 'src/app/models/odlukaDTO';
 import { Odbijanje } from 'src/app/models/odbijanje';
 import { environment } from 'src/environments/environment';
 import { XonomyService } from '../xonomy/xonomy.service';
 import { Referenca } from 'src/app/models/referenca';
-import { MatTableDataSource } from '@angular/material/table';
 
 @Injectable({
   providedIn: 'root'
@@ -32,8 +31,7 @@ export class OdlukaService {
     return `
       <odluka:Odluka
       xmlns="${OSNOVA}"
-      xmlns:odluka="${ODLUKA}"
-      xmlns:xsi="${XSI}">
+      xmlns:odluka="${ODLUKA}">
         ${odbijanje.detalji}
         <odluka:brojZahteva>${brojZahteva}</odluka:brojZahteva>
       </odluka:Odluka>
@@ -46,8 +44,7 @@ export class OdlukaService {
     return `
       <odluka:Odluka
       xmlns="${OSNOVA}"
-      xmlns:odluka="${ODLUKA}"
-      xmlns:xsi="${XSI}">
+      xmlns:odluka="${ODLUKA}">
         ${obavestenje.detalji}
         <odluka:brojZahteva>${brojZahteva}</odluka:brojZahteva>
         <odluka:Uvid>

@@ -6,7 +6,7 @@ import org.w3c.dom.Document;
 import org.xmldb.api.base.ResourceSet;
 
 import com.example.demo.mapper.IzvestajMapper;
-import com.example.demo.parser.XSLTransformer;
+import com.example.demo.parser.DOMParser;
 import com.example.demo.repository.rdf.IzvestajRDF;
 import com.example.demo.repository.xml.IzvestajExist;
 
@@ -21,20 +21,24 @@ public class IzvestajService implements ServiceInterface {
 	
 	@Autowired
 	private IzvestajMapper izvestajMapper;
-	
-	@Autowired
-	private XSLTransformer xslTransformer;
 
 	@Override
 	public void add(String xml) {
 		Document document = this.izvestajMapper.map(xml);
-		this.izvestajExist.update(this.izvestajMapper.getBroj(document), document);
-		this.izvestajRDF.add(this.xslTransformer.generateMetadata(document));
+		this.izvestajExist.update(DOMParser.getBroj(document), document);
+		this.izvestajRDF.add(document);
 	}
 
 	@Override
 	public void update(String documentId, Document document) {
 		this.izvestajExist.update(documentId, document);
+		this.izvestajRDF.update(documentId, document);
+	}
+	
+	@Override
+	public void delete(String documentId) {
+		this.izvestajExist.delete(documentId);
+		this.izvestajRDF.delete(documentId);
 	}
 
 	@Override

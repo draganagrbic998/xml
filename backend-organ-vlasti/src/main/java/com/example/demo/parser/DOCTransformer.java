@@ -25,10 +25,10 @@ public class DOCTransformer {
 
 	@Autowired
 	private DOMParser domParser;
-
+			
 	public String html(Document document, String xslPath) {
-		ByteArrayOutputStream out = this.xslTransformer.generateHtml(this.domParser.buildXml(document), xslPath);
-		return out.toString();
+		System.out.println(this.domParser.buildXml(document));
+		return this.xslTransformer.generateHtml(this.domParser.buildXml(document), xslPath).toString();
 	}
 
 	public Resource generateHtml(Document document, String xslPath, String genPath) {
@@ -38,7 +38,8 @@ public class DOCTransformer {
 					+ document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent() + ".html");
 			Files.write(file, out.toByteArray());
 			return new UrlResource(file.toUri());
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			throw new MyException(e);
 		}
 	}
@@ -50,18 +51,14 @@ public class DOCTransformer {
 					+ document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent() + ".pdf");
 			Files.write(file, out.toByteArray());
 			return new UrlResource(file.toUri());
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			throw new MyException(e);
 		}
 	}
 
 	public byte[] plainPdf(Document document, String xslFoPath) {
-		try {
-			ByteArrayOutputStream out = this.xslTransformer.generatePdf(this.domParser.buildXml(document), xslFoPath);
-			return out.toByteArray();
-		} catch (Exception e) {
-			throw new MyException(e);
-		}
+		return this.xslTransformer.generatePdf(this.domParser.buildXml(document), xslFoPath).toByteArray();
 	}
 
 	public Resource generateMetadata(String broj, ResultSet results, MetadataTip type, String genPath) {
@@ -69,13 +66,15 @@ public class DOCTransformer {
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 			if (type.equals(MetadataTip.xml)) {
 				ResultSetFormatter.outputAsXML(out, results);
-			} else {
+			} 
+			else {
 				ResultSetFormatter.outputAsJSON(out, results);
 			}
 			Path file = Paths.get(genPath + broj + "_metadata." + type);
 			Files.write(file, out.toByteArray());
 			return new UrlResource(file.toUri());
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			throw new MyException(e);
 		}
 	}

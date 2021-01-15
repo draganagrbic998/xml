@@ -24,7 +24,7 @@ import com.example.demo.repository.xml.KorisnikExist;
 import com.example.demo.repository.xml.ZalbaExist;
 import com.example.demo.service.KorisnikService;
 import com.example.demo.ws.utils.SOAPService;
-import com.example.demo.ws.utils.SOAPDocument;
+import com.example.demo.ws.utils.SOAPActions;
 
 @Component
 public class ZalbaMapper implements MapperInterface {
@@ -82,7 +82,7 @@ public class ZalbaMapper implements MapperInterface {
 		if (dto.getElementsByTagNameNS(Namespaces.ZALBA, "brojOdluke").getLength() > 0) {
 			String brojOdluke = dto.getElementsByTagNameNS(Namespaces.ZALBA, "brojOdluke").item(0).getTextContent();
 			Element odluka = (Element) this.domParser.buildDocument(this.soapService
-					.sendSOAPMessage(this.domParser.buildDocument(String.format("<pretraga><broj>%s</broj></pretraga>", brojOdluke)), SOAPDocument.odluka))
+					.sendSOAPMessage(this.domParser.buildDocument(String.format("<pretraga><broj>%s</broj></pretraga>", brojOdluke)), SOAPActions.get_odluka))
 					.getElementsByTagNameNS(Namespaces.ODLUKA, "Odluka").item(0);
 			Element podaciOdluke = (Element) document.getElementsByTagNameNS(Namespaces.ZALBA, "PodaciOdluke").item(0);
 			podaciOdluke.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).setTextContent(brojOdluke);
@@ -97,7 +97,7 @@ public class ZalbaMapper implements MapperInterface {
 		}
 		
 		Element zahtev = (Element) this.domParser.buildDocument(this.soapService
-				.sendSOAPMessage(this.domParser.buildDocument(String.format("<pretraga><broj>%s</broj></pretraga>", brojZahteva)), SOAPDocument.zahtev))
+				.sendSOAPMessage(this.domParser.buildDocument(String.format("<pretraga><broj>%s</broj></pretraga>", brojZahteva)), SOAPActions.get_zahtev))
 				.getElementsByTagNameNS(Namespaces.ZAHTEV, "Zahtev").item(0);
 		documentFragment.appendChild(document.importNode(zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "OrganVlasti").item(0), true));
 		documentFragment.appendChild(document.importNode(dto.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0), true));
@@ -135,8 +135,8 @@ public class ZalbaMapper implements MapperInterface {
 					zalba.appendChild(zalbeDocument.importNode(document.getElementsByTagNameNS(Namespaces.ZALBA, "datumProsledjivanja").item(0), true));
 				
 				Node reference = zalbeDocument.createElementNS(Namespaces.OSNOVA, "Reference");
-				this.domParser.addReference(zalbeDocument, reference, this.zalbaRDF.odgovori(broj.getTextContent()), "odgovori");
-				this.domParser.addReference(zalbeDocument, reference, this.zalbaRDF.resenja(broj.getTextContent()), "resenja");
+				DOMParser.setReferences(zalbeDocument, reference, this.zalbaRDF.odgovori(broj.getTextContent()), "odgovori");
+				DOMParser.setReferences(zalbeDocument, reference, this.zalbaRDF.resenja(broj.getTextContent()), "resenja");
 				zalba.appendChild(reference);
 				
 				zalbe.appendChild(zalba);

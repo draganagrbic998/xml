@@ -14,15 +14,6 @@ import com.example.demo.common.MyException;
 @Component
 public class JAXBParser {
 	
-	public Object unmarshalFromXml(String xml, Class<?> cl) {
-		try {
-			return JAXBContext.newInstance(cl).createUnmarshaller().unmarshal(new StringReader(xml));
-		}
-		catch(Exception e) {
-			throw new MyException(e);
-		}
-	}
-	
 	public Object unmarshal(Document document, Class<?> cl) {
 		try {
 			return JAXBContext.newInstance(cl).createUnmarshaller().unmarshal(document);
@@ -31,23 +22,32 @@ public class JAXBParser {
 			throw new MyException(e);
 		}
 	}
-	
-	public String marshalToXml(Object obj) {
+
+	public Object unmarshalFromXml(String xml, Class<?> cl) {
 		try {
-		    StringWriter sw = new StringWriter();
-		    JAXBContext.newInstance(obj.getClass()).createMarshaller().marshal(obj, sw);
-		    return sw.toString();
+			return JAXBContext.newInstance(cl).createUnmarshaller().unmarshal(new StringReader(xml));
 		}
 		catch(Exception e) {
 			throw new MyException(e);
 		}
 	}
-	
+
 	public Document marshal(Object obj) {
 		try {
 		    DOMResult result = new DOMResult();
 		    JAXBContext.newInstance(obj.getClass()).createMarshaller().marshal(obj, result);
 		    return (Document) result.getNode();
+		}
+		catch(Exception e) {
+			throw new MyException(e);
+		}
+	}
+
+	public String marshalToXml(Object obj) {
+		try {
+		    StringWriter sw = new StringWriter();
+		    JAXBContext.newInstance(obj.getClass()).createMarshaller().marshal(obj, sw);
+		    return sw.toString();
 		}
 		catch(Exception e) {
 			throw new MyException(e);

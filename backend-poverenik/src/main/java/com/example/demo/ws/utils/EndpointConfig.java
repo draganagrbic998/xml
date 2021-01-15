@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 
 import com.example.demo.ws.izvestaj.IzvestajPortImpl;
 import com.example.demo.ws.odgovor.OdgovorPortImpl;
+import com.example.demo.ws.zalba.ZalbaPortImpl;
 
 @Configuration
 public class EndpointConfig {
@@ -22,6 +23,9 @@ public class EndpointConfig {
 
 	@Autowired
 	private IzvestajPortImpl ipi;
+	
+	@Autowired
+	private ZalbaPortImpl zpi;
 
 	@Bean
 	public Endpoint odgovorEndpoint() {
@@ -34,6 +38,13 @@ public class EndpointConfig {
 	public Endpoint izvestajEndpoint() {
 		EndpointImpl endpoint = new EndpointImpl(bus, ipi);
 		endpoint.publish("/izvestaj");
+		return endpoint;
+	}
+	
+	@Bean
+	public Endpoint zalbaEndpoint() {
+		EndpointImpl endpoint = new EndpointImpl(bus, zpi);
+		endpoint.publish("/zalba");
 		return endpoint;
 	}
 }

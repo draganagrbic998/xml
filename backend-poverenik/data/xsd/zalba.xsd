@@ -56,7 +56,7 @@
         <xs:restriction base="xs:string">
             <xs:enumeration value="cekanje"/>
             <xs:enumeration value="prosledjeno"/>
-            <xs:enumeration value="obavesteno"/>
+            <xs:enumeration value="ispravljeno"/>
             <xs:enumeration value="odgovoreno"/>
             <xs:enumeration value="odustato"/>
             <xs:enumeration value="obustavljeno"/>

@@ -12,7 +12,6 @@ import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
-import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.update.UpdateExecutionFactory;
 import org.apache.jena.update.UpdateFactory;
@@ -20,9 +19,11 @@ import org.apache.jena.update.UpdateProcessor;
 import org.apache.jena.update.UpdateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.w3c.dom.Document;
 
 import com.example.demo.common.Constants;
 import com.example.demo.common.MyException;
+import com.example.demo.parser.XSLTransformer;
 
 @Component
 public class FusekiManager {
@@ -30,13 +31,28 @@ public class FusekiManager {
 	@Autowired
 	private FusekiAuthentication authUtilities;
 	
+	@Autowired
+	private XSLTransformer xslTransformer;
+	
 	private static final String RETRIEVE_QUERY = Constants.SPARQL_FOLDER + "retrieve.rq";
 	public static final String REFERENCE_QUERY = Constants.SPARQL_FOLDER + "reference.rq";
 	
-	public void save(String graphUri, Model model) {
+	public void add(String graphUri, Document document) {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
-		model.write(out, SparqlUtil.NTRIPLES);
+		this.xslTransformer.generateMetadata(document).write(out, SparqlUtil.NTRIPLES);
 		String sparql = SparqlUtil.insertData(this.authUtilities.getData() + graphUri, out.toString());
+		UpdateRequest request = UpdateFactory.create(sparql);
+        UpdateProcessor processor = UpdateExecutionFactory.createRemote(request, this.authUtilities.getUpdate());
+		processor.execute();
+	}
+	
+	public void update(String graphUri, String subject, Document document) {
+		this.delete(graphUri, subject);
+		this.add(graphUri, document);
+	}
+	
+	public void delete(String graphUri, String subject) {
+		String sparql = SparqlUtil.deleteData(this.authUtilities.getData() + graphUri, subject);
 		UpdateRequest request = UpdateFactory.create(sparql);
         UpdateProcessor processor = UpdateExecutionFactory.createRemote(request, this.authUtilities.getUpdate());
 		processor.execute();
@@ -48,19 +64,7 @@ public class FusekiManager {
 		ResultSet results = query.execSelect();
 		return results;
 	}
-	
-	public void update(String graphUri, Model model, String subject) {
-		this.delete(graphUri, subject);
-		this.save(graphUri, model);
-	}
-	
-	public void delete(String graphUri, String subject) {
-		String sparql = SparqlUtil.deleteData(this.authUtilities.getData() + graphUri, subject);
-		UpdateRequest request = UpdateFactory.create(sparql);
-        UpdateProcessor processor = UpdateExecutionFactory.createRemote(request, this.authUtilities.getUpdate());
-		processor.execute();
-	}
-	
+		
 	public List<Integer> search(String sparql, String prefix) {
 		QueryExecution query = QueryExecutionFactory.sparqlService(this.authUtilities.getQuery(), sparql);
 		ResultSet results = query.execSelect();

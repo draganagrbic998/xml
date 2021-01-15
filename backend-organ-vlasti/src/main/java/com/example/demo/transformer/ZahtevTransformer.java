@@ -23,11 +23,11 @@ public class ZahtevTransformer implements TransformerInterface {
 	
 	@Autowired
 	private DOCTransformer docTransformer;
-	
+		
 	private static final String XSL_PATH = Constants.XSL_FOLDER + "zahtev.xsl";
 	private static final String XSL_FO_PATH = Constants.XSL_FOLDER + "zahtev_fo.xsl";
 	private static final String GEN_PATH = Constants.GEN_FOLDER + "zahtevi" + File.separatorChar;
-	
+		
 	@Override
 	public String html(String documentId) {
 		return this.docTransformer.html(this.zahtevExist.load(documentId), XSL_PATH);

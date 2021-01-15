@@ -8,11 +8,10 @@ import org.xmldb.api.base.ResourceSet;
 import com.example.demo.common.Namespaces;
 import com.example.demo.enums.StatusZalbe;
 import com.example.demo.mapper.OdgovorMapper;
-import com.example.demo.parser.XSLTransformer;
 import com.example.demo.repository.rdf.OdgovorRDF;
 import com.example.demo.repository.xml.OdgovorExist;
 import com.example.demo.ws.utils.SOAPService;
-import com.example.demo.ws.utils.SOAPDocument;
+import com.example.demo.ws.utils.SOAPActions;
 
 @Service
 public class OdgovorService implements ServiceInterface {
@@ -32,24 +31,28 @@ public class OdgovorService implements ServiceInterface {
 	@Autowired
 	private SOAPService soapService;
 	
-	@Autowired
-	private XSLTransformer xslTransformer;
-	
 	@Override
 	public void add(String xml) {
 		Document document = this.odgovorMapper.map(xml);
 		String brojZalbe = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
 		this.odgovorExist.update(brojZalbe, document);
-		this.odgovorRDF.add(this.xslTransformer.generateMetadata(document));
+		this.odgovorRDF.add(document);
 		Document zalbaDocument = this.zalbaService.load(brojZalbe);
 		zalbaDocument.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.odgovoreno + "");
 		this.zalbaService.update(brojZalbe, zalbaDocument);
-		this.soapService.sendSOAPMessage(document, SOAPDocument.odgovor);	
+		this.soapService.sendSOAPMessage(document, SOAPActions.create_odgovor);	
 	}
 
 	@Override
 	public void update(String documentId, Document document) {
 		this.odgovorExist.update(documentId, document);
+		this.odgovorRDF.update(documentId, document);
+	}
+	
+	@Override
+	public void delete(String documentId) {
+		this.odgovorExist.delete(documentId);
+		this.odgovorRDF.delete(documentId);
 	}
 
 	@Override

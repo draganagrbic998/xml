@@ -33,7 +33,6 @@ public class ZalbaPortImpl implements Zalba {
 	
     public void odustaniZalba(java.lang.String odustaniZalba) {
         LOG.info("Executing operation odustaniZalba");
-        System.out.println(odustaniZalba);
         try {
         	this.zalbaService.odustani(this.domParser.buildDocument(odustaniZalba).getElementsByTagName("broj").item(0).getTextContent());
         } 
@@ -45,7 +44,6 @@ public class ZalbaPortImpl implements Zalba {
 
     public void obustaviZalba(java.lang.String obustaviZalba) {
         LOG.info("Executing operation obustaviZalba");
-        System.out.println(obustaviZalba);
         try {
         	this.zalbaService.obustavi(this.domParser.buildDocument(obustaviZalba).getElementsByTagName("broj").item(0).getTextContent());
         } 

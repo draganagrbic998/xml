@@ -91,15 +91,17 @@ public class DOMParser {
 		return transformerFactory;
 	}
 	
-	public void addReference(Document document, Node reference, List<Integer> brojevi, String tip) {
-		
+	public static String getBroj(Document document) {
+		return document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
+	}
+
+	public static void setReferences(Document document, Node reference, List<Integer> brojevi, String tip) {
 		for (int broj: brojevi) {
 			Element referenca = document.createElementNS(Namespaces.OSNOVA, "ref");
 			referenca.setAttribute("tip", tip);
 			referenca.setTextContent(broj + "");
 			reference.appendChild(referenca);
 		}
-		
 	}
-
+		
 }

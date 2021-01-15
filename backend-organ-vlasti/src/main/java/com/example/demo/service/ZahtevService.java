@@ -10,7 +10,6 @@ import com.example.demo.mapper.ZahtevMapper;
 import com.example.demo.model.Korisnik;
 import com.example.demo.model.ZahtevSearch;
 import com.example.demo.parser.JAXBParser;
-import com.example.demo.parser.XSLTransformer;
 import com.example.demo.repository.rdf.ZahtevRDF;
 import com.example.demo.repository.xml.ZahtevExist;
 
@@ -30,32 +29,27 @@ public class ZahtevService implements ServiceInterface {
 	private KorisnikService korisnikService;
 	
 	@Autowired
-	private XSLTransformer xslTransformer;
-	
-	@Autowired
 	private JAXBParser jaxbParser;
-	
-	//dodaj interfejs za obicnu/naprednu pretragu
-		
+			
 	@Override
 	public void add(String xml) {
 		Document document = this.zahtevMapper.map(xml);
 		this.zahtevExist.add(document);
-		this.zahtevRDF.add(this.xslTransformer.generateMetadata(document));		
+		this.zahtevRDF.add(document);		
 	}
 
 	@Override
 	public void update(String documentId, Document document) {
 		this.zahtevExist.update(documentId, document);
+		this.zahtevRDF.update(documentId, document);
 	}
 	
-	public String advancedSearch(String xml) {
-		ZahtevSearch zahtevSearch = (ZahtevSearch) this.jaxbParser.unmarshalFromXml(xml, ZahtevSearch.class);
-		String xpathExp = String.format("/zahtev:Zahtev[%s]", this.zahtevRDF.search(zahtevSearch));
-		ResourceSet resources = this.zahtevExist.retrieve(xpathExp);
-		return this.zahtevMapper.map(resources);
+	@Override
+	public void delete(String documentId) {
+		this.zahtevExist.delete(documentId);
+		this.zahtevRDF.delete(documentId);
 	}
-
+	
 	@Override
 	public String retrieve() {
 		Korisnik korisnik = this.korisnikService.currentUser();
@@ -75,4 +69,11 @@ public class ZahtevService implements ServiceInterface {
 		return this.zahtevExist.load(documentId);
 	}
 	
+	public String advancedSearch(String xml) {
+		ZahtevSearch zahtevSearch = (ZahtevSearch) this.jaxbParser.unmarshalFromXml(xml, ZahtevSearch.class);
+		String xpathExp = String.format("/zahtev:Zahtev[%s]", this.zahtevRDF.search(zahtevSearch));
+		ResourceSet resources = this.zahtevExist.retrieve(xpathExp);
+		return this.zahtevMapper.map(resources);
+	}
+
 }

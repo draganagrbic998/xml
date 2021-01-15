@@ -10,7 +10,6 @@ public class ExceptionsHandler {
 
 	@ExceptionHandler
 	public ResponseEntity<Void> handleException(Exception exception){
-		exception.printStackTrace();
 		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	

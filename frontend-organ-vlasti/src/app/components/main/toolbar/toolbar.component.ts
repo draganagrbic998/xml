@@ -15,10 +15,6 @@ export class ToolbarComponent implements OnInit {
     private router: Router
   ) { }
 
-  drawerToggle(): void{
-    this.authService.announceDrawerToggle();
-  }
-
   get uloga(): string{
     return this.authService.getUser()?.uloga;
   }
@@ -38,6 +34,10 @@ export class ToolbarComponent implements OnInit {
   signOut(): void{
     this.authService.deleteUser();
     this.router.navigate([LOGIN_PATH]);
+  }
+
+  drawerToggle(): void{
+    this.authService.announceDrawerToggle();
   }
 
   ngOnInit(): void {

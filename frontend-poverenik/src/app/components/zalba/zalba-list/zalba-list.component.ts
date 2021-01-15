@@ -26,6 +26,7 @@ export class ZalbaListComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatDrawer) drawer: MatDrawer;
   columns: string[] = ['tipZalbe', 'datum', 'status', 'dokumenti', 'metapodaci', 'akcije'];
+
   zalbe: MatTableDataSource<ZalbaDTO> = new MatTableDataSource<ZalbaDTO>([]);
   fetchPending = true;
   sendPending = false;
@@ -41,6 +42,23 @@ export class ZalbaListComponent implements AfterViewInit {
     stanje: new FormControl('')
   });
 
+  get uloga(): string{
+    return this.authService.getUser()?.uloga;
+  }
+
+  convertDate(date: string): string{
+    const array: string[] = date.split('-');
+    return `${array[2]}.${array[1]}.${array[0]}.`;
+  }
+
+  xmlMetadata(broj: string): void{
+    window.open(`//localhost:8082/${environment.apiZalbe}/${broj}/metadata/xml`, '_blank');
+  }
+
+  jsonMetadata(broj: string): void{
+    window.open(`//localhost:8082/${environment.apiZalbe}/${broj}/metadata/json`, '_blank');
+  }
+
   naprednaPretraga(): void{
     this.fetchPending = true;
     this.zalbaService.advancedSearch(this.naprednaForma.value).subscribe(
@@ -52,23 +70,6 @@ export class ZalbaListComponent implements AfterViewInit {
         this.fetchPending = false;
       }
     );
-  }
-
-  get uloga(): string{
-    return this.authService.getUser()?.uloga;
-  }
-
-  xmlMetadata(broj: string): void{
-    window.open(`//localhost:8082/${environment.apiZalbe}/${broj}/metadata/xml`, '_blank');
-  }
-
-  jsonMetadata(broj: string): void{
-    window.open(`//localhost:8082/${environment.apiZalbe}/${broj}/metadata/json`, '_blank');
-  }
-
-  convertDate(date: string): string{
-    const array: string[] = date.split('-');
-    return `${array[2]}.${array[1]}.${array[0]}.`;
   }
 
   canOdustati(zalba: ZalbaDTO): boolean{

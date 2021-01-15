@@ -53,8 +53,8 @@ public class ZalbaMapper implements MapperInterface {
 				zalba.appendChild(zalbeDocument.importNode(document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0), true));
 				
 				Node reference = zalbeDocument.createElementNS(Namespaces.OSNOVA, "Reference");
-				this.domParser.addReference(zalbeDocument, reference, this.zalbaRDF.odgovori(broj.getTextContent()), "odgovori");
-				this.domParser.addReference(zalbeDocument, reference, this.zalbaRDF.resenja(broj.getTextContent()), "resenja");
+				DOMParser.setReferences(zalbeDocument, reference, this.zalbaRDF.odgovori(broj.getTextContent()), "odgovori");
+				DOMParser.setReferences(zalbeDocument, reference, this.zalbaRDF.resenja(broj.getTextContent()), "resenja");
 				zalba.appendChild(reference);
 
 				zalbe.appendChild(zalba);
@@ -65,10 +65,6 @@ public class ZalbaMapper implements MapperInterface {
 		catch(Exception e) {
 			throw new MyException(e);
 		}
-	}
-	
-	public String getBroj(Document document) {
-		return document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
 	}
 	
 	public static TipZalbe getTipZalbe(Document document) {

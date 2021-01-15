@@ -27,6 +27,9 @@ import { ZalbaListComponent } from './components/zalba/zalba-list/zalba-list.com
 import { ResenjeListComponent } from './components/resenje/resenje-list/resenje-list.component';
 import { OdgovorFormComponent } from './components/zalba/odgovor-form/odgovor-form.component';
 import { IzvestajListComponent } from './components/izvestaj/izvestaj-list/izvestaj-list.component';
+import { SpacerContainerComponent } from './components/layout/spacer-container/spacer-container.component';
+import { OdgovorListComponent } from './components/zalba/odgovor-list/odgovor-list.component';
+import { ReferenceListComponent } from './components/main/reference-list/reference-list.component';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
@@ -45,9 +48,6 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
-import { SpacerContainerComponent } from './components/layout/spacer-container/spacer-container.component';
-import { OdgovorListComponent } from './components/zalba/odgovor-list/odgovor-list.component';
-import { ReferenceListComponent } from './components/main/reference-list/reference-list.component';
 
 @NgModule({
   declarations: [

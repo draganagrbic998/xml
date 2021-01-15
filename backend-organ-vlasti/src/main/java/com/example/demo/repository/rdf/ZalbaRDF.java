@@ -3,9 +3,9 @@ package com.example.demo.repository.rdf;
 import java.util.List;
 
 import org.apache.jena.query.ResultSet;
-import org.apache.jena.rdf.model.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.w3c.dom.Document;
 
 import com.example.demo.common.Namespaces;
 import com.example.demo.fuseki.FusekiAuthentication;
@@ -23,23 +23,23 @@ public class ZalbaRDF implements RDFInterface {
 	public static final String ZALBA_GRAPH = "/zalbe";
 
 	@Override
-	public void add(Model model) {
-		this.fusekiManager.save(ZALBA_GRAPH, model);
+	public void add(Document document) {
+		this.fusekiManager.add(ZALBA_GRAPH, document);
+	}
+
+	@Override
+	public void update(String subject, Document document) {
+		this.fusekiManager.update(ZALBA_GRAPH, Namespaces.ZALBA + "/" + subject, document);
+	}
+
+	@Override
+	public void delete(String subject) {
+		this.fusekiManager.delete(ZALBA_GRAPH, Namespaces.ZALBA + "/" + subject);
 	}
 
 	@Override
 	public ResultSet retrieve(String subject) {
 		return this.fusekiManager.retrieve(ZALBA_GRAPH, Namespaces.ZALBA + "/" + subject);
-	}
-
-	@Override
-	public void update(String graphUri, Model model, String subject) {
-		this.fusekiManager.update(graphUri, model, subject);
-	}
-
-	@Override
-	public void delete(String graphUri, String subject) {
-		this.fusekiManager.delete(graphUri, subject);
 	}
 	
 	public List<Integer> odgovori(String broj) {

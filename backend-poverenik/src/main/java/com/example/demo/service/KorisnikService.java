@@ -12,8 +12,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.xmldb.api.base.ResourceIterator;
-import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.modules.XMLResource;
 
 import com.example.demo.common.Constants;
@@ -35,9 +33,6 @@ public class KorisnikService implements UserDetailsService {
 	private KorisnikExist korisnikExist;
 	
 	@Autowired
-	private JAXBParser jaxbParser;
-
-	@Autowired
 	private TokenUtils tokenUtils;
 	
 	@Autowired
@@ -48,6 +43,9 @@ public class KorisnikService implements UserDetailsService {
 	
 	@Autowired
 	private EmailService emailService;
+	
+	@Autowired
+	private JAXBParser jaxbParser;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) {
@@ -127,26 +125,5 @@ public class KorisnikService implements UserDetailsService {
 		email.setText(text);
 		this.emailService.sendEmail(email);
 	}
-	
-	public void notifyOdustajanje(String imePrezime, String datumZalbe) {
-		try {
-			ResourceSet resources = this.korisnikExist.retrieve("/Korisnik[not(Adresa)]");
-			ResourceIterator it = resources.getIterator();
-			while (it.hasMoreResources()) {
-				XMLResource resource = (XMLResource) it.nextResource();
-				Korisnik korisnik = (Korisnik) this.jaxbParser.unmarshalFromXml(resource.getContent().toString(), Korisnik.class);
-				Email email = new Email();
-				email.setTo(korisnik.getOsoba().getMejl());
-				email.setSubject("Odustanak od žalbe");
-				String text = "Gradjanin " + imePrezime + " odustao/la je od žalbe koju je podneo/la dana "
-						+ datumZalbe + "\nMožete otići na servis i obustaviti proces. ";
-				email.setText(text);
-				this.emailService.sendEmail(email);
-			}
-		}
-		catch(Exception e) {
-			throw new MyException(e);
-		}
-	}
-		
+			
 }

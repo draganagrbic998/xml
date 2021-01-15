@@ -125,10 +125,7 @@ public class KorisnikService implements UserDetailsService {
 	private void sendActivationEmail(String mejl, String potpis) {
 		Document organVlasti = this.organVlastiService.load();
 		String naziv = organVlasti.getElementsByTagNameNS(Namespaces.OSNOVA, "naziv").item(0).getTextContent();
-		String mesto = organVlasti.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(0).getTextContent();
-		String ulica = organVlasti.getElementsByTagNameNS(Namespaces.OSNOVA, "ulica").item(0).getTextContent();
-		String broj = organVlasti.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
-		String sediste = ulica + " " + broj + ", " + mesto;
+		String sediste = organVlasti.getElementsByTagNameNS(Namespaces.OSNOVA, "Adresa").item(0).getTextContent();
 		
 		Email email = new Email();
 		email.setTo(mejl);

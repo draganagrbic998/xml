@@ -13,6 +13,15 @@ import com.example.demo.common.MyException;
 
 @Component
 public class JAXBParser {
+		
+	public Object unmarshal(Document document, Class<?> cl) {
+		try {
+			return JAXBContext.newInstance(cl).createUnmarshaller().unmarshal(document);
+		}
+		catch(Exception e) {
+			throw new MyException(e);
+		}
+	}
 	
 	public Object unmarshalFromXml(String xml, Class<?> cl) {
 		try {
@@ -22,10 +31,12 @@ public class JAXBParser {
 			throw new MyException(e);
 		}
 	}
-	
-	public Object unmarshal(Document document, Class<?> cl) {
+		
+	public Document marshal(Object obj) {
 		try {
-			return JAXBContext.newInstance(cl).createUnmarshaller().unmarshal(document);
+		    DOMResult result = new DOMResult();
+		    JAXBContext.newInstance(obj.getClass()).createMarshaller().marshal(obj, result);
+		    return (Document) result.getNode();
 		}
 		catch(Exception e) {
 			throw new MyException(e);
@@ -37,17 +48,6 @@ public class JAXBParser {
 		    StringWriter sw = new StringWriter();
 		    JAXBContext.newInstance(obj.getClass()).createMarshaller().marshal(obj, sw);
 		    return sw.toString();
-		}
-		catch(Exception e) {
-			throw new MyException(e);
-		}
-	}
-	
-	public Document marshal(Object obj) {
-		try {
-		    DOMResult result = new DOMResult();
-		    JAXBContext.newInstance(obj.getClass()).createMarshaller().marshal(obj, result);
-		    return (Document) result.getNode();
 		}
 		catch(Exception e) {
 			throw new MyException(e);

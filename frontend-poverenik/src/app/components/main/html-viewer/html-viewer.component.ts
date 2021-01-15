@@ -37,6 +37,9 @@ export class HtmlViewerComponent implements OnInit {
     if (dokument === 'zalbe'){
       service = this.zalbaService;
     }
+    else if (dokument === 'odgovori'){
+      service = this.odgovorService;
+    }
     else if (dokument === 'resenja'){
       service = this.resenjeService;
     }
@@ -46,11 +49,8 @@ export class HtmlViewerComponent implements OnInit {
     else if (dokument === 'zahtevi'){
       service = this.zahtevService;
     }
-    else if (dokument === 'odluke'){
-      service = this.odlukaService;
-    }
     else{
-      service = this.odgovorService;
+      service = this.odlukaService;
     }
     service.view(this.route.snapshot.params.broj).subscribe(
       (html: string) => {

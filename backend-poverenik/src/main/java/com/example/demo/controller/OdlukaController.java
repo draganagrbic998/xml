@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.w3c.dom.Document;
 
 import com.example.demo.parser.DOMParser;
-import com.example.demo.ws.utils.SOAPDocument;
+import com.example.demo.ws.utils.SOAPActions;
 import com.example.demo.ws.utils.SOAPService;
 
 @RestController
@@ -28,7 +28,7 @@ public class OdlukaController {
 	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<String> html(@PathVariable String broj) {
 		Document document = this.domParser.buildDocument(String.format("<pregled><broj>%s</broj><tip>html</tip></pregled>", broj));
-		return new ResponseEntity<>(this.soapService.sendSOAPMessage(document, SOAPDocument.odluka_html), HttpStatus.OK);
+		return new ResponseEntity<>(this.soapService.sendSOAPMessage(document, SOAPActions.odluka_html), HttpStatus.OK);
 	}
 
 

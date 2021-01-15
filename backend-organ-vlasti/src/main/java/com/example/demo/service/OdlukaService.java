@@ -12,11 +12,13 @@ import com.example.demo.enums.StatusZahteva;
 import com.example.demo.enums.TipOdluke;
 import com.example.demo.mapper.OdlukaMapper;
 import com.example.demo.model.Korisnik;
-import com.example.demo.parser.XSLTransformer;
+import com.example.demo.parser.DOMParser;
 import com.example.demo.repository.rdf.OdlukaRDF;
 import com.example.demo.repository.xml.OdlukaExist;
 import com.example.demo.service.email.Email;
 import com.example.demo.service.email.EmailService;
+import com.example.demo.ws.utils.SOAPActions;
+import com.example.demo.ws.utils.SOAPService;
 
 @Service
 public class OdlukaService implements ServiceInterface {
@@ -37,16 +39,22 @@ public class OdlukaService implements ServiceInterface {
 	private ZahtevService zahtevService;
 	
 	@Autowired
+	private ZalbaService zalbaService;
+	
+	@Autowired
 	private EmailService emailService;
 
 	@Autowired
-	private XSLTransformer xslTransformer;
+	private SOAPService soapService;
 	
+	@Autowired
+	private DOMParser domParser;
+		
 	@Override
 	public void add(String xml) {
 		Document document = this.odlukaMapper.map(xml);
 		this.odlukaExist.add(document);
-		this.odlukaRDF.add(this.xslTransformer.generateMetadata(document));
+		this.odlukaRDF.add(document);
 		String brojZahteva = document.getElementsByTagNameNS(Namespaces.ODLUKA, "brojZahteva").item(0).getTextContent();
 		Document zahtevDocument = this.zahtevService.load(brojZahteva);
 		if (OdlukaMapper.getTipOdluke(document).equals(TipOdluke.obavestenje)) {
@@ -57,11 +65,22 @@ public class OdlukaService implements ServiceInterface {
 		}
 		this.zahtevService.update(brojZahteva, zahtevDocument);
 		this.notifyOdluka(document);		
+		if (OdlukaMapper.getTipOdluke(document).equals(TipOdluke.obavestenje)) {
+			this.zalbaService.otkazi(brojZahteva);
+			this.soapService.sendSOAPMessage(this.domParser.buildDocument("<broj>" + brojZahteva + "</broj>"), SOAPActions.otkazi_zalbu);
+		}
 	}
 
 	@Override
 	public void update(String documentId, Document document) {
 		this.odlukaExist.update(documentId, document);
+		this.odlukaRDF.update(documentId, document);
+	}
+
+	@Override
+	public void delete(String documentId) {
+		this.odlukaExist.delete(documentId);
+		this.odlukaRDF.delete(documentId);
 	}
 
 	@Override
@@ -86,20 +105,16 @@ public class OdlukaService implements ServiceInterface {
 	private void notifyOdluka(Document document) {
 		try {
 			String brojOdluke = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
-			String mejl = document.getElementsByTagNameNS(Namespaces.OSNOVA, "mejl").item(0).getTextContent();
-			String ime = document.getElementsByTagNameNS(Namespaces.OSNOVA, "ime").item(0).getTextContent();
-			String prezime = document.getElementsByTagNameNS(Namespaces.OSNOVA, "prezime").item(0).getTextContent();
-			String naziv = document.getElementsByTagNameNS(Namespaces.OSNOVA, "naziv").item(0).getTextContent();
-			String mesto = document.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(1).getTextContent();
-			String ulica = document.getElementsByTagNameNS(Namespaces.OSNOVA, "ulica").item(1).getTextContent();
-			String broj = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(1).getTextContent();
-			String sediste = ulica + " " + broj + ", " + mesto;
 			String datumZahteva = Constants.sdf2.format(Constants.sdf.parse(document.getElementsByTagNameNS(Namespaces.ODLUKA, "datumZahteva").item(0).getTextContent()));
+			String mejl = document.getElementsByTagNameNS(Namespaces.OSNOVA, "mejl").item(0).getTextContent();
+			String naziv = document.getElementsByTagNameNS(Namespaces.OSNOVA, "naziv").item(0).getTextContent();
+			String sediste = document.getElementsByTagNameNS(Namespaces.OSNOVA, "Adresa").item(1).getTextContent();
+			//kad izbacis korisnika bice item(0)
 			
 			Email email = new Email();
 			email.setTo(mejl);
 			email.setSubject("Odgovor na zahtev za informacijama od javnog značaja");
-			String text = "Poštovani/a " + ime + " " + prezime + ", \n\n"
+			String text = "Poštovani/a, \n\n"
 					+ "Odgovor/i na zahtev za informacijama od javnog značaja koji ste podneli dana " 
 					+ datumZahteva + " nalaze se u linkovima ispod: \n"
 					+ Constants.BACKEND_URL + "/api/odluke/" + brojOdluke + "/html\n"

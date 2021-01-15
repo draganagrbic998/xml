@@ -50,9 +50,5 @@ public class IzvestajMapper implements MapperInterface {
 			throw new MyException(e);
 		}
 	}
-	
-	public String getBroj(Document document) {
-		return document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
-	}
 
 }

@@ -7,11 +7,10 @@ import org.xmldb.api.base.ResourceSet;
 
 import com.example.demo.common.MyException;
 import com.example.demo.mapper.IzvestajMapper;
-import com.example.demo.parser.XSLTransformer;
 import com.example.demo.repository.rdf.IzvestajRDF;
 import com.example.demo.repository.xml.IzvestajExist;
 import com.example.demo.ws.utils.SOAPService;
-import com.example.demo.ws.utils.SOAPDocument;
+import com.example.demo.ws.utils.SOAPActions;
 
 @Service
 public class IzvestajService implements ServiceInterface {
@@ -27,9 +26,6 @@ public class IzvestajService implements ServiceInterface {
 
 	@Autowired
 	private SOAPService soapService;
-	
-	@Autowired
-	private XSLTransformer xslTransformer;
 
 	@Override
 	public void add(String godina) {
@@ -37,8 +33,8 @@ public class IzvestajService implements ServiceInterface {
 			Document document = this.izvestajMapper.map(godina);
 			if (this.izvestajExist.retrieve("/izvestaj:Izvestaj[izvestaj:godina = " + godina + "]").getSize() == 0) {
 				this.izvestajExist.add(document);
-				this.izvestajRDF.add(this.xslTransformer.generateMetadata(document));
-				this.soapService.sendSOAPMessage(document, SOAPDocument.izvestaj);
+				this.izvestajRDF.add(document);
+				this.soapService.sendSOAPMessage(document, SOAPActions.create_izvestaj);
 			}
 		}
 		catch(Exception e) {
@@ -49,6 +45,13 @@ public class IzvestajService implements ServiceInterface {
 	@Override
 	public void update(String documentId, Document document) {
 		this.izvestajExist.update(documentId, document);
+		this.izvestajRDF.update(documentId, document);
+	}
+	
+	@Override
+	public void delete(String documentId) {
+		this.izvestajExist.delete(documentId);
+		this.izvestajRDF.delete(documentId);
 	}
 
 	@Override

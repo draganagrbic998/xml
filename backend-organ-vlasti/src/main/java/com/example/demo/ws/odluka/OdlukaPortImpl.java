@@ -41,7 +41,6 @@ public class OdlukaPortImpl implements Odluka {
 
 	public java.lang.String getOdlukaHtml(java.lang.String getOdlukaHtmlRequest) {
 		LOG.info("Executing operation getOdlukaHtml");
-		System.out.println(getOdlukaHtmlRequest);
 		try {
 			String documentId = this.domParser.buildDocument(getOdlukaHtmlRequest).getElementsByTagName("broj").item(0)
 					.getTextContent();
@@ -54,7 +53,6 @@ public class OdlukaPortImpl implements Odluka {
 
 	public byte[] getOdlukaPdf(java.lang.String getOdlukaPdfRequest) {
 		LOG.info("Executing operation getOdlukaPdf");
-		System.out.println(getOdlukaPdfRequest);
 		try {
 			String documentId = this.domParser.buildDocument(getOdlukaPdfRequest).getElementsByTagName("broj").item(0)
 					.getTextContent();

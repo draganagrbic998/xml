@@ -18,10 +18,15 @@ export class OdlukaListComponent implements AfterViewInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   columns: string[] = ['tipOdluke', 'datum', 'datumZahteva', 'dokumenti', 'metapodaci'];
+
   odluke: MatTableDataSource<OdlukaDTO> = new MatTableDataSource<OdlukaDTO>([]);
   fetchPending = true;
-  refColumns: string[] = ['tip', 'dokumenti'];
   selectedOdluka: OdlukaDTO;
+
+  convertDate(date: string): string{
+    const array: string[] = date.split('-');
+    return `${array[2]}.${array[1]}.${array[0]}.`;
+  }
 
   xmlMetadata(broj: string): void{
     window.open(`//localhost:8081/${environment.apiOdluke}/${broj}/metadata/xml`, '_blank');
@@ -29,11 +34,6 @@ export class OdlukaListComponent implements AfterViewInit {
 
   jsonMetadata(broj: string): void{
     window.open(`//localhost:8081/${environment.apiOdluke}/${broj}/metadata/json`, '_blank');
-  }
-
-  convertDate(date: string): string{
-    const array: string[] = date.split('-');
-    return `${array[2]}.${array[1]}.${array[0]}.`;
   }
 
   ngAfterViewInit(): void {

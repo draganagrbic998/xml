@@ -27,7 +27,7 @@ import com.example.demo.repository.xml.KorisnikExist;
 import com.example.demo.repository.xml.OdgovorExist;
 import com.example.demo.repository.xml.ResenjeExist;
 import com.example.demo.repository.xml.ZalbaExist;
-import com.example.demo.ws.utils.SOAPDocument;
+import com.example.demo.ws.utils.SOAPActions;
 import com.example.demo.ws.utils.SOAPService;
 
 @Component
@@ -75,6 +75,7 @@ public class DataInitializator {
 		this.existManager.save(KorisnikExist.KORISNIK_COLLECTION, "poverenik.javni.znacaj@gmail.com", this.domParser.buildDocumentFromFile(POVERENIK1), KorisnikExist.KORISNIK_SCHEMA);
 		this.existManager.save(KorisnikExist.KORISNIK_COLLECTION, "draganaasd@gmail.com", this.domParser.buildDocumentFromFile(GRADJANIN1), KorisnikExist.KORISNIK_SCHEMA);
 
+		/*
 		this.existManager.save(ZalbaExist.ZALBA_COLLECTION, "1", this.domParser.buildDocumentFromFile(ZALBA_DELIMICNOST1), ZalbaExist.ZALBA_SCHEMA);
 		this.existManager.save(ZalbaExist.ZALBA_COLLECTION, "2", this.domParser.buildDocumentFromFile(ZALBA_ODLUKA1), ZalbaExist.ZALBA_SCHEMA);
 		this.existManager.save(ZalbaExist.ZALBA_COLLECTION, "3", this.domParser.buildDocumentFromFile(ZALBA_CUTANJE1), ZalbaExist.ZALBA_SCHEMA);
@@ -102,11 +103,12 @@ public class DataInitializator {
 		model.add(this.xslTransformer.generateMetadata(this.domParser.buildDocumentFromFile(RESENJE2)));
 		model.add(this.xslTransformer.generateMetadata(this.domParser.buildDocumentFromFile(RESENJE3)));
 		this.fusekiManager.save(ResenjeRDF.RESENJE_GRAPH, model);
-
+*/
+		/*
 		String temp = soap.sendSOAPMessage(this.domParser.buildDocument(String.format("<pretraga><broj>%s</broj></pretraga>", 1)), SOAPDocument.zahtev_pdf);
 		byte[] decodedString = Base64.getDecoder().decode(temp);
 		Path file = Paths.get(Constants.GEN_FOLDER + "1.pdf");
-		Files.write(file, decodedString);
+		Files.write(file, decodedString);*/
 	}
 
 }

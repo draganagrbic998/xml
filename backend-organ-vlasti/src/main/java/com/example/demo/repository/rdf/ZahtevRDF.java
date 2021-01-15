@@ -3,11 +3,10 @@ package com.example.demo.repository.rdf;
 import java.util.List;
 
 import org.apache.jena.query.ResultSet;
-import org.apache.jena.rdf.model.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.w3c.dom.Document;
 
-import com.example.demo.common.Constants;
 import com.example.demo.common.Namespaces;
 import com.example.demo.fuseki.FusekiAuthentication;
 import com.example.demo.fuseki.FusekiManager;
@@ -23,26 +22,26 @@ public class ZahtevRDF implements RDFInterface {
 	private FusekiAuthentication authUtilities;
 
 	public static final String ZAHTEV_GRAPH = "/zahtevi";
-	private static final String ZAHTEV_SEARCH = Constants.SPARQL_FOLDER + "zahtev.rq";
+	//private static final String ZAHTEV_SEARCH = Constants.SPARQL_FOLDER + "zahtev.rq";
 
 	@Override
-	public void add(Model model) {
-		this.fusekiManager.save(ZAHTEV_GRAPH, model);
+	public void add(Document document) {
+		this.fusekiManager.add(ZAHTEV_GRAPH, document);
+	}
+
+	@Override
+	public void update(String subject, Document document) {
+		this.fusekiManager.update(ZAHTEV_GRAPH, Namespaces.ZAHTEV + "/" + subject, document);
+	}
+
+	@Override
+	public void delete(String subject) {
+		this.fusekiManager.delete(ZAHTEV_GRAPH, Namespaces.ZAHTEV + "/" + subject);
 	}
 
 	@Override
 	public ResultSet retrieve(String subject) {
 		return this.fusekiManager.retrieve(ZAHTEV_GRAPH, Namespaces.ZAHTEV + "/" + subject);
-	}
-
-	@Override
-	public void update(String graphUri, Model model, String subject) {
-		this.fusekiManager.update(graphUri, model, subject);
-	}
-
-	@Override
-	public void delete(String graphUri, String subject) {
-		this.fusekiManager.delete(graphUri, subject);
 	}
 	
 	public List<Integer> odluke(String broj) {
@@ -66,7 +65,6 @@ public class ZahtevRDF implements RDFInterface {
 				Namespaces.PREDIKAT + "zahtev", Namespaces.ZAHTEV + "/" + broj), Namespaces.RESENJE + "/");
 	}
 
-	// dodaj interfejs za pretragu
 	public String search(ZahtevSearch search) {
 		return null;
 		/*

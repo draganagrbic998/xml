@@ -98,9 +98,9 @@ public class ZahtevMapper implements MapperInterface {
 				zahtev.appendChild(zahteviDocument.importNode(document.getElementsByTagNameNS(Namespaces.ZAHTEV, "status").item(0), true));
 			
 				Node reference = zahteviDocument.createElementNS(Namespaces.OSNOVA, "Reference");
-				this.domParser.addReference(zahteviDocument, reference, this.zahtevRDF.odluke(broj.getTextContent()), "odluke");
-				this.domParser.addReference(zahteviDocument, reference, this.zahtevRDF.zalbe(broj.getTextContent()), "zalbe");
-				this.domParser.addReference(zahteviDocument, reference, this.zahtevRDF.resenja(broj.getTextContent()), "resenja");
+				DOMParser.setReferences(zahteviDocument, reference, this.zahtevRDF.odluke(broj.getTextContent()), "odluke");
+				DOMParser.setReferences(zahteviDocument, reference, this.zahtevRDF.zalbe(broj.getTextContent()), "zalbe");
+				DOMParser.setReferences(zahteviDocument, reference, this.zahtevRDF.resenja(broj.getTextContent()), "resenja");
 				zahtev.appendChild(reference);
 
 				zahtevi.appendChild(zahtev);						

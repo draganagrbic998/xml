@@ -20,16 +20,9 @@ export class IzvestajListComponent implements AfterViewInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   columns: string[] = ['godina', 'datum', 'dokumenti', 'metapodaci'];
+
   izvestaji: MatTableDataSource<IzvestajDTO> = new MatTableDataSource<IzvestajDTO>([]);
   fetchPending = true;
-
-  xmlMetadata(broj: string): void{
-    window.open(`//localhost:8082/${environment.apiIzvestaji}/${broj}/metadata/xml`, '_blank');
-  }
-
-  jsonMetadata(broj: string): void{
-    window.open(`//localhost:8082/${environment.apiIzvestaji}/${broj}/metadata/json`, '_blank');
-  }
 
   get uloga(): string{
     return this.authService.getUser()?.uloga;
@@ -38,6 +31,14 @@ export class IzvestajListComponent implements AfterViewInit {
   convertDate(date: string): string{
     const array: string[] = date.split('-');
     return `${array[2]}.${array[1]}.${array[0]}.`;
+  }
+
+  xmlMetadata(broj: string): void{
+    window.open(`//localhost:8082/${environment.apiIzvestaji}/${broj}/metadata/xml`, '_blank');
+  }
+
+  jsonMetadata(broj: string): void{
+    window.open(`//localhost:8082/${environment.apiIzvestaji}/${broj}/metadata/json`, '_blank');
   }
 
   ngAfterViewInit(): void {

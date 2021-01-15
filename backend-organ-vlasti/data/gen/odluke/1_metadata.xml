@@ -7,6 +7,22 @@
   <results>
     <result>
       <binding name="predicate">
+        <uri>https://github.com/draganagrbic998/xml/predikat/organVlasti</uri>
+      </binding>
+      <binding name="object">
+        <literal>Naziv organa vlasti</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="predicate">
+        <uri>https://github.com/draganagrbic998/xml/predikat/tip</uri>
+      </binding>
+      <binding name="object">
+        <literal>obavestenje</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="predicate">
         <uri>https://github.com/draganagrbic998/xml/predikat/izdatoU</uri>
       </binding>
       <binding name="object">
@@ -15,10 +31,10 @@
     </result>
     <result>
       <binding name="predicate">
-        <uri>https://github.com/draganagrbic998/xml/predikat/izdao</uri>
+        <uri>https://github.com/draganagrbic998/xml/predikat/vlasnik</uri>
       </binding>
       <binding name="object">
-        <uri>https://github.com/draganagrbic998/xml/korisnik/sluzbenik@gmail.com</uri>
+        <uri>https://github.com/draganagrbic998/xml/korisnik/draganaasd@gmail.com</uri>
       </binding>
     </result>
     <result>
@@ -34,7 +50,7 @@
         <uri>https://github.com/draganagrbic998/xml/predikat/datum</uri>
       </binding>
       <binding name="object">
-        <literal>2021-01-11</literal>
+        <literal>2021-01-15</literal>
       </binding>
     </result>
     <result>

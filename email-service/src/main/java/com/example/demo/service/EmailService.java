@@ -5,9 +5,9 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.w3c.dom.Document;
 
-import com.example.demo.parser.DOMParser;
+import com.example.demo.model.Email;
+import com.example.demo.parser.JAXBParser;
 
 @Service
 public class EmailService {
@@ -16,15 +16,15 @@ public class EmailService {
 	private JavaMailSenderImpl sender;
 	
 	@Autowired
-	private DOMParser domParser;
+	private JAXBParser jaxbParser;
 	
 	@Async
 	public void sendEmail(String xml) {
-		Document document = this.domParser.buildDocument(xml);
+		Email email = (Email) this.jaxbParser.unmarshal(xml, Email.class);
 		SimpleMailMessage message = new SimpleMailMessage();
-		message.setTo(document.getElementsByTagName("to").item(0).getTextContent());
-		message.setSubject(document.getElementsByTagName("subject").item(0).getTextContent());
-		message.setText(document.getElementsByTagName("text").item(0).getTextContent());
+		message.setTo(email.getTo());
+		message.setSubject(email.getSubject());
+		message.setText(email.getText());
 		this.sender.send(message);
 	}
 	

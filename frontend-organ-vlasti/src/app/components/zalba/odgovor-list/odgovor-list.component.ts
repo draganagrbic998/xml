@@ -18,6 +18,7 @@ export class OdgovorListComponent implements AfterViewInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   columns: string[] = ['broj', 'datum', 'datumZalbe', 'dokumenti', 'metapodaci'];
+
   odgovori: MatTableDataSource<OdgovorDTO> = new MatTableDataSource<OdgovorDTO>([]);
   fetchPending = true;
   selectedOdgovor: OdgovorDTO;

@@ -9,7 +9,6 @@ import { map } from 'rxjs/operators';
 import { XonomyService } from '../xonomy/xonomy.service';
 import { ZahtevPretraga } from 'src/app/models/zahtevPretraga';
 import { Referenca } from 'src/app/models/referenca';
-import { MatTableDataSource } from '@angular/material/table';
 
 @Injectable({
   providedIn: 'root'

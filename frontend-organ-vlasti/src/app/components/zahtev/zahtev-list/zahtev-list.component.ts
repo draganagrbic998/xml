@@ -3,7 +3,6 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDrawer } from '@angular/material/sidenav';
 import { MatTableDataSource } from '@angular/material/table';
-import { Referenca } from 'src/app/models/referenca';
 import { ZahtevDTO } from 'src/app/models/zahtevDTO';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ZahtevService } from 'src/app/services/zahtev/zahtev.service';
@@ -24,6 +23,7 @@ export class ZahtevListComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatDrawer) drawer: MatDrawer;
   columns: string[] = ['tip', 'datum', 'status', 'dokumenti', 'metapodaci', 'akcije'];
+
   zahtevi: MatTableDataSource<ZahtevDTO> = new MatTableDataSource<ZahtevDTO>([]);
   fetchPending = true;
   selectedZahtev: ZahtevDTO;
@@ -34,6 +34,23 @@ export class ZahtevListComponent implements AfterViewInit {
     tip: new FormControl(''),
     stanje: new FormControl('')
   });
+
+  get uloga(): string{
+    return this.authService.getUser()?.uloga;
+  }
+
+  convertDate(date: string): string{
+    const array: string[] = date.split('-');
+    return `${array[2]}.${array[1]}.${array[0]}.`;
+  }
+
+  xmlMetadata(broj: string): void{
+    window.open(`//localhost:8081/${environment.apiZahtevi}/${broj}/metadata/xml`, '_blank');
+  }
+
+  jsonMetadata(broj: string): void{
+    window.open(`//localhost:8081/${environment.apiZahtevi}/${broj}/metadata/json`, '_blank');
+  }
 
   naprednaPretraga(): void{
     this.fetchPending = true;
@@ -46,23 +63,6 @@ export class ZahtevListComponent implements AfterViewInit {
         this.fetchPending = false;
       }
     );
-  }
-
-  xmlMetadata(broj: string): void{
-    window.open(`//localhost:8081/${environment.apiZahtevi}/${broj}/metadata/xml`, '_blank');
-  }
-
-  jsonMetadata(broj: string): void{
-    window.open(`//localhost:8081/${environment.apiZahtevi}/${broj}/metadata/json`, '_blank');
-  }
-
-  convertDate(date: string): string{
-    const array: string[] = date.split('-');
-    return `${array[2]}.${array[1]}.${array[0]}.`;
-  }
-
-  get uloga(): string{
-    return this.authService.getUser()?.uloga;
   }
 
   ngAfterViewInit(): void {

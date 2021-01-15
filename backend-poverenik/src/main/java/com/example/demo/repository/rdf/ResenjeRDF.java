@@ -1,9 +1,9 @@
 package com.example.demo.repository.rdf;
 
 import org.apache.jena.query.ResultSet;
-import org.apache.jena.rdf.model.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.w3c.dom.Document;
 
 import com.example.demo.common.Namespaces;
 import com.example.demo.fuseki.FusekiManager;
@@ -18,23 +18,23 @@ public class ResenjeRDF implements RDFInterface {
 	public static final String RESENJE_GRAPH = "/resenja";
 
 	@Override
-	public void add(Model model) {
-		this.fusekiManager.save(RESENJE_GRAPH, model);
+	public void add(Document document) {
+		this.fusekiManager.add(RESENJE_GRAPH, document);
+	}
+
+	@Override
+	public void update(String subject, Document document) {
+		this.fusekiManager.update(RESENJE_GRAPH, Namespaces.RESENJE + "/" + subject, document);
+	}
+
+	@Override
+	public void delete(String subject) {
+		this.fusekiManager.delete(RESENJE_GRAPH, Namespaces.RESENJE + "/" + subject);
 	}
 
 	@Override
 	public ResultSet retrieve(String subject) {
 		return this.fusekiManager.retrieve(RESENJE_GRAPH, Namespaces.RESENJE + "/" + subject);
-	}
-
-	@Override
-	public void update(String graphUri, Model model, String subject) {
-		this.fusekiManager.update(graphUri, model, subject);
-	}
-
-	@Override
-	public void delete(String graphUri, String subject) {
-		this.fusekiManager.delete(graphUri, subject);
 	}
 
 	@Override

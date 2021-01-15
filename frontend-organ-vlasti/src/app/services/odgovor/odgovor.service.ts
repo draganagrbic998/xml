@@ -34,16 +34,6 @@ export class OdgovorService {
 
   }
 
-  view(broj: number): Observable<string>{
-    return this.http.get<string>(`${this.API_ODGOVORI}/${broj}`, {responseType: 'text' as 'json'});
-  }
-
-  save(broj: number, odgovor: Odgovor): Observable<null>{
-    odgovor.detalji = this.xonomyService.removeXmlSpace(odgovor.detalji);
-    const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
-    return this.http.post<null>(this.API_ODGOVORI, this.odgovorToXml(broj, odgovor), options);
-  }
-
   xmlToOdgovori(xml: string): OdgovorDTO[]{
     const parser = new DOMParser();
     const odgovori = parser.parseFromString(xml, 'text/xml').getElementsByTagNameNS(ODGOVOR, 'Odgovor');
@@ -72,10 +62,20 @@ export class OdgovorService {
     return odgovoriDTO;
   }
 
+  save(broj: number, odgovor: Odgovor): Observable<null>{
+    odgovor.detalji = this.xonomyService.removeXmlSpace(odgovor.detalji);
+    const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
+    return this.http.post<null>(this.API_ODGOVORI, this.odgovorToXml(broj, odgovor), options);
+  }
+
   list(): Observable<OdgovorDTO[]>{
     return this.http.get<string>(this.API_ODGOVORI, {responseType: 'text' as 'json'}).pipe(
       map((xml: string) => this.xmlToOdgovori(xml))
     );
+  }
+
+  view(broj: number): Observable<string>{
+    return this.http.get<string>(`${this.API_ODGOVORI}/${broj}`, {responseType: 'text' as 'json'});
   }
 
 }

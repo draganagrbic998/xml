@@ -80,7 +80,6 @@ public class OdlukaMapper implements MapperInterface {
 		catch(Exception e) {
 			;
 		}
-		System.out.println(this.domParser.buildXml(document));
 		
 		return document;
 	}
@@ -106,8 +105,8 @@ public class OdlukaMapper implements MapperInterface {
 				odluka.appendChild(odlukeDocument.importNode(document.getElementsByTagNameNS(Namespaces.ODLUKA, "datumZahteva").item(0), true));
 				
 				Node reference = odlukeDocument.createElementNS(Namespaces.OSNOVA, "Reference");
-				this.domParser.addReference(odlukeDocument, reference, this.odlukaRDF.zalbe(broj.getTextContent()), "zalbe");
-				this.domParser.addReference(odlukeDocument, reference, this.odlukaRDF.resenja(broj.getTextContent()), "resenja");
+				DOMParser.setReferences(odlukeDocument, reference, this.odlukaRDF.zalbe(broj.getTextContent()), "zalbe");
+				DOMParser.setReferences(odlukeDocument, reference, this.odlukaRDF.resenja(broj.getTextContent()), "resenja");
 				odluka.appendChild(reference);
 				
 				odluke.appendChild(odluka);

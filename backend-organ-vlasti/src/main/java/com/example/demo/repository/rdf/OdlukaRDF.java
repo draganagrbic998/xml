@@ -3,9 +3,9 @@ package com.example.demo.repository.rdf;
 import java.util.List;
 
 import org.apache.jena.query.ResultSet;
-import org.apache.jena.rdf.model.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.w3c.dom.Document;
 
 import com.example.demo.common.Namespaces;
 import com.example.demo.fuseki.FusekiAuthentication;
@@ -23,23 +23,23 @@ public class OdlukaRDF implements RDFInterface {
 	public static final String ODLUKA_GRAPH = "/odluke";
 
 	@Override
-	public void add(Model model) {
-		this.fusekiManager.save(ODLUKA_GRAPH, model);
+	public void add(Document document) {
+		this.fusekiManager.add(ODLUKA_GRAPH, document);
+	}
+
+	@Override
+	public void update(String subject, Document document) {
+		this.fusekiManager.update(ODLUKA_GRAPH, Namespaces.ODLUKA + "/" + subject, document);
+	}
+
+	@Override
+	public void delete(String subject) {
+		this.fusekiManager.delete(ODLUKA_GRAPH, Namespaces.ODLUKA + "/" + subject);
 	}
 
 	@Override
 	public ResultSet retrieve(String subject) {
 		return this.fusekiManager.retrieve(ODLUKA_GRAPH, Namespaces.ODLUKA + "/" + subject);
-	}
-
-	@Override
-	public void update(String graphUri, Model model, String subject) {
-		this.fusekiManager.update(graphUri, model, subject);
-	}
-
-	@Override
-	public void delete(String graphUri, String subject) {
-		this.fusekiManager.delete(graphUri, subject);
 	}
 	
 	public List<Integer> zalbe(String broj) {

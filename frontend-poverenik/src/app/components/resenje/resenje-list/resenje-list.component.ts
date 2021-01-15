@@ -20,16 +20,9 @@ export class ResenjeListComponent implements AfterViewInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   columns: string[] = ['datum', 'status', 'dokumenti', 'metapodaci'];
+
   resenja: MatTableDataSource<ResenjeDTO> = new MatTableDataSource<ResenjeDTO>([]);
   fetchPending = true;
-
-  xmlMetadata(broj: string): void{
-    window.open(`//localhost:8081/${environment.apiResenja}/${broj}/metadata/xml`, '_blank');
-  }
-
-  jsonMetadata(broj: string): void{
-    window.open(`//localhost:8081/${environment.apiResenja}/${broj}/metadata/json`, '_blank');
-  }
 
   get uloga(): string{
     return this.authService.getUser()?.uloga;
@@ -38,6 +31,14 @@ export class ResenjeListComponent implements AfterViewInit {
   convertDate(date: string): string{
     const array: string[] = date.split('-');
     return `${array[2]}.${array[1]}.${array[0]}.`;
+  }
+
+  xmlMetadata(broj: string): void{
+    window.open(`//localhost:8081/${environment.apiResenja}/${broj}/metadata/xml`, '_blank');
+  }
+
+  jsonMetadata(broj: string): void{
+    window.open(`//localhost:8081/${environment.apiResenja}/${broj}/metadata/json`, '_blank');
   }
 
   ngAfterViewInit(): void {

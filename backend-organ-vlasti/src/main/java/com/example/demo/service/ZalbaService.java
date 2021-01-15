@@ -3,12 +3,15 @@ package com.example.demo.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
+import org.xmldb.api.base.ResourceIterator;
 import org.xmldb.api.base.ResourceSet;
+import org.xmldb.api.modules.XMLResource;
 
+import com.example.demo.common.MyException;
 import com.example.demo.common.Namespaces;
 import com.example.demo.enums.StatusZalbe;
 import com.example.demo.mapper.ZalbaMapper;
-import com.example.demo.parser.XSLTransformer;
+import com.example.demo.parser.DOMParser;
 import com.example.demo.repository.rdf.ZalbaRDF;
 import com.example.demo.repository.xml.ZalbaExist;
 
@@ -25,18 +28,25 @@ public class ZalbaService implements ServiceInterface {
 	private ZalbaRDF zalbaRDF;
 	
 	@Autowired
-	private XSLTransformer xslTransformer;
-
+	private DOMParser domParser;
+		
 	@Override
 	public void add(String xml) {
 		Document document = this.zalbaMapper.map(xml);
-		this.zalbaExist.update(this.zalbaMapper.getBroj(document), document);
-		this.zalbaRDF.add(this.xslTransformer.generateMetadata(document));		
+		this.zalbaExist.update(DOMParser.getBroj(document), document);
+		this.zalbaRDF.add(document);		
 	}
 
 	@Override
 	public void update(String documentId, Document document) {
 		this.zalbaExist.update(documentId, document);
+		this.zalbaRDF.update(documentId, document);
+	}
+	
+	@Override
+	public void delete(String documentId) {
+		this.zalbaExist.delete(documentId);
+		this.zalbaRDF.delete(documentId);
 	}
 
 	@Override
@@ -54,14 +64,29 @@ public class ZalbaService implements ServiceInterface {
 		Document document = this.zalbaExist.load(broj);
 		document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.odustato + "");
 		this.zalbaExist.update(broj, document);
-		//slanje mejla
 	}
 
 	public void obustavi(String broj) {
 		Document document = this.zalbaExist.load(broj);
 		document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.obustavljeno + "");
 		this.zalbaExist.update(broj, document);
-		//slanje mejla
+	}
+	
+	public void otkazi(String brojZahteva) {
+		try {
+			String xpathExp = String.format("/zalba:Zalba[zalba:PodaciZahteva/broj='%s']", brojZahteva);
+			ResourceSet resources = this.zalbaExist.retrieve(xpathExp);
+			ResourceIterator it = resources.getIterator();
+			while (it.hasMoreResources()) {
+				XMLResource resource = (XMLResource) it.nextResource();
+				Document document = this.domParser.buildDocument(resource.getContent().toString());
+				document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.ispravljeno + "");
+				this.zalbaExist.update(document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent(), document);
+			}
+		}
+		catch(Exception e) {
+			throw new MyException(e);
+		}
 	}
 	
 }

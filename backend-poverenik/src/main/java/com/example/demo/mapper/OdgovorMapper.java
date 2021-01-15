@@ -45,7 +45,7 @@ public class OdgovorMapper implements MapperInterface {
 				odgovor.appendChild(odgovoriDocument.importNode(document.getElementsByTagNameNS(Namespaces.ODGOVOR, "datumZalbe").item(0), true));
 				
 				Node reference = odgovoriDocument.createElementNS(Namespaces.OSNOVA, "Reference");
-				this.domParser.addReference(odgovoriDocument, reference, this.odgovorRDF.resenja(broj.getTextContent()), "resenja");
+				DOMParser.setReferences(odgovoriDocument, reference, this.odgovorRDF.resenja(broj.getTextContent()), "resenja");
 				odgovor.appendChild(reference);
 				
 				odgovori.appendChild(odgovor);
@@ -56,10 +56,6 @@ public class OdgovorMapper implements MapperInterface {
 		catch(Exception e) {
 			throw new MyException(e);
 		}
-	}
-	
-	public String getBroj(Document document) {
-		return document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
 	}
 	
 }

@@ -10,7 +10,7 @@ import com.example.demo.common.Namespaces;
 import com.example.demo.enums.StatusZalbe;
 import com.example.demo.mapper.OdgovorMapper;
 import com.example.demo.model.Korisnik;
-import com.example.demo.parser.XSLTransformer;
+import com.example.demo.parser.DOMParser;
 import com.example.demo.repository.rdf.OdgovorRDF;
 import com.example.demo.repository.xml.OdgovorExist;
 
@@ -31,15 +31,12 @@ public class OdgovorService implements ServiceInterface {
 
 	@Autowired
 	private ZalbaService zalbaService;
-	
-	@Autowired
-	private XSLTransformer xslTransformer;
 		
 	@Override
 	public void add(String xml) {
 		Document document = this.odgovorMapper.map(xml);
-		this.odgovorExist.update(this.odgovorMapper.getBroj(document), document);
-		this.odgovorRDF.add(this.xslTransformer.generateMetadata(document));
+		this.odgovorExist.update(DOMParser.getBroj(document), document);
+		this.odgovorRDF.add(document);
 		String brojZalbe = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
 		Document zalbaDocument = this.zalbaService.load(brojZalbe);
 		zalbaDocument.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.odgovoreno + "");
@@ -49,6 +46,13 @@ public class OdgovorService implements ServiceInterface {
 	@Override
 	public void update(String documentId, Document document) {
 		this.odgovorExist.update(documentId, document);
+		this.odgovorRDF.update(documentId, document);
+	}
+	
+	@Override
+	public void delete(String documentId) {
+		this.odgovorExist.delete(documentId);
+		this.odgovorRDF.delete(documentId);
 	}
 
 	@Override

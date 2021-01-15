@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ODGOVOR, OSNOVA } from 'src/app/constants/namespaces';
 import { OdgovorDTO } from 'src/app/models/odgovorDTO';
+import { Referenca } from 'src/app/models/referenca';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -44,6 +45,7 @@ export class OdgovorService {
 
     return odgovoriDTO;
   }
+
   view(broj: number): Observable<string>{
     return this.http.get<string>(`${this.API_ODGOVORI}/${broj}`, {responseType: 'text' as 'json'});
   }
