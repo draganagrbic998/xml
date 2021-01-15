@@ -134,20 +134,20 @@ xmlns:odluka="https://github.com/draganagrbic998/xml/odluka">
 					<fo:block>
 			            <xsl:apply-templates select="osnova:Detalji"></xsl:apply-templates>
 					</fo:block>					
-					<fo:block-container position="absolute" top="10.6cm">
-              			<fo:block border-bottom="0.2mm solid black">
-              			</fo:block>
-              		</fo:block-container>
-              		<fo:block-container position="absolute" top="11.1cm">
+					<fo:block-container position="absolute" top="11.1cm">
               			<fo:block border-bottom="0.2mm solid black">
               			</fo:block>
               		</fo:block-container>
               		<fo:block-container position="absolute" top="11.6cm">
               			<fo:block border-bottom="0.2mm solid black">
+              			</fo:block>
+              		</fo:block-container>
+              		<fo:block-container position="absolute" top="12.1cm">
+              			<fo:block border-bottom="0.2mm solid black">
               			</fo:block>              			
               		</fo:block-container>
 					
-					<fo:block-container position="absolute" top="11.6cm">
+					<fo:block-container position="absolute" top="12.1cm">
 						<fo:block text-align="center">
 							(опис тражене информације)
 						</fo:block>
