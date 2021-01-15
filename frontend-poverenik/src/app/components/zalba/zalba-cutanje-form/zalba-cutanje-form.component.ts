@@ -53,9 +53,10 @@ export class ZalbaCutanjeFormComponent implements AfterViewInit {
 
   ngAfterViewInit(): void{
     const detaljiXml = '<Detalji></Detalji>';
-    const detaljiEditor = document.getElementById('detaljiEditor');
+    const detaljiEditor = document.getElementById('detaljiEditor1');
     const detaljiSpecifikacija = this.xonomyService.detaljiSpecifikacija;
     Xonomy.render(detaljiXml, detaljiEditor, detaljiSpecifikacija);
+    console.log('zalba cutanje');
   }
 
 }
