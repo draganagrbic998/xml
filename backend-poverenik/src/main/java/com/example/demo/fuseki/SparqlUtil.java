@@ -16,6 +16,8 @@ public class SparqlUtil {
 	
 	public static final String NTRIPLES = "N-TRIPLES";
 
+	public static final String TURTLE = "TURTLE";
+
 	public static final String RDF_XML = "RDF/XML";
 	
 	public static String dropAll() {

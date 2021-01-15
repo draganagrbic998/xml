@@ -5,6 +5,7 @@ import org.apache.jena.rdf.model.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.example.demo.common.Constants;
 import com.example.demo.common.Namespaces;
 import com.example.demo.fuseki.FusekiManager;
 import com.example.demo.model.Pretraga;
@@ -19,7 +20,7 @@ public class ResenjeRDF implements RDFInterface {
 
 	@Override
 	public void add(Model model) {
-		this.fusekiManager.save(RESENJE_GRAPH, model);
+		this.fusekiManager.save(RESENJE_GRAPH, model, Constants.RESENJE_SHAPE);
 	}
 
 	@Override
@@ -29,7 +30,7 @@ public class ResenjeRDF implements RDFInterface {
 
 	@Override
 	public void update(String graphUri, Model model, String subject) {
-		this.fusekiManager.update(graphUri, model, subject);
+		this.fusekiManager.update(graphUri, model, subject, Constants.RESENJE_SHAPE);
 	}
 
 	@Override

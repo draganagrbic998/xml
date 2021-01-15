@@ -19,6 +19,14 @@ public class Constants {
 	public static final String SPARQL_FOLDER = DATA_FOLDER + "sparql" + File.separatorChar;
 	public static final String RDFS_FOLDER = DATA_FOLDER + "rdfs" + File.separatorChar;
 	public static final String STUB_FOLDER = DATA_FOLDER + "stubs" + File.separatorChar;
+	public static final String SHAPE_FOLDER = DATA_FOLDER + "shapes" + File.separatorChar;
+
+	public static final String ZAHTEV_SHAPE = SHAPE_FOLDER + "zahtev.ttl";
+	public static final String ODLUKA_SHAPE = SHAPE_FOLDER + "odluka.ttl";
+	public static final String ZALBA_SHAPE = SHAPE_FOLDER + "zalba.ttl";
+	public static final String ODGOVOR_SHAPE = SHAPE_FOLDER + "odgovor.ttl";
+	public static final String RESENJE_SHAPE = SHAPE_FOLDER + "resenje.ttl";
+	public static final String IZVESTAJ_SHAPE = SHAPE_FOLDER + "izvestaj.ttl";
 	
 	public static final String COLLECTIONS_PREFIX = "/db/database";
 	public static final String GRDDL_XSL = DATA_FOLDER + "grddl.xsl";

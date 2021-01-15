@@ -14,12 +14,18 @@ import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.riot.RDFDataMgr;
+import org.apache.jena.riot.RDFFormat;
 import org.apache.jena.update.UpdateExecutionFactory;
 import org.apache.jena.update.UpdateFactory;
 import org.apache.jena.update.UpdateProcessor;
 import org.apache.jena.update.UpdateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.topbraid.jenax.util.JenaUtil;
+import org.topbraid.shacl.validation.ValidationUtil;
+import org.topbraid.shacl.vocabulary.SH;
 
 import com.example.demo.common.Constants;
 import com.example.demo.common.MyException;
@@ -31,15 +37,27 @@ public class FusekiManager {
 	private FusekiAuthentication authUtilities;
 	
 	private static final String RETRIEVE_QUERY = Constants.SPARQL_FOLDER + "retrieve.rq";
-	public static final String REFERENCE_QUERY = Constants.SPARQL_FOLDER + "reference.rq";
+	public static final String REFERENCE_QUERY = Constants.SPARQL_FOLDER + "reference.rq";	
 	
-	public void save(String graphUri, Model model) {
+	public void save(String graphUri, Model model, String shapePath) {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
-		model.write(out, SparqlUtil.NTRIPLES);
-		String sparql = SparqlUtil.insertData(this.authUtilities.getData() + graphUri, out.toString());
-		UpdateRequest request = UpdateFactory.create(sparql);
-        UpdateProcessor processor = UpdateExecutionFactory.createRemote(request, this.authUtilities.getUpdate());
-		processor.execute();
+		
+		Model shapeModel = JenaUtil.createDefaultModel();
+		shapeModel.read(shapePath);
+
+		Resource reportResource = ValidationUtil.validateModel(model, shapeModel, true);
+		boolean conforms = reportResource.getProperty(SH.conforms).getBoolean();
+		
+		if (conforms) {
+			model.write(out, SparqlUtil.NTRIPLES);
+			String sparql = SparqlUtil.insertData(this.authUtilities.getData() + graphUri, out.toString());
+			UpdateRequest request = UpdateFactory.create(sparql);
+	        UpdateProcessor processor = UpdateExecutionFactory.createRemote(request, this.authUtilities.getUpdate());
+			processor.execute();
+		}
+		else {
+			RDFDataMgr.write(System.out, reportResource.getModel(), RDFFormat.TURTLE);
+		}
 	}
 	
 	public ResultSet retrieve(String graphUri, String subject) {
@@ -49,9 +67,9 @@ public class FusekiManager {
 		return results;
 	}
 	
-	public void update(String graphUri, Model model, String subject) {
+	public void update(String graphUri, Model model, String subject, String shapePath) {
 		this.delete(graphUri, subject);
-		this.save(graphUri, model);
+		this.save(graphUri, model, shapePath);
 	}
 	
 	public void delete(String graphUri, String subject) {

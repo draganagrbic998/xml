@@ -7,6 +7,7 @@ import org.apache.jena.rdf.model.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.example.demo.common.Constants;
 import com.example.demo.common.Namespaces;
 import com.example.demo.fuseki.FusekiAuthentication;
 import com.example.demo.fuseki.FusekiManager;
@@ -24,7 +25,7 @@ public class ZalbaRDF implements RDFInterface {
 
 	@Override
 	public void add(Model model) {
-		this.fusekiManager.save(ZALBA_GRAPH, model);
+		this.fusekiManager.save(ZALBA_GRAPH, model, Constants.ZALBA_SHAPE);
 	}
 
 	@Override
@@ -34,7 +35,7 @@ public class ZalbaRDF implements RDFInterface {
 
 	@Override
 	public void update(String graphUri, Model model, String subject) {
-		this.fusekiManager.update(graphUri, model, subject);
+		this.fusekiManager.update(graphUri, model, subject, Constants.ZALBA_SHAPE);
 	}
 
 	@Override

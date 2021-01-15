@@ -27,7 +27,7 @@ public class ZahtevRDF implements RDFInterface {
 
 	@Override
 	public void add(Model model) {
-		this.fusekiManager.save(ZAHTEV_GRAPH, model);
+		this.fusekiManager.save(ZAHTEV_GRAPH, model, Constants.ZAHTEV_SHAPE);
 	}
 
 	@Override
@@ -37,7 +37,7 @@ public class ZahtevRDF implements RDFInterface {
 
 	@Override
 	public void update(String graphUri, Model model, String subject) {
-		this.fusekiManager.update(graphUri, model, subject);
+		this.fusekiManager.update(graphUri, model, subject, Constants.ZAHTEV_SHAPE);
 	}
 
 	@Override

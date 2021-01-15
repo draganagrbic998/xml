@@ -50,6 +50,10 @@ public class XSLTransformer {
 						model.createResource(Namespaces.ZALBA + "/" + broj), 
 						model.createProperty(Namespaces.PREDIKAT + "tip"), 
 						model.createLiteral(ZalbaMapper.getTipZalbe(document) + "")));
+				model.add(model.createStatement(
+						model.createResource(Namespaces.ZALBA + "/" + broj),
+						model.createProperty(Namespaces.RDF + "type"),
+						model.createResource(Namespaces.ZALBA)));
 			}
 			else if (document.getElementsByTagNameNS(Namespaces.ODLUKA, "Odluka").getLength() > 0) {
 				String broj = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
@@ -57,6 +61,38 @@ public class XSLTransformer {
 						model.createResource(Namespaces.ODLUKA + "/" + broj), 
 						model.createProperty(Namespaces.PREDIKAT + "tip"), 
 						model.createLiteral(OdlukaMapper.getTipOdluke(document) + "")));
+				model.add(model.createStatement(
+						model.createResource(Namespaces.ODLUKA + "/" + broj),
+						model.createProperty(Namespaces.RDF + "type"),
+						model.createResource(Namespaces.ODLUKA)));
+			}
+			else if (document.getElementsByTagNameNS(Namespaces.ZAHTEV, "Zahtev").getLength() > 0) {
+				String broj = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
+				model.add(model.createStatement(
+						model.createResource(Namespaces.ZAHTEV + "/" + broj),
+						model.createProperty(Namespaces.RDF + "type"),
+						model.createResource(Namespaces.ZAHTEV)));
+			}
+			else if (document.getElementsByTagNameNS(Namespaces.ODGOVOR, "Odgovor").getLength() > 0) {
+				String broj = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
+				model.add(model.createStatement(
+						model.createResource(Namespaces.ODGOVOR + "/" + broj),
+						model.createProperty(Namespaces.RDF + "type"),
+						model.createResource(Namespaces.ODGOVOR)));
+			}
+			else if (document.getElementsByTagNameNS(Namespaces.RESENJE, "Resenje").getLength() > 0) {
+				String broj = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
+				model.add(model.createStatement(
+						model.createResource(Namespaces.RESENJE + "/" + broj),
+						model.createProperty(Namespaces.RDF + "type"),
+						model.createResource(Namespaces.RESENJE)));
+			}
+			else if (document.getElementsByTagNameNS(Namespaces.IZVESTAJ, "Izvestaj").getLength() > 0) {
+				String broj = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
+				model.add(model.createStatement(
+						model.createResource(Namespaces.IZVESTAJ + "/" + broj),
+						model.createProperty(Namespaces.RDF + "type"),
+						model.createResource(Namespaces.IZVESTAJ)));
 			}
 			return model;
 		}
