@@ -53,6 +53,7 @@ public class ZalbaMapper implements MapperInterface {
 	public Document map(String xml) {
 		String broj = this.existManager.nextDocumentId(ZalbaExist.ZALBA_COLLECTION);
 		Document dto = this.domParser.buildDocument(xml);
+		String lozinka = dto.getElementsByTagNameNS(Namespaces.OSNOVA, "lozinka").item(0).getTextContent();
 		Document document = this.domParser.buildDocumentFromFile(STUB_FILE);
 		Element zalba = (Element) document.getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").item(0);
 		NodeList tipCutanja = dto.getElementsByTagNameNS(Namespaces.ZALBA, "tipCutanja");
@@ -82,7 +83,9 @@ public class ZalbaMapper implements MapperInterface {
 		if (dto.getElementsByTagNameNS(Namespaces.ZALBA, "brojOdluke").getLength() > 0) {
 			String brojOdluke = dto.getElementsByTagNameNS(Namespaces.ZALBA, "brojOdluke").item(0).getTextContent();
 			Element odluka = (Element) this.domParser.buildDocument(this.soapService
-					.sendSOAPMessage(this.domParser.buildDocument(String.format("<pretraga><broj>%s</broj></pretraga>", brojOdluke)), SOAPActions.get_odluka))
+					.sendSOAPMessage(this.domParser.buildDocument(
+							String.format("<pretraga><broj>%s</broj><lozinka>%s</lozinka></pretraga>", brojOdluke, lozinka)),
+							SOAPActions.get_odluka))
 					.getElementsByTagNameNS(Namespaces.ODLUKA, "Odluka").item(0);
 			Element podaciOdluke = (Element) document.getElementsByTagNameNS(Namespaces.ZALBA, "PodaciOdluke").item(0);
 			podaciOdluke.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).setTextContent(brojOdluke);
@@ -97,7 +100,9 @@ public class ZalbaMapper implements MapperInterface {
 		}
 		
 		Element zahtev = (Element) this.domParser.buildDocument(this.soapService
-				.sendSOAPMessage(this.domParser.buildDocument(String.format("<pretraga><broj>%s</broj></pretraga>", brojZahteva)), SOAPActions.get_zahtev))
+				.sendSOAPMessage(this.domParser.buildDocument(
+						String.format("<pretraga><broj>%s</broj><lozinka>%s</lozinka></pretraga>", brojZahteva, lozinka)),
+						SOAPActions.get_zahtev))
 				.getElementsByTagNameNS(Namespaces.ZAHTEV, "Zahtev").item(0);
 		documentFragment.appendChild(document.importNode(zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "OrganVlasti").item(0), true));
 		documentFragment.appendChild(document.importNode(dto.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0), true));

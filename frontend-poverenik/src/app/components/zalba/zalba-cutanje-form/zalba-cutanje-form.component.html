@@ -14,6 +14,20 @@
                 </mat-error>
             </mat-form-field>
             <mat-form-field>
+                <mat-label>Tip ćutanja: </mat-label>
+                <mat-select formControlName="tipCutanja">
+                    <mat-option [value]="'nije postupio'">
+                        nije postupio
+                    </mat-option>
+                    <mat-option [value]="'nije postupio u zakonskom roku'">
+                        nije postupio u zakonskom roku
+                    </mat-option>
+                    <mat-option [value]="'nije postupio u celosti'">
+                        nije postupio u celosti
+                    </mat-option>
+                </mat-select>                
+            </mat-form-field>
+            <mat-form-field>
                 <mat-label>
                     {{zalbaDelimicnost ? 'Broj odluke' : 'Broj zahteva'}}
                 </mat-label>
@@ -29,18 +43,16 @@
                 </mat-error>    
             </mat-form-field>
             <mat-form-field>
-                <mat-label>Tip ćutanja: </mat-label>
-                <mat-select formControlName="tipCutanja">
-                    <mat-option [value]="'nije postupio'">
-                        nije postupio
-                    </mat-option>
-                    <mat-option [value]="'nije postupio u zakonskom roku'">
-                        nije postupio u zakonskom roku
-                    </mat-option>
-                    <mat-option [value]="'nije postupio u celosti'">
-                        nije postupio u celosti
-                    </mat-option>
-                </mat-select>                
+                <mat-label>Lozinka</mat-label>
+                <input 
+                type="password" 
+                matInput 
+                autocomplete="off"
+                formControlName="lozinka"
+                placeholder="Unesite lozinku">
+                <mat-error>
+                    Lozinka je obavezna!
+                </mat-error>    
             </mat-form-field>
             <div id="detaljiEditor1"></div>
         </div>    

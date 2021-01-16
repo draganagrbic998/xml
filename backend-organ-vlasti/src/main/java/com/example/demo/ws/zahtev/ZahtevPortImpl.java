@@ -3,9 +3,15 @@ package com.example.demo.ws.zahtev;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
+import com.example.demo.common.Namespaces;
+import com.example.demo.common.WrongPasswordException;
 import com.example.demo.parser.DOMParser;
+import com.example.demo.repository.xml.KorisnikExist;
 import com.example.demo.service.ZahtevService;
 import com.example.demo.transformer.ZahtevTransformer;
 
@@ -23,13 +29,27 @@ public class ZahtevPortImpl implements Zahtev {
 
 	@Autowired
 	private ZahtevTransformer zahtevTransformer;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private KorisnikExist korisnikExist;
 
 	public java.lang.String getZahtev(java.lang.String getZahtevRequest) {
 		LOG.info("Executing operation getZahtev");
 		try {
+			String lozinka = this.domParser.buildDocument(getZahtevRequest).getElementsByTagName("lozinka").item(0)
+					.getTextContent();
 			String documentId = this.domParser.buildDocument(getZahtevRequest).getElementsByTagName("broj").item(0)
 					.getTextContent();
-			java.lang.String _return = this.domParser.buildXml(this.zahtevService.load(documentId));
+			Document document = this.zahtevService.load(documentId);
+			Element zahtev = (Element) document.getElementsByTagNameNS(Namespaces.ZAHTEV, "Zahtev").item(0);
+			Document korisnik = this.korisnikExist.load(zahtev.getAttribute("href").replace(Namespaces.KORISNIK + "", ""));
+			if (!this.passwordEncoder.matches(lozinka, korisnik.getElementsByTagNameNS(Namespaces.OSNOVA, "lozinka").item(0).getTextContent())) {
+				throw new WrongPasswordException();
+			}
+			java.lang.String _return = this.domParser.buildXml(document);
 			return _return;
 		} catch (java.lang.Exception ex) {
 			ex.printStackTrace();

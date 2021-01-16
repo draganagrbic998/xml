@@ -38,6 +38,7 @@ export class ZalbaService {
         <zalba:tipCutanja>${zalba.tipCutanja}</zalba:tipCutanja>
         ${brojDokumenta}
         ${zalba.detalji}
+        <lozinka>${zalba.lozinka}</lozinka>
       </zalba:Zalba>
     `;
 
@@ -50,6 +51,7 @@ export class ZalbaService {
     xmlns:zalba="${ZALBA}">
       <zalba:brojOdluke>${zalba.brojOdluke}</zalba:brojOdluke>
       ${zalba.detalji}
+      <lozinka>${zalba.lozinka}</lozinka>
     </zalba:Zalba>
   `;
   }
