@@ -7,7 +7,7 @@ import org.apache.commons.httpclient.methods.StringRequestEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.common.MyException;
+import com.example.demo.exception.MyException;
 import com.example.demo.parser.JAXBParser;
 
 @Service

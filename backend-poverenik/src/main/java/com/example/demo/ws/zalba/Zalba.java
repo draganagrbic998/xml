@@ -15,5 +15,5 @@ public interface Zalba {
 	@WebMethod
 	@Oneway
 	public void otkaziZalbu(
-			@WebParam(partName = "otkaziZalbu", name = "otkaziZalbu", targetNamespace = "http://demo.example.com/ws/zalba") java.lang.String otkaziZalbu);
+		@WebParam(partName = "otkaziZalbu", name = "otkaziZalbu", targetNamespace = "http://demo.example.com/ws/zalba") java.lang.String otkaziZalbu);
 }

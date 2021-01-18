@@ -49,9 +49,9 @@ export class ResenjeFormComponent implements AfterViewInit {
 
   ngAfterViewInit(): void{
     const odlukaXml = '<Odluka><Dispozitiva></Dispozitiva><Obrazlozenje></Obrazlozenje></Odluka>';
-    const odlukaEditor = document.getElementById('odlukaEditor');
+    const resenjeEditor = document.getElementById('resenjeEditor');
     const odlukaSpecifikacija = this.xonomyService.odlukaSpecifikacija;
-    Xonomy.render(odlukaXml, odlukaEditor, odlukaSpecifikacija);
+    Xonomy.render(odlukaXml, resenjeEditor, odlukaSpecifikacija);
   }
 
 }

@@ -63,7 +63,7 @@ public class OdlukaController {
 				.body(resource);
 	}
 	
-	@GetMapping(value = "/{broj}/metadata/xml", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	@GetMapping(value = "/{broj}/metadata_xml", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<Resource> xmlMetadata(@PathVariable String broj) {
 		Resource resource = this.odlukaTransfomer.generateMetadata(broj, MetadataTip.xml);
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)
@@ -71,12 +71,24 @@ public class OdlukaController {
 				.body(resource);
 	}
 	
-	@GetMapping(value = "/{broj}/metadata/json", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	@GetMapping(value = "/{broj}/metadata_json", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<Resource> jsonMetadata(@PathVariable String broj) {
 		Resource resource = this.odlukaTransfomer.generateMetadata(broj, MetadataTip.json);
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
 				.body(resource);
+	}
+
+	@PostMapping(value="obicna_pretraga", consumes = MediaType.TEXT_XML_VALUE, produces = MediaType.TEXT_XML_VALUE)
+	@PreAuthorize("hasAuthority('sluzbenik')")
+	public ResponseEntity<String> regularSearch(@RequestBody String xml) {		
+		return new ResponseEntity<>(this.odlukaService.regularSearch(xml), HttpStatus.OK);
+	}
+
+	@PostMapping(value="napredna_pretraga", consumes = MediaType.TEXT_XML_VALUE, produces = MediaType.TEXT_XML_VALUE)
+	@PreAuthorize("hasAuthority('sluzbenik')")
+	public ResponseEntity<String> advancedSearch(@RequestBody String xml) {		
+		return new ResponseEntity<>(this.odlukaService.advancedSearch(xml), HttpStatus.OK);
 	}
 
 }

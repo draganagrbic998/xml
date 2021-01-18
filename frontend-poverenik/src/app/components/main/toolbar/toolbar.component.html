@@ -1,6 +1,7 @@
 <mat-toolbar color="primary" class="mat-elevation-z24">
     <span>
         <button
+        *ngIf="uloga === 'poverenik' && listPage"
         class="toggler"
         mat-icon-button 
         (click)="drawerToggle()">

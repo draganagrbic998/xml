@@ -59,9 +59,9 @@ export class ZahtevFormComponent implements AfterViewInit {
 
   ngAfterViewInit(): void{
     const detaljiXml = '<Detalji></Detalji>';
-    const detaljiEditor = document.getElementById('detaljiEditor');
+    const zahtevEditor = document.getElementById('zahtevEditor');
     const detaljiSpecifikacija = this.xonomyService.detaljiSpecifikacija;
-    Xonomy.render(detaljiXml, detaljiEditor, detaljiSpecifikacija);
+    Xonomy.render(detaljiXml, zahtevEditor, detaljiSpecifikacija);
 
     this.zahtevForm.get('tipZahteva').valueChanges.subscribe(
       () => {

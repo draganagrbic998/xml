@@ -28,13 +28,7 @@ public class ZahtevController {
 	
 	@Autowired
 	private ZahtevTransformer zahtevTransformer;
-	
-	@PostMapping(value="advanced_search", consumes = MediaType.TEXT_XML_VALUE, produces = MediaType.TEXT_XML_VALUE)
-	@PreAuthorize("hasAuthority('sluzbenik')")
-	public ResponseEntity<String> advancedSearch(@RequestBody String xml) {		
-		return new ResponseEntity<>(this.zahtevService.advancedSearch(xml), HttpStatus.OK);
-	}
-				
+					
 	@PostMapping(consumes = MediaType.TEXT_XML_VALUE)
 	@PreAuthorize("hasAuthority('gradjanin')")
 	public ResponseEntity<Void> add(@RequestBody String xml) {		
@@ -62,7 +56,7 @@ public class ZahtevController {
 				.body(resource);
 	}
 	
-	@GetMapping(value = "/{broj}/metadata/xml", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	@GetMapping(value = "/{broj}/metadata_xml", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<Resource> xmlMetadata(@PathVariable String broj) {
 		Resource resource = this.zahtevTransformer.generateMetadata(broj, MetadataTip.xml);
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)
@@ -70,12 +64,24 @@ public class ZahtevController {
 				.body(resource);
 	}
 	
-	@GetMapping(value = "/{broj}/metadata/json", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	@GetMapping(value = "/{broj}/metadata_json", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<Resource> jsonMetadata(@PathVariable String broj) {
 		Resource resource = this.zahtevTransformer.generateMetadata(broj, MetadataTip.json);
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
 				.body(resource);
+	}
+	
+	@PostMapping(value="obicna_pretraga", consumes = MediaType.TEXT_XML_VALUE, produces = MediaType.TEXT_XML_VALUE)
+	@PreAuthorize("hasAuthority('sluzbenik')")
+	public ResponseEntity<String> regularSearch(@RequestBody String xml) {		
+		return new ResponseEntity<>(this.zahtevService.regularSearch(xml), HttpStatus.OK);
+	}
+
+	@PostMapping(value="napredna_pretraga", consumes = MediaType.TEXT_XML_VALUE, produces = MediaType.TEXT_XML_VALUE)
+	@PreAuthorize("hasAuthority('sluzbenik')")
+	public ResponseEntity<String> advancedSearch(@RequestBody String xml) {		
+		return new ResponseEntity<>(this.zahtevService.advancedSearch(xml), HttpStatus.OK);
 	}
 
 }

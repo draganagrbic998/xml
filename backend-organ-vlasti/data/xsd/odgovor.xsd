@@ -15,7 +15,13 @@
                         <xs:complexType>
                             <xs:simpleContent>
                                 <xs:extension base="xs:date">
-                                    <xs:attribute name="rel" type="osnova:TRequiredString"/>
+                                    <xs:attribute name="rel">
+                                        <xs:simpleType>
+                                            <xs:restriction base="xs:string">
+                                                <xs:enumeration value="pred:zalba"/>
+                                            </xs:restriction>
+                                        </xs:simpleType>
+                                    </xs:attribute>
                                     <xs:attribute name="href" type="osnova:TRequiredString"/>
                                 </xs:extension>
                             </xs:simpleContent>

@@ -9,6 +9,7 @@ import org.w3c.dom.Document;
 
 import com.example.demo.common.Constants;
 import com.example.demo.common.Namespaces;
+import com.example.demo.common.Utils;
 import com.example.demo.fuseki.FusekiAuthentication;
 import com.example.demo.fuseki.FusekiManager;
 
@@ -17,12 +18,14 @@ public class ZalbaRDF implements RDFInterface {
 
 	@Autowired
 	private FusekiManager fusekiManager;
-	
+
 	@Autowired
 	private FusekiAuthentication authUtilities;
 
 	public static final String ZALBA_GRAPH = "/zalbe";
 	public static final String ZALBA_SHAPE = Constants.SHAPE_FOLDER + "zalba.ttl";
+	public static final String ZALBA_AND_SEARCH = Constants.SPARQL_FOLDER + "zalba_and.rq";
+	public static final String ZALBA_OR_SEARCH = Constants.SPARQL_FOLDER + "zalba_or.rq";
 
 	@Override
 	public void add(Document document) {
@@ -46,14 +49,14 @@ public class ZalbaRDF implements RDFInterface {
 	
 	public List<Integer> odgovori(String broj) {
 		return this.fusekiManager.search(
-				String.format(FusekiManager.readFile(FusekiManager.REFERENCE_QUERY), 
+				String.format(Utils.readFile(FusekiManager.REFERENCE_QUERY), 
 				this.authUtilities.getData() + OdgovorRDF.ODGOVOR_GRAPH, 
 				Namespaces.PREDIKAT + "zalba", Namespaces.ZALBA + "/" + broj), Namespaces.ODGOVOR + "/");
 	}
 	
 	public List<Integer> resenja(String broj) {
 		return this.fusekiManager.search(
-				String.format(FusekiManager.readFile(FusekiManager.REFERENCE_QUERY), 
+				String.format(Utils.readFile(FusekiManager.REFERENCE_QUERY), 
 				this.authUtilities.getData() + ResenjeRDF.RESENJE_GRAPH, 
 				Namespaces.PREDIKAT + "zalba", Namespaces.ZALBA + "/" + broj), Namespaces.RESENJE + "/");
 	}

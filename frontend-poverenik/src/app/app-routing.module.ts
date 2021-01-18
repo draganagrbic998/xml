@@ -25,7 +25,7 @@ import { GradjaninGuard } from './guard/gradjanin/gradjanin.guard';
 import { PoverenikGuard } from './guard/poverenik/poverenik.guard';
 import { HtmlViewerComponent } from './components/main/html-viewer/html-viewer.component';
 import { PdfViewerComponent } from './components/main/pdf-viewer/pdf-viewer.component';
-import { OdgovorListComponent } from './components/zalba/odgovor-list/odgovor-list.component';
+import { OdgovorListComponent } from './components/odgovor/odgovor-list/odgovor-list.component';
 
 const routes: Routes = [
   {

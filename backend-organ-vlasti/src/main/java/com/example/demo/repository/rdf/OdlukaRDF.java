@@ -9,6 +9,7 @@ import org.w3c.dom.Document;
 
 import com.example.demo.common.Constants;
 import com.example.demo.common.Namespaces;
+import com.example.demo.common.Utils;
 import com.example.demo.fuseki.FusekiAuthentication;
 import com.example.demo.fuseki.FusekiManager;
 
@@ -23,6 +24,8 @@ public class OdlukaRDF implements RDFInterface {
 	
 	public static final String ODLUKA_GRAPH = "/odluke";
 	public static final String ODLUKA_SHAPE = Constants.SHAPE_FOLDER + "odluka.ttl";
+	public static final String ODLUKA_AND_SEARCH = Constants.SPARQL_FOLDER + "odluka_and.rq";
+	public static final String ODLUKA_OR_SEARCH = Constants.SPARQL_FOLDER + "odluka_or.rq";
 
 	@Override
 	public void add(Document document) {
@@ -46,14 +49,14 @@ public class OdlukaRDF implements RDFInterface {
 	
 	public List<Integer> zalbe(String broj) {
 		return this.fusekiManager.search(
-				String.format(FusekiManager.readFile(FusekiManager.REFERENCE_QUERY), 
+				String.format(Utils.readFile(FusekiManager.REFERENCE_QUERY), 
 				this.authUtilities.getData() + ZalbaRDF.ZALBA_GRAPH, 
 				Namespaces.PREDIKAT + "odluka", Namespaces.ODLUKA + "/" + broj), Namespaces.ZALBA + "/");
 	}
 	
 	public List<Integer> resenja(String broj) {
 		return this.fusekiManager.search(
-				String.format(FusekiManager.readFile(FusekiManager.REFERENCE_QUERY), 
+				String.format(Utils.readFile(FusekiManager.REFERENCE_QUERY), 
 				this.authUtilities.getData() + ResenjeRDF.RESENJE_GRAPH, 
 				Namespaces.PREDIKAT + "odluka", Namespaces.ODLUKA + "/" + broj), Namespaces.RESENJE + "/");
 	}

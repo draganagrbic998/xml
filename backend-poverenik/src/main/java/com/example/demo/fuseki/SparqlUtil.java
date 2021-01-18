@@ -39,9 +39,8 @@ public class SparqlUtil {
 	public static String selectData(String graphURI, String sparqlCondition) {
 		return String.format(SELECT_NAMED_GRAPH_TEMPLATE, graphURI, sparqlCondition);
 	}
-
+	
 	public static String deleteData(String graphURI, String subject) {
 		return String.format(DELETE_TEMPLATE_NAMED_GRAPH, graphURI, subject);
 	}
-	
 }

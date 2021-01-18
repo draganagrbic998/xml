@@ -5,8 +5,11 @@ import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.xmldb.api.base.ResourceSet;
 
-import com.example.demo.common.MyException;
+import com.example.demo.common.Utils;
+import com.example.demo.exception.MyException;
+import com.example.demo.exception.ResourceTakenException;
 import com.example.demo.mapper.IzvestajMapper;
+import com.example.demo.parser.JAXBParser;
 import com.example.demo.repository.rdf.IzvestajRDF;
 import com.example.demo.repository.xml.IzvestajExist;
 import com.example.demo.ws.utils.SOAPService;
@@ -26,20 +29,24 @@ public class IzvestajService implements ServiceInterface {
 
 	@Autowired
 	private SOAPService soapService;
+	
+	@Autowired
+	private JAXBParser jaxbParser;
 
 	@Override
 	public void add(String godina) {
 		try {
-			Document document = this.izvestajMapper.map(godina);
-			if (this.izvestajExist.retrieve("/izvestaj:Izvestaj[izvestaj:godina = " + godina + "]").getSize() == 0) {
-				this.izvestajExist.add(document);
-				this.izvestajRDF.add(document);
-				this.soapService.sendSOAPMessage(document, SOAPActions.create_izvestaj);
+			if (this.izvestajExist.retrieve("/izvestaj:Izvestaj[izvestaj:godina = " + godina + "]").getSize() > 0) {
+				throw new ResourceTakenException();
 			}
 		}
 		catch(Exception e) {
 			throw new MyException(e);
 		}
+		Document document = this.izvestajMapper.map(godina);
+		this.izvestajExist.add(document);
+		this.izvestajRDF.add(document);
+		this.soapService.sendSOAPMessage(document, SOAPActions.create_izvestaj);
 	}
 
 	@Override
@@ -55,14 +62,23 @@ public class IzvestajService implements ServiceInterface {
 	}
 
 	@Override
-	public String retrieve() {
-		ResourceSet resources = this.izvestajExist.retrieve("/izvestaj:Izvestaj");
-		return this.izvestajMapper.map(resources);
+	public Document load(String documentId) {
+		return this.izvestajExist.load(documentId);
 	}
 
 	@Override
-	public Document load(String documentId) {
-		return this.izvestajExist.load(documentId);
+	public String retrieve() {
+		return this.izvestajMapper.map(this.izvestajExist.retrieve("/izvestaj:Izvestaj"));
+	}
+
+	@Override
+	public String regularSearch(String xml) {
+		return null;
+	}
+
+	@Override
+	public String advancedSearch(String xml) {
+		return null;
 	}
 
 }

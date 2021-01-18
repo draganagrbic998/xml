@@ -1,10 +1,12 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatDrawer } from '@angular/material/sidenav';
 import { MatTableDataSource } from '@angular/material/table';
 import { ZalbaDTO } from 'src/app/models/zalbaDTO';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ZalbaService } from 'src/app/services/zalba/zalba.service';
 import { environment } from 'src/environments/environment';
+import { ZalbaPretraga } from '../zalba-pretraga/zalba-pretraga';
 
 @Component({
   selector: 'app-zalba-list',
@@ -19,6 +21,7 @@ export class ZalbaListComponent implements AfterViewInit {
   ) { }
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatDrawer) drawer: MatDrawer;
   columns: string[] = ['tipZalbe', 'datum', 'status', 'dokumenti', 'metapodaci', 'akcije'];
 
   zalbe: MatTableDataSource<ZalbaDTO> = new MatTableDataSource<ZalbaDTO>([]);
@@ -35,11 +38,37 @@ export class ZalbaListComponent implements AfterViewInit {
   }
 
   xmlMetadata(broj: string): void{
-    window.open(`//localhost:8081/${environment.apiZalbe}/${broj}/metadata/xml`, '_blank');
+    window.open(`//localhost:8081/${environment.apiZalbe}/${broj}/metadata_xml`, '_blank');
   }
 
   jsonMetadata(broj: string): void{
-    window.open(`//localhost:8081/${environment.apiZahtevi}/${broj}/metadata/json`, '_blank');
+    window.open(`//localhost:8081/${environment.apiZahtevi}/${broj}/metadata_json`, '_blank');
+  }
+
+  obicnaPretraga(pretraga: string): void{
+    this.fetchPending = true;
+    this.zalbaService.obicnaPretraga(pretraga).subscribe(
+      (zalbe: ZalbaDTO[]) => {
+        this.zalbe = new MatTableDataSource<ZalbaDTO>(zalbe);
+        this.fetchPending = false;
+      },
+      () => {
+        this.fetchPending = false;
+      }
+    );
+  }
+
+  naprednaPretraga(pretraga: ZalbaPretraga): void{
+    this.fetchPending = true;
+    this.zalbaService.naprednaPretraga(pretraga).subscribe(
+      (zalbe: ZalbaDTO[]) => {
+        this.zalbe = new MatTableDataSource<ZalbaDTO>(zalbe);
+        this.fetchPending = false;
+      },
+      () => {
+        this.fetchPending = false;
+      }
+    );
   }
 
   ngAfterViewInit(): void {
@@ -53,6 +82,10 @@ export class ZalbaListComponent implements AfterViewInit {
         this.fetchPending = false;
       }
     );
+
+    this.authService.drawerToggle$.subscribe(() => {
+      this.drawer.toggle();
+    });
   }
 
 }

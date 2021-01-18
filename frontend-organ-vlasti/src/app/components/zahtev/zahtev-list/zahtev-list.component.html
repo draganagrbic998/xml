@@ -1,74 +1,19 @@
 <mat-drawer-container>
   <mat-drawer mode="side" #drawer class="mat-elevation-z24">
-    <h3>Napredna pretraga</h3><br>
-
-    <form [formGroup]="naprednaForma">
-      <div [class.disabled]="fetchPending">
-        <mat-form-field> 
-          <mat-label>Datum</mat-label>
-          <input 
-          matInput 
-          autocomplete="off"
-          formControlName="datum" 
-          placeholder="Unesite datum"
-          [matDatepicker]="datum">
-          <mat-datepicker-toggle matSuffix [for]="datum"></mat-datepicker-toggle>
-          <mat-datepicker #datum></mat-datepicker>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Mesto</mat-label>
-          <input 
-          matInput 
-          autocomplete="off"
-          formControlName="mesto"
-          placeholder="Unesite mesto">
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Tip zahteva</mat-label>
-          <mat-select formControlName="tip">
-              <mat-option [value]="'obavestenje'">
-                  obaveštenje da li organ poseduje traženu informaciju
-              </mat-option>
-              <mat-option [value]="'uvid'">
-                  uvid u dokument koji sadrži traženu informaciju
-              </mat-option>
-              <mat-option [value]="'kopija'">
-                  kopija dokumenta koji sadrži traženu informaciju
-              </mat-option>
-              <mat-option [value]="'dostava'">
-                  dostava dokumenta koji sadrži traženu informaciju
-              </mat-option>
-          </mat-select>                
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Stanje zahteva</mat-label>
-          <mat-select formControlName="stanje">
-              <mat-option [value]="'cekanje'">
-                čeka se odgovor na zahtev
-              </mat-option>
-              <mat-option [value]="'odobreno'">
-                  zahtev je prihvaćen
-              </mat-option>
-              <mat-option [value]="'odbijeno'">
-                  zahtev je odbijen
-              </mat-option>
-          </mat-select>                
-        </mat-form-field>
-      </div>
-      <app-spacer-container>
-        <span></span>
-        <span>
-          <button 
-          *ngIf="!fetchPending"
-          mat-raised-button 
-          color="primary"
-          (click)="naprednaPretraga()">Pretraži</button>
-          <app-spinner-button *ngIf="fetchPending"></app-spinner-button>
-        </span>
-      </app-spacer-container>
-    </form>
-
+    <mat-tab-group animationDuration="0ms">
+      <mat-tab [label]="'Obična pretraga'">
+        <app-obicna-pretraga
+        [fetchPending]="fetchPending"
+        (pretragaTriggered)="obicnaPretraga($event)"></app-obicna-pretraga>
+      </mat-tab>
+      <mat-tab [label]="'Napredna pretraga'">
+        <app-zahtev-pretraga
+        [fetchPending]="fetchPending"
+        (pretragaTriggered)="naprednaPretraga($event)"></app-zahtev-pretraga>    
+      </mat-tab>
+    </mat-tab-group>
   </mat-drawer>
+
   <app-preloader *ngIf="fetchPending"></app-preloader>
 
   <div class="root">

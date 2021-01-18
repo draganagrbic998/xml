@@ -42,4 +42,9 @@ public class ResenjeExist implements ExistInterface {
 		return this.existManager.retrieve(RESENJE_COLLECTION, xpathExp);
 	}
 	
+	@Override
+	public String nextDocumentId() {
+		return this.existManager.nextDocumentId(RESENJE_COLLECTION);
+	}
+	
 }

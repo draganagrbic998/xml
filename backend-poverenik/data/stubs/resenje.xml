@@ -9,6 +9,9 @@ href="">
 	<broj></broj>
 	<datum property="pred:datum" datatype="xs:string"></datum>
 	<resenje:status property="pred:status" datatype="xs:string"></resenje:status>
+	<resenje:Odbrana>
+		<resenje:datumOdbrane rel="pred:odgovor" href=""></resenje:datumOdbrane>
+	</resenje:Odbrana>
 	<resenje:PodaciZalbe>
 		<resenje:tipZalbe property="pred:tipZalbe" datatype="xs:string"></resenje:tipZalbe>
 		<resenje:brojZalbe rel="pred:zalba" href=""></resenje:brojZalbe>

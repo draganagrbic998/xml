@@ -1,9 +1,6 @@
 package com.example.demo.fuseki;
 
 import java.io.ByteArrayOutputStream;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -31,7 +28,7 @@ import org.topbraid.shacl.validation.ValidationUtil;
 import org.topbraid.shacl.vocabulary.SH;
 
 import com.example.demo.common.Constants;
-import com.example.demo.common.MyException;
+import com.example.demo.common.Utils;
 import com.example.demo.parser.XSLTransformer;
 
 @Component
@@ -43,7 +40,7 @@ public class FusekiManager {
 	@Autowired
 	private XSLTransformer xslTransformer;
 	
-	private static final String RETRIEVE_QUERY = Constants.SPARQL_FOLDER + "retrieve.rq";
+	public static final String RETRIEVE_QUERY = Constants.SPARQL_FOLDER + "retrieve.rq";
 	public static final String REFERENCE_QUERY = Constants.SPARQL_FOLDER + "reference.rq";	
 	
 	public void add(String graphUri, Document document, String shapePath) {
@@ -79,12 +76,19 @@ public class FusekiManager {
 	}
 	
 	public ResultSet retrieve(String graphUri, String subject) {
-		String sparql = String.format(readFile(RETRIEVE_QUERY), this.authUtilities.getData() + graphUri, subject);
+		String sparql = String.format(Utils.readFile(RETRIEVE_QUERY), this.authUtilities.getData() + graphUri, subject);
 		QueryExecution query = QueryExecutionFactory.sparqlService(this.authUtilities.getQuery(), sparql);
 		ResultSet results = query.execSelect();
 		return results;
 	}
 		
+	public void dropAll() {
+		UpdateRequest request = UpdateFactory.create() ;
+        request.add(SparqlUtil.dropAll());
+        UpdateProcessor processor = UpdateExecutionFactory.createRemote(request, this.authUtilities.getUpdate());
+        processor.execute();
+	}
+
 	public List<Integer> search(String sparql, String prefix) {
 		QueryExecution query = QueryExecutionFactory.sparqlService(this.authUtilities.getQuery(), sparql);
 		ResultSet results = query.execSelect();
@@ -103,34 +107,7 @@ public class FusekiManager {
 		    	}
 		    }
 		}
-		/*
-		String xpathExp = "(";
-		for (int i = 0; i < brojevi.size(); ++i) {
-			if (i == 0) {
-				xpathExp += "broj = '" + brojevi.get(i) + "'";
-			} else {
-				xpathExp += " or broj = '" + brojevi.get(i) + "'";
-			}
-		}
-		xpathExp += ")";
-		return xpathExp;*/
 		return brojevi;
 	}
-	
-	public void dropAll() {
-		UpdateRequest request = UpdateFactory.create() ;
-        request.add(SparqlUtil.dropAll());
-        UpdateProcessor processor = UpdateExecutionFactory.createRemote(request, this.authUtilities.getUpdate());
-        processor.execute();
-	}
-	
-	public static String readFile(String path) {
-		try {
-			return new String(Files.readAllBytes(Paths.get(path)), StandardCharsets.UTF_8);
-		}
-		catch(Exception e) {
-			throw new MyException(e);
-		}
-	}
-	
+			
 }

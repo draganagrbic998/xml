@@ -8,8 +8,8 @@ import org.xmldb.api.base.ResourceIterator;
 import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.modules.XMLResource;
 
-import com.example.demo.common.MyException;
 import com.example.demo.common.Namespaces;
+import com.example.demo.exception.MyException;
 import com.example.demo.parser.DOMParser;
 
 @Component
@@ -33,14 +33,15 @@ public class IzvestajMapper implements MapperInterface {
 
 			while (it.hasMoreResources()) {
 				XMLResource resource = (XMLResource) it.nextResource();
-				Document document = this.domParser.buildDocument(resource.getContent().toString());
+				Document izvestajDocument = this.domParser.buildDocument(resource.getContent().toString());
 				Node izvestaj = izvestajiDocument.createElementNS(Namespaces.IZVESTAJ, "Izvestaj");
+				
 				izvestaj.appendChild(izvestajiDocument
-						.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0), true));
+						.importNode(izvestajDocument.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0), true));
 				izvestaj.appendChild(izvestajiDocument
-						.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
+						.importNode(izvestajDocument.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
 				izvestaj.appendChild(izvestajiDocument
-						.importNode(document.getElementsByTagNameNS(Namespaces.IZVESTAJ, "godina").item(0), true));
+						.importNode(izvestajDocument.getElementsByTagNameNS(Namespaces.IZVESTAJ, "godina").item(0), true));
 				izvestaji.appendChild(izvestaj);
 			}
 

@@ -20,7 +20,7 @@ public class AuthController {
 			
 	@Autowired
 	private KorisnikService korisnikService;
-	
+
 	@PostMapping(value = "/login", consumes = MediaType.TEXT_XML_VALUE, produces = MediaType.TEXT_XML_VALUE)
 	public ResponseEntity<String> login(@RequestBody String xml) {
 		return new ResponseEntity<>(this.korisnikService.login(xml), HttpStatus.OK);
@@ -42,15 +42,14 @@ public class AuthController {
 					+ "font-weight: bold; font-size: 24px;'><h1>NALOG USPEŠNO AKTIVIRAN</h1><br>"
 					+ "Kliknite na link ispod da biste se prijavili:<br>"
 					+ "<a href='" + Constants.FRONTEND_URL + "'>PRIJAVI SE</a>" + "</div>";
-			return new ResponseEntity<>(html, HttpStatus.OK);
 		}
 		catch(Exception e) {
 			html = "<div style='height: 100%; width: 100%; display: flex;"
 					+ "flex-direction: column; justify-content: center; align-items: center;"
 					+ "font-weight: bold; font-size: 24px;'><h1>GREŠKA</h1><br>"
 					+ "Kontaktirajte server za više informacija.";
-			return new ResponseEntity<>(html, HttpStatus.OK);
 		}
+		return new ResponseEntity<>(html, HttpStatus.OK);
 	}
 
 }

@@ -13,9 +13,21 @@
                     <xs:element name="godina">
                         <xs:complexType>
                             <xs:simpleContent>
-                                <xs:extension base="osnova:TGodina">
-                                    <xs:attribute name="property" type="osnova:TRequiredString"/>
-                                    <xs:attribute name="datatype" type="osnova:TRequiredString"/>
+                                <xs:extension base="izvestaj:TGodina">
+                                    <xs:attribute name="property">
+                                        <xs:simpleType>
+                                            <xs:restriction base="xs:string">
+                                                <xs:enumeration value="pred:godina"/>
+                                            </xs:restriction>
+                                        </xs:simpleType>
+                                    </xs:attribute>
+                                    <xs:attribute name="datatype">
+                                        <xs:simpleType>
+                                            <xs:restriction base="xs:string">
+                                                <xs:enumeration value="xs:string"/>
+                                            </xs:restriction>
+                                        </xs:simpleType>
+                                    </xs:attribute>
                                 </xs:extension>
                             </xs:simpleContent>
                         </xs:complexType>
@@ -41,4 +53,9 @@
         </xs:complexContent>
     </xs:complexType>
     <xs:element name="Izvestaj" type="izvestaj:TIzvestaj"/>
+    <xs:simpleType name="TGodina">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9]+"/>
+        </xs:restriction>
+    </xs:simpleType>
 </xs:schema>

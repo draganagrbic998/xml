@@ -25,11 +25,18 @@ import { PdfViewerComponent } from './components/main/pdf-viewer/pdf-viewer.comp
 import { OdbijanjeFormComponent } from './components/odluka/odbijanje-form/odbijanje-form.component';
 import { ZalbaListComponent } from './components/zalba/zalba-list/zalba-list.component';
 import { ResenjeListComponent } from './components/resenje/resenje-list/resenje-list.component';
-import { OdgovorFormComponent } from './components/zalba/odgovor-form/odgovor-form.component';
+import { OdgovorFormComponent } from './components/odgovor/odgovor-form/odgovor-form.component';
 import { IzvestajListComponent } from './components/izvestaj/izvestaj-list/izvestaj-list.component';
 import { SpacerContainerComponent } from './components/layout/spacer-container/spacer-container.component';
-import { OdgovorListComponent } from './components/zalba/odgovor-list/odgovor-list.component';
+import { OdgovorListComponent } from './components/odgovor/odgovor-list/odgovor-list.component';
 import { ReferenceListComponent } from './components/main/reference-list/reference-list.component';
+import { ZahtevPretragaComponent } from './components/zahtev/zahtev-pretraga/zahtev-pretraga.component';
+import { ResenjePretragaComponent } from './components/resenje/resenje-pretraga/resenje-pretraga.component';
+import { OdlukaPretragaComponent } from './components/odluka/odluka-pretraga/odluka-pretraga.component';
+import { OdgovorPretragaComponent } from './components/odgovor/odgovor-pretraga/odgovor-pretraga.component';
+import { ObicnaPretragaComponent } from './components/main/obicna-pretraga/obicna-pretraga.component';
+import { IzvestajPretragaComponent } from './components/izvestaj/izvestaj-pretraga/izvestaj-pretraga.component';
+import { ZalbaPretragaComponent } from './components/zalba/zalba-pretraga/zalba-pretraga.component';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
@@ -47,6 +54,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatTabsModule } from '@angular/material/tabs';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 
 @NgModule({
@@ -73,7 +81,14 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
     IzvestajListComponent,
     SpacerContainerComponent,
     OdgovorListComponent,
-    ReferenceListComponent
+    ReferenceListComponent,
+    ZahtevPretragaComponent,
+    ResenjePretragaComponent,
+    OdlukaPretragaComponent,
+    OdgovorPretragaComponent,
+    ObicnaPretragaComponent,
+    IzvestajPretragaComponent,
+    ZalbaPretragaComponent
   ],
   imports: [
     BrowserModule,
@@ -100,6 +115,7 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
     MatPaginatorModule,
     MatSidenavModule,
     MatTooltipModule,
+    MatTabsModule,
     NgxExtendedPdfViewerModule
   ],
   providers: [

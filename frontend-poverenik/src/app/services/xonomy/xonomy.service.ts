@@ -10,7 +10,34 @@ export class XonomyService {
 
   constructor() { }
 
-  public odlukaSpecifikacija = {
+  pretragaSpecifikacija = {
+    elements: {
+      Fraze: {
+        menu: [
+          {
+            caption: 'Dodaj <fraza> tag',
+            action: Xonomy.newElementChild,
+            actionParameter: '<fraza></fraza>'
+          }
+        ]
+      },
+      fraza: {
+        hasText: true,
+        asker: Xonomy.askString,
+        menu: [
+          {
+            caption: 'Obriši <fraza> tag',
+            action: Xonomy.deleteElement
+          }
+        ]
+      },
+      kljucne_reci: {
+        hasText: true
+      }
+    }
+  };
+
+  odlukaSpecifikacija = {
     elements: {
       Dispozitiva: {
         menu: [
@@ -56,7 +83,7 @@ export class XonomyService {
     }
   };
 
-  public detaljiSpecifikacija = {
+  detaljiSpecifikacija = {
     elements: {
       Detalji: {
         hasText: true,
@@ -121,11 +148,6 @@ export class XonomyService {
       pasusi.item(i).removeAttribute('xml:space');
       pasusi.item(i).setAttribute('xmlns', RESENJE);
     }
-    const odluke = document.getElementsByTagName('Odluka');
-    for (let i = 0; i < odluke.length; ++i){
-      odluke.item(i).removeAttribute('xml:space');
-      odluke.item(i).setAttribute('xmlns', RESENJE);
-    }
     const dispozitive = document.getElementsByTagName('Dispozitiva');
     for (let i = 0; i < dispozitive.length; ++i){
       dispozitive.item(i).removeAttribute('xml:space');
@@ -135,6 +157,11 @@ export class XonomyService {
     for (let i = 0; i < obrazlozenja.length; ++i){
       obrazlozenja.item(i).removeAttribute('xml:space');
       obrazlozenja.item(i).setAttribute('xmlns', RESENJE);
+    }
+    const odluke = document.getElementsByTagName('Odluka');
+    for (let i = 0; i < odluke.length; ++i){
+      odluke.item(i).removeAttribute('xml:space');
+      odluke.item(i).setAttribute('xmlns', RESENJE);
     }
 
     return serializer.serializeToString(document);

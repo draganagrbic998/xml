@@ -9,7 +9,7 @@ import javax.xml.validation.SchemaFactory;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
 
-import com.example.demo.common.MyException;
+import com.example.demo.exception.MyException;
 
 @Component
 public class SchemaValidator {

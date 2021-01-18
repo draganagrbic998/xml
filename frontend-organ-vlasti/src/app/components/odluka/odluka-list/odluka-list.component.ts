@@ -1,9 +1,12 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatDrawer } from '@angular/material/sidenav';
 import { MatTableDataSource } from '@angular/material/table';
 import { OdlukaDTO } from 'src/app/models/odlukaDTO';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { OdlukaService } from 'src/app/services/odluka/odluka.service';
 import { environment } from 'src/environments/environment';
+import { OdlukaPretraga } from '../odluka-pretraga/odluka-pretraga';
 
 @Component({
   selector: 'app-odluka-list',
@@ -13,10 +16,12 @@ import { environment } from 'src/environments/environment';
 export class OdlukaListComponent implements AfterViewInit {
 
   constructor(
-    private odlukaService: OdlukaService
+    private odlukaService: OdlukaService,
+    private authService: AuthService
   ) { }
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatDrawer) drawer: MatDrawer;
   columns: string[] = ['tipOdluke', 'datum', 'datumZahteva', 'dokumenti', 'metapodaci'];
 
   odluke: MatTableDataSource<OdlukaDTO> = new MatTableDataSource<OdlukaDTO>([]);
@@ -29,11 +34,37 @@ export class OdlukaListComponent implements AfterViewInit {
   }
 
   xmlMetadata(broj: string): void{
-    window.open(`//localhost:8081/${environment.apiOdluke}/${broj}/metadata/xml`, '_blank');
+    window.open(`//localhost:8081/${environment.apiOdluke}/${broj}/metadata_xml`, '_blank');
   }
 
   jsonMetadata(broj: string): void{
-    window.open(`//localhost:8081/${environment.apiOdluke}/${broj}/metadata/json`, '_blank');
+    window.open(`//localhost:8081/${environment.apiOdluke}/${broj}/metadata_json`, '_blank');
+  }
+
+  obicnaPretraga(pretraga: string): void{
+    this.fetchPending = true;
+    this.odlukaService.obicnaPretraga(pretraga).subscribe(
+      (odluke: OdlukaDTO[]) => {
+        this.odluke = new MatTableDataSource<OdlukaDTO>(odluke);
+        this.fetchPending = false;
+      },
+      () => {
+        this.fetchPending = false;
+      }
+    );
+  }
+
+  naprednaPretraga(pretraga: OdlukaPretraga): void{
+    this.fetchPending = true;
+    this.odlukaService.naprednaPretraga(pretraga).subscribe(
+      (odluke: OdlukaDTO[]) => {
+        this.odluke = new MatTableDataSource<OdlukaDTO>(odluke);
+        this.fetchPending = false;
+      },
+      () => {
+        this.fetchPending = false;
+      }
+    );
   }
 
   ngAfterViewInit(): void {
@@ -47,6 +78,10 @@ export class OdlukaListComponent implements AfterViewInit {
         this.fetchPending = false;
       }
     );
+
+    this.authService.drawerToggle$.subscribe(() => {
+      this.drawer.toggle();
+    });
   }
 
 }

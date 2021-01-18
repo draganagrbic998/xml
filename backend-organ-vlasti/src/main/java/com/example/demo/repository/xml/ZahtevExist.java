@@ -42,4 +42,9 @@ public class ZahtevExist implements ExistInterface {
 		return this.existManager.retrieve(ZAHTEV_COLLECTION, xpathExp);
 	}
 	
+	@Override
+	public String nextDocumentId() {
+		return this.existManager.nextDocumentId(ZAHTEV_COLLECTION);
+	}
+	
 }

@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.w3c.dom.Document;
 
 import com.example.demo.common.Constants;
-import com.example.demo.common.MyException;
+import com.example.demo.exception.MyException;
 import com.example.demo.parser.DOMParser;
 import com.example.demo.ws.utils.SOAPActions;
 import com.example.demo.ws.utils.SOAPService;

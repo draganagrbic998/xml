@@ -16,8 +16,8 @@ import org.xmldb.api.modules.CollectionManagementService;
 import org.xmldb.api.modules.XMLResource;
 import org.xmldb.api.modules.XPathQueryService;
 
-import com.example.demo.common.MyException;
 import com.example.demo.common.Namespaces;
+import com.example.demo.exception.MyException;
 import com.example.demo.parser.SchemaValidator;
 
 @Component
@@ -41,38 +41,17 @@ public class ExistManager {
 			throw new MyException(e);
 		}
 	}
-	
-	public String nextDocumentId(String collectionId) {
-		Collection collection = null;
-		try { 
-			this.createConnection();
-			collection = this.getCollection(collectionId, 0);
-			String[] array = collection.listResources();
-			return (Arrays.asList(array).stream().mapToInt(str -> Integer.parseInt(str)).max().orElse(0) + 1) + "";
-		}
-		catch(Exception e) {
-			throw new MyException(e);
-		}
-		finally {
-			try {
-				collection.close();
-			}
-			catch(Exception e) {
-				throw new MyException(e);
-			}
-		}
-	}
-	
+		
 	public String save(String collectionId, String documentId, Document document, String schemaPath) {
 		Collection collection = null;
 		XMLResource resource = null;
 		try { 
 			this.createConnection();
 			collection = this.getCollection(collectionId, 0);
-			this.schemaValidator.validate(document, schemaPath);
 			if (documentId == null) {
 				documentId = this.nextDocumentId(collectionId);
 			}
+			this.schemaValidator.validate(document, schemaPath);
 			resource = (XMLResource) collection.createResource(documentId, XMLResource.RESOURCE_TYPE);
 			resource.setContentAsDOM(document);
 			collection.storeResource(resource);
@@ -85,6 +64,26 @@ public class ExistManager {
 			try {
 				collection.close();
 				((EXistResource) resource).freeResources();
+			}
+			catch(Exception e) {
+				throw new MyException(e);
+			}
+		}
+	}
+	
+	public void delete(String collectionId, String documentId) {
+		this.createConnection();
+		Collection collection = null;
+		try {
+			collection = this.getCollection(collectionId, 0);
+			collection.removeResource(collection.getResource(documentId));
+		}
+		catch(Exception e) {
+			throw new MyException(e);
+		}
+		finally {
+			try {
+				collection.close();
 			}
 			catch(Exception e) {
 				throw new MyException(e);
@@ -122,11 +121,9 @@ public class ExistManager {
 			XPathQueryService xpathService = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
 			xpathService.setProperty(OutputKeys.INDENT, "yes");
 			xpathService.setNamespace("", Namespaces.OSNOVA);
-			xpathService.setNamespace("zahtev", Namespaces.ZAHTEV);
-			xpathService.setNamespace("odluka", Namespaces.ODLUKA);
 			xpathService.setNamespace("zalba", Namespaces.ZALBA);
-			xpathService.setNamespace("resenje", Namespaces.RESENJE);
 			xpathService.setNamespace("odgovor", Namespaces.ODGOVOR);
+			xpathService.setNamespace("resenje", Namespaces.RESENJE);
 			xpathService.setNamespace("izvestaj", Namespaces.IZVESTAJ);
 			return xpathService.query(xpathExp);
 		} 
@@ -136,6 +133,28 @@ public class ExistManager {
 		finally {
 			try {
 				collection.close();			
+			}
+			catch(Exception e) {
+				throw new MyException(e);
+			}
+		}
+	}
+	
+	public void dropCollection(String collectionId) {
+		this.createConnection();
+		Collection collection = null;
+		try {
+			collection = this.getCollection(collectionId, 0);
+			for (String documentId: collection.listResources()) {
+				collection.removeResource(collection.getResource(documentId));
+			}
+		}
+		catch(Exception e) {
+			throw new MyException(e);
+		}
+		finally {
+			try {
+				collection.close();
 			}
 			catch(Exception e) {
 				throw new MyException(e);
@@ -184,14 +203,13 @@ public class ExistManager {
 		}
 	}
 	
-	public void dropCollection(String collectionId) {
-		this.createConnection();
+	public String nextDocumentId(String collectionId) {
 		Collection collection = null;
-		try {
+		try { 
+			this.createConnection();
 			collection = this.getCollection(collectionId, 0);
-			for (String documentId: collection.listResources()) {
-				collection.removeResource(collection.getResource(documentId));
-			}
+			String[] array = collection.listResources();
+			return (Arrays.asList(array).stream().mapToInt(str -> Integer.parseInt(str)).max().orElse(0) + 1) + "";
 		}
 		catch(Exception e) {
 			throw new MyException(e);
@@ -205,25 +223,5 @@ public class ExistManager {
 			}
 		}
 	}
-	
-	public void delete(String collectionId, String documentId) {
-		this.createConnection();
-		Collection collection = null;
-		try {
-			collection = this.getCollection(collectionId, 0);
-			collection.removeResource(collection.getResource(documentId));
-		}
-		catch(Exception e) {
-			throw new MyException(e);
-		}
-		finally {
-			try {
-				collection.close();
-			}
-			catch(Exception e) {
-				throw new MyException(e);
-			}
-		}
-	}
-	
+			
 }

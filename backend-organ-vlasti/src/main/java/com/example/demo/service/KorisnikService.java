@@ -16,9 +16,9 @@ import org.w3c.dom.Document;
 import org.xmldb.api.modules.XMLResource;
 
 import com.example.demo.common.Constants;
-import com.example.demo.common.EmailTakenException;
-import com.example.demo.common.MyException;
 import com.example.demo.common.Namespaces;
+import com.example.demo.exception.EmailTakenException;
+import com.example.demo.exception.MyException;
 import com.example.demo.model.Korisnik;
 import com.example.demo.model.Prijava;
 import com.example.demo.model.Profil;
@@ -35,9 +35,6 @@ public class KorisnikService implements UserDetailsService {
 	private KorisnikExist korisnikExist;
 	
 	@Autowired
-	private JAXBParser jaxbParser;
-
-	@Autowired
 	private TokenUtils tokenUtils;
 	
 	@Autowired
@@ -52,10 +49,13 @@ public class KorisnikService implements UserDetailsService {
 	@Autowired
 	private EmailService emailService;
 
+	@Autowired
+	private JAXBParser jaxbParser;
+
 	@Override
 	public UserDetails loadUserByUsername(String username) {
 		try {
-			return (Korisnik) this.jaxbParser.unmarshal(this.korisnikExist.load(username), Korisnik.class);
+			return (Korisnik) this.jaxbParser.unmarshalFromDoc(this.korisnikExist.load(username), Korisnik.class);
 		}
 		catch(Exception e) {
 			return null;
@@ -76,9 +76,9 @@ public class KorisnikService implements UserDetailsService {
 		this.authManager.authenticate(new UsernamePasswordAuthenticationToken(prijava.getMejl(), prijava.getLozinka()));
 		Korisnik korisnik = (Korisnik) this.loadUserByUsername(prijava.getMejl());
 		return this.jaxbParser.marshalToXml(new Profil(
-			this.tokenUtils.generateToken(korisnik.getOsoba().getMejl()),
+			this.tokenUtils.generateToken(korisnik.getMejl()),
 			korisnik.getUloga(),
-			korisnik.getOsoba().getMejl(),
+			korisnik.getMejl(),
 			korisnik.getOsoba().getIme(),
 			korisnik.getOsoba().getPrezime()
 		));
@@ -86,17 +86,15 @@ public class KorisnikService implements UserDetailsService {
 	
 	public void register(String xml) {
 		Korisnik korisnik = (Korisnik) this.jaxbParser.unmarshalFromXml(xml, Korisnik.class);
-		if (this.loadUserByUsername(korisnik.getOsoba().getMejl()) != null) {
+		if (this.loadUserByUsername(korisnik.getMejl()) != null) {
 			throw new EmailTakenException();
 		}
 		korisnik.getOsoba().setPotpis(this.generatePotpis());
 		korisnik.setAktivan(false);
 		korisnik.setLozinka(this.passwordEncoder.encode(korisnik.getLozinka()));
-		Document document = this.jaxbParser.marshal(korisnik);
-		//((Element) document.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(0)).setAttribute("property", "pred:mesto");
-		//((Element) document.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(0)).setAttribute("datatype", "xs:string");
-		this.korisnikExist.update(korisnik.getOsoba().getMejl(), document);			
-		this.sendActivationEmail(korisnik.getOsoba().getMejl(), korisnik.getOsoba().getPotpis());
+		Document document = this.jaxbParser.marshalToDoc(korisnik);
+		this.korisnikExist.update(korisnik.getMejl(), document);			
+		this.sendActivationEmail(korisnik.getMejl(), korisnik.getOsoba().getPotpis());
 	}
 	
 	public void activate(String potpis) {
@@ -105,7 +103,7 @@ public class KorisnikService implements UserDetailsService {
 			XMLResource resource = (XMLResource) this.korisnikExist.retrieve(xpathExp).getIterator().nextResource();
 			Korisnik korisnik = (Korisnik) this.jaxbParser.unmarshalFromXml(resource.getContent().toString(), Korisnik.class);
 			korisnik.setAktivan(true);
-			this.korisnikExist.update(korisnik.getOsoba().getMejl(), this.jaxbParser.marshal(korisnik));
+			this.korisnikExist.update(korisnik.getMejl(), this.jaxbParser.marshalToDoc(korisnik));
 		}
 		catch(Exception e) {
 			throw new MyException(e);

@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { ZalbaPretraga } from 'src/app/components/zalba/zalba-pretraga/zalba-pretraga';
 import { OSNOVA, ZALBA } from 'src/app/constants/namespaces';
 import { Referenca } from 'src/app/models/referenca';
 import { ZalbaDTO } from 'src/app/models/zalbaDTO';
@@ -47,6 +48,20 @@ export class ZalbaService {
     return zalbeDTO;
   }
 
+  private pretragaToXml(pretraga: ZalbaPretraga): string{
+    return `
+      <pretraga>
+        <operacija>${pretraga.operacija}</operacija>
+        <datum>${pretraga.datum}</datum>
+        <mesto>${pretraga.mesto}</mesto>
+        <tip>${pretraga.tip}</tip>
+        <status>${pretraga.status}</status>
+        <izdatoU>${pretraga.izdatoU}</izdatoU>
+        <organVlasti>${pretraga.organVlasti}</organVlasti>
+      </pretraga>
+    `;
+  }
+
   list(): Observable<ZalbaDTO[]>{
     return this.http.get<string>(this.API_ZALBE, {responseType: 'text' as 'json'}).pipe(
       map((xml: string) => this.xmlToZalbe(xml))
@@ -55,6 +70,19 @@ export class ZalbaService {
 
   view(broj: string): Observable<string>{
     return this.http.get<string>(`${this.API_ZALBE}/${broj}`, {responseType: 'text' as 'json'});
+  }
+
+  obicnaPretraga(pretraga: string): Observable<ZalbaDTO[]>{
+    const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml'), responseType: 'text' as 'json' };
+    return this.http.post<string>(`${this.API_ZALBE}/obicna_pretraga`, pretraga, options).pipe(
+      map((xml: string) => this.xmlToZalbe(xml)));
+  }
+
+  naprednaPretraga(pretraga: ZalbaPretraga): Observable<ZalbaDTO[]>{
+    const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml'), responseType: 'text' as 'json' };
+    return this.http.post<string>(`${this.API_ZALBE}/napredna_pretraga`, this.pretragaToXml(pretraga), options).pipe(
+      map((xml: string) => this.xmlToZalbe(xml))
+    );
   }
 
 }

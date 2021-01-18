@@ -41,5 +41,10 @@ public class KorisnikExist implements ExistInterface {
 	public ResourceSet retrieve(String xpathExp) {
 		return this.existManager.retrieve(KORISNIK_COLLECTION, xpathExp);
 	}
-		
+	
+	@Override
+	public String nextDocumentId() {
+		return this.existManager.nextDocumentId(KORISNIK_COLLECTION);
+	}
+	
 }

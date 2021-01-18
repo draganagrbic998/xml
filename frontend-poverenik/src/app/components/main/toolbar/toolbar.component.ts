@@ -31,6 +31,10 @@ export class ToolbarComponent implements OnInit {
     return this.router.url.includes(LOGIN_PATH);
   }
 
+  get listPage(): boolean{
+    return this.router.url.includes('list');
+  }
+
   signOut(): void{
     this.authService.deleteUser();
     this.router.navigate([LOGIN_PATH]);

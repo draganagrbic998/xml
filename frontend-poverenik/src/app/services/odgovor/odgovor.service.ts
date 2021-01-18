@@ -1,11 +1,13 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { OdgovorPretraga } from 'src/app/components/odgovor/odgovor-pretraga/odgovor-pretraga';
 import { ODGOVOR, OSNOVA } from 'src/app/constants/namespaces';
 import { OdgovorDTO } from 'src/app/models/odgovorDTO';
 import { Referenca } from 'src/app/models/referenca';
 import { environment } from 'src/environments/environment';
+import { dateToString } from '../utils';
 
 @Injectable({
   providedIn: 'root'
@@ -46,12 +48,36 @@ export class OdgovorService {
     return odgovoriDTO;
   }
 
+  private pretragaToXml(pretraga: OdgovorPretraga): string{
+    return `
+      <pretraga>
+        <operacija>${pretraga.operacija}</operacija>
+        <datum>${dateToString(pretraga.datum)}</datum>
+        <izdatoU>${pretraga.izdatoU}</izdatoU>
+        <organVlasti>${pretraga.organVlasti}</organVlasti>
+      </pretraga>
+    `;
+  }
+
   view(broj: number): Observable<string>{
     return this.http.get<string>(`${this.API_ODGOVORI}/${broj}`, {responseType: 'text' as 'json'});
   }
 
   list(): Observable<OdgovorDTO[]>{
     return this.http.get<string>(this.API_ODGOVORI, {responseType: 'text' as 'json'}).pipe(
+      map((xml: string) => this.xmlToOdgovori(xml))
+    );
+  }
+
+  obicnaPretraga(pretraga: string): Observable<OdgovorDTO[]>{
+    const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml'), responseType: 'text' as 'json' };
+    return this.http.post<string>(`${this.API_ODGOVORI}/obicna_pretraga`, pretraga, options).pipe(
+      map((xml: string) => this.xmlToOdgovori(xml)));
+  }
+
+  naprednaPretraga(pretraga: OdgovorPretraga): Observable<OdgovorDTO[]>{
+    const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml'), responseType: 'text' as 'json' };
+    return this.http.post<string>(`${this.API_ODGOVORI}/napredna_pretraga`, this.pretragaToXml(pretraga), options).pipe(
       map((xml: string) => this.xmlToOdgovori(xml))
     );
   }

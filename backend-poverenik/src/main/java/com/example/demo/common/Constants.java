@@ -5,7 +5,7 @@ import java.io.File;
 import com.ibm.icu.text.SimpleDateFormat;
 
 public class Constants {
-	
+
 	public static final String BACKEND_URL = "http://localhost:8082";
 	public static final String FRONTEND_URL = "http://localhost:4201";
 	public static final String POVERENIK = "poverenik";
@@ -26,5 +26,5 @@ public class Constants {
 	public static final String FOP_CONF = DATA_FOLDER + "fop.conf";
 	public static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	public static final SimpleDateFormat sdf2 = new SimpleDateFormat("dd.MM.yyy.");
-		
+
 }

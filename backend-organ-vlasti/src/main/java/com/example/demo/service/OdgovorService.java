@@ -6,9 +6,14 @@ import org.w3c.dom.Document;
 import org.xmldb.api.base.ResourceSet;
 
 import com.example.demo.common.Namespaces;
+import com.example.demo.common.Utils;
 import com.example.demo.enums.StatusZalbe;
+import com.example.demo.exception.ResourceTakenException;
 import com.example.demo.mapper.OdgovorMapper;
+import com.example.demo.mapper.ZalbaMapper;
+import com.example.demo.parser.JAXBParser;
 import com.example.demo.repository.rdf.OdgovorRDF;
+import com.example.demo.repository.rdf.ZalbaRDF;
 import com.example.demo.repository.xml.OdgovorExist;
 import com.example.demo.ws.utils.SOAPService;
 import com.example.demo.ws.utils.SOAPActions;
@@ -29,17 +34,27 @@ public class OdgovorService implements ServiceInterface {
 	private ZalbaService zalbaService;
 	
 	@Autowired
+	private ZalbaRDF zalbaRDF;
+	
+	@Autowired
 	private SOAPService soapService;
+	
+	@Autowired
+	private JAXBParser jaxbParser;
 	
 	@Override
 	public void add(String xml) {
 		Document document = this.odgovorMapper.map(xml);
-		String brojZalbe = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
-		this.odgovorExist.update(brojZalbe, document);
+		Document zalbaDocument = this.zalbaService.load(Utils.getBroj(document));
+		if (!ZalbaMapper.getStatusZalbe(zalbaDocument).equals(StatusZalbe.prosledjeno)) {
+			throw new ResourceTakenException();
+		}
+		
+		this.odgovorExist.update(Utils.getBroj(document), document);
 		this.odgovorRDF.add(document);
-		Document zalbaDocument = this.zalbaService.load(brojZalbe);
 		zalbaDocument.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.odgovoreno + "");
-		this.zalbaService.update(brojZalbe, zalbaDocument);
+		this.zalbaService.update(Utils.getBroj(zalbaDocument), zalbaDocument);
+		this.zalbaRDF.update(Utils.getBroj(zalbaDocument), zalbaDocument);
 		this.soapService.sendSOAPMessage(document, SOAPActions.create_odgovor);	
 	}
 
@@ -56,14 +71,23 @@ public class OdgovorService implements ServiceInterface {
 	}
 
 	@Override
-	public String retrieve() {
-		ResourceSet resources = this.odgovorExist.retrieve("/odgovor:Odgovor");
-		return this.odgovorMapper.map(resources);
+	public Document load(String documentId) {
+		return this.odgovorExist.load(documentId);
 	}
 
 	@Override
-	public Document load(String documentId) {
-		return this.odgovorExist.load(documentId);
+	public String retrieve() {
+		return this.odgovorMapper.map(this.odgovorExist.retrieve("/odgovor:Odgovor"));
+	}
+	
+	@Override
+	public String regularSearch(String xml) {
+		return null;
+	}
+
+	@Override
+	public String advancedSearch(String xml) {
+		return null;
 	}
 
 }

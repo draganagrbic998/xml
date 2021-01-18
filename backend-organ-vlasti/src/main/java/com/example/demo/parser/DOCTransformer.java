@@ -13,21 +13,20 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
 
-import com.example.demo.common.MyException;
 import com.example.demo.common.Namespaces;
 import com.example.demo.enums.MetadataTip;
+import com.example.demo.exception.MyException;
 
 @Component
 public class DOCTransformer {
 
 	@Autowired
-	private XSLTransformer xslTransformer;
+	private DOMParser domParser;
 
 	@Autowired
-	private DOMParser domParser;
+	private XSLTransformer xslTransformer;
 			
 	public String html(Document document, String xslPath) {
-		System.out.println(this.domParser.buildXml(document));
 		return this.xslTransformer.generateHtml(this.domParser.buildXml(document), xslPath).toString();
 	}
 

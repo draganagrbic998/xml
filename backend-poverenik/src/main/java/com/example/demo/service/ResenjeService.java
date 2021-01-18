@@ -7,12 +7,17 @@ import org.w3c.dom.Element;
 import org.xmldb.api.base.ResourceSet;
 
 import com.example.demo.common.Constants;
-import com.example.demo.common.MyException;
 import com.example.demo.common.Namespaces;
+import com.example.demo.common.Utils;
 import com.example.demo.enums.StatusZalbe;
+import com.example.demo.exception.MyException;
+import com.example.demo.exception.ResourceTakenException;
 import com.example.demo.mapper.ResenjeMapper;
+import com.example.demo.mapper.ZalbaMapper;
 import com.example.demo.model.Korisnik;
+import com.example.demo.parser.JAXBParser;
 import com.example.demo.repository.rdf.ResenjeRDF;
+import com.example.demo.repository.rdf.ZalbaRDF;
 import com.example.demo.repository.xml.ResenjeExist;
 import com.example.demo.service.email.Email;
 import com.example.demo.service.email.EmailService;
@@ -36,34 +41,45 @@ public class ResenjeService implements ServiceInterface {
 	
 	@Autowired
 	private ZalbaService zalbaService;
+	
+	@Autowired
+	private ZalbaRDF zalbaRDF;
 			
 	@Autowired
 	private EmailService emailService;
 
 	@Autowired
 	private SOAPService soapService;
+	
+	@Autowired
+	private JAXBParser jaxbParser;
 
 	@Override
 	public void add(String xml) {
 		Document document = this.resenjeMapper.map(xml);
-		this.resenjeExist.add(document);
-		this.resenjeRDF.add(document);
 		String brojZalbe = document.getElementsByTagNameNS(Namespaces.RESENJE, "brojZalbe").item(0).getTextContent();
 		Document zalbaDocument = this.zalbaService.load(brojZalbe);
-		Element zalba = (Element) zalbaDocument.getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").item(0);
+
+		if (!ZalbaMapper.getStatusZalbe(zalbaDocument).equals(StatusZalbe.prosledjeno) && !ZalbaMapper.getStatusZalbe(zalbaDocument).equals(StatusZalbe.odgovoreno)) {
+			throw new ResourceTakenException();
+		}
+		
+		this.resenjeExist.add(document);
+		this.resenjeRDF.add(document);
 		
 		zalbaDocument.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.reseno + "");
-		Element podaciZahteva = (Element) zalba.getElementsByTagNameNS(Namespaces.ZALBA, "PodaciZahteva").item(0);
+		Element podaciZahteva = (Element) zalbaDocument.getElementsByTagNameNS(Namespaces.ZALBA, "PodaciZahteva").item(0);
 		podaciZahteva.removeChild(podaciZahteva.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0));
 		try {
-			Element podaciOdluke = (Element) zalba.getElementsByTagNameNS(Namespaces.ZALBA, "PodaciOdluke").item(0);
+			Element podaciOdluke = (Element) zalbaDocument.getElementsByTagNameNS(Namespaces.ZALBA, "PodaciOdluke").item(0);
 			podaciOdluke.removeChild(podaciOdluke.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0));
 		}
 		catch(Exception e) {
 			;
 		}
-		this.zalbaService.update(brojZalbe, zalbaDocument);
 		
+		this.zalbaService.update(brojZalbe, zalbaDocument);
+		this.zalbaRDF.update(brojZalbe, zalbaDocument);
 		this.soapService.sendSOAPMessage(document, SOAPActions.create_resenje);
 		this.notifyResenje(document);
 	}
@@ -79,6 +95,11 @@ public class ResenjeService implements ServiceInterface {
 		this.resenjeExist.delete(documentId);
 		this.resenjeRDF.delete(documentId);
 	}
+	
+	@Override
+	public Document load(String documentId) {
+		return this.resenjeExist.load(documentId);
+	}
 
 	@Override
 	public String retrieve() {
@@ -88,23 +109,28 @@ public class ResenjeService implements ServiceInterface {
 			xpathExp = "/resenje:Resenje";
 		}
 		else {
-			xpathExp = String.format("/resenje:Resenje[Osoba/mejl='%s']", korisnik.getOsoba().getMejl());
+			xpathExp = String.format("/resenje:Resenje[@href='%s']", Namespaces.KORISNIK + "/" + korisnik.getMejl());
 		}		
-		ResourceSet resouces = this.resenjeExist.retrieve(xpathExp);
-		return this.resenjeMapper.map(resouces);		
+		return this.resenjeMapper.map(this.resenjeExist.retrieve(xpathExp));		
+	}
+	
+	@Override
+	public String regularSearch(String xml) {
+		return null;
 	}
 
 	@Override
-	public Document load(String documentId) {
-		return this.resenjeExist.load(documentId);
+	public String advancedSearch(String xml) {
+		return null;
 	}
 	
 	private void notifyResenje(Document document) {
 		try {
-			String mejl = document.getElementsByTagNameNS(Namespaces.OSNOVA, "mejl").item(0).getTextContent();
-			String naziv = document.getElementsByTagNameNS(Namespaces.OSNOVA, "naziv").item(0).getTextContent();
 			String brojResenja = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
 			String datumZalbe = Constants.sdf2.format(Constants.sdf.parse(document.getElementsByTagNameNS(Namespaces.RESENJE, "datumZalbe").item(0).getTextContent()));
+			String mejl = ((Element) document.getElementsByTagNameNS(Namespaces.RESENJE, "Resenje").item(0))
+					.getAttribute("href").replace(Namespaces.KORISNIK + "/", "");
+			String naziv = document.getElementsByTagNameNS(Namespaces.OSNOVA, "naziv").item(0).getTextContent();
 			
 			Email email = new Email();
 			email.setTo(mejl);
@@ -122,12 +148,6 @@ public class ResenjeService implements ServiceInterface {
 		catch(Exception e) {
 			throw new MyException(e);
 		}
-	}
-
-	@Override
-	public String advancedSearch(String xml) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 	
 }

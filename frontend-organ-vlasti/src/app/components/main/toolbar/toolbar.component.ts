@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LOGIN_PATH, REGISTER_PATH } from 'src/app/constants/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -29,6 +29,10 @@ export class ToolbarComponent implements OnInit {
 
   get login(): boolean{
     return this.router.url.includes(LOGIN_PATH);
+  }
+
+  get listPage(): boolean{
+    return this.router.url.includes('list');
   }
 
   signOut(): void{

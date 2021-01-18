@@ -5,8 +5,9 @@ import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.xmldb.api.base.ResourceSet;
 
+import com.example.demo.common.Utils;
 import com.example.demo.mapper.IzvestajMapper;
-import com.example.demo.parser.DOMParser;
+import com.example.demo.parser.JAXBParser;
 import com.example.demo.repository.rdf.IzvestajRDF;
 import com.example.demo.repository.xml.IzvestajExist;
 
@@ -21,11 +22,14 @@ public class IzvestajService implements ServiceInterface {
 	
 	@Autowired
 	private IzvestajMapper izvestajMapper;
+	
+	@Autowired
+	private JAXBParser jaxbParser;
 
 	@Override
 	public void add(String xml) {
 		Document document = this.izvestajMapper.map(xml);
-		this.izvestajExist.update(DOMParser.getBroj(document), document);
+		this.izvestajExist.update(Utils.getBroj(document), document);
 		this.izvestajRDF.add(document);
 	}
 
@@ -42,19 +46,22 @@ public class IzvestajService implements ServiceInterface {
 	}
 
 	@Override
-	public String retrieve() {
-		ResourceSet resources = this.izvestajExist.retrieve("/izvestaj:Izvestaj");
-		return this.izvestajMapper.map(resources);
-	}
-
-	@Override
 	public Document load(String documentId) {
 		return this.izvestajExist.load(documentId);
 	}
 
 	@Override
+	public String retrieve() {
+		return this.izvestajMapper.map(this.izvestajExist.retrieve("/izvestaj:Izvestaj"));
+	}
+
+	@Override
+	public String regularSearch(String xml) {
+		return null;
+	}
+
+	@Override
 	public String advancedSearch(String xml) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

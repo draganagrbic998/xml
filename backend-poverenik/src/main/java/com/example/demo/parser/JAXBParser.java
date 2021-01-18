@@ -9,12 +9,12 @@ import javax.xml.transform.dom.DOMResult;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
 
-import com.example.demo.common.MyException;
+import com.example.demo.exception.MyException;
 
 @Component
 public class JAXBParser {
-		
-	public Object unmarshal(Document document, Class<?> cl) {
+	
+	public Object unmarshalFromDoc(Document document, Class<?> cl) {
 		try {
 			return JAXBContext.newInstance(cl).createUnmarshaller().unmarshal(document);
 		}
@@ -22,7 +22,7 @@ public class JAXBParser {
 			throw new MyException(e);
 		}
 	}
-	
+
 	public Object unmarshalFromXml(String xml, Class<?> cl) {
 		try {
 			return JAXBContext.newInstance(cl).createUnmarshaller().unmarshal(new StringReader(xml));
@@ -31,8 +31,8 @@ public class JAXBParser {
 			throw new MyException(e);
 		}
 	}
-		
-	public Document marshal(Object obj) {
+
+	public Document marshalToDoc(Object obj) {
 		try {
 		    DOMResult result = new DOMResult();
 		    JAXBContext.newInstance(obj.getClass()).createMarshaller().marshal(obj, result);
@@ -42,7 +42,7 @@ public class JAXBParser {
 			throw new MyException(e);
 		}
 	}
-	
+
 	public String marshalToXml(Object obj) {
 		try {
 		    StringWriter sw = new StringWriter();

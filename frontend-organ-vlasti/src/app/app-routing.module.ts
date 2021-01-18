@@ -27,11 +27,11 @@ import {
 import { GradjaninGuard } from './guard/gradjanin/gradjanin.guard';
 import { SluzbenikGuard } from './guard/sluzbenik/sluzbenik.guard';
 import { OdbijanjeFormComponent } from './components/odluka/odbijanje-form/odbijanje-form.component';
-import { OdgovorFormComponent } from './components/zalba/odgovor-form/odgovor-form.component';
+import { OdgovorFormComponent } from './components/odgovor/odgovor-form/odgovor-form.component';
 import { ZalbaListComponent } from './components/zalba/zalba-list/zalba-list.component';
 import { ResenjeListComponent } from './components/resenje/resenje-list/resenje-list.component';
 import { IzvestajListComponent } from './components/izvestaj/izvestaj-list/izvestaj-list.component';
-import { OdgovorListComponent } from './components/zalba/odgovor-list/odgovor-list.component';
+import { OdgovorListComponent } from './components/odgovor/odgovor-list/odgovor-list.component';
 
 const routes: Routes = [
   {

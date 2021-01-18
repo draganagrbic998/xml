@@ -1,10 +1,12 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { ResenjePretraga } from 'src/app/components/resenje/resenje-pretraga/resenje-pretraga';
 import { OSNOVA, RESENJE } from 'src/app/constants/namespaces';
 import { ResenjeDTO } from 'src/app/models/resenjeDTO';
 import { environment } from 'src/environments/environment';
+import { dateToString } from '../utils';
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +35,19 @@ export class ResenjeService {
     return resenja;
   }
 
+  private pretragaToXml(pretraga: ResenjePretraga): string{
+    return `
+      <pretraga>
+        <operacija>${pretraga.operacija}</operacija>
+        <datum>${dateToString(pretraga.datum)}</datum>
+        <tipZalbe>${pretraga.tipZalbe}</tipZalbe>
+        <status>${pretraga.status}</status>
+        <izdatoU>${pretraga.izdatoU}</izdatoU>
+        <organVlasti>${pretraga.organVlasti}</organVlasti>
+      </pretraga>
+    `;
+  }
+
   list(): Observable<ResenjeDTO[]>{
     return this.http.get<string>(this.API_RESENJA, {responseType: 'text' as 'json'}).pipe(
       map((xml: string) => this.xmlToResenja(xml))
@@ -41,6 +56,19 @@ export class ResenjeService {
 
   view(broj: number): Observable<string>{
     return this.http.get<string>(`${this.API_RESENJA}/${broj}`, {responseType: 'text' as 'json'});
+  }
+
+  obicnaPretraga(pretraga: string): Observable<ResenjeDTO[]>{
+    const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml'), responseType: 'text' as 'json' };
+    return this.http.post<string>(`${this.API_RESENJA}/obicna_pretraga`, pretraga, options).pipe(
+      map((xml: string) => this.xmlToResenja(xml)));
+  }
+
+  naprednaPretraga(pretraga: ResenjePretraga): Observable<ResenjeDTO[]>{
+    const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml'), responseType: 'text' as 'json' };
+    return this.http.post<string>(`${this.API_RESENJA}/napredna_pretraga`, this.pretragaToXml(pretraga), options).pipe(
+      map((xml: string) => this.xmlToResenja(xml))
+    );
   }
 
 }

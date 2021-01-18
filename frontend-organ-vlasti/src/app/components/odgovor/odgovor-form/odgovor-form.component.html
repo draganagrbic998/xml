@@ -1,0 +1,15 @@
+<app-form-container>
+    <h3>Odgovor na žalbu</h3><br><br>
+    <div [class.disabled]="savePending">
+        <div id="odgovorEditor"></div>
+    </div>
+    <br><br>
+    <app-center-container>
+        <button 
+        *ngIf="!savePending"
+        mat-raised-button 
+        color="primary"
+        (click)="save()">Pošalji odgovor</button>
+        <app-spinner-button *ngIf="savePending"></app-spinner-button>
+    </app-center-container>
+</app-form-container>

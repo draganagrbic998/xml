@@ -1,5 +1,4 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDrawer } from '@angular/material/sidenav';
 import { MatTableDataSource } from '@angular/material/table';
@@ -7,6 +6,7 @@ import { ZahtevDTO } from 'src/app/models/zahtevDTO';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ZahtevService } from 'src/app/services/zahtev/zahtev.service';
 import { environment } from 'src/environments/environment';
+import { ZahtevPretraga } from '../zahtev-pretraga/zahtev-pretraga';
 
 @Component({
   selector: 'app-zahtev-list',
@@ -28,13 +28,6 @@ export class ZahtevListComponent implements AfterViewInit {
   fetchPending = true;
   selectedZahtev: ZahtevDTO;
 
-  naprednaForma: FormGroup = new FormGroup({
-    datum: new FormControl(''),
-    mesto: new FormControl(''),
-    tip: new FormControl(''),
-    stanje: new FormControl('')
-  });
-
   get uloga(): string{
     return this.authService.getUser()?.uloga;
   }
@@ -45,16 +38,29 @@ export class ZahtevListComponent implements AfterViewInit {
   }
 
   xmlMetadata(broj: string): void{
-    window.open(`//localhost:8081/${environment.apiZahtevi}/${broj}/metadata/xml`, '_blank');
+    window.open(`//localhost:8081/${environment.apiZahtevi}/${broj}/metadata_xml`, '_blank');
   }
 
   jsonMetadata(broj: string): void{
-    window.open(`//localhost:8081/${environment.apiZahtevi}/${broj}/metadata/json`, '_blank');
+    window.open(`//localhost:8081/${environment.apiZahtevi}/${broj}/metadata_json`, '_blank');
   }
 
-  naprednaPretraga(): void{
+  obicnaPretraga(pretraga: string): void{
     this.fetchPending = true;
-    this.zahtevService.advancedSearch(this.naprednaForma.value).subscribe(
+    this.zahtevService.obicnaPretraga(pretraga).subscribe(
+      (zahtevi: ZahtevDTO[]) => {
+        this.zahtevi = new MatTableDataSource<ZahtevDTO>(zahtevi);
+        this.fetchPending = false;
+      },
+      () => {
+        this.fetchPending = false;
+      }
+    );
+  }
+
+  naprednaPretraga(pretraga: ZahtevPretraga): void{
+    this.fetchPending = true;
+    this.zahtevService.naprednaPretraga(pretraga).subscribe(
       (zahtevi: ZahtevDTO[]) => {
         this.zahtevi = new MatTableDataSource<ZahtevDTO>(zahtevi);
         this.fetchPending = false;

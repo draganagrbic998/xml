@@ -9,10 +9,11 @@ import org.xmldb.api.base.ResourceIterator;
 import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.modules.XMLResource;
 
-import com.example.demo.common.MyException;
 import com.example.demo.common.Namespaces;
+import com.example.demo.common.Utils;
 import com.example.demo.enums.StatusZalbe;
 import com.example.demo.enums.TipZalbe;
+import com.example.demo.exception.MyException;
 import com.example.demo.parser.DOMParser;
 import com.example.demo.repository.rdf.ZalbaRDF;
 
@@ -20,11 +21,11 @@ import com.example.demo.repository.rdf.ZalbaRDF;
 public class ZalbaMapper implements MapperInterface {
 
 	@Autowired
-	private DOMParser domParser;
-	
-	@Autowired
 	private ZalbaRDF zalbaRDF;
-	
+
+	@Autowired
+	private DOMParser domParser;
+		
 	@Override
 	public Document map(String xml) {
 		Document document = this.domParser.buildDocument(xml);
@@ -42,21 +43,20 @@ public class ZalbaMapper implements MapperInterface {
 
 			while (it.hasMoreResources()) {
 				XMLResource resource = (XMLResource) it.nextResource();
-				Document document = this.domParser.buildDocument(resource.getContent().toString());
-				Node broj = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0);
+				Document zalbaDocument = this.domParser.buildDocument(resource.getContent().toString());
 				Node zalba = zalbeDocument.createElementNS(Namespaces.ZALBA, "Zalba");
 				Node tipZalbe = zalbeDocument.createElementNS(Namespaces.ZALBA, "tipZalbe");
-				tipZalbe.setTextContent(getTipZalbe(document) + "");
+				tipZalbe.setTextContent(getTipZalbe(zalbaDocument) + "");
+				
 				zalba.appendChild(tipZalbe);
-				zalba.appendChild(zalbeDocument.importNode(broj, true));
-				zalba.appendChild(zalbeDocument.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
-				zalba.appendChild(zalbeDocument.importNode(document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0), true));
+				zalba.appendChild(zalbeDocument.importNode(zalbaDocument.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0), true));
+				zalba.appendChild(zalbeDocument.importNode(zalbaDocument.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
+				zalba.appendChild(zalbeDocument.importNode(zalbaDocument.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0), true));
 				
 				Node reference = zalbeDocument.createElementNS(Namespaces.OSNOVA, "Reference");
-				DOMParser.setReferences(zalbeDocument, reference, this.zalbaRDF.odgovori(broj.getTextContent()), "odgovori");
-				DOMParser.setReferences(zalbeDocument, reference, this.zalbaRDF.resenja(broj.getTextContent()), "resenja");
+				Utils.setReferences(zalbeDocument, reference, this.zalbaRDF.odgovori(Utils.getBroj(zalbaDocument)), "odgovori");
+				Utils.setReferences(zalbeDocument, reference, this.zalbaRDF.resenja(Utils.getBroj(zalbaDocument)), "resenja");
 				zalba.appendChild(reference);
-
 				zalbe.appendChild(zalba);
 			}
 
@@ -76,6 +76,10 @@ public class ZalbaMapper implements MapperInterface {
 			return TipZalbe.delimicnost;
 		}
 		return TipZalbe.odluka;
+	}
+	
+	public static StatusZalbe getStatusZalbe(Document document) {
+		return StatusZalbe.valueOf(document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).getTextContent());
 	}
 	
 }

@@ -2,11 +2,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { OdgovorPretraga } from 'src/app/components/odgovor/odgovor-pretraga/odgovor-pretraga';
 import { ODGOVOR, OSNOVA } from 'src/app/constants/namespaces';
 import { Odgovor } from 'src/app/models/odgovor';
 import { OdgovorDTO } from 'src/app/models/odgovorDTO';
 import { Referenca } from 'src/app/models/referenca';
 import { environment } from 'src/environments/environment';
+import { dateToString } from '../utils';
 import { XonomyService } from '../xonomy/xonomy.service';
 
 @Injectable({
@@ -20,19 +22,6 @@ export class OdgovorService {
   ) { }
 
   private readonly API_ODGOVORI = `${environment.baseUrl}/${environment.apiOdgovori}`;
-
-  private odgovorToXml(brojZalbe: number, odgovor: Odgovor): string{
-
-    return `
-      <odgovor:Odgovor
-      xmlns="${OSNOVA}"
-      xmlns:odgovor="${ODGOVOR}">
-        <broj>${brojZalbe}</broj>
-        ${odgovor.detalji}
-      </odgovor:Odgovor>
-    `;
-
-  }
 
   xmlToOdgovori(xml: string): OdgovorDTO[]{
     const parser = new DOMParser();
@@ -62,6 +51,30 @@ export class OdgovorService {
     return odgovoriDTO;
   }
 
+  private odgovorToXml(brojZalbe: number, odgovor: Odgovor): string{
+
+    return `
+      <odgovor:Odgovor
+      xmlns="${OSNOVA}"
+      xmlns:odgovor="${ODGOVOR}">
+        <broj>${brojZalbe}</broj>
+        ${odgovor.detalji}
+      </odgovor:Odgovor>
+    `;
+
+  }
+
+  private pretragaToXml(pretraga: OdgovorPretraga): string{
+    return `
+      <pretraga>
+        <operacija>${pretraga.operacija}</operacija>
+        <datum>${dateToString(pretraga.datum)}</datum>
+        <izdatoU>${pretraga.izdatoU}</izdatoU>
+        <organVlasti>${pretraga.organVlasti}</organVlasti>
+      </pretraga>
+    `;
+  }
+
   save(broj: number, odgovor: Odgovor): Observable<null>{
     odgovor.detalji = this.xonomyService.removeXmlSpace(odgovor.detalji);
     const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
@@ -76,6 +89,19 @@ export class OdgovorService {
 
   view(broj: number): Observable<string>{
     return this.http.get<string>(`${this.API_ODGOVORI}/${broj}`, {responseType: 'text' as 'json'});
+  }
+
+  obicnaPretraga(pretraga: string): Observable<OdgovorDTO[]>{
+    const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml'), responseType: 'text' as 'json' };
+    return this.http.post<string>(`${this.API_ODGOVORI}/obicna_pretraga`, pretraga, options).pipe(
+      map((xml: string) => this.xmlToOdgovori(xml)));
+  }
+
+  naprednaPretraga(pretraga: OdgovorPretraga): Observable<OdgovorDTO[]>{
+    const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml'), responseType: 'text' as 'json' };
+    return this.http.post<string>(`${this.API_ODGOVORI}/napredna_pretraga`, this.pretragaToXml(pretraga), options).pipe(
+      map((xml: string) => this.xmlToOdgovori(xml))
+    );
   }
 
 }

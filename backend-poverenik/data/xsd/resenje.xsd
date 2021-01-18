@@ -13,8 +13,20 @@
                         <xs:complexType>
                             <xs:simpleContent>
                                 <xs:extension base="resenje:TStatus">
-                                    <xs:attribute name="property" type="osnova:TRequiredString"/>
-                                    <xs:attribute name="datatype" type="osnova:TRequiredString"/>
+                                    <xs:attribute name="property">
+                                        <xs:simpleType>
+                                            <xs:restriction base="xs:string">
+                                                <xs:enumeration value="pred:status"/>
+                                            </xs:restriction>
+                                        </xs:simpleType>
+                                    </xs:attribute>
+                                    <xs:attribute name="datatype">
+                                        <xs:simpleType>
+                                            <xs:restriction base="xs:string">
+                                                <xs:enumeration value="xs:string"/>
+                                            </xs:restriction>
+                                        </xs:simpleType>
+                                    </xs:attribute>
                                 </xs:extension>
                             </xs:simpleContent>
                         </xs:complexType>
@@ -26,8 +38,13 @@
                                     <xs:complexType>
                                         <xs:simpleContent>
                                             <xs:extension base="xs:date">
-                                                <xs:attribute name="rel"
-                                                  type="osnova:TRequiredString"/>
+                                                <xs:attribute name="rel">
+                                                  <xs:simpleType>
+                                                  <xs:restriction base="xs:string">
+                                                  <xs:enumeration value="pred:odgovor"/>
+                                                  </xs:restriction>
+                                                  </xs:simpleType>
+                                                </xs:attribute>
                                                 <xs:attribute name="href"
                                                   type="osnova:TRequiredString"/>
                                             </xs:extension>
@@ -56,10 +73,20 @@
                                     <xs:complexType>
                                         <xs:simpleContent>
                                             <xs:extension base="resenje:TZalba">
-                                                <xs:attribute name="property"
-                                                  type="osnova:TRequiredString"/>
-                                                <xs:attribute name="datatype"
-                                                  type="osnova:TRequiredString"/>
+                                                <xs:attribute name="property">
+                                                  <xs:simpleType>
+                                                  <xs:restriction base="xs:string">
+                                                  <xs:enumeration value="pred:tipZalbe"/>
+                                                  </xs:restriction>
+                                                  </xs:simpleType>
+                                                </xs:attribute>
+                                                <xs:attribute name="datatype">
+                                                  <xs:simpleType>
+                                                  <xs:restriction base="xs:string">
+                                                  <xs:enumeration value="xs:string"/>
+                                                  </xs:restriction>
+                                                  </xs:simpleType>
+                                                </xs:attribute>
                                             </xs:extension>
                                         </xs:simpleContent>
                                     </xs:complexType>
@@ -68,8 +95,13 @@
                                     <xs:complexType>
                                         <xs:simpleContent>
                                             <xs:extension base="xs:positiveInteger">
-                                                <xs:attribute name="rel"
-                                                  type="osnova:TRequiredString"/>
+                                                <xs:attribute name="rel">
+                                                  <xs:simpleType>
+                                                  <xs:restriction base="xs:string">
+                                                  <xs:enumeration value="pred:zalba"/>
+                                                  </xs:restriction>
+                                                  </xs:simpleType>
+                                                </xs:attribute>
                                                 <xs:attribute name="href"
                                                   type="osnova:TRequiredString"/>
                                             </xs:extension>
@@ -87,27 +119,18 @@
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
+    <xs:element name="Resenje" type="resenje:TResenje"/>
     <xs:complexType name="TPasusi">
         <xs:sequence>
             <xs:element maxOccurs="unbounded" name="Pasus" minOccurs="0">
                 <xs:complexType mixed="true">
                     <xs:sequence maxOccurs="unbounded" minOccurs="0">
-                        <xs:element name="zakon">
-                            <xs:complexType>
-                                <xs:simpleContent>
-                                    <xs:extension base="xs:string">
-                                        <xs:attribute name="clan" type="xs:string"/>
-                                        <xs:attribute name="stav" type="xs:string"/>
-                                    </xs:extension>
-                                </xs:simpleContent>
-                            </xs:complexType>
-                        </xs:element>
+                        <xs:element name="zakon" type="xs:string"> </xs:element>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
         </xs:sequence>
     </xs:complexType>
-    <xs:element name="Resenje" type="resenje:TResenje"/>
     <xs:simpleType name="TStatus">
         <xs:restriction base="xs:string">
             <xs:enumeration value="odobreno"/>

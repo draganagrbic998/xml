@@ -1,8 +1,7 @@
 <odgovor:Odgovor xmlns="https://github.com/draganagrbic998/xml/osnova" xmlns:odgovor="https://github.com/draganagrbic998/xml/odgovor" xmlns:pred="https://github.com/draganagrbic998/xml/predikat/" xmlns:xs="http://www.w3.org/2001/XMLSchema#" about="https://github.com/draganagrbic998/xml/odgovor/1" href="https://github.com/draganagrbic998/xml/korisnik/draganaasd@gmail.com" rel="pred:vlasnik">
 	<broj>1</broj>
-	<datum datatype="xs:string" property="pred:datum">2021-01-15</datum>
+	<datum datatype="xs:string" property="pred:datum">2021-01-18</datum>
 	<Osoba>
-        <mejl>draganaasd@gmail.com</mejl>
         <ime>Dragana</ime>
         <prezime>Grbic</prezime>
         <potpis>757272859077776977757767</potpis>
@@ -16,5 +15,5 @@
     </Adresa>
 </OrganVlasti>
     <Detalji/>
-    <odgovor:datumZalbe href="https://github.com/draganagrbic998/xml/zalba/1" rel="pred:zalba">2021-01-15</odgovor:datumZalbe>
+    <odgovor:datumZalbe href="https://github.com/draganagrbic998/xml/zalba/1" rel="pred:zalba">2021-01-18</odgovor:datumZalbe>
 </odgovor:Odgovor>

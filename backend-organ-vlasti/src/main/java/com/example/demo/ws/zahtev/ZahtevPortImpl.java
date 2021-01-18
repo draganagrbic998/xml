@@ -9,7 +9,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import com.example.demo.common.Namespaces;
-import com.example.demo.common.WrongPasswordException;
+import com.example.demo.exception.WrongPasswordException;
 import com.example.demo.parser.DOMParser;
 import com.example.demo.repository.xml.KorisnikExist;
 import com.example.demo.service.ZahtevService;
@@ -22,30 +22,33 @@ public class ZahtevPortImpl implements Zahtev {
 	private static final Logger LOG = Logger.getLogger(ZahtevPortImpl.class.getName());
 
 	@Autowired
-	private ZahtevService zahtevService;
+	private DOMParser domParser;
 
 	@Autowired
-	private DOMParser domParser;
+	private ZahtevService zahtevService;
 
 	@Autowired
 	private ZahtevTransformer zahtevTransformer;
 	
 	@Autowired
-	private PasswordEncoder passwordEncoder;
-	
-	@Autowired
 	private KorisnikExist korisnikExist;
 
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
 	public java.lang.String getZahtev(java.lang.String getZahtevRequest) {
 		LOG.info("Executing operation getZahtev");
 		try {
-			String lozinka = this.domParser.buildDocument(getZahtevRequest).getElementsByTagName("lozinka").item(0)
-					.getTextContent();
 			String documentId = this.domParser.buildDocument(getZahtevRequest).getElementsByTagName("broj").item(0)
 					.getTextContent();
 			Document document = this.zahtevService.load(documentId);
+			/*if (!ZahtevMapper.getStatusZahteva(document).equals(StatusZahteva.odbijeno)) {
+				throw new ResourceTakenException();
+			}*/
 			Element zahtev = (Element) document.getElementsByTagNameNS(Namespaces.ZAHTEV, "Zahtev").item(0);
 			Document korisnik = this.korisnikExist.load(zahtev.getAttribute("href").replace(Namespaces.KORISNIK + "", ""));
+			String lozinka = this.domParser.buildDocument(getZahtevRequest).getElementsByTagName("lozinka").item(0)
+					.getTextContent();
 			if (!this.passwordEncoder.matches(lozinka, korisnik.getElementsByTagNameNS(Namespaces.OSNOVA, "lozinka").item(0).getTextContent())) {
 				throw new WrongPasswordException();
 			}

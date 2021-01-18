@@ -42,4 +42,9 @@ public class OrganVlastiExist implements ExistInterface {
 		return this.existManager.retrieve(ORGAN_VLASTI_COLLECTION, xpathExp);
 	}
 	
+	@Override
+	public String nextDocumentId() {
+		return this.existManager.nextDocumentId(ORGAN_VLASTI_COLLECTION);
+	}
+	
 }

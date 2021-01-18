@@ -49,9 +49,9 @@ export class ZalbaOdlukaFormComponent implements AfterViewInit {
 
   ngAfterViewInit(): void{
     const detaljiXml = '<Detalji></Detalji>';
-    const detaljiEditor = document.getElementById('detaljiEditor2');
+    const zalbaOdlukaEditor = document.getElementById('zalbaOdlukaEditor');
     const detaljiSpecifikacija = this.xonomyService.detaljiSpecifikacija;
-    Xonomy.render(detaljiXml, detaljiEditor, detaljiSpecifikacija);
+    Xonomy.render(detaljiXml, zalbaOdlukaEditor, detaljiSpecifikacija);
   }
 
 }

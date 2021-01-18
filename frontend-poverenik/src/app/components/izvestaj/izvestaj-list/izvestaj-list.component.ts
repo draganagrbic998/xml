@@ -1,10 +1,12 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatDrawer } from '@angular/material/sidenav';
 import { MatTableDataSource } from '@angular/material/table';
 import { IzvestajDTO } from 'src/app/models/izvestajDTO';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { IzvestajService } from 'src/app/services/izvestaj/izvestaj.service';
 import { environment } from 'src/environments/environment';
+import { IzvestajPretraga } from '../izvestaj-pretraga/izvestaj-pretraga';
 
 @Component({
   selector: 'app-izvestaj-list',
@@ -19,6 +21,7 @@ export class IzvestajListComponent implements AfterViewInit {
   ) { }
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatDrawer) drawer: MatDrawer;
   columns: string[] = ['godina', 'datum', 'dokumenti', 'metapodaci'];
 
   izvestaji: MatTableDataSource<IzvestajDTO> = new MatTableDataSource<IzvestajDTO>([]);
@@ -34,11 +37,37 @@ export class IzvestajListComponent implements AfterViewInit {
   }
 
   xmlMetadata(broj: string): void{
-    window.open(`//localhost:8082/${environment.apiIzvestaji}/${broj}/metadata/xml`, '_blank');
+    window.open(`//localhost:8082/${environment.apiIzvestaji}/${broj}/metadata_xml`, '_blank');
   }
 
   jsonMetadata(broj: string): void{
-    window.open(`//localhost:8082/${environment.apiIzvestaji}/${broj}/metadata/json`, '_blank');
+    window.open(`//localhost:8082/${environment.apiIzvestaji}/${broj}/metadata_json`, '_blank');
+  }
+
+  obicnaPretraga(pretraga: string): void{
+    this.fetchPending = true;
+    this.izvestajService.obicnaPretraga(pretraga).subscribe(
+      (izvestaji: IzvestajDTO[]) => {
+        this.izvestaji = new MatTableDataSource<IzvestajDTO>(izvestaji);
+        this.fetchPending = false;
+      },
+      () => {
+        this.fetchPending = false;
+      }
+    );
+  }
+
+  naprednaPretraga(pretraga: IzvestajPretraga): void{
+    this.fetchPending = true;
+    this.izvestajService.naprednaPretraga(pretraga).subscribe(
+      (izvestaji: IzvestajDTO[]) => {
+        this.izvestaji = new MatTableDataSource<IzvestajDTO>(izvestaji);
+        this.fetchPending = false;
+      },
+      () => {
+        this.fetchPending = false;
+      }
+    );
   }
 
   ngAfterViewInit(): void {
@@ -52,6 +81,10 @@ export class IzvestajListComponent implements AfterViewInit {
         this.fetchPending = false;
       }
     );
+
+    this.authService.drawerToggle$.subscribe(() => {
+      this.drawer.toggle();
+    });
   }
 
 }

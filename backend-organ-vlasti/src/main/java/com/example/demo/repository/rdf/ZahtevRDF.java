@@ -9,9 +9,9 @@ import org.w3c.dom.Document;
 
 import com.example.demo.common.Constants;
 import com.example.demo.common.Namespaces;
+import com.example.demo.common.Utils;
 import com.example.demo.fuseki.FusekiAuthentication;
 import com.example.demo.fuseki.FusekiManager;
-import com.example.demo.model.ZahtevSearch;
 
 @Repository
 public class ZahtevRDF implements RDFInterface {
@@ -24,7 +24,8 @@ public class ZahtevRDF implements RDFInterface {
 
 	public static final String ZAHTEV_GRAPH = "/zahtevi";
 	public static final String ZAHTEV_SHAPE = Constants.SHAPE_FOLDER + "zahtev.ttl";
-	//private static final String ZAHTEV_SEARCH = Constants.SPARQL_FOLDER + "zahtev.rq";
+	public static final String ZAHTEV_AND_SEARCH = Constants.SPARQL_FOLDER + "zahtev_and.rq";
+	public static final String ZAHTEV_OR_SEARCH = Constants.SPARQL_FOLDER + "zahtev_or.rq";
 
 	@Override
 	public void add(Document document) {
@@ -48,32 +49,23 @@ public class ZahtevRDF implements RDFInterface {
 	
 	public List<Integer> odluke(String broj) {
 		return this.fusekiManager.search(
-				String.format(FusekiManager.readFile(FusekiManager.REFERENCE_QUERY), 
+				String.format(Utils.readFile(FusekiManager.REFERENCE_QUERY), 
 				this.authUtilities.getData() + OdlukaRDF.ODLUKA_GRAPH, 
 				Namespaces.PREDIKAT + "zahtev", Namespaces.ZAHTEV + "/" + broj), Namespaces.ODLUKA + "/");
 	}
 	
 	public List<Integer> zalbe(String broj) {
 		return this.fusekiManager.search(
-				String.format(FusekiManager.readFile(FusekiManager.REFERENCE_QUERY), 
+				String.format(Utils.readFile(FusekiManager.REFERENCE_QUERY), 
 				this.authUtilities.getData() + ZalbaRDF.ZALBA_GRAPH, 
 				Namespaces.PREDIKAT + "zahtev", Namespaces.ZAHTEV + "/" + broj), Namespaces.ZALBA + "/");
 	}
 	
 	public List<Integer> resenja(String broj) {
 		return this.fusekiManager.search(
-				String.format(FusekiManager.readFile(FusekiManager.REFERENCE_QUERY), 
+				String.format(Utils.readFile(FusekiManager.REFERENCE_QUERY), 
 				this.authUtilities.getData() + ResenjeRDF.RESENJE_GRAPH, 
 				Namespaces.PREDIKAT + "zahtev", Namespaces.ZAHTEV + "/" + broj), Namespaces.RESENJE + "/");
-	}
-
-	public String search(ZahtevSearch search) {
-		return null;
-		/*
-		return this.fusekiManager.search(String.format(FusekiManager.readFile(ZAHTEV_SEARCH),
-				this.authUtilities.getData() + ZAHTEV_GRAPH, Namespaces.PREDIKAT + "datum",
-				Namespaces.PREDIKAT + "mesto", Namespaces.PREDIKAT + "tip", Namespaces.PREDIKAT + "status",
-				search.getDatum(), search.getMesto(), search.getTip(), search.getStanje()), Namespaces.ZAHTEV + "/");*/
 	}
 
 }

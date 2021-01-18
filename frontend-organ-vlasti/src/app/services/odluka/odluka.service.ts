@@ -9,6 +9,8 @@ import { Odbijanje } from 'src/app/models/odbijanje';
 import { environment } from 'src/environments/environment';
 import { XonomyService } from '../xonomy/xonomy.service';
 import { Referenca } from 'src/app/models/referenca';
+import { OdlukaPretraga } from 'src/app/components/odluka/odluka-pretraga/odluka-pretraga';
+import { dateToString } from '../utils';
 
 @Injectable({
   providedIn: 'root'
@@ -21,43 +23,6 @@ export class OdlukaService {
   ) { }
 
   private readonly API_ODLUKE = `${environment.baseUrl}/${environment.apiOdluke}`;
-
-  private dateToString(date: Date): string {
-    return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}.`;
-  }
-
-  private odbijanjeToXml(brojZahteva: number, odbijanje: Odbijanje): string{
-
-    return `
-      <odluka:Odluka
-      xmlns="${OSNOVA}"
-      xmlns:odluka="${ODLUKA}">
-        ${odbijanje.detalji}
-        <odluka:brojZahteva>${brojZahteva}</odluka:brojZahteva>
-      </odluka:Odluka>
-    `;
-
-  }
-
-  private obavestenjeToXml(brojZahteva: number, obavestenje: Obavestenje): string{
-
-    return `
-      <odluka:Odluka
-      xmlns="${OSNOVA}"
-      xmlns:odluka="${ODLUKA}">
-        ${obavestenje.detalji}
-        <odluka:brojZahteva>${brojZahteva}</odluka:brojZahteva>
-        <odluka:Uvid>
-          <odluka:datumUvida>${this.dateToString(obavestenje.datumUvida)}</odluka:datumUvida>
-            <odluka:pocetak>${obavestenje.pocetak}</odluka:pocetak>
-            <odluka:kraj>${obavestenje.kraj}</odluka:kraj>
-            <odluka:kancelarija>${obavestenje.kancelarija}</odluka:kancelarija>
-        </odluka:Uvid>
-        <odluka:kopija>${obavestenje.kopija}</odluka:kopija>
-      </odluka:Odluka>
-    `;
-
-  }
 
   private xmlToOdluke(xml: string): OdlukaDTO[]{
     const parser = new DOMParser();
@@ -88,6 +53,52 @@ export class OdlukaService {
     return odlukeDTO;
   }
 
+  private obavestenjeToXml(brojZahteva: number, obavestenje: Obavestenje): string{
+
+    return `
+      <odluka:Odluka
+      xmlns="${OSNOVA}"
+      xmlns:odluka="${ODLUKA}">
+        ${obavestenje.detalji}
+        <odluka:brojZahteva>${brojZahteva}</odluka:brojZahteva>
+        <odluka:Uvid>
+          <odluka:datumUvida>${dateToString(obavestenje.datumUvida)}</odluka:datumUvida>
+            <odluka:pocetak>${obavestenje.pocetak}</odluka:pocetak>
+            <odluka:kraj>${obavestenje.kraj}</odluka:kraj>
+            <odluka:kancelarija>${obavestenje.kancelarija}</odluka:kancelarija>
+        </odluka:Uvid>
+        <odluka:kopija>${obavestenje.kopija}</odluka:kopija>
+      </odluka:Odluka>
+    `;
+
+  }
+
+  private odbijanjeToXml(brojZahteva: number, odbijanje: Odbijanje): string{
+
+    return `
+      <odluka:Odluka
+      xmlns="${OSNOVA}"
+      xmlns:odluka="${ODLUKA}">
+        ${odbijanje.detalji}
+        <odluka:brojZahteva>${brojZahteva}</odluka:brojZahteva>
+      </odluka:Odluka>
+    `;
+
+  }
+
+  private pretragaToXml(pretraga: OdlukaPretraga): string{
+    return `
+      <pretraga>
+        <operacija>${pretraga.operacija}</operacija>
+        <datum>${dateToString(pretraga.datum)}</datum>
+        <mesto>${pretraga.mesto}</mesto>
+        <tip>${pretraga.tip}</tip>
+        <izdatoU>${pretraga.izdatoU}</izdatoU>
+        <organVlasti>${pretraga.organVlasti}</organVlasti>
+      </pretraga>
+    `;
+  }
+
   saveObavestenje(brojZahteva: number, obavestenje: Obavestenje): Observable<null>{
     obavestenje.detalji = this.xonomyService.removeXmlSpace(obavestenje.detalji);
     const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
@@ -108,6 +119,19 @@ export class OdlukaService {
 
   view(broj: number): Observable<string>{
     return this.http.get<string>(`${this.API_ODLUKE}/${broj}`, {responseType: 'text' as 'json'});
+  }
+
+  obicnaPretraga(pretraga: string): Observable<OdlukaDTO[]>{
+    const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml'), responseType: 'text' as 'json' };
+    return this.http.post<string>(`${this.API_ODLUKE}/obicna_pretraga`, pretraga, options).pipe(
+      map((xml: string) => this.xmlToOdluke(xml)));
+  }
+
+  naprednaPretraga(pretraga: OdlukaPretraga): Observable<OdlukaDTO[]>{
+    const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml'), responseType: 'text' as 'json' };
+    return this.http.post<string>(`${this.API_ODLUKE}/napredna_pretraga`, this.pretragaToXml(pretraga), options).pipe(
+      map((xml: string) => this.xmlToOdluke(xml))
+    );
   }
 
 }

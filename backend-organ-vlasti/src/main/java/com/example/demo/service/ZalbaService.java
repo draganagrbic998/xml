@@ -7,11 +7,13 @@ import org.xmldb.api.base.ResourceIterator;
 import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.modules.XMLResource;
 
-import com.example.demo.common.MyException;
 import com.example.demo.common.Namespaces;
+import com.example.demo.common.Utils;
 import com.example.demo.enums.StatusZalbe;
+import com.example.demo.exception.MyException;
 import com.example.demo.mapper.ZalbaMapper;
 import com.example.demo.parser.DOMParser;
+import com.example.demo.parser.JAXBParser;
 import com.example.demo.repository.rdf.ZalbaRDF;
 import com.example.demo.repository.xml.ZalbaExist;
 
@@ -29,11 +31,14 @@ public class ZalbaService implements ServiceInterface {
 	
 	@Autowired
 	private DOMParser domParser;
+	
+	@Autowired
+	private JAXBParser jaxbParser;
 		
 	@Override
 	public void add(String xml) {
 		Document document = this.zalbaMapper.map(xml);
-		this.zalbaExist.update(DOMParser.getBroj(document), document);
+		this.zalbaExist.update(Utils.getBroj(document), document);
 		this.zalbaRDF.add(document);		
 	}
 
@@ -50,26 +55,37 @@ public class ZalbaService implements ServiceInterface {
 	}
 
 	@Override
-	public String retrieve() {
-		ResourceSet resources = this.zalbaExist.retrieve("/zalba:Zalba");
-		return this.zalbaMapper.map(resources);
+	public Document load(String documentId) {
+		return this.zalbaExist.load(documentId);
 	}
 
 	@Override
-	public Document load(String documentId) {
-		return this.zalbaExist.load(documentId);
+	public String retrieve() {
+		return this.zalbaMapper.map(this.zalbaExist.retrieve("/zalba:Zalba"));
+	}
+	
+	@Override
+	public String regularSearch(String xml) {
+		return null;
+	}
+
+	@Override
+	public String advancedSearch(String xml) {
+		return null;
 	}
 	
 	public void odustani(String broj) {
 		Document document = this.zalbaExist.load(broj);
 		document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.odustato + "");
 		this.zalbaExist.update(broj, document);
+		this.zalbaRDF.update(broj, document);
 	}
 
 	public void obustavi(String broj) {
 		Document document = this.zalbaExist.load(broj);
 		document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.obustavljeno + "");
 		this.zalbaExist.update(broj, document);
+		this.zalbaRDF.update(broj, document);
 	}
 	
 	public void otkazi(String brojZahteva) {
@@ -81,7 +97,8 @@ public class ZalbaService implements ServiceInterface {
 				XMLResource resource = (XMLResource) it.nextResource();
 				Document document = this.domParser.buildDocument(resource.getContent().toString());
 				document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.ispravljeno + "");
-				this.zalbaExist.update(document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent(), document);
+				this.zalbaExist.update(Utils.getBroj(document), document);
+				this.zalbaRDF.update(Utils.getBroj(document), document);
 			}
 		}
 		catch(Exception e) {

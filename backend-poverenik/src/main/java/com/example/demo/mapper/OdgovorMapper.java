@@ -8,8 +8,9 @@ import org.xmldb.api.base.ResourceIterator;
 import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.modules.XMLResource;
 
-import com.example.demo.common.MyException;
 import com.example.demo.common.Namespaces;
+import com.example.demo.common.Utils;
+import com.example.demo.exception.MyException;
 import com.example.demo.parser.DOMParser;
 import com.example.demo.repository.rdf.OdgovorRDF;
 
@@ -37,17 +38,15 @@ public class OdgovorMapper implements MapperInterface {
 
 			while (it.hasMoreResources()) {
 				XMLResource resource = (XMLResource) it.nextResource();
-				Document document = this.domParser.buildDocument(resource.getContent().toString());
-				Node broj = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0);
+				Document odgovorDocument = this.domParser.buildDocument(resource.getContent().toString());
 				Node odgovor = odgovoriDocument.createElementNS(Namespaces.ODGOVOR, "Odgovor");
-				odgovor.appendChild(odgovoriDocument.importNode(broj, true));
-				odgovor.appendChild(odgovoriDocument.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
-				odgovor.appendChild(odgovoriDocument.importNode(document.getElementsByTagNameNS(Namespaces.ODGOVOR, "datumZalbe").item(0), true));
+				odgovor.appendChild(odgovoriDocument.importNode(odgovorDocument.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0), true));
+				odgovor.appendChild(odgovoriDocument.importNode(odgovorDocument.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
+				odgovor.appendChild(odgovoriDocument.importNode(odgovorDocument.getElementsByTagNameNS(Namespaces.ODGOVOR, "datumZalbe").item(0), true));
 				
 				Node reference = odgovoriDocument.createElementNS(Namespaces.OSNOVA, "Reference");
-				DOMParser.setReferences(odgovoriDocument, reference, this.odgovorRDF.resenja(broj.getTextContent()), "resenja");
+				Utils.setReferences(odgovoriDocument, reference, this.odgovorRDF.resenja(Utils.getBroj(odgovorDocument)), "resenja");
 				odgovor.appendChild(reference);
-				
 				odgovori.appendChild(odgovor);
 			}
 

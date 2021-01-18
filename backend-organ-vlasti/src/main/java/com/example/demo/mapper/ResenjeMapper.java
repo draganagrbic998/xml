@@ -8,8 +8,8 @@ import org.xmldb.api.base.ResourceIterator;
 import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.modules.XMLResource;
 
-import com.example.demo.common.MyException;
 import com.example.demo.common.Namespaces;
+import com.example.demo.exception.MyException;
 import com.example.demo.parser.DOMParser;
 
 @Component
@@ -33,11 +33,12 @@ public class ResenjeMapper implements MapperInterface {
 			
 			while (it.hasMoreResources()) {
 				XMLResource resource = (XMLResource) it.nextResource();
-				Document document = this.domParser.buildDocument(resource.getContent().toString());
+				Document resenjeDocument = this.domParser.buildDocument(resource.getContent().toString());
 				Node resenje = resenjaDocument.createElementNS(Namespaces.RESENJE, "Resenje");
-				resenje.appendChild(resenjaDocument.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0), true));
-				resenje.appendChild(resenjaDocument.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
-				resenje.appendChild(resenjaDocument.importNode(document.getElementsByTagNameNS(Namespaces.RESENJE, "status").item(0), true));
+				
+				resenje.appendChild(resenjaDocument.importNode(resenjeDocument.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0), true));
+				resenje.appendChild(resenjaDocument.importNode(resenjeDocument.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
+				resenje.appendChild(resenjaDocument.importNode(resenjeDocument.getElementsByTagNameNS(Namespaces.RESENJE, "status").item(0), true));
 				resenja.appendChild(resenje);
 			}
 			

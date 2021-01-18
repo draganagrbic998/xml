@@ -1,0 +1,11 @@
+SELECT * FROM <%s> WHERE {
+  ?doc <%s> ?godina .
+  ?doc <%s> ?datum .
+  ?doc <%s> ?izdatoU .
+  ?doc <%s> ?organVlasti .
+  FILTER( CONTAINS(UCASE(str(?godina)), UCASE("%s"))
+    && CONTAINS(UCASE(str(?datum)), UCASE("%s"))
+    && CONTAINS(UCASE(str(?izdatoU)), UCASE("%s"))
+    && CONTAINS(UCASE(str(?organVlasti)), UCASE("%s"))
+  ) .
+} 

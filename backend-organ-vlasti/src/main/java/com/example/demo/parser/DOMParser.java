@@ -6,7 +6,6 @@ import static org.apache.xerces.jaxp.JAXPConstants.W3C_XML_SCHEMA;
 import java.io.File;
 import java.io.StringReader;
 import java.io.StringWriter;
-import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -18,12 +17,9 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
 
-import com.example.demo.common.MyException;
-import com.example.demo.common.Namespaces;
+import com.example.demo.exception.MyException;
 
 @Component
 public class DOMParser {
@@ -89,19 +85,6 @@ public class DOMParser {
 
 	public TransformerFactory getTransformerFactory() {
 		return transformerFactory;
-	}
-	
-	public static String getBroj(Document document) {
-		return document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
-	}
-	
-	public static void setReferences(Document document, Node reference, List<Integer> brojevi, String tip) {
-		for (int broj: brojevi) {
-			Element referenca = document.createElementNS(Namespaces.OSNOVA, "ref");
-			referenca.setAttribute("tip", tip);
-			referenca.setTextContent(broj + "");
-			reference.appendChild(referenca);
-		}
 	}
 		
 }

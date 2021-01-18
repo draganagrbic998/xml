@@ -19,15 +19,18 @@ import com.example.demo.common.Namespaces;
 @SuppressWarnings("serial")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "Korisnik", namespace = Namespaces.OSNOVA)
-@XmlType(propOrder = {  "aktivan", "lozinka", "osoba", "adresa" })
+@XmlType(propOrder = {  "mejl", "lozinka", "aktivan", "osoba", "adresa" })
 public class Korisnik implements UserDetails {
-		
+			
 	@XmlElement(namespace = Namespaces.OSNOVA, required = true)
-	private boolean aktivan;
-	
+	private String mejl;
+
 	@XmlElement(namespace = Namespaces.OSNOVA, required = true)
 	private String lozinka;
 	
+	@XmlElement(namespace = Namespaces.OSNOVA, required = true)
+	private boolean aktivan;
+
 	@XmlElement(namespace = Namespaces.OSNOVA, required = true, name = "Osoba")
 	private Osoba osoba;
 	
@@ -52,7 +55,7 @@ public class Korisnik implements UserDetails {
 
 	@Override
 	public String getUsername() {
-		return this.osoba.getMejl();
+		return this.mejl;
 	}
 
 	@Override
@@ -75,12 +78,12 @@ public class Korisnik implements UserDetails {
 		return this.aktivan;
 	}
 
-	public boolean isAktivan() {
-		return aktivan;
+	public String getMejl() {
+		return mejl;
 	}
 
-	public void setAktivan(boolean aktivan) {
-		this.aktivan = aktivan;
+	public void setMejl(String mejl) {
+		this.mejl = mejl;
 	}
 
 	public String getLozinka() {
@@ -89,6 +92,14 @@ public class Korisnik implements UserDetails {
 
 	public void setLozinka(String lozinka) {
 		this.lozinka = lozinka;
+	}
+
+	public boolean isAktivan() {
+		return aktivan;
+	}
+
+	public void setAktivan(boolean aktivan) {
+		this.aktivan = aktivan;
 	}
 
 	public Osoba getOsoba() {

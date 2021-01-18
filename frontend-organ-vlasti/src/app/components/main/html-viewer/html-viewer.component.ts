@@ -19,8 +19,8 @@ export class HtmlViewerComponent implements OnInit {
     private odlukaService: OdlukaService,
     private zalbaService: ZalbaService,
     private odgovorService: OdgovorService,
-    private izvestajService: IzvestajService,
     private resenjeService: ResenjeService,
+    private izvestajService: IzvestajService,
     private route: ActivatedRoute
   ) { }
 

@@ -15,11 +15,11 @@ public class ZalbaPortImpl implements Zalba {
 	private static final Logger LOG = Logger.getLogger(ZalbaPortImpl.class.getName());
 
 	@Autowired
-	private ZalbaService zalbaService;
-	
-	@Autowired
 	private DOMParser domParser;
 
+	@Autowired
+	private ZalbaService zalbaService;
+	
 	public void createZalba(java.lang.String createZalba) {
 		LOG.info("Executing operation createZalba");
 		try {

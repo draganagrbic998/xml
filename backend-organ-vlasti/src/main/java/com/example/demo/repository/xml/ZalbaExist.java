@@ -42,4 +42,9 @@ public class ZalbaExist implements ExistInterface {
 		return this.existManager.retrieve(ZALBA_COLLECTION, xpathExp);
 	}
 		
+	@Override
+	public String nextDocumentId() {
+		return this.existManager.nextDocumentId(ZALBA_COLLECTION);
+	}
+	
 }

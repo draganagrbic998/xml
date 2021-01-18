@@ -1,111 +1,17 @@
 <mat-drawer-container>
   <mat-drawer mode="side" #drawer class="mat-elevation-z24">
-
-    <h3>Napredna pretraga</h3><br>
-
-    <form [formGroup]="naprednaForma">
-      <div [class.disabled]="fetchPending">
-        <mat-form-field>
-          <mat-label>Logička operacija</mat-label>
-          <mat-select formControlName="operacija">
-              <mat-option [value]="'and'">
-                  and operacija
-              </mat-option>
-              <mat-option [value]="'or'">
-                  or operacija
-              </mat-option>
-          </mat-select>                
-        </mat-form-field>
-        <mat-form-field> 
-          <mat-label>Datum</mat-label>
-          <input 
-          matInput 
-          autocomplete="off"
-          formControlName="datum" 
-          placeholder="Unesite datum"
-          [matDatepicker]="datum">
-          <mat-datepicker-toggle matSuffix [for]="datum"></mat-datepicker-toggle>
-          <mat-datepicker #datum></mat-datepicker>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Mesto</mat-label>
-          <input 
-          matInput 
-          autocomplete="off"
-          formControlName="mesto"
-          placeholder="Unesite mesto">
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Mesto izdavanja</mat-label>
-          <input 
-          matInput 
-          autocomplete="off"
-          formControlName="mestoIzdavanja"
-          placeholder="Unesite mesto izdavanja">
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Organ vlasti</mat-label>
-          <input 
-          matInput 
-          autocomplete="off"
-          formControlName="organVlasti"
-          placeholder="Unesite organ vlasti">
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Tip žalbe</mat-label>
-          <mat-select formControlName="tip">
-              <mat-option [value]="'cutanje'">
-                  žalba na čutanje organa vlasti
-              </mat-option>
-              <mat-option [value]="'delimicnost'">
-                  žalba na ćutanje-delimicnost organa vlasti
-              </mat-option>
-              <mat-option [value]="'odluka'">
-                  žalba na odluku-odbijanje organa vlasti
-              </mat-option>
-          </mat-select>                
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Stanje žalbe</mat-label>
-          <mat-select formControlName="stanje">
-            <mat-option [value]="'cekanje'">
-              čekanje
-            </mat-option>
-            <mat-option [value]="'prosledjeno'">
-                prosleđeno
-            </mat-option>
-            <mat-option [value]="'odgovoreno'">
-                odgovoreno
-            </mat-option>
-            <mat-option [value]="'odustato'">
-              odbijeno
-            </mat-option>
-            <mat-option [value]="'ispravljeno'">
-              ispravljeno
-            </mat-option>
-            <mat-option [value]="'obustavljeno'">
-              obustavljeno
-            </mat-option>
-            <mat-option [value]="'reseno'">
-              reseno
-            </mat-option>
-          </mat-select>                
-        </mat-form-field>
-        </div>
-      <app-spacer-container>
-        <span></span>
-        <span>
-          <button 
-          *ngIf="!fetchPending"
-          mat-raised-button 
-          color="primary"
-          (click)="naprednaPretraga()">Pretraži</button>
-          <app-spinner-button *ngIf="fetchPending"></app-spinner-button>
-        </span>
-      </app-spacer-container>
-    </form>
-
-
+    <mat-tab-group animationDuration="0ms">
+      <mat-tab [label]="'Obična pretraga'">
+        <app-obicna-pretraga
+        [fetchPending]="fetchPending"
+        (pretragaTriggered)="obicnaPretraga($event)"></app-obicna-pretraga>
+      </mat-tab>
+      <mat-tab [label]="'Napredna pretraga'">
+        <app-zalba-pretraga
+        [fetchPending]="fetchPending"
+        (pretragaTriggered)="naprednaPretraga($event)"></app-zalba-pretraga>
+      </mat-tab>
+    </mat-tab-group>
   </mat-drawer>
 
   <app-preloader *ngIf="fetchPending || sendPending" [transparent]="sendPending">
@@ -157,7 +63,7 @@
             (click)="prosledi(zalba)">
             Prosledi</a>
             <a
-            *ngIf="!sendPending && uloga === 'poverenik' && zalba.status === 'odustato'"
+            *ngIf="!sendPending && uloga === 'poverenik' && canObustaviti(zalba)"
             (click)="obustavi(zalba)">
             Obustavi</a>
             <a

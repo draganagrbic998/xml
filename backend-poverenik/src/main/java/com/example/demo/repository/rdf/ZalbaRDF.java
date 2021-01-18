@@ -9,9 +9,9 @@ import org.w3c.dom.Document;
 
 import com.example.demo.common.Constants;
 import com.example.demo.common.Namespaces;
+import com.example.demo.common.Utils;
 import com.example.demo.fuseki.FusekiAuthentication;
 import com.example.demo.fuseki.FusekiManager;
-import com.example.demo.model.Pretraga;
 
 @Repository
 public class ZalbaRDF implements RDFInterface {
@@ -24,8 +24,8 @@ public class ZalbaRDF implements RDFInterface {
 
 	public static final String ZALBA_GRAPH = "/zalbe";
 	public static final String ZALBA_SHAPE = Constants.SHAPE_FOLDER + "zalba.ttl";
-	//private static final String ZALBA_AND_SEARCH = Constants.SPARQL_FOLDER + "zalba_and.rq";
-	//private static final String ZALBA_OR_SEARCH = Constants.SPARQL_FOLDER + "zalba_or.rq";
+	private static final String ZALBA_AND_SEARCH = Constants.SPARQL_FOLDER + "zalba_and.rq";
+	private static final String ZALBA_OR_SEARCH = Constants.SPARQL_FOLDER + "zalba_or.rq";
 
 	@Override
 	public void add(Document document) {
@@ -49,30 +49,16 @@ public class ZalbaRDF implements RDFInterface {
 	
 	public List<Integer> odgovori(String broj) {
 		return this.fusekiManager.search(
-				String.format(FusekiManager.readFile(FusekiManager.REFERENCE_QUERY), 
+				String.format(Utils.readFile(FusekiManager.REFERENCE_QUERY), 
 				this.authUtilities.getData() + OdgovorRDF.ODGOVOR_GRAPH, 
 				Namespaces.PREDIKAT + "zalba", Namespaces.ZALBA + "/" + broj), Namespaces.ODGOVOR + "/");
 	}
 	
 	public List<Integer> resenja(String broj) {
 		return this.fusekiManager.search(
-				String.format(FusekiManager.readFile(FusekiManager.REFERENCE_QUERY), 
+				String.format(Utils.readFile(FusekiManager.REFERENCE_QUERY), 
 				this.authUtilities.getData() + ResenjeRDF.RESENJE_GRAPH, 
 				Namespaces.PREDIKAT + "zalba", Namespaces.ZALBA + "/" + broj), Namespaces.RESENJE + "/");
-	}
-
-	@Override
-	public String search(Pretraga pretraga) {
-		return null;
-		/*
-		ZalbaPretraga zalbaPretraga = (ZalbaPretraga) pretraga;
-		return this.fusekiManager.search(String.format(
-				FusekiManager.readFile(zalbaPretraga.getOperacija().equals("and") ? ZALBA_AND_SEARCH : ZALBA_OR_SEARCH),
-				this.authUtilities.getData() + ZALBA_GRAPH, Namespaces.PREDIKAT + "datum",
-				Namespaces.PREDIKAT + "mesto", Namespaces.PREDIKAT + "izdatoU", Namespaces.PREDIKAT + "organVlasti",
-				Namespaces.PREDIKAT + "tip", Namespaces.PREDIKAT + "stanje", zalbaPretraga.getDatum(),
-				zalbaPretraga.getMesto(), zalbaPretraga.getMestoIzdavanja(), zalbaPretraga.getOrganVlasti(),
-				zalbaPretraga.getTip(), zalbaPretraga.getStanje()));*/
 	}
 
 }

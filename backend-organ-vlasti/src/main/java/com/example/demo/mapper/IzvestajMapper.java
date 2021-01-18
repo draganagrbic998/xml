@@ -13,9 +13,9 @@ import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.modules.XMLResource;
 
 import com.example.demo.common.Constants;
-import com.example.demo.common.MyException;
 import com.example.demo.common.Namespaces;
-import com.example.demo.exist.ExistManager;
+import com.example.demo.common.Utils;
+import com.example.demo.exception.MyException;
 import com.example.demo.parser.DOMParser;
 import com.example.demo.repository.xml.IzvestajExist;
 import com.example.demo.repository.xml.KorisnikExist;
@@ -27,9 +27,9 @@ import com.example.demo.service.OrganVlastiService;
 
 @Component
 public class IzvestajMapper implements MapperInterface {
-
+	
 	@Autowired
-	private KorisnikService korisnikService;
+	private IzvestajExist izvestajExist;
 
 	@Autowired
 	private ZahtevExist zahtevExist;
@@ -41,41 +41,35 @@ public class IzvestajMapper implements MapperInterface {
 	private ZalbaExist zalbaExist;
 
 	@Autowired
-	private DOMParser domParser;
+	private KorisnikExist korisnikExist;
 
 	@Autowired
-	private KorisnikExist korisnikExist;
-	
+	private KorisnikService korisnikService;
+
 	@Autowired
 	private OrganVlastiService organVlastiService;
-	
+
 	@Autowired
-	private ExistManager existManager;
-	
-	private static final String STUB_FILE = Constants.STUB_FOLDER + "izvestaj.xml";
+	private DOMParser domParser;
+				
+	public static final String STUB_FILE = Constants.STUB_FOLDER + "izvestaj.xml";
 
 	@Override
 	public Document map(String godina) {
 		try {
 			Document document = this.domParser.buildDocumentFromFile(STUB_FILE);
 			Element izvestaj = (Element) document.getElementsByTagNameNS(Namespaces.IZVESTAJ, "Izvestaj").item(0);
-
-			Node broj = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0);
-			broj.setTextContent(this.existManager.nextDocumentId(IzvestajExist.IZVESTAJ_COLLECTION));
-			
-			Node datum = document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0);
-			datum.setTextContent(Constants.sdf.format(new Date()));
-
-			Node godinaNode = document.getElementsByTagNameNS(Namespaces.IZVESTAJ, "godina").item(0);
-			godinaNode.setTextContent(godina);
-			
 			DocumentFragment documentFragment = document.createDocumentFragment();
-			documentFragment.appendChild(document.importNode(this.korisnikExist.load(this.korisnikService.currentUser().getOsoba().getMejl()).getElementsByTagNameNS(Namespaces.OSNOVA, "Osoba").item(0), true));
+			
+			document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).setTextContent(this.izvestajExist.nextDocumentId());
+			document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).setTextContent(Constants.sdf.format(new Date()));
+			document.getElementsByTagNameNS(Namespaces.IZVESTAJ, "godina").item(0).setTextContent(godina);
+			izvestaj.setAttribute("about", Namespaces.IZVESTAJ + "/" + Utils.getBroj(document));
+			izvestaj.setAttribute("href", Namespaces.KORISNIK + "/" + this.korisnikService.currentUser().getMejl());
+			
+			documentFragment.appendChild(document.importNode(this.korisnikExist.load(this.korisnikService.currentUser().getMejl()).getElementsByTagNameNS(Namespaces.OSNOVA, "Osoba").item(0), true));
 			documentFragment.appendChild(document.importNode(this.organVlastiService.load().getElementsByTagNameNS(Namespaces.OSNOVA, "OrganVlasti").item(0), true));
 			izvestaj.insertBefore(documentFragment, izvestaj.getElementsByTagNameNS(Namespaces.IZVESTAJ, "godina").item(0));
-
-			izvestaj.setAttribute("about", Namespaces.IZVESTAJ + "/" + broj.getTextContent());
-			izvestaj.setAttribute("href", Namespaces.KORISNIK + "/" + this.korisnikService.currentUser().getOsoba().getMejl());
 
 			Node bzNode = document.createElementNS(Namespaces.IZVESTAJ, "izvestaj:brojZahteva");
 			bzNode.setTextContent(this.zahtevExist.retrieve("/zahtev:Zahtev/datum[contains(text(), \"" + godina + "\")]").getSize() + "");
@@ -176,14 +170,15 @@ public class IzvestajMapper implements MapperInterface {
 
 			while (it.hasMoreResources()) {
 				XMLResource resource = (XMLResource) it.nextResource();
-				Document document = this.domParser.buildDocument(resource.getContent().toString());
+				Document izvestajDocument = this.domParser.buildDocument(resource.getContent().toString());
 				Node izvestaj = izvestajiDocument.createElementNS(Namespaces.IZVESTAJ, "Izvestaj");
+				
 				izvestaj.appendChild(izvestajiDocument
-						.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0), true));
+						.importNode(izvestajDocument.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0), true));
 				izvestaj.appendChild(izvestajiDocument
-						.importNode(document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
+						.importNode(izvestajDocument.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
 				izvestaj.appendChild(izvestajiDocument
-						.importNode(document.getElementsByTagNameNS(Namespaces.IZVESTAJ, "godina").item(0), true));
+						.importNode(izvestajDocument.getElementsByTagNameNS(Namespaces.IZVESTAJ, "godina").item(0), true));
 				izvestaji.appendChild(izvestaj);
 			}
 

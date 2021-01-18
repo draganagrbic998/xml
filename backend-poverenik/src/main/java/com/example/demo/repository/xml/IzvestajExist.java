@@ -42,4 +42,9 @@ public class IzvestajExist implements ExistInterface {
 		return this.existManager.retrieve(IZVESTAJ_COLLECTION, xpathExp);
 	}
 	
+	@Override
+	public String nextDocumentId() {
+		return this.existManager.nextDocumentId(IZVESTAJ_COLLECTION);
+	}
+	
 }

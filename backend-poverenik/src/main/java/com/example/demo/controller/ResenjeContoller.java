@@ -64,7 +64,7 @@ public class ResenjeContoller {
 				.body(resource);
 	}
 	
-	@GetMapping(value = "/{broj}/metadata/xml", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	@GetMapping(value = "/{broj}/metadata_xml", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<Resource> xmlMetadata(@PathVariable String broj) {
 		Resource resource = this.resenjeTransformer.generateMetadata(broj, MetadataTip.xml);
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)
@@ -72,7 +72,7 @@ public class ResenjeContoller {
 				.body(resource);
 	}
 	
-	@GetMapping(value = "/{broj}/metadata/json", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	@GetMapping(value = "/{broj}/metadata_json", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<Resource> jsonMetadata(@PathVariable String broj) {
 		Resource resource = this.resenjeTransformer.generateMetadata(broj, MetadataTip.json);
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)
@@ -80,6 +80,18 @@ public class ResenjeContoller {
 				.body(resource);
 	}
 	
+	@PostMapping(value="obicna_pretraga", consumes = MediaType.TEXT_XML_VALUE, produces = MediaType.TEXT_XML_VALUE)
+	@PreAuthorize("hasAuthority('poverenik')")
+	public ResponseEntity<String> regularSearch(@RequestBody String xml) {		
+		return new ResponseEntity<>(this.resenjeService.regularSearch(xml), HttpStatus.OK);
+	}
+
+	@PostMapping(value="napredna_pretraga", consumes = MediaType.TEXT_XML_VALUE, produces = MediaType.TEXT_XML_VALUE)
+	@PreAuthorize("hasAuthority('poverenik')")
+	public ResponseEntity<String> advancedSearch(@RequestBody String xml) {		
+		return new ResponseEntity<>(this.resenjeService.advancedSearch(xml), HttpStatus.OK);
+	}
+
 }
 
 

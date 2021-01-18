@@ -7,8 +7,9 @@ import { OSNOVA, ZAHTEV } from 'src/app/constants/namespaces';
 import { ZahtevDTO } from 'src/app/models/zahtevDTO';
 import { map } from 'rxjs/operators';
 import { XonomyService } from '../xonomy/xonomy.service';
-import { ZahtevPretraga } from 'src/app/models/zahtevPretraga';
+import { ZahtevPretraga } from 'src/app/components/zahtev/zahtev-pretraga/zahtev-pretraga';
 import { Referenca } from 'src/app/models/referenca';
+import { dateToString } from '../utils';
 
 @Injectable({
   providedIn: 'root'
@@ -21,47 +22,6 @@ export class ZahtevService {
   ) { }
 
   private readonly API_ZAHTEVI = `${environment.baseUrl}/${environment.apiZahtevi}`;
-
-  private dateToString(date: Date): string {
-    if (!date){
-      return '';
-    }
-    return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}.`;
-  }
-
-  private zahtevToXml(zahtev: Zahtev): string{
-
-    let xml = `
-      ${zahtev.detalji}
-      <zahtev:tipZahteva property="pred:tip" datatype="xs:string">${zahtev.tipZahteva}</zahtev:tipZahteva>
-    `;
-    if (zahtev.tipZahteva === 'dostava'){
-      xml += `<zahtev:tipDostave>${zahtev.tipDostave}</zahtev:tipDostave>`;
-    }
-    if (zahtev.tipDostave === 'ostalo'){
-      xml += `<zahtev:opisDostave>${zahtev.opisDostave}</zahtev:opisDostave>`;
-    }
-
-    return `
-      <zahtev:Zahtev
-      xmlns="${OSNOVA}"
-      xmlns:zahtev="${ZAHTEV}">
-        ${xml}
-      </zahtev:Zahtev>
-    `;
-
-  }
-
-  private pretragaToXml(pretraga: ZahtevPretraga): string{
-    return `
-      <pretraga>
-        <datum>${this.dateToString(pretraga.datum)}</datum>
-        <mesto>${pretraga.mesto}</mesto>
-        <tip>${pretraga.tip}</tip>
-        <stanje>${pretraga.stanje}</stanje>
-      </pretraga>
-    `;
-  }
 
   private xmlToZahtevi(xml: string): ZahtevDTO[]{
     const parser = new DOMParser();
@@ -92,6 +52,43 @@ export class ZahtevService {
     return zahteviDTO;
   }
 
+  private zahtevToXml(zahtev: Zahtev): string{
+
+    let xml = `
+      ${zahtev.detalji}
+      <zahtev:tipZahteva property="pred:tip" datatype="xs:string">${zahtev.tipZahteva}</zahtev:tipZahteva>
+    `;
+    if (zahtev.tipZahteva === 'dostava'){
+      xml += `<zahtev:tipDostave>${zahtev.tipDostave}</zahtev:tipDostave>`;
+    }
+    if (zahtev.tipDostave === 'ostalo'){
+      xml += `<zahtev:opisDostave>${zahtev.opisDostave}</zahtev:opisDostave>`;
+    }
+
+    return `
+      <zahtev:Zahtev
+      xmlns="${OSNOVA}"
+      xmlns:zahtev="${ZAHTEV}">
+        ${xml}
+      </zahtev:Zahtev>
+    `;
+
+  }
+
+  private pretragaToXml(pretraga: ZahtevPretraga): string{
+    return `
+      <pretraga>
+        <operacija>${pretraga.operacija}</operacija>
+        <datum>${dateToString(pretraga.datum)}</datum>
+        <mesto>${pretraga.mesto}</mesto>
+        <tip>${pretraga.tip}</tip>
+        <status>${pretraga.status}</status>
+        <izdatoU>${pretraga.izdatoU}</izdatoU>
+        <organVlasti>${pretraga.organVlasti}</organVlasti>
+      </pretraga>
+    `;
+  }
+
   save(zahtev: Zahtev): Observable<null>{
     zahtev.detalji = this.xonomyService.removeXmlSpace(zahtev.detalji);
     const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
@@ -108,9 +105,15 @@ export class ZahtevService {
     return this.http.get<string>(`${this.API_ZAHTEVI}/${broj}`, {responseType: 'text' as 'json'});
   }
 
-  advancedSearch(pretraga: ZahtevPretraga): Observable<ZahtevDTO[]>{
+  obicnaPretraga(pretraga: string): Observable<ZahtevDTO[]>{
     const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml'), responseType: 'text' as 'json' };
-    return this.http.post<string>(`${this.API_ZAHTEVI}/advanced_search`, this.pretragaToXml(pretraga), options).pipe(
+    return this.http.post<string>(`${this.API_ZAHTEVI}/obicna_pretraga`, pretraga, options).pipe(
+      map((xml: string) => this.xmlToZahtevi(xml)));
+  }
+
+  naprednaPretraga(pretraga: ZahtevPretraga): Observable<ZahtevDTO[]>{
+    const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml'), responseType: 'text' as 'json' };
+    return this.http.post<string>(`${this.API_ZAHTEVI}/napredna_pretraga`, this.pretragaToXml(pretraga), options).pipe(
       map((xml: string) => this.xmlToZahtevi(xml))
     );
   }

@@ -9,9 +9,9 @@ import org.w3c.dom.Document;
 
 import com.example.demo.common.Constants;
 import com.example.demo.common.Namespaces;
+import com.example.demo.common.Utils;
 import com.example.demo.fuseki.FusekiAuthentication;
 import com.example.demo.fuseki.FusekiManager;
-import com.example.demo.model.Pretraga;
 
 @Repository
 public class OdgovorRDF implements RDFInterface {
@@ -24,6 +24,8 @@ public class OdgovorRDF implements RDFInterface {
 
 	public static final String ODGOVOR_GRAPH = "/odgovori";
 	public static final String ODGOVOR_SHAPE = Constants.SHAPE_FOLDER + "odgovor.ttl";
+	public static final String ODGOVOR_AND_SEARCH = Constants.SPARQL_FOLDER + "odgovor_and.rq";
+	public static final String ODGOVOR_OR_SEARCH = Constants.SPARQL_FOLDER + "odgovor_or.rq";
 
 	@Override
 	public void add(Document document) {
@@ -44,16 +46,10 @@ public class OdgovorRDF implements RDFInterface {
 	public ResultSet retrieve(String subject) {
 		return this.fusekiManager.retrieve(ODGOVOR_GRAPH, Namespaces.ODGOVOR + "/" + subject);
 	}
-
-	@Override
-	public String search(Pretraga pretraga) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 	public List<Integer> resenja(String broj) {
 		return this.fusekiManager.search(
-				String.format(FusekiManager.readFile(FusekiManager.REFERENCE_QUERY), 
+				String.format(Utils.readFile(FusekiManager.REFERENCE_QUERY), 
 				this.authUtilities.getData() + ResenjeRDF.RESENJE_GRAPH, 
 				Namespaces.PREDIKAT + "odgovor", Namespaces.ODGOVOR + "/" + broj), Namespaces.RESENJE + "/");
 	}

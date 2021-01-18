@@ -12,8 +12,18 @@
                         <xs:complexType>
                             <xs:simpleContent>
                                 <xs:extension base="xs:positiveInteger">
-                                    <xs:attribute name="rel" type="osnova:TRequiredString"/>
-                                    <xs:attribute name="href" type="osnova:TRequiredString"/>
+                                    <xs:attribute name="rel">
+                                        <xs:simpleType>
+                                            <xs:restriction base="xs:string">
+                                                <xs:enumeration value="pred:zahtev"/>
+                                            </xs:restriction>
+                                        </xs:simpleType>
+                                    </xs:attribute>
+                                    <xs:attribute name="href">
+                                        <xs:simpleType>
+                                            <xs:restriction base="osnova:TRequiredString"/>
+                                        </xs:simpleType>
+                                    </xs:attribute>
                                 </xs:extension>
                             </xs:simpleContent>
                         </xs:complexType>

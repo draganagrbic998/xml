@@ -27,7 +27,7 @@ public class ZalbaController {
 	
 	@Autowired
 	private ZalbaTransformer zalbaTransformer;
-			
+				
 	@PostMapping(consumes = MediaType.TEXT_XML_VALUE)
 	@PreAuthorize("hasAuthority('gradjanin')")
 	public ResponseEntity<Void> add(@RequestBody String xml) {		
@@ -40,13 +40,7 @@ public class ZalbaController {
 	public ResponseEntity<String> retrieve() {
 		return new ResponseEntity<>(this.zalbaService.retrieve(), HttpStatus.OK);
 	}
-	
-	@PostMapping(value = "advanced_search", consumes = MediaType.TEXT_XML_VALUE, produces = MediaType.TEXT_XML_VALUE)
-	@PreAuthorize("hasAuthority('poverenik')")
-	public ResponseEntity<String> advancedSearch(@RequestBody String xml) {
-		return new ResponseEntity<>(this.zalbaService.advancedSearch(xml), HttpStatus.OK);
-	}
-	
+		
 	@GetMapping(value = "/{broj}", produces = "text/html; charset=utf-8")
 	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<String> html(@PathVariable String broj) {
@@ -61,7 +55,7 @@ public class ZalbaController {
 				.body(resource);
 	}
 	
-	@GetMapping(value = "/{broj}/metadata/xml", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	@GetMapping(value = "/{broj}/metadata_xml", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<Resource> xmlMetadata(@PathVariable String broj) {
 		Resource resource = this.zalbaTransformer.generateMetadata(broj, MetadataTip.xml);
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)
@@ -69,12 +63,24 @@ public class ZalbaController {
 				.body(resource);
 	}
 	
-	@GetMapping(value = "/{broj}/metadata/json", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	@GetMapping(value = "/{broj}/metadata_json", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<Resource> jsonMetadata(@PathVariable String broj) {
 		Resource resource = this.zalbaTransformer.generateMetadata(broj, MetadataTip.json);
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
 				.body(resource);
+	}
+	
+	@PostMapping(value="obicna_pretraga", consumes = MediaType.TEXT_XML_VALUE, produces = MediaType.TEXT_XML_VALUE)
+	@PreAuthorize("hasAuthority('poverenik')")
+	public ResponseEntity<String> regularSearch(@RequestBody String xml) {		
+		return new ResponseEntity<>(this.zalbaService.regularSearch(xml), HttpStatus.OK);
+	}
+
+	@PostMapping(value="napredna_pretraga", consumes = MediaType.TEXT_XML_VALUE, produces = MediaType.TEXT_XML_VALUE)
+	@PreAuthorize("hasAuthority('poverenik')")
+	public ResponseEntity<String> advancedSearch(@RequestBody String xml) {		
+		return new ResponseEntity<>(this.zalbaService.advancedSearch(xml), HttpStatus.OK);
 	}
 
 	@PostMapping(value = "/odustani/{broj}")
@@ -97,5 +103,5 @@ public class ZalbaController {
 		this.zalbaService.prosledi(broj);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-	
+
 }

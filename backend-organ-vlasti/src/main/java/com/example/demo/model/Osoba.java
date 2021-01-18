@@ -10,12 +10,9 @@ import com.example.demo.common.Namespaces;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "Osoba", namespace = Namespaces.OSNOVA)
-@XmlType(propOrder = { "mejl", "ime", "prezime", "potpis" })
+@XmlType(propOrder = { "ime", "prezime", "potpis" })
 public class Osoba {
 	
-	@XmlElement(namespace = Namespaces.OSNOVA, required = true)
-	private String mejl;
-
 	@XmlElement(namespace = Namespaces.OSNOVA, required = true)
 	private String ime;
 	
@@ -27,14 +24,6 @@ public class Osoba {
 	
 	public Osoba() {
 		super();
-	}
-
-	public String getMejl() {
-		return mejl;
-	}
-
-	public void setMejl(String mejl) {
-		this.mejl = mejl;
 	}
 
 	public String getIme() {

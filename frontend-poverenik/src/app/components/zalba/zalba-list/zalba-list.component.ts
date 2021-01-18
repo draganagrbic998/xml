@@ -1,11 +1,11 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDrawer } from '@angular/material/sidenav';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { SNACKBAR_CLOSE, SNACKBAR_ERROR, SNACKBAR_ERROR_OPTIONS, SNACKBAR_SUCCESS_OPTIONS } from 'src/app/constants/snackbar';
 import { ZalbaDTO } from 'src/app/models/zalbaDTO';
+import { ZalbaPretraga } from 'src/app/components/zalba/zalba-pretraga/zalba-pretraga';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ZalbaService } from 'src/app/services/zalba/zalba.service';
 import { environment } from 'src/environments/environment';
@@ -32,16 +32,6 @@ export class ZalbaListComponent implements AfterViewInit {
   sendPending = false;
   selectedZalba: ZalbaDTO;
 
-  naprednaForma: FormGroup = new FormGroup({
-    operacija: new FormControl(''),
-    datum: new FormControl(''),
-    mesto: new FormControl(''),
-    mestoIzdavanja: new FormControl(''),
-    organVlasti: new FormControl(''),
-    tip: new FormControl(''),
-    stanje: new FormControl('')
-  });
-
   get uloga(): string{
     return this.authService.getUser()?.uloga;
   }
@@ -52,16 +42,29 @@ export class ZalbaListComponent implements AfterViewInit {
   }
 
   xmlMetadata(broj: string): void{
-    window.open(`//localhost:8082/${environment.apiZalbe}/${broj}/metadata/xml`, '_blank');
+    window.open(`//localhost:8082/${environment.apiZalbe}/${broj}/metadata_xml`, '_blank');
   }
 
   jsonMetadata(broj: string): void{
-    window.open(`//localhost:8082/${environment.apiZalbe}/${broj}/metadata/json`, '_blank');
+    window.open(`//localhost:8082/${environment.apiZalbe}/${broj}/metadata_json`, '_blank');
   }
 
-  naprednaPretraga(): void{
+  obicnaPretraga(pretraga: string): void{
     this.fetchPending = true;
-    this.zalbaService.advancedSearch(this.naprednaForma.value).subscribe(
+    this.zalbaService.obicnaPretraga(pretraga).subscribe(
+      (zalbe: ZalbaDTO[]) => {
+        this.zalbe = new MatTableDataSource<ZalbaDTO>(zalbe);
+        this.fetchPending = false;
+      },
+      () => {
+        this.fetchPending = false;
+      }
+    );
+  }
+
+  naprednaPretraga(pretraga: ZalbaPretraga): void{
+    this.fetchPending = true;
+    this.zalbaService.naprednaPretraga(pretraga).subscribe(
       (zalbe: ZalbaDTO[]) => {
         this.zalbe = new MatTableDataSource<ZalbaDTO>(zalbe);
         this.fetchPending = false;
@@ -76,6 +79,10 @@ export class ZalbaListComponent implements AfterViewInit {
     return zalba.status === 'cekanje' || zalba.status === 'prosledjeno' || zalba.status === 'odgovoreno';
   }
 
+  canObustaviti(zalba: ZalbaDTO): boolean{
+    return zalba.status === 'odustato' || zalba.status === 'ispravljeno';
+  }
+
   canResiti(zalba: ZalbaDTO): boolean {
     if (zalba.status === 'odgovoreno') {
       return true;
@@ -84,7 +91,8 @@ export class ZalbaListComponent implements AfterViewInit {
     /*
     if (zalba.status !== 'prosledjeno' && ((new Date()).getTime() - zalba.datumProsledjivanja) / 86400000 > 15) {
       return true;
-    }*/
+    }
+    */
 
     if (zalba.status === 'prosledjeno'){
       return true;

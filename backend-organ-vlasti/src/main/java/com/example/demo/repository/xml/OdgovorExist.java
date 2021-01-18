@@ -41,5 +41,10 @@ public class OdgovorExist implements ExistInterface {
 	public ResourceSet retrieve(String xpathExp) {
 		return this.existManager.retrieve(ODGOVOR_COLLECTION, xpathExp);
 	}
+	
+	@Override
+	public String nextDocumentId() {
+		return this.existManager.nextDocumentId(ODGOVOR_COLLECTION);
+	}
 
 }

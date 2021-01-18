@@ -22,8 +22,9 @@ import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
 
 import com.example.demo.common.Constants;
-import com.example.demo.common.MyException;
 import com.example.demo.common.Namespaces;
+import com.example.demo.common.Utils;
+import com.example.demo.exception.MyException;
 import com.example.demo.mapper.OdlukaMapper;
 import com.example.demo.mapper.ZalbaMapper;
 
@@ -44,56 +45,7 @@ public class XSLTransformer {
 			transformer.transform(in, output);
 			Model model = ModelFactory.createDefaultModel();
 			model.read(new StringReader(out.toString()), null);
-			if (document.getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").getLength() > 0) {
-				String broj = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
-				model.add(model.createStatement(
-						model.createResource(Namespaces.ZALBA + "/" + broj), 
-						model.createProperty(Namespaces.PREDIKAT + "tip"), 
-						model.createLiteral(ZalbaMapper.getTipZalbe(document) + "")));
-				model.add(model.createStatement(
-						model.createResource(Namespaces.ZALBA + "/" + broj),
-						model.createProperty(Namespaces.RDF + "type"),
-						model.createResource(Namespaces.ZALBA)));
-			}
-			else if (document.getElementsByTagNameNS(Namespaces.ODLUKA, "Odluka").getLength() > 0) {
-				String broj = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
-				model.add(model.createStatement(
-						model.createResource(Namespaces.ODLUKA + "/" + broj), 
-						model.createProperty(Namespaces.PREDIKAT + "tip"), 
-						model.createLiteral(OdlukaMapper.getTipOdluke(document) + "")));
-				model.add(model.createStatement(
-						model.createResource(Namespaces.ODLUKA + "/" + broj),
-						model.createProperty(Namespaces.RDF + "type"),
-						model.createResource(Namespaces.ODLUKA)));
-			}
-			else if (document.getElementsByTagNameNS(Namespaces.ZAHTEV, "Zahtev").getLength() > 0) {
-				String broj = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
-				model.add(model.createStatement(
-						model.createResource(Namespaces.ZAHTEV + "/" + broj),
-						model.createProperty(Namespaces.RDF + "type"),
-						model.createResource(Namespaces.ZAHTEV)));
-			}
-			else if (document.getElementsByTagNameNS(Namespaces.ODGOVOR, "Odgovor").getLength() > 0) {
-				String broj = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
-				model.add(model.createStatement(
-						model.createResource(Namespaces.ODGOVOR + "/" + broj),
-						model.createProperty(Namespaces.RDF + "type"),
-						model.createResource(Namespaces.ODGOVOR)));
-			}
-			else if (document.getElementsByTagNameNS(Namespaces.RESENJE, "Resenje").getLength() > 0) {
-				String broj = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
-				model.add(model.createStatement(
-						model.createResource(Namespaces.RESENJE + "/" + broj),
-						model.createProperty(Namespaces.RDF + "type"),
-						model.createResource(Namespaces.RESENJE)));
-			}
-			else if (document.getElementsByTagNameNS(Namespaces.IZVESTAJ, "Izvestaj").getLength() > 0) {
-				String broj = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
-				model.add(model.createStatement(
-						model.createResource(Namespaces.IZVESTAJ + "/" + broj),
-						model.createProperty(Namespaces.RDF + "type"),
-						model.createResource(Namespaces.IZVESTAJ)));
-			}
+			this.setTypes(document, model);
 			return model;
 		}
 		catch(Exception e) {
@@ -134,6 +86,25 @@ public class XSLTransformer {
 		catch(Exception e) {
 			throw new MyException(e);
 		}
+	}
+	
+	private void setTypes(Document document, Model model) {
+		if (document.getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").getLength() > 0) {
+			model.add(model.createStatement(
+					model.createResource(Namespaces.ZALBA + "/" + Utils.getBroj(document)), 
+					model.createProperty(Namespaces.PREDIKAT + "tip"), 
+					model.createLiteral(ZalbaMapper.getTipZalbe(document) + "")));
+		}
+		else if (document.getElementsByTagNameNS(Namespaces.ODLUKA, "Odluka").getLength() > 0) {
+			model.add(model.createStatement(
+					model.createResource(Namespaces.ODLUKA + "/" + Utils.getBroj(document)), 
+					model.createProperty(Namespaces.PREDIKAT + "tip"), 
+					model.createLiteral(OdlukaMapper.getTipOdluke(document) + "")));
+		}
+		model.add(model.createStatement(
+				model.createResource(document.getFirstChild().getNamespaceURI() + "/" + Utils.getBroj(document)),
+				model.createProperty(Namespaces.RDF + "type"),
+				model.createResource(document.getFirstChild().getNamespaceURI())));
 	}
 	
 }

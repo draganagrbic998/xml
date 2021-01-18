@@ -31,6 +31,14 @@
     </result>
     <result>
       <binding name="predicate">
+        <uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri>
+      </binding>
+      <binding name="object">
+        <uri>https://github.com/draganagrbic998/xml/odluka</uri>
+      </binding>
+    </result>
+    <result>
+      <binding name="predicate">
         <uri>https://github.com/draganagrbic998/xml/predikat/vlasnik</uri>
       </binding>
       <binding name="object">
@@ -50,7 +58,7 @@
         <uri>https://github.com/draganagrbic998/xml/predikat/datum</uri>
       </binding>
       <binding name="object">
-        <literal>2021-01-15</literal>
+        <literal>2021-01-18</literal>
       </binding>
     </result>
     <result>

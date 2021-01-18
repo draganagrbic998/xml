@@ -42,4 +42,9 @@ public class OdlukaExist implements ExistInterface {
 		return this.existManager.retrieve(ODLUKA_COLLECTION, xpathExp);
 	}
 	
+	@Override
+	public String nextDocumentId() {
+		return this.existManager.nextDocumentId(ODLUKA_COLLECTION);
+	}
+	
 }

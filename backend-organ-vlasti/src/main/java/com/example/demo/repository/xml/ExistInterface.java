@@ -10,5 +10,6 @@ public interface ExistInterface {
 	public void delete(String documentId);
 	public Document load(String documentId);
 	public ResourceSet retrieve(String xpathExp);
+	public String nextDocumentId();
 
 }
