@@ -12,7 +12,7 @@ export class AppComponent {
     private router: Router
   ) { }
 
-  get pdfPage(): boolean{
+  get docPage(): boolean{
     return this.router.url.includes('pdf') || this.router.url.includes('html');
   }
 
