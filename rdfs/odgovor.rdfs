@@ -17,4 +17,12 @@
 	<rdfs:Property rdf:ID="izdatoU">
 		<rdfs:domain rdf:resource="#Odgovor"/>
 	</rdfs:Property>
+
+	<rdfs:Property rdf:ID="organVlasti">
+		<rdfs:domain rdf:resource="#Odgovor"/>
+	</rdfs:Property>
+
+	<rdfs:Property rdf:ID="vlasnik">
+		<rdfs:domain rdf:resource="#Odgovor"/>
+	</rdfs:Property>
 </rdf:RDF>
