@@ -13,7 +13,7 @@ export class AppComponent {
   ) { }
 
   get pdfPage(): boolean{
-    return this.router.url.includes('pdf');
+    return this.router.url.includes('pdf') || this.router.url.includes('html');
   }
 
 }
