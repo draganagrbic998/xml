@@ -18,7 +18,11 @@
 		<rdfs:domain rdf:resource="#Odluka"/>
 	</rdfs:Property>
 	
-	<rdfs:Property rdf:ID="izdao">
+	<rdfs:Property rdf:ID="vlasnik">
+		<rdfs:domain rdf:resource="#Odluka"/>
+	</rdfs:Property>
+		
+	<rdfs:Property rdf:ID="organVlasti">
 		<rdfs:domain rdf:resource="#Odluka"/>
 	</rdfs:Property>
 	
