@@ -7,39 +7,39 @@
 	<rdfs:Class rdf:ID="Resenje"/>
 
 	<rdfs:Property rdf:ID="datum">
-		<rdfs:domain rdf:resource="#Zahtev"/>
+		<rdfs:domain rdf:resource="#Resenje"/>
 	</rdfs:Property>
 	
 	<rdfs:Property rdf:ID="status">
-		<rdfs:domain rdf:resource="#Zahtev"/>
+		<rdfs:domain rdf:resource="#Resenje"/>
 	</rdfs:Property>
 	
 	<rdfs:Property rdf:ID="tipZalbe">
-		<rdfs:domain rdf:resource="#Zahtev"/>
+		<rdfs:domain rdf:resource="#Resenje"/>
 	</rdfs:Property>
 	
 	<rdfs:Property rdf:ID="zahtev">
-		<rdfs:domain rdf:resource="#Zahtev"/>
+		<rdfs:domain rdf:resource="#Resenje"/>
 	</rdfs:Property>
 	
 	<rdfs:Property rdf:ID="zalba">
-		<rdfs:domain rdf:resource="#Zahtev"/>
+		<rdfs:domain rdf:resource="#Resenje"/>
 	</rdfs:Property>
 	
 	<rdfs:Property rdf:ID="odgovor">
-		<rdfs:domain rdf:resource="#Zahtev"/>
+		<rdfs:domain rdf:resource="#Resenje"/>
 	</rdfs:Property>
 	
 	<rdfs:Property rdf:ID="odluka">
-		<rdfs:domain rdf:resource="#Zahtev"/>
+		<rdfs:domain rdf:resource="#Resenje"/>
 	</rdfs:Property>
 	
 	<rdfs:Property rdf:ID="izdatoU">
-		<rdfs:domain rdf:resource="#Zahtev"/>
+		<rdfs:domain rdf:resource="#Resenje"/>
 	</rdfs:Property>
 	
 	<rdfs:Property rdf:ID="vlasnik">
-		<rdfs:domain rdf:resource="#Zahtev"/>
+		<rdfs:domain rdf:resource="#Resenje"/>
 	</rdfs:Property>
 </rdf:RDF>
 
