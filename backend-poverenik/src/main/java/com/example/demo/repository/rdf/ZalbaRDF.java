@@ -24,8 +24,8 @@ public class ZalbaRDF implements RDFInterface {
 
 	public static final String ZALBA_GRAPH = "/zalbe";
 	public static final String ZALBA_SHAPE = Constants.SHAPE_FOLDER + "zalba.ttl";
-	private static final String ZALBA_AND_SEARCH = Constants.SPARQL_FOLDER + "zalba_and.rq";
-	private static final String ZALBA_OR_SEARCH = Constants.SPARQL_FOLDER + "zalba_or.rq";
+	public static final String ZALBA_AND_SEARCH = Constants.SPARQL_FOLDER + "zalba_and.rq";
+	public static final String ZALBA_OR_SEARCH = Constants.SPARQL_FOLDER + "zalba_or.rq";
 
 	@Override
 	public void add(Document document) {

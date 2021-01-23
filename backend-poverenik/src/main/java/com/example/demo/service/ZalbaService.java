@@ -20,7 +20,6 @@ import com.example.demo.exception.ResourceTakenException;
 import com.example.demo.mapper.ZalbaMapper;
 import com.example.demo.model.Korisnik;
 import com.example.demo.parser.DOMParser;
-import com.example.demo.parser.JAXBParser;
 import com.example.demo.repository.rdf.ZalbaRDF;
 import com.example.demo.repository.xml.ZalbaExist;
 import com.example.demo.ws.utils.SOAPActions;
@@ -43,10 +42,7 @@ public class ZalbaService implements ServiceInterface {
 	
 	@Autowired
 	private SOAPService soapService;
-	
-	@Autowired
-	private JAXBParser jaxbParser;
-	
+		
 	@Autowired
 	private DOMParser domParser;
 

@@ -1,6 +1,5 @@
 package com.example.demo.repository.rdf;
 
-import java.util.List;
 
 import org.apache.jena.query.ResultSet;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +8,6 @@ import org.w3c.dom.Document;
 
 import com.example.demo.common.Constants;
 import com.example.demo.common.Namespaces;
-import com.example.demo.common.Utils;
-import com.example.demo.fuseki.FusekiAuthentication;
 import com.example.demo.fuseki.FusekiManager;
 
 @Repository
@@ -19,9 +16,6 @@ public class IzvestajRDF implements RDFInterface {
 	@Autowired
 	private FusekiManager fusekiManager;
 	
-	@Autowired
-	private FusekiAuthentication authUtilities;
-
 	public static final String IZVESTAJ_GRAPH = "/izvestaji";
 	public static final String IZVESTAJ_SHAPE = Constants.SHAPE_FOLDER + "izvestaj.ttl";
 	public static final String IZVESTAJ_AND_SEARCH = Constants.SPARQL_FOLDER + "izvestaj_and.rq";
