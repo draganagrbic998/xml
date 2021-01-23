@@ -2,7 +2,7 @@ import { MatSnackBarConfig } from '@angular/material/snack-bar';
 
 export const SNACKBAR_CLOSE = 'Close';
 export const SNACKBAR_ERROR = 'Desila se greška! Pokušajte ponovo.';
-export const EMPTY_DETALJI = 'Morate uneti nešto kod detalja!';
+export const EMPTY_DETALJI = 'Morate uneti detalje!';
 
 export const SNACKBAR_SUCCESS_OPTIONS: MatSnackBarConfig = {
     horizontalPosition: 'center',

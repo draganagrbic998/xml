@@ -30,8 +30,28 @@ export class ResenjeFormComponent implements AfterViewInit {
     status: new FormControl('', [Validators.required])
   });
 
+  get praznaDispozitiva(): boolean{
+    const parser = new DOMParser();
+    const Dispozitiva = parser.parseFromString(Xonomy.harvest(), 'text/xml').getElementsByTagName('Dispozitiva').item(0);
+    return Dispozitiva.textContent.trim() === '';
+  }
+
+  get praznoObrazlozenje(): boolean{
+    const parser = new DOMParser();
+    const Obrazlozenje = parser.parseFromString(Xonomy.harvest(), 'text/xml').getElementsByTagName('Obrazlozenje').item(0);
+    return Obrazlozenje.textContent.trim() === '';
+  }
+
   save(): void{
     if (this.resenjeForm.invalid){
+      return;
+    }
+    if (this.praznaDispozitiva && this.resenjeForm.value.status === 'odobreno'){
+      this.snackBar.open('Morate uneti dispozitivu!', SNACKBAR_CLOSE, SNACKBAR_ERROR_OPTIONS);
+      return;
+    }
+    if (this.praznoObrazlozenje){
+      this.snackBar.open('Morate uneti obrazlozenje!', SNACKBAR_CLOSE, SNACKBAR_ERROR_OPTIONS);
       return;
     }
     const resenje: Resenje = this.resenjeForm.value;
