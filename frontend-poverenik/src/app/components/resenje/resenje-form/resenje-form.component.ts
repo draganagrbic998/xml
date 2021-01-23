@@ -6,6 +6,7 @@ import { SNACKBAR_CLOSE, SNACKBAR_ERROR, SNACKBAR_ERROR_OPTIONS, SNACKBAR_SUCCES
 import { XonomyService } from 'src/app/services/xonomy/xonomy.service';
 import { ResenjeService } from 'src/app/services/resenje/resenje.service';
 import { Resenje } from 'src/app/models/resenje';
+import { Location } from '@angular/common';
 
 declare const Xonomy: any;
 
@@ -20,7 +21,8 @@ export class ResenjeFormComponent implements AfterViewInit {
     private resenjeService: ResenjeService,
     private xonomyService: XonomyService,
     private snackBar: MatSnackBar,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private location: Location
   ) { }
 
   savePending = false;
@@ -39,6 +41,7 @@ export class ResenjeFormComponent implements AfterViewInit {
       () => {
         this.savePending = false;
         this.snackBar.open('Rešenje poslato!', SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);
+        this.location.back();
       },
       () => {
         this.savePending = false;

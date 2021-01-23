@@ -1,7 +1,7 @@
 import { MatSnackBarConfig } from '@angular/material/snack-bar';
 
 export const SNACKBAR_CLOSE = 'Close';
-export const SNACKBAR_ERROR = 'An error occured! Try again.';
+export const SNACKBAR_ERROR = 'Desila se greška! Pokušajte ponovo.';
 
 export const SNACKBAR_SUCCESS_OPTIONS: MatSnackBarConfig = {
     horizontalPosition: 'center',

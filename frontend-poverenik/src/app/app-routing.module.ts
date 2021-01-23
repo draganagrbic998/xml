@@ -26,6 +26,7 @@ import { PoverenikGuard } from './guard/poverenik/poverenik.guard';
 import { HtmlViewerComponent } from './components/main/html-viewer/html-viewer.component';
 import { PdfViewerComponent } from './components/main/pdf-viewer/pdf-viewer.component';
 import { OdgovorListComponent } from './components/odgovor/odgovor-list/odgovor-list.component';
+import { AuthGuard } from './guard/auth/auth.guard';
 
 const routes: Routes = [
   {
@@ -48,11 +49,13 @@ const routes: Routes = [
   },
   {
     path: ZALBA_LIST,
-    component: ZalbaListComponent
+    component: ZalbaListComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: ODGOVOR_LIST,
-    component: OdgovorListComponent
+    component: OdgovorListComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: RESENJE_FORM,
@@ -61,7 +64,8 @@ const routes: Routes = [
   },
   {
     path: RESENJE_LIST,
-    component: ResenjeListComponent
+    component: ResenjeListComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: IZVESTAJ_LIST,
@@ -70,11 +74,13 @@ const routes: Routes = [
   },
   {
     path: HTML_PATH,
-    component: HtmlViewerComponent
+    component: HtmlViewerComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: PDF_PATH,
-    component: PdfViewerComponent
+    component: PdfViewerComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: '**',

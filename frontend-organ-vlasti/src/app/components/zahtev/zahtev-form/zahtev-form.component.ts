@@ -25,8 +25,8 @@ export class ZahtevFormComponent implements AfterViewInit {
 
   savePending = false;
   zahtevForm: FormGroup = new FormGroup({
-    tipZahteva: new FormControl('obavestenje', [Validators.required]),
-    tipDostave: new FormControl('posta', [this.zahtevValidator.tipDostave()]),
+    tipZahteva: new FormControl('', [Validators.required]),
+    tipDostave: new FormControl('', [this.zahtevValidator.tipDostave()]),
     opisDostave: new FormControl('', [this.zahtevValidator.opisDostave()])
   });
 
@@ -49,6 +49,7 @@ export class ZahtevFormComponent implements AfterViewInit {
       () => {
         this.savePending = false;
         this.snackBar.open('Zahtev poslat!', SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);
+        this.zahtevForm.reset();
       },
       () => {
         this.savePending = false;

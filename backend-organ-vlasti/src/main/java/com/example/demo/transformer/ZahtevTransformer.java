@@ -52,4 +52,8 @@ public class ZahtevTransformer implements TransformerInterface {
 		return this.docTransformer.plainPdf(this.zahtevExist.load(documentId), XSL_FO_PATH);
 	}
 
+	public byte[] plainHtml(String documentId) {
+		return this.docTransformer.plainHtml(this.zahtevExist.load(documentId), XSL_PATH);
+	}
+
 }

@@ -24,8 +24,8 @@ export class ZalbaCutanjeFormComponent implements AfterViewInit {
   savePending = false;
   zalbaForm: FormGroup = new FormGroup({
     naziv: new FormControl('', [Validators.required, Validators.pattern(new RegExp('\\S'))]),
+    tipCutanja: new FormControl('', [Validators.required]),
     brojDokumenta: new FormControl('', [Validators.required, Validators.pattern(/^[0-9]\d*$/)]),
-    tipCutanja: new FormControl('nije postupio', [Validators.required]),
     lozinka: new FormControl('', [Validators.required, Validators.pattern(new RegExp('\\S'))])
   });
 
@@ -44,6 +44,7 @@ export class ZalbaCutanjeFormComponent implements AfterViewInit {
       () => {
         this.savePending = false;
         this.snackBar.open('Zalba poslata!', SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);
+        this.zalbaForm.reset();
       },
       () => {
         this.savePending = false;

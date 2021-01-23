@@ -18,7 +18,6 @@ import com.example.demo.exception.MyException;
 import com.example.demo.mapper.ZahtevMapper;
 import com.example.demo.model.Korisnik;
 import com.example.demo.parser.DOMParser;
-import com.example.demo.parser.JAXBParser;
 import com.example.demo.repository.rdf.ZahtevRDF;
 import com.example.demo.repository.xml.ZahtevExist;
 import com.example.demo.service.email.Email;
@@ -41,9 +40,6 @@ public class ZahtevService implements ServiceInterface {
 	
 	@Autowired
 	private EmailService emailService;
-
-	@Autowired
-	private JAXBParser jaxbParser;
 	
 	@Autowired
 	private DOMParser domParser;

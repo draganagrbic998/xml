@@ -32,6 +32,7 @@ import { ZalbaListComponent } from './components/zalba/zalba-list/zalba-list.com
 import { ResenjeListComponent } from './components/resenje/resenje-list/resenje-list.component';
 import { IzvestajListComponent } from './components/izvestaj/izvestaj-list/izvestaj-list.component';
 import { OdgovorListComponent } from './components/odgovor/odgovor-list/odgovor-list.component';
+import { AuthGuard } from './guard/auth/auth.guard';
 
 const routes: Routes = [
   {
@@ -49,7 +50,8 @@ const routes: Routes = [
   },
   {
     path: ZAHTEV_LIST,
-    component: ZahtevListComponent
+    component: ZahtevListComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: OBAVESTENJE_FORM,
@@ -63,7 +65,8 @@ const routes: Routes = [
   },
   {
     path: ODLUKA_LIST,
-    component: OdlukaListComponent
+    component: OdlukaListComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: ZALBA_LIST,
@@ -92,11 +95,13 @@ const routes: Routes = [
   },
   {
     path: HTML_PATH,
-    component: HtmlViewerComponent
+    component: HtmlViewerComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: PDF_PATH,
-    component: PdfViewerComponent
+    component: PdfViewerComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: '**',

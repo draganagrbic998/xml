@@ -19,7 +19,7 @@ public class Email {
 	
 	@XmlElement(required = true)
 	private String text;
-	
+		
 	public Email() {
 		super();
 	}

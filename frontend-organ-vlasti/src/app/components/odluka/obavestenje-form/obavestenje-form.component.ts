@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { AfterViewInit, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -20,7 +21,8 @@ export class ObavestenjeFormComponent implements AfterViewInit {
     private odlukaService: OdlukaService,
     private xonomyService: XonomyService,
     private snackBar: MatSnackBar,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private location: Location
   ) { }
 
   savePending = false;
@@ -43,6 +45,7 @@ export class ObavestenjeFormComponent implements AfterViewInit {
       () => {
         this.savePending = false;
         this.snackBar.open('Obaveštenje poslato!', SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);
+        this.location.back();
       },
       () => {
         this.savePending = false;

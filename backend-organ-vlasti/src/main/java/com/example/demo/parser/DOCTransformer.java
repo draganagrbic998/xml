@@ -60,6 +60,10 @@ public class DOCTransformer {
 		return this.xslTransformer.generatePdf(this.domParser.buildXml(document), xslFoPath).toByteArray();
 	}
 
+	public byte[] plainHtml(Document document, String xslPath) {
+		return this.xslTransformer.generateHtml(this.domParser.buildXml(document), xslPath).toByteArray();
+	}
+
 	public Resource generateMetadata(String broj, ResultSet results, MetadataTip type, String genPath) {
 		try {
 			ByteArrayOutputStream out = new ByteArrayOutputStream();

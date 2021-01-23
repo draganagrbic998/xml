@@ -3,13 +3,10 @@ package com.example.demo.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
-import org.xmldb.api.base.ResourceSet;
 
-import com.example.demo.common.Utils;
 import com.example.demo.exception.MyException;
 import com.example.demo.exception.ResourceTakenException;
 import com.example.demo.mapper.IzvestajMapper;
-import com.example.demo.parser.JAXBParser;
 import com.example.demo.repository.rdf.IzvestajRDF;
 import com.example.demo.repository.xml.IzvestajExist;
 import com.example.demo.ws.utils.SOAPService;
@@ -30,9 +27,6 @@ public class IzvestajService implements ServiceInterface {
 	@Autowired
 	private SOAPService soapService;
 	
-	@Autowired
-	private JAXBParser jaxbParser;
-
 	@Override
 	public void add(String godina) {
 		try {

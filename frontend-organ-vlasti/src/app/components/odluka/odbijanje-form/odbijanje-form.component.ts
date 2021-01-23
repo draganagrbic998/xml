@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { AfterViewInit, Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
@@ -19,7 +20,8 @@ export class OdbijanjeFormComponent implements AfterViewInit {
     private odlukaService: OdlukaService,
     private xonomyService: XonomyService,
     private snackBar: MatSnackBar,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private location: Location
   ) { }
 
   savePending = false;
@@ -31,6 +33,7 @@ export class OdbijanjeFormComponent implements AfterViewInit {
       () => {
         this.savePending = false;
         this.snackBar.open('Zahtev odbijen!', SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);
+        this.location.back();
       },
       () => {
         this.savePending = false;

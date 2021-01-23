@@ -13,7 +13,6 @@ import com.example.demo.enums.StatusZalbe;
 import com.example.demo.exception.MyException;
 import com.example.demo.mapper.ZalbaMapper;
 import com.example.demo.parser.DOMParser;
-import com.example.demo.parser.JAXBParser;
 import com.example.demo.repository.rdf.ZalbaRDF;
 import com.example.demo.repository.xml.ZalbaExist;
 
@@ -31,10 +30,7 @@ public class ZalbaService implements ServiceInterface {
 	
 	@Autowired
 	private DOMParser domParser;
-	
-	@Autowired
-	private JAXBParser jaxbParser;
-		
+			
 	@Override
 	public void add(String xml) {
 		Document document = this.zalbaMapper.map(xml);
