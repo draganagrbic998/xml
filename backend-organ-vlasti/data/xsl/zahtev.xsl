@@ -204,7 +204,7 @@ xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev">
 								адреса
 							</p>
 							<p class="underline" style="margin-top: 5px;">
-								<xsl:value-of select="$osoba/osnova:mejl"></xsl:value-of>
+								<xsl:value-of select="substring-after(@href, 'https://github.com/draganagrbic998/xml/korisnik/')"></xsl:value-of>
 							</p>
 							<p class="small">
 								други подаци за контакт

@@ -200,7 +200,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 								адреса
 							</p>
 							<p class="dotted" style="margin-top: 5px;">
-								<xsl:value-of select="$osoba/osnova:mejl"></xsl:value-of>
+								<xsl:value-of select="substring-after(@href, 'https://github.com/draganagrbic998/xml/korisnik/')"></xsl:value-of>
 							</p>
 							<p>
 								други подаци за контакт

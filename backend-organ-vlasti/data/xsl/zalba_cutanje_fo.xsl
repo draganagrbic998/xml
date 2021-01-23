@@ -221,7 +221,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 									адреса
 								</fo:block>
 								<fo:block border-bottom="1px dotted black" margin-top="5px">
-									<xsl:value-of select="$osoba/osnova:mejl"></xsl:value-of>
+									<xsl:value-of select="substring-after(@href, 'https://github.com/draganagrbic998/xml/korisnik/')"></xsl:value-of>
 								</fo:block>
 								<fo:block>
 									други подаци за контакт
