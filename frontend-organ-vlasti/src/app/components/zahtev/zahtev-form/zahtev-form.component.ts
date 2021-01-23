@@ -1,7 +1,8 @@
 import { AfterViewInit, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { SNACKBAR_CLOSE, SNACKBAR_ERROR, SNACKBAR_ERROR_OPTIONS, SNACKBAR_SUCCESS_OPTIONS } from 'src/app/constants/snackbar';
+import { EMPTY_DETALJI, SNACKBAR_CLOSE, SNACKBAR_ERROR, SNACKBAR_ERROR_OPTIONS,
+  SNACKBAR_SUCCESS_OPTIONS } from 'src/app/constants/snackbar';
 import { Zahtev } from 'src/app/models/zahtev';
 import { XonomyService } from 'src/app/services/xonomy/xonomy.service';
 import { ZahtevService } from 'src/app/services/zahtev/zahtev.service';
@@ -38,8 +39,18 @@ export class ZahtevFormComponent implements AfterViewInit {
     return this.dostava && this.zahtevForm.value.tipDostave === 'ostalo';
   }
 
+  get prazniDetalji(): boolean{
+    const parser = new DOMParser();
+    const Detalji = parser.parseFromString(Xonomy.harvest(), 'text/xml').getElementsByTagName('Detalji').item(0);
+    return Detalji.textContent.trim() === '';
+  }
+
   save(): void{
     if (!this.zahtevForm.valid){
+      return;
+    }
+    if (this.prazniDetalji){
+      this.snackBar.open(EMPTY_DETALJI, SNACKBAR_CLOSE, SNACKBAR_ERROR_OPTIONS);
       return;
     }
     const zahtev: Zahtev = this.zahtevForm.value;

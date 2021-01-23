@@ -3,7 +3,8 @@ import { AfterViewInit, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
-import { SNACKBAR_CLOSE, SNACKBAR_ERROR, SNACKBAR_ERROR_OPTIONS, SNACKBAR_SUCCESS_OPTIONS } from 'src/app/constants/snackbar';
+import { EMPTY_DETALJI, SNACKBAR_CLOSE, SNACKBAR_ERROR, SNACKBAR_ERROR_OPTIONS,
+  SNACKBAR_SUCCESS_OPTIONS } from 'src/app/constants/snackbar';
 import { Obavestenje } from 'src/app/models/obavestenje';
 import { OdlukaService } from 'src/app/services/odluka/odluka.service';
 import { XonomyService } from 'src/app/services/xonomy/xonomy.service';
@@ -34,8 +35,18 @@ export class ObavestenjeFormComponent implements AfterViewInit {
     kopija: new FormControl('', [Validators.required, Validators.pattern(/^[0-9]\d*$/)])
   });
 
+  get prazniDetalji(): boolean{
+    const parser = new DOMParser();
+    const Detalji = parser.parseFromString(Xonomy.harvest(), 'text/xml').getElementsByTagName('Detalji').item(0);
+    return Detalji.textContent.trim() === '';
+  }
+
   save(): void{
     if (this.obavestenjeForm.invalid){
+      return;
+    }
+    if (this.prazniDetalji){
+      this.snackBar.open(EMPTY_DETALJI, SNACKBAR_CLOSE, SNACKBAR_ERROR_OPTIONS);
       return;
     }
     const obavestenje: Obavestenje = this.obavestenjeForm.value;
