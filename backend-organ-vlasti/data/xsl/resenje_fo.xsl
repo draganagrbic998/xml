@@ -10,10 +10,23 @@ xmlns:resenje="https://github.com/draganagrbic998/xml/resenje">
             <fo:layout-master-set>
                 <fo:simple-page-master master-name="resenje-page">
                     <fo:region-body margin="0.5in"></fo:region-body>
+	                <fo:region-after region-name="xsl-region-after" extent="1.5in"></fo:region-after>
                 </fo:simple-page-master>
             </fo:layout-master-set>
             
             <fo:page-sequence master-reference="resenje-page">
+	            <fo:static-content flow-name="xsl-region-after" font-size="10px" color="blue">
+	          		<fo:block linefeed-treatment="preserve" margin="0.5in">
+       					<fo:leader leader-length="100%" leader-pattern="rule"></fo:leader>                        
+						Повереник за информације од јавног значаја и заштиту података о личности	  
+						&#160;&#160;&#160;Информатор о раду 31.08.2020.године   
+	    				<fo:block text-align-last="justify">
+							<fo:leader></fo:leader>
+							<fo:page-number></fo:page-number>     		
+						</fo:block>
+	          		</fo:block>
+	      		</fo:static-content>
+            
                 <fo:flow flow-name="xsl-region-body">
                 
 					<xsl:variable name="status" select="resenje:status"></xsl:variable>
