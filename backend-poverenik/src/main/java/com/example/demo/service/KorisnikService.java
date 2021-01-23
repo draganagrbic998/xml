@@ -1,9 +1,9 @@
 package com.example.demo.service;
 
 import java.nio.ByteBuffer;
+import java.util.Base64;
 import java.util.UUID;
 
-import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -124,7 +124,7 @@ public class KorisnikService implements UserDetailsService {
                 .putLong(uuid.getMostSignificantBits())
                 .putLong(uuid.getLeastSignificantBits())
                 .array();
-        return Base64.encodeBase64String(bytes);
+        return Base64.getUrlEncoder().encodeToString(bytes);
 	}
 	
 	private void sendActivationEmail(String mejl, String potpis) {		
