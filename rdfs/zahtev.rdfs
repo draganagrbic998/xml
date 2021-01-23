@@ -18,7 +18,11 @@
 		<rdfs:domain rdf:resource="#Zahtev"/>
 	</rdfs:Property>
 	
-	<rdfs:Property rdf:ID="podneo">
+	<rdfs:Property rdf:ID="vlasnik">
+		<rdfs:domain rdf:resource="#Zahtev"/>
+	</rdfs:Property>
+	
+	<rdfs:Property rdf:ID="organVlasti">
 		<rdfs:domain rdf:resource="#Zahtev"/>
 	</rdfs:Property>
 	
