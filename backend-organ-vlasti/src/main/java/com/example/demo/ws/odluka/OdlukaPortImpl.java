@@ -76,7 +76,7 @@ public class OdlukaPortImpl implements Odluka {
 		try {
 			String documentId = this.domParser.buildDocument(getOdlukaPdfRequest).getElementsByTagName("broj").item(0)
 					.getTextContent();
-			return this.odlukaTransformer.plainPdf(documentId);
+			return this.odlukaTransformer.bytePdf(documentId);
 		} catch (java.lang.Exception ex) {
 			ex.printStackTrace();
 			throw new RuntimeException(ex);

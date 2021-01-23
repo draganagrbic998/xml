@@ -31,6 +31,11 @@ public class OdgovorExist implements ExistInterface {
 	public void delete(String documentId) {
 		this.existManager.delete(ODGOVOR_COLLECTION, documentId);
 	}
+		
+	@Override
+	public ResourceSet retrieve(String xpathExp) {
+		return this.existManager.retrieve(ODGOVOR_COLLECTION, xpathExp);
+	}
 	
 	@Override
 	public Document load(String documentId) {
@@ -41,12 +46,7 @@ public class OdgovorExist implements ExistInterface {
 			return null;
 		}
 	}
-	
-	@Override
-	public ResourceSet retrieve(String xpathExp) {
-		return this.existManager.retrieve(ODGOVOR_COLLECTION, xpathExp);
-	}
-	
+
 	@Override
 	public String nextDocumentId() {
 		return this.existManager.nextDocumentId(ODGOVOR_COLLECTION);

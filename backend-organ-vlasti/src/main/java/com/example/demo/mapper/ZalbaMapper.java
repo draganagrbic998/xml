@@ -21,10 +21,10 @@ import com.example.demo.repository.rdf.ZalbaRDF;
 public class ZalbaMapper implements MapperInterface {
 
 	@Autowired
-	private ZalbaRDF zalbaRDF;
+	private DOMParser domParser;
 
 	@Autowired
-	private DOMParser domParser;
+	private ZalbaRDF zalbaRDF;
 		
 	@Override
 	public Document map(String xml) {

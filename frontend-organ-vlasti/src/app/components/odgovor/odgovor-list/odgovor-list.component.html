@@ -50,8 +50,8 @@
         <ng-container matColumnDef="metapodaci">
           <th mat-header-cell *matHeaderCellDef>Metapodaci</th>
           <td mat-cell *matCellDef="let odgovor">
-            <a *ngIf="true" (click)="xmlMetadata(odgovor.broj)">XML</a><br>
-            <a *ngIf="true" (click)="jsonMetadata(odgovor.broj)">JSON</a>
+            <a [href]="xmlMetadata(odgovor.broj)" target="_blank">XML</a><br>
+            <a [href]="jsonMetadata(odgovor.broj)" target="_blank">JSON</a>
           </td>
         </ng-container>
 

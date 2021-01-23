@@ -31,17 +31,17 @@ public class OdlukaExist implements ExistInterface {
 	public void delete(String documentId) {
 		this.existManager.delete(ODLUKA_COLLECTION, documentId);
 	}
-	
-	@Override
-	public Document load(String documentId) {
-		return this.existManager.load(ODLUKA_COLLECTION, documentId);
-	}
-	
+		
 	@Override
 	public ResourceSet retrieve(String xpathExp) {
 		return this.existManager.retrieve(ODLUKA_COLLECTION, xpathExp);
 	}
 	
+	@Override
+	public Document load(String documentId) {
+		return this.existManager.load(ODLUKA_COLLECTION, documentId);
+	}
+
 	@Override
 	public String nextDocumentId() {
 		return this.existManager.nextDocumentId(ODLUKA_COLLECTION);

@@ -33,15 +33,15 @@ public class OrganVlastiExist implements ExistInterface {
 	}
 
 	@Override
+	public ResourceSet retrieve(String xpathExp) {
+		return this.existManager.retrieve(ORGAN_VLASTI_COLLECTION, xpathExp);
+	}
+
+	@Override
 	public Document load(String documentId) {
 		return this.existManager.load(ORGAN_VLASTI_COLLECTION, documentId);
 	}
 
-	@Override
-	public ResourceSet retrieve(String xpathExp) {
-		return this.existManager.retrieve(ORGAN_VLASTI_COLLECTION, xpathExp);
-	}
-	
 	@Override
 	public String nextDocumentId() {
 		return this.existManager.nextDocumentId(ORGAN_VLASTI_COLLECTION);

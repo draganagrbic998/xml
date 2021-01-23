@@ -31,17 +31,17 @@ public class ZahtevExist implements ExistInterface {
 	public void delete(String documentId) {
 		this.existManager.delete(ZAHTEV_COLLECTION, documentId);
 	}
-	
-	@Override
-	public Document load(String documentId) {
-		return this.existManager.load(ZAHTEV_COLLECTION, documentId);
-	}
-	
+		
 	@Override
 	public ResourceSet retrieve(String xpathExp) {
 		return this.existManager.retrieve(ZAHTEV_COLLECTION, xpathExp);
 	}
 	
+	@Override
+	public Document load(String documentId) {
+		return this.existManager.load(ZAHTEV_COLLECTION, documentId);
+	}
+
 	@Override
 	public String nextDocumentId() {
 		return this.existManager.nextDocumentId(ZAHTEV_COLLECTION);

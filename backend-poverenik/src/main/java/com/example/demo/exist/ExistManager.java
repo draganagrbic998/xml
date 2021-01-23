@@ -17,7 +17,9 @@ import org.xmldb.api.modules.XMLResource;
 import org.xmldb.api.modules.XPathQueryService;
 
 import com.example.demo.common.Namespaces;
+import com.example.demo.exception.InvalidXMLException;
 import com.example.demo.exception.MyException;
+import com.example.demo.exception.NotFoundException;
 import com.example.demo.parser.SchemaValidator;
 
 @Component
@@ -58,7 +60,7 @@ public class ExistManager {
 			return documentId;
 		}
 		catch(Exception e) {
-			throw new MyException(e);
+			throw new InvalidXMLException();
 		}
 		finally {
 			try {
@@ -79,11 +81,38 @@ public class ExistManager {
 			collection.removeResource(collection.getResource(documentId));
 		}
 		catch(Exception e) {
-			throw new MyException(e);
+			throw new NotFoundException();
 		}
 		finally {
 			try {
 				collection.close();
+			}
+			catch(Exception e) {
+				throw new MyException(e);
+			}
+		}
+	}
+		
+	public ResourceSet retrieve(String collectionId, String xpathExp) {
+		Collection collection = null;
+		try {
+			this.createConnection();
+			collection = this.getCollection(collectionId, 0);
+			XPathQueryService xpathService = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
+			xpathService.setProperty(OutputKeys.INDENT, "yes");
+			xpathService.setNamespace("", Namespaces.OSNOVA);
+			xpathService.setNamespace("zalba", Namespaces.ZALBA);
+			xpathService.setNamespace("odgovor", Namespaces.ODGOVOR);
+			xpathService.setNamespace("resenje", Namespaces.RESENJE);
+			xpathService.setNamespace("izvestaj", Namespaces.IZVESTAJ);
+			return xpathService.query(xpathExp);
+		} 
+		catch(Exception e) {
+			throw new NotFoundException();
+		}
+		finally {
+			try {
+				collection.close();			
 			}
 			catch(Exception e) {
 				throw new MyException(e);
@@ -101,7 +130,7 @@ public class ExistManager {
 			return (Document) resource.getContentAsDOM();
 		}
 		catch(Exception e) {
-			throw new MyException(e);
+			throw new NotFoundException();
 		}
 		finally {
 			try {
@@ -112,34 +141,28 @@ public class ExistManager {
 			}
 		}
 	}
-	
-	public ResourceSet retrieve(String collectionId, String xpathExp) {
+
+	public String nextDocumentId(String collectionId) {
 		Collection collection = null;
-		try {
+		try { 
 			this.createConnection();
 			collection = this.getCollection(collectionId, 0);
-			XPathQueryService xpathService = (XPathQueryService) collection.getService("XPathQueryService", "1.0");
-			xpathService.setProperty(OutputKeys.INDENT, "yes");
-			xpathService.setNamespace("", Namespaces.OSNOVA);
-			xpathService.setNamespace("zalba", Namespaces.ZALBA);
-			xpathService.setNamespace("odgovor", Namespaces.ODGOVOR);
-			xpathService.setNamespace("resenje", Namespaces.RESENJE);
-			xpathService.setNamespace("izvestaj", Namespaces.IZVESTAJ);
-			return xpathService.query(xpathExp);
-		} 
+			String[] array = collection.listResources();
+			return (Arrays.asList(array).stream().mapToInt(str -> Integer.parseInt(str)).max().orElse(0) + 1) + "";
+		}
 		catch(Exception e) {
-			throw new MyException(e);
+			throw new NotFoundException();
 		}
 		finally {
 			try {
-				collection.close();			
+				collection.close();
 			}
 			catch(Exception e) {
 				throw new MyException(e);
 			}
 		}
 	}
-	
+
 	public void dropCollection(String collectionId) {
 		this.createConnection();
 		Collection collection = null;
@@ -150,7 +173,7 @@ public class ExistManager {
 			}
 		}
 		catch(Exception e) {
-			throw new MyException(e);
+			throw new NotFoundException();
 		}
 		finally {
 			try {
@@ -202,26 +225,5 @@ public class ExistManager {
 			throw new MyException(e);
 		}
 	}
-	
-	public String nextDocumentId(String collectionId) {
-		Collection collection = null;
-		try { 
-			this.createConnection();
-			collection = this.getCollection(collectionId, 0);
-			String[] array = collection.listResources();
-			return (Arrays.asList(array).stream().mapToInt(str -> Integer.parseInt(str)).max().orElse(0) + 1) + "";
-		}
-		catch(Exception e) {
-			throw new MyException(e);
-		}
-		finally {
-			try {
-				collection.close();
-			}
-			catch(Exception e) {
-				throw new MyException(e);
-			}
-		}
-	}
-			
+				
 }

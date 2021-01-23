@@ -30,6 +30,11 @@ import com.example.demo.ws.utils.SOAPActions;
 @Component
 public class ZalbaMapper implements MapperInterface {
 	
+	public static final String STUB_FILE = Constants.STUB_FOLDER + "zalba.xml";
+
+	@Autowired
+	private DOMParser domParser;
+
 	@Autowired
 	private ZalbaExist zalbaExist;
 	
@@ -44,12 +49,7 @@ public class ZalbaMapper implements MapperInterface {
 	
 	@Autowired
 	private SOAPService soapService;
-
-	@Autowired
-	private DOMParser domParser;
-				
-	private static final String STUB_FILE = Constants.STUB_FOLDER + "zalba.xml";
-	
+					
 	@Override
 	public Document map(String xml) {
 		Document dto = this.domParser.buildDocument(xml);

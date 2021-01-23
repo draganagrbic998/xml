@@ -1,6 +1,5 @@
 package com.example.demo.repository.rdf;
 
-
 import org.apache.jena.query.ResultSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;

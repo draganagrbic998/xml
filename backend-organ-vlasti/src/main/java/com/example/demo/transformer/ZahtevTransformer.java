@@ -7,8 +7,8 @@ import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
 import com.example.demo.common.Constants;
-import com.example.demo.enums.MetadataTip;
-import com.example.demo.parser.DOCTransformer;
+import com.example.demo.enums.MetadataType;
+import com.example.demo.parser.XSLTransformer;
 import com.example.demo.repository.rdf.ZahtevRDF;
 import com.example.demo.repository.xml.ZahtevExist;
 
@@ -22,7 +22,7 @@ public class ZahtevTransformer implements TransformerInterface {
 	private ZahtevRDF zahtevRDF;
 	
 	@Autowired
-	private DOCTransformer docTransformer;
+	private XSLTransformer xslTransformer;
 		
 	private static final String XSL_PATH = Constants.XSL_FOLDER + "zahtev.xsl";
 	private static final String XSL_FO_PATH = Constants.XSL_FOLDER + "zahtev_fo.xsl";
@@ -30,30 +30,27 @@ public class ZahtevTransformer implements TransformerInterface {
 		
 	@Override
 	public String html(String documentId) {
-		return this.docTransformer.html(this.zahtevExist.load(documentId), XSL_PATH);
+		return this.xslTransformer.html(this.zahtevExist.load(documentId), XSL_PATH);
+	}
+		
+	@Override
+	public Resource pdf(String documentId) {
+		return this.xslTransformer.pdf(this.zahtevExist.load(documentId), XSL_FO_PATH, GEN_PATH);
 	}
 	
 	@Override
-	public Resource generateHtml(String documentId) {
-		return this.docTransformer.generateHtml(this.zahtevExist.load(documentId), XSL_PATH, GEN_PATH);
+	public byte[] byteHtml(String documentId) {
+		return this.xslTransformer.byteHtml(this.zahtevExist.load(documentId), XSL_PATH);
 	}
 	
 	@Override
-	public Resource generatePdf(String documentId) {
-		return this.docTransformer.generatePdf(this.zahtevExist.load(documentId), XSL_FO_PATH, GEN_PATH);
+	public byte[] bytePdf(String documentId) {
+		return this.xslTransformer.bytePdf(this.zahtevExist.load(documentId), XSL_FO_PATH);
 	}
 	
 	@Override
-	public Resource generateMetadata(String documentId, MetadataTip type) {
-		return this.docTransformer.generateMetadata(documentId, this.zahtevRDF.retrieve(documentId), type, GEN_PATH);
-	}
-	
-	public byte[] plainPdf(String documentId) {
-		return this.docTransformer.plainPdf(this.zahtevExist.load(documentId), XSL_FO_PATH);
-	}
-
-	public byte[] plainHtml(String documentId) {
-		return this.docTransformer.plainHtml(this.zahtevExist.load(documentId), XSL_PATH);
+	public Resource metadata(String documentId, MetadataType type) {
+		return this.xslTransformer.metadata(documentId, this.zahtevRDF.retrieve(documentId), type, GEN_PATH);
 	}
 
 }

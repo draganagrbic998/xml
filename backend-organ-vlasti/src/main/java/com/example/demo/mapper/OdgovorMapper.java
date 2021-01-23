@@ -23,16 +23,16 @@ import com.example.demo.repository.xml.ZalbaExist;
 @Component
 public class OdgovorMapper implements MapperInterface {
 
+	public static final String STUB_FILE = Constants.STUB_FOLDER + "odgovor.xml";
+
+	@Autowired
+	private DOMParser domParser;
+
 	@Autowired
 	private ZalbaExist zalbaExist;
 		
 	@Autowired
 	private OdgovorRDF odgovorRDF;
-	
-	@Autowired
-	private DOMParser domParser;
-
-	private static final String STUB_FILE = Constants.STUB_FOLDER + "odgovor.xml";
 	
 	@Override
 	public Document map(String xml) {

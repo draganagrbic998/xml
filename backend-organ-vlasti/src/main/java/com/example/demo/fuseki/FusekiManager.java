@@ -12,8 +12,6 @@ import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.riot.RDFDataMgr;
-import org.apache.jena.riot.RDFFormat;
 import org.apache.jena.update.UpdateExecutionFactory;
 import org.apache.jena.update.UpdateFactory;
 import org.apache.jena.update.UpdateProcessor;
@@ -29,6 +27,7 @@ import org.topbraid.shacl.vocabulary.SH;
 
 import com.example.demo.common.Constants;
 import com.example.demo.common.Utils;
+import com.example.demo.exception.InvalidRDFException;
 import com.example.demo.parser.XSLTransformer;
 
 @Component
@@ -44,7 +43,7 @@ public class FusekiManager {
 	public static final String REFERENCE_QUERY = Constants.SPARQL_FOLDER + "reference.rq";	
 	
 	public void add(String graphUri, Document document, String shapePath) {
-		Model model = this.xslTransformer.generateMetadata(document);
+		Model model = this.xslTransformer.model(document);
 		Model shapeModel = JenaUtil.createDefaultModel();
 		shapeModel.read(shapePath);
 		Resource reportResource = ValidationUtil.validateModel(model, shapeModel, true);
@@ -59,7 +58,7 @@ public class FusekiManager {
 			processor.execute();
 		}
 		else {
-			RDFDataMgr.write(System.out, reportResource.getModel(), RDFFormat.TURTLE);
+			throw new InvalidRDFException();
 		}
 	}
 	

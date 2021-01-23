@@ -33,12 +33,12 @@ export class OdgovorListComponent implements AfterViewInit {
     return `${array[2]}.${array[1]}.${array[0]}.`;
   }
 
-  xmlMetadata(broj: string): void{
-    window.open(`//localhost:8082/${environment.apiOdgovori}/${broj}/metadata_xml`, '_blank');
+  xmlMetadata(broj: string): string{
+    return `${environment.baseUrl}/${environment.apiOdgovori}/${broj}/metadata_xml`;
   }
 
-  jsonMetadata(broj: string): void{
-    window.open(`//localhost:8082/${environment.apiOdgovori}/${broj}/metadata_json`, '_blank');
+  jsonMetadata(broj: string): string{
+    return `${environment.baseUrl}/${environment.apiOdgovori}/${broj}/metadata_json`;
   }
 
   obicnaPretraga(pretraga: string): void{

@@ -25,6 +25,11 @@ import com.example.demo.repository.xml.ZahtevExist;
 @Component
 public class OdlukaMapper implements MapperInterface {
 
+	public static final String STUB_FILE = Constants.STUB_FOLDER + "odluka.xml";
+
+	@Autowired
+	private DOMParser domParser;
+
 	@Autowired
 	private OdlukaExist odlukaExist;
 	
@@ -33,12 +38,7 @@ public class OdlukaMapper implements MapperInterface {
 
 	@Autowired
 	private ZahtevExist zahtevExist;
-
-	@Autowired
-	private DOMParser domParser;
 		
-	private static final String STUB_FILE = Constants.STUB_FOLDER + "odluka.xml";
-
 	@Override
 	public Document map(String xml) {
 		Document dto = this.domParser.buildDocument(xml);

@@ -8,10 +8,10 @@ import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
 
 import com.example.demo.common.Constants;
-import com.example.demo.enums.MetadataTip;
+import com.example.demo.enums.MetadataType;
 import com.example.demo.enums.TipOdluke;
 import com.example.demo.mapper.OdlukaMapper;
-import com.example.demo.parser.DOCTransformer;
+import com.example.demo.parser.XSLTransformer;
 import com.example.demo.repository.rdf.OdlukaRDF;
 import com.example.demo.repository.xml.OdlukaExist;
 
@@ -25,7 +25,7 @@ public class OdlukaTransformer implements TransformerInterface {
 	private OdlukaRDF odlukaRDF;
 	
 	@Autowired
-	private DOCTransformer docTransformer;
+	private XSLTransformer xslTransformer;
 
 	private static final String XSL_PATH_OBAVESTENJE = Constants.XSL_FOLDER + "obavestenje.xsl";
 	private static final String XSL_PATH_ODBIJANJE = Constants.XSL_FOLDER + "odbijanje.xsl";
@@ -37,40 +37,41 @@ public class OdlukaTransformer implements TransformerInterface {
 	public String html(String documentId) {
 		Document document = this.odlukaExist.load(documentId);
 		if (OdlukaMapper.getTipOdluke(document).equals(TipOdluke.obavestenje)) {
-			return this.docTransformer.html(document, XSL_PATH_OBAVESTENJE);
+			return this.xslTransformer.html(document, XSL_PATH_OBAVESTENJE);
 		}
-		return this.docTransformer.html(document, XSL_PATH_ODBIJANJE);
+		return this.xslTransformer.html(document, XSL_PATH_ODBIJANJE);
+	}
+		
+	@Override
+	public Resource pdf(String documentId) {
+		Document document = this.odlukaExist.load(documentId);
+		if (OdlukaMapper.getTipOdluke(document).equals(TipOdluke.obavestenje)) {
+			return this.xslTransformer.pdf(document, XSL_FO_PATH_OBAVESTENJE, GEN_PATH);
+		}
+		return this.xslTransformer.pdf(document, XSL_FO_PATH_ODBIJANJE, GEN_PATH);
 	}
 	
 	@Override
-	public Resource generateHtml(String documentId) {
+	public byte[] byteHtml(String documentId) {
 		Document document = this.odlukaExist.load(documentId);
 		if (OdlukaMapper.getTipOdluke(document).equals(TipOdluke.obavestenje)) {
-			return this.docTransformer.generateHtml(document, XSL_PATH_OBAVESTENJE, GEN_PATH);
+			return this.xslTransformer.byteHtml(document, XSL_PATH_OBAVESTENJE);
 		}
-		return this.docTransformer.generateHtml(document, XSL_PATH_ODBIJANJE, GEN_PATH);
+		return this.xslTransformer.byteHtml(document, XSL_PATH_ODBIJANJE);
 	}
 	
 	@Override
-	public Resource generatePdf(String documentId) {
+	public byte[] bytePdf(String documentId) {
 		Document document = this.odlukaExist.load(documentId);
 		if (OdlukaMapper.getTipOdluke(document).equals(TipOdluke.obavestenje)) {
-			return this.docTransformer.generatePdf(document, XSL_FO_PATH_OBAVESTENJE, GEN_PATH);
+			return this.xslTransformer.bytePdf(document, XSL_FO_PATH_OBAVESTENJE);
 		}
-		return this.docTransformer.generatePdf(document, XSL_FO_PATH_ODBIJANJE, GEN_PATH);
+		return this.xslTransformer.bytePdf(document, XSL_FO_PATH_ODBIJANJE);
 	}
 	
 	@Override
-	public Resource generateMetadata(String documentId, MetadataTip type) {
-		return this.docTransformer.generateMetadata(documentId, this.odlukaRDF.retrieve(documentId), type, GEN_PATH);
+	public Resource metadata(String documentId, MetadataType type) {
+		return this.xslTransformer.metadata(documentId, this.odlukaRDF.retrieve(documentId), type, GEN_PATH);
 	}
 	
-	public byte[] plainPdf(String documentId) {
-		Document document = this.odlukaExist.load(documentId);
-		if (OdlukaMapper.getTipOdluke(document).equals(TipOdluke.obavestenje)) {
-			return this.docTransformer.plainPdf(document, XSL_FO_PATH_OBAVESTENJE);
-		}
-		return this.docTransformer.plainPdf(document, XSL_FO_PATH_ODBIJANJE);
-	}
-
 }

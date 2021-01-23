@@ -39,12 +39,12 @@ public class OdlukaController {
 	@GetMapping(value = "/{broj}", produces = "text/html; charset=utf-8")
 	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<String> html(@PathVariable String broj) {
-		Document document = this.domParser.buildDocument(String.format("<pregled><broj>%s</broj><tip>html</tip></pregled>", broj));
+		Document document = this.domParser.buildDocument("<broj>" + broj + "</broj>");
 		return new ResponseEntity<>(this.soapService.sendSOAPMessage(document, SOAPActions.odluka_html), HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/{broj}/pdf", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-	public ResponseEntity<Resource> generatePdf(@PathVariable String broj) {
+	public ResponseEntity<Resource> pdf(@PathVariable String broj) {
 		try {
 			Document document = this.domParser.buildDocument("<broj>" + broj + "</broj>");
 			String temp = this.soapService.sendSOAPMessage(document, SOAPActions.odluka_pdf);

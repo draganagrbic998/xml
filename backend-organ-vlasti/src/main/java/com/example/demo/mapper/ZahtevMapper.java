@@ -26,7 +26,12 @@ import com.example.demo.service.OrganVlastiService;
 
 @Component
 public class ZahtevMapper implements MapperInterface {
-	
+
+	public static final String STUB_FILE = Constants.STUB_FOLDER + "zahtev.xml";
+
+	@Autowired
+	private DOMParser domParser;
+				
 	@Autowired
 	private ZahtevExist zahtevExist;
 	
@@ -41,11 +46,6 @@ public class ZahtevMapper implements MapperInterface {
 	
 	@Autowired
 	private OrganVlastiService organVlastiService;
-
-	@Autowired
-	private DOMParser domParser;
-				
-	private static final String STUB_FILE = Constants.STUB_FOLDER + "zahtev.xml";
 	
 	@Override
 	public Document map(String xml) {

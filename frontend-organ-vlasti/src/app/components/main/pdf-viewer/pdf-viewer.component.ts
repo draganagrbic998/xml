@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-pdf-viewer',
@@ -13,7 +14,7 @@ export class PdfViewerComponent implements OnInit {
   ) { }
 
   get path(): string{
-    return `//localhost:8081/api/${this.route.snapshot.params.dokument}/${this.route.snapshot.params.broj}/pdf`;
+    return `${environment.baseUrl}/api/${this.route.snapshot.params.dokument}/${this.route.snapshot.params.broj}/pdf`;
   }
 
   ngOnInit(): void {

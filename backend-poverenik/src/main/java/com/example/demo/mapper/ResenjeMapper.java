@@ -25,6 +25,11 @@ import com.example.demo.service.KorisnikService;
 @Component
 public class ResenjeMapper implements MapperInterface {
 	
+	public static final String STUB_FILE = Constants.STUB_FOLDER + "resenje.xml";
+
+	@Autowired
+	private DOMParser domParser;
+
 	@Autowired
 	private ResenjeExist resenjeExist;
 
@@ -39,12 +44,7 @@ public class ResenjeMapper implements MapperInterface {
 
 	@Autowired
 	private KorisnikService korisnikService;
-	
-	@Autowired
-	private DOMParser domParser;
-	
-	private static final String STUB_FILE = Constants.STUB_FOLDER + "resenje.xml";
-	
+			
 	@Override
 	public Document map(String xml) {
 		Document dto = this.domParser.buildDocument(xml);

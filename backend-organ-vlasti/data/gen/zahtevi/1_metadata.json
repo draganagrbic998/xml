@@ -10,7 +10,7 @@
       } ,
       {
         "predicate": { "type": "uri" , "value": "https://github.com/draganagrbic998/xml/predikat/tip" } ,
-        "object": { "type": "literal" , "value": "obavestenje" }
+        "object": { "type": "literal" , "value": "uvid" }
       } ,
       {
         "predicate": { "type": "uri" , "value": "https://github.com/draganagrbic998/xml/predikat/izdatoU" } ,
@@ -34,7 +34,7 @@
       } ,
       {
         "predicate": { "type": "uri" , "value": "https://github.com/draganagrbic998/xml/predikat/status" } ,
-        "object": { "type": "literal" , "value": "cekanje" }
+        "object": { "type": "literal" , "value": "odobreno" }
       }
     ]
   }

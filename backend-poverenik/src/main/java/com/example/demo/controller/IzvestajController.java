@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.enums.MetadataTip;
+import com.example.demo.enums.MetadataType;
 import com.example.demo.service.IzvestajService;
 import com.example.demo.transformer.IzvestajTransformer;
 
@@ -41,8 +41,8 @@ public class IzvestajController {
 	}
 	
 	@GetMapping(value = "/{broj}/pdf", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-	public ResponseEntity<Resource> generatePdf(@PathVariable String broj) {
-		Resource resource = this.izvestajTransformer.generatePdf(broj);
+	public ResponseEntity<Resource> pdf(@PathVariable String broj) {
+		Resource resource = this.izvestajTransformer.pdf(broj);
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
 				.body(resource);
@@ -50,7 +50,7 @@ public class IzvestajController {
 	
 	@GetMapping(value = "/{broj}/metadata_xml", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<Resource> xmlMetadata(@PathVariable String broj) {
-		Resource resource = this.izvestajTransformer.generateMetadata(broj, MetadataTip.xml);
+		Resource resource = this.izvestajTransformer.metadata(broj, MetadataType.xml);
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
 				.body(resource);
@@ -58,7 +58,7 @@ public class IzvestajController {
 	
 	@GetMapping(value = "/{broj}/metadata_json", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<Resource> jsonMetadata(@PathVariable String broj) {
-		Resource resource = this.izvestajTransformer.generateMetadata(broj, MetadataTip.json);
+		Resource resource = this.izvestajTransformer.metadata(broj, MetadataType.json);
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
 				.body(resource);

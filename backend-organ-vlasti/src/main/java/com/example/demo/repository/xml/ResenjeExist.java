@@ -31,17 +31,17 @@ public class ResenjeExist implements ExistInterface {
 	public void delete(String documentId) {
 		this.existManager.delete(RESENJE_COLLECTION, documentId);
 	}
-	
-	@Override
-	public Document load(String documentId) {
-		return this.existManager.load(RESENJE_COLLECTION, documentId);
-	}
-	
+		
 	@Override
 	public ResourceSet retrieve(String xpathExp) {
 		return this.existManager.retrieve(RESENJE_COLLECTION, xpathExp);
 	}
 	
+	@Override
+	public Document load(String documentId) {
+		return this.existManager.load(RESENJE_COLLECTION, documentId);
+	}
+
 	@Override
 	public String nextDocumentId() {
 		return this.existManager.nextDocumentId(RESENJE_COLLECTION);

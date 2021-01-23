@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.enums.MetadataTip;
+import com.example.demo.enums.MetadataType;
 import com.example.demo.service.OdlukaService;
 import com.example.demo.transformer.OdlukaTransformer;
 
@@ -47,17 +47,9 @@ public class OdlukaController {
 		return new ResponseEntity<>(this.odlukaTransfomer.html(broj), HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/{broj}/html", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-	public ResponseEntity<Resource> generateHtml(@PathVariable String broj) {
-		Resource resource = this.odlukaTransfomer.generateHtml(broj);
-		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-				.body(resource);
-	}
-	
 	@GetMapping(value = "/{broj}/pdf", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-	public ResponseEntity<Resource> generatePdf(@PathVariable String broj) {
-		Resource resource = this.odlukaTransfomer.generatePdf(broj);
+	public ResponseEntity<Resource> pdf(@PathVariable String broj) {
+		Resource resource = this.odlukaTransfomer.pdf(broj);
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
 				.body(resource);
@@ -65,7 +57,7 @@ public class OdlukaController {
 	
 	@GetMapping(value = "/{broj}/metadata_xml", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<Resource> xmlMetadata(@PathVariable String broj) {
-		Resource resource = this.odlukaTransfomer.generateMetadata(broj, MetadataTip.xml);
+		Resource resource = this.odlukaTransfomer.metadata(broj, MetadataType.xml);
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
 				.body(resource);
@@ -73,7 +65,7 @@ public class OdlukaController {
 	
 	@GetMapping(value = "/{broj}/metadata_json", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public ResponseEntity<Resource> jsonMetadata(@PathVariable String broj) {
-		Resource resource = this.odlukaTransfomer.generateMetadata(broj, MetadataTip.json);
+		Resource resource = this.odlukaTransfomer.metadata(broj, MetadataType.json);
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
 				.body(resource);

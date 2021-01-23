@@ -31,17 +31,17 @@ public class OdgovorExist implements ExistInterface {
 	public void delete(String documentId) {
 		this.existManager.delete(ODGOVOR_COLLECTION, documentId);
 	}
-	
-	@Override
-	public Document load(String documentId) {
-		return this.existManager.load(ODGOVOR_COLLECTION, documentId);
-	}
-	
+		
 	@Override
 	public ResourceSet retrieve(String xpathExp) {
 		return this.existManager.retrieve(ODGOVOR_COLLECTION, xpathExp);
 	}
 	
+	@Override
+	public Document load(String documentId) {
+		return this.existManager.load(ODGOVOR_COLLECTION, documentId);
+	}
+
 	@Override
 	public String nextDocumentId() {
 		return this.existManager.nextDocumentId(ODGOVOR_COLLECTION);

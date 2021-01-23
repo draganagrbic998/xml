@@ -7,8 +7,8 @@ public interface ServiceInterface {
 	public void add(String xml);
 	public void update(String documentId, Document document);
 	public void delete(String documentId);
-	public Document load(String documentId);
 	public String retrieve();
+	public Document load(String documentId);
 	public String regularSearch(String xml);
 	public String advancedSearch(String xml);
 

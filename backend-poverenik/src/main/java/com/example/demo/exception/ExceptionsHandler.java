@@ -9,7 +9,22 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class ExceptionsHandler {
 
 	@ExceptionHandler
-	public ResponseEntity<Void> handleException(MyException exception){
+	public ResponseEntity<ExceptionMessage> handleException(Exception exception){
+		if (exception instanceof EmailTakenException) {
+			return new ResponseEntity<>(new ExceptionMessage("Email taken!", HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
+		}
+		else if (exception instanceof InvalidXMLException) {
+			return new ResponseEntity<>(new ExceptionMessage("Invalid XML data!", HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
+		}
+		else if (exception instanceof InvalidRDFException) {
+			return new ResponseEntity<>(new ExceptionMessage("Invalid RDF data!", HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
+		}
+		else if (exception instanceof NotFoundException) {
+			return new ResponseEntity<>(new ExceptionMessage("Resource not found!", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+		}
+		else if (exception instanceof ResourceTakenException) {
+			return new ResponseEntity<>(new ExceptionMessage("Resource can't be created!", HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST);
+		}
 		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	

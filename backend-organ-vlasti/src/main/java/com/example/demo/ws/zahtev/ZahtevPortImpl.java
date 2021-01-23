@@ -79,7 +79,7 @@ public class ZahtevPortImpl implements Zahtev {
 			String documentId = this.domParser.buildDocument(getZahtevPdfRequest)
 					.getElementsByTagName("broj").item(0)
 					.getTextContent();
-			return this.zahtevTransformer.plainPdf(documentId);
+			return this.zahtevTransformer.bytePdf(documentId);
 		} catch (java.lang.Exception ex) {
 			ex.printStackTrace();
 			throw new RuntimeException(ex);
