@@ -89,9 +89,10 @@ public class ZalbaMapper implements MapperInterface {
 			brojZahteva = dto.getElementsByTagNameNS(Namespaces.ZALBA, "brojZahteva").item(0).getTextContent();
 		}
 		
+		String cutanje = dto.getElementsByTagNameNS(Namespaces.ZALBA, "brojOdluke").getLength() > 0 ? "" : "<cutanje></cutanje>";
 		Element zahtev = (Element) this.domParser.buildDocument(this.soapService
 				.sendSOAPMessage(this.domParser.buildDocument(
-						String.format("<pretraga><broj>%s</broj><lozinka>%s</lozinka></pretraga>", brojZahteva, lozinka)),
+						String.format("<pretraga>%s<broj>%s</broj><lozinka>%s</lozinka></pretraga>", cutanje, brojZahteva, lozinka)),
 						SOAPActions.get_zahtev))
 				.getElementsByTagNameNS(Namespaces.ZAHTEV, "Zahtev").item(0);
 		documentFragment.appendChild(document.importNode(zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "OrganVlasti").item(0), true));

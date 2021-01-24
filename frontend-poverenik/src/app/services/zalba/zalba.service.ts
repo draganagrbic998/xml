@@ -143,19 +143,16 @@ export class ZalbaService {
     );
   }
 
-  prosledi(broj: number): Observable<null>{
-    const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
-    return this.http.post<null>(`${this.API_ZALBE}/prosledi/${broj}`, options);
-  }
-
   odustani(broj: number): Observable<null>{
-    const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
-    return this.http.post<null>(`${this.API_ZALBE}/odustani/${broj}`, options);
+    return this.http.put<null>(`${this.API_ZALBE}/odustani/${broj}`, null);
   }
 
   obustavi(broj: number): Observable<null>{
-    const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
-    return this.http.post<null>(`${this.API_ZALBE}/obustavi/${broj}`, options);
+    return this.http.put<null>(`${this.API_ZALBE}/obustavi/${broj}`, null);
+  }
+
+  prosledi(broj: number): Observable<null>{
+    return this.http.put<null>(`${this.API_ZALBE}/prosledi/${broj}`, null);
   }
 
 }

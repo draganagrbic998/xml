@@ -10,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -83,21 +84,21 @@ public class ZalbaController {
 		return new ResponseEntity<>(this.zalbaService.advancedSearch(xml), HttpStatus.OK);
 	}
 
-	@PostMapping(value = "/odustani/{broj}")
+	@PutMapping(value = "/odustani/{broj}")
 	@PreAuthorize("hasAuthority('gradjanin')")
 	public ResponseEntity<Void> odustani(@PathVariable String broj){
 		this.zalbaService.odustani(broj);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
-	@PostMapping(value = "/obustavi/{broj}")
+	@PutMapping(value = "/obustavi/{broj}")
 	@PreAuthorize("hasAuthority('poverenik')")
 	public ResponseEntity<Void> obustavi(@PathVariable String broj) {
 		this.zalbaService.obustavi(broj);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
-	@PostMapping(value = "/prosledi/{broj}")
+	@PutMapping(value = "/prosledi/{broj}")
 	@PreAuthorize("hasAuthority('poverenik')")
 	public ResponseEntity<Void> prosledi(@PathVariable String broj) {
 		this.zalbaService.prosledi(broj);
