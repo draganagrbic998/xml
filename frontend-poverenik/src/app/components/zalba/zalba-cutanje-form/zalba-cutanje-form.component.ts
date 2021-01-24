@@ -1,4 +1,4 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { EMPTY_DETALJI, SNACKBAR_CLOSE, SNACKBAR_ERROR, SNACKBAR_ERROR_OPTIONS,
@@ -24,7 +24,7 @@ export class ZalbaCutanjeFormComponent implements AfterViewInit {
 
   savePending = false;
   zalbaForm: FormGroup = new FormGroup({
-    naziv: new FormControl('', [Validators.required, Validators.pattern(new RegExp('\\S'))]),
+    naziv: new FormControl('Naziv organa vlasti', [Validators.required, Validators.pattern(new RegExp('\\S'))]),
     tipCutanja: new FormControl('', [Validators.required]),
     brojDokumenta: new FormControl('', [Validators.required, Validators.pattern(/^[0-9]\d*$/)]),
     lozinka: new FormControl('', [Validators.required, Validators.pattern(new RegExp('\\S'))])
