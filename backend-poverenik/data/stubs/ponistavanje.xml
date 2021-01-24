@@ -1,0 +1,6 @@
+<resenje:Resenje
+xmlns="https://github.com/draganagrbic998/xml/osnova"
+xmlns:resenje="https://github.com/draganagrbic998/xml/resenje">
+   <resenje:status property="pred:tip" datatype="xs:string"></resenje:status>
+   <resenje:brojZalbe></resenje:brojZalbe>
+</resenje:Resenje>

@@ -14,6 +14,5 @@ href="">
 	<resenje:PodaciZalbe>
 		<resenje:tipZalbe property="pred:tipZalbe" datatype="xs:string"></resenje:tipZalbe>
 		<resenje:datumZalbe rel="pred:zalba" href=""></resenje:datumZalbe>
-		<resenje:datumProsledjivanja></resenje:datumProsledjivanja>
 	</resenje:PodaciZalbe>
 </resenje:Resenje>

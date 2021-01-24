@@ -7,7 +7,6 @@ import org.w3c.dom.Element;
 
 import com.example.demo.common.Namespaces;
 import com.example.demo.common.Utils;
-import com.example.demo.enums.StatusZalbe;
 import com.example.demo.mapper.ResenjeMapper;
 import com.example.demo.repository.rdf.ResenjeRDF;
 import com.example.demo.repository.xml.ResenjeExist;
@@ -36,7 +35,7 @@ public class ResenjeService implements ServiceInterface {
 
 		this.resenjeExist.update(Utils.getBroj(document), document);
 		this.resenjeRDF.add(document);
-		zalbaDocument.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.reseno + "");
+		zalbaDocument.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(ResenjeMapper.getStatusResenja(document) + "");
 		this.zalbaService.update(brojZalbe, zalbaDocument);
 	}
 

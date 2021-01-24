@@ -80,7 +80,8 @@ export class ZalbaListComponent implements AfterViewInit {
   }
 
   canObustaviti(zalba: ZalbaDTO): boolean{
-    return zalba.status === 'odustato' || zalba.status === 'ispravljeno';
+    console.log(zalba.status);
+    return zalba.status === 'odustato' || zalba.status === 'obavesteno';
   }
 
   canResiti(zalba: ZalbaDTO): boolean {
@@ -135,7 +136,7 @@ export class ZalbaListComponent implements AfterViewInit {
     this.sendPending = true;
     this.zalbaService.obustavi(zalba.broj).subscribe(
       () => {
-        zalba.status = 'obustavljeno';
+        zalba.status = 'ponisteno';
         this.sendPending = false;
         this.snackBar.open('Žalba obustavljena!', SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);
       },

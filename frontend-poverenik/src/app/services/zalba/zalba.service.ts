@@ -147,12 +147,12 @@ export class ZalbaService {
     return this.http.put<null>(`${this.API_ZALBE}/odustani/${broj}`, null);
   }
 
-  obustavi(broj: number): Observable<null>{
-    return this.http.put<null>(`${this.API_ZALBE}/obustavi/${broj}`, null);
-  }
-
   prosledi(broj: number): Observable<null>{
     return this.http.put<null>(`${this.API_ZALBE}/prosledi/${broj}`, null);
+  }
+
+  obustavi(broj: number): Observable<null>{
+    return this.http.post<null>(`${this.API_ZALBE}/obustavi/${broj}`, null);
   }
 
 }

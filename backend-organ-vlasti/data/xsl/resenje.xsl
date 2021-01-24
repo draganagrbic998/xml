@@ -86,6 +86,9 @@ xmlns:resenje="https://github.com/draganagrbic998/xml/resenje">
 							<xsl:if test="$status='odbijeno' and not($podaciOdluke)">
 								– одбија се захтев:
 							</xsl:if>
+							<xsl:if test="$status='odustato' or $status='obavesteno'">
+								- поништава се
+							</xsl:if>
 						</div>
 						<div>&#160;</div>
 					</div>
@@ -147,6 +150,15 @@ xmlns:resenje="https://github.com/draganagrbic998/xml/resenje">
 				            <xsl:number format="I"></xsl:number>&#160;<xsl:apply-templates></xsl:apply-templates>
 						</p>
 					</xsl:for-each>
+					
+					<xsl:if test="$status='odustato' or $status='obavesteno'">
+						<p class="indent">
+							Поништава се жалба коју је поднео АА дана
+							<xsl:value-of select="concat($danZahteva, concat('.', concat($mesecZahteva, concat('.', concat($godinaZahteva, '.')))))"></xsl:value-of>					
+							против органа власти <xsl:value-of select="$organVlasti"></xsl:value-of>,
+							<xsl:value-of select="$sediste"></xsl:value-of>
+						</p>
+					</xsl:if>
 					
 					<xsl:if test="$status='odbijeno'">
 						<p class="indent">
@@ -221,37 +233,40 @@ xmlns:resenje="https://github.com/draganagrbic998/xml/resenje">
 						</xsl:if>
 					</p>
 					
-					<p class="indent">
-						<xsl:variable name="danProsledjivanja" select="substring-after(substring-after($podaciZalbe/resenje:datumProsledjivanja, '-'), '-')"></xsl:variable>
-						<xsl:variable name="mesecProsledjivanja" select="substring-before(substring-after($podaciZalbe/resenje:datumProsledjivanja, '-'), '-')"></xsl:variable>
-						<xsl:variable name="godinaProsledjivanja" select="substring-before($podaciZalbe/resenje:datumProsledjivanja, '-')"></xsl:variable>
-						Поступајући по <a href="{$zalba_link}">жалби</a>, Повереник је дана 					
-						<xsl:value-of select="concat($danProsledjivanja, concat('.', concat($mesecProsledjivanja, concat('.', concat($godinaProsledjivanja, '.')))))"></xsl:value-of>					
-						године упутио исту на изјашњење органу
-						<xsl:value-of select="$organVlasti"></xsl:value-of>,
-						<xsl:value-of select="$sediste"></xsl:value-of>,
-						као органу власти у смислу члана 3. Закона о слободном приступу информацијама од 
-						јавног значаја
-						<xsl:if test="not($podaciOdluke)">
-							и затражио да се изјасни о наводима жалбе, посебно о разлозима непоступања у законском 
-							року по поднетом захтеву у складу са одредбама члана 16. ст.1-9. или ст. 10. Закона, 
-							остављајући рок од осам 
-							дана</xsl:if>
-	 					<xsl:if test="not(resenje:Odbrana/osnova:Detalji)">
-							, поводом чега није добио одговор.
-						</xsl:if>	
-						<xsl:if test="resenje:Odbrana/osnova:Detalji">.
-							<p class="indent">
-								<xsl:variable name="danOdbrane" select="substring-after(substring-after(resenje:Odbrana/resenje:datumOdbrane, '-'), '-')"></xsl:variable>
-								<xsl:variable name="mesecOdbrane" select="substring-before(substring-after(resenje:Odbrana/resenje:datumOdbrane, '-'), '-')"></xsl:variable>
-								<xsl:variable name="godinaOdbrane" select="substring-before(resenje:Odbrana/resenje:datumOdbrane, '-')"></xsl:variable>
-								У <a href="{$odgovor_link}">одговору на жалбу</a> од 
-								<xsl:value-of select="concat($danOdbrane, concat('.', concat($mesecOdbrane, concat('.', concat($godinaOdbrane, '.')))))"></xsl:value-of>					
-								године, орган власти се изјаснио следећим ставом:
-								<xsl:apply-templates select="resenje:Odbrana/osnova:Detalji"></xsl:apply-templates>.
-							</p>					
-						</xsl:if>					
-					</p>
+					<xsl:if test="$podaciZalbe/resenje:datumProsledjivanja">
+						<p class="indent">
+							<xsl:variable name="danProsledjivanja" select="substring-after(substring-after($podaciZalbe/resenje:datumProsledjivanja, '-'), '-')"></xsl:variable>
+							<xsl:variable name="mesecProsledjivanja" select="substring-before(substring-after($podaciZalbe/resenje:datumProsledjivanja, '-'), '-')"></xsl:variable>
+							<xsl:variable name="godinaProsledjivanja" select="substring-before($podaciZalbe/resenje:datumProsledjivanja, '-')"></xsl:variable>
+							Поступајући по <a href="{$zalba_link}">жалби</a>, Повереник је дана 					
+							<xsl:value-of select="concat($danProsledjivanja, concat('.', concat($mesecProsledjivanja, concat('.', concat($godinaProsledjivanja, '.')))))"></xsl:value-of>					
+							године упутио исту на изјашњење органу
+							<xsl:value-of select="$organVlasti"></xsl:value-of>,
+							<xsl:value-of select="$sediste"></xsl:value-of>,
+							као органу власти у смислу члана 3. Закона о слободном приступу информацијама од 
+							јавног значаја
+							<xsl:if test="not($podaciOdluke)">
+								и затражио да се изјасни о наводима жалбе, посебно о разлозима непоступања у законском 
+								року по поднетом захтеву у складу са одредбама члана 16. ст.1-9. или ст. 10. Закона, 
+								остављајући рок од осам 
+								дана</xsl:if>
+		 					<xsl:if test="not(resenje:Odbrana/osnova:Detalji)">
+								, поводом чега није добио одговор.
+							</xsl:if>	
+							<xsl:if test="resenje:Odbrana/osnova:Detalji">.
+								<p class="indent">
+									<xsl:variable name="danOdbrane" select="substring-after(substring-after(resenje:Odbrana/resenje:datumOdbrane, '-'), '-')"></xsl:variable>
+									<xsl:variable name="mesecOdbrane" select="substring-before(substring-after(resenje:Odbrana/resenje:datumOdbrane, '-'), '-')"></xsl:variable>
+									<xsl:variable name="godinaOdbrane" select="substring-before(resenje:Odbrana/resenje:datumOdbrane, '-')"></xsl:variable>
+									У <a href="{$odgovor_link}">одговору на жалбу</a> од 
+									<xsl:value-of select="concat($danOdbrane, concat('.', concat($mesecOdbrane, concat('.', concat($godinaOdbrane, '.')))))"></xsl:value-of>					
+									године, орган власти се изјаснио следећим ставом:
+									<xsl:apply-templates select="resenje:Odbrana/osnova:Detalji"></xsl:apply-templates>.
+								</p>					
+							</xsl:if>					
+						</p>
+						
+					</xsl:if>
 										
 					<p class="indent">
 						По разматрању жалбе и осталих списа овог предмета, донета је 
@@ -298,6 +313,29 @@ xmlns:resenje="https://github.com/draganagrbic998/xml/resenje">
 							копију тог документа.
 						</p>
 					</xsl:if>		
+					
+					<xsl:if test="$status='odustato' or $status='obavesteno'">
+						<xsl:variable name="danOtkazivanja" select="substring-after(substring-after($podaciZalbe/resenje:datumOtkazivanja, '-'), '-')"></xsl:variable>
+						<xsl:variable name="mesecOtkazivanja" select="substring-before(substring-after($podaciZalbe/resenje:datumOtkazivanja, '-'), '-')"></xsl:variable>
+						<xsl:variable name="godinaOtkazivanja" select="substring-before($podaciZalbe/resenje:datumOtkazivanja, '-')"></xsl:variable>						
+						<p class="indent">
+							<b>Жалбени поступак се поништава</b> из разлога што је
+							<xsl:if test="$status='odustato'">
+								АА дана 
+								<xsl:value-of select="concat($danOtkazivanja, concat('.', concat($mesecOtkazivanja, concat('.', concat($godinaOtkazivanja, '.')))))"></xsl:value-of>					
+								послао захтев за одустајањем од поднете жалбе.
+							</xsl:if>
+							<xsl:if test="$status='obavesteno'">
+								орган власти
+								<xsl:value-of select="$organVlasti"></xsl:value-of>,
+								<xsl:value-of select="$sediste"></xsl:value-of>
+								дана
+								<xsl:value-of select="concat($danOtkazivanja, concat('.', concat($mesecOtkazivanja, concat('.', concat($godinaOtkazivanja, '.')))))"></xsl:value-of>					
+								обавестио АА електронском поштом о информацијама које је претходно 
+								тражио.
+							</xsl:if>
+						</p>
+					</xsl:if>
 					
 					<xsl:for-each select="resenje:Odluka/resenje:Obrazlozenje/resenje:Pasus">
 						<p class="indent" style="word-break: break-all;">

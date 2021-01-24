@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.xmldb.api.base.ResourceIterator;
 import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.modules.XMLResource;
@@ -36,6 +37,15 @@ public class ZalbaService implements ServiceInterface {
 	@Override
 	public void add(String xml) {
 		Document document = this.zalbaMapper.map(xml);
+		Element podaciZahteva = (Element) document.getElementsByTagNameNS(Namespaces.ZALBA, "PodaciZahteva").item(0);
+		podaciZahteva.removeChild(podaciZahteva.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0));
+		try {
+			Element podaciOdluke = (Element) document.getElementsByTagNameNS(Namespaces.ZALBA, "PodaciOdluke").item(0);
+			podaciOdluke.removeChild(podaciOdluke.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0));
+		}
+		catch(Exception e) {
+			;
+		}
 		this.zalbaExist.update(Utils.getBroj(document), document);
 		this.zalbaRDF.add(document);		
 	}
@@ -92,22 +102,15 @@ public class ZalbaService implements ServiceInterface {
 		this.zalbaRDF.update(broj, document);
 	}
 
-	public void obustavi(String broj) {
-		Document document = this.zalbaExist.load(broj);
-		document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.obustavljeno + "");
-		this.zalbaExist.update(broj, document);
-		this.zalbaRDF.update(broj, document);
-	}
-	
 	public void otkazi(String brojZahteva) {
 		try {
-			String xpathExp = String.format("/zalba:Zalba[zalba:PodaciZahteva/broj='%s']", brojZahteva);
+			String xpathExp = String.format("/zalba:Zalba[zalba:PodaciZahteva/@href='%s']", Namespaces.ZAHTEV + "/" + brojZahteva);
 			ResourceSet resources = this.zalbaExist.retrieve(xpathExp);
 			ResourceIterator it = resources.getIterator();
 			while (it.hasMoreResources()) {
 				XMLResource resource = (XMLResource) it.nextResource();
 				Document document = this.domParser.buildDocument(resource.getContent().toString());
-				document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.ispravljeno + "");
+				document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.obavesteno + "");
 				this.zalbaExist.update(Utils.getBroj(document), document);
 				this.zalbaRDF.update(Utils.getBroj(document), document);
 			}

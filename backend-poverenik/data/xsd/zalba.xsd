@@ -31,6 +31,7 @@
                         </xs:complexType>
                     </xs:element>
                     <xs:element minOccurs="0" name="datumProsledjivanja" type="xs:date"/>
+                    <xs:element minOccurs="0" name="datumOtkazivanja" type="xs:date"/>
                     <xs:element name="PodaciZahteva" type="osnova:TPodaci"/>
                 </xs:sequence>
             </xs:extension>
@@ -68,11 +69,12 @@
         <xs:restriction base="xs:string">
             <xs:enumeration value="cekanje"/>
             <xs:enumeration value="prosledjeno"/>
-            <xs:enumeration value="ispravljeno"/>
+            <xs:enumeration value="obavesteno"/>
             <xs:enumeration value="odgovoreno"/>
             <xs:enumeration value="odustato"/>
-            <xs:enumeration value="obustavljeno"/>
-            <xs:enumeration value="reseno"/>
+            <xs:enumeration value="ponisteno"/>
+            <xs:enumeration value="odobreno"/>
+            <xs:enumeration value="odbijeno"/>
         </xs:restriction>
     </xs:simpleType>
 </xs:schema>

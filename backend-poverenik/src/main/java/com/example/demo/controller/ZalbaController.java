@@ -90,19 +90,25 @@ public class ZalbaController {
 		this.zalbaService.odustani(broj);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-	
-	@PutMapping(value = "/obustavi/{broj}")
-	@PreAuthorize("hasAuthority('poverenik')")
-	public ResponseEntity<Void> obustavi(@PathVariable String broj) {
-		this.zalbaService.obustavi(broj);
-		return new ResponseEntity<>(HttpStatus.OK);
-	}
-	
+		
 	@PutMapping(value = "/prosledi/{broj}")
 	@PreAuthorize("hasAuthority('poverenik')")
 	public ResponseEntity<Void> prosledi(@PathVariable String broj) {
 		this.zalbaService.prosledi(broj);
 		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
+	@PostMapping(value = "/obustavi/{broj}")
+	@PreAuthorize("hasAuthority('poverenik')")
+	public ResponseEntity<Void> obustavi(@PathVariable String broj) {
+		try {
+			this.zalbaService.obustavi(broj);
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 }

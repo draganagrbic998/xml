@@ -6,7 +6,6 @@ public class SOAPConstants {
 	public static final String ZALBA_NAMESPACE = "http://demo.example.com/ws/zalba";
 	public static final String CREATE_ZALBA_ELEMENT = "createZalba";
 	public static final String ODUSTANI_ZALBA_ELEMENT = "odustaniZalba";
-	public static final String OBUSTAVI_ZALBA_ELEMENT = "obustaviZalba";
 
 	public static final String RESENJE_SERVICE = "http://localhost:8081/ws/resenje";
 	public static final String RESENJE_NAMESPACE = "http://demo.example.com/ws/resenje";

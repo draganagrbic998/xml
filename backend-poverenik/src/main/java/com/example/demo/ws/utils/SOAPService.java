@@ -75,12 +75,8 @@ public class SOAPService {
 				name = this.soapFactory.createName(SOAPConstants.GET_ODLUKA_PDF_ELEMENT, "m", SOAPConstants.ODLUKA_NAMESPACE);
 				endpoint = new URL(SOAPConstants.ODLUKA_SERVICE);
 			}
-			else if (action.equals(SOAPActions.zalba_odustani)) {
-				name = this.soapFactory.createName(SOAPConstants.ODUSTANI_ZALBA_ELEMENT, "m", SOAPConstants.ZALBA_NAMESPACE);
-				endpoint = new URL(SOAPConstants.ZALBA_SERVICE);
-			}
 			else {
-				name = this.soapFactory.createName(SOAPConstants.OBUSTAVI_ZALBA_ELEMENT, "m", SOAPConstants.ZALBA_NAMESPACE);
+				name = this.soapFactory.createName(SOAPConstants.ODUSTANI_ZALBA_ELEMENT, "m", SOAPConstants.ZALBA_NAMESPACE);
 				endpoint = new URL(SOAPConstants.ZALBA_SERVICE);
 			}
 

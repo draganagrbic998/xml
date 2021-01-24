@@ -10,6 +10,7 @@ import org.xmldb.api.modules.XMLResource;
 
 import com.example.demo.common.Namespaces;
 import com.example.demo.common.Utils;
+import com.example.demo.enums.StatusResenja;
 import com.example.demo.exception.MyException;
 import com.example.demo.parser.DOMParser;
 
@@ -52,4 +53,13 @@ public class ResenjeMapper implements MapperInterface {
 		}
 	}
 	
+	public static StatusResenja getStatusResenja(Document document) {
+		try {
+			return StatusResenja.valueOf(document.getElementsByTagNameNS(Namespaces.RESENJE, "status").item(0).getTextContent());
+		}
+		catch(Exception e) {
+			return StatusResenja.ponisteno;
+		}
+	}
+		
 }

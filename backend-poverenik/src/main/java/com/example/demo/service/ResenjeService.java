@@ -54,14 +54,20 @@ public class ResenjeService implements ServiceInterface {
 				.getAttribute("href").replace(Namespaces.ZALBA + "/", "");
 		Document zalbaDocument = this.zalbaService.load(brojZalbe);
 
-		if (!ZalbaMapper.getStatusZalbe(zalbaDocument).equals(StatusZalbe.prosledjeno) && !ZalbaMapper.getStatusZalbe(zalbaDocument).equals(StatusZalbe.odgovoreno)) {
+		if (!ZalbaMapper.getStatusZalbe(zalbaDocument).equals(StatusZalbe.prosledjeno) 
+				&& !ZalbaMapper.getStatusZalbe(zalbaDocument).equals(StatusZalbe.odgovoreno)
+				&& !ZalbaMapper.getStatusZalbe(zalbaDocument).equals(StatusZalbe.obavesteno)
+				&& !ZalbaMapper.getStatusZalbe(zalbaDocument).equals(StatusZalbe.odustato)) {
 			throw new ResourceTakenException();
 		}
 		
+		if (zalbaDocument.getElementsByTagNameNS(Namespaces.ZALBA, "datumProsledjivanja").getLength() > 0) {
+			this.soapService.sendSOAPMessage(document, SOAPActions.create_resenje);
+		}
 		this.resenjeExist.add(document);
 		this.resenjeRDF.add(document);
 		
-		zalbaDocument.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.reseno + "");
+		zalbaDocument.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(ResenjeMapper.getStatusResenja(document) + "");
 		Element podaciZahteva = (Element) zalbaDocument.getElementsByTagNameNS(Namespaces.ZALBA, "PodaciZahteva").item(0);
 		podaciZahteva.removeChild(podaciZahteva.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0));
 		try {
@@ -73,7 +79,6 @@ public class ResenjeService implements ServiceInterface {
 		}
 		
 		this.zalbaService.update(brojZalbe, zalbaDocument);
-		this.soapService.sendSOAPMessage(document, SOAPActions.create_resenje);
 		this.notificationManager.notifyResenje(document, this.resenjeTransformer.byteHtml(Utils.getBroj(document)), this.resenjeTransformer.bytePdf(Utils.getBroj(document)));
 	}
 
