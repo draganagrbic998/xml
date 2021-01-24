@@ -56,7 +56,7 @@ public class DataInitializator {
 		this.existManager.dropCollection(IzvestajExist.IZVESTAJ_COLLECTION);
 		this.fusekiManager.dropAll();
 
-		this.existManager.save(KorisnikExist.KORISNIK_COLLECTION, "poverenik.javni.znacaj@gmail.com", this.domParser.buildDocumentFromFile(POVERENIK1), KorisnikExist.KORISNIK_SCHEMA);
+		this.existManager.save(KorisnikExist.KORISNIK_COLLECTION, "poverenik@gmail.com", this.domParser.buildDocumentFromFile(POVERENIK1), KorisnikExist.KORISNIK_SCHEMA);
 		this.existManager.save(KorisnikExist.KORISNIK_COLLECTION, "draganaasd@gmail.com", this.domParser.buildDocumentFromFile(GRADJANIN1), KorisnikExist.KORISNIK_SCHEMA);
 
 		/*

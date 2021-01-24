@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Korisnik xmlns="https://github.com/draganagrbic998/xml/osnova">
-    <mejl>poverenik.javni.znacaj@gmail.com</mejl>
+    <mejl>poverenik@gmail.com</mejl>
     <lozinka>$2a$10$gfuYh.hxu0AlVb1yVXRcie38viaXdpwa2aZHWWhdPVQiq741vD8F.</lozinka>
     <aktivan>true</aktivan>
     <Osoba>
