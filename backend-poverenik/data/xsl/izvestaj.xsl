@@ -118,7 +118,7 @@ xmlns:izvestaj="https://github.com/draganagrbic998/xml/izvestaj">
 								</div>
 								<div>
 									<p class="underline" style="min-width: 120px;">
-										<xsl:value-of select="osnova:broj"></xsl:value-of>
+										<xsl:value-of select="substring-after(@about, 'https://github.com/draganagrbic998/xml/izvestaj/')"></xsl:value-of>
 									</p>
 									<p class="underline" style="min-width: 120px;">
 										<xsl:variable name="dan" select="substring-after(substring-after(osnova:datum, '-'), '-')"></xsl:variable>

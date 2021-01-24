@@ -96,7 +96,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 						<xsl:variable name="godinaOdluke" select="substring-before(zalba:PodaciOdluke/osnova:datum, '-')"></xsl:variable>
 						Број 
 						<fo:inline border-bottom="1px dotted black">
-							<xsl:value-of select="zalba:PodaciOdluke/osnova:brojOdluke"></xsl:value-of>
+							<xsl:value-of select="substring-after(zalba:PodaciOdluke/@href, 'https://github.com/draganagrbic998/xml/odluka/')"></xsl:value-of>
 						</fo:inline> 
 						од 
 						<fo:inline border-bottom="1px dotted black">
@@ -241,7 +241,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
                							
 										<fo:basic-link>
 				               				<xsl:attribute name="external-destination">
-				               					<xsl:value-of select="concat('http://localhost:4201/pdf/zahtevi/', zalba:PodaciZahteva/osnova:broj)"></xsl:value-of>
+				               					<xsl:value-of select="concat('http://localhost:4201/pdf/zahtevi/', substring-after(zalba:PodaciZahteva/@href, 'https://github.com/draganagrbic998/xml/zahtev/'))"></xsl:value-of>
 				               				</xsl:attribute>
 				               				<xsl:attribute name="color">
 												blue
@@ -253,7 +253,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
                							
 										<fo:basic-link>
 				               				<xsl:attribute name="external-destination">
-				               					<xsl:value-of select="concat('http://localhost:4201/pdf/odluke/', zalba:PodaciOdluke/osnova:broj)"></xsl:value-of>
+				               					<xsl:value-of select="concat('http://localhost:4201/pdf/odluke/', substring-after(zalba:PodaciOdluke/@href, 'https://github.com/draganagrbic998/xml/odluka/'))"></xsl:value-of>
 				               				</xsl:attribute>
 				               				<xsl:attribute name="color">
 												blue

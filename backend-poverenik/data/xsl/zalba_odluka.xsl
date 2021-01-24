@@ -116,7 +116,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 						<xsl:variable name="godinaOdluke" select="substring-before(zalba:PodaciOdluke/osnova:datum, '-')"></xsl:variable>
 						Број 
 						<span class="dotted">
-							<xsl:value-of select="zalba:PodaciOdluke/osnova:brojOdluke"></xsl:value-of>
+							<xsl:value-of select="substring-after(zalba:PodaciOdluke/@href, 'https://github.com/draganagrbic998/xml/odluka/')"></xsl:value-of>
 						</span> 
 						од 
 						<span class="dotted">
@@ -228,8 +228,8 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 							Ако жалбу изјављује на овом обрасцу, додатно образложење може  посебно приложити.					
 						</li>
 						<li>
-							<xsl:variable name="zahtev_link" select="concat('http://localhost:4201/html/zahtevi/', zalba:PodaciZahteva/osnova:broj)"></xsl:variable>
-							<xsl:variable name="odluka_link" select="concat('http://localhost:4201/html/odluke/', zalba:PodaciOdluke/osnova:broj)"></xsl:variable>
+							<xsl:variable name="zahtev_link" select="concat('http://localhost:4201/html/zahtevi/', substring-after(zalba:PodaciZahteva/@href, 'https://github.com/draganagrbic998/xml/zahtev/'))"></xsl:variable>
+							<xsl:variable name="odluka_link" select="concat('http://localhost:4201/html/odluke/', substring-after(zalba:PodaciOdluke/@href, 'https://github.com/draganagrbic998/xml/odluka/'))"></xsl:variable>
 							Уз жалбу обавезно приложити <a href="{$zahtev_link}">копију поднетог захтева</a> и доказ о његовој предаји-упућивању 
 							органу као и <a href="{$odluka_link}">копију одлуке органа</a> која се оспорава жалбом.					
 						</li>

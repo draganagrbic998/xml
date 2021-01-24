@@ -65,10 +65,14 @@ xmlns:resenje="https://github.com/draganagrbic998/xml/resenje">
 					<xsl:variable name="mesecOdluke" select="substring-before(substring-after($podaciOdluke/osnova:datum, '-'), '-')"></xsl:variable>
 					<xsl:variable name="godinaOdluke" select="substring-before($podaciOdluke/osnova:datum, '-')"></xsl:variable>
 	
-					<xsl:variable name="zahtev_link" select="concat('http://localhost:4200/html/zahtevi/', resenje:PodaciZahteva/osnova:broj)"></xsl:variable>
-					<xsl:variable name="odluka_link" select="concat('http://localhost:4200/html/odluke/', resenje:PodaciOdluke/osnova:broj)"></xsl:variable>
-					<xsl:variable name="zalba_link" select="concat('http://localhost:4200/html/zalbe/', resenje:PodaciZalbe/resenje:brojZalbe)"></xsl:variable>
-					<xsl:variable name="odgovor_link" select="concat('http://localhost:4200/html/odgovori/', resenje:PodaciZalbe/resenje:brojZalbe)"></xsl:variable>
+					<xsl:variable name="zahtev_broj" select="substring-after(resenje:PodaciZahteva/@href, 'https://github.com/draganagrbic998/xml/zahtev/')"></xsl:variable>
+					<xsl:variable name="odluka_broj" select="substring-after(resenje:PodaciOdluke/@href, 'https://github.com/draganagrbic998/xml/odluka/')"></xsl:variable>
+					<xsl:variable name="zalba_broj" select="substring-after(resenje:PodaciZalbe/datumZalbe/@href, 'https://github.com/draganagrbic998/xml/zalba/')"></xsl:variable>
+	
+					<xsl:variable name="zahtev_link" select="concat('http://localhost:4200/html/zahtevi/', $zahtev_broj)"></xsl:variable>
+					<xsl:variable name="odluka_link" select="concat('http://localhost:4200/html/odluke/', $odluka_broj)"></xsl:variable>
+					<xsl:variable name="zalba_link" select="concat('http://localhost:4200/html/zalbe/', $zalba_broj)"></xsl:variable>
+					<xsl:variable name="odgovor_link" select="concat('http://localhost:4200/html/odgovori/', $zalba_broj)"></xsl:variable>
 
 					<div class="flex">
 						<div>
@@ -87,8 +91,8 @@ xmlns:resenje="https://github.com/draganagrbic998/xml/resenje">
 					</div>
 					
 					<div class="flex">
-						<div>
-							Бр. <xsl:value-of select="osnova:broj"></xsl:value-of>
+						<div>						
+							Бр. <xsl:value-of select="substring-after(@about, 'https://github.com/draganagrbic998/xml/resenje/')"></xsl:value-of>
 						</div>
 						<div>
 							<xsl:variable name="dan" select="substring-after(substring-after(osnova:datum, '-'), '-')"></xsl:variable>
@@ -116,7 +120,7 @@ xmlns:resenje="https://github.com/draganagrbic998/xml/resenje">
 						<xsl:value-of select="$sediste"></xsl:value-of>, 
 						<xsl:if test="$podaciOdluke">
 							број: 
-							<xsl:value-of select="$podaciOdluke/osnova:broj"></xsl:value-of> 
+							<xsl:value-of select="$odluka_broj"></xsl:value-of> 
 							од 
 							<xsl:value-of select="concat($danOdluke, concat('.', concat($mesecOdluke, concat('.', concat($godinaOdluke, '.')))))"></xsl:value-of>					
 							године,
@@ -152,7 +156,7 @@ xmlns:resenje="https://github.com/draganagrbic998/xml/resenje">
 								<xsl:value-of select="$organVlasti"></xsl:value-of>, 
 								<xsl:value-of select="$sediste"></xsl:value-of>,
 									број: 
-								<xsl:value-of select="$podaciOdluke/osnova:broj"></xsl:value-of>
+								<xsl:value-of select="$odluka_broj"></xsl:value-of>
 									од 
 								<xsl:value-of select="concat($danOdluke, concat('.', concat($mesecOdluke, concat('.', concat($godinaOdluke, '.')))))"></xsl:value-of>					
 									године,
@@ -193,7 +197,7 @@ xmlns:resenje="https://github.com/draganagrbic998/xml/resenje">
 						<xsl:value-of select="$sediste"></xsl:value-of>,
 						<xsl:if test="$podaciOdluke">
 							број: 
-							<xsl:value-of select="$podaciOdluke/osnova:broj"></xsl:value-of> 
+							<xsl:value-of select="$odluka_broj"></xsl:value-of> 
 							од 
 							<xsl:value-of select="concat($danOdluke, concat('.', concat($mesecOdluke, concat('.', concat($godinaOdluke, '.')))))"></xsl:value-of>					
 							године,
@@ -280,7 +284,7 @@ xmlns:resenje="https://github.com/draganagrbic998/xml/resenje">
 					<xsl:if test="$podaciOdluke">
 						<p class="indent">
 							Даље је, увидом у списе предмета утврђено да је одговором број: 
-							<xsl:value-of select="$podaciOdluke/osnova:broj"></xsl:value-of> 
+							<xsl:value-of select="$odluka_broj"></xsl:value-of> 
 							од 
 							<xsl:value-of select="concat($danOdluke, concat('.', concat($mesecOdluke, concat('.', concat($godinaOdluke, '.')))))"></xsl:value-of>										
 							године, орган власти обавестио жалиоца следеће:

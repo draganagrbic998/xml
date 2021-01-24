@@ -85,7 +85,7 @@ xmlns:odgovor="https://github.com/draganagrbic998/xml/odgovor">
 						<xsl:variable name="godinaZalbe" select="substring-before(odgovor:datumZalbe, '-')"></xsl:variable>
 						Број жалбе: 
 						<span class="underline">
-							<xsl:value-of select="osnova:broj"></xsl:value-of>
+							<xsl:value-of select="substring-after(@about, 'https://github.com/draganagrbic998/xml/odgovor/')"></xsl:value-of>
 						</span> 
 						, поднешена дана
 						<span class="underline">
@@ -106,7 +106,7 @@ xmlns:odgovor="https://github.com/draganagrbic998/xml/odgovor">
 					<br></br><br></br>
 					
 					<p class="indent">
-						<xsl:variable name="zalba_link" select="concat('http://localhost:4201/html/zalbe/', osnova:broj)"></xsl:variable>
+						<xsl:variable name="zalba_link" select="concat('http://localhost:4201/html/zalbe/', substring-after(@about, 'https://github.com/draganagrbic998/xml/odgovor/'))"></xsl:variable>
 						Орган власти 
 						<span class="underline"><xsl:value-of select="osnova:OrganVlasti/osnova:naziv"></xsl:value-of></span>
 						подноси одговор на

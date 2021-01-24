@@ -51,6 +51,10 @@ xmlns:resenje="https://github.com/draganagrbic998/xml/resenje">
 					<xsl:variable name="mesecOdluke" select="substring-before(substring-after($podaciOdluke/osnova:datum, '-'), '-')"></xsl:variable>
 					<xsl:variable name="godinaOdluke" select="substring-before($podaciOdluke/osnova:datum, '-')"></xsl:variable>
 
+					<xsl:variable name="zahtev_broj" select="substring-after(resenje:PodaciZahteva/@href, 'https://github.com/draganagrbic998/xml/zahtev/')"></xsl:variable>
+					<xsl:variable name="odluka_broj" select="substring-after(resenje:PodaciOdluke/@href, 'https://github.com/draganagrbic998/xml/odluka/')"></xsl:variable>
+					<xsl:variable name="zalba_broj" select="substring-after(resenje:PodaciZalbe/datumZalbe/@href, 'https://github.com/draganagrbic998/xml/zalba/')"></xsl:variable>
+	
 					<fo:block>
 						<fo:inline-container>
 							<fo:block>
@@ -73,7 +77,7 @@ xmlns:resenje="https://github.com/draganagrbic998/xml/resenje">
 					<fo:block>
 						<fo:inline-container inline-progression-dimension="50%">
 							<fo:block>
-								Бр. <xsl:value-of select="osnova:broj"></xsl:value-of>
+								Бр. <xsl:value-of select="substring-after(@about, 'https://github.com/draganagrbic998/xml/resenje/')"></xsl:value-of>
 							</fo:block>
 						</fo:inline-container>
 						<fo:inline-container inline-progression-dimension="50%">
@@ -102,7 +106,7 @@ xmlns:resenje="https://github.com/draganagrbic998/xml/resenje">
 						<xsl:value-of select="$sediste"></xsl:value-of>, 
 						<xsl:if test="$podaciOdluke">
 							број: 
-							<xsl:value-of select="$podaciOdluke/osnova:broj"></xsl:value-of> 
+							<xsl:value-of select="$odluka_broj"></xsl:value-of> 
 							од 
 							<xsl:value-of select="concat($danOdluke, concat('.', concat($mesecOdluke, concat('.', concat($godinaOdluke, '.')))))"></xsl:value-of>					
 							године,
@@ -136,7 +140,7 @@ xmlns:resenje="https://github.com/draganagrbic998/xml/resenje">
 								<xsl:value-of select="$organVlasti"></xsl:value-of>, 
 								<xsl:value-of select="$sediste"></xsl:value-of>,
 									број: 
-								<xsl:value-of select="$podaciOdluke/osnova:broj"></xsl:value-of>
+								<xsl:value-of select="$odluka_broj"></xsl:value-of>
 									од 
 								<xsl:value-of select="concat($danOdluke, concat('.', concat($mesecOdluke, concat('.', concat($godinaOdluke, '.')))))"></xsl:value-of>					
 									године,
@@ -175,7 +179,7 @@ xmlns:resenje="https://github.com/draganagrbic998/xml/resenje">
 						<xsl:value-of select="$sediste"></xsl:value-of>,
 						<xsl:if test="$podaciOdluke">
 							број: 
-							<xsl:value-of select="$podaciOdluke/osnova:broj"></xsl:value-of> 
+							<xsl:value-of select="$odluka_broj"></xsl:value-of> 
 							од 
 							<xsl:value-of select="concat($danOdluke, concat('.', concat($mesecOdluke, concat('.', concat($godinaOdluke, '.')))))"></xsl:value-of>					
 							године,
@@ -189,7 +193,7 @@ xmlns:resenje="https://github.com/draganagrbic998/xml/resenje">
 							
 							<fo:basic-link>
 	               				<xsl:attribute name="external-destination">
-	               					<xsl:value-of select="concat('http://localhost:4200/pdf/zahtevi/', resenje:PodaciZahteva/osnova:broj)"></xsl:value-of>
+	               					<xsl:value-of select="concat('http://localhost:4200/pdf/zahtevi/', $zahtev_broj)"></xsl:value-of>
 	               				</xsl:attribute>
 	               				<xsl:attribute name="color">
 									blue
@@ -206,7 +210,7 @@ xmlns:resenje="https://github.com/draganagrbic998/xml/resenje">
 							
 							<fo:basic-link>
 	               				<xsl:attribute name="external-destination">
-	               					<xsl:value-of select="concat('http://localhost:4200/pdf/zahtevi/', resenje:PodaciZahteva/osnova:broj)"></xsl:value-of>
+	               					<xsl:value-of select="concat('http://localhost:4200/pdf/zahtevi/', $zahtev_broj)"></xsl:value-of>
 	               				</xsl:attribute>
 	               				<xsl:attribute name="color">
 									blue
@@ -216,7 +220,7 @@ xmlns:resenje="https://github.com/draganagrbic998/xml/resenje">
 							и
 							<fo:basic-link>
 	               				<xsl:attribute name="external-destination">
-	               					<xsl:value-of select="concat('http://localhost:4200/html/odluke/', resenje:PodaciOdluke/osnova:broj)"></xsl:value-of>
+	               					<xsl:value-of select="concat('http://localhost:4200/pdf/odluke/', $odluka_broj)"></xsl:value-of>
 	               				</xsl:attribute>
 	               				<xsl:attribute name="color">
 									blue
@@ -232,7 +236,7 @@ xmlns:resenje="https://github.com/draganagrbic998/xml/resenje">
 							
 							<fo:basic-link>
 	               				<xsl:attribute name="external-destination">
-	               					<xsl:value-of select="concat('http://localhost:4200/pdf/zahtevi/', resenje:PodaciZahteva/osnova:broj)"></xsl:value-of>
+	               					<xsl:value-of select="concat('http://localhost:4200/pdf/zahtevi/', $zahtev_broj)"></xsl:value-of>
 	               				</xsl:attribute>
 	               				<xsl:attribute name="color">
 									blue
@@ -242,7 +246,7 @@ xmlns:resenje="https://github.com/draganagrbic998/xml/resenje">
 							и
 							<fo:basic-link>
 	               				<xsl:attribute name="external-destination">
-	               					<xsl:value-of select="concat('http://localhost:4200/html/odluke/', resenje:PodaciOdluke/osnova:broj)"></xsl:value-of>
+	               					<xsl:value-of select="concat('http://localhost:4200/pdf/odluke/', $odluka_broj)"></xsl:value-of>
 	               				</xsl:attribute>
 	               				<xsl:attribute name="color">
 									blue
@@ -261,7 +265,7 @@ xmlns:resenje="https://github.com/draganagrbic998/xml/resenje">
 						
 						<fo:basic-link>
                				<xsl:attribute name="external-destination">
-               					<xsl:value-of select="concat('http://localhost:4200/html/zalbe/', resenje:PodaciZalbe/resenje:brojZalbe)"></xsl:value-of>
+               					<xsl:value-of select="concat('http://localhost:4200/pdf/zalbe/', $zalba_broj)"></xsl:value-of>
                				</xsl:attribute>
                				<xsl:attribute name="color">
 								blue
@@ -295,7 +299,7 @@ xmlns:resenje="https://github.com/draganagrbic998/xml/resenje">
 							
 							<fo:basic-link>
 	               				<xsl:attribute name="external-destination">
-	               					<xsl:value-of select="concat('http://localhost:4200/pdf/odgovori/', resenje:PodaciZalbe/resenje:brojZalbe)"></xsl:value-of>
+	               					<xsl:value-of select="concat('http://localhost:4200/pdf/odgovori/', $zalba_broj)"></xsl:value-of>
 	               				</xsl:attribute>
 	               				<xsl:attribute name="color">
 									blue
@@ -341,7 +345,7 @@ xmlns:resenje="https://github.com/draganagrbic998/xml/resenje">
 					<xsl:if test="$podaciOdluke">
 						<fo:block text-indent="40px">
 							Даље је, увидом у списе предмета утврђено да је одговором број: 
-							<xsl:value-of select="$podaciOdluke/osnova:broj"></xsl:value-of> 
+							<xsl:value-of select="$odluka_broj"></xsl:value-of> 
 							од 
 							<xsl:value-of select="concat($danOdluke, concat('.', concat($mesecOdluke, concat('.', concat($godinaOdluke, '.')))))"></xsl:value-of>										
 							године, орган власти обавестио жалиоца следеће:

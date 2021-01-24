@@ -64,7 +64,7 @@ xmlns:izvestaj="https://github.com/draganagrbic998/xml/izvestaj">
 	               				</fo:inline-container>
 	               				<fo:inline-container inline-progression-dimension="60%">
                						<fo:block border-bottom="0.2mm solid black">
-										<xsl:value-of select="osnova:broj"></xsl:value-of>
+										<xsl:value-of select="substring-after(@about, 'https://github.com/draganagrbic998/xml/izvestaj/')"></xsl:value-of>
                						</fo:block>
                						<fo:block border-bottom="0.2mm solid black">
 										<xsl:variable name="dan" select="substring-after(substring-after(osnova:datum, '-'), '-')"></xsl:variable>

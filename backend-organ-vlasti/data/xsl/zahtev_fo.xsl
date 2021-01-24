@@ -246,7 +246,7 @@ xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev">
 								</fo:block>
 								<fo:block margin-top="20px">
 									Број захтева: <fo:inline border-bottom="0.2mm solid black">
-										<xsl:value-of select="osnova:broj"></xsl:value-of>
+										<xsl:value-of select="substring-after(@about, 'https://github.com/draganagrbic998/xml/zahtev/')"></xsl:value-of>
 									</fo:inline>
 								</fo:block>
 	              			</fo:inline-container>

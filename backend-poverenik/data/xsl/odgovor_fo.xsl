@@ -47,7 +47,7 @@ xmlns:odgovor="https://github.com/draganagrbic998/xml/odgovor">
 						<xsl:variable name="godinaZalbe" select="substring-before(odgovor:datumZalbe, '-')"></xsl:variable>
 						Број жалбе: 
 						<fo:inline border-bottom="0.2mm solid black">
-							<xsl:value-of select="osnova:broj"></xsl:value-of>
+							<xsl:value-of select="substring-after(@about, 'https://github.com/draganagrbic998/xml/odgovor/')"></xsl:value-of>
 						</fo:inline> 
 						, поднешена дана
 						<fo:inline border-bottom="0.2mm solid black">
@@ -76,8 +76,8 @@ xmlns:odgovor="https://github.com/draganagrbic998/xml/odgovor">
 						подноси одговор на
 						
 						<fo:basic-link>
-               				<xsl:attribute name="external-destination">
-               					<xsl:value-of select="concat('http://localhost:4201/html/zalbe/', osnova:broj)"></xsl:value-of>
+               				<xsl:attribute name="external-destination">               				
+               					<xsl:value-of select="concat('http://localhost:4201/pdf/zalbe/', substring-after(@about, 'https://github.com/draganagrbic998/xml/odgovor/'))"></xsl:value-of>
                				</xsl:attribute>
                				<xsl:attribute name="color">
 								blue

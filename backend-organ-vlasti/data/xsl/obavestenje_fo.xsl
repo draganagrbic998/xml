@@ -42,7 +42,7 @@ xmlns:odluka="https://github.com/draganagrbic998/xml/odluka">
 	               				</fo:inline-container>
 	               				<fo:inline-container inline-progression-dimension="60%">
                						<fo:block border-bottom="0.2mm solid black">
-										<xsl:value-of select="osnova:broj"></xsl:value-of>
+										<xsl:value-of select="substring-after(@about, 'https://github.com/draganagrbic998/xml/odluka/')"></xsl:value-of>
                						</fo:block>
                						<fo:block border-bottom="0.2mm solid black">
 										<xsl:variable name="dan" select="substring-after(substring-after(osnova:datum, '-'), '-')"></xsl:variable>
@@ -113,7 +113,7 @@ xmlns:odluka="https://github.com/draganagrbic998/xml/odluka">
 	               		
 						<fo:basic-link>
                				<xsl:attribute name="external-destination">
-               					<xsl:value-of select="concat('http://localhost:4200/pdf/zahtevi/', odluka:brojZahteva)"></xsl:value-of>
+               					<xsl:value-of select="concat('http://localhost:4200/pdf/zahtevi/', substring-after(odluka:datumZahteva/@href, 'https://github.com/draganagrbic998/xml/zahtev/'))"></xsl:value-of>
                				</xsl:attribute>
                				<xsl:attribute name="color">
 								blue

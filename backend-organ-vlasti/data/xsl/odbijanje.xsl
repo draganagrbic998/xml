@@ -85,7 +85,7 @@ xmlns:odluka="https://github.com/draganagrbic998/xml/odluka">
 						<xsl:variable name="godina" select="substring-before(osnova:datum, '-')"></xsl:variable>
 						Број решења: 
 						<span class="underline">
-							<xsl:value-of select="osnova:broj"></xsl:value-of>
+							<xsl:value-of select="substring-after(@about, 'https://github.com/draganagrbic998/xml/odluka/')"></xsl:value-of>
 						</span> 
 						, издат дана
 						<span class="underline">
@@ -115,7 +115,7 @@ xmlns:odluka="https://github.com/draganagrbic998/xml/odluka">
 					<br></br><br></br>
 					
 					<p class="indent">
-						<xsl:variable name="zahtev_link" select="concat('http://localhost:4200/html/zahtevi/', odluka:brojZahteva)"></xsl:variable>
+						<xsl:variable name="zahtev_link" select="concat('http://localhost:4200/html/zahtevi/', substring-after(odluka:datumZahteva/@href, 'https://github.com/draganagrbic998/xml/zahtev/'))"></xsl:variable>
 						Орган власти 
 						<span class="underline"><xsl:value-of select="osnova:OrganVlasti/osnova:naziv"></xsl:value-of></span>
 						издаје решење о одбијању <a href="{$zahtev_link}">захтева за информацијама од јавног значаја</a>, које је 

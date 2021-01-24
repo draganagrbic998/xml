@@ -85,7 +85,7 @@ xmlns:odluka="https://github.com/draganagrbic998/xml/odluka">
 								</div>
 								<div>
 									<p class="underline" style="min-width: 120px;">
-										<xsl:value-of select="osnova:broj"></xsl:value-of>
+										<xsl:value-of select="substring-after(@about, 'https://github.com/draganagrbic998/xml/odluka/')"></xsl:value-of>
 									</p>
 									<p class="underline" style="min-width: 120px;">
 										<xsl:variable name="dan" select="substring-after(substring-after(osnova:datum, '-'), '-')"></xsl:variable>
@@ -132,8 +132,8 @@ xmlns:odluka="https://github.com/draganagrbic998/xml/odluka">
 					
 					<br></br>
 					
-					<p class="indent">
-						<xsl:variable name="zahtev_link" select="concat('http://localhost:4200/html/zahtevi/', odluka:brojZahteva)"></xsl:variable>
+					<p class="indent">					
+						<xsl:variable name="zahtev_link" select="concat('http://localhost:4200/html/zahtevi/', substring-after(odluka:datumZahteva/@href, 'https://github.com/draganagrbic998/xml/zahtev/'))"></xsl:variable>
 						На основу члана 16. ст. 1. Закона о слободном приступу информацијама од јавног значаја, 
 						поступајући по вашем <a href="{$zahtev_link}">захтеву за слободан приступ информацијама</a> од
 						<span class="underline">
