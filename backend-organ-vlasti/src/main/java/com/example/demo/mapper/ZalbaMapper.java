@@ -45,11 +45,13 @@ public class ZalbaMapper implements MapperInterface {
 				XMLResource resource = (XMLResource) it.nextResource();
 				Document zalbaDocument = this.domParser.buildDocument(resource.getContent().toString());
 				Node zalba = zalbeDocument.createElementNS(Namespaces.ZALBA, "Zalba");
+				
 				Node tipZalbe = zalbeDocument.createElementNS(Namespaces.ZALBA, "tipZalbe");
 				tipZalbe.setTextContent(getTipZalbe(zalbaDocument) + "");
-				
 				zalba.appendChild(tipZalbe);
-				zalba.appendChild(zalbeDocument.importNode(zalbaDocument.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0), true));
+				Node broj = zalbeDocument.createElementNS(Namespaces.OSNOVA, "broj");
+				broj.setTextContent(Utils.getBroj(zalbaDocument));
+				zalba.appendChild(broj);
 				zalba.appendChild(zalbeDocument.importNode(zalbaDocument.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
 				zalba.appendChild(zalbeDocument.importNode(zalbaDocument.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0), true));
 				

@@ -26,18 +26,18 @@ public class IzvestajRDF implements RDFInterface {
 	}
 
 	@Override
-	public void update(String subject, Document document) {
-		this.fusekiManager.update(IZVESTAJ_GRAPH, Namespaces.IZVESTAJ + "/" + subject, document, IZVESTAJ_SHAPE);
+	public void update(String documentId, Document document) {
+		this.fusekiManager.update(IZVESTAJ_GRAPH, Namespaces.IZVESTAJ + "/" + documentId, document, IZVESTAJ_SHAPE);
 	}
 
 	@Override
-	public void delete(String subject) {
-		this.fusekiManager.delete(IZVESTAJ_GRAPH, Namespaces.IZVESTAJ + "/" + subject);
+	public void delete(String documentId) {
+		this.fusekiManager.delete(IZVESTAJ_GRAPH, Namespaces.IZVESTAJ + "/" + documentId);
 	}
 
 	@Override
-	public ResultSet retrieve(String subject) {
-		return this.fusekiManager.retrieve(IZVESTAJ_GRAPH, Namespaces.IZVESTAJ + "/" + subject);
+	public ResultSet retrieve(String documentId) {
+		return this.fusekiManager.retrieve(IZVESTAJ_GRAPH, Namespaces.IZVESTAJ + "/" + documentId);
 	}
 
 }

@@ -3,6 +3,7 @@ package com.example.demo.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import com.example.demo.common.Namespaces;
 import com.example.demo.common.Utils;
@@ -29,7 +30,8 @@ public class ResenjeService implements ServiceInterface {
 	@Override
 	public void add(String xml) {
 		Document document = this.resenjeMapper.map(xml);
-		String brojZalbe = document.getElementsByTagNameNS(Namespaces.RESENJE, "brojZalbe").item(0).getTextContent();
+		String brojZalbe = ((Element) document.getElementsByTagNameNS(Namespaces.RESENJE, "datumZalbe").item(0))
+				.getAttribute("href").replace(Namespaces.ZALBA + "/", "");
 		Document zalbaDocument = this.zalbaService.load(brojZalbe);
 
 		this.resenjeExist.update(Utils.getBroj(document), document);

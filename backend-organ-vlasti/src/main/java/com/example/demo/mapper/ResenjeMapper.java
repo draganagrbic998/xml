@@ -9,6 +9,7 @@ import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.modules.XMLResource;
 
 import com.example.demo.common.Namespaces;
+import com.example.demo.common.Utils;
 import com.example.demo.exception.MyException;
 import com.example.demo.parser.DOMParser;
 
@@ -36,7 +37,9 @@ public class ResenjeMapper implements MapperInterface {
 				Document resenjeDocument = this.domParser.buildDocument(resource.getContent().toString());
 				Node resenje = resenjaDocument.createElementNS(Namespaces.RESENJE, "Resenje");
 				
-				resenje.appendChild(resenjaDocument.importNode(resenjeDocument.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0), true));
+				Node broj = resenjaDocument.createElementNS(Namespaces.OSNOVA, "broj");
+				broj.setTextContent(Utils.getBroj(resenjeDocument));
+				resenje.appendChild(broj);
 				resenje.appendChild(resenjaDocument.importNode(resenjeDocument.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
 				resenje.appendChild(resenjaDocument.importNode(resenjeDocument.getElementsByTagNameNS(Namespaces.RESENJE, "status").item(0), true));
 				resenja.appendChild(resenje);

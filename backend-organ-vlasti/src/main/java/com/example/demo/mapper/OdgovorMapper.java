@@ -37,24 +37,23 @@ public class OdgovorMapper implements MapperInterface {
 	@Override
 	public Document map(String xml) {
 		Document dto = this.domParser.buildDocument(xml);
-		String broj = Utils.getBroj(dto);
+		String brojZalbe = dto.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
 		Document document = this.domParser.buildDocumentFromFile(STUB_FILE);
 		Element odgovor = (Element) document.getElementsByTagNameNS(Namespaces.ODGOVOR, "Odgovor").item(0);
-		Element zalba = (Element) this.zalbaService.load(broj).getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").item(0);
+		Element zalba = (Element) this.zalbaService.load(brojZalbe).getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").item(0);
 		DocumentFragment documentFragment = document.createDocumentFragment();
 
-		odgovor.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).setTextContent(broj);
-		odgovor.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).setTextContent(Constants.sdf.format(new Date()));
-		odgovor.setAttribute("about", Namespaces.ODGOVOR + "/" + broj);
+		odgovor.setAttribute("about", Namespaces.ODGOVOR + "/" + brojZalbe);
 		odgovor.setAttribute("href", zalba.getAttribute("href"));
+		odgovor.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).setTextContent(Constants.sdf.format(new Date()));
 		
 		documentFragment.appendChild(document.importNode(zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "Osoba").item(0), true));
 		documentFragment.appendChild(document.importNode(zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "OrganVlasti").item(0), true));
 		documentFragment.appendChild(document.importNode(dto.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0), true));
 		
 		Element datumZalbe = (Element) document.getElementsByTagNameNS(Namespaces.ODGOVOR, "datumZalbe").item(0);
-		datumZalbe.setTextContent(zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).getTextContent());
 		datumZalbe.setAttribute("href", zalba.getAttribute("about"));
+		datumZalbe.setTextContent(zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).getTextContent());
 		odgovor.insertBefore(documentFragment, datumZalbe);
 		return document;
 	}
@@ -72,7 +71,9 @@ public class OdgovorMapper implements MapperInterface {
 				Document odgovorDocument = this.domParser.buildDocument(resource.getContent().toString());
 				Node odgovor = odgovoriDocument.createElementNS(Namespaces.ODGOVOR, "Odgovor");
 
-				odgovor.appendChild(odgovoriDocument.importNode(odgovorDocument.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0), true));
+				Node broj = odgovoriDocument.createElementNS(Namespaces.OSNOVA, "broj");
+				broj.setTextContent(Utils.getBroj(odgovorDocument));
+				odgovor.appendChild(broj);
 				odgovor.appendChild(odgovoriDocument.importNode(odgovorDocument.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
 				odgovor.appendChild(odgovoriDocument.importNode(odgovorDocument.getElementsByTagNameNS(Namespaces.ODGOVOR, "datumZalbe").item(0), true));
 				

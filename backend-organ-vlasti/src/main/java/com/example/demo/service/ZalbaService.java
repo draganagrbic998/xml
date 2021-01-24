@@ -77,12 +77,12 @@ public class ZalbaService implements ServiceInterface {
 		return null;
 	}
 	
-	public List<Integer> odgovori(String broj) {
-		return this.zalbaRDF.odgovori(broj);
+	public List<String> odgovori(String documentId) {
+		return this.zalbaRDF.odgovori(documentId);
 	}
 
-	public List<Integer> resenja(String broj) {
-		return this.zalbaRDF.resenja(broj);
+	public List<String> resenja(String documentId) {
+		return this.zalbaRDF.resenja(documentId);
 	}
 	
 	public void odustani(String broj) {

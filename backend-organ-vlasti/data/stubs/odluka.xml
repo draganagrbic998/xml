@@ -8,8 +8,6 @@ xsi:type=""
 about=""
 rel="pred:vlasnik"
 href="">
-	<broj></broj>
 	<datum property="pred:datum" datatype="xs:string"></datum>
-	<odluka:brojZahteva rel="pred:zahtev" href=""></odluka:brojZahteva>
-	<odluka:datumZahteva></odluka:datumZahteva>
+	<odluka:datumZahteva rel="pred:zahtev" href=""></odluka:datumZahteva>
 </odluka:Odluka>

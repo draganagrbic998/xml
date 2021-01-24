@@ -6,7 +6,6 @@ xmlns:xs="http://www.w3.org/2001/XMLSchema#"
 about=""
 rel="pred:vlasnik"
 href="">
-	<broj></broj>
 	<datum property="pred:datum" datatype="xs:string"></datum>
 	<odgovor:datumZalbe rel="pred:zalba" href=""></odgovor:datumZalbe>
 </odgovor:Odgovor>

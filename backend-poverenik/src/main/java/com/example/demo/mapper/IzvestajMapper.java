@@ -9,6 +9,7 @@ import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.modules.XMLResource;
 
 import com.example.demo.common.Namespaces;
+import com.example.demo.common.Utils;
 import com.example.demo.exception.MyException;
 import com.example.demo.parser.DOMParser;
 
@@ -36,8 +37,9 @@ public class IzvestajMapper implements MapperInterface {
 				Document izvestajDocument = this.domParser.buildDocument(resource.getContent().toString());
 				Node izvestaj = izvestajiDocument.createElementNS(Namespaces.IZVESTAJ, "Izvestaj");
 				
-				izvestaj.appendChild(izvestajiDocument
-						.importNode(izvestajDocument.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0), true));
+				Node broj = izvestajiDocument.createElementNS(Namespaces.OSNOVA, "broj");
+				broj.setTextContent(Utils.getBroj(izvestajDocument));
+				izvestaj.appendChild(broj);
 				izvestaj.appendChild(izvestajiDocument
 						.importNode(izvestajDocument.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
 				izvestaj.appendChild(izvestajiDocument

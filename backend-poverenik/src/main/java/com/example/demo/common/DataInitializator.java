@@ -59,6 +59,7 @@ public class DataInitializator {
 		this.existManager.save(KorisnikExist.KORISNIK_COLLECTION, "poverenik.javni.znacaj@gmail.com", this.domParser.buildDocumentFromFile(POVERENIK1), KorisnikExist.KORISNIK_SCHEMA);
 		this.existManager.save(KorisnikExist.KORISNIK_COLLECTION, "draganaasd@gmail.com", this.domParser.buildDocumentFromFile(GRADJANIN1), KorisnikExist.KORISNIK_SCHEMA);
 
+		/*
 		this.existManager.save(ZalbaExist.ZALBA_COLLECTION, "1", this.domParser.buildDocumentFromFile(ZALBA_DELIMICNOST1), ZalbaExist.ZALBA_SCHEMA);
 		this.existManager.save(ZalbaExist.ZALBA_COLLECTION, "2", this.domParser.buildDocumentFromFile(ZALBA_ODLUKA1), ZalbaExist.ZALBA_SCHEMA);
 		this.existManager.save(ZalbaExist.ZALBA_COLLECTION, "3", this.domParser.buildDocumentFromFile(ZALBA_CUTANJE1), ZalbaExist.ZALBA_SCHEMA);
@@ -80,7 +81,7 @@ public class DataInitializator {
 		this.fusekiManager.add(ResenjeRDF.RESENJE_GRAPH, this.domParser.buildDocumentFromFile(RESENJE1), ResenjeRDF.RESENJE_SHAPE);
 		this.fusekiManager.add(ResenjeRDF.RESENJE_GRAPH, this.domParser.buildDocumentFromFile(RESENJE2), ResenjeRDF.RESENJE_SHAPE);
 		this.fusekiManager.add(ResenjeRDF.RESENJE_GRAPH, this.domParser.buildDocumentFromFile(RESENJE3), ResenjeRDF.RESENJE_SHAPE);
-
+*/
 	}
 
 }

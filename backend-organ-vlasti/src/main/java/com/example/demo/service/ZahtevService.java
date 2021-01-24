@@ -97,16 +97,16 @@ public class ZahtevService implements ServiceInterface {
 		return null;
 	}
 
-	public List<Integer> odluke(String broj) {
-		return this.zahtevRDF.odluke(broj);
+	public List<String> odluke(String documentId) {
+		return this.zahtevRDF.odluke(documentId);
 	}
 
-	public List<Integer> zalbe(String broj) {
-		return this.zahtevRDF.zalbe(broj);
+	public List<String> zalbe(String documentId) {
+		return this.zahtevRDF.zalbe(documentId);
 	}
 
-	public List<Integer> resenja(String broj) {
-		return this.zahtevRDF.resenja(broj);
+	public List<String> resenja(String documentId) {
+		return this.zahtevRDF.resenja(documentId);
 	}
 
 	//@Scheduled(fixedDelay = CUTANJE_MILISECONDS_LIMIT, initialDelay = CUTANJE_MILISECONDS_LIMIT)

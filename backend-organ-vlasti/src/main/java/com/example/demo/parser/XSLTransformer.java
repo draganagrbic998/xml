@@ -142,18 +142,18 @@ public class XSLTransformer {
 	private void setTypes(Document document, Model model) {
 		if (document.getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").getLength() > 0) {
 			model.add(model.createStatement(
-					model.createResource(Namespaces.ZALBA + "/" + Utils.getBroj(document)), 
+					model.createResource(Utils.getId(document)), 
 					model.createProperty(Namespaces.PREDIKAT + "tip"), 
 					model.createLiteral(ZalbaMapper.getTipZalbe(document) + "")));
 		}
 		else if (document.getElementsByTagNameNS(Namespaces.ODLUKA, "Odluka").getLength() > 0) {
 			model.add(model.createStatement(
-					model.createResource(Namespaces.ODLUKA + "/" + Utils.getBroj(document)), 
+					model.createResource(Utils.getId(document)), 
 					model.createProperty(Namespaces.PREDIKAT + "tip"), 
 					model.createLiteral(OdlukaMapper.getTipOdluke(document) + "")));
 		}
 		model.add(model.createStatement(
-				model.createResource(document.getFirstChild().getNamespaceURI() + "/" + Utils.getBroj(document)),
+				model.createResource(Utils.getId(document)), 
 				model.createProperty(Namespaces.RDF + "type"),
 				model.createResource(document.getFirstChild().getNamespaceURI())));
 	}

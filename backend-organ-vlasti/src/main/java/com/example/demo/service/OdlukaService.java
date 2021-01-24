@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import com.example.demo.common.Constants;
 import com.example.demo.common.Namespaces;
@@ -59,7 +60,8 @@ public class OdlukaService implements ServiceInterface {
 	@Override
 	public void add(String xml) {
 		Document document = this.odlukaMapper.map(xml);
-		String brojZahteva = document.getElementsByTagNameNS(Namespaces.ODLUKA, "brojZahteva").item(0).getTextContent();
+		String brojZahteva = ((Element) document.getElementsByTagNameNS(Namespaces.ODLUKA, "datumZahteva").item(0))
+				.getAttribute("href").replace(Namespaces.ZAHTEV + "/", "");
 		Document zahtevDocument = this.zahtevService.load(brojZahteva);
 		
 		if (OdlukaMapper.getTipOdluke(document).equals(TipOdluke.obavestenje)) {
@@ -130,12 +132,12 @@ public class OdlukaService implements ServiceInterface {
 		return null;
 	}
 
-	public List<Integer> zalbe(String broj) {
-		return this.odlukaRDF.zalbe(broj);
+	public List<String> zalbe(String documentId) {
+		return this.odlukaRDF.zalbe(documentId);
 	}
 
-	public List<Integer> resenja(String broj) {
-		return this.odlukaRDF.resenja(broj);
+	public List<String> resenja(String documentId) {
+		return this.odlukaRDF.resenja(documentId);
 	}
 	
 }

@@ -92,7 +92,6 @@
     </xs:element>
     <xs:complexType name="TDokument" abstract="true">
         <xs:sequence>
-            <xs:element name="broj" type="xs:positiveInteger"> </xs:element>
             <xs:element name="datum">
                 <xs:complexType>
                     <xs:simpleContent>

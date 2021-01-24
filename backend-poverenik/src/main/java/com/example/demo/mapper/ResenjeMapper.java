@@ -14,6 +14,7 @@ import org.xmldb.api.modules.XMLResource;
 
 import com.example.demo.common.Constants;
 import com.example.demo.common.Namespaces;
+import com.example.demo.common.Utils;
 import com.example.demo.exception.MyException;
 import com.example.demo.parser.DOMParser;
 import com.example.demo.service.KorisnikService;
@@ -44,27 +45,25 @@ public class ResenjeMapper implements MapperInterface {
 	@Override
 	public Document map(String xml) {
 		Document dto = this.domParser.buildDocument(xml);
-		String broj = this.resenjeService.nextDocumentId();
+		String brojZalbe = dto.getElementsByTagNameNS(Namespaces.RESENJE, "brojZalbe").item(0).getTextContent();
 		Document document = this.domParser.buildDocumentFromFile(STUB_FILE);
 		Element resenje = (Element) document.getElementsByTagNameNS(Namespaces.RESENJE, "Resenje").item(0);
-		String brojZalbe = dto.getElementsByTagNameNS(Namespaces.RESENJE, "brojZalbe").item(0).getTextContent();
 		Document zalbaDocument = this.zalbaService.load(brojZalbe);
 		Element zalba = (Element) zalbaDocument.getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").item(0);
 		DocumentFragment documentFragment = document.createDocumentFragment();
 
-		resenje.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).setTextContent(broj);
+		resenje.setAttribute("about", Namespaces.RESENJE + "/" + this.resenjeService.nextDocumentId());
+		resenje.setAttribute("href", zalba.getAttribute("href"));
 		resenje.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).setTextContent(Constants.sdf.format(new Date()));
 		resenje.getElementsByTagNameNS(Namespaces.RESENJE, "status").item(0).setTextContent(
 				dto.getElementsByTagNameNS(Namespaces.RESENJE, "status").item(0).getTextContent());
-		resenje.setAttribute("about", Namespaces.RESENJE + "/" + broj);
-		resenje.setAttribute("href", zalba.getAttribute("href"));
 		
 		Document odgovorDocument = this.odgovorService.load(brojZalbe);
 		if (odgovorDocument != null) {
 			Element odgovor = (Element) odgovorDocument.getElementsByTagNameNS(Namespaces.ODGOVOR, "Odgovor").item(0);
 			Element datumOdbrane = (Element) document.getElementsByTagNameNS(Namespaces.RESENJE, "datumOdbrane").item(0);
-			datumOdbrane.setTextContent(odgovorDocument.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).getTextContent());
 			datumOdbrane.setAttribute("href", odgovor.getAttribute("about"));
+			datumOdbrane.setTextContent(odgovorDocument.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).getTextContent());
 			document.getElementsByTagNameNS(Namespaces.RESENJE, "Odbrana").item(0).appendChild(
 				document.importNode(odgovorDocument.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0), true));
 		}
@@ -80,12 +79,11 @@ public class ResenjeMapper implements MapperInterface {
 		documentFragment.appendChild(podaciZahteva);
 		document.renameNode(podaciZahteva, Namespaces.RESENJE, "resenje:PodaciZahteva");
 		resenje.insertBefore(documentFragment, document.getElementsByTagNameNS(Namespaces.RESENJE, "PodaciZalbe").item(0));
-				
+
 		document.getElementsByTagNameNS(Namespaces.RESENJE, "tipZalbe").item(0).setTextContent(ZalbaMapper.getTipZalbe(zalbaDocument) + "");
-		document.getElementsByTagNameNS(Namespaces.RESENJE, "brojZalbe").item(0).setTextContent(brojZalbe);
-		((Element) document.getElementsByTagNameNS(Namespaces.RESENJE, "brojZalbe").item(0)).setAttribute("href", zalba.getAttribute("about"));
-		document.getElementsByTagNameNS(Namespaces.RESENJE, "datumZalbe").item(0).setTextContent(
-				zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).getTextContent());
+		Element datumZalbe = (Element) document.getElementsByTagNameNS(Namespaces.RESENJE, "datumZalbe").item(0);
+		datumZalbe.setAttribute("href", zalba.getAttribute("about"));
+		datumZalbe.setTextContent(zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).getTextContent());
 		document.getElementsByTagNameNS(Namespaces.RESENJE, "datumProsledjivanja").item(0).setTextContent(
 				zalba.getElementsByTagNameNS(Namespaces.ZALBA, "datumProsledjivanja").item(0).getTextContent());
 		
@@ -111,7 +109,9 @@ public class ResenjeMapper implements MapperInterface {
 				Document resenjeDocument = this.domParser.buildDocument(resource.getContent().toString());
 				Node resenje = resenjaDocument.createElementNS(Namespaces.RESENJE, "Resenje");
 				
-				resenje.appendChild(resenjaDocument.importNode(resenjeDocument.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0), true));
+				Node broj = resenjaDocument.createElementNS(Namespaces.OSNOVA, "broj");
+				broj.setTextContent(Utils.getBroj(resenjeDocument));
+				resenje.appendChild(broj);
 				resenje.appendChild(resenjaDocument.importNode(resenjeDocument.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
 				resenje.appendChild(resenjaDocument.importNode(resenjeDocument.getElementsByTagNameNS(Namespaces.RESENJE, "status").item(0), true));
 				resenja.appendChild(resenje);

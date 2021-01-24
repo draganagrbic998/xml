@@ -33,32 +33,32 @@ public class ZalbaRDF implements RDFInterface {
 	}
 	
 	@Override
-	public void update(String subject, Document document) {
-		this.fusekiManager.update(ZALBA_GRAPH, Namespaces.ZALBA + "/" + subject, document, ZALBA_SHAPE);
+	public void update(String documentId, Document document) {
+		this.fusekiManager.update(ZALBA_GRAPH, Namespaces.ZALBA + "/" + documentId, document, ZALBA_SHAPE);
 	}
 
 	@Override
-	public void delete(String subject) {
-		this.fusekiManager.delete(ZALBA_GRAPH, Namespaces.ZALBA + "/" + subject);
+	public void delete(String documentId) {
+		this.fusekiManager.delete(ZALBA_GRAPH, Namespaces.ZALBA + "/" + documentId);
 	}
 	
 	@Override
-	public ResultSet retrieve(String subject) {
-		return this.fusekiManager.retrieve(ZALBA_GRAPH, Namespaces.ZALBA + "/" + subject);
+	public ResultSet retrieve(String documentId) {
+		return this.fusekiManager.retrieve(ZALBA_GRAPH, Namespaces.ZALBA + "/" + documentId);
 	}
 	
-	public List<Integer> odgovori(String broj) {
+	public List<String> odgovori(String documentId) {
 		return this.fusekiManager.search(
 				String.format(Utils.readFile(FusekiManager.REFERENCE_QUERY), 
 				this.authUtilities.getData() + OdgovorRDF.ODGOVOR_GRAPH, 
-				Namespaces.PREDIKAT + "zalba", Namespaces.ZALBA + "/" + broj), Namespaces.ODGOVOR + "/");
+				Namespaces.PREDIKAT + "zalba", Namespaces.ZALBA + "/" + documentId));
 	}
 	
-	public List<Integer> resenja(String broj) {
+	public List<String> resenja(String documentId) {
 		return this.fusekiManager.search(
 				String.format(Utils.readFile(FusekiManager.REFERENCE_QUERY), 
 				this.authUtilities.getData() + ResenjeRDF.RESENJE_GRAPH, 
-				Namespaces.PREDIKAT + "zalba", Namespaces.ZALBA + "/" + broj), Namespaces.RESENJE + "/");
+				Namespaces.PREDIKAT + "zalba", Namespaces.ZALBA + "/" + documentId));
 	}
 
 }

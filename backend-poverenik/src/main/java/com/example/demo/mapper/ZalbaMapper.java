@@ -45,7 +45,6 @@ public class ZalbaMapper implements MapperInterface {
 	@Override
 	public Document map(String xml) {
 		Document dto = this.domParser.buildDocument(xml);
-		String broj = this.zalbaService.nextDocumentId();
 		Document document = this.domParser.buildDocumentFromFile(STUB_FILE);
 		Element zalba = (Element) document.getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").item(0);
 		DocumentFragment documentFragment = document.createDocumentFragment();
@@ -59,11 +58,10 @@ public class ZalbaMapper implements MapperInterface {
 			zalba.setAttribute("xsi:type", "zalba:TZalbaOdluka");		
 			zalba.removeChild(zalba.getElementsByTagNameNS(Namespaces.ZALBA, "tipCutanja").item(0));
 		}
-		
-		zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).setTextContent(broj);
-		zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).setTextContent(Constants.sdf.format(new Date()));
-		zalba.setAttribute("about", Namespaces.ZALBA + "/" + broj);
+
+		zalba.setAttribute("about", Namespaces.ZALBA + "/" + this.zalbaService.nextDocumentId());
 		zalba.setAttribute("href", Namespaces.KORISNIK + "/" + this.korisnikService.currentUser().getMejl());
+		zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).setTextContent(Constants.sdf.format(new Date()));
 				
 		Node gradjanin = document.createElementNS(Namespaces.OSNOVA, "Gradjanin");
 		gradjanin.appendChild(document.importNode(this.korisnikService.loadUser(this.korisnikService.currentUser().getMejl()).getElementsByTagNameNS(Namespaces.OSNOVA, "Osoba").item(0), true));
@@ -80,11 +78,11 @@ public class ZalbaMapper implements MapperInterface {
 							SOAPActions.get_odluka))
 					.getElementsByTagNameNS(Namespaces.ODLUKA, "Odluka").item(0);
 			Element podaciOdluke = (Element) document.getElementsByTagNameNS(Namespaces.ZALBA, "PodaciOdluke").item(0);
-			podaciOdluke.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).setTextContent(brojOdluke);
-			podaciOdluke.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).setTextContent(odluka.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).getTextContent());
 			podaciOdluke.setAttribute("href", odluka.getAttribute("about"));
+			podaciOdluke.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).setTextContent(odluka.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).getTextContent());
 			podaciOdluke.appendChild(document.importNode(odluka.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0), true));
-			brojZahteva = odluka.getElementsByTagNameNS(Namespaces.ODLUKA, "brojZahteva").item(0).getTextContent();
+			brojZahteva = ((Element) odluka.getElementsByTagNameNS(Namespaces.ODLUKA, "datumZahteva").item(0))
+					.getAttribute("href").replace(Namespaces.ZAHTEV + "/", "");
 		}
 		else {
 			zalba.removeChild(zalba.getElementsByTagNameNS(Namespaces.ZALBA, "PodaciOdluke").item(0));
@@ -101,9 +99,8 @@ public class ZalbaMapper implements MapperInterface {
 		zalba.insertBefore(documentFragment, document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0));
 		
 		Element podaciZahteva = (Element) document.getElementsByTagNameNS(Namespaces.ZALBA, "PodaciZahteva").item(0);
-		podaciZahteva.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).setTextContent(brojZahteva);
-		podaciZahteva.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).setTextContent(zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).getTextContent());
 		podaciZahteva.setAttribute("href", zahtev.getAttribute("about"));
+		podaciZahteva.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).setTextContent(zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).getTextContent());
 		podaciZahteva.appendChild(document.importNode(zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0), true));
 				
 		return document;
@@ -121,11 +118,13 @@ public class ZalbaMapper implements MapperInterface {
 				XMLResource resource = (XMLResource) it.nextResource();
 				Document zalbaDocument = this.domParser.buildDocument(resource.getContent().toString());
 				Node zalba = zalbeDocument.createElementNS(Namespaces.ZALBA, "Zalba");
+				
 				Node tipZalbe = zalbeDocument.createElementNS(Namespaces.ZALBA, "tipZalbe");
 				tipZalbe.setTextContent(getTipZalbe(zalbaDocument) + "");
-				
 				zalba.appendChild(tipZalbe);
-				zalba.appendChild(zalbeDocument.importNode(zalbaDocument.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0), true));
+				Node broj = zalbeDocument.createElementNS(Namespaces.OSNOVA, "broj");
+				broj.setTextContent(Utils.getBroj(zalbaDocument));
+				zalba.appendChild(broj);
 				zalba.appendChild(zalbeDocument.importNode(zalbaDocument.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
 				zalba.appendChild(zalbeDocument.importNode(zalbaDocument.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0), true));
 				if (zalbaDocument.getElementsByTagNameNS(Namespaces.ZALBA, "datumProsledjivanja").getLength() > 0)

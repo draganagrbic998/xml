@@ -42,15 +42,13 @@ public class ZahtevMapper implements MapperInterface {
 	@Override
 	public Document map(String xml) {
 		Document dto = this.domParser.buildDocument(xml);
-		String broj = this.zahtevService.nextDocumentId();
 		Document document = this.domParser.buildDocumentFromFile(STUB_FILE);
 		Element zahtev = (Element) document.getElementsByTagNameNS(Namespaces.ZAHTEV, "Zahtev").item(0);
 		DocumentFragment documentFragment = document.createDocumentFragment();
-		
-		zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).setTextContent(broj);
-		zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).setTextContent(Constants.sdf.format(new Date()));
-		zahtev.setAttribute("about", Namespaces.ZAHTEV + "/" + broj);
+
+		zahtev.setAttribute("about", Namespaces.ZAHTEV + "/" + this.zahtevService.nextDocumentId());
 		zahtev.setAttribute("href", Namespaces.KORISNIK + "/" + this.korisnikService.currentUser().getMejl());
+		zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).setTextContent(Constants.sdf.format(new Date()));
 
 		Node gradjanin = document.createElementNS(Namespaces.OSNOVA, "Gradjanin");
 		gradjanin.appendChild(document.importNode(this.korisnikService.loadUser(this.korisnikService.currentUser().getMejl()).getElementsByTagNameNS(Namespaces.OSNOVA, "Osoba").item(0), true));
@@ -87,9 +85,11 @@ public class ZahtevMapper implements MapperInterface {
 				XMLResource resource = (XMLResource) it.nextResource();
 				Document zahtevDocument = this.domParser.buildDocument(resource.getContent().toString());
 				Node zahtev = zahteviDocument.createElementNS(Namespaces.ZAHTEV, "Zahtev");
-				
+
+				Node broj = zahteviDocument.createElementNS(Namespaces.OSNOVA, "broj");
+				broj.setTextContent(Utils.getBroj(zahtevDocument));
+				zahtev.appendChild(broj);
 				zahtev.appendChild(zahteviDocument.importNode(zahtevDocument.getElementsByTagNameNS(Namespaces.ZAHTEV, "tipZahteva").item(0), true));
-				zahtev.appendChild(zahteviDocument.importNode(zahtevDocument.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0), true));
 				zahtev.appendChild(zahteviDocument.importNode(zahtevDocument.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
 				zahtev.appendChild(zahteviDocument.importNode(zahtevDocument.getElementsByTagNameNS(Namespaces.ZAHTEV, "status").item(0), true));
 			

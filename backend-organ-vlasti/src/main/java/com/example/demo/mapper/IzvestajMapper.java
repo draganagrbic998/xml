@@ -56,19 +56,19 @@ public class IzvestajMapper implements MapperInterface {
 			Document document = this.domParser.buildDocumentFromFile(STUB_FILE);
 			Element izvestaj = (Element) document.getElementsByTagNameNS(Namespaces.IZVESTAJ, "Izvestaj").item(0);
 			DocumentFragment documentFragment = document.createDocumentFragment();
-			
-			document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).setTextContent(this.izvestajService.nextDocumentId());
+
+			izvestaj.setAttribute("about", Namespaces.IZVESTAJ + "/" + this.izvestajService.nextDocumentId());
+			izvestaj.setAttribute("href", Namespaces.KORISNIK + "/" + this.korisnikService.currentUser().getMejl());
 			document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).setTextContent(Constants.sdf.format(new Date()));
 			document.getElementsByTagNameNS(Namespaces.IZVESTAJ, "godina").item(0).setTextContent(godina);
-			izvestaj.setAttribute("about", Namespaces.IZVESTAJ + "/" + Utils.getBroj(document));
-			izvestaj.setAttribute("href", Namespaces.KORISNIK + "/" + this.korisnikService.currentUser().getMejl());
 			
 			documentFragment.appendChild(document.importNode(this.korisnikService.loadUser(this.korisnikService.currentUser().getMejl()).getElementsByTagNameNS(Namespaces.OSNOVA, "Osoba").item(0), true));
 			documentFragment.appendChild(document.importNode(this.organVlastiService.load().getElementsByTagNameNS(Namespaces.OSNOVA, "OrganVlasti").item(0), true));
 			izvestaj.insertBefore(documentFragment, izvestaj.getElementsByTagNameNS(Namespaces.IZVESTAJ, "godina").item(0));
 
 			Node bzNode = document.createElementNS(Namespaces.IZVESTAJ, "izvestaj:brojZahteva");
-			bzNode.setTextContent(this.zahtevExist.retrieve("/zahtev:Zahtev/datum[contains(text(), \"" + godina + "\")]").getSize() + "");
+			bzNode.setTextContent(
+					this.zahtevExist.retrieve("/zahtev:Zahtev/datum[contains(text(), \"" + godina + "\")]").getSize() + "");
 			
 			Node bzoNode = document.createElementNS(Namespaces.IZVESTAJ, "izvestaj:brojZahtevaObavestenje");
 			bzoNode.setTextContent(
@@ -103,7 +103,8 @@ public class IzvestajMapper implements MapperInterface {
 					this.zahtevExist.retrieve("/zahtev:Zahtev[zahtev:tipDostave = 'ostalo']/datum[contains(text(), \"" + godina + "\")]").getSize() + "");
 
 			Node boNode = document.createElementNS(Namespaces.IZVESTAJ, "izvestaj:brojOdluka");
-			boNode.setTextContent(this.odlukaExist.retrieve("/odluka:Odluka/datum[contains(text(), \"" + godina + "\")]").getSize() + "");
+			boNode.setTextContent(
+					this.odlukaExist.retrieve("/odluka:Odluka/datum[contains(text(), \"" + godina + "\")]").getSize() + "");
 
 			Node bopriNode = document.createElementNS(Namespaces.IZVESTAJ, "izvestaj:brojOdlukaOdobreno");
 			bopriNode.setTextContent(
@@ -114,7 +115,8 @@ public class IzvestajMapper implements MapperInterface {
 					this.odlukaExist.retrieve("/odluka:Odluka[@xsi:type='odluka:TOdbijanje']/datum[contains(text(), \"" + godina + "\")]").getSize() + "");
 
 			Node bzalNode = document.createElementNS(Namespaces.IZVESTAJ, "izvestaj:brojZalbi");
-			bzalNode.setTextContent(this.zalbaExist.retrieve("/zalba:Zalba/datum[contains(text(), \"" + godina + "\")]").getSize() + "");
+			bzalNode.setTextContent(
+					this.zalbaExist.retrieve("/zalba:Zalba/datum[contains(text(), \"" + godina + "\")]").getSize() + "");
 
 			Node bzcutNode = document.createElementNS(Namespaces.IZVESTAJ, "izvestaj:brojZalbiCutanje");
 			bzcutNode.setTextContent(
@@ -169,8 +171,9 @@ public class IzvestajMapper implements MapperInterface {
 				Document izvestajDocument = this.domParser.buildDocument(resource.getContent().toString());
 				Node izvestaj = izvestajiDocument.createElementNS(Namespaces.IZVESTAJ, "Izvestaj");
 				
-				izvestaj.appendChild(izvestajiDocument
-						.importNode(izvestajDocument.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0), true));
+				Node broj = izvestajiDocument.createElementNS(Namespaces.OSNOVA, "broj");
+				broj.setTextContent(Utils.getBroj(izvestajDocument));
+				izvestaj.appendChild(broj);
 				izvestaj.appendChild(izvestajiDocument
 						.importNode(izvestajDocument.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
 				izvestaj.appendChild(izvestajiDocument

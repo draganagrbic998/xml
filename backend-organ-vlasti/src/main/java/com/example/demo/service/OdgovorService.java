@@ -87,8 +87,8 @@ public class OdgovorService implements ServiceInterface {
 		return null;
 	}
 
-	public List<Integer> resenja(String broj) {
-		return this.odgovorRDF.resenja(broj);
+	public List<String> resenja(String documentId) {
+		return this.odgovorRDF.resenja(documentId);
 	}
 
 }

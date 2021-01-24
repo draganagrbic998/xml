@@ -36,7 +36,7 @@ public class OdgovorService implements ServiceInterface {
 	@Override
 	public void add(String xml) {
 		Document document = this.odgovorMapper.map(xml);
-		String brojZalbe = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
+		String brojZalbe = Utils.getBroj(document);
 		Document zalbaDocument = this.zalbaService.load(brojZalbe);
 
 		this.odgovorExist.update(Utils.getBroj(document), document);
@@ -90,8 +90,8 @@ public class OdgovorService implements ServiceInterface {
 		return null;
 	}
 
-	public List<Integer> resenja(String broj) {
-		return this.odgovorRDF.resenja(broj);
+	public List<String> resenja(String documentId) {
+		return this.odgovorRDF.resenja(documentId);
 	}
 
 }

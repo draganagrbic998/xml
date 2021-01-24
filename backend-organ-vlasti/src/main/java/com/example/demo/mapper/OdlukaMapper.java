@@ -38,7 +38,6 @@ public class OdlukaMapper implements MapperInterface {
 	@Override
 	public Document map(String xml) {
 		Document dto = this.domParser.buildDocument(xml);
-		String broj = this.odlukaService.nextDocumentId();
 		Document document = this.domParser.buildDocumentFromFile(STUB_FILE);
 		Element odluka = (Element) document.getElementsByTagNameNS(Namespaces.ODLUKA, "Odluka").item(0);
 		String brojZahteva = dto.getElementsByTagNameNS(Namespaces.ODLUKA, "brojZahteva").item(0).getTextContent();
@@ -52,20 +51,18 @@ public class OdlukaMapper implements MapperInterface {
 			odluka.setAttribute("xsi:type", "odluka:TOdbijanje");			
 		}
 
-		odluka.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).setTextContent(broj);
-		odluka.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).setTextContent(Constants.sdf.format(new Date()));
-		odluka.setAttribute("about", Namespaces.ODLUKA + "/" + broj);
+		odluka.setAttribute("about", Namespaces.ODLUKA + "/" + this.odlukaService.nextDocumentId());
 		odluka.setAttribute("href", zahtev.getAttribute("href"));
+		odluka.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).setTextContent(Constants.sdf.format(new Date()));
 		
 		documentFragment.appendChild(document.importNode(zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "Gradjanin").item(0), true));
 		documentFragment.appendChild(document.importNode(zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "OrganVlasti").item(0), true));
 		documentFragment.appendChild(document.importNode(dto.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0), true));
 		
-		Element brojZahtevaNode = (Element) document.getElementsByTagNameNS(Namespaces.ODLUKA, "brojZahteva").item(0);
-		brojZahtevaNode.setTextContent(brojZahteva);
-		brojZahtevaNode.setAttribute("href", zahtev.getAttribute("about"));
-		odluka.insertBefore(documentFragment, brojZahtevaNode);
-		odluka.getElementsByTagNameNS(Namespaces.ODLUKA, "datumZahteva").item(0).setTextContent(zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).getTextContent());
+		Element datumZahteva = (Element) document.getElementsByTagNameNS(Namespaces.ODLUKA, "datumZahteva").item(0);
+		datumZahteva.setAttribute("href", zahtev.getAttribute("about"));
+		datumZahteva.setTextContent(zahtev.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).getTextContent());
+		odluka.insertBefore(documentFragment, datumZahteva);
 		
 		try {
 			odluka.appendChild(document.importNode(dto.getElementsByTagNameNS(Namespaces.ODLUKA, "Uvid").item(0), true));
@@ -94,11 +91,13 @@ public class OdlukaMapper implements MapperInterface {
 				XMLResource resource = (XMLResource) it.nextResource();
 				Document odlukaDocument = this.domParser.buildDocument(resource.getContent().toString());
 				Node odluka = odlukeDocument.createElementNS(Namespaces.ODLUKA, "Odluka");
+				
 				Node tipOdluke = odlukeDocument.createElementNS(Namespaces.ODLUKA, "tipOdluke");
 				tipOdluke.setTextContent(getTipOdluke(odlukaDocument) + "");
-				
 				odluka.appendChild(tipOdluke);
-				odluka.appendChild(odlukeDocument.importNode(odlukaDocument.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0), true));
+				Node broj = odlukeDocument.createElementNS(Namespaces.OSNOVA, "broj");
+				broj.setTextContent(Utils.getBroj(odlukaDocument));
+				odluka.appendChild(broj);
 				odluka.appendChild(odlukeDocument.importNode(odlukaDocument.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
 				odluka.appendChild(odlukeDocument.importNode(odlukaDocument.getElementsByTagNameNS(Namespaces.ODLUKA, "datumZahteva").item(0), true));
 				

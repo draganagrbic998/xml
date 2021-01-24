@@ -6,7 +6,6 @@ xmlns:xs="http://www.w3.org/2001/XMLSchema#"
 about=""
 rel="pred:vlasnik"
 href="">
-	<broj></broj>
 	<datum property="pred:datum" datatype="xs:string"></datum>
 	<resenje:status property="pred:status" datatype="xs:string"></resenje:status>
 	<resenje:Odbrana>
@@ -14,8 +13,7 @@ href="">
 	</resenje:Odbrana>
 	<resenje:PodaciZalbe>
 		<resenje:tipZalbe property="pred:tipZalbe" datatype="xs:string"></resenje:tipZalbe>
-		<resenje:brojZalbe rel="pred:zalba" href=""></resenje:brojZalbe>
-		<resenje:datumZalbe></resenje:datumZalbe>
+		<resenje:datumZalbe rel="pred:zalba" href=""></resenje:datumZalbe>
 		<resenje:datumProsledjivanja></resenje:datumProsledjivanja>
 	</resenje:PodaciZalbe>
 </resenje:Resenje>

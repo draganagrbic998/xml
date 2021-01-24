@@ -40,7 +40,10 @@ public class OdgovorMapper implements MapperInterface {
 				XMLResource resource = (XMLResource) it.nextResource();
 				Document odgovorDocument = this.domParser.buildDocument(resource.getContent().toString());
 				Node odgovor = odgovoriDocument.createElementNS(Namespaces.ODGOVOR, "Odgovor");
-				odgovor.appendChild(odgovoriDocument.importNode(odgovorDocument.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0), true));
+
+				Node broj = odgovoriDocument.createElementNS(Namespaces.OSNOVA, "broj");
+				broj.setTextContent(Utils.getBroj(odgovorDocument));
+				odgovor.appendChild(broj);
 				odgovor.appendChild(odgovoriDocument.importNode(odgovorDocument.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0), true));
 				odgovor.appendChild(odgovoriDocument.importNode(odgovorDocument.getElementsByTagNameNS(Namespaces.ODGOVOR, "datumZalbe").item(0), true));
 				

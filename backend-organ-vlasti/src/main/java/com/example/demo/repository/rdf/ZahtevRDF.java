@@ -33,39 +33,39 @@ public class ZahtevRDF implements RDFInterface {
 	}
 	
 	@Override
-	public void update(String subject, Document document) {
-		this.fusekiManager.update(ZAHTEV_GRAPH, Namespaces.ZAHTEV + "/" + subject, document, ZAHTEV_SHAPE);
+	public void update(String documentId, Document document) {
+		this.fusekiManager.update(ZAHTEV_GRAPH, Namespaces.ZAHTEV + "/" + documentId, document, ZAHTEV_SHAPE);
 	}
 
 	@Override
-	public void delete(String subject) {
-		this.fusekiManager.delete(ZAHTEV_GRAPH, Namespaces.ZAHTEV + "/" + subject);
+	public void delete(String documentId) {
+		this.fusekiManager.delete(ZAHTEV_GRAPH, Namespaces.ZAHTEV + "/" + documentId);
 	}
 	
 	@Override
-	public ResultSet retrieve(String subject) {
-		return this.fusekiManager.retrieve(ZAHTEV_GRAPH, Namespaces.ZAHTEV + "/" + subject);
+	public ResultSet retrieve(String documentId) {
+		return this.fusekiManager.retrieve(ZAHTEV_GRAPH, Namespaces.ZAHTEV + "/" + documentId);
 	}
 	
-	public List<Integer> odluke(String broj) {
+	public List<String> odluke(String documentId) {
 		return this.fusekiManager.search(
 				String.format(Utils.readFile(FusekiManager.REFERENCE_QUERY), 
 				this.authUtilities.getData() + OdlukaRDF.ODLUKA_GRAPH, 
-				Namespaces.PREDIKAT + "zahtev", Namespaces.ZAHTEV + "/" + broj), Namespaces.ODLUKA + "/");
+				Namespaces.PREDIKAT + "zahtev", Namespaces.ZAHTEV + "/" + documentId));
 	}
 	
-	public List<Integer> zalbe(String broj) {
+	public List<String> zalbe(String documentId) {
 		return this.fusekiManager.search(
 				String.format(Utils.readFile(FusekiManager.REFERENCE_QUERY), 
 				this.authUtilities.getData() + ZalbaRDF.ZALBA_GRAPH, 
-				Namespaces.PREDIKAT + "zahtev", Namespaces.ZAHTEV + "/" + broj), Namespaces.ZALBA + "/");
+				Namespaces.PREDIKAT + "zahtev", Namespaces.ZAHTEV + "/" + documentId));
 	}
 	
-	public List<Integer> resenja(String broj) {
+	public List<String> resenja(String documentId) {
 		return this.fusekiManager.search(
 				String.format(Utils.readFile(FusekiManager.REFERENCE_QUERY), 
 				this.authUtilities.getData() + ResenjeRDF.RESENJE_GRAPH, 
-				Namespaces.PREDIKAT + "zahtev", Namespaces.ZAHTEV + "/" + broj), Namespaces.RESENJE + "/");
+				Namespaces.PREDIKAT + "zahtev", Namespaces.ZAHTEV + "/" + documentId));
 	}
 
 }

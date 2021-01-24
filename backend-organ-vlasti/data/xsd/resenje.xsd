@@ -91,10 +91,10 @@
                                         </xs:simpleContent>
                                     </xs:complexType>
                                 </xs:element>
-                                <xs:element name="brojZalbe">
+                                <xs:element name="datumZalbe">
                                     <xs:complexType>
                                         <xs:simpleContent>
-                                            <xs:extension base="xs:positiveInteger">
+                                            <xs:extension base="xs:date">
                                                 <xs:attribute name="rel">
                                                   <xs:simpleType>
                                                   <xs:restriction base="xs:string">
@@ -108,7 +108,6 @@
                                         </xs:simpleContent>
                                     </xs:complexType>
                                 </xs:element>
-                                <xs:element name="datumZalbe" type="xs:date"/>
                                 <xs:element name="datumProsledjivanja" type="xs:date"/>
                             </xs:sequence>
                         </xs:complexType>

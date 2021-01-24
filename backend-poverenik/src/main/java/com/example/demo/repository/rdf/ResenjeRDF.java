@@ -26,18 +26,18 @@ public class ResenjeRDF implements RDFInterface {
 	}
 
 	@Override
-	public void update(String subject, Document document) {
-		this.fusekiManager.update(RESENJE_GRAPH, Namespaces.RESENJE + "/" + subject, document, RESENJE_SHAPE);
+	public void update(String documentId, Document document) {
+		this.fusekiManager.update(RESENJE_GRAPH, Namespaces.RESENJE + "/" + documentId, document, RESENJE_SHAPE);
 	}
 
 	@Override
-	public void delete(String subject) {
-		this.fusekiManager.delete(RESENJE_GRAPH, Namespaces.RESENJE + "/" + subject);
+	public void delete(String documentId) {
+		this.fusekiManager.delete(RESENJE_GRAPH, Namespaces.RESENJE + "/" + documentId);
 	}
 	
 	@Override
-	public ResultSet retrieve(String subject) {
-		return this.fusekiManager.retrieve(RESENJE_GRAPH, Namespaces.RESENJE + "/" + subject);
+	public ResultSet retrieve(String documentId) {
+		return this.fusekiManager.retrieve(RESENJE_GRAPH, Namespaces.RESENJE + "/" + documentId);
 	}
 
 }
