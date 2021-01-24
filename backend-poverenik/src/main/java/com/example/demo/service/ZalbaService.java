@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,11 +33,11 @@ public class ZalbaService implements ServiceInterface {
 	private ZalbaExist zalbaExist;
 	
 	@Autowired
-	private ZalbaMapper zalbaMapper;
-
-	@Autowired
 	private ZalbaRDF zalbaRDF;
 	
+	@Autowired
+	private ZalbaMapper zalbaMapper;
+
 	@Autowired
 	private KorisnikService korisnikService;
 	
@@ -45,7 +46,7 @@ public class ZalbaService implements ServiceInterface {
 		
 	@Autowired
 	private DOMParser domParser;
-
+	
 	@Override
 	public void add(String xml) {
 		Document document = this.zalbaMapper.map(xml);
@@ -66,11 +67,6 @@ public class ZalbaService implements ServiceInterface {
 	}
 
 	@Override
-	public Document load(String documentId) {
-		return this.zalbaExist.load(documentId);
-	}
-
-	@Override
 	public String retrieve() {
 		Korisnik korisnik = this.korisnikService.currentUser();
 		String xpathExp;
@@ -84,6 +80,16 @@ public class ZalbaService implements ServiceInterface {
 	}
 
 	@Override
+	public Document load(String documentId) {
+		return this.zalbaExist.load(documentId);
+	}
+
+	@Override
+	public String nextDocumentId() {
+		return this.zalbaExist.nextDocumentId();
+	}
+	
+	@Override
 	public String regularSearch(String xml) {
 		return null;
 	}
@@ -91,6 +97,14 @@ public class ZalbaService implements ServiceInterface {
 	@Override
 	public String advancedSearch(String xml) {
 		return null;
+	}
+	
+	public List<Integer> odgovori(String broj) {
+		return this.zalbaRDF.odgovori(broj);
+	}
+	
+	public List<Integer> resenja(String broj) {
+		return this.zalbaRDF.resenja(broj);
 	}
 	
 	public void odustani(String broj) {

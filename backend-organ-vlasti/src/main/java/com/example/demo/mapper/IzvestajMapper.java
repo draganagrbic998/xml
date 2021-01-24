@@ -17,11 +17,10 @@ import com.example.demo.common.Namespaces;
 import com.example.demo.common.Utils;
 import com.example.demo.exception.MyException;
 import com.example.demo.parser.DOMParser;
-import com.example.demo.repository.xml.IzvestajExist;
-import com.example.demo.repository.xml.KorisnikExist;
 import com.example.demo.repository.xml.OdlukaExist;
 import com.example.demo.repository.xml.ZahtevExist;
 import com.example.demo.repository.xml.ZalbaExist;
+import com.example.demo.service.IzvestajService;
 import com.example.demo.service.KorisnikService;
 import com.example.demo.service.OrganVlastiService;
 
@@ -34,7 +33,7 @@ public class IzvestajMapper implements MapperInterface {
 	private DOMParser domParser;
 				
 	@Autowired
-	private IzvestajExist izvestajExist;
+	private IzvestajService izvestajService;
 
 	@Autowired
 	private ZahtevExist zahtevExist;
@@ -44,9 +43,6 @@ public class IzvestajMapper implements MapperInterface {
 
 	@Autowired
 	private ZalbaExist zalbaExist;
-
-	@Autowired
-	private KorisnikExist korisnikExist;
 
 	@Autowired
 	private KorisnikService korisnikService;
@@ -61,13 +57,13 @@ public class IzvestajMapper implements MapperInterface {
 			Element izvestaj = (Element) document.getElementsByTagNameNS(Namespaces.IZVESTAJ, "Izvestaj").item(0);
 			DocumentFragment documentFragment = document.createDocumentFragment();
 			
-			document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).setTextContent(this.izvestajExist.nextDocumentId());
+			document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).setTextContent(this.izvestajService.nextDocumentId());
 			document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).setTextContent(Constants.sdf.format(new Date()));
 			document.getElementsByTagNameNS(Namespaces.IZVESTAJ, "godina").item(0).setTextContent(godina);
 			izvestaj.setAttribute("about", Namespaces.IZVESTAJ + "/" + Utils.getBroj(document));
 			izvestaj.setAttribute("href", Namespaces.KORISNIK + "/" + this.korisnikService.currentUser().getMejl());
 			
-			documentFragment.appendChild(document.importNode(this.korisnikExist.load(this.korisnikService.currentUser().getMejl()).getElementsByTagNameNS(Namespaces.OSNOVA, "Osoba").item(0), true));
+			documentFragment.appendChild(document.importNode(this.korisnikService.loadUser(this.korisnikService.currentUser().getMejl()).getElementsByTagNameNS(Namespaces.OSNOVA, "Osoba").item(0), true));
 			documentFragment.appendChild(document.importNode(this.organVlastiService.load().getElementsByTagNameNS(Namespaces.OSNOVA, "OrganVlasti").item(0), true));
 			izvestaj.insertBefore(documentFragment, izvestaj.getElementsByTagNameNS(Namespaces.IZVESTAJ, "godina").item(0));
 

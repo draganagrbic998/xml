@@ -15,7 +15,7 @@ import com.example.demo.enums.StatusZalbe;
 import com.example.demo.enums.TipZalbe;
 import com.example.demo.exception.MyException;
 import com.example.demo.parser.DOMParser;
-import com.example.demo.repository.rdf.ZalbaRDF;
+import com.example.demo.service.ZalbaService;
 
 @Component
 public class ZalbaMapper implements MapperInterface {
@@ -24,7 +24,7 @@ public class ZalbaMapper implements MapperInterface {
 	private DOMParser domParser;
 
 	@Autowired
-	private ZalbaRDF zalbaRDF;
+	private ZalbaService zalbaService;
 		
 	@Override
 	public Document map(String xml) {
@@ -54,8 +54,8 @@ public class ZalbaMapper implements MapperInterface {
 				zalba.appendChild(zalbeDocument.importNode(zalbaDocument.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0), true));
 				
 				Node reference = zalbeDocument.createElementNS(Namespaces.OSNOVA, "Reference");
-				Utils.setReferences(zalbeDocument, reference, this.zalbaRDF.odgovori(Utils.getBroj(zalbaDocument)), "odgovori");
-				Utils.setReferences(zalbeDocument, reference, this.zalbaRDF.resenja(Utils.getBroj(zalbaDocument)), "resenja");
+				Utils.setReferences(zalbeDocument, reference, this.zalbaService.odgovori(Utils.getBroj(zalbaDocument)), "odgovori");
+				Utils.setReferences(zalbeDocument, reference, this.zalbaService.resenja(Utils.getBroj(zalbaDocument)), "resenja");
 				zalba.appendChild(reference);
 				zalbe.appendChild(zalba);
 			}

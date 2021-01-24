@@ -12,7 +12,7 @@ import com.example.demo.common.Namespaces;
 import com.example.demo.common.Utils;
 import com.example.demo.exception.MyException;
 import com.example.demo.parser.DOMParser;
-import com.example.demo.repository.rdf.OdgovorRDF;
+import com.example.demo.service.OdgovorService;
 
 @Component
 public class OdgovorMapper implements MapperInterface {
@@ -21,7 +21,7 @@ public class OdgovorMapper implements MapperInterface {
 	private DOMParser domParser;
 	
 	@Autowired
-	private OdgovorRDF odgovorRDF;
+	private OdgovorService odgovorService;
 	
 	@Override
 	public Document map(String xml) {
@@ -45,7 +45,7 @@ public class OdgovorMapper implements MapperInterface {
 				odgovor.appendChild(odgovoriDocument.importNode(odgovorDocument.getElementsByTagNameNS(Namespaces.ODGOVOR, "datumZalbe").item(0), true));
 				
 				Node reference = odgovoriDocument.createElementNS(Namespaces.OSNOVA, "Reference");
-				Utils.setReferences(odgovoriDocument, reference, this.odgovorRDF.resenja(Utils.getBroj(odgovorDocument)), "resenja");
+				Utils.setReferences(odgovoriDocument, reference, this.odgovorService.resenja(Utils.getBroj(odgovorDocument)), "resenja");
 				odgovor.appendChild(reference);
 				odgovori.appendChild(odgovor);
 			}

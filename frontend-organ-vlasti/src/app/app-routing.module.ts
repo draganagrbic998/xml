@@ -102,6 +102,11 @@ const routes: Routes = [
     path: PDF_PATH,
     component: PdfViewerComponent,
     canActivate: [AuthGuard]
+  },
+  {
+    path: '**',
+    pathMatch: 'full',
+    redirectTo: LOGIN_PATH
   }
 ];
 

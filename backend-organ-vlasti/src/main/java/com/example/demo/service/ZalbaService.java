@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
@@ -30,7 +32,7 @@ public class ZalbaService implements ServiceInterface {
 	
 	@Autowired
 	private DOMParser domParser;
-			
+				
 	@Override
 	public void add(String xml) {
 		Document document = this.zalbaMapper.map(xml);
@@ -51,13 +53,18 @@ public class ZalbaService implements ServiceInterface {
 	}
 
 	@Override
+	public String retrieve() {
+		return this.zalbaMapper.map(this.zalbaExist.retrieve("/zalba:Zalba"));
+	}
+	
+	@Override
 	public Document load(String documentId) {
 		return this.zalbaExist.load(documentId);
 	}
-
+	
 	@Override
-	public String retrieve() {
-		return this.zalbaMapper.map(this.zalbaExist.retrieve("/zalba:Zalba"));
+	public String nextDocumentId() {
+		return this.zalbaExist.nextDocumentId();
 	}
 	
 	@Override
@@ -68,6 +75,14 @@ public class ZalbaService implements ServiceInterface {
 	@Override
 	public String advancedSearch(String xml) {
 		return null;
+	}
+	
+	public List<Integer> odgovori(String broj) {
+		return this.zalbaRDF.odgovori(broj);
+	}
+
+	public List<Integer> resenja(String broj) {
+		return this.zalbaRDF.resenja(broj);
 	}
 	
 	public void odustani(String broj) {

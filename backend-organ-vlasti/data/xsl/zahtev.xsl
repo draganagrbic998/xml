@@ -186,6 +186,12 @@ xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev">
 								</span>. 
 								године
 							</p>
+							<br></br>
+							<p>
+								Број захтева: <span class="underline">
+									<xsl:value-of select="osnova:broj"></xsl:value-of>
+								</span>
+							</p>
 						</div>
 						
 						<div class="center">

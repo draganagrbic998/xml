@@ -17,7 +17,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.xmldb.api.modules.XMLResource;
 
-import com.example.demo.common.Constants;
 import com.example.demo.common.Namespaces;
 import com.example.demo.exception.EmailTakenException;
 import com.example.demo.exception.MyException;
@@ -28,15 +27,14 @@ import com.example.demo.parser.DOMParser;
 import com.example.demo.parser.JAXBParser;
 import com.example.demo.repository.xml.KorisnikExist;
 import com.example.demo.security.TokenUtils;
-import com.example.demo.service.email.Email;
-import com.example.demo.service.email.EmailService;
+import com.example.demo.service.email.NotificationManager;
 
 @Service
 public class KorisnikService implements UserDetailsService {
 
 	@Autowired
 	private KorisnikExist korisnikExist;
-	
+
 	@Autowired
 	private TokenUtils tokenUtils;
 	
@@ -47,17 +45,14 @@ public class KorisnikService implements UserDetailsService {
 	private PasswordEncoder passwordEncoder;
 	
 	@Autowired
-	private OrganVlastiService organVlastiService;
-	
-	@Autowired
-	private EmailService emailService;
-
+	private NotificationManager notificationManager;
+		
 	@Autowired
 	private JAXBParser jaxbParser;
 	
 	@Autowired
 	private DOMParser domParser;
-
+		
 	@Override
 	public UserDetails loadUserByUsername(String username) {
 		try {
@@ -105,7 +100,7 @@ public class KorisnikService implements UserDetailsService {
 		document.getElementsByTagNameNS(Namespaces.OSNOVA, "Adresa").item(0).replaceChild(updatedMesto, mesto);
 		document.renameNode(updatedMesto, Namespaces.OSNOVA, "mesto");
 		this.korisnikExist.update(korisnik.getMejl(), document);			
-		this.sendActivationEmail(korisnik.getMejl(), korisnik.getOsoba().getPotpis());
+		this.notificationManager.sendActivationEmail(korisnik.getMejl(), korisnik.getOsoba().getPotpis());
 	}
 	
 	public void activate(String potpis) {
@@ -121,6 +116,10 @@ public class KorisnikService implements UserDetailsService {
 		}
 	}
 	
+	public Document loadUser(String username) {
+		return this.korisnikExist.load(username);
+	}
+
 	private String generatePotpis() {
         UUID uuid = UUID.randomUUID();
         byte[] bytes = ByteBuffer.wrap(new byte[256])
@@ -129,23 +128,5 @@ public class KorisnikService implements UserDetailsService {
                 .array();
         return Base64.getUrlEncoder().encodeToString(bytes);
 	}
-	
-	private void sendActivationEmail(String mejl, String potpis) {
-		Document document = this.organVlastiService.load();
-		String naziv = document.getElementsByTagNameNS(Namespaces.OSNOVA, "naziv").item(0).getTextContent();
-		String sediste = document.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(0).getTextContent();
-		
-		Email email = new Email();
-		email.setTo(mejl);
-		email.setSubject("Aktivacija naloga");
-		String text = "Uspešno ste se registrovali na portal organa vlasti " + naziv
-				+ ". \nKlikon na link ispod možete aktivirati svoj nalog: \n"
-				+ Constants.BACKEND_URL + "/auth/activate/" + potpis + "\n\n"
-				+ "Svako dobro, \n"
-				+ naziv + "\n" 
-				+ sediste;
-		email.setText(text);
-		this.emailService.sendEmail(email);
-	}
-		
+			
 }

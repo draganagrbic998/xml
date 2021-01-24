@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
@@ -11,7 +13,6 @@ import com.example.demo.enums.StatusZalbe;
 import com.example.demo.mapper.OdgovorMapper;
 import com.example.demo.model.Korisnik;
 import com.example.demo.repository.rdf.OdgovorRDF;
-import com.example.demo.repository.rdf.ZalbaRDF;
 import com.example.demo.repository.xml.OdgovorExist;
 
 @Service
@@ -31,10 +32,7 @@ public class OdgovorService implements ServiceInterface {
 
 	@Autowired
 	private ZalbaService zalbaService;
-	
-	@Autowired
-	private ZalbaRDF zalbaRDF;
-			
+				
 	@Override
 	public void add(String xml) {
 		Document document = this.odgovorMapper.map(xml);
@@ -45,7 +43,6 @@ public class OdgovorService implements ServiceInterface {
 		this.odgovorRDF.add(document);
 		zalbaDocument.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.odgovoreno + "");
 		this.zalbaService.update(brojZalbe, zalbaDocument);
-		this.zalbaRDF.update(brojZalbe, zalbaDocument);
 	}
 
 	@Override
@@ -58,11 +55,6 @@ public class OdgovorService implements ServiceInterface {
 	public void delete(String documentId) {
 		this.odgovorExist.delete(documentId);
 		this.odgovorRDF.delete(documentId);
-	}
-
-	@Override
-	public Document load(String documentId) {
-		return this.odgovorExist.load(documentId);
 	}
 
 	@Override
@@ -79,6 +71,16 @@ public class OdgovorService implements ServiceInterface {
 	}
 
 	@Override
+	public Document load(String documentId) {
+		return this.odgovorExist.load(documentId);
+	}
+	
+	@Override
+	public String nextDocumentId() {
+		return this.odgovorExist.nextDocumentId();
+	}
+
+	@Override
 	public String regularSearch(String xml) {
 		return null;
 	}
@@ -86,6 +88,10 @@ public class OdgovorService implements ServiceInterface {
 	@Override
 	public String advancedSearch(String xml) {
 		return null;
+	}
+
+	public List<Integer> resenja(String broj) {
+		return this.odgovorRDF.resenja(broj);
 	}
 
 }

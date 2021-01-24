@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
@@ -11,7 +13,6 @@ import com.example.demo.exception.ResourceTakenException;
 import com.example.demo.mapper.OdgovorMapper;
 import com.example.demo.mapper.ZalbaMapper;
 import com.example.demo.repository.rdf.OdgovorRDF;
-import com.example.demo.repository.rdf.ZalbaRDF;
 import com.example.demo.repository.xml.OdgovorExist;
 import com.example.demo.ws.utils.SOAPService;
 import com.example.demo.ws.utils.SOAPActions;
@@ -30,10 +31,7 @@ public class OdgovorService implements ServiceInterface {
 
 	@Autowired
 	private ZalbaService zalbaService;
-	
-	@Autowired
-	private ZalbaRDF zalbaRDF;
-	
+		
 	@Autowired
 	private SOAPService soapService;
 		
@@ -44,13 +42,12 @@ public class OdgovorService implements ServiceInterface {
 		if (!ZalbaMapper.getStatusZalbe(zalbaDocument).equals(StatusZalbe.prosledjeno)) {
 			throw new ResourceTakenException();
 		}
-		
+
+		this.soapService.sendSOAPMessage(document, SOAPActions.create_odgovor);	
 		this.odgovorExist.update(Utils.getBroj(document), document);
 		this.odgovorRDF.add(document);
 		zalbaDocument.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.odgovoreno + "");
 		this.zalbaService.update(Utils.getBroj(zalbaDocument), zalbaDocument);
-		this.zalbaRDF.update(Utils.getBroj(zalbaDocument), zalbaDocument);
-		this.soapService.sendSOAPMessage(document, SOAPActions.create_odgovor);	
 	}
 
 	@Override
@@ -66,13 +63,18 @@ public class OdgovorService implements ServiceInterface {
 	}
 
 	@Override
+	public String retrieve() {
+		return this.odgovorMapper.map(this.odgovorExist.retrieve("/odgovor:Odgovor"));
+	}
+	
+	@Override
 	public Document load(String documentId) {
 		return this.odgovorExist.load(documentId);
 	}
-
+	
 	@Override
-	public String retrieve() {
-		return this.odgovorMapper.map(this.odgovorExist.retrieve("/odgovor:Odgovor"));
+	public String nextDocumentId() {
+		return this.odgovorExist.nextDocumentId();
 	}
 	
 	@Override
@@ -83,6 +85,10 @@ public class OdgovorService implements ServiceInterface {
 	@Override
 	public String advancedSearch(String xml) {
 		return null;
+	}
+
+	public List<Integer> resenja(String broj) {
+		return this.odgovorRDF.resenja(broj);
 	}
 
 }

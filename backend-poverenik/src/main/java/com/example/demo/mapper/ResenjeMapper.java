@@ -16,11 +16,10 @@ import com.example.demo.common.Constants;
 import com.example.demo.common.Namespaces;
 import com.example.demo.exception.MyException;
 import com.example.demo.parser.DOMParser;
-import com.example.demo.repository.xml.KorisnikExist;
-import com.example.demo.repository.xml.OdgovorExist;
-import com.example.demo.repository.xml.ResenjeExist;
-import com.example.demo.repository.xml.ZalbaExist;
 import com.example.demo.service.KorisnikService;
+import com.example.demo.service.OdgovorService;
+import com.example.demo.service.ResenjeService;
+import com.example.demo.service.ZalbaService;
 
 @Component
 public class ResenjeMapper implements MapperInterface {
@@ -31,16 +30,13 @@ public class ResenjeMapper implements MapperInterface {
 	private DOMParser domParser;
 
 	@Autowired
-	private ResenjeExist resenjeExist;
+	private ResenjeService resenjeService;
 
 	@Autowired
-	private ZalbaExist zalbaExist;
+	private ZalbaService zalbaService;
 	
 	@Autowired
-	private OdgovorExist odgovorExist;
-
-	@Autowired
-	private KorisnikExist korisnikExist;
+	private OdgovorService odgovorService;
 
 	@Autowired
 	private KorisnikService korisnikService;
@@ -48,11 +44,11 @@ public class ResenjeMapper implements MapperInterface {
 	@Override
 	public Document map(String xml) {
 		Document dto = this.domParser.buildDocument(xml);
-		String broj = this.resenjeExist.nextDocumentId();
+		String broj = this.resenjeService.nextDocumentId();
 		Document document = this.domParser.buildDocumentFromFile(STUB_FILE);
 		Element resenje = (Element) document.getElementsByTagNameNS(Namespaces.RESENJE, "Resenje").item(0);
 		String brojZalbe = dto.getElementsByTagNameNS(Namespaces.RESENJE, "brojZalbe").item(0).getTextContent();
-		Document zalbaDocument = this.zalbaExist.load(brojZalbe);
+		Document zalbaDocument = this.zalbaService.load(brojZalbe);
 		Element zalba = (Element) zalbaDocument.getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").item(0);
 		DocumentFragment documentFragment = document.createDocumentFragment();
 
@@ -63,7 +59,7 @@ public class ResenjeMapper implements MapperInterface {
 		resenje.setAttribute("about", Namespaces.RESENJE + "/" + broj);
 		resenje.setAttribute("href", zalba.getAttribute("href"));
 		
-		Document odgovorDocument = this.odgovorExist.load(brojZalbe);
+		Document odgovorDocument = this.odgovorService.load(brojZalbe);
 		if (odgovorDocument != null) {
 			Element odgovor = (Element) odgovorDocument.getElementsByTagNameNS(Namespaces.ODGOVOR, "Odgovor").item(0);
 			Element datumOdbrane = (Element) document.getElementsByTagNameNS(Namespaces.RESENJE, "datumOdbrane").item(0);
@@ -77,7 +73,7 @@ public class ResenjeMapper implements MapperInterface {
 		}
 
 		documentFragment.appendChild(document.importNode(dto.getElementsByTagNameNS(Namespaces.RESENJE, "Odluka").item(0), true));
-		documentFragment.appendChild(document.importNode(this.korisnikExist.load(this.korisnikService.currentUser().getMejl()).getElementsByTagNameNS(Namespaces.OSNOVA, "Osoba").item(0), true));
+		documentFragment.appendChild(document.importNode(this.korisnikService.loadUser(this.korisnikService.currentUser().getMejl()).getElementsByTagNameNS(Namespaces.OSNOVA, "Osoba").item(0), true));
 		documentFragment.appendChild(document.importNode(zalba.getElementsByTagNameNS(Namespaces.OSNOVA, "OrganVlasti").item(0), true));
 		
 		Node podaciZahteva = document.importNode((Element) zalba.getElementsByTagNameNS(Namespaces.ZALBA, "PodaciZahteva").item(0), true);

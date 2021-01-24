@@ -9,7 +9,6 @@ import com.example.demo.common.Utils;
 import com.example.demo.enums.StatusZalbe;
 import com.example.demo.mapper.ResenjeMapper;
 import com.example.demo.repository.rdf.ResenjeRDF;
-import com.example.demo.repository.rdf.ZalbaRDF;
 import com.example.demo.repository.xml.ResenjeExist;
 
 @Service
@@ -26,10 +25,7 @@ public class ResenjeService implements ServiceInterface {
 	
 	@Autowired
 	private ZalbaService zalbaService;
-	
-	@Autowired
-	private ZalbaRDF zalbaRDF;
-	
+		
 	@Override
 	public void add(String xml) {
 		Document document = this.resenjeMapper.map(xml);
@@ -40,7 +36,6 @@ public class ResenjeService implements ServiceInterface {
 		this.resenjeRDF.add(document);
 		zalbaDocument.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.reseno + "");
 		this.zalbaService.update(brojZalbe, zalbaDocument);
-		this.zalbaRDF.update(brojZalbe, zalbaDocument);
 	}
 
 	@Override
@@ -56,13 +51,18 @@ public class ResenjeService implements ServiceInterface {
 	}
 
 	@Override
-	public Document load(String documentId) {
-		return this.resenjeExist.load(documentId);
+	public String retrieve() {
+		return this.resenjeMapper.map(this.resenjeExist.retrieve("/resenje:Resenje"));		
 	}
 
 	@Override
-	public String retrieve() {
-		return this.resenjeMapper.map(this.resenjeExist.retrieve("/resenje:Resenje"));		
+	public Document load(String documentId) {
+		return this.resenjeExist.load(documentId);
+	}
+	
+	@Override
+	public String nextDocumentId() {
+		return this.resenjeExist.nextDocumentId();
 	}
 
 	@Override

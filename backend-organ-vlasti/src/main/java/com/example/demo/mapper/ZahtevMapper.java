@@ -18,11 +18,9 @@ import com.example.demo.common.Utils;
 import com.example.demo.enums.StatusZahteva;
 import com.example.demo.exception.MyException;
 import com.example.demo.parser.DOMParser;
-import com.example.demo.repository.rdf.ZahtevRDF;
-import com.example.demo.repository.xml.KorisnikExist;
-import com.example.demo.repository.xml.ZahtevExist;
 import com.example.demo.service.KorisnikService;
 import com.example.demo.service.OrganVlastiService;
+import com.example.demo.service.ZahtevService;
 
 @Component
 public class ZahtevMapper implements MapperInterface {
@@ -33,14 +31,8 @@ public class ZahtevMapper implements MapperInterface {
 	private DOMParser domParser;
 				
 	@Autowired
-	private ZahtevExist zahtevExist;
+	private ZahtevService zahtevService;
 	
-	@Autowired
-	private ZahtevRDF zahtevRDF;
-
-	@Autowired
-	private KorisnikExist korisnikExist;
-
 	@Autowired
 	private KorisnikService korisnikService;
 	
@@ -50,7 +42,7 @@ public class ZahtevMapper implements MapperInterface {
 	@Override
 	public Document map(String xml) {
 		Document dto = this.domParser.buildDocument(xml);
-		String broj = this.zahtevExist.nextDocumentId();
+		String broj = this.zahtevService.nextDocumentId();
 		Document document = this.domParser.buildDocumentFromFile(STUB_FILE);
 		Element zahtev = (Element) document.getElementsByTagNameNS(Namespaces.ZAHTEV, "Zahtev").item(0);
 		DocumentFragment documentFragment = document.createDocumentFragment();
@@ -61,8 +53,8 @@ public class ZahtevMapper implements MapperInterface {
 		zahtev.setAttribute("href", Namespaces.KORISNIK + "/" + this.korisnikService.currentUser().getMejl());
 
 		Node gradjanin = document.createElementNS(Namespaces.OSNOVA, "Gradjanin");
-		gradjanin.appendChild(document.importNode(this.korisnikExist.load(this.korisnikService.currentUser().getMejl()).getElementsByTagNameNS(Namespaces.OSNOVA, "Osoba").item(0), true));
-		gradjanin.appendChild(document.importNode(this.korisnikExist.load(this.korisnikService.currentUser().getMejl()).getElementsByTagNameNS(Namespaces.OSNOVA, "Adresa").item(0), true));
+		gradjanin.appendChild(document.importNode(this.korisnikService.loadUser(this.korisnikService.currentUser().getMejl()).getElementsByTagNameNS(Namespaces.OSNOVA, "Osoba").item(0), true));
+		gradjanin.appendChild(document.importNode(this.korisnikService.loadUser(this.korisnikService.currentUser().getMejl()).getElementsByTagNameNS(Namespaces.OSNOVA, "Adresa").item(0), true));
 		documentFragment.appendChild(gradjanin);
 		documentFragment.appendChild(document.importNode(this.organVlastiService.load().getElementsByTagNameNS(Namespaces.OSNOVA, "OrganVlasti").item(0), true));
 		documentFragment.appendChild(document.importNode(dto.getElementsByTagNameNS(Namespaces.OSNOVA, "Detalji").item(0), true));
@@ -102,9 +94,9 @@ public class ZahtevMapper implements MapperInterface {
 				zahtev.appendChild(zahteviDocument.importNode(zahtevDocument.getElementsByTagNameNS(Namespaces.ZAHTEV, "status").item(0), true));
 			
 				Node reference = zahteviDocument.createElementNS(Namespaces.OSNOVA, "Reference");
-				Utils.setReferences(zahteviDocument, reference, this.zahtevRDF.odluke(Utils.getBroj(zahtevDocument)), "odluke");
-				Utils.setReferences(zahteviDocument, reference, this.zahtevRDF.zalbe(Utils.getBroj(zahtevDocument)), "zalbe");
-				Utils.setReferences(zahteviDocument, reference, this.zahtevRDF.resenja(Utils.getBroj(zahtevDocument)), "resenja");
+				Utils.setReferences(zahteviDocument, reference, this.zahtevService.odluke(Utils.getBroj(zahtevDocument)), "odluke");
+				Utils.setReferences(zahteviDocument, reference, this.zahtevService.zalbe(Utils.getBroj(zahtevDocument)), "zalbe");
+				Utils.setReferences(zahteviDocument, reference, this.zahtevService.resenja(Utils.getBroj(zahtevDocument)), "resenja");
 				zahtev.appendChild(reference);
 				zahtevi.appendChild(zahtev);						
 			}

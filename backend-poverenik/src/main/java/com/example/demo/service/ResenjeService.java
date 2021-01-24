@@ -7,17 +7,16 @@ import org.w3c.dom.Element;
 
 import com.example.demo.common.Constants;
 import com.example.demo.common.Namespaces;
+import com.example.demo.common.Utils;
 import com.example.demo.enums.StatusZalbe;
-import com.example.demo.exception.MyException;
 import com.example.demo.exception.ResourceTakenException;
 import com.example.demo.mapper.ResenjeMapper;
 import com.example.demo.mapper.ZalbaMapper;
 import com.example.demo.model.Korisnik;
 import com.example.demo.repository.rdf.ResenjeRDF;
-import com.example.demo.repository.rdf.ZalbaRDF;
 import com.example.demo.repository.xml.ResenjeExist;
-import com.example.demo.service.email.Email;
-import com.example.demo.service.email.EmailService;
+import com.example.demo.service.email.NotificationManager;
+import com.example.demo.transformer.ResenjeTransformer;
 import com.example.demo.ws.utils.SOAPActions;
 import com.example.demo.ws.utils.SOAPService;
 
@@ -38,15 +37,15 @@ public class ResenjeService implements ServiceInterface {
 	
 	@Autowired
 	private ZalbaService zalbaService;
-	
-	@Autowired
-	private ZalbaRDF zalbaRDF;
-			
-	@Autowired
-	private EmailService emailService;
-
+				
 	@Autowired
 	private SOAPService soapService;
+	
+	@Autowired
+	private NotificationManager notificationManager;
+	
+	@Autowired
+	private ResenjeTransformer resenjeTransformer;
 	
 	@Override
 	public void add(String xml) {
@@ -73,9 +72,8 @@ public class ResenjeService implements ServiceInterface {
 		}
 		
 		this.zalbaService.update(brojZalbe, zalbaDocument);
-		this.zalbaRDF.update(brojZalbe, zalbaDocument);
 		this.soapService.sendSOAPMessage(document, SOAPActions.create_resenje);
-		this.notifyResenje(document);
+		this.notificationManager.notifyResenje(document, this.resenjeTransformer.byteHtml(Utils.getBroj(document)), this.resenjeTransformer.bytePdf(Utils.getBroj(document)));
 	}
 
 	@Override
@@ -91,11 +89,6 @@ public class ResenjeService implements ServiceInterface {
 	}
 	
 	@Override
-	public Document load(String documentId) {
-		return this.resenjeExist.load(documentId);
-	}
-
-	@Override
 	public String retrieve() {
 		Korisnik korisnik = this.korisnikService.currentUser();
 		String xpathExp = null;
@@ -109,6 +102,16 @@ public class ResenjeService implements ServiceInterface {
 	}
 	
 	@Override
+	public Document load(String documentId) {
+		return this.resenjeExist.load(documentId);
+	}
+	
+	@Override
+	public String nextDocumentId() {
+		return this.resenjeExist.nextDocumentId();
+	}
+
+	@Override
 	public String regularSearch(String xml) {
 		return null;
 	}
@@ -116,32 +119,6 @@ public class ResenjeService implements ServiceInterface {
 	@Override
 	public String advancedSearch(String xml) {
 		return null;
-	}
-	
-	private void notifyResenje(Document document) {
-		try {
-			String brojResenja = document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
-			String datumZalbe = Constants.sdf2.format(Constants.sdf.parse(document.getElementsByTagNameNS(Namespaces.RESENJE, "datumZalbe").item(0).getTextContent()));
-			String mejl = ((Element) document.getElementsByTagNameNS(Namespaces.RESENJE, "Resenje").item(0))
-					.getAttribute("href").replace(Namespaces.KORISNIK + "/", "");
-			String naziv = document.getElementsByTagNameNS(Namespaces.OSNOVA, "naziv").item(0).getTextContent();
-			
-			Email email = new Email();
-			email.setTo(mejl);
-			email.setSubject("Rešenje na žalbu za uskraćeno pravo na pristup informacijama od javnog značaja");
-			String text = "Poštovani/a, \n\n"
-					+ "Rešenje na žalbu koju ste podneli protiv organa vlasti " + naziv
-					+ " dana " + datumZalbe + " nalazi se u linkovima ispod: \n"
-					+ Constants.BACKEND_URL + "/api/resenja/" + brojResenja + "/html\n"
-					+ Constants.BACKEND_URL + "/api/resenja/" + brojResenja + "/pdf\n\n"
-					+ "Svako dobro, \n"
-					+ "Poverenik za informacije od javnog značaja i zaštitu podataka o ličnosti";
-			email.setText(text);
-			this.emailService.sendEmail(email);
-		}
-		catch(Exception e) {
-			throw new MyException(e);
-		}
 	}
 	
 }

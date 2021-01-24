@@ -18,9 +18,8 @@ import com.example.demo.common.Utils;
 import com.example.demo.enums.TipOdluke;
 import com.example.demo.exception.MyException;
 import com.example.demo.parser.DOMParser;
-import com.example.demo.repository.rdf.OdlukaRDF;
-import com.example.demo.repository.xml.OdlukaExist;
-import com.example.demo.repository.xml.ZahtevExist;
+import com.example.demo.service.OdlukaService;
+import com.example.demo.service.ZahtevService;
 
 @Component
 public class OdlukaMapper implements MapperInterface {
@@ -31,22 +30,19 @@ public class OdlukaMapper implements MapperInterface {
 	private DOMParser domParser;
 
 	@Autowired
-	private OdlukaExist odlukaExist;
+	private OdlukaService odlukaService;
 	
 	@Autowired
-	private OdlukaRDF odlukaRDF;
-
-	@Autowired
-	private ZahtevExist zahtevExist;
+	private ZahtevService zahtevService;
 		
 	@Override
 	public Document map(String xml) {
 		Document dto = this.domParser.buildDocument(xml);
-		String broj = this.odlukaExist.nextDocumentId();
+		String broj = this.odlukaService.nextDocumentId();
 		Document document = this.domParser.buildDocumentFromFile(STUB_FILE);
 		Element odluka = (Element) document.getElementsByTagNameNS(Namespaces.ODLUKA, "Odluka").item(0);
 		String brojZahteva = dto.getElementsByTagNameNS(Namespaces.ODLUKA, "brojZahteva").item(0).getTextContent();
-		Element zahtev = (Element) this.zahtevExist.load(brojZahteva).getElementsByTagNameNS(Namespaces.ZAHTEV, "Zahtev").item(0);
+		Element zahtev = (Element) this.zahtevService.load(brojZahteva).getElementsByTagNameNS(Namespaces.ZAHTEV, "Zahtev").item(0);
 		DocumentFragment documentFragment = document.createDocumentFragment();
 
 		if (dto.getElementsByTagNameNS(Namespaces.ODLUKA, "Uvid").getLength() > 0) {
@@ -107,8 +103,8 @@ public class OdlukaMapper implements MapperInterface {
 				odluka.appendChild(odlukeDocument.importNode(odlukaDocument.getElementsByTagNameNS(Namespaces.ODLUKA, "datumZahteva").item(0), true));
 				
 				Node reference = odlukeDocument.createElementNS(Namespaces.OSNOVA, "Reference");
-				Utils.setReferences(odlukeDocument, reference, this.odlukaRDF.zalbe(Utils.getBroj(odlukaDocument)), "zalbe");
-				Utils.setReferences(odlukeDocument, reference, this.odlukaRDF.resenja(Utils.getBroj(odlukaDocument)), "resenja");
+				Utils.setReferences(odlukeDocument, reference, this.odlukaService.zalbe(Utils.getBroj(odlukaDocument)), "zalbe");
+				Utils.setReferences(odlukeDocument, reference, this.odlukaService.resenja(Utils.getBroj(odlukaDocument)), "resenja");
 				odluka.appendChild(reference);
 				odluke.appendChild(odluka);
 			}

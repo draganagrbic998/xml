@@ -229,7 +229,6 @@ xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev">
 	              				<fo:block>		 
 									<fo:block linefeed-treatment="preserve">
 										&#160;
-										&#160;
 									</fo:block>
 									У <fo:inline border-bottom="0.2mm solid black">&#160;<xsl:value-of select="osnova:Gradjanin/osnova:Adresa/osnova:mesto"></xsl:value-of>&#160;</fo:inline>, 
 								</fo:block>
@@ -244,6 +243,11 @@ xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev">
 									20<fo:inline>
 										<xsl:value-of select="$godina"></xsl:value-of>
 									</fo:inline>. године
+								</fo:block>
+								<fo:block margin-top="20px">
+									Број захтева: <fo:inline border-bottom="0.2mm solid black">
+										<xsl:value-of select="osnova:broj"></xsl:value-of>
+									</fo:inline>
 								</fo:block>
 	              			</fo:inline-container>
 	              			<fo:inline-container inline-progression-dimension="40%" text-align="center">

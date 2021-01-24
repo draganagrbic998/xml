@@ -65,8 +65,8 @@ public class EmailService {
 	            		return;
 	            	}	
 	            }
-	            if (document.getElementsByTagName("xhtml").getLength() > 0) {
-		    		byte[] decodedString = Base64.getDecoder().decode(document.getElementsByTagName("xhtml").item(0).getTextContent());
+	            if (document.getElementsByTagName("html").getLength() > 0) {
+		    		byte[] decodedString = Base64.getDecoder().decode(document.getElementsByTagName("html").item(0).getTextContent());
 		    		File file = new File(Utils.nextDocumentId() + ".html");
 		    		FileOutputStream fout = new FileOutputStream(file);
 		    		fout.write(decodedString);
@@ -76,6 +76,7 @@ public class EmailService {
 		            	helper.addAttachment(file.getPath(), resource);
 	            	}
 	            	catch(Exception e) {
+	            		e.printStackTrace();
 	            		return;
 	            	}	
 	            }

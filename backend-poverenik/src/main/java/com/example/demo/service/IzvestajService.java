@@ -41,13 +41,18 @@ public class IzvestajService implements ServiceInterface {
 	}
 
 	@Override
+	public String retrieve() {
+		return this.izvestajMapper.map(this.izvestajExist.retrieve("/izvestaj:Izvestaj"));
+	}
+	
+	@Override
 	public Document load(String documentId) {
 		return this.izvestajExist.load(documentId);
 	}
 
 	@Override
-	public String retrieve() {
-		return this.izvestajMapper.map(this.izvestajExist.retrieve("/izvestaj:Izvestaj"));
+	public String nextDocumentId() {
+		return this.izvestajExist.nextDocumentId();
 	}
 
 	@Override

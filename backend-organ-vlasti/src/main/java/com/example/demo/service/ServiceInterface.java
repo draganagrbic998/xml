@@ -9,6 +9,7 @@ public interface ServiceInterface {
 	public void delete(String documentId);
 	public String retrieve();
 	public Document load(String documentId);
+	public String nextDocumentId();
 	public String regularSearch(String xml);
 	public String advancedSearch(String xml);
 

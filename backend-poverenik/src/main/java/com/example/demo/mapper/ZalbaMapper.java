@@ -20,10 +20,8 @@ import com.example.demo.enums.StatusZalbe;
 import com.example.demo.enums.TipZalbe;
 import com.example.demo.exception.MyException;
 import com.example.demo.parser.DOMParser;
-import com.example.demo.repository.rdf.ZalbaRDF;
-import com.example.demo.repository.xml.KorisnikExist;
-import com.example.demo.repository.xml.ZalbaExist;
 import com.example.demo.service.KorisnikService;
+import com.example.demo.service.ZalbaService;
 import com.example.demo.ws.utils.SOAPService;
 import com.example.demo.ws.utils.SOAPActions;
 
@@ -36,14 +34,8 @@ public class ZalbaMapper implements MapperInterface {
 	private DOMParser domParser;
 
 	@Autowired
-	private ZalbaExist zalbaExist;
+	private ZalbaService zalbaService;
 	
-	@Autowired
-	private ZalbaRDF zalbaRDF;
-
-	@Autowired
-	private KorisnikExist korisnikExist;
-
 	@Autowired
 	private KorisnikService korisnikService;
 	
@@ -53,7 +45,7 @@ public class ZalbaMapper implements MapperInterface {
 	@Override
 	public Document map(String xml) {
 		Document dto = this.domParser.buildDocument(xml);
-		String broj = this.zalbaExist.nextDocumentId();
+		String broj = this.zalbaService.nextDocumentId();
 		Document document = this.domParser.buildDocumentFromFile(STUB_FILE);
 		Element zalba = (Element) document.getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").item(0);
 		DocumentFragment documentFragment = document.createDocumentFragment();
@@ -74,8 +66,8 @@ public class ZalbaMapper implements MapperInterface {
 		zalba.setAttribute("href", Namespaces.KORISNIK + "/" + this.korisnikService.currentUser().getMejl());
 				
 		Node gradjanin = document.createElementNS(Namespaces.OSNOVA, "Gradjanin");
-		gradjanin.appendChild(document.importNode(this.korisnikExist.load(this.korisnikService.currentUser().getMejl()).getElementsByTagNameNS(Namespaces.OSNOVA, "Osoba").item(0), true));
-		gradjanin.appendChild(document.importNode(this.korisnikExist.load(this.korisnikService.currentUser().getMejl()).getElementsByTagNameNS(Namespaces.OSNOVA, "Adresa").item(0), true));
+		gradjanin.appendChild(document.importNode(this.korisnikService.loadUser(this.korisnikService.currentUser().getMejl()).getElementsByTagNameNS(Namespaces.OSNOVA, "Osoba").item(0), true));
+		gradjanin.appendChild(document.importNode(this.korisnikService.loadUser(this.korisnikService.currentUser().getMejl()).getElementsByTagNameNS(Namespaces.OSNOVA, "Adresa").item(0), true));
 		documentFragment.appendChild(gradjanin);
 		String brojZahteva;
 		
@@ -140,8 +132,8 @@ public class ZalbaMapper implements MapperInterface {
 					zalba.appendChild(zalbeDocument.importNode(zalbaDocument.getElementsByTagNameNS(Namespaces.ZALBA, "datumProsledjivanja").item(0), true));
 				
 				Node reference = zalbeDocument.createElementNS(Namespaces.OSNOVA, "Reference");
-				Utils.setReferences(zalbeDocument, reference, this.zalbaRDF.odgovori(Utils.getBroj(zalbaDocument)), "odgovori");
-				Utils.setReferences(zalbeDocument, reference, this.zalbaRDF.resenja(Utils.getBroj(zalbaDocument)), "resenja");
+				Utils.setReferences(zalbeDocument, reference, this.zalbaService.odgovori(Utils.getBroj(zalbaDocument)), "odgovori");
+				Utils.setReferences(zalbeDocument, reference, this.zalbaService.resenja(Utils.getBroj(zalbaDocument)), "resenja");
 				zalba.appendChild(reference);
 				zalbe.appendChild(zalba);
 			}

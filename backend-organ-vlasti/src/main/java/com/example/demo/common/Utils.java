@@ -12,7 +12,7 @@ import org.w3c.dom.Node;
 import com.example.demo.exception.MyException;
 
 public class Utils {
-	
+		
 	public static String readFile(String path) {
 		try {
 			return new String(Files.readAllBytes(Paths.get(path)), StandardCharsets.UTF_8);
@@ -25,7 +25,7 @@ public class Utils {
 	public static String getBroj(Document document) {
 		return document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
 	}
-	
+		
 	public static String getReferences(List<Integer> brojevi) {
 		String xpathExp = "[(";
 		for (int i = 0; i < brojevi.size(); ++i) {

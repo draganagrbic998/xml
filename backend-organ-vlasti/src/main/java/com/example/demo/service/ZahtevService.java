@@ -1,11 +1,11 @@
 package com.example.demo.service;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.xmldb.api.base.ResourceIterator;
 import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.modules.XMLResource;
@@ -20,12 +20,13 @@ import com.example.demo.model.Korisnik;
 import com.example.demo.parser.DOMParser;
 import com.example.demo.repository.rdf.ZahtevRDF;
 import com.example.demo.repository.xml.ZahtevExist;
-import com.example.demo.service.email.Email;
-import com.example.demo.service.email.EmailService;
+import com.example.demo.service.email.NotificationManager;
 
 @Service
 public class ZahtevService implements ServiceInterface {
 	
+	public static final long CUTANJE_MILISECONDS_LIMIT = 10000;
+
 	@Autowired
 	private ZahtevExist zahtevExist;
 			
@@ -39,13 +40,11 @@ public class ZahtevService implements ServiceInterface {
 	private KorisnikService korisnikService;
 	
 	@Autowired
-	private EmailService emailService;
+	private NotificationManager notificationManager;
 	
 	@Autowired
 	private DOMParser domParser;
-				
-	private static final long CUTANJE_MILISECONDS_LIMIT = 10000;
-
+					
 	@Override
 	public void add(String xml) {
 		Document document = this.zahtevMapper.map(xml);
@@ -66,11 +65,6 @@ public class ZahtevService implements ServiceInterface {
 	}
 
 	@Override
-	public Document load(String documentId) {
-		return this.zahtevExist.load(documentId);
-	}
-
-	@Override
 	public String retrieve() {
 		Korisnik korisnik = this.korisnikService.currentUser();
 		String xpathExp;
@@ -84,6 +78,16 @@ public class ZahtevService implements ServiceInterface {
 	}
 
 	@Override
+	public Document load(String documentId) {
+		return this.zahtevExist.load(documentId);
+	}
+	
+	@Override
+	public String nextDocumentId() {
+		return this.zahtevExist.nextDocumentId();
+	}
+
+	@Override
 	public String regularSearch(String xml) {
 		return null;
 	}
@@ -91,6 +95,18 @@ public class ZahtevService implements ServiceInterface {
 	@Override
 	public String advancedSearch(String xml) {
 		return null;
+	}
+
+	public List<Integer> odluke(String broj) {
+		return this.zahtevRDF.odluke(broj);
+	}
+
+	public List<Integer> zalbe(String broj) {
+		return this.zahtevRDF.zalbe(broj);
+	}
+
+	public List<Integer> resenja(String broj) {
+		return this.zahtevRDF.resenja(broj);
 	}
 
 	//@Scheduled(fixedDelay = CUTANJE_MILISECONDS_LIMIT, initialDelay = CUTANJE_MILISECONDS_LIMIT)
@@ -104,19 +120,8 @@ public class ZahtevService implements ServiceInterface {
 				Document document = this.domParser.buildDocument(resource.getContent().toString());
 				document.getElementsByTagNameNS(Namespaces.ZAHTEV, "status").item(0).setTextContent(StatusZahteva.odbijeno + "");
 				this.zahtevExist.update(Utils.getBroj(document), document);
-
-				Element zahtev = (Element) document.getElementsByTagNameNS(Namespaces.ZAHTEV, "Zahtev").item(0);
-				Email email = new Email();
-				email.setTo(zahtev.getAttribute("href").replace(Namespaces.KORISNIK + "/", ""));
-				email.setSubject("Ćutanje uprave na zahtev za informacijama od javnog značaja");
-				String text = "Poštovani/a, \n\n"
-						+ "Zahtev za informacijama od javnog značaja koji ste podneli dana "
-						+ Constants.sdf2.format(Constants.sdf.parse(document.getElementsByTagNameNS(Namespaces.OSNOVA, "datum").item(0).getTextContent()))
-						+ " nije primio odgovor u zakonskom roku od 15 dana. \nMožete podneti žalbu na ćutanje uprave. \n\n" 
-						+ "Svako dobro, \n"
-						+ document.getElementsByTagNameNS(Namespaces.OSNOVA, "naziv").item(0).getTextContent(); 
-				email.setText(text);
-				this.emailService.sendEmail(email);
+				
+				this.notificationManager.notifyCutanjeUprave(document);
 				System.out.println("ULOVLJEN ZAHTEV BROJ " + Utils.getBroj(document));
 			}
 		}
@@ -124,5 +129,5 @@ public class ZahtevService implements ServiceInterface {
 			throw new MyException(e);
 		}
 	}
-
+	
 }

@@ -38,9 +38,9 @@ public class IzvestajService implements ServiceInterface {
 			throw new MyException(e);
 		}
 		Document document = this.izvestajMapper.map(godina);
+		this.soapService.sendSOAPMessage(document, SOAPActions.create_izvestaj);
 		this.izvestajExist.add(document);
 		this.izvestajRDF.add(document);
-		this.soapService.sendSOAPMessage(document, SOAPActions.create_izvestaj);
 	}
 
 	@Override
@@ -56,13 +56,18 @@ public class IzvestajService implements ServiceInterface {
 	}
 
 	@Override
+	public String retrieve() {
+		return this.izvestajMapper.map(this.izvestajExist.retrieve("/izvestaj:Izvestaj"));
+	}
+	
+	@Override
 	public Document load(String documentId) {
 		return this.izvestajExist.load(documentId);
 	}
-
+	
 	@Override
-	public String retrieve() {
-		return this.izvestajMapper.map(this.izvestajExist.retrieve("/izvestaj:Izvestaj"));
+	public String nextDocumentId() {
+		return this.izvestajExist.nextDocumentId();
 	}
 
 	@Override
