@@ -31,15 +31,14 @@ public class Utils {
 		return array[array.length - 1];
 	}
 	
-	public static String getReferences(List<Integer> brojevi) {
-		//ovo ces menjati na @about
+	public static String getReferences(List<String> ids) {
 		String xpathExp = "[(";
-		for (int i = 0; i < brojevi.size(); ++i) {
+		for (int i = 0; i < ids.size(); ++i) {
 			if (i == 0) {
-				xpathExp += "broj = '" + brojevi.get(i) + "'";
+				xpathExp += "@about = '" + ids.get(i) + "'";
 			} 
 			else {
-				xpathExp += " or broj = '" + brojevi.get(i) + "'";
+				xpathExp += " or @about = '" + ids.get(i) + "'";
 			}
 		}
 		xpathExp += ")]";

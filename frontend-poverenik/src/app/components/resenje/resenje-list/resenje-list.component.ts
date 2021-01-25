@@ -6,7 +6,6 @@ import { ResenjeDTO } from 'src/app/models/resenjeDTO';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ResenjeService } from 'src/app/services/resenje/resenje.service';
 import { environment } from 'src/environments/environment';
-import { ResenjePretraga } from '../resenje-pretraga/resenje-pretraga';
 
 @Component({
   selector: 'app-resenje-list',
@@ -57,7 +56,7 @@ export class ResenjeListComponent implements AfterViewInit {
     );
   }
 
-  naprednaPretraga(pretraga: ResenjePretraga): void{
+  naprednaPretraga(pretraga: string): void{
     this.fetchPending = true;
     this.resenjeService.naprednaPretraga(pretraga).subscribe(
       (resenja: ResenjeDTO[]) => {

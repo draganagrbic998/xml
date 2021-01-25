@@ -2,7 +2,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { IzvestajPretraga } from 'src/app/components/izvestaj/izvestaj-pretraga/izvestaj-pretraga';
 import { OSNOVA, IZVESTAJ } from 'src/app/constants/namespaces';
 import { IzvestajDTO } from 'src/app/models/izvestajDTO';
 import { environment } from 'src/environments/environment';
@@ -35,18 +34,6 @@ export class IzvestajService {
     return izvestajiDTO;
   }
 
-  private pretragaToXml(pretraga: IzvestajPretraga): string{
-    return `
-      <pretraga>
-        <operacija>${pretraga.operacija}</operacija>
-        <godina>${pretraga.godina}</godina>
-        <datum>${dateToString(pretraga.datum)}</datum>
-        <izdatoU>${pretraga.izdatoU}</izdatoU>
-        <organVlasti>${pretraga.organVlasti}</organVlasti>
-      </pretraga>
-    `;
-  }
-
   save(godina: string): Observable<null>{
     const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
     return this.http.post<null>(`${this.API_IZVESTAJI}/${godina}`, options);
@@ -68,9 +55,9 @@ export class IzvestajService {
       map((xml: string) => this.xmlToIzvestaji(xml)));
   }
 
-  naprednaPretraga(pretraga: IzvestajPretraga): Observable<IzvestajDTO[]>{
+  naprednaPretraga(pretraga: string): Observable<IzvestajDTO[]>{
     const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml'), responseType: 'text' as 'json' };
-    return this.http.post<string>(`${this.API_IZVESTAJI}/napredna_pretraga`, this.pretragaToXml(pretraga), options).pipe(
+    return this.http.post<string>(`${this.API_IZVESTAJI}/napredna_pretraga`, pretraga, options).pipe(
       map((xml: string) => this.xmlToIzvestaji(xml))
     );
   }

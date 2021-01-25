@@ -9,7 +9,6 @@ import { Odbijanje } from 'src/app/models/odbijanje';
 import { environment } from 'src/environments/environment';
 import { XonomyService } from '../xonomy/xonomy.service';
 import { Referenca } from 'src/app/models/referenca';
-import { OdlukaPretraga } from 'src/app/components/odluka/odluka-pretraga/odluka-pretraga';
 import { dateToString } from '../utils';
 
 @Injectable({
@@ -86,19 +85,6 @@ export class OdlukaService {
 
   }
 
-  private pretragaToXml(pretraga: OdlukaPretraga): string{
-    return `
-      <pretraga>
-        <operacija>${pretraga.operacija}</operacija>
-        <datum>${dateToString(pretraga.datum)}</datum>
-        <mesto>${pretraga.mesto}</mesto>
-        <tip>${pretraga.tip}</tip>
-        <izdatoU>${pretraga.izdatoU}</izdatoU>
-        <organVlasti>${pretraga.organVlasti}</organVlasti>
-      </pretraga>
-    `;
-  }
-
   saveObavestenje(brojZahteva: number, obavestenje: Obavestenje): Observable<null>{
     obavestenje.detalji = this.xonomyService.removeXmlSpace(obavestenje.detalji);
     const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
@@ -127,9 +113,9 @@ export class OdlukaService {
       map((xml: string) => this.xmlToOdluke(xml)));
   }
 
-  naprednaPretraga(pretraga: OdlukaPretraga): Observable<OdlukaDTO[]>{
+  naprednaPretraga(pretraga: string): Observable<OdlukaDTO[]>{
     const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml'), responseType: 'text' as 'json' };
-    return this.http.post<string>(`${this.API_ODLUKE}/napredna_pretraga`, this.pretragaToXml(pretraga), options).pipe(
+    return this.http.post<string>(`${this.API_ODLUKE}/napredna_pretraga`, pretraga, options).pipe(
       map((xml: string) => this.xmlToOdluke(xml))
     );
   }

@@ -6,7 +6,6 @@ import { OdlukaDTO } from 'src/app/models/odlukaDTO';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { OdlukaService } from 'src/app/services/odluka/odluka.service';
 import { environment } from 'src/environments/environment';
-import { OdlukaPretraga } from '../odluka-pretraga/odluka-pretraga';
 
 @Component({
   selector: 'app-odluka-list',
@@ -54,7 +53,7 @@ export class OdlukaListComponent implements AfterViewInit {
     );
   }
 
-  naprednaPretraga(pretraga: OdlukaPretraga): void{
+  naprednaPretraga(pretraga: string): void{
     this.fetchPending = true;
     this.odlukaService.naprednaPretraga(pretraga).subscribe(
       (odluke: OdlukaDTO[]) => {

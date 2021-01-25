@@ -6,7 +6,6 @@ import { IzvestajDTO } from 'src/app/models/izvestajDTO';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { IzvestajService } from 'src/app/services/izvestaj/izvestaj.service';
 import { environment } from 'src/environments/environment';
-import { IzvestajPretraga } from '../izvestaj-pretraga/izvestaj-pretraga';
 
 @Component({
   selector: 'app-izvestaj-list',
@@ -57,7 +56,7 @@ export class IzvestajListComponent implements AfterViewInit {
     );
   }
 
-  naprednaPretraga(pretraga: IzvestajPretraga): void{
+  naprednaPretraga(pretraga: string): void{
     this.fetchPending = true;
     this.izvestajService.naprednaPretraga(pretraga).subscribe(
       (izvestaji: IzvestajDTO[]) => {

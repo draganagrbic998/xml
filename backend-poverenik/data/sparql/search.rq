@@ -1,0 +1,4 @@
+SELECT * FROM <%s> WHERE {
+  %s
+  FILTER( %s ) .
+} 

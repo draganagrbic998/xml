@@ -2,7 +2,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ResenjePretraga } from 'src/app/components/resenje/resenje-pretraga/resenje-pretraga';
 import { OSNOVA, RESENJE } from 'src/app/constants/namespaces';
 import { Resenje } from 'src/app/models/resenje';
 import { ResenjeDTO } from 'src/app/models/resenjeDTO';
@@ -51,19 +50,6 @@ export class ResenjeService {
 
   }
 
-  private pretragaToXml(pretraga: ResenjePretraga): string{
-    return `
-      <pretraga>
-        <operacija>${pretraga.operacija}</operacija>
-        <datum>${dateToString(pretraga.datum)}</datum>
-        <tipZalbe>${pretraga.tipZalbe}</tipZalbe>
-        <status>${pretraga.status}</status>
-        <izdatoU>${pretraga.izdatoU}</izdatoU>
-        <organVlasti>${pretraga.organVlasti}</organVlasti>
-      </pretraga>
-    `;
-  }
-
   save(brojZalbe: number, resenje: Resenje): Observable<null>{
     resenje.odluka = this.xonomyService.removeXmlSpace(resenje.odluka);
     const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
@@ -86,9 +72,9 @@ export class ResenjeService {
       map((xml: string) => this.xmlToResenja(xml)));
   }
 
-  naprednaPretraga(pretraga: ResenjePretraga): Observable<ResenjeDTO[]>{
+  naprednaPretraga(pretraga: string): Observable<ResenjeDTO[]>{
     const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml'), responseType: 'text' as 'json' };
-    return this.http.post<string>(`${this.API_RESENJA}/napredna_pretraga`, this.pretragaToXml(pretraga), options).pipe(
+    return this.http.post<string>(`${this.API_RESENJA}/napredna_pretraga`, pretraga, options).pipe(
       map((xml: string) => this.xmlToResenja(xml))
     );
   }

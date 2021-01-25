@@ -1,0 +1,13 @@
+<div id="zahtevEditor"></div>
+
+<app-spacer-container>
+    <span></span>
+    <span>
+      <button 
+      *ngIf="!fetchPending"
+      mat-raised-button 
+      color="primary"
+      (click)="pretrazi()">Pretraži</button>
+      <app-spinner-button *ngIf="fetchPending"></app-spinner-button>
+    </span>
+  </app-spacer-container>

@@ -7,9 +7,7 @@ import { OSNOVA, ZAHTEV } from 'src/app/constants/namespaces';
 import { ZahtevDTO } from 'src/app/models/zahtevDTO';
 import { map } from 'rxjs/operators';
 import { XonomyService } from '../xonomy/xonomy.service';
-import { ZahtevPretraga } from 'src/app/components/zahtev/zahtev-pretraga/zahtev-pretraga';
 import { Referenca } from 'src/app/models/referenca';
-import { dateToString } from '../utils';
 
 @Injectable({
   providedIn: 'root'
@@ -75,20 +73,6 @@ export class ZahtevService {
 
   }
 
-  private pretragaToXml(pretraga: ZahtevPretraga): string{
-    return `
-      <pretraga>
-        <operacija>${pretraga.operacija}</operacija>
-        <datum>${dateToString(pretraga.datum)}</datum>
-        <mesto>${pretraga.mesto}</mesto>
-        <tip>${pretraga.tip}</tip>
-        <status>${pretraga.status}</status>
-        <izdatoU>${pretraga.izdatoU}</izdatoU>
-        <organVlasti>${pretraga.organVlasti}</organVlasti>
-      </pretraga>
-    `;
-  }
-
   save(zahtev: Zahtev): Observable<null>{
     zahtev.detalji = this.xonomyService.removeXmlSpace(zahtev.detalji);
     const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
@@ -111,9 +95,9 @@ export class ZahtevService {
       map((xml: string) => this.xmlToZahtevi(xml)));
   }
 
-  naprednaPretraga(pretraga: ZahtevPretraga): Observable<ZahtevDTO[]>{
+  naprednaPretraga(pretraga: string): Observable<ZahtevDTO[]>{
     const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml'), responseType: 'text' as 'json' };
-    return this.http.post<string>(`${this.API_ZAHTEVI}/napredna_pretraga`, this.pretragaToXml(pretraga), options).pipe(
+    return this.http.post<string>(`${this.API_ZAHTEVI}/napredna_pretraga`, pretraga, options).pipe(
       map((xml: string) => this.xmlToZahtevi(xml))
     );
   }

@@ -19,7 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import org.w3c.dom.Document;
-
+import org.w3c.dom.Node;
 import org.topbraid.jenax.util.JenaUtil;
 import org.topbraid.shacl.validation.ValidationUtil;
 import org.topbraid.shacl.vocabulary.SH;
@@ -27,6 +27,7 @@ import org.topbraid.shacl.vocabulary.SH;
 import com.example.demo.common.Constants;
 import com.example.demo.common.Utils;
 import com.example.demo.exception.InvalidRDFException;
+import com.example.demo.parser.DOMParser;
 import com.example.demo.parser.XSLTransformer;
 
 @Component
@@ -38,9 +39,13 @@ public class FusekiManager {
 	@Autowired
 	private XSLTransformer xslTransformer;
 	
+	@Autowired
+	private DOMParser domParser;
+	
 	public static final String RETRIEVE_QUERY = Constants.SPARQL_FOLDER + "retrieve.rq";
 	public static final String REFERENCE_QUERY = Constants.SPARQL_FOLDER + "reference.rq";	
-	
+	public static final String SEARCH_QUERY = Constants.SPARQL_FOLDER + "search.rq";	
+
 	public void add(String graphUri, Document document, String shapePath) {
 		Model model = this.xslTransformer.model(document);
 		Model shapeModel = JenaUtil.createDefaultModel();
@@ -87,7 +92,23 @@ public class FusekiManager {
         processor.execute();
 	}
 
-	public List<String> search(String sparql) {
+	public List<String> referenceSparql(String graphName, String predikat, String objekat) {
+		return this.search(String.format(Utils.readFile(REFERENCE_QUERY), 
+				this.authUtilities.getData() + graphName, 
+				predikat, objekat));
+	}
+	
+	public List<String> searchSparql(String graphName, String xml) {
+		Node pretraga = this.domParser.buildDocument(xml).getFirstChild();
+		//ako je pretraga prazna, ne radi
+		return this.search(String.format(Utils.readFile(SEARCH_QUERY), 
+				this.authUtilities.getData() + graphName, 
+				SearchUtil.predikatPart(pretraga),
+				SearchUtil.filterPart(pretraga)));
+	}
+	
+	private List<String> search(String sparql) {
+		System.out.println(sparql);
 		List<String> ids = new ArrayList<>();
 		QueryExecution query = QueryExecutionFactory.sparqlService(this.authUtilities.getQuery(), sparql);
 		ResultSet results = query.execSelect();

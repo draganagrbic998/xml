@@ -5,7 +5,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { SNACKBAR_CLOSE, SNACKBAR_ERROR, SNACKBAR_ERROR_OPTIONS, SNACKBAR_SUCCESS_OPTIONS } from 'src/app/constants/snackbar';
 import { ZalbaDTO } from 'src/app/models/zalbaDTO';
-import { ZalbaPretraga } from 'src/app/components/zalba/zalba-pretraga/zalba-pretraga';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ZalbaService } from 'src/app/services/zalba/zalba.service';
 import { environment } from 'src/environments/environment';
@@ -62,7 +61,7 @@ export class ZalbaListComponent implements AfterViewInit {
     );
   }
 
-  naprednaPretraga(pretraga: ZalbaPretraga): void{
+  naprednaPretraga(pretraga: string): void{
     this.fetchPending = true;
     this.zalbaService.naprednaPretraga(pretraga).subscribe(
       (zalbe: ZalbaDTO[]) => {

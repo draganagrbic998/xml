@@ -9,7 +9,10 @@ export class XonomyService {
 
   constructor() { }
 
-  pretragaSpecifikacija = {
+  zahtevPretraga = {
+  };
+
+  obicnaPretraga = {
     elements: {
       Fraze: {
         menu: [

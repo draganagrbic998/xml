@@ -6,7 +6,6 @@ import { ZalbaDTO } from 'src/app/models/zalbaDTO';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ZalbaService } from 'src/app/services/zalba/zalba.service';
 import { environment } from 'src/environments/environment';
-import { ZalbaPretraga } from '../zalba-pretraga/zalba-pretraga';
 
 @Component({
   selector: 'app-zalba-list',
@@ -58,7 +57,7 @@ export class ZalbaListComponent implements AfterViewInit {
     );
   }
 
-  naprednaPretraga(pretraga: ZalbaPretraga): void{
+  naprednaPretraga(pretraga: string): void{
     this.fetchPending = true;
     this.zalbaService.naprednaPretraga(pretraga).subscribe(
       (zalbe: ZalbaDTO[]) => {

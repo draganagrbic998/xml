@@ -9,8 +9,6 @@ import org.w3c.dom.Document;
 
 import com.example.demo.common.Constants;
 import com.example.demo.common.Namespaces;
-import com.example.demo.common.Utils;
-import com.example.demo.fuseki.FusekiAuthentication;
 import com.example.demo.fuseki.FusekiManager;
 
 @Repository
@@ -18,9 +16,6 @@ public class ZalbaRDF implements RDFInterface {
 
 	@Autowired
 	private FusekiManager fusekiManager;
-
-	@Autowired
-	private FusekiAuthentication authUtilities;
 
 	public static final String ZALBA_GRAPH = "/zalbe";
 	public static final String ZALBA_SHAPE = Constants.SHAPE_FOLDER + "zalba.ttl";
@@ -48,17 +43,11 @@ public class ZalbaRDF implements RDFInterface {
 	}
 	
 	public List<String> odgovori(String documentId) {
-		return this.fusekiManager.search(
-				String.format(Utils.readFile(FusekiManager.REFERENCE_QUERY), 
-				this.authUtilities.getData() + OdgovorRDF.ODGOVOR_GRAPH, 
-				Namespaces.PREDIKAT + "zalba", Namespaces.ZALBA + "/" + documentId));
+		return this.fusekiManager.referenceSparql(OdgovorRDF.ODGOVOR_GRAPH, Namespaces.PREDIKAT + "zalba", Namespaces.ZALBA + "/" + documentId);
 	}
 	
 	public List<String> resenja(String documentId) {
-		return this.fusekiManager.search(
-				String.format(Utils.readFile(FusekiManager.REFERENCE_QUERY), 
-				this.authUtilities.getData() + ResenjeRDF.RESENJE_GRAPH, 
-				Namespaces.PREDIKAT + "zalba", Namespaces.ZALBA + "/" + documentId));
+		return this.fusekiManager.referenceSparql(ResenjeRDF.RESENJE_GRAPH, Namespaces.PREDIKAT + "zalba", Namespaces.ZALBA + "/" + documentId);
 	}
 
 }

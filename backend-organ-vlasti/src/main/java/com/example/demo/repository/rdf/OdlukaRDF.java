@@ -9,8 +9,6 @@ import org.w3c.dom.Document;
 
 import com.example.demo.common.Constants;
 import com.example.demo.common.Namespaces;
-import com.example.demo.common.Utils;
-import com.example.demo.fuseki.FusekiAuthentication;
 import com.example.demo.fuseki.FusekiManager;
 
 @Repository
@@ -18,10 +16,7 @@ public class OdlukaRDF implements RDFInterface {
 
 	@Autowired
 	private FusekiManager fusekiManager;
-	
-	@Autowired
-	private FusekiAuthentication authUtilities;
-	
+		
 	public static final String ODLUKA_GRAPH = "/odluke";
 	public static final String ODLUKA_SHAPE = Constants.SHAPE_FOLDER + "odluka.ttl";
 	public static final String ODLUKA_AND_SEARCH = Constants.SPARQL_FOLDER + "odluka_and.rq";
@@ -48,17 +43,11 @@ public class OdlukaRDF implements RDFInterface {
 	}
 	
 	public List<String> zalbe(String documentId) {
-		return this.fusekiManager.search(
-				String.format(Utils.readFile(FusekiManager.REFERENCE_QUERY), 
-				this.authUtilities.getData() + ZalbaRDF.ZALBA_GRAPH, 
-				Namespaces.PREDIKAT + "odluka", Namespaces.ODLUKA + "/" + documentId));
+		return this.fusekiManager.referenceSparql(ZalbaRDF.ZALBA_GRAPH, Namespaces.PREDIKAT + "odluka", Namespaces.ODLUKA + "/" + documentId);
 	}
 	
 	public List<String> resenja(String documentId) {
-		return this.fusekiManager.search(
-				String.format(Utils.readFile(FusekiManager.REFERENCE_QUERY), 
-				this.authUtilities.getData() + ResenjeRDF.RESENJE_GRAPH, 
-				Namespaces.PREDIKAT + "odluka", Namespaces.ODLUKA + "/" + documentId));
+		return this.fusekiManager.referenceSparql(ResenjeRDF.RESENJE_GRAPH, Namespaces.PREDIKAT + "odluka", Namespaces.ODLUKA + "/" + documentId);
 	}
 	
 }

@@ -6,7 +6,6 @@ import { OdgovorDTO } from 'src/app/models/odgovorDTO';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { OdgovorService } from 'src/app/services/odgovor/odgovor.service';
 import { environment } from 'src/environments/environment';
-import { OdgovorPretraga } from '../odgovor-pretraga/odgovor-pretraga';
 
 @Component({
   selector: 'app-odgovor-list',
@@ -54,7 +53,7 @@ export class OdgovorListComponent implements AfterViewInit {
     );
   }
 
-  naprednaPretraga(pretraga: OdgovorPretraga): void{
+  naprednaPretraga(pretraga: string): void{
     this.fetchPending = true;
     this.odgovorService.naprednaPretraga(pretraga).subscribe(
       (odgovori: OdgovorDTO[]) => {

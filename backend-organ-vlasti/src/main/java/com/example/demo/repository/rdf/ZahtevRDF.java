@@ -10,7 +10,6 @@ import org.w3c.dom.Document;
 import com.example.demo.common.Constants;
 import com.example.demo.common.Namespaces;
 import com.example.demo.common.Utils;
-import com.example.demo.fuseki.FusekiAuthentication;
 import com.example.demo.fuseki.FusekiManager;
 
 @Repository
@@ -18,9 +17,6 @@ public class ZahtevRDF implements RDFInterface {
 
 	@Autowired
 	private FusekiManager fusekiManager;
-
-	@Autowired
-	private FusekiAuthentication authUtilities;
 
 	public static final String ZAHTEV_GRAPH = "/zahtevi";
 	public static final String ZAHTEV_SHAPE = Constants.SHAPE_FOLDER + "zahtev.ttl";
@@ -46,26 +42,22 @@ public class ZahtevRDF implements RDFInterface {
 	public ResultSet retrieve(String documentId) {
 		return this.fusekiManager.retrieve(ZAHTEV_GRAPH, Namespaces.ZAHTEV + "/" + documentId);
 	}
-	
+		
+	public String search(String xml) {
+		List<String> ids = this.fusekiManager.searchSparql(ZAHTEV_GRAPH, xml);
+		return Utils.getReferences(ids);
+	}
+
 	public List<String> odluke(String documentId) {
-		return this.fusekiManager.search(
-				String.format(Utils.readFile(FusekiManager.REFERENCE_QUERY), 
-				this.authUtilities.getData() + OdlukaRDF.ODLUKA_GRAPH, 
-				Namespaces.PREDIKAT + "zahtev", Namespaces.ZAHTEV + "/" + documentId));
+		return this.fusekiManager.referenceSparql(OdlukaRDF.ODLUKA_GRAPH, Namespaces.PREDIKAT + "zahtev", Namespaces.ZAHTEV + "/" + documentId);
 	}
 	
 	public List<String> zalbe(String documentId) {
-		return this.fusekiManager.search(
-				String.format(Utils.readFile(FusekiManager.REFERENCE_QUERY), 
-				this.authUtilities.getData() + ZalbaRDF.ZALBA_GRAPH, 
-				Namespaces.PREDIKAT + "zahtev", Namespaces.ZAHTEV + "/" + documentId));
+		return this.fusekiManager.referenceSparql(ZalbaRDF.ZALBA_GRAPH, Namespaces.PREDIKAT + "zahtev", Namespaces.ZAHTEV + "/" + documentId);
 	}
 	
 	public List<String> resenja(String documentId) {
-		return this.fusekiManager.search(
-				String.format(Utils.readFile(FusekiManager.REFERENCE_QUERY), 
-				this.authUtilities.getData() + ResenjeRDF.RESENJE_GRAPH, 
-				Namespaces.PREDIKAT + "zahtev", Namespaces.ZAHTEV + "/" + documentId));
+		return this.fusekiManager.referenceSparql(ResenjeRDF.RESENJE_GRAPH, Namespaces.PREDIKAT + "zahtev", Namespaces.ZAHTEV + "/" + documentId);
 	}
 
 }

@@ -7,7 +7,6 @@ import { Referenca } from 'src/app/models/referenca';
 import { ZalbaCutanje } from 'src/app/models/zalba-cutanje';
 import { ZalbaOdluka } from 'src/app/models/zalba-odluka';
 import { ZalbaDTO } from 'src/app/models/zalbaDTO';
-import { ZalbaPretraga } from 'src/app/components/zalba/zalba-pretraga/zalba-pretraga';
 import { environment } from 'src/environments/environment';
 import { XonomyService } from '../xonomy/xonomy.service';
 
@@ -94,20 +93,6 @@ export class ZalbaService {
   `;
   }
 
-  private pretragaToXml(pretraga: ZalbaPretraga): string{
-    return `
-      <pretraga>
-        <operacija>${pretraga.operacija}</operacija>
-        <datum>${pretraga.datum}</datum>
-        <mesto>${pretraga.mesto}</mesto>
-        <tip>${pretraga.tip}</tip>
-        <status>${pretraga.status}</status>
-        <izdatoU>${pretraga.izdatoU}</izdatoU>
-        <organVlasti>${pretraga.organVlasti}</organVlasti>
-      </pretraga>
-    `;
-  }
-
   saveZalbaCutanje(zalba: ZalbaCutanje): Observable<null>{
     zalba.detalji = this.xonomyService.removeXmlSpace(zalba.detalji);
     const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
@@ -136,9 +121,9 @@ export class ZalbaService {
       map((xml: string) => this.xmlToZalbe(xml)));
   }
 
-  naprednaPretraga(pretraga: ZalbaPretraga): Observable<ZalbaDTO[]>{
+  naprednaPretraga(pretraga: string): Observable<ZalbaDTO[]>{
     const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml'), responseType: 'text' as 'json' };
-    return this.http.post<string>(`${this.API_ZALBE}/napredna_pretraga`, this.pretragaToXml(pretraga), options).pipe(
+    return this.http.post<string>(`${this.API_ZALBE}/napredna_pretraga`, pretraga, options).pipe(
       map((xml: string) => this.xmlToZalbe(xml))
     );
   }

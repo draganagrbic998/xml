@@ -6,7 +6,6 @@ import { ZahtevDTO } from 'src/app/models/zahtevDTO';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ZahtevService } from 'src/app/services/zahtev/zahtev.service';
 import { environment } from 'src/environments/environment';
-import { ZahtevPretraga } from '../zahtev-pretraga/zahtev-pretraga';
 
 @Component({
   selector: 'app-zahtev-list',
@@ -58,7 +57,7 @@ export class ZahtevListComponent implements AfterViewInit {
     );
   }
 
-  naprednaPretraga(pretraga: ZahtevPretraga): void{
+  naprednaPretraga(pretraga: string): void{
     this.fetchPending = true;
     this.zahtevService.naprednaPretraga(pretraga).subscribe(
       (zahtevi: ZahtevDTO[]) => {
