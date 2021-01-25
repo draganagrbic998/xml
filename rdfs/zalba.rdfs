@@ -8,34 +8,42 @@
 
 	<rdfs:Property rdf:ID="datum">
 		<rdfs:domain rdf:resource="#Zalba"/>
+		<rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
 	</rdfs:Property>
 	
 	<rdfs:Property rdf:ID="mesto">
 		<rdfs:domain rdf:resource="#Zalba"/>
+		<rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
 	</rdfs:Property>
 	
 	<rdfs:Property rdf:ID="tip">
 		<rdfs:domain rdf:resource="#Zalba"/>
+		<rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
 	</rdfs:Property>
 	
 	<rdfs:Property rdf:ID="stanje">
 		<rdfs:domain rdf:resource="#Zalba"/>
+		<rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
 	</rdfs:Property>
 	
 	<rdfs:Property rdf:ID="vlasnik">
 		<rdfs:domain rdf:resource="#Zalba"/>
+		<rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
 	</rdfs:Property>
 	
 	<rdfs:Property rdf:ID="izdatoU">
 		<rdfs:domain rdf:resource="#Zalba"/>
+		<rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
 	</rdfs:Property>
 
 	<rdfs:Property rdf:ID="organVlasti">
 		<rdfs:domain rdf:resource="#Zalba"/>
+		<rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
 	</rdfs:Property>
 	
 	<rdfs:Property rdf:ID="zahtev">
 		<rdfs:domain rdf:resource="#Zalba"/>
+		<rdfs:range rdf:resource="#Zahtev"/>
 	</rdfs:Property>
 	
 	<rdfs:Property rdf:ID="odluka">
