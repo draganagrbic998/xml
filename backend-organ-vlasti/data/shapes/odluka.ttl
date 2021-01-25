@@ -28,6 +28,7 @@ o:OdlukaShape
 		sh:minCount 1 ;
 		sh:maxCount 1 ;
 		sh:datatype xsd:string ;
+		sh:pattern "(obavestenje|odbijanje)" ;
 	] ;
 	sh:property [
 		sh:path prop:zahtev ;

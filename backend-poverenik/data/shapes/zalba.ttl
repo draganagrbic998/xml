@@ -28,12 +28,14 @@ z:ZalbaShape
 		sh:minCount 1 ;
 		sh:maxCount 1 ;
 		sh:datatype xsd:string ;
+		sh:pattern "(cutanje|odluka|delimicnost)" ;
 	] ;
 	sh:property [
 		sh:path prop:status ;
 		sh:minCount 1 ;
 		sh:maxCount 1 ;
 		sh:datatype xsd:string ;
+		sh:pattern "(cekanje|prosledjeno|odgovoreno|odustato|obavesteno|odobreno|odbijeno)" ;
 	] ;
 	sh:property [
 		sh:path prop:zahtev ;

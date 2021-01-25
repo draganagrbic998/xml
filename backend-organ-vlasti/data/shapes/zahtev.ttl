@@ -28,12 +28,14 @@ z:ZahtevShape
 		sh:minCount 1 ;
 		sh:maxCount 1 ;
 		sh:datatype xsd:string ;
+		sh:pattern "(obavestenje|uvid|kopija|dostava)" ;
 	] ;
 	sh:property [
 		sh:path prop:status ;
 		sh:minCount 1 ;
 		sh:maxCount 1 ;
 		sh:datatype xsd:string ;
+		sh:pattern "(cekanje|odobreno|odbijeno)" ;
 	] ;
 	sh:property [
 		sh:path prop:izdatoU ;
