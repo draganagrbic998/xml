@@ -15,9 +15,12 @@ import com.example.demo.common.Namespaces;
 import com.example.demo.common.Utils;
 import com.example.demo.enums.StatusZahteva;
 import com.example.demo.exception.MyException;
+import com.example.demo.exist.SearchUtil;
 import com.example.demo.mapper.ZahtevMapper;
 import com.example.demo.model.Korisnik;
+import com.example.demo.model.ObicnaPretraga;
 import com.example.demo.parser.DOMParser;
+import com.example.demo.parser.JAXBParser;
 import com.example.demo.repository.rdf.ZahtevRDF;
 import com.example.demo.repository.xml.ZahtevExist;
 import com.example.demo.service.email.NotificationManager;
@@ -44,6 +47,9 @@ public class ZahtevService implements ServiceInterface {
 	
 	@Autowired
 	private DOMParser domParser;
+	
+	@Autowired
+	private JAXBParser jaxbParser;
 					
 	@Override
 	public void add(String xml) {

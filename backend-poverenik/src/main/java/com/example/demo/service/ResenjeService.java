@@ -4,15 +4,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.xmldb.api.base.ResourceSet;
 
 import com.example.demo.common.Constants;
 import com.example.demo.common.Namespaces;
 import com.example.demo.common.Utils;
 import com.example.demo.enums.StatusZalbe;
 import com.example.demo.exception.ResourceTakenException;
+import com.example.demo.exist.SearchUtil;
 import com.example.demo.mapper.ResenjeMapper;
 import com.example.demo.mapper.ZalbaMapper;
 import com.example.demo.model.Korisnik;
+import com.example.demo.model.ObicnaPretraga;
+import com.example.demo.parser.JAXBParser;
 import com.example.demo.repository.rdf.ResenjeRDF;
 import com.example.demo.repository.xml.ResenjeExist;
 import com.example.demo.service.email.NotificationManager;
@@ -46,6 +50,9 @@ public class ResenjeService implements ServiceInterface {
 	
 	@Autowired
 	private ResenjeTransformer resenjeTransformer;
+	
+	@Autowired
+	private JAXBParser jaxbParser;
 	
 	@Override
 	public void add(String xml) {

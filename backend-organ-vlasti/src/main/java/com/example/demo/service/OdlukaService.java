@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.xmldb.api.base.ResourceSet;
 
 import com.example.demo.common.Constants;
 import com.example.demo.common.Namespaces;
@@ -13,10 +14,13 @@ import com.example.demo.common.Utils;
 import com.example.demo.enums.StatusZahteva;
 import com.example.demo.enums.TipOdluke;
 import com.example.demo.exception.ResourceTakenException;
+import com.example.demo.exist.SearchUtil;
 import com.example.demo.mapper.OdlukaMapper;
 import com.example.demo.mapper.ZahtevMapper;
 import com.example.demo.model.Korisnik;
+import com.example.demo.model.ObicnaPretraga;
 import com.example.demo.parser.DOMParser;
+import com.example.demo.parser.JAXBParser;
 import com.example.demo.repository.rdf.OdlukaRDF;
 import com.example.demo.repository.xml.OdlukaExist;
 import com.example.demo.service.email.NotificationManager;
@@ -56,6 +60,9 @@ public class OdlukaService implements ServiceInterface {
 	
 	@Autowired
 	private OdlukaTransformer odlukaTransformer;
+	
+	@Autowired
+	private JAXBParser jaxbParser;
 	
 	@Override
 	public void add(String xml) {
