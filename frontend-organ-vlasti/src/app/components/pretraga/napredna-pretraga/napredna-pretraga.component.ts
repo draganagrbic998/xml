@@ -29,6 +29,28 @@ export class NaprednaPretragaComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void{
+    let specifikacija;
+    if (this.tip === 'zahtev'){
+      specifikacija = this.xonomyService.zahtevPretraga;
+    }
+    else if (this.tip === 'odluka'){
+      specifikacija = this.xonomyService.odlukaPretraga;
+    }
+    else if (this.tip === 'zalba'){
+      specifikacija = this.xonomyService.zalbaPretraga;
+    }
+    else if (this.tip === 'odgovor'){
+      specifikacija = this.xonomyService.odgovorPretraga;
+    }
+    else if (this.tip === 'resenje'){
+      specifikacija = this.xonomyService.resenjePretraga;
+    }
+    else{
+      specifikacija = this.xonomyService.izvestajPretraga;
+    }
+    const pretragaXml = '<Pretraga></Pretraga>';
+    const pretragaEditor = document.getElementById(this.page + 'naprednaPretraga');
+    Xonomy.render(pretragaXml, pretragaEditor, specifikacija);
   }
 
 }
