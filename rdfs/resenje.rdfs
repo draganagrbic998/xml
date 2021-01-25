@@ -4,51 +4,52 @@
 	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
 	xml:base="https://github.com/draganagrbic998/xml/#">
 
-	<rdfs:Class rdf:ID="Resenje"/>
+	<rdfs:Class rdf:ID="resenje"/>
+	<rdfs:Class rdf:ID="korisnik"/>
 
-	<rdfs:Property rdf:ID="datum">
-		<rdfs:domain rdf:resource="#Resenje"/>
+	<rdfs:Property rdf:about="https://github.com/draganagrbic998/xml/predikat/datum">
+		<rdfs:domain rdf:resource="#resenje"/>
 		<rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
 	</rdfs:Property>
 	
-	<rdfs:Property rdf:ID="status">
-		<rdfs:domain rdf:resource="#Resenje"/>
+	<rdfs:Property rdf:about="https://github.com/draganagrbic998/xml/predikat/status">
+		<rdfs:domain rdf:resource="#resenje"/>
 		<rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
 	</rdfs:Property>
 	
-	<rdfs:Property rdf:ID="tipZalbe">
-		<rdfs:domain rdf:resource="#Resenje"/>
+	<rdfs:Property rdf:about="https://github.com/draganagrbic998/xml/predikat/tipZalbe">
+		<rdfs:domain rdf:resource="#resenje"/>
 		<rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
 	</rdfs:Property>
 	
-	<rdfs:Property rdf:ID="zahtev">
-		<rdfs:domain rdf:resource="#Resenje"/>
-		<rdfs:range rdf:resource="#Zahtev"/>
+	<rdfs:Property rdf:about="https://github.com/draganagrbic998/xml/predikat/zahtev">
+		<rdfs:domain rdf:resource="#resenje"/>
+		<rdfs:range rdf:resource="#zahtev"/>
 	</rdfs:Property>
 	
-	<rdfs:Property rdf:ID="zalba">
-		<rdfs:domain rdf:resource="#Resenje"/>
-		<rdfs:range rdf:resource="#Zalba"/>
+	<rdfs:Property rdf:about="https://github.com/draganagrbic998/xml/predikat/zalba">
+		<rdfs:domain rdf:resource="#resenje"/>
+		<rdfs:range rdf:resource="#zalba"/>
 	</rdfs:Property>
 	
-	<rdfs:Property rdf:ID="odgovor">
-		<rdfs:domain rdf:resource="#Resenje"/>
-		<rdfs:range rdf:resource="#Odgovor"/>
+	<rdfs:Property rdf:about="https://github.com/draganagrbic998/xml/predikat/odgovor">
+		<rdfs:domain rdf:resource="#resenje"/>
+		<rdfs:range rdf:resource="#odgovor"/>
 	</rdfs:Property>
 	
-	<rdfs:Property rdf:ID="odluka">
-		<rdfs:domain rdf:resource="#Resenje"/>
-		<rdfs:range rdf:resource="#Odluka"/>
+	<rdfs:Property rdf:about="https://github.com/draganagrbic998/xml/predikat/odluka">
+		<rdfs:domain rdf:resource="#resenje"/>
+		<rdfs:range rdf:resource="#odluka"/>
 	</rdfs:Property>
 	
-	<rdfs:Property rdf:ID="izdatoU">
-		<rdfs:domain rdf:resource="#Resenje"/>
+	<rdfs:Property rdf:about="https://github.com/draganagrbic998/xml/predikat/izdatoU">
+		<rdfs:domain rdf:resource="#resenje"/>
 		<rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
 	</rdfs:Property>
 	
-	<rdfs:Property rdf:ID="vlasnik">
-		<rdfs:domain rdf:resource="#Resenje"/>
-		<rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+	<rdfs:Property rdf:about="https://github.com/draganagrbic998/xml/predikat/vlasnik">
+		<rdfs:domain rdf:resource="#resenje"/>
+		<rdfs:range rdf:resource="#korisnik"/>
 	</rdfs:Property>
 </rdf:RDF>
 
