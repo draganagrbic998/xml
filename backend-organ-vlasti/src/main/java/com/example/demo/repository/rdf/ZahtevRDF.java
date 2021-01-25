@@ -43,10 +43,6 @@ public class ZahtevRDF implements RDFInterface {
 		return this.fusekiManager.retrieve(ZAHTEV_GRAPH, Namespaces.ZAHTEV + "/" + documentId);
 	}
 		
-	public String search(String xml) {
-		return Utils.getReferences(this.fusekiManager.searchSparql(ZAHTEV_GRAPH, xml));
-	}
-
 	public List<String> odluke(String documentId) {
 		return this.fusekiManager.referenceSparql(OdlukaRDF.ODLUKA_GRAPH, Namespaces.PREDIKAT + "zahtev", Namespaces.ZAHTEV + "/" + documentId);
 	}

@@ -100,9 +100,7 @@ public class ZahtevService implements ServiceInterface {
 
 	@Override
 	public String advancedSearch(String xml) {
-		String xpathExp = String.format("/zahtev:Zahtev%s", this.zahtevRDF.search(xml));
-		ResourceSet resources = this.zahtevExist.retrieve(xpathExp);
-		return this.zahtevMapper.map(resources);
+		return null;
 	}
 
 	public List<String> odluke(String documentId) {
