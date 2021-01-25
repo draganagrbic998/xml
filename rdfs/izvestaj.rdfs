@@ -16,6 +16,11 @@
 		<rdfs:domain rdf:resource="#izvestaj"/>
 		<rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
 	</rdfs:Property>
+
+	<rdfs:Property rdf:about="https://github.com/draganagrbic998/xml/predikat/izdatoU">
+		<rdfs:domain rdf:resource="#izvestaj"/>
+		<rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+	</rdfs:Property>
 	
 	<rdfs:Property rdf:about="https://github.com/draganagrbic998/xml/predikat/organVlasti">
 		<rdfs:domain rdf:resource="#izvestaj"/>
