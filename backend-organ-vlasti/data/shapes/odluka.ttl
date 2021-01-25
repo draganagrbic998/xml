@@ -14,12 +14,14 @@ o:OdlukaShape
 		sh:minCount 1 ;
 		sh:maxCount 1 ;
 		sh:datatype xsd:string ;
+		sh:pattern "[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])" ;
 	] ;
 	sh:property [
 		sh:path prop:mesto ;
 		sh:minCount 1 ;
 		sh:maxCount 1 ;
 		sh:datatype xsd:string ;
+		sh:minLength 1 ;
 	] ;
 	sh:property [
 		sh:path prop:tip ;
@@ -38,12 +40,14 @@ o:OdlukaShape
 		sh:minCount 1 ;
 		sh:maxCount 1 ;
 		sh:datatype xsd:string ;
+		sh:minLength 1 ;
 	] ;
 	sh:property [
 		sh:path prop:organVlasti ;
 		sh:minCount 1 ;
 		sh:maxCount 1 ;
 		sh:datatype xsd:string ;
+		sh:minLength 1 ;
 	] ;
 	sh:property [
 		sh:path prop:vlasnik ;

@@ -16,7 +16,7 @@ public class OdgovorRDF implements RDFInterface {
 
 	@Autowired
 	private FusekiManager fusekiManager;
-	
+
 	public static final String ODGOVOR_GRAPH = "/odgovori";
 	public static final String ODGOVOR_SHAPE = Constants.SHAPE_FOLDER + "odgovor.ttl";
 	public static final String ODGOVOR_AND_SEARCH = Constants.SPARQL_FOLDER + "odgovor_and.rq";
@@ -26,7 +26,7 @@ public class OdgovorRDF implements RDFInterface {
 	public void add(Document document) {
 		this.fusekiManager.add(ODGOVOR_GRAPH, document, ODGOVOR_SHAPE);
 	}
-	
+
 	@Override
 	public void update(String documentId, Document document) {
 		this.fusekiManager.update(ODGOVOR_GRAPH, Namespaces.ODGOVOR + "/" + documentId, document, ODGOVOR_SHAPE);
@@ -36,12 +36,12 @@ public class OdgovorRDF implements RDFInterface {
 	public void delete(String documentId) {
 		this.fusekiManager.delete(ODGOVOR_GRAPH, Namespaces.ODGOVOR + "/" + documentId);
 	}
-	
+
 	@Override
 	public ResultSet retrieve(String documentId) {
 		return this.fusekiManager.retrieve(ODGOVOR_GRAPH, Namespaces.ODGOVOR + "/" + documentId);
 	}
-	
+
 	public List<String> resenja(String documentId) {
 		return this.fusekiManager.referenceSparql(ResenjeRDF.RESENJE_GRAPH, Namespaces.PREDIKAT + "odgovor", Namespaces.ODGOVOR + "/" + documentId);
 	}

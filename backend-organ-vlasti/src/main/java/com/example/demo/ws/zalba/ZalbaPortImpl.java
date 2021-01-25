@@ -42,15 +42,4 @@ public class ZalbaPortImpl implements Zalba {
         }
     }
 
-    public void obustaviZalba(java.lang.String obustaviZalba) {
-        LOG.info("Executing operation obustaviZalba");
-        try {
-        	//this.zalbaService.obustavi(this.domParser.buildDocument(obustaviZalba).getElementsByTagName("broj").item(0).getTextContent());
-        } 
-        catch (java.lang.Exception ex) {
-            ex.printStackTrace();
-            throw new RuntimeException(ex);
-        }
-    }
-
 }

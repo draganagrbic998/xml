@@ -26,10 +26,4 @@ public interface Zalba {
         java.lang.String odustaniZalba
     );
 
-    @WebMethod
-    @Oneway
-    public void obustaviZalba(
-        @WebParam(partName = "obustaviZalba", name = "obustaviZalba", targetNamespace = "http://demo.example.com/ws/zalba")
-        java.lang.String obustaviZalba
-    );
 }

@@ -14,7 +14,7 @@ public class ResenjeRDF implements RDFInterface {
 
 	@Autowired
 	private FusekiManager fusekiManager;
-	
+
 	public static final String RESENJE_GRAPH = "/resenja";
 	public static final String RESENJE_SHAPE = Constants.SHAPE_FOLDER + "resenje.ttl";
 	public static final String RESENJE_AND_SEARCH = Constants.SPARQL_FOLDER + "resenje_and.rq";
@@ -24,7 +24,7 @@ public class ResenjeRDF implements RDFInterface {
 	public void add(Document document) {
 		this.fusekiManager.add(RESENJE_GRAPH, document, RESENJE_SHAPE);
 	}
-	
+
 	@Override
 	public void update(String documentId, Document document) {
 		this.fusekiManager.update(RESENJE_GRAPH, Namespaces.RESENJE + "/" + documentId, document, RESENJE_SHAPE);
@@ -34,7 +34,7 @@ public class ResenjeRDF implements RDFInterface {
 	public void delete(String documentId) {
 		this.fusekiManager.delete(RESENJE_GRAPH, Namespaces.RESENJE + "/" + documentId);
 	}
-	
+
 	@Override
 	public ResultSet retrieve(String documentId) {
 		return this.fusekiManager.retrieve(RESENJE_GRAPH, Namespaces.RESENJE + "/" + documentId);

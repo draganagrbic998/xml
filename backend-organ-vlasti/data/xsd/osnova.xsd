@@ -115,7 +115,7 @@
                 </xs:complexType>
             </xs:element>
         </xs:sequence>
-        <xs:attribute name="about" type="osnova:TRequiredString" use="optional"/>
+        <xs:attribute name="about" type="osnova:TGithubPrefixString" use="optional"/>
         <xs:attribute name="rel" use="optional">
             <xs:simpleType>
                 <xs:restriction base="xs:string">
@@ -125,7 +125,7 @@
                 </xs:restriction>
             </xs:simpleType>
         </xs:attribute>
-        <xs:attribute name="href" type="osnova:TRequiredString" use="optional"/>
+        <xs:attribute name="href" type="osnova:TGithubPrefixString" use="optional"/>
     </xs:complexType>
     <xs:complexType name="TPodnosenje" abstract="true">
         <xs:complexContent>
@@ -158,6 +158,11 @@
     <xs:simpleType name="TRequiredString">
         <xs:restriction base="xs:string">
             <xs:minLength value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TGithubPrefixString">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="https:\/\/github.com\/draganagrbic998\/xml\/.+"/>
         </xs:restriction>
     </xs:simpleType>
 </xs:schema>
