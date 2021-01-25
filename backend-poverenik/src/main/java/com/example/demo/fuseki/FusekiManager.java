@@ -11,6 +11,8 @@ import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.riot.RDFDataMgr;
+import org.apache.jena.riot.RDFFormat;
 import org.apache.jena.update.UpdateExecutionFactory;
 import org.apache.jena.update.UpdateFactory;
 import org.apache.jena.update.UpdateProcessor;
@@ -57,6 +59,7 @@ public class FusekiManager {
 			processor.execute();
 		}
 		else {
+			RDFDataMgr.write(System.out, reportResource.getModel(), RDFFormat.TURTLE);
 			throw new InvalidRDFException();
 		}
 	}

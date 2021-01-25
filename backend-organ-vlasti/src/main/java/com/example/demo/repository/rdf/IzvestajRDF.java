@@ -14,7 +14,7 @@ public class IzvestajRDF implements RDFInterface {
 
 	@Autowired
 	private FusekiManager fusekiManager;
-	
+
 	public static final String IZVESTAJ_GRAPH = "/izvestaji";
 	public static final String IZVESTAJ_SHAPE = Constants.SHAPE_FOLDER + "izvestaj.ttl";
 	public static final String IZVESTAJ_AND_SEARCH = Constants.SPARQL_FOLDER + "izvestaj_and.rq";

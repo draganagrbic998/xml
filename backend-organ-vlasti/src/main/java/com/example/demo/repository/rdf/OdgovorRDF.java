@@ -18,7 +18,7 @@ public class OdgovorRDF implements RDFInterface {
 
 	@Autowired
 	private FusekiManager fusekiManager;
-	
+
 	@Autowired
 	private FusekiAuthentication authUtilities;
 
@@ -31,7 +31,7 @@ public class OdgovorRDF implements RDFInterface {
 	public void add(Document document) {
 		this.fusekiManager.add(ODGOVOR_GRAPH, document, ODGOVOR_SHAPE);
 	}
-	
+
 	@Override
 	public void update(String documentId, Document document) {
 		this.fusekiManager.update(ODGOVOR_GRAPH, Namespaces.ODGOVOR + "/" + documentId, document, ODGOVOR_SHAPE);
@@ -41,17 +41,16 @@ public class OdgovorRDF implements RDFInterface {
 	public void delete(String documentId) {
 		this.fusekiManager.delete(ODGOVOR_GRAPH, Namespaces.ODGOVOR + "/" + documentId);
 	}
-	
+
 	@Override
 	public ResultSet retrieve(String documentId) {
 		return this.fusekiManager.retrieve(ODGOVOR_GRAPH, Namespaces.ODGOVOR + "/" + documentId);
 	}
-	
+
 	public List<String> resenja(String documentId) {
-		return this.fusekiManager.search(
-				String.format(Utils.readFile(FusekiManager.REFERENCE_QUERY), 
-				this.authUtilities.getData() + ResenjeRDF.RESENJE_GRAPH, 
-				Namespaces.PREDIKAT + "odgovor", Namespaces.ODGOVOR + "/" + documentId));
+		return this.fusekiManager.search(String.format(Utils.readFile(FusekiManager.REFERENCE_QUERY),
+				this.authUtilities.getData() + ResenjeRDF.RESENJE_GRAPH, Namespaces.PREDIKAT + "odgovor",
+				Namespaces.ODGOVOR + "/" + documentId));
 	}
 
 }

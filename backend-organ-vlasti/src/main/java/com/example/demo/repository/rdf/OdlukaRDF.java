@@ -18,10 +18,10 @@ public class OdlukaRDF implements RDFInterface {
 
 	@Autowired
 	private FusekiManager fusekiManager;
-	
+
 	@Autowired
 	private FusekiAuthentication authUtilities;
-	
+
 	public static final String ODLUKA_GRAPH = "/odluke";
 	public static final String ODLUKA_SHAPE = Constants.SHAPE_FOLDER + "odluka.ttl";
 	public static final String ODLUKA_AND_SEARCH = Constants.SPARQL_FOLDER + "odluka_and.rq";
@@ -31,7 +31,7 @@ public class OdlukaRDF implements RDFInterface {
 	public void add(Document document) {
 		this.fusekiManager.add(ODLUKA_GRAPH, document, ODLUKA_SHAPE);
 	}
-	
+
 	@Override
 	public void update(String documentId, Document document) {
 		this.fusekiManager.update(ODLUKA_GRAPH, Namespaces.ODLUKA + "/" + documentId, document, ODLUKA_SHAPE);
@@ -41,24 +41,22 @@ public class OdlukaRDF implements RDFInterface {
 	public void delete(String documentId) {
 		this.fusekiManager.delete(ODLUKA_GRAPH, Namespaces.ODLUKA + "/" + documentId);
 	}
-	
+
 	@Override
 	public ResultSet retrieve(String documentId) {
 		return this.fusekiManager.retrieve(ODLUKA_GRAPH, Namespaces.ODLUKA + "/" + documentId);
 	}
-	
+
 	public List<String> zalbe(String documentId) {
-		return this.fusekiManager.search(
-				String.format(Utils.readFile(FusekiManager.REFERENCE_QUERY), 
-				this.authUtilities.getData() + ZalbaRDF.ZALBA_GRAPH, 
-				Namespaces.PREDIKAT + "odluka", Namespaces.ODLUKA + "/" + documentId));
+		return this.fusekiManager.search(String.format(Utils.readFile(FusekiManager.REFERENCE_QUERY),
+				this.authUtilities.getData() + ZalbaRDF.ZALBA_GRAPH, Namespaces.PREDIKAT + "odluka",
+				Namespaces.ODLUKA + "/" + documentId));
 	}
-	
+
 	public List<String> resenja(String documentId) {
-		return this.fusekiManager.search(
-				String.format(Utils.readFile(FusekiManager.REFERENCE_QUERY), 
-				this.authUtilities.getData() + ResenjeRDF.RESENJE_GRAPH, 
-				Namespaces.PREDIKAT + "odluka", Namespaces.ODLUKA + "/" + documentId));
+		return this.fusekiManager.search(String.format(Utils.readFile(FusekiManager.REFERENCE_QUERY),
+				this.authUtilities.getData() + ResenjeRDF.RESENJE_GRAPH, Namespaces.PREDIKAT + "odluka",
+				Namespaces.ODLUKA + "/" + documentId));
 	}
-	
+
 }
