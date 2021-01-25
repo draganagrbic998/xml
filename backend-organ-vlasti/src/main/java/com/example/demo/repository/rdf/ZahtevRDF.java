@@ -44,8 +44,7 @@ public class ZahtevRDF implements RDFInterface {
 	}
 		
 	public String search(String xml) {
-		List<String> ids = this.fusekiManager.searchSparql(ZAHTEV_GRAPH, xml);
-		return Utils.getReferences(ids);
+		return Utils.getReferences(this.fusekiManager.searchSparql(ZAHTEV_GRAPH, xml));
 	}
 
 	public List<String> odluke(String documentId) {
