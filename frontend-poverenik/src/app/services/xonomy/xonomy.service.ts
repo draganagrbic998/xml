@@ -10,33 +10,6 @@ export class XonomyService {
 
   constructor() { }
 
-  pretragaSpecifikacija = {
-    elements: {
-      Fraze: {
-        menu: [
-          {
-            caption: 'Dodaj <fraza> tag',
-            action: Xonomy.newElementChild,
-            actionParameter: '<fraza></fraza>'
-          }
-        ]
-      },
-      fraza: {
-        hasText: true,
-        asker: Xonomy.askString,
-        menu: [
-          {
-            caption: 'Obriši <fraza> tag',
-            action: Xonomy.deleteElement
-          }
-        ]
-      },
-      kljucne_reci: {
-        hasText: true
-      }
-    }
-  };
-
   odlukaSpecifikacija = {
     elements: {
       Dispozitiva: {

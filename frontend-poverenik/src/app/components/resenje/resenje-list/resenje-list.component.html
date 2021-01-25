@@ -1,17 +1,10 @@
 <mat-drawer-container>
   <mat-drawer mode="side" #drawer class="mat-elevation-z24">
-    <mat-tab-group animationDuration="0ms">
-      <mat-tab [label]="'Obična pretraga'">
-        <app-obicna-pretraga
-        [fetchPending]="fetchPending"
-        (pretragaTriggered)="obicnaPretraga($event)"></app-obicna-pretraga>
-      </mat-tab>
-      <mat-tab [label]="'Napredna pretraga'">
-        <app-resenje-pretraga
-        [fetchPending]="fetchPending"
-        (pretragaTriggered)="naprednaPretraga($event)"></app-resenje-pretraga>
-          </mat-tab>
-    </mat-tab-group>
+    <app-pretraga
+    [tip]="'izvestaj'"
+    [fetchPending]="fetchPending"
+    (obicnaPretragaTriggered)="obicnaPretraga($event)"
+    (naprednaPretragaTriggered)="naprednaPretraga($event)"></app-pretraga>
   </mat-drawer>
 
   <app-preloader *ngIf="fetchPending"></app-preloader>

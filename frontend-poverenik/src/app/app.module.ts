@@ -27,11 +27,7 @@ import { OdgovorListComponent } from './components/odgovor/odgovor-list/odgovor-
 import { IzvestajListComponent } from './components/izvestaj/izvestaj-list/izvestaj-list.component';
 import { SpacerContainerComponent } from './components/layout/spacer-container/spacer-container.component';
 import { ReferenceListComponent } from './components/main/reference-list/reference-list.component';
-import { ResenjePretragaComponent } from './components/resenje/resenje-pretraga/resenje-pretraga.component';
-import { ZalbaPretragaComponent } from './components/zalba/zalba-pretraga/zalba-pretraga.component';
-import { OdgovorPretragaComponent } from './components/odgovor/odgovor-pretraga/odgovor-pretraga.component';
-import { ObicnaPretragaComponent } from './components/main/obicna-pretraga/obicna-pretraga.component';
-import { IzvestajPretragaComponent } from './components/izvestaj/izvestaj-pretraga/izvestaj-pretraga.component';
+import { ObicnaPretragaComponent } from './components/pretraga/obicna-pretraga/obicna-pretraga.component';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
@@ -51,6 +47,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTabsModule } from '@angular/material/tabs';
+import { PretragaComponent } from './components/pretraga/pretraga.component';
+import { NaprednaPretragaComponent } from './components/pretraga/napredna-pretraga/napredna-pretraga.component';
 
 @NgModule({
   declarations: [
@@ -74,11 +72,9 @@ import { MatTabsModule } from '@angular/material/tabs';
     IzvestajListComponent,
     SpacerContainerComponent,
     ReferenceListComponent,
-    ResenjePretragaComponent,
-    ZalbaPretragaComponent,
-    OdgovorPretragaComponent,
     ObicnaPretragaComponent,
-    IzvestajPretragaComponent
+    PretragaComponent,
+    NaprednaPretragaComponent
   ],
   imports: [
     BrowserModule,

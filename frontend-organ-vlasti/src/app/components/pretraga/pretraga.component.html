@@ -1,0 +1,16 @@
+<mat-tab-group animationDuration="0ms" (selectedIndexChange)="tab=1-tab">
+    <mat-tab [label]="'Obična pretraga'">
+    </mat-tab>
+    <mat-tab [label]="'Napredna pretraga'">
+    </mat-tab>
+</mat-tab-group>
+
+<app-obicna-pretraga
+*ngIf="tab===0"
+[fetchPending]="fetchPending"
+(pretragaTriggered)="obicnaPretragaTriggered.emit($event)"></app-obicna-pretraga>  
+<app-napredna-pretraga
+*ngIf="tab===1"
+[tip]="tip"
+[fetchPending]="fetchPending"
+(pretragaTriggered)="naprednaPretragaTriggered.emit($event)"></app-napredna-pretraga>  

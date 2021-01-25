@@ -9,36 +9,6 @@ export class XonomyService {
 
   constructor() { }
 
-  zahtevPretraga = {
-  };
-
-  obicnaPretraga = {
-    elements: {
-      Fraze: {
-        menu: [
-          {
-            caption: 'Dodaj <fraza> tag',
-            action: Xonomy.newElementChild,
-            actionParameter: '<fraza></fraza>'
-          }
-        ]
-      },
-      fraza: {
-        hasText: true,
-        asker: Xonomy.askString,
-        menu: [
-          {
-            caption: 'Obriši <fraza> tag',
-            action: Xonomy.deleteElement
-          }
-        ]
-      },
-      kljucne_reci: {
-        hasText: true
-      }
-    }
-  };
-
   detaljiSpecifikacija = {
     elements: {
       Detalji: {
@@ -98,6 +68,31 @@ export class XonomyService {
     }
 
     return serializer.serializeToString(document);
+  }
+
+  hideMetapodatak(jsElement, metapodatak: string): boolean{
+    if (jsElement.children.length === 0){
+      return false;
+    }
+    if (jsElement.hasChildElement(metapodatak)){
+      return true;
+    }
+    const prev = jsElement.children[jsElement.children.length - 1];
+    if (prev.name !== 'and' && prev.name !== 'or'){
+      return true;
+    }
+    return false;
+  }
+
+  hideLogOp(jsElement): boolean{
+    if (jsElement.children.length === 0){
+      return true;
+    }
+    const prev = jsElement.children[jsElement.children.length - 1];
+    if (prev.name === 'and' || prev.name === 'or'){
+      return true;
+    }
+    return false;
   }
 
 }
