@@ -4,35 +4,36 @@
 	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
 	xml:base="https://github.com/draganagrbic998/xml/#">
 
-	<rdfs:Class rdf:ID="Zahtev"/>
+	<rdfs:Class rdf:ID="zahtev"/>
+	<rdfs:Class rdf:ID="korisnik"/>
 
-	<rdfs:Property rdf:ID="datum">
-		<rdfs:domain rdf:resource="#Zahtev"/>
+	<rdfs:Property rdf:about="https://github.com/draganagrbic998/xml/predikat/datum">
+		<rdfs:domain rdf:resource="#zahtev"/>
 		<rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
 	</rdfs:Property>
 	
-	<rdfs:Property rdf:ID="mesto">
-		<rdfs:domain rdf:resource="#Zahtev"/>
+	<rdfs:Property rdf:about="https://github.com/draganagrbic998/xml/predikat/mesto">
+		<rdfs:domain rdf:resource="#zahtev"/>
 		<rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
 	</rdfs:Property>
 	
-	<rdfs:Property rdf:ID="tip">
-		<rdfs:domain rdf:resource="#Zahtev"/>
+	<rdfs:Property rdf:about="https://github.com/draganagrbic998/xml/predikat/tip">
+		<rdfs:domain rdf:resource="#zahtev"/>
 		<rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
 	</rdfs:Property>
 	
-	<rdfs:Property rdf:ID="vlasnik">
-		<rdfs:domain rdf:resource="#Zahtev"/>
+	<rdfs:Property rdf:about="https://github.com/draganagrbic998/xml/predikat/vlasnik">
+		<rdfs:domain rdf:resource="#zahtev"/>
+		<rdfs:range rdf:resource="#korisnik"/>
+	</rdfs:Property>
+	
+	<rdfs:Property rdf:about="https://github.com/draganagrbic998/xml/predikat/organVlasti">
+		<rdfs:domain rdf:resource="#zahtev"/>
 		<rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
 	</rdfs:Property>
 	
-	<rdfs:Property rdf:ID="organVlasti">
-		<rdfs:domain rdf:resource="#Zahtev"/>
-		<rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
-	</rdfs:Property>
-	
-	<rdfs:Property rdf:ID="izdatoU">
-		<rdfs:domain rdf:resource="#Zahtev"/>
+	<rdfs:Property rdf:about="https://github.com/draganagrbic998/xml/predikat/izdatoU">
+		<rdfs:domain rdf:resource="#zahtev"/>
 		<rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
 	</rdfs:Property>
 	
