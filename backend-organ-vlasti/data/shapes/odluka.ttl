@@ -21,6 +21,7 @@ o:OdlukaShape
 		sh:minCount 1 ;
 		sh:maxCount 1 ;
 		sh:datatype xsd:string ;
+		sh:minLength 1 ;
 	] ;
 	sh:property [
 		sh:path prop:tip ;
@@ -39,12 +40,14 @@ o:OdlukaShape
 		sh:minCount 1 ;
 		sh:maxCount 1 ;
 		sh:datatype xsd:string ;
+		sh:minLength 1 ;
 	] ;
 	sh:property [
 		sh:path prop:organVlasti ;
 		sh:minCount 1 ;
 		sh:maxCount 1 ;
 		sh:datatype xsd:string ;
+		sh:minLength 1 ;
 	] ;
 	sh:property [
 		sh:path prop:vlasnik ;
