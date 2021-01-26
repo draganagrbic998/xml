@@ -64,7 +64,10 @@ public class IzvestajService implements ServiceInterface {
 
 	@Override
 	public String regularSearch(String xml) {
-		return null;
+		ObicnaPretraga pretraga = (ObicnaPretraga) this.jaxbParser.unmarshalFromXml(xml, ObicnaPretraga.class);
+		String xpathExp = String.format("/izvestaj:Izvestaj%s", SearchUtil.pretragaXpath(pretraga));
+		ResourceSet resources = this.izvestajExist.retrieve(xpathExp);
+		return this.izvestajMapper.map(resources);
 	}
 
 	@Override
