@@ -134,7 +134,9 @@ public class ResenjeService implements ServiceInterface {
 
 	@Override
 	public String advancedSearch(String xml) {
-		return null;
+		String xpathExp = String.format("/resenje:Resenje%s", this.resenjeRDF.search(xml));
+		ResourceSet resources = this.resenjeExist.retrieve(xpathExp);
+		return this.resenjeMapper.map(resources);
 	}
 	
 }
