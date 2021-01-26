@@ -95,7 +95,10 @@ public class ZahtevService implements ServiceInterface {
 
 	@Override
 	public String regularSearch(String xml) {
-		return null;
+		ObicnaPretraga pretraga = (ObicnaPretraga) this.jaxbParser.unmarshalFromXml(xml, ObicnaPretraga.class);
+		String xpathExp = String.format("/zahtev:Zahtev%s", SearchUtil.pretragaXpath(pretraga));
+		ResourceSet resources = this.zahtevExist.retrieve(xpathExp);
+		return this.zahtevMapper.map(resources);
 	}
 
 	@Override
