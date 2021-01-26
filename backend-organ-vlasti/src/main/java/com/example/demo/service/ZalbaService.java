@@ -93,7 +93,9 @@ public class ZalbaService implements ServiceInterface {
 
 	@Override
 	public String advancedSearch(String xml) {
-		return null;
+		String xpathExp = String.format("/zalba:Zalba%s", this.zalbaRDF.search(xml));
+		ResourceSet resources = this.zalbaExist.retrieve(xpathExp);
+		return this.zalbaMapper.map(resources);
 	}
 	
 	public List<String> odgovori(String documentId) {
