@@ -72,7 +72,9 @@ public class IzvestajService implements ServiceInterface {
 
 	@Override
 	public String advancedSearch(String xml) {
-		return null;
+		String xpathExp = String.format("/izvestaj:Izvestaj%s", this.izvestajRDF.search(xml));
+		ResourceSet resources = this.izvestajExist.retrieve(xpathExp);
+		return this.izvestajMapper.map(resources);
 	}
 
 }
