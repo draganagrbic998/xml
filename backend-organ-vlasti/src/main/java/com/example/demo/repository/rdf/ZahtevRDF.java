@@ -54,5 +54,9 @@ public class ZahtevRDF implements RDFInterface {
 	public List<String> resenja(String documentId) {
 		return this.fusekiManager.referenceSparql(ResenjeRDF.RESENJE_GRAPH, Namespaces.PREDIKAT + "zahtev", Namespaces.ZAHTEV + "/" + documentId);
 	}
+	
+	public String search(String xml) {
+		return Utils.getReferences(this.fusekiManager.searchSparql(ZAHTEV_GRAPH, xml));
+	}
 
 }
