@@ -97,7 +97,9 @@ public class OdgovorService implements ServiceInterface {
 
 	@Override
 	public String advancedSearch(String xml) {
-		return null;
+		String xpathExp = String.format("/odgovor:Odgovor%s", this.odgovorRDF.search(xml));
+		ResourceSet resources = this.odgovorExist.retrieve(xpathExp);
+		return this.odgovorMapper.map(resources);
 	}
 
 	public List<String> resenja(String documentId) {
