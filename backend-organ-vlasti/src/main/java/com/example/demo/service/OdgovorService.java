@@ -86,7 +86,10 @@ public class OdgovorService implements ServiceInterface {
 	
 	@Override
 	public String regularSearch(String xml) {
-		return null;
+		ObicnaPretraga pretraga = (ObicnaPretraga) this.jaxbParser.unmarshalFromXml(xml, ObicnaPretraga.class);
+		String xpathExp = String.format("/odgovor:Odgovor%s", SearchUtil.pretragaXpath(pretraga));
+		ResourceSet resources = this.odgovorExist.retrieve(xpathExp);
+		return this.odgovorMapper.map(resources);
 	}
 
 	@Override
