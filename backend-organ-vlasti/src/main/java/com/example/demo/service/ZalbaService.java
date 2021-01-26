@@ -85,7 +85,10 @@ public class ZalbaService implements ServiceInterface {
 	
 	@Override
 	public String regularSearch(String xml) {
-		return null;
+		ObicnaPretraga pretraga = (ObicnaPretraga) this.jaxbParser.unmarshalFromXml(xml, ObicnaPretraga.class);
+		String xpathExp = String.format("/zalba:Zalba%s", SearchUtil.pretragaXpath(pretraga));
+		ResourceSet resources = this.zalbaExist.retrieve(xpathExp);
+		return this.zalbaMapper.map(resources);
 	}
 
 	@Override
