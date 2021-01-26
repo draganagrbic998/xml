@@ -9,6 +9,7 @@ import org.w3c.dom.Document;
 
 import com.example.demo.common.Constants;
 import com.example.demo.common.Namespaces;
+import com.example.demo.common.Utils;
 import com.example.demo.fuseki.FusekiManager;
 
 @Repository
@@ -40,6 +41,10 @@ public class OdgovorRDF implements RDFInterface {
 	@Override
 	public ResultSet retrieve(String documentId) {
 		return this.fusekiManager.retrieve(ODGOVOR_GRAPH, Namespaces.ODGOVOR + "/" + documentId);
+	}
+	
+	public String search(String xml) {
+		return Utils.getReferences(this.fusekiManager.searchSparql(ODGOVOR_GRAPH, xml));
 	}
 
 	public List<String> resenja(String documentId) {
