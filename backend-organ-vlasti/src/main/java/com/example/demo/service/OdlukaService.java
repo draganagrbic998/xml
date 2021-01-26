@@ -139,7 +139,9 @@ public class OdlukaService implements ServiceInterface {
 
 	@Override
 	public String advancedSearch(String xml) {
-		return null;
+		String xpathExp = String.format("/odluka:Odluka%s", this.odlukaRDF.search(xml));
+		ResourceSet resources = this.odlukaExist.retrieve(xpathExp);
+		return this.odlukaMapper.map(resources);
 	}
 
 	public List<String> zalbe(String documentId) {
