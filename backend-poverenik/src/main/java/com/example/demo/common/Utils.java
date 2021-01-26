@@ -31,7 +31,7 @@ public class Utils {
 		return array[array.length - 1];
 	}
 	
-	public static String getReferences(List<Integer> brojevi) {
+	public static String getReferences(List<String> brojevi) {
 		//ovo ces menjati na @about
 		String xpathExp = "[(";
 		for (int i = 0; i < brojevi.size(); ++i) {
