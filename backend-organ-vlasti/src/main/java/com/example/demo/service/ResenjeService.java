@@ -75,7 +75,10 @@ public class ResenjeService implements ServiceInterface {
 
 	@Override
 	public String regularSearch(String xml) {
-		return null;
+		ObicnaPretraga pretraga = (ObicnaPretraga) this.jaxbParser.unmarshalFromXml(xml, ObicnaPretraga.class);
+		String xpathExp = String.format("/resenje:Resenje%s", SearchUtil.pretragaXpath(pretraga));
+		ResourceSet resources = this.resenjeExist.retrieve(xpathExp);
+		return this.resenjeMapper.map(resources);
 	}
 
 	@Override
