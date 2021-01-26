@@ -131,7 +131,10 @@ public class OdlukaService implements ServiceInterface {
 	
 	@Override
 	public String regularSearch(String xml) {
-		return null;
+		ObicnaPretraga pretraga = (ObicnaPretraga) this.jaxbParser.unmarshalFromXml(xml, ObicnaPretraga.class);
+		String xpathExp = String.format("/odluka:Odluka%s", SearchUtil.pretragaXpath(pretraga));
+		ResourceSet resources = this.odlukaExist.retrieve(xpathExp);
+		return this.odlukaMapper.map(resources);
 	}
 
 	@Override
