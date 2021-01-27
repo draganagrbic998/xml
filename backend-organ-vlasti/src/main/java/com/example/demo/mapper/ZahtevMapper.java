@@ -101,7 +101,6 @@ public class ZahtevMapper implements MapperInterface {
 				zahtevi.appendChild(zahtev);						
 			}
 			
-			
 			return this.domParser.buildXml(zahteviDocument);
 		}
 		catch(Exception e) {

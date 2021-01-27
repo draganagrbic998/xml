@@ -4,14 +4,21 @@
     <div [id]="page + 'naprednaPretraga'"></div>
     <br><br>
     <app-spacer-container>
-        <span></span>
         <span>
-        <button 
-        *ngIf="!fetchPending"
-        mat-raised-button 
-        color="primary"
-        (click)="pretrazi()">Pretraži</button>
-        <app-spinner-button *ngIf="fetchPending"></app-spinner-button>
+            <button 
+            *ngIf="!fetchPending"
+            mat-raised-button 
+            color="primary"
+            (click)="ngAfterViewInit()">Resetuj</button>
+            <app-spinner-button *ngIf="fetchPending"></app-spinner-button>
+        </span>
+        <span>
+            <button 
+            *ngIf="!fetchPending"
+            mat-raised-button 
+            color="primary"
+            (click)="pretrazi()">Pretraži</button>
+            <app-spinner-button *ngIf="fetchPending"></app-spinner-button>
         </span>
     </app-spacer-container>
 </div>
