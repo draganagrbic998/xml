@@ -9,7 +9,7 @@ xmlns:resenje="https://github.com/draganagrbic998/xml/resenje">
         <fo:root font-size="12px" text-align="justify" font-family="Times New Roman">
             <fo:layout-master-set>
                 <fo:simple-page-master master-name="resenje-page">
-                    <fo:region-body margin="0.5in"></fo:region-body>
+                    <fo:region-body margin="0.5in" margin-bottom="1in"></fo:region-body>
 	                <fo:region-after region-name="xsl-region-after" extent="1.5in"></fo:region-after>
                 </fo:simple-page-master>
             </fo:layout-master-set>
