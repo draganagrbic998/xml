@@ -72,13 +72,13 @@ public class OdlukaController {
 	}
 
 	@PostMapping(value="obicna_pretraga", consumes = MediaType.TEXT_XML_VALUE, produces = MediaType.TEXT_XML_VALUE)
-	@PreAuthorize("hasAuthority('sluzbenik')")
+	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<String> regularSearch(@RequestBody String xml) {		
 		return new ResponseEntity<>(this.odlukaService.regularSearch(xml), HttpStatus.OK);
 	}
 
 	@PostMapping(value="napredna_pretraga", consumes = MediaType.TEXT_XML_VALUE, produces = MediaType.TEXT_XML_VALUE)
-	@PreAuthorize("hasAuthority('sluzbenik')")
+	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<String> advancedSearch(@RequestBody String xml) {		
 		return new ResponseEntity<>(this.odlukaService.advancedSearch(xml), HttpStatus.OK);
 	}

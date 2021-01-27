@@ -95,15 +95,31 @@ public class ZahtevService implements ServiceInterface {
 
 	@Override
 	public String regularSearch(String xml) {
+		Korisnik korisnik = this.korisnikService.currentUser();
+		String prefix;
+		if (korisnik.getUloga().equals(Constants.SLUZBENIK)) {
+			prefix = "/zahtev:Zahtev";
+		}
+		else {
+			prefix = String.format("/zahtev:Zahtev[@href='%s']", Namespaces.KORISNIK + "/" + korisnik.getMejl());
+		}
 		Pretraga pretraga = (Pretraga) this.jaxbParser.unmarshalFromXml(xml, Pretraga.class);
-		String xpathExp = String.format("/zahtev:Zahtev%s", SearchUtil.pretragaToXpath(pretraga));
+		String xpathExp = String.format("%s%s", prefix, SearchUtil.pretragaToXpath(pretraga));
 		ResourceSet resources = this.zahtevExist.retrieve(xpathExp);
 		return this.zahtevMapper.map(resources);
 	}
 
 	@Override
 	public String advancedSearch(String xml) {
-		String xpathExp = String.format("/zahtev:Zahtev%s", this.zahtevRDF.search(xml));
+		Korisnik korisnik = this.korisnikService.currentUser();
+		String prefix;
+		if (korisnik.getUloga().equals(Constants.SLUZBENIK)) {
+			prefix = "/zahtev:Zahtev";
+		}
+		else {
+			prefix = String.format("/zahtev:Zahtev[@href='%s']", Namespaces.KORISNIK + "/" + korisnik.getMejl());
+		}
+		String xpathExp = String.format("%s%s", prefix, this.zahtevRDF.search(xml));
 		ResourceSet resources = this.zahtevExist.retrieve(xpathExp);
 		return this.zahtevMapper.map(resources);
 	}

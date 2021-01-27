@@ -73,13 +73,13 @@ public class ZalbaController {
 	}
 	
 	@PostMapping(value="obicna_pretraga", consumes = MediaType.TEXT_XML_VALUE, produces = MediaType.TEXT_XML_VALUE)
-	@PreAuthorize("hasAuthority('poverenik')")
+	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<String> regularSearch(@RequestBody String xml) {		
 		return new ResponseEntity<>(this.zalbaService.regularSearch(xml), HttpStatus.OK);
 	}
 
 	@PostMapping(value="napredna_pretraga", consumes = MediaType.TEXT_XML_VALUE, produces = MediaType.TEXT_XML_VALUE)
-	@PreAuthorize("hasAuthority('poverenik')")
+	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<String> advancedSearch(@RequestBody String xml) {		
 		return new ResponseEntity<>(this.zalbaService.advancedSearch(xml), HttpStatus.OK);
 	}

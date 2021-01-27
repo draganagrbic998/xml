@@ -29,13 +29,13 @@ public class ZalbaController {
 	private ZalbaTransformer zalbaTransformer;
 
 	@GetMapping(produces = MediaType.TEXT_XML_VALUE)
-	@PreAuthorize("isAuthenticated()")
+	@PreAuthorize("hasAuthority('sluzbenik')")
 	public ResponseEntity<String> retrieve() {
 		return new ResponseEntity<>(this.zalbaService.retrieve(), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/{broj}", produces = "text/html; charset=utf-8")
-	@PreAuthorize("isAuthenticated()")
+	@PreAuthorize("hasAuthority('sluzbenik')")
 	public ResponseEntity<String> html(@PathVariable String broj) {
 		return new ResponseEntity<>(this.zalbaTransformer.html(broj), HttpStatus.OK);
 	}

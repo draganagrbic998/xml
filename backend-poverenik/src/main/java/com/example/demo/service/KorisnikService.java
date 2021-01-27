@@ -13,7 +13,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.xmldb.api.modules.XMLResource;
 
@@ -94,8 +93,8 @@ public class KorisnikService implements UserDetailsService {
 		korisnik.setAktivan(false);
 		korisnik.setLozinka(this.passwordEncoder.encode(korisnik.getLozinka()));
 		Document document = this.jaxbParser.marshalToDoc(korisnik);
-		Node mesto = (Element) document.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(0);
-		Node updatedMesto = document.importNode((Element) this.domParser.buildDocument("<mesto property=\"pred:mesto\" datatype=\"xs:string\">" + mesto.getTextContent() + "</mesto>")
+		Node mesto = document.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(0);
+		Node updatedMesto = document.importNode(this.domParser.buildDocument("<mesto property=\"pred:mesto\" datatype=\"xs:string\">" + mesto.getTextContent() + "</mesto>")
 				.getElementsByTagName("mesto").item(0), true);
 		document.getElementsByTagNameNS(Namespaces.OSNOVA, "Adresa").item(0).replaceChild(updatedMesto, mesto);
 		document.renameNode(updatedMesto, Namespaces.OSNOVA, "mesto");

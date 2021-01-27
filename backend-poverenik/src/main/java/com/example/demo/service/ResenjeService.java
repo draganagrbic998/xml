@@ -126,15 +126,31 @@ public class ResenjeService implements ServiceInterface {
 
 	@Override
 	public String regularSearch(String xml) {
+		Korisnik korisnik = this.korisnikService.currentUser();
+		String prefix;
+		if (korisnik.getUloga().equals(Constants.POVERENIK)) {
+			prefix = "/odgovor:Odgovor";
+		} 
+		else {
+			prefix = String.format("/odgovor:Odgovor[@href='%s']", Namespaces.KORISNIK + "/" + korisnik.getMejl());
+		}
 		Pretraga pretraga = (Pretraga) this.jaxbParser.unmarshalFromXml(xml, Pretraga.class);
-		String xpathExp = String.format("/resenje:Resenje%s", SearchUtil.pretragaToXpath(pretraga));
+		String xpathExp = String.format("%s%s", prefix, SearchUtil.pretragaToXpath(pretraga));
 		ResourceSet resources = this.resenjeExist.retrieve(xpathExp);
 		return this.resenjeMapper.map(resources);
 	}
 
 	@Override
 	public String advancedSearch(String xml) {
-		String xpathExp = String.format("/resenje:Resenje%s", this.resenjeRDF.search(xml));
+		Korisnik korisnik = this.korisnikService.currentUser();
+		String prefix;
+		if (korisnik.getUloga().equals(Constants.POVERENIK)) {
+			prefix = "/odgovor:Odgovor";
+		} 
+		else {
+			prefix = String.format("/odgovor:Odgovor[@href='%s']", Namespaces.KORISNIK + "/" + korisnik.getMejl());
+		}
+		String xpathExp = String.format("%s%s", prefix, this.resenjeRDF.search(xml));
 		ResourceSet resources = this.resenjeExist.retrieve(xpathExp);
 		return this.resenjeMapper.map(resources);
 	}

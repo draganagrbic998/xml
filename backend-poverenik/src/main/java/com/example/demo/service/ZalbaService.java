@@ -102,15 +102,31 @@ public class ZalbaService implements ServiceInterface {
 	
 	@Override
 	public String regularSearch(String xml) {
+		Korisnik korisnik = this.korisnikService.currentUser();
+		String prefix;
+		if (korisnik.getUloga().equals(Constants.POVERENIK)) {
+			prefix = "/odgovor:Odgovor";
+		} 
+		else {
+			prefix = String.format("/odgovor:Odgovor[@href='%s']", Namespaces.KORISNIK + "/" + korisnik.getMejl());
+		}
 		Pretraga pretraga = (Pretraga) this.jaxbParser.unmarshalFromXml(xml, Pretraga.class);
-		String xpathExp = String.format("/zalba:Zalba%s", SearchUtil.pretragaToXpath(pretraga));
+		String xpathExp = String.format("%s%s", prefix, SearchUtil.pretragaToXpath(pretraga));
 		ResourceSet resources = this.zalbaExist.retrieve(xpathExp);
 		return this.zalbaMapper.map(resources);
 	}
 
 	@Override
 	public String advancedSearch(String xml) {
-		String xpathExp = String.format("/zalba:Zalba%s", this.zalbaRDF.search(xml));
+		Korisnik korisnik = this.korisnikService.currentUser();
+		String prefix;
+		if (korisnik.getUloga().equals(Constants.POVERENIK)) {
+			prefix = "/odgovor:Odgovor";
+		} 
+		else {
+			prefix = String.format("/odgovor:Odgovor[@href='%s']", Namespaces.KORISNIK + "/" + korisnik.getMejl());
+		}
+		String xpathExp = String.format("%s%s", prefix, this.zalbaRDF.search(xml));
 		ResourceSet resources = this.zalbaExist.retrieve(xpathExp);
 		return this.zalbaMapper.map(resources);
 	}

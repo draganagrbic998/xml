@@ -131,15 +131,31 @@ public class OdlukaService implements ServiceInterface {
 	
 	@Override
 	public String regularSearch(String xml) {
+		Korisnik korisnik = this.korisnikService.currentUser();
+		String prefix;
+		if (korisnik.getUloga().equals(Constants.SLUZBENIK)) {
+			prefix = "/odluka:Odluka";
+		}
+		else {
+			prefix = String.format("/odluka:Odluka[@href='%s']", Namespaces.KORISNIK + "/" + korisnik.getMejl());
+		}
 		Pretraga pretraga = (Pretraga) this.jaxbParser.unmarshalFromXml(xml, Pretraga.class);
-		String xpathExp = String.format("/odluka:Odluka%s", SearchUtil.pretragaToXpath(pretraga));
+		String xpathExp = String.format("%s%s", prefix, SearchUtil.pretragaToXpath(pretraga));
 		ResourceSet resources = this.odlukaExist.retrieve(xpathExp);
 		return this.odlukaMapper.map(resources);
 	}
 
 	@Override
 	public String advancedSearch(String xml) {
-		String xpathExp = String.format("/odluka:Odluka%s", this.odlukaRDF.search(xml));
+		Korisnik korisnik = this.korisnikService.currentUser();
+		String prefix;
+		if (korisnik.getUloga().equals(Constants.SLUZBENIK)) {
+			prefix = "/odluka:Odluka";
+		}
+		else {
+			prefix = String.format("/odluka:Odluka[@href='%s']", Namespaces.KORISNIK + "/" + korisnik.getMejl());
+		}
+		String xpathExp = String.format("%s%s", prefix, this.odlukaRDF.search(xml));
 		ResourceSet resources = this.odlukaExist.retrieve(xpathExp);
 		return this.odlukaMapper.map(resources);
 	}

@@ -73,13 +73,13 @@ public class ZahtevController {
 	}
 	
 	@PostMapping(value="obicna_pretraga", consumes = MediaType.TEXT_XML_VALUE, produces = MediaType.TEXT_XML_VALUE)
-	@PreAuthorize("hasAuthority('sluzbenik')")
+	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<String> regularSearch(@RequestBody String xml) {		
 		return new ResponseEntity<>(this.zahtevService.regularSearch(xml), HttpStatus.OK);
 	}
 
 	@PostMapping(value="napredna_pretraga", consumes = MediaType.TEXT_XML_VALUE, produces = MediaType.TEXT_XML_VALUE)
-	@PreAuthorize("hasAuthority('sluzbenik')")
+	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<String> advancedSearch(@RequestBody String xml) {		
 		return new ResponseEntity<>(this.zahtevService.advancedSearch(xml), HttpStatus.OK);
 	}
