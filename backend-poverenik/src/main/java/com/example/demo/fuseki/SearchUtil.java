@@ -8,12 +8,10 @@ import com.example.demo.common.Namespaces;
 public class SearchUtil {
 
 	private static String predikat(String metapodatak) {
-		//jel ovo %n ok??????????
 		return String.format("?doc <%s> ?%s .%n", Namespaces.PREDIKAT + metapodatak, metapodatak);
 	}
 	
 	private static String filter(String metapodatak, String param) {
-		//jel ovo %n ok??????????
 		return String.format("CONTAINS(UCASE(str(?%s)), UCASE(\"%s\"))%n", metapodatak, param);
 	}
 	
