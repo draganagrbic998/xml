@@ -5,7 +5,6 @@ import { map } from 'rxjs/operators';
 import { OSNOVA, RESENJE } from 'src/app/constants/namespaces';
 import { ResenjeDTO } from 'src/app/models/resenjeDTO';
 import { environment } from 'src/environments/environment';
-import { dateToString } from '../utils';
 
 @Injectable({
   providedIn: 'root'

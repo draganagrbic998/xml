@@ -6,7 +6,6 @@ import { OSNOVA, RESENJE } from 'src/app/constants/namespaces';
 import { Resenje } from 'src/app/models/resenje';
 import { ResenjeDTO } from 'src/app/models/resenjeDTO';
 import { environment } from 'src/environments/environment';
-import { dateToString } from '../utils';
 import { XonomyService } from '../xonomy/xonomy.service';
 
 @Injectable({

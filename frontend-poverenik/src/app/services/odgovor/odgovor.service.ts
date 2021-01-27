@@ -6,7 +6,6 @@ import { ODGOVOR, OSNOVA } from 'src/app/constants/namespaces';
 import { OdgovorDTO } from 'src/app/models/odgovorDTO';
 import { Referenca } from 'src/app/models/referenca';
 import { environment } from 'src/environments/environment';
-import { dateToString } from '../utils';
 
 @Injectable({
   providedIn: 'root'
