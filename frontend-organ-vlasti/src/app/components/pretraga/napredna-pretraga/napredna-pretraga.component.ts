@@ -1,5 +1,7 @@
 import { AfterViewInit, Component, EventEmitter, Input, Output } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { SNACKBAR_CLOSE, SNACKBAR_PRETRAGA_ERROR_OPTIONS } from 'src/app/constants/snackbar';
 import { XonomyService } from 'src/app/services/xonomy/xonomy.service';
 
 declare const Xonomy: any;
@@ -13,7 +15,8 @@ export class NaprednaPretragaComponent implements AfterViewInit {
 
   constructor(
     private xonomyService: XonomyService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) { }
 
   @Input() fetchPending: boolean;
@@ -25,6 +28,17 @@ export class NaprednaPretragaComponent implements AfterViewInit {
   }
 
   pretrazi(): void{
+    const xml = Xonomy.harvest();
+    const parser = new DOMParser();
+    const pretraga = parser.parseFromString(xml, 'text/xml').getElementsByTagName('Pretraga').item(0);
+    if (pretraga.lastChild === null){
+      this.snackBar.open('Morate uneti bar jedan metapodatak!', SNACKBAR_CLOSE, SNACKBAR_PRETRAGA_ERROR_OPTIONS);
+      return;
+    }
+    if (pretraga.lastChild.nodeName === 'and' || pretraga.lastChild.nodeName === 'or'){
+      this.snackBar.open('Logička operacija se ne sme nalaziti na kraju!', SNACKBAR_CLOSE, SNACKBAR_PRETRAGA_ERROR_OPTIONS);
+      return;
+    }
     this.pretragaTriggered.emit(Xonomy.harvest());
   }
 

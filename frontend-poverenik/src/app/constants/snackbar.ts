@@ -17,3 +17,10 @@ export const SNACKBAR_ERROR_OPTIONS: MatSnackBarConfig = {
     panelClass: 'snackbar-error',
     duration: 2000
 };
+
+export const SNACKBAR_PRETRAGA_ERROR_OPTIONS: MatSnackBarConfig = {
+    horizontalPosition: 'left',
+    verticalPosition: 'top',
+    panelClass: 'snackbar-error',
+    duration: 2000
+};
