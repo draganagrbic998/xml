@@ -41,8 +41,9 @@ public class IzvestajRDF implements RDFInterface {
 		return this.fusekiManager.retrieve(IZVESTAJ_GRAPH, Namespaces.IZVESTAJ + "/" + documentId);
 	}
 	
+	@Override
 	public String search(String xml) {
-		return Utils.getReferences(this.fusekiManager.searchSparql(IZVESTAJ_GRAPH, xml));
+		return Utils.getReferences(this.fusekiManager.search(IZVESTAJ_GRAPH, xml));
 	}
 
 

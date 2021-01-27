@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "Pretraga")
 @XmlType(propOrder = { "fraze", "kljucneReci" })
-public class ObicnaPretraga {
+public class Pretraga {
 
 	@XmlElementWrapper(name = "Fraze")
 	@XmlElement(name = "fraza")
@@ -21,7 +21,7 @@ public class ObicnaPretraga {
 	@XmlElement(name = "kljucne_reci")
 	private String kljucneReci;
 
-	public ObicnaPretraga() {
+	public Pretraga() {
 		super();
 	}
 

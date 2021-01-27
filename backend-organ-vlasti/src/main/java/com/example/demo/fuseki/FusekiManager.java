@@ -11,8 +11,6 @@ import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.riot.RDFDataMgr;
-import org.apache.jena.riot.RDFFormat;
 import org.apache.jena.update.UpdateExecutionFactory;
 import org.apache.jena.update.UpdateFactory;
 import org.apache.jena.update.UpdateProcessor;
@@ -64,7 +62,6 @@ public class FusekiManager {
 			processor.execute();
 		}
 		else {
-			RDFDataMgr.write(System.out, reportResource.getModel(), RDFFormat.TURTLE);
 			throw new InvalidRDFException();
 		}
 	}
@@ -84,8 +81,7 @@ public class FusekiManager {
 	public ResultSet retrieve(String graphUri, String subject) {
 		String sparql = String.format(Utils.readFile(RETRIEVE_QUERY), this.authUtilities.getData() + graphUri, subject);
 		QueryExecution query = QueryExecutionFactory.sparqlService(this.authUtilities.getQuery(), sparql);
-		ResultSet results = query.execSelect();
-		return results;
+		return query.execSelect();
 	}
 		
 	public void dropAll() {
@@ -95,23 +91,22 @@ public class FusekiManager {
         processor.execute();
 	}
 
-	public List<String> referenceSparql(String graphName, String predikat, String objekat) {
-		return this.search(String.format(Utils.readFile(REFERENCE_QUERY), 
+	public List<String> references(String graphName, String predikat, String objekat) {
+		return this.executeSparql(String.format(Utils.readFile(REFERENCE_QUERY), 
 				this.authUtilities.getData() + graphName, 
 				predikat, objekat));
 	}
 	
-	public List<String> searchSparql(String graphName, String xml) {
+	public List<String> search(String graphName, String xml) {
 		Node pretraga = this.domParser.buildDocument(xml).getFirstChild();
 		//ako je pretraga prazna, ne radi
-		return this.search(String.format(Utils.readFile(SEARCH_QUERY), 
+		return this.executeSparql(String.format(Utils.readFile(SEARCH_QUERY), 
 				this.authUtilities.getData() + graphName, 
 				SearchUtil.predikatPart(pretraga),
 				SearchUtil.filterPart(pretraga)));
 	}
 	
-	private List<String> search(String sparql) {
-		System.out.println(sparql);
+	private List<String> executeSparql(String sparql) {
 		List<String> ids = new ArrayList<>();
 		QueryExecution query = QueryExecutionFactory.sparqlService(this.authUtilities.getQuery(), sparql);
 		ResultSet results = query.execSelect();

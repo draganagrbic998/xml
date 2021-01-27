@@ -39,12 +39,7 @@ public class OdgovorExist implements ExistInterface {
 	
 	@Override
 	public Document load(String documentId) {
-		try {
-			return this.existManager.load(ODGOVOR_COLLECTION, documentId);
-		}
-		catch(Exception e) {
-			return null;
-		}
+		return this.existManager.load(ODGOVOR_COLLECTION, documentId);
 	}
 
 	@Override

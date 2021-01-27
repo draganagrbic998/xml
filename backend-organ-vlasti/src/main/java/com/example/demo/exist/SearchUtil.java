@@ -1,10 +1,10 @@
 package com.example.demo.exist;
 
-import com.example.demo.model.ObicnaPretraga;
+import com.example.demo.model.Pretraga;
 
 public class SearchUtil {
 
-	public static String pretragaXpath(ObicnaPretraga pretraga) {
+	public static String pretragaToXpath(Pretraga pretraga) {
 		String xpathExp = "";
 		//lowercase???
 		for (String fraza: pretraga.getFraze()) {

@@ -62,7 +62,7 @@ public class EmailService {
 		            	helper.addAttachment(file.getPath(), resource);
 	            	}
 	            	catch(Exception e) {
-	            		return;
+	            		;
 	            	}	
 	            }
 	            if (document.getElementsByTagName("html").getLength() > 0) {
@@ -76,8 +76,7 @@ public class EmailService {
 		            	helper.addAttachment(file.getPath(), resource);
 	            	}
 	            	catch(Exception e) {
-	            		e.printStackTrace();
-	            		return;
+	            		;
 	            	}	
 	            }
 	            

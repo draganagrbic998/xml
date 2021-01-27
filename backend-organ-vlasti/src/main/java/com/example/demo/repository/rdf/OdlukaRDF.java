@@ -43,16 +43,17 @@ public class OdlukaRDF implements RDFInterface {
 		return this.fusekiManager.retrieve(ODLUKA_GRAPH, Namespaces.ODLUKA + "/" + documentId);
 	}
 
+	@Override
+	public String search(String xml) {
+		return Utils.getReferences(this.fusekiManager.search(ODLUKA_GRAPH, xml));
+	}
+
 	public List<String> zalbe(String documentId) {
-		return this.fusekiManager.referenceSparql(ZalbaRDF.ZALBA_GRAPH, Namespaces.PREDIKAT + "odluka", Namespaces.ODLUKA + "/" + documentId);
+		return this.fusekiManager.references(ZalbaRDF.ZALBA_GRAPH, Namespaces.PREDIKAT + "odluka", Namespaces.ODLUKA + "/" + documentId);
 	}
 
 	public List<String> resenja(String documentId) {
-		return this.fusekiManager.referenceSparql(ResenjeRDF.RESENJE_GRAPH, Namespaces.PREDIKAT + "odluka", Namespaces.ODLUKA + "/" + documentId);
+		return this.fusekiManager.references(ResenjeRDF.RESENJE_GRAPH, Namespaces.PREDIKAT + "odluka", Namespaces.ODLUKA + "/" + documentId);
 	}
 	
-	public String search(String xml) {
-		return Utils.getReferences(this.fusekiManager.searchSparql(ODLUKA_GRAPH, xml));
-	}
-
 }

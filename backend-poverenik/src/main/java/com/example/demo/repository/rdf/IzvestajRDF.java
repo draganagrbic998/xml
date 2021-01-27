@@ -15,7 +15,7 @@ public class IzvestajRDF implements RDFInterface {
 
 	@Autowired
 	private FusekiManager fusekiManager;
-	
+
 	public static final String IZVESTAJ_GRAPH = "/izvestaji";
 	public static final String IZVESTAJ_SHAPE = Constants.SHAPE_FOLDER + "izvestaj.ttl";
 	public static final String IZVESTAJ_AND_SEARCH = Constants.SPARQL_FOLDER + "izvestaj_and.rq";
@@ -25,7 +25,7 @@ public class IzvestajRDF implements RDFInterface {
 	public void add(Document document) {
 		this.fusekiManager.add(IZVESTAJ_GRAPH, document, IZVESTAJ_SHAPE);
 	}
-	
+
 	@Override
 	public void update(String documentId, Document document) {
 		this.fusekiManager.update(IZVESTAJ_GRAPH, Namespaces.IZVESTAJ + "/" + documentId, document, IZVESTAJ_SHAPE);
@@ -35,14 +35,15 @@ public class IzvestajRDF implements RDFInterface {
 	public void delete(String documentId) {
 		this.fusekiManager.delete(IZVESTAJ_GRAPH, Namespaces.IZVESTAJ + "/" + documentId);
 	}
-	
+
 	@Override
 	public ResultSet retrieve(String documentId) {
 		return this.fusekiManager.retrieve(IZVESTAJ_GRAPH, Namespaces.IZVESTAJ + "/" + documentId);
 	}
 	
+	@Override
 	public String search(String xml) {
-		return Utils.getReferences(this.fusekiManager.searchSparql(IZVESTAJ_GRAPH, xml));
+		return Utils.getReferences(this.fusekiManager.search(IZVESTAJ_GRAPH, xml));
 	}
 
 

@@ -32,25 +32,25 @@ public class ResenjeTransformer implements TransformerInterface {
 	public String html(String documentId) {
 		return this.xslTransformer.html(this.resenjeExist.load(documentId), XSL_PATH);
 	}
-	
+		
 	@Override
 	public Resource pdf(String documentId) {
 		return this.xslTransformer.pdf(this.resenjeExist.load(documentId), XSL_FO_PATH, GEN_PATH);
 	}
-	
+
 	@Override
 	public byte[] byteHtml(String documentId) {
 		return this.xslTransformer.byteHtml(this.resenjeExist.load(documentId), XSL_PATH);
 	}
-	
+
 	@Override
 	public byte[] bytePdf(String documentId) {
 		return this.xslTransformer.bytePdf(this.resenjeExist.load(documentId), XSL_FO_PATH);
 	}
-	
+
 	@Override
 	public Resource metadata(String documentId, MetadataType type) {
 		return this.xslTransformer.metadata(documentId, this.resenjeRDF.retrieve(documentId), type, GEN_PATH);
 	}
-
+	
 }

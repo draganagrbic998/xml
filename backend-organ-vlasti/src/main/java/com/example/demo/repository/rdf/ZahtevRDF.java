@@ -42,21 +42,22 @@ public class ZahtevRDF implements RDFInterface {
 	public ResultSet retrieve(String documentId) {
 		return this.fusekiManager.retrieve(ZAHTEV_GRAPH, Namespaces.ZAHTEV + "/" + documentId);
 	}
-		
+	
+	@Override
+	public String search(String xml) {
+		return Utils.getReferences(this.fusekiManager.search(ZAHTEV_GRAPH, xml));
+	}
+
 	public List<String> odluke(String documentId) {
-		return this.fusekiManager.referenceSparql(OdlukaRDF.ODLUKA_GRAPH, Namespaces.PREDIKAT + "zahtev", Namespaces.ZAHTEV + "/" + documentId);
+		return this.fusekiManager.references(OdlukaRDF.ODLUKA_GRAPH, Namespaces.PREDIKAT + "zahtev", Namespaces.ZAHTEV + "/" + documentId);
 	}
 	
 	public List<String> zalbe(String documentId) {
-		return this.fusekiManager.referenceSparql(ZalbaRDF.ZALBA_GRAPH, Namespaces.PREDIKAT + "zahtev", Namespaces.ZAHTEV + "/" + documentId);
+		return this.fusekiManager.references(ZalbaRDF.ZALBA_GRAPH, Namespaces.PREDIKAT + "zahtev", Namespaces.ZAHTEV + "/" + documentId);
 	}
 	
 	public List<String> resenja(String documentId) {
-		return this.fusekiManager.referenceSparql(ResenjeRDF.RESENJE_GRAPH, Namespaces.PREDIKAT + "zahtev", Namespaces.ZAHTEV + "/" + documentId);
+		return this.fusekiManager.references(ResenjeRDF.RESENJE_GRAPH, Namespaces.PREDIKAT + "zahtev", Namespaces.ZAHTEV + "/" + documentId);
 	}
 	
-	public String search(String xml) {
-		return Utils.getReferences(this.fusekiManager.searchSparql(ZAHTEV_GRAPH, xml));
-	}
-
 }

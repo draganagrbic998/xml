@@ -37,18 +37,19 @@ public class OdgovorRDF implements RDFInterface {
 	public void delete(String documentId) {
 		this.fusekiManager.delete(ODGOVOR_GRAPH, Namespaces.ODGOVOR + "/" + documentId);
 	}
-	
+
 	@Override
 	public ResultSet retrieve(String documentId) {
 		return this.fusekiManager.retrieve(ODGOVOR_GRAPH, Namespaces.ODGOVOR + "/" + documentId);
 	}
 	
-	public List<String> resenja(String documentId) {
-		return this.fusekiManager.referenceSparql(ResenjeRDF.RESENJE_GRAPH, Namespaces.PREDIKAT + "odgovor", Namespaces.ODGOVOR + "/" + documentId);
-	}
-	
+	@Override
 	public String search(String xml) {
-		return Utils.getReferences(this.fusekiManager.searchSparql(ODGOVOR_GRAPH, xml));
+		return Utils.getReferences(this.fusekiManager.search(ODGOVOR_GRAPH, xml));
+	}
+
+	public List<String> resenja(String documentId) {
+		return this.fusekiManager.references(ResenjeRDF.RESENJE_GRAPH, Namespaces.PREDIKAT + "odgovor", Namespaces.ODGOVOR + "/" + documentId);
 	}
 
 }

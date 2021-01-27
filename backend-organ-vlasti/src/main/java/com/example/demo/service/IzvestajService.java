@@ -9,7 +9,7 @@ import com.example.demo.exception.MyException;
 import com.example.demo.exception.ResourceTakenException;
 import com.example.demo.exist.SearchUtil;
 import com.example.demo.mapper.IzvestajMapper;
-import com.example.demo.model.ObicnaPretraga;
+import com.example.demo.model.Pretraga;
 import com.example.demo.parser.JAXBParser;
 import com.example.demo.repository.rdf.IzvestajRDF;
 import com.example.demo.repository.xml.IzvestajExist;
@@ -79,8 +79,8 @@ public class IzvestajService implements ServiceInterface {
 
 	@Override
 	public String regularSearch(String xml) {
-		ObicnaPretraga pretraga = (ObicnaPretraga) this.jaxbParser.unmarshalFromXml(xml, ObicnaPretraga.class);
-		String xpathExp = String.format("/izvestaj:Izvestaj%s", SearchUtil.pretragaXpath(pretraga));
+		Pretraga pretraga = (Pretraga) this.jaxbParser.unmarshalFromXml(xml, Pretraga.class);
+		String xpathExp = String.format("/izvestaj:Izvestaj%s", SearchUtil.pretragaToXpath(pretraga));
 		ResourceSet resources = this.izvestajExist.retrieve(xpathExp);
 		return this.izvestajMapper.map(resources);
 	}

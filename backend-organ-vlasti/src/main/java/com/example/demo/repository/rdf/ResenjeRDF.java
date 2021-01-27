@@ -41,8 +41,9 @@ public class ResenjeRDF implements RDFInterface {
 		return this.fusekiManager.retrieve(RESENJE_GRAPH, Namespaces.RESENJE + "/" + documentId);
 	}
 	
+	@Override	
 	public String search(String xml) {
-		return Utils.getReferences(this.fusekiManager.searchSparql(RESENJE_GRAPH, xml));
+		return Utils.getReferences(this.fusekiManager.search(RESENJE_GRAPH, xml));
 	}
 
 }

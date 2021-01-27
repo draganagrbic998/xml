@@ -14,7 +14,7 @@ import com.example.demo.enums.StatusZalbe;
 import com.example.demo.exist.SearchUtil;
 import com.example.demo.mapper.OdgovorMapper;
 import com.example.demo.model.Korisnik;
-import com.example.demo.model.ObicnaPretraga;
+import com.example.demo.model.Pretraga;
 import com.example.demo.parser.JAXBParser;
 import com.example.demo.repository.rdf.OdgovorRDF;
 import com.example.demo.repository.xml.OdgovorExist;
@@ -89,8 +89,8 @@ public class OdgovorService implements ServiceInterface {
 
 	@Override
 	public String regularSearch(String xml) {
-		ObicnaPretraga pretraga = (ObicnaPretraga) this.jaxbParser.unmarshalFromXml(xml, ObicnaPretraga.class);
-		String xpathExp = String.format("/odgovor:Odgovor%s", SearchUtil.pretragaXpath(pretraga));
+		Pretraga pretraga = (Pretraga) this.jaxbParser.unmarshalFromXml(xml, Pretraga.class);
+		String xpathExp = String.format("/odgovor:Odgovor%s", SearchUtil.pretragaToXpath(pretraga));
 		ResourceSet resources = this.odgovorExist.retrieve(xpathExp);
 		return this.odgovorMapper.map(resources);
 	}

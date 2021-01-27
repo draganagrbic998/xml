@@ -101,14 +101,8 @@ public class ZalbaController {
 	@PostMapping(value = "/obustavi/{broj}")
 	@PreAuthorize("hasAuthority('poverenik')")
 	public ResponseEntity<Void> obustavi(@PathVariable String broj) {
-		try {
-			this.zalbaService.obustavi(broj);
-			return new ResponseEntity<>(HttpStatus.OK);
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-			return null;
-		}
+		this.zalbaService.obustavi(broj);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 }

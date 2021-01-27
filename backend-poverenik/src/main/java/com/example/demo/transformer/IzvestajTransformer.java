@@ -20,7 +20,7 @@ public class IzvestajTransformer implements TransformerInterface {
 	
 	@Autowired
 	private IzvestajRDF izvestajRDF;
-	
+
 	@Autowired
 	private XSLTransformer xslTransformer;
 
@@ -32,7 +32,7 @@ public class IzvestajTransformer implements TransformerInterface {
 	public String html(String documentId) {
 		return this.xslTransformer.html(this.izvestajExist.load(documentId), XSL_PATH);
 	}
-	
+		
 	@Override
 	public Resource pdf(String documentId) {
 		return this.xslTransformer.pdf(this.izvestajExist.load(documentId), XSL_FO_PATH, GEN_PATH);
@@ -47,10 +47,10 @@ public class IzvestajTransformer implements TransformerInterface {
 	public byte[] bytePdf(String documentId) {
 		return this.xslTransformer.bytePdf(this.izvestajExist.load(documentId), XSL_FO_PATH);
 	}
-	
+
 	@Override
 	public Resource metadata(String documentId, MetadataType type) {
 		return this.xslTransformer.metadata(documentId, this.izvestajRDF.retrieve(documentId), type, GEN_PATH);
 	}
-	
+		
 }

@@ -46,5 +46,5 @@ public class ZalbaExist implements ExistInterface {
 	public String nextDocumentId() {
 		return this.existManager.nextDocumentId(ZALBA_COLLECTION);
 	}
-		
+	
 }

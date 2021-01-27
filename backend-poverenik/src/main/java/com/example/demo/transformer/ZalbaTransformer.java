@@ -41,7 +41,7 @@ public class ZalbaTransformer implements TransformerInterface {
 		}
 		return this.xslTransformer.html(document, XSL_PATH_CUTANJE);
 	}
-	
+		
 	@Override
 	public Resource pdf(String documentId) {
 		Document document = this.zalbaExist.load(documentId);

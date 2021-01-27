@@ -43,16 +43,17 @@ public class ZalbaRDF implements RDFInterface {
 		return this.fusekiManager.retrieve(ZALBA_GRAPH, Namespaces.ZALBA + "/" + documentId);
 	}
 	
+	@Override
+	public String search(String xml) {
+		return Utils.getReferences(this.fusekiManager.search(ZALBA_GRAPH, xml));
+	}
+	
 	public List<String> odgovori(String documentId) {
-		return this.fusekiManager.referenceSparql(OdgovorRDF.ODGOVOR_GRAPH, Namespaces.PREDIKAT + "zalba", Namespaces.ZALBA + "/" + documentId);
+		return this.fusekiManager.references(OdgovorRDF.ODGOVOR_GRAPH, Namespaces.PREDIKAT + "zalba", Namespaces.ZALBA + "/" + documentId);
 	}
 	
 	public List<String> resenja(String documentId) {
-		return this.fusekiManager.referenceSparql(ResenjeRDF.RESENJE_GRAPH, Namespaces.PREDIKAT + "zalba", Namespaces.ZALBA + "/" + documentId);
-	}
-	
-	public String search(String xml) {
-		return Utils.getReferences(this.fusekiManager.searchSparql(ZALBA_GRAPH, xml));
+		return this.fusekiManager.references(ResenjeRDF.RESENJE_GRAPH, Namespaces.PREDIKAT + "zalba", Namespaces.ZALBA + "/" + documentId);
 	}
 
 }

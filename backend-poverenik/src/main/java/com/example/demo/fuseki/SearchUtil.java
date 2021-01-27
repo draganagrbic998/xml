@@ -7,15 +7,17 @@ import com.example.demo.common.Namespaces;
 
 public class SearchUtil {
 
-	public static String predikat(String metapodatak) {
-		return String.format("?doc <%s> ?%s .\n", Namespaces.PREDIKAT + metapodatak, metapodatak);
+	private static String predikat(String metapodatak) {
+		//jel ovo %n ok??????????
+		return String.format("?doc <%s> ?%s .%n", Namespaces.PREDIKAT + metapodatak, metapodatak);
 	}
 	
-	public static String filter(String metapodatak, String param) {
-		return String.format("CONTAINS(UCASE(str(?%s)), UCASE(\"%s\"))\n", metapodatak, param);
+	private static String filter(String metapodatak, String param) {
+		//jel ovo %n ok??????????
+		return String.format("CONTAINS(UCASE(str(?%s)), UCASE(\"%s\"))%n", metapodatak, param);
 	}
 	
-	public static String logOp(String op) {
+	private static String logOp(String op) {
 		if (op.equals("and")) {
 			return "&&";
 		}
