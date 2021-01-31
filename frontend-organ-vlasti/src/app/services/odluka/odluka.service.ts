@@ -85,26 +85,28 @@ export class OdlukaService {
 
   }
 
-  saveObavestenje(brojZahteva: number, obavestenje: Obavestenje): Observable<null>{
+  addObavestenje(brojZahteva: number, obavestenje: Obavestenje): Observable<null>{
     obavestenje.detalji = this.xonomyService.removeXmlSpace(obavestenje.detalji);
     const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
     return this.http.post<null>(this.API_ODLUKE, this.obavestenjeToXml(brojZahteva, obavestenje), options);
   }
 
-  saveOdbijanje(brojZahteva: number, odbijanje: Odbijanje): Observable<null>{
+  addOdbijanje(brojZahteva: number, odbijanje: Odbijanje): Observable<null>{
     odbijanje.detalji = this.xonomyService.removeXmlSpace(odbijanje.detalji);
     const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
     return this.http.post<null>(this.API_ODLUKE, this.odbijanjeToXml(brojZahteva, odbijanje), options);
   }
 
-  list(): Observable<OdlukaDTO[]>{
+  findAll(): Observable<OdlukaDTO[]>{
     return this.http.get<string>(this.API_ODLUKE, {responseType: 'text' as 'json'}).pipe(
       map((xml: string) => this.xmlToOdluke(xml))
     );
   }
 
-  view(broj: number): Observable<string>{
-    return this.http.get<string>(`${this.API_ODLUKE}/${broj}`, {responseType: 'text' as 'json'});
+  find(broj: number, format: string): Observable<string>{
+    let headers = new HttpHeaders();
+    headers = headers.set('Accept', format === 'text' ? 'text/html' : 'application/pdf');
+    return this.http.get<string>(`${this.API_ODLUKE}/${broj}`, {responseType: format as 'json', headers});
   }
 
   obicnaPretraga(pretraga: string): Observable<OdlukaDTO[]>{

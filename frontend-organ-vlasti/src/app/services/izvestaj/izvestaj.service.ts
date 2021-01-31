@@ -33,19 +33,21 @@ export class IzvestajService {
     return izvestajiDTO;
   }
 
-  save(godina: string): Observable<null>{
+  add(godina: string): Observable<null>{
     const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
     return this.http.post<null>(`${this.API_IZVESTAJI}/${godina}`, options);
   }
 
-  list(): Observable<IzvestajDTO[]>{
+  findAll(): Observable<IzvestajDTO[]>{
     return this.http.get<string>(this.API_IZVESTAJI, {responseType: 'text' as 'json'}).pipe(
       map((xml: string) => this.xmlToIzvestaji(xml))
     );
   }
 
-  view(broj: number): Observable<string>{
-    return this.http.get<string>(`${this.API_IZVESTAJI}/${broj}`, {responseType: 'text' as 'json'});
+  find(broj: number, format: string): Observable<string>{
+    let headers = new HttpHeaders();
+    headers = headers.set('Accept', format === 'text' ? 'text/html' : 'application/pdf');
+    return this.http.get<string>(`${this.API_IZVESTAJI}/${broj}`, {responseType: format as 'json', headers});
   }
 
   obicnaPretraga(pretraga: string): Observable<IzvestajDTO[]>{

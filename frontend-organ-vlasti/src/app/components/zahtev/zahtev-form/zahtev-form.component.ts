@@ -56,7 +56,7 @@ export class ZahtevFormComponent implements AfterViewInit {
     const zahtev: Zahtev = this.zahtevForm.value;
     zahtev.detalji = Xonomy.harvest();
     this.savePending = true;
-    this.zahtevService.save(zahtev).subscribe(
+    this.zahtevService.add(zahtev).subscribe(
       () => {
         this.savePending = false;
         this.snackBar.open('Zahtev poslat!', SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);

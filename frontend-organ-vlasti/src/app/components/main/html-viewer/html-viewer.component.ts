@@ -52,7 +52,7 @@ export class HtmlViewerComponent implements OnInit {
     else{
       service = this.izvestajService;
     }
-    service.view(this.route.snapshot.params.broj).subscribe(
+    service.find(this.route.snapshot.params.broj, 'text').subscribe(
       (html: string) => {
         this.html = html;
         this.fetchPending = false;

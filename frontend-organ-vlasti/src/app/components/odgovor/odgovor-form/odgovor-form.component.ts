@@ -40,7 +40,7 @@ export class OdgovorFormComponent implements AfterViewInit {
     }
     const odgovor: Odgovor = {detalji: Xonomy.harvest()};
     this.savePending = true;
-    this.odgovorService.save(this.route.snapshot.params.brojZalbe, odgovor).subscribe(
+    this.odgovorService.add(this.route.snapshot.params.brojZalbe, odgovor).subscribe(
       () => {
         this.savePending = false;
         this.snackBar.open('Odgovor poslat!', SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);

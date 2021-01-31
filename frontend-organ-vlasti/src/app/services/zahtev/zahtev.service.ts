@@ -73,20 +73,22 @@ export class ZahtevService {
 
   }
 
-  save(zahtev: Zahtev): Observable<null>{
+  add(zahtev: Zahtev): Observable<null>{
     zahtev.detalji = this.xonomyService.removeXmlSpace(zahtev.detalji);
     const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
     return this.http.post<null>(this.API_ZAHTEVI, this.zahtevToXml(zahtev), options);
   }
 
-  list(): Observable<ZahtevDTO[]>{
+  findAll(): Observable<ZahtevDTO[]>{
     return this.http.get<string>(this.API_ZAHTEVI, {responseType: 'text' as 'json'}).pipe(
       map((xml: string) => this.xmlToZahtevi(xml))
     );
   }
 
-  view(broj: number): Observable<string>{
-    return this.http.get<string>(`${this.API_ZAHTEVI}/${broj}`, {responseType: 'text' as 'json'});
+  find(broj: number, format: string): Observable<string>{
+    let headers = new HttpHeaders();
+    headers = headers.set('Accept', format === 'text' ? 'text/html' : 'application/pdf');
+    return this.http.get<string>(`${this.API_ZAHTEVI}/${broj}`, {responseType: format as 'json', headers});
   }
 
   obicnaPretraga(pretraga: string): Observable<ZahtevDTO[]>{

@@ -40,7 +40,7 @@ export class OdbijanjeFormComponent implements AfterViewInit {
     }
     const odbijanje: Odbijanje = {detalji: Xonomy.harvest()};
     this.savePending = true;
-    this.odlukaService.saveOdbijanje(this.route.snapshot.params.brojZahteva, odbijanje).subscribe(
+    this.odlukaService.addOdbijanje(this.route.snapshot.params.brojZahteva, odbijanje).subscribe(
       () => {
         this.savePending = false;
         this.snackBar.open('Zahtev odbijen!', SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);

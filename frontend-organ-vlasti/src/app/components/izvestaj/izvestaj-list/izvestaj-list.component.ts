@@ -59,7 +59,7 @@ export class IzvestajListComponent implements AfterViewInit {
     }
     const godina: string = this.izvestajForm.controls.godina.value;
     this.savePending = true;
-    this.izvestajService.save(godina).subscribe(
+    this.izvestajService.add(godina).subscribe(
       () => {
         this.savePending = false;
         this.snackBar.open('Izveštaj kreiran i podnet!', SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);
@@ -74,7 +74,7 @@ export class IzvestajListComponent implements AfterViewInit {
 
   refreshData(): void {
     this.izvestaji.paginator = this.paginator;
-    this.izvestajService.list().subscribe(
+    this.izvestajService.findAll().subscribe(
       (izvestaji: IzvestajDTO[]) => {
         this.izvestaji = new MatTableDataSource<IzvestajDTO>(izvestaji);
         this.fetchPending = false;

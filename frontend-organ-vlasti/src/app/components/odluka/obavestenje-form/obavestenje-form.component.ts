@@ -52,7 +52,7 @@ export class ObavestenjeFormComponent implements AfterViewInit {
     const obavestenje: Obavestenje = this.obavestenjeForm.value;
     obavestenje.detalji = Xonomy.harvest();
     this.savePending = true;
-    this.odlukaService.saveObavestenje(this.route.snapshot.params.brojZahteva, obavestenje).subscribe(
+    this.odlukaService.addObavestenje(this.route.snapshot.params.brojZahteva, obavestenje).subscribe(
       () => {
         this.savePending = false;
         this.snackBar.open('Obaveštenje poslato!', SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);

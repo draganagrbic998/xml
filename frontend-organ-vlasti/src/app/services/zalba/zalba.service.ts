@@ -47,14 +47,16 @@ export class ZalbaService {
     return zalbeDTO;
   }
 
-  list(): Observable<ZalbaDTO[]>{
+  findAll(): Observable<ZalbaDTO[]>{
     return this.http.get<string>(this.API_ZALBE, {responseType: 'text' as 'json'}).pipe(
       map((xml: string) => this.xmlToZalbe(xml))
     );
   }
 
-  view(broj: string): Observable<string>{
-    return this.http.get<string>(`${this.API_ZALBE}/${broj}`, {responseType: 'text' as 'json'});
+  find(broj: string, format: string): Observable<string>{
+    let headers = new HttpHeaders();
+    headers = headers.set('Accept', format === 'text' ? 'text/html' : 'application/pdf');
+    return this.http.get<string>(`${this.API_ZALBE}/${broj}`, {responseType: format as 'json', headers});
   }
 
   obicnaPretraga(pretraga: string): Observable<ZalbaDTO[]>{

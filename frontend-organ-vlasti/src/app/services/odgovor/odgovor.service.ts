@@ -62,20 +62,22 @@ export class OdgovorService {
 
   }
 
-  save(broj: number, odgovor: Odgovor): Observable<null>{
+  add(broj: number, odgovor: Odgovor): Observable<null>{
     odgovor.detalji = this.xonomyService.removeXmlSpace(odgovor.detalji);
     const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
     return this.http.post<null>(this.API_ODGOVORI, this.odgovorToXml(broj, odgovor), options);
   }
 
-  list(): Observable<OdgovorDTO[]>{
+  findAll(): Observable<OdgovorDTO[]>{
     return this.http.get<string>(this.API_ODGOVORI, {responseType: 'text' as 'json'}).pipe(
       map((xml: string) => this.xmlToOdgovori(xml))
     );
   }
 
-  view(broj: number): Observable<string>{
-    return this.http.get<string>(`${this.API_ODGOVORI}/${broj}`, {responseType: 'text' as 'json'});
+  find(broj: number, format: string): Observable<string>{
+    let headers = new HttpHeaders();
+    headers = headers.set('Accept', format === 'text' ? 'text/html' : 'application/pdf');
+    return this.http.get<string>(`${this.API_ODGOVORI}/${broj}`, {responseType: format as 'json', headers});
   }
 
   obicnaPretraga(pretraga: string): Observable<OdgovorDTO[]>{
