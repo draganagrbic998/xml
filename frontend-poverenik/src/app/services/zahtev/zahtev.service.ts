@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -14,8 +14,10 @@ export class ZahtevService {
 
   private readonly API_ZAHTEVI = `${environment.baseUrl}/${environment.apiZahtevi}`;
 
-  view(broj: number): Observable<string>{
-    return this.http.get<string>(`${this.API_ZAHTEVI}/${broj}`, {responseType: 'text' as 'json'});
+  find(broj: number, format: string): Observable<string>{
+    let headers = new HttpHeaders();
+    headers = headers.set('Accept', format === 'text' ? 'text/html' : 'application/pdf');
+    return this.http.get<string>(`${this.API_ZAHTEVI}/${broj}`, {responseType: format as 'json', headers});
   }
 
 }

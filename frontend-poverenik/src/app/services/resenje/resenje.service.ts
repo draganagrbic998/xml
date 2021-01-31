@@ -49,20 +49,22 @@ export class ResenjeService {
 
   }
 
-  save(brojZalbe: number, resenje: Resenje): Observable<null>{
+  add(brojZalbe: number, resenje: Resenje): Observable<null>{
     resenje.odluka = this.xonomyService.removeXmlSpace(resenje.odluka);
     const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
     return this.http.post<null>(this.API_RESENJA, this.resenjeToXml(brojZalbe, resenje), options);
   }
 
-  list(): Observable<ResenjeDTO[]>{
+  findAll(): Observable<ResenjeDTO[]>{
     return this.http.get<string>(this.API_RESENJA, {responseType: 'text' as 'json'}).pipe(
       map((xml: string) => this.xmlToResenja(xml))
     );
   }
 
-  view(broj: number): Observable<string>{
-    return this.http.get<string>(`${this.API_RESENJA}/${broj}`, {responseType: 'text' as 'json'});
+  find(broj: number, format: string): Observable<string>{
+    let headers = new HttpHeaders();
+    headers = headers.set('Accept', format === 'text' ? 'text/html' : 'application/pdf');
+    return this.http.get<string>(`${this.API_RESENJA}/${broj}`, {responseType: format as 'json', headers});
   }
 
   obicnaPretraga(pretraga: string): Observable<ResenjeDTO[]>{

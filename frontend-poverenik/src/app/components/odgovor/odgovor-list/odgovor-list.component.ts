@@ -68,7 +68,7 @@ export class OdgovorListComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.odgovori.paginator = this.paginator;
-    this.odgovorService.list().subscribe(
+    this.odgovorService.findAll().subscribe(
       (odgovori: OdgovorDTO[]) => {
         this.odgovori = new MatTableDataSource<OdgovorDTO>(odgovori);
         this.fetchPending = false;

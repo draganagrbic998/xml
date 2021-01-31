@@ -46,7 +46,7 @@ export class ZalbaOdlukaFormComponent implements AfterViewInit {
     const zalba: ZalbaOdluka = this.zalbaForm.value;
     zalba.detalji = Xonomy.harvest();
     this.savePending = true;
-    this.zalbaService.saveZalbaOdluka(zalba).subscribe(
+    this.zalbaService.addZalbaOdluka(zalba).subscribe(
       () => {
         this.savePending = false;
         this.snackBar.open('Zalba poslata!', SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);

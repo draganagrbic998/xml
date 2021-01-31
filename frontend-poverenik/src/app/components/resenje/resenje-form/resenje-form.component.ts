@@ -57,7 +57,7 @@ export class ResenjeFormComponent implements AfterViewInit {
     const resenje: Resenje = this.resenjeForm.value;
     resenje.odluka = Xonomy.harvest();
     this.savePending = true;
-    this.resenjeService.save(this.route.snapshot.params.brojZalbe, resenje).subscribe(
+    this.resenjeService.add(this.route.snapshot.params.brojZalbe, resenje).subscribe(
       () => {
         this.savePending = false;
         this.snackBar.open('Rešenje poslato!', SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);

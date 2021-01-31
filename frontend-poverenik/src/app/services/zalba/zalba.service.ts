@@ -93,26 +93,28 @@ export class ZalbaService {
   `;
   }
 
-  saveZalbaCutanje(zalba: ZalbaCutanje): Observable<null>{
+  addZalbaCutanje(zalba: ZalbaCutanje): Observable<null>{
     zalba.detalji = this.xonomyService.removeXmlSpace(zalba.detalji);
     const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
     return this.http.post<null>(this.API_ZALBE, this.zalbaCutanjeToXml(zalba), options);
   }
 
-  saveZalbaOdluka(zalba: ZalbaOdluka): Observable<null>{
+  addZalbaOdluka(zalba: ZalbaOdluka): Observable<null>{
     zalba.detalji = this.xonomyService.removeXmlSpace(zalba.detalji);
     const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml') };
     return this.http.post<null>(this.API_ZALBE, this.zalbaOdlukaToXml(zalba), options);
   }
 
-  list(): Observable<ZalbaDTO[]>{
+  findAll(): Observable<ZalbaDTO[]>{
     return this.http.get<string>(this.API_ZALBE, {responseType: 'text' as 'json'}).pipe(
       map((xml: string) => this.xmlToZalbe(xml))
     );
   }
 
-  view(broj: number): Observable<string>{
-    return this.http.get<string>(`${this.API_ZALBE}/${broj}`, {responseType: 'text' as 'json'});
+  find(broj: number, format: string): Observable<string>{
+    let headers = new HttpHeaders();
+    headers = headers.set('Accept', format === 'text' ? 'text/html' : 'application/pdf');
+    return this.http.get<string>(`${this.API_ZALBE}/${broj}`, {responseType: format as 'json', headers});
   }
 
   obicnaPretraga(pretraga: string): Observable<ZalbaDTO[]>{

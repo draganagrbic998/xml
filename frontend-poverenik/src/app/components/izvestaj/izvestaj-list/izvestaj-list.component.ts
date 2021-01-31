@@ -71,7 +71,7 @@ export class IzvestajListComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.izvestaji.paginator = this.paginator;
-    this.izvestajService.list().subscribe(
+    this.izvestajService.findAll().subscribe(
       (izvestaji: IzvestajDTO[]) => {
         this.izvestaji = new MatTableDataSource<IzvestajDTO>(izvestaji);
         this.fetchPending = false;

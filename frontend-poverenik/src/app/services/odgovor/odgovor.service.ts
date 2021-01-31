@@ -46,14 +46,16 @@ export class OdgovorService {
     return odgovoriDTO;
   }
 
-  view(broj: number): Observable<string>{
-    return this.http.get<string>(`${this.API_ODGOVORI}/${broj}`, {responseType: 'text' as 'json'});
-  }
-
-  list(): Observable<OdgovorDTO[]>{
+  findAll(): Observable<OdgovorDTO[]>{
     return this.http.get<string>(this.API_ODGOVORI, {responseType: 'text' as 'json'}).pipe(
       map((xml: string) => this.xmlToOdgovori(xml))
     );
+  }
+
+  find(broj: number, format: string): Observable<string>{
+    let headers = new HttpHeaders();
+    headers = headers.set('Accept', format === 'text' ? 'text/html' : 'application/pdf');
+    return this.http.get<string>(`${this.API_ODGOVORI}/${broj}`, {responseType: format as 'json', headers});
   }
 
   obicnaPretraga(pretraga: string): Observable<OdgovorDTO[]>{

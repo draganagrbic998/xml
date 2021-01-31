@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -38,22 +39,26 @@ public class ZalbaController {
 	
 	@GetMapping(produces = MediaType.TEXT_XML_VALUE)
 	@PreAuthorize("isAuthenticated()")
-	public ResponseEntity<String> retrieve() {
+	public ResponseEntity<String> findAll() {
 		return new ResponseEntity<>(this.zalbaService.retrieve(), HttpStatus.OK);
 	}
 		
-	@GetMapping(value = "/{broj}", produces = "text/html; charset=utf-8")
+	@GetMapping(value = "/{broj}")
 	@PreAuthorize("isAuthenticated()")
-	public ResponseEntity<String> html(@PathVariable String broj) {
-		return new ResponseEntity<>(this.zalbaTransformer.html(broj), HttpStatus.OK);
-	}
-	
-	@GetMapping(value = "/{broj}/pdf", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-	public ResponseEntity<Resource> pdf(@PathVariable String broj) {
-		Resource resource = this.zalbaTransformer.pdf(broj);
-		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-				.body(resource);
+	public ResponseEntity<Object> find(@PathVariable String broj, @RequestHeader("Accept") String format) {
+		if (format.equals("text/html")) {
+			return ResponseEntity.ok()
+					.header(HttpHeaders.CONTENT_TYPE, "text/html; charset=utf-8")
+					.body(this.zalbaTransformer.html(broj));
+		}
+		else if (format.equals("application/pdf")) {
+			Resource resource = this.zalbaTransformer.pdf(broj);
+			return ResponseEntity.ok()
+					.header(HttpHeaders.CONTENT_TYPE, "application/pdf")
+					.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+					.body(resource);
+		}
+		return ResponseEntity.notFound().build();
 	}
 	
 	@GetMapping(value = "/{broj}/metadata_xml", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)

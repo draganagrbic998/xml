@@ -15,12 +15,12 @@ import { ZalbaService } from 'src/app/services/zalba/zalba.service';
 export class HtmlViewerComponent implements OnInit {
 
   constructor(
+    private zahtevService: ZahtevService,
+    private odlukaService: OdlukaService,
     private zalbaService: ZalbaService,
     private odgovorService: OdgovorService,
     private resenjeService: ResenjeService,
     private izvestajService: IzvestajService,
-    private zahtevService: ZahtevService,
-    private odlukaService: OdlukaService,
     private route: ActivatedRoute
   ) { }
 
@@ -32,9 +32,15 @@ export class HtmlViewerComponent implements OnInit {
   fetchPending =  true;
 
   ngOnInit(): void {
-    const dokument = this.route.snapshot.params.dokument;
+    const dokument: string = this.route.snapshot.params.dokument;
     let service;
-    if (dokument === 'zalbe'){
+    if (dokument === 'zahtevi'){
+      service = this.zahtevService;
+    }
+    else if (dokument === 'odluke'){
+      service = this.odlukaService;
+    }
+    else if (dokument === 'zalbe'){
       service = this.zalbaService;
     }
     else if (dokument === 'odgovori'){
@@ -43,16 +49,10 @@ export class HtmlViewerComponent implements OnInit {
     else if (dokument === 'resenja'){
       service = this.resenjeService;
     }
-    else if (dokument === 'izvestaji'){
+    else{
       service = this.izvestajService;
     }
-    else if (dokument === 'zahtevi'){
-      service = this.zahtevService;
-    }
-    else{
-      service = this.odlukaService;
-    }
-    service.view(this.route.snapshot.params.broj).subscribe(
+    service.find(this.route.snapshot.params.broj, 'text').subscribe(
       (html: string) => {
         this.html = html;
         this.fetchPending = false;
