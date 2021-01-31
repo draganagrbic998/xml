@@ -49,8 +49,8 @@ public class OdgovorTransformer implements TransformerInterface {
 	}
 
 	@Override
-	public Resource metadata(String documentId, MetadataType type) {
-		return this.xslTransformer.metadata(documentId, this.odgovorRDF.retrieve(documentId), type, GEN_PATH);
+	public String metadata(String documentId, MetadataType type) {
+		return this.xslTransformer.metadata(this.odgovorRDF.retrieve(documentId), type);
 	}
 		
 }

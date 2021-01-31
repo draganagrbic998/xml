@@ -5,7 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { OdgovorDTO } from 'src/app/models/odgovorDTO';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { OdgovorService } from 'src/app/services/odgovor/odgovor.service';
-import { environment } from 'src/environments/environment';
+import { saveMetadata } from 'src/app/services/utils';
 
 @Component({
   selector: 'app-odgovor-list',
@@ -27,17 +27,10 @@ export class OdgovorListComponent implements AfterViewInit {
   fetchPending = true;
   selectedOdgovor: OdgovorDTO;
 
-  convertDate(date: string): string{
-    const array: string[] = date.split('-');
-    return `${array[2]}.${array[1]}.${array[0]}.`;
-  }
-
-  xmlMetadata(broj: string): string{
-    return `${environment.baseUrl}/${environment.apiOdgovori}/${broj}/metadata_xml`;
-  }
-
-  jsonMetadata(broj: string): string{
-    return `${environment.baseUrl}/${environment.apiOdgovori}/${broj}/metadata_json`;
+  metadata(broj: number, format: string): void{
+    this.odgovorService.metadata(broj, format).subscribe(
+      (response: string) => saveMetadata(response, format)
+    );
   }
 
   obicnaPretraga(pretraga: string): void{

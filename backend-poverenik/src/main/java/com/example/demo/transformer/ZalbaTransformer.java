@@ -70,8 +70,8 @@ public class ZalbaTransformer implements TransformerInterface {
 	}
 	
 	@Override
-	public Resource metadata(String documentId, MetadataType type) {
-		return this.xslTransformer.metadata(documentId, this.zalbaRDF.retrieve(documentId), type, GEN_PATH);
+	public String metadata(String documentId, MetadataType type) {
+		return this.xslTransformer.metadata(this.zalbaRDF.retrieve(documentId), type);
 	}
 
 }

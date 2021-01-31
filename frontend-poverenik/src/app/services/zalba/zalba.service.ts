@@ -117,6 +117,12 @@ export class ZalbaService {
     return this.http.get<string>(`${this.API_ZALBE}/${broj}`, {responseType: format as 'json', headers});
   }
 
+  metadata(broj: number, format: string): Observable<string>{
+    let headers = new HttpHeaders();
+    headers = headers.set('Accept', format === 'rdf' ? 'text/xml' : 'application/json');
+    return this.http.get<string>(`${this.API_ZALBE}/${broj}/metadata`, {responseType: 'text' as 'json', headers});
+  }
+
   obicnaPretraga(pretraga: string): Observable<ZalbaDTO[]>{
     const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml'), responseType: 'text' as 'json' };
     return this.http.post<string>(`${this.API_ZALBE}/obicna_pretraga`, pretraga, options).pipe(

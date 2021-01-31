@@ -6,8 +6,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { SNACKBAR_CLOSE, SNACKBAR_ERROR, SNACKBAR_ERROR_OPTIONS, SNACKBAR_SUCCESS_OPTIONS } from 'src/app/constants/snackbar';
 import { ZalbaDTO } from 'src/app/models/zalbaDTO';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { saveMetadata } from 'src/app/services/utils';
 import { ZalbaService } from 'src/app/services/zalba/zalba.service';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-zalba-list',
@@ -35,17 +35,10 @@ export class ZalbaListComponent implements AfterViewInit {
     return this.authService.getUser()?.uloga;
   }
 
-  convertDate(date: string): string{
-    const array: string[] = date.split('-');
-    return `${array[2]}.${array[1]}.${array[0]}.`;
-  }
-
-  xmlMetadata(broj: string): string{
-    return `${environment.baseUrl}/${environment.apiZalbe}/${broj}/metadata_xml`;
-  }
-
-  jsonMetadata(broj: string): string{
-    return `${environment.baseUrl}/${environment.apiZalbe}/${broj}/metadata_json`;
+  metadata(broj: number, format: string): void{
+    this.zalbaService.metadata(broj, format).subscribe(
+      (response: string) => saveMetadata(response, format)
+    );
   }
 
   obicnaPretraga(pretraga: string): void{

@@ -5,7 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { IzvestajDTO } from 'src/app/models/izvestajDTO';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { IzvestajService } from 'src/app/services/izvestaj/izvestaj.service';
-import { environment } from 'src/environments/environment';
+import { saveMetadata } from 'src/app/services/utils';
 
 @Component({
   selector: 'app-izvestaj-list',
@@ -30,17 +30,10 @@ export class IzvestajListComponent implements AfterViewInit {
     return this.authService.getUser()?.uloga;
   }
 
-  convertDate(date: string): string{
-    const array: string[] = date.split('-');
-    return `${array[2]}.${array[1]}.${array[0]}.`;
-  }
-
-  xmlMetadata(broj: string): string{
-    return `${environment.baseUrl}/${environment.apiIzvestaji}/${broj}/metadata_xml`;
-  }
-
-  jsonMetadata(broj: string): string{
-    return `${environment.baseUrl}/${environment.apiIzvestaji}/${broj}/metadata_json`;
+  metadata(broj: number, format: string): void{
+    this.izvestajService.metadata(broj, format).subscribe(
+      (response: string) => saveMetadata(response, format)
+    );
   }
 
   obicnaPretraga(pretraga: string): void{

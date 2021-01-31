@@ -53,20 +53,13 @@ public class OdgovorController {
 		return ResponseEntity.notFound().build();
 	}
 	
-	@GetMapping(value = "/{broj}/metadata_xml", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-	public ResponseEntity<Resource> xmlMetadata(@PathVariable String broj) {
-		Resource resource = this.odgovorTransformer.metadata(broj, MetadataType.xml);
-		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-				.body(resource);
-	}
-	
-	@GetMapping(value = "/{broj}/metadata_json", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-	public ResponseEntity<Resource> jsonMetadata(@PathVariable String broj) {
-		Resource resource = this.odgovorTransformer.metadata(broj, MetadataType.json);
-		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-				.body(resource);
+	@GetMapping(value = "/{broj}/metadata")
+	@PreAuthorize("isAuthenticated()")
+	public ResponseEntity<String> metadata(@PathVariable String broj, @RequestHeader("Accept") String format) {
+		return ResponseEntity.ok()
+				.header(HttpHeaders.CONTENT_TYPE, format + "; charset=utf-8")
+				.body(this.odgovorTransformer.metadata(broj,
+						format.equals("text/xml") ? MetadataType.xml : MetadataType.json));
 	}
 	
 	@PostMapping(value="obicna_pretraga", consumes = MediaType.TEXT_XML_VALUE, produces = MediaType.TEXT_XML_VALUE)
