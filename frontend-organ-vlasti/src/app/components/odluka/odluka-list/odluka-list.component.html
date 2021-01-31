@@ -24,12 +24,12 @@
     
         <ng-container matColumnDef="datum">
           <th mat-header-cell *matHeaderCellDef>Datum izdavanja</th>
-          <td mat-cell *matCellDef="let odgovor"> {{convertDate(odgovor.datum)}} </td>
+          <td mat-cell *matCellDef="let odgovor"> {{odgovor.datum}} </td>
         </ng-container>
     
         <ng-container matColumnDef="datumZahteva">
           <th mat-header-cell *matHeaderCellDef>Datum podnošenja zahteva</th>
-          <td mat-cell *matCellDef="let odgovor"> {{convertDate(odgovor.datumZahteva)}} </td>
+          <td mat-cell *matCellDef="let odgovor"> {{odgovor.datumZahteva}} </td>
         </ng-container>
   
         <ng-container matColumnDef="dokumenti">
@@ -43,8 +43,8 @@
         <ng-container matColumnDef="metapodaci">
           <th mat-header-cell *matHeaderCellDef>Metapodaci</th>
           <td mat-cell *matCellDef="let odluka">
-            <a [href]="xmlMetadata(odluka.broj)" target="_blank">XML</a><br>
-            <a [href]="jsonMetadata(odluka.broj)" target="_blank">JSON</a>
+            <a *ngIf="true" (click)="metadata(odluka.broj, 'rdf')">RDF</a><br>
+            <a *ngIf="true" (click)="metadata(odluka.broj, 'json')">JSON</a><br>
           </td>
         </ng-container>
       

@@ -24,7 +24,7 @@
     
         <ng-container matColumnDef="datum">
           <th mat-header-cell *matHeaderCellDef>Datum podnošenja</th>
-          <td mat-cell *matCellDef="let zalba"> {{convertDate(zalba.datum)}} </td>
+          <td mat-cell *matCellDef="let zalba"> {{zalba.datum}} </td>
         </ng-container>
 
         <ng-container matColumnDef="status">
@@ -43,8 +43,8 @@
         <ng-container matColumnDef="metapodaci">
           <th mat-header-cell *matHeaderCellDef>Metapodaci</th>
           <td mat-cell *matCellDef="let zalba">
-            <a [href]="xmlMetadata(zalba.broj)" target="_blank">XML</a><br>
-            <a [href]="jsonMetadata(zalba.broj)" target="_blank">JSON</a>
+            <a *ngIf="true" (click)="metadata(zalba.broj, 'rdf')">RDF</a><br>
+            <a *ngIf="true" (click)="metadata(zalba.broj, 'json')">JSON</a><br>
           </td>
         </ng-container>
 

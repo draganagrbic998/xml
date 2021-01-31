@@ -45,6 +45,12 @@ export class ResenjeService {
     return this.http.get<string>(`${this.API_RESENJA}/${broj}`, {responseType: format as 'json', headers});
   }
 
+  metadata(broj: number, format: string): Observable<string>{
+    let headers = new HttpHeaders();
+    headers = headers.set('Accept', format === 'rdf' ? 'text/xml' : 'application/json');
+    return this.http.get<string>(`${this.API_RESENJA}/${broj}/metadata`, {responseType: 'text' as 'json', headers});
+  }
+
   obicnaPretraga(pretraga: string): Observable<ResenjeDTO[]>{
     const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml'), responseType: 'text' as 'json' };
     return this.http.post<string>(`${this.API_RESENJA}/obicna_pretraga`, pretraga, options).pipe(

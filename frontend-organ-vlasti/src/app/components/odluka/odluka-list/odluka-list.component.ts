@@ -5,7 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { OdlukaDTO } from 'src/app/models/odlukaDTO';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { OdlukaService } from 'src/app/services/odluka/odluka.service';
-import { environment } from 'src/environments/environment';
+import { saveMetadata } from 'src/app/services/utils';
 
 @Component({
   selector: 'app-odluka-list',
@@ -27,17 +27,10 @@ export class OdlukaListComponent implements AfterViewInit {
   fetchPending = true;
   selectedOdluka: OdlukaDTO;
 
-  convertDate(date: string): string{
-    const array: string[] = date.split('-');
-    return `${array[2]}.${array[1]}.${array[0]}.`;
-  }
-
-  xmlMetadata(broj: string): string{
-    return `${environment.baseUrl}/${environment.apiOdluke}/${broj}/metadata_xml`;
-  }
-
-  jsonMetadata(broj: string): string{
-    return `${environment.baseUrl}/${environment.apiOdluke}/${broj}/metadata_json`;
+  metadata(broj: number, format: string): void{
+    this.odlukaService.metadata(broj, format).subscribe(
+      (response: string) => saveMetadata(response, format)
+    );
   }
 
   obicnaPretraga(pretraga: string): void{

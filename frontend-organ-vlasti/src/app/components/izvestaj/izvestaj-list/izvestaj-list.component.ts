@@ -8,7 +8,7 @@ import { SNACKBAR_CLOSE, SNACKBAR_ERROR, SNACKBAR_ERROR_OPTIONS, SNACKBAR_SUCCES
 import { IzvestajDTO } from 'src/app/models/izvestajDTO';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { IzvestajService } from 'src/app/services/izvestaj/izvestaj.service';
-import { environment } from 'src/environments/environment';
+import { saveMetadata } from 'src/app/services/utils';
 import { IzvestajValidatorService } from './izvestaj-validator.service';
 
 @Component({
@@ -40,17 +40,10 @@ export class IzvestajListComponent implements AfterViewInit {
     return this.authService.getUser()?.uloga;
   }
 
-  convertDate(date: string): string{
-    const array: string[] = date.split('-');
-    return `${array[2]}.${array[1]}.${array[0]}.`;
-  }
-
-  xmlMetadata(broj: string): string{
-    return `${environment.baseUrl}/${environment.apiIzvestaji}/${broj}/metadata_xml`;
-  }
-
-  jsonMetadata(broj: string): string{
-    return `${environment.baseUrl}/${environment.apiIzvestaji}/${broj}/metadata_json`;
+  metadata(broj: number, format: string): void{
+    this.izvestajService.metadata(broj, format).subscribe(
+      (response: string) => saveMetadata(response, format)
+    );
   }
 
   save(): void {
@@ -72,19 +65,6 @@ export class IzvestajListComponent implements AfterViewInit {
     );
   }
 
-  refreshData(): void {
-    this.izvestaji.paginator = this.paginator;
-    this.izvestajService.findAll().subscribe(
-      (izvestaji: IzvestajDTO[]) => {
-        this.izvestaji = new MatTableDataSource<IzvestajDTO>(izvestaji);
-        this.fetchPending = false;
-      },
-      () => {
-        this.fetchPending = false;
-      }
-    );
-  }
-
   obicnaPretraga(pretraga: string): void{
     this.fetchPending = true;
     this.izvestajService.obicnaPretraga(pretraga).subscribe(
@@ -101,6 +81,19 @@ export class IzvestajListComponent implements AfterViewInit {
   naprednaPretraga(pretraga: string): void{
     this.fetchPending = true;
     this.izvestajService.naprednaPretraga(pretraga).subscribe(
+      (izvestaji: IzvestajDTO[]) => {
+        this.izvestaji = new MatTableDataSource<IzvestajDTO>(izvestaji);
+        this.fetchPending = false;
+      },
+      () => {
+        this.fetchPending = false;
+      }
+    );
+  }
+
+  refreshData(): void {
+    this.izvestaji.paginator = this.paginator;
+    this.izvestajService.findAll().subscribe(
       (izvestaji: IzvestajDTO[]) => {
         this.izvestaji = new MatTableDataSource<IzvestajDTO>(izvestaji);
         this.fetchPending = false;

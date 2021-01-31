@@ -10,6 +10,6 @@ public interface TransformerInterface {
 	public Resource pdf(String documentId);
 	public byte[] byteHtml(String documentId);
 	public byte[] bytePdf(String documentId);
-	public Resource metadata(String documentId, MetadataType type);
+	public String metadata(String documentId, MetadataType type);
 
 }

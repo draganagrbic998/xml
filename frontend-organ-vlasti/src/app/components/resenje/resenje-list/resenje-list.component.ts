@@ -5,7 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ResenjeDTO } from 'src/app/models/resenjeDTO';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { ResenjeService } from 'src/app/services/resenje/resenje.service';
-import { environment } from 'src/environments/environment';
+import { saveMetadata } from 'src/app/services/utils';
 
 @Component({
   selector: 'app-resenje-list',
@@ -30,17 +30,10 @@ export class ResenjeListComponent implements AfterViewInit {
     return this.authService.getUser()?.uloga;
   }
 
-  convertDate(date: string): string{
-    const array: string[] = date.split('-');
-    return `${array[2]}.${array[1]}.${array[0]}.`;
-  }
-
-  xmlMetadata(broj: string): string{
-    return `${environment.baseUrl}/${environment.apiResenja}/${broj}/metadata_xml`;
-  }
-
-  jsonMetadata(broj: string): string{
-    return `${environment.baseUrl}/${environment.apiResenja}/${broj}/metadata_json`;
+  metadata(broj: number, format: string): void{
+    this.resenjeService.metadata(broj, format).subscribe(
+      (response: string) => saveMetadata(response, format)
+    );
   }
 
   obicnaPretraga(pretraga: string): void{

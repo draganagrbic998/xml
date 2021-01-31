@@ -93,23 +93,15 @@ public class XSLTransformer {
 		}
 	}
 	
-	public Resource metadata(String documentId, ResultSet results, MetadataType type, String genPath) {
-		try {
-			ByteArrayOutputStream out = new ByteArrayOutputStream();
-			if (type.equals(MetadataType.xml)) {
-				ResultSetFormatter.outputAsXML(out, results);
-			} 
-			else {
-				ResultSetFormatter.outputAsJSON(out, results);
-			}
-			
-			Path file = Paths.get(genPath + documentId + "_metadata." + type);
-			Files.write(file, out.toByteArray());
-			return new UrlResource(file.toUri());
+	public String metadata(ResultSet results, MetadataType type) {
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		if (type.equals(MetadataType.xml)) {
+			ResultSetFormatter.outputAsXML(out, results);
 		} 
-		catch (Exception e) {
-			throw new MyException(e);
+		else {
+			ResultSetFormatter.outputAsJSON(out, results);
 		}
+		return out.toString();
 	}
 	
 	public byte[] byteHtml(Document document, String xslPath) {

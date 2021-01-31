@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { OSNOVA, IZVESTAJ } from 'src/app/constants/namespaces';
 import { IzvestajDTO } from 'src/app/models/izvestajDTO';
 import { environment } from 'src/environments/environment';
+import { saveMetadata } from '../utils';
 
 @Injectable({
   providedIn: 'root'
@@ -48,6 +49,12 @@ export class IzvestajService {
     let headers = new HttpHeaders();
     headers = headers.set('Accept', format === 'text' ? 'text/html' : 'application/pdf');
     return this.http.get<string>(`${this.API_IZVESTAJI}/${broj}`, {responseType: format as 'json', headers});
+  }
+
+  metadata(broj: number, format: string): Observable<string>{
+    let headers = new HttpHeaders();
+    headers = headers.set('Accept', format === 'rdf' ? 'text/xml' : 'application/json');
+    return this.http.get<string>(`${this.API_IZVESTAJI}/${broj}/metadata`, {responseType: 'text' as 'json', headers});
   }
 
   obicnaPretraga(pretraga: string): Observable<IzvestajDTO[]>{

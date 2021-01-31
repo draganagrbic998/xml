@@ -70,8 +70,8 @@ public class OdlukaTransformer implements TransformerInterface {
 	}
 	
 	@Override
-	public Resource metadata(String documentId, MetadataType type) {
-		return this.xslTransformer.metadata(documentId, this.odlukaRDF.retrieve(documentId), type, GEN_PATH);
+	public String metadata(String documentId, MetadataType type) {
+		return this.xslTransformer.metadata(this.odlukaRDF.retrieve(documentId), type);
 	}
 	
 }

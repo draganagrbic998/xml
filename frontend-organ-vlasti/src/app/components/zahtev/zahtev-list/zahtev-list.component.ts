@@ -4,8 +4,8 @@ import { MatDrawer } from '@angular/material/sidenav';
 import { MatTableDataSource } from '@angular/material/table';
 import { ZahtevDTO } from 'src/app/models/zahtevDTO';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { saveMetadata } from 'src/app/services/utils';
 import { ZahtevService } from 'src/app/services/zahtev/zahtev.service';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-zahtev-list',
@@ -31,17 +31,10 @@ export class ZahtevListComponent implements AfterViewInit {
     return this.authService.getUser()?.uloga;
   }
 
-  convertDate(date: string): string{
-    const array: string[] = date.split('-');
-    return `${array[2]}.${array[1]}.${array[0]}.`;
-  }
-
-  xmlMetadata(broj: string): string{
-    return `${environment.baseUrl}/${environment.apiZahtevi}/${broj}/metadata_xml`;
-  }
-
-  jsonMetadata(broj: string): string{
-    return `${environment.baseUrl}/${environment.apiZahtevi}/${broj}/metadata_json`;
+  metadata(broj: number, format: string): void{
+    this.zahtevService.metadata(broj, format).subscribe(
+      (response: string) => saveMetadata(response, format)
+    );
   }
 
   obicnaPretraga(pretraga: string): void{

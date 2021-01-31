@@ -54,22 +54,15 @@ public class ResenjeContoller {
 		return ResponseEntity.notFound().build();
 	}
 	
-	@GetMapping(value = "/{broj}/metadata_xml", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-	public ResponseEntity<Resource> xmlMetadata(@PathVariable String broj) {
-		Resource resource = this.resenjeTransformer.metadata(broj, MetadataType.xml);
-		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-				.body(resource);
+	@GetMapping(value = "/{broj}/metadata")
+	@PreAuthorize("hasAuthority('sluzbenik')")
+	public ResponseEntity<String> metadata(@PathVariable String broj, @RequestHeader("Accept") String format) {
+		return ResponseEntity.ok()
+				.header(HttpHeaders.CONTENT_TYPE, format + "; charset=utf-8")
+				.body(this.resenjeTransformer.metadata(broj,
+						format.equals("text/xml") ? MetadataType.xml : MetadataType.json));
 	}
-	
-	@GetMapping(value = "/{broj}/metadata_json", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-	public ResponseEntity<Resource> jsonMetadata(@PathVariable String broj) {
-		Resource resource = this.resenjeTransformer.metadata(broj, MetadataType.json);
-		return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM)
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-				.body(resource);
-	}
-	
+
 	@PostMapping(value="obicna_pretraga", consumes = MediaType.TEXT_XML_VALUE, produces = MediaType.TEXT_XML_VALUE)
 	@PreAuthorize("hasAuthority('sluzbenik')")
 	public ResponseEntity<String> regularSearch(@RequestBody String xml) {		
