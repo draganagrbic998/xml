@@ -21,6 +21,7 @@ import com.example.demo.transformer.IzvestajTransformer;
 
 @RestController
 @RequestMapping(value = "/api/izvestaji")
+@PreAuthorize("hasAuthority('sluzbenik')")
 public class IzvestajController {
 	
 	@Autowired
@@ -30,20 +31,17 @@ public class IzvestajController {
 	private IzvestajTransformer izvestajTransformer;
 	
 	@PostMapping(value = "/{godina}")
-	@PreAuthorize("hasAuthority('sluzbenik')")
 	public ResponseEntity<Void> add(@PathVariable String godina) {
 		this.izvestajService.add(godina);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
 	@GetMapping(produces = MediaType.TEXT_XML_VALUE)
-	@PreAuthorize("hasAuthority('sluzbenik')")
 	public ResponseEntity<String> findAll() {
 		return new ResponseEntity<>(this.izvestajService.retrieve(), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/{broj}")
-	@PreAuthorize("hasAuthority('sluzbenik')")
 	public ResponseEntity<Object> find(@PathVariable String broj, @RequestHeader("Accept") String format) {
 		if (format.equals("text/html")) {
 			return ResponseEntity.ok()
@@ -61,7 +59,6 @@ public class IzvestajController {
 	}
 	
 	@GetMapping(value = "/{broj}/metadata")
-	@PreAuthorize("hasAuthority('sluzbenik')")
 	public ResponseEntity<String> metadata(@PathVariable String broj, @RequestHeader("Accept") String format) {
 		//ove raditi i za latinicu
 		return ResponseEntity.ok()
@@ -71,13 +68,11 @@ public class IzvestajController {
 	}
 	
 	@PostMapping(value="obicna_pretraga", consumes = MediaType.TEXT_XML_VALUE, produces = MediaType.TEXT_XML_VALUE)
-	@PreAuthorize("hasAuthority('sluzbenik')")
 	public ResponseEntity<String> regularSearch(@RequestBody String xml) {		
 		return new ResponseEntity<>(this.izvestajService.regularSearch(xml), HttpStatus.OK);
 	}
 	
 	@PostMapping(value="napredna_pretraga", consumes = MediaType.TEXT_XML_VALUE, produces = MediaType.TEXT_XML_VALUE)
-	@PreAuthorize("hasAuthority('sluzbenik')")
 	public ResponseEntity<String> advancedSearch(@RequestBody String xml) {		
 		return new ResponseEntity<>(this.izvestajService.advancedSearch(xml), HttpStatus.OK);
 	}

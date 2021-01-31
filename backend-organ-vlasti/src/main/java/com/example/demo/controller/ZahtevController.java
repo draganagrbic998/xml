@@ -22,6 +22,7 @@ import org.springframework.core.io.Resource;
 
 @RestController
 @RequestMapping(value = "/api/zahtevi")
+@PreAuthorize("isAuthenticated()")
 public class ZahtevController {
 
 	@Autowired
@@ -38,13 +39,11 @@ public class ZahtevController {
 	}
 	
 	@GetMapping(produces = MediaType.TEXT_XML_VALUE)
-	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<String> findAll() {
 		return new ResponseEntity<>(this.zahtevService.retrieve(), HttpStatus.OK);
 	}
 		
 	@GetMapping(value = "/{broj}")
-	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<Object> find(@PathVariable String broj, @RequestHeader("Accept") String format) {
 		if (format.equals("text/html")) {
 			return ResponseEntity.ok()
@@ -62,7 +61,6 @@ public class ZahtevController {
 	}
 	
 	@GetMapping(value = "/{broj}/metadata")
-	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<String> metadata(@PathVariable String broj, @RequestHeader("Accept") String format) {
 		return ResponseEntity.ok()
 				.header(HttpHeaders.CONTENT_TYPE, format + "; charset=utf-8")
@@ -71,13 +69,11 @@ public class ZahtevController {
 	}
 	
 	@PostMapping(value="obicna_pretraga", consumes = MediaType.TEXT_XML_VALUE, produces = MediaType.TEXT_XML_VALUE)
-	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<String> regularSearch(@RequestBody String xml) {		
 		return new ResponseEntity<>(this.zahtevService.regularSearch(xml), HttpStatus.OK);
 	}
 
 	@PostMapping(value="napredna_pretraga", consumes = MediaType.TEXT_XML_VALUE, produces = MediaType.TEXT_XML_VALUE)
-	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<String> advancedSearch(@RequestBody String xml) {		
 		return new ResponseEntity<>(this.zahtevService.advancedSearch(xml), HttpStatus.OK);
 	}

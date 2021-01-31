@@ -21,6 +21,7 @@ import com.example.demo.transformer.ZalbaTransformer;
 
 @RestController
 @RequestMapping(value = "/api/zalbe")
+@PreAuthorize("hasAuthority('sluzbenik')")
 public class ZalbaController {
 
 	@Autowired
@@ -30,13 +31,11 @@ public class ZalbaController {
 	private ZalbaTransformer zalbaTransformer;
 
 	@GetMapping(produces = MediaType.TEXT_XML_VALUE)
-	@PreAuthorize("hasAuthority('sluzbenik')")
 	public ResponseEntity<String> findAll() {
 		return new ResponseEntity<>(this.zalbaService.retrieve(), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/{broj}")
-	@PreAuthorize("hasAuthority('sluzbenik')")
 	public ResponseEntity<Object> find(@PathVariable String broj, @RequestHeader("Accept") String format) {
 		if (format.equals("text/html")) {
 			return ResponseEntity.ok()
@@ -54,7 +53,6 @@ public class ZalbaController {
 	}
 	
 	@GetMapping(value = "/{broj}/metadata")
-	@PreAuthorize("hasAuthority('sluzbenik')")
 	public ResponseEntity<String> metadata(@PathVariable String broj, @RequestHeader("Accept") String format) {
 		return ResponseEntity.ok()
 				.header(HttpHeaders.CONTENT_TYPE, format + "; charset=utf-8")
@@ -63,13 +61,11 @@ public class ZalbaController {
 	}
 
 	@PostMapping(value="obicna_pretraga", consumes = MediaType.TEXT_XML_VALUE, produces = MediaType.TEXT_XML_VALUE)
-	@PreAuthorize("hasAuthority('sluzbenik')")
 	public ResponseEntity<String> regularSearch(@RequestBody String xml) {		
 		return new ResponseEntity<>(this.zalbaService.regularSearch(xml), HttpStatus.OK);
 	}
 
 	@PostMapping(value="napredna_pretraga", consumes = MediaType.TEXT_XML_VALUE, produces = MediaType.TEXT_XML_VALUE)
-	@PreAuthorize("hasAuthority('sluzbenik')")
 	public ResponseEntity<String> advancedSearch(@RequestBody String xml) {		
 		return new ResponseEntity<>(this.zalbaService.advancedSearch(xml), HttpStatus.OK);
 	}

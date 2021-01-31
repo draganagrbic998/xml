@@ -26,6 +26,7 @@ import com.example.demo.ws.utils.SOAPService;
 
 @RestController
 @RequestMapping(value = "/api/zahtevi")
+@PreAuthorize("isAuthenticated()")
 public class ZahtevController {
 	
 	@Autowired
@@ -35,7 +36,6 @@ public class ZahtevController {
 	private DOMParser domParser;
 
 	@GetMapping(value = "/{broj}")
-	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<Object> find(@PathVariable String broj, @RequestHeader("Accept") String format) throws IOException {
 		if (format.equals("text/html")) {
 			return ResponseEntity.ok()
