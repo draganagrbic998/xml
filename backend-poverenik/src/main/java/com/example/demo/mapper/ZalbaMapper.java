@@ -71,10 +71,11 @@ public class ZalbaMapper implements MapperInterface {
 		
 		String lozinka = dto.getElementsByTagNameNS(Namespaces.OSNOVA, "lozinka").item(0).getTextContent();
 		if (dto.getElementsByTagNameNS(Namespaces.ZALBA, "brojOdluke").getLength() > 0) {
+			String delimicnost = dto.getElementsByTagNameNS(Namespaces.ZALBA, "tipCutanja").getLength() > 0 ? "<delimicnost></delimicnost>" : "";
 			String brojOdluke = dto.getElementsByTagNameNS(Namespaces.ZALBA, "brojOdluke").item(0).getTextContent();
 			Element odluka = (Element) this.domParser.buildDocument(this.soapService
 					.sendSOAPMessage(this.domParser.buildDocument(
-							String.format("<pretraga><broj>%s</broj><lozinka>%s</lozinka></pretraga>", brojOdluke, lozinka)),
+							String.format("<pretraga>%s<broj>%s</broj><lozinka>%s</lozinka></pretraga>", delimicnost, brojOdluke, lozinka)),
 							SOAPActions.get_odluka))
 					.getElementsByTagNameNS(Namespaces.ODLUKA, "Odluka").item(0);
 			Element podaciOdluke = (Element) document.getElementsByTagNameNS(Namespaces.ZALBA, "PodaciOdluke").item(0);

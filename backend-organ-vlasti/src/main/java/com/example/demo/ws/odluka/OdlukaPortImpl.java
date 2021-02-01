@@ -10,7 +10,10 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import com.example.demo.common.Namespaces;
+import com.example.demo.enums.TipOdluke;
+import com.example.demo.exception.ResourceTakenException;
 import com.example.demo.exception.WrongPasswordException;
+import com.example.demo.mapper.OdlukaMapper;
 import com.example.demo.parser.DOMParser;
 import com.example.demo.repository.xml.KorisnikExist;
 import com.example.demo.service.OdlukaService;
@@ -41,9 +44,16 @@ public class OdlukaPortImpl implements Odluka {
 	public java.lang.String getOdluka(java.lang.String getOdlukaRequest) {
 		LOG.info("Executing operation getOdluka");
 		try {
+			Document request = this.domParser.buildDocument(getOdlukaRequest);
 			String documentId = this.domParser.buildDocument(getOdlukaRequest).getElementsByTagName("broj").item(0)
 					.getTextContent();
 			Document document = this.odlukaService.find(documentId);
+			if (request.getElementsByTagName("delimicnost").getLength() > 0 && !OdlukaMapper.getTipOdluke(document).equals(TipOdluke.obavestenje)) {
+				throw new ResourceTakenException();
+			}
+			if (request.getElementsByTagName("delimicnost").getLength() == 0 && !OdlukaMapper.getTipOdluke(document).equals(TipOdluke.odbijanje)) {
+				throw new ResourceTakenException();
+			}
 			Element odluka = (Element) document.getElementsByTagNameNS(Namespaces.ODLUKA, "Odluka").item(0);
 			Document korisnik = this.korisnikExist.find(odluka.getAttribute("href").replace(Namespaces.KORISNIK + "/", ""));
 			String lozinka = this.domParser.buildDocument(getOdlukaRequest).getElementsByTagName("lozinka").item(0)
