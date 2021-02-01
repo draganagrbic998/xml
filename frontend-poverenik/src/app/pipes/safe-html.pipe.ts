@@ -11,7 +11,6 @@ export class SafeHtmlPipe implements PipeTransform {
   ) {}
 
   transform(html: string): any {
-    html = html.replace('http://localhost:4200', 'http://localhost:4201');
     return this.sanitizer.bypassSecurityTrustHtml(html);
   }
 

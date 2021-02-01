@@ -29,21 +29,21 @@ public class EndpointConfig {
 
 	@Bean
 	public Endpoint odgovorEndpoint() {
-		EndpointImpl endpoint = new EndpointImpl(bus, opi);
+		EndpointImpl endpoint = new EndpointImpl(this.bus, this.opi);
 		endpoint.publish("/odgovor");
 		return endpoint;
 	}
 
 	@Bean
 	public Endpoint izvestajEndpoint() {
-		EndpointImpl endpoint = new EndpointImpl(bus, ipi);
+		EndpointImpl endpoint = new EndpointImpl(this.bus, this.ipi);
 		endpoint.publish("/izvestaj");
 		return endpoint;
 	}
 	
 	@Bean
 	public Endpoint zalbaEndpoint() {
-		EndpointImpl endpoint = new EndpointImpl(bus, zpi);
+		EndpointImpl endpoint = new EndpointImpl(this.bus, this.zpi);
 		endpoint.publish("/zalba");
 		return endpoint;
 	}

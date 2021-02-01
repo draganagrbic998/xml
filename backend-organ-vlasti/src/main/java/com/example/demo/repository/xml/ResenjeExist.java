@@ -33,13 +33,13 @@ public class ResenjeExist implements ExistInterface {
 	}
 		
 	@Override
-	public ResourceSet retrieve(String xpathExp) {
-		return this.existManager.retrieve(RESENJE_COLLECTION, xpathExp);
+	public ResourceSet findAll(String xpathExp) {
+		return this.existManager.findAll(RESENJE_COLLECTION, xpathExp);
 	}
 	
 	@Override
-	public Document load(String documentId) {
-		return this.existManager.load(RESENJE_COLLECTION, documentId);
+	public Document find(String documentId) {
+		return this.existManager.find(RESENJE_COLLECTION, documentId);
 	}
 
 	@Override

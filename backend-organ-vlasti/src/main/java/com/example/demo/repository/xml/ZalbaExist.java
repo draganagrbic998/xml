@@ -33,13 +33,13 @@ public class ZalbaExist implements ExistInterface {
 	}
 		
 	@Override
-	public ResourceSet retrieve(String xpathExp) {
-		return this.existManager.retrieve(ZALBA_COLLECTION, xpathExp);
+	public ResourceSet findAll(String xpathExp) {
+		return this.existManager.findAll(ZALBA_COLLECTION, xpathExp);
 	}
 	
 	@Override
-	public Document load(String documentId) {
-		return this.existManager.load(ZALBA_COLLECTION, documentId);
+	public Document find(String documentId) {
+		return this.existManager.find(ZALBA_COLLECTION, documentId);
 	}
 
 	@Override

@@ -45,7 +45,7 @@ public class OdgovorService implements ServiceInterface {
 	@Override
 	public void add(String xml) {
 		Document document = this.odgovorMapper.map(xml);
-		Document zalbaDocument = this.zalbaService.load(Utils.getBroj(document));
+		Document zalbaDocument = this.zalbaService.find(Utils.getBroj(document));
 		if (!ZalbaMapper.getStatusZalbe(zalbaDocument).equals(StatusZalbe.prosledjeno)) {
 			throw new ResourceTakenException();
 		}
@@ -70,13 +70,13 @@ public class OdgovorService implements ServiceInterface {
 	}
 
 	@Override
-	public String retrieve() {
-		return this.odgovorMapper.map(this.odgovorExist.retrieve("/odgovor:Odgovor"));
+	public String findAll() {
+		return this.odgovorMapper.map(this.odgovorExist.findAll("/odgovor:Odgovor"));
 	}
 	
 	@Override
-	public Document load(String documentId) {
-		return this.odgovorExist.load(documentId);
+	public Document find(String documentId) {
+		return this.odgovorExist.find(documentId);
 	}
 	
 	@Override
@@ -88,14 +88,14 @@ public class OdgovorService implements ServiceInterface {
 	public String regularSearch(String xml) {
 		Pretraga pretraga = (Pretraga) this.jaxbParser.unmarshalFromXml(xml, Pretraga.class);
 		String xpathExp = String.format("/odgovor:Odgovor%s", SearchUtil.pretragaToXpath(pretraga));
-		ResourceSet resources = this.odgovorExist.retrieve(xpathExp);
+		ResourceSet resources = this.odgovorExist.findAll(xpathExp);
 		return this.odgovorMapper.map(resources);
 	}
 
 	@Override
 	public String advancedSearch(String xml) {
 		String xpathExp = String.format("/odgovor:Odgovor%s", this.odgovorRDF.search(xml));
-		ResourceSet resources = this.odgovorExist.retrieve(xpathExp);
+		ResourceSet resources = this.odgovorExist.findAll(xpathExp);
 		return this.odgovorMapper.map(resources);
 	}
 

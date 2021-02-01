@@ -8,6 +8,7 @@ import org.w3c.dom.Element;
 import com.example.demo.common.Constants;
 import com.example.demo.common.Namespaces;
 import com.example.demo.exception.MyException;
+import com.example.demo.model.Email;
 import com.example.demo.service.OrganVlastiService;
 
 @Component

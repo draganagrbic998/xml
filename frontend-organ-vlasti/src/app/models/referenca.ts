@@ -1,4 +1,4 @@
 export interface Referenca{
     tip: string;
-    broj: string;
+    broj: number;
 }

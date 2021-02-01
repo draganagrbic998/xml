@@ -33,13 +33,13 @@ public class IzvestajExist implements ExistInterface {
 	}
 
 	@Override
-	public ResourceSet retrieve(String xpathExp) {
-		return this.existManager.retrieve(IZVESTAJ_COLLECTION, xpathExp);
+	public ResourceSet findAll(String xpathExp) {
+		return this.existManager.findAll(IZVESTAJ_COLLECTION, xpathExp);
 	}
 
 	@Override
-	public Document load(String documentId) {
-		return this.existManager.load(IZVESTAJ_COLLECTION, documentId);
+	public Document find(String documentId) {
+		return this.existManager.find(IZVESTAJ_COLLECTION, documentId);
 	}
 
 	@Override

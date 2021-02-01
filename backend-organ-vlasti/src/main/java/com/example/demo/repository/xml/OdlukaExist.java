@@ -33,13 +33,13 @@ public class OdlukaExist implements ExistInterface {
 	}
 		
 	@Override
-	public ResourceSet retrieve(String xpathExp) {
-		return this.existManager.retrieve(ODLUKA_COLLECTION, xpathExp);
+	public ResourceSet findAll(String xpathExp) {
+		return this.existManager.findAll(ODLUKA_COLLECTION, xpathExp);
 	}
 	
 	@Override
-	public Document load(String documentId) {
-		return this.existManager.load(ODLUKA_COLLECTION, documentId);
+	public Document find(String documentId) {
+		return this.existManager.find(ODLUKA_COLLECTION, documentId);
 	}
 
 	@Override

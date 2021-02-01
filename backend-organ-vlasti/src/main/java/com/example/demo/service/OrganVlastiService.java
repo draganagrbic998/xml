@@ -14,7 +14,7 @@ public class OrganVlastiService {
 	private OrganVlastiExist organVlastiExist;
 		
 	public Document load() {
-		return this.organVlastiExist.load("1");
+		return this.organVlastiExist.find("1");
 	}
 	
 }

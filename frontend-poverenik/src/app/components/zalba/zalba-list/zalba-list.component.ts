@@ -41,38 +41,11 @@ export class ZalbaListComponent implements AfterViewInit {
     );
   }
 
-  obicnaPretraga(pretraga: string): void{
-    this.fetchPending = true;
-    this.zalbaService.obicnaPretraga(pretraga).subscribe(
-      (zalbe: ZalbaDTO[]) => {
-        this.zalbe = new MatTableDataSource<ZalbaDTO>(zalbe);
-        this.fetchPending = false;
-      },
-      () => {
-        this.fetchPending = false;
-      }
-    );
-  }
-
-  naprednaPretraga(pretraga: string): void{
-    this.fetchPending = true;
-    this.zalbaService.naprednaPretraga(pretraga).subscribe(
-      (zalbe: ZalbaDTO[]) => {
-        this.zalbe = new MatTableDataSource<ZalbaDTO>(zalbe);
-        this.fetchPending = false;
-      },
-      () => {
-        this.fetchPending = false;
-      }
-    );
-  }
-
   canOdustati(zalba: ZalbaDTO): boolean{
     return zalba.status === 'cekanje' || zalba.status === 'prosledjeno' || zalba.status === 'odgovoreno';
   }
 
   canObustaviti(zalba: ZalbaDTO): boolean{
-    console.log(zalba.status);
     return zalba.status === 'odustato' || zalba.status === 'obavesteno';
   }
 
@@ -135,6 +108,32 @@ export class ZalbaListComponent implements AfterViewInit {
       () => {
         this.sendPending = false;
         this.snackBar.open(SNACKBAR_ERROR, SNACKBAR_CLOSE, SNACKBAR_ERROR_OPTIONS);
+      }
+    );
+  }
+
+  obicnaPretraga(pretraga: string): void{
+    this.fetchPending = true;
+    this.zalbaService.obicnaPretraga(pretraga).subscribe(
+      (zalbe: ZalbaDTO[]) => {
+        this.zalbe = new MatTableDataSource<ZalbaDTO>(zalbe);
+        this.fetchPending = false;
+      },
+      () => {
+        this.fetchPending = false;
+      }
+    );
+  }
+
+  naprednaPretraga(pretraga: string): void{
+    this.fetchPending = true;
+    this.zalbaService.naprednaPretraga(pretraga).subscribe(
+      (zalbe: ZalbaDTO[]) => {
+        this.zalbe = new MatTableDataSource<ZalbaDTO>(zalbe);
+        this.fetchPending = false;
+      },
+      () => {
+        this.fetchPending = false;
       }
     );
   }

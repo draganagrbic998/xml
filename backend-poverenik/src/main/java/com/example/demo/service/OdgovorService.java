@@ -44,7 +44,7 @@ public class OdgovorService implements ServiceInterface {
 	public void add(String xml) {
 		Document document = this.odgovorMapper.map(xml);
 		String brojZalbe = Utils.getBroj(document);
-		Document zalbaDocument = this.zalbaService.load(brojZalbe);
+		Document zalbaDocument = this.zalbaService.find(brojZalbe);
 
 		this.odgovorExist.update(Utils.getBroj(document), document);
 		this.odgovorRDF.add(document);
@@ -65,7 +65,7 @@ public class OdgovorService implements ServiceInterface {
 	}
 
 	@Override
-	public String retrieve() {
+	public String findAll() {
 		Korisnik korisnik = this.korisnikService.currentUser();
 		String xpathExp;
 		if (korisnik.getUloga().equals(Constants.POVERENIK)) {
@@ -74,12 +74,12 @@ public class OdgovorService implements ServiceInterface {
 		else {
 			xpathExp = String.format("/odgovor:Odgovor[@href='%s']", Namespaces.KORISNIK + "/" + korisnik.getMejl());
 		}
-		return this.odgovorMapper.map(this.odgovorExist.retrieve(xpathExp));
+		return this.odgovorMapper.map(this.odgovorExist.findAll(xpathExp));
 	}
 
 	@Override
-	public Document load(String documentId) {
-		return this.odgovorExist.load(documentId);
+	public Document find(String documentId) {
+		return this.odgovorExist.find(documentId);
 	}
 	
 	@Override
@@ -99,7 +99,7 @@ public class OdgovorService implements ServiceInterface {
 		}
 		Pretraga pretraga = (Pretraga) this.jaxbParser.unmarshalFromXml(xml, Pretraga.class);
 		String xpathExp = String.format("%s%s", prefix, SearchUtil.pretragaToXpath(pretraga));
-		ResourceSet resources = this.odgovorExist.retrieve(xpathExp);
+		ResourceSet resources = this.odgovorExist.findAll(xpathExp);
 		return this.odgovorMapper.map(resources);
 	}
 
@@ -114,7 +114,7 @@ public class OdgovorService implements ServiceInterface {
 			prefix = String.format("/odgovor:Odgovor[@href='%s']", Namespaces.KORISNIK + "/" + korisnik.getMejl());
 		}
 		String xpathExp = String.format("%s%s", prefix, this.odgovorRDF.search(xml));
-		ResourceSet resources = this.odgovorExist.retrieve(xpathExp);
+		ResourceSet resources = this.odgovorExist.findAll(xpathExp);
 		return this.odgovorMapper.map(resources);
 	}
 

@@ -39,8 +39,8 @@ public class OdgovorRDF implements RDFInterface {
 	}
 
 	@Override
-	public ResultSet retrieve(String documentId) {
-		return this.fusekiManager.retrieve(ODGOVOR_GRAPH, Namespaces.ODGOVOR + "/" + documentId);
+	public ResultSet findAll(String documentId) {
+		return this.fusekiManager.findAll(ODGOVOR_GRAPH, Namespaces.ODGOVOR + "/" + documentId);
 	}
 	
 	@Override

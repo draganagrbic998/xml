@@ -39,8 +39,8 @@ public class ZalbaRDF implements RDFInterface {
 	}
 	
 	@Override
-	public ResultSet retrieve(String documentId) {
-		return this.fusekiManager.retrieve(ZALBA_GRAPH, Namespaces.ZALBA + "/" + documentId);
+	public ResultSet findAll(String documentId) {
+		return this.fusekiManager.findAll(ZALBA_GRAPH, Namespaces.ZALBA + "/" + documentId);
 	}
 	
 	@Override

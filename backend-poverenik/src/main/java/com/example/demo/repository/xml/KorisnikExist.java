@@ -33,13 +33,13 @@ public class KorisnikExist implements ExistInterface {
 	}
 		
 	@Override
-	public ResourceSet retrieve(String xpathExp) {
-		return this.existManager.retrieve(KORISNIK_COLLECTION, xpathExp);
+	public ResourceSet findAll(String xpathExp) {
+		return this.existManager.findAll(KORISNIK_COLLECTION, xpathExp);
 	}
 	
 	@Override
-	public Document load(String documentId) {
-		return this.existManager.load(KORISNIK_COLLECTION, documentId);
+	public Document find(String documentId) {
+		return this.existManager.find(KORISNIK_COLLECTION, documentId);
 	}
 
 	@Override

@@ -21,7 +21,7 @@ export class OdgovorService {
 
   private readonly API_ODGOVORI = `${environment.baseUrl}/${environment.apiOdgovori}`;
 
-  xmlToOdgovori(xml: string): OdgovorDTO[]{
+  private xmlToOdgovori(xml: string): OdgovorDTO[]{
     const parser = new DOMParser();
     const odgovori = parser.parseFromString(xml, 'text/xml').getElementsByTagNameNS(ODGOVOR, 'Odgovor');
     const odgovoriDTO: OdgovorDTO[] = [];
@@ -34,7 +34,7 @@ export class OdgovorService {
       for (let j = 0; j < reference.length; ++j){
         referenceDTO.push({
           tip: reference.item(j).getAttribute('tip'),
-          broj: reference.item(j).textContent
+          broj: +reference.item(j).textContent
         });
       }
 

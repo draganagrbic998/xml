@@ -49,7 +49,7 @@ public class ResenjeMapper implements MapperInterface {
 		String brojZalbe = dto.getElementsByTagNameNS(Namespaces.RESENJE, "brojZalbe").item(0).getTextContent();
 		Document document = this.domParser.buildDocumentFromFile(STUB_FILE);
 		Element resenje = (Element) document.getElementsByTagNameNS(Namespaces.RESENJE, "Resenje").item(0);
-		Document zalbaDocument = this.zalbaService.load(brojZalbe);
+		Document zalbaDocument = this.zalbaService.find(brojZalbe);
 		Element zalba = (Element) zalbaDocument.getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").item(0);
 		DocumentFragment documentFragment = document.createDocumentFragment();
 
@@ -59,7 +59,7 @@ public class ResenjeMapper implements MapperInterface {
 		resenje.getElementsByTagNameNS(Namespaces.RESENJE, "status").item(0).setTextContent(
 				dto.getElementsByTagNameNS(Namespaces.RESENJE, "status").item(0).getTextContent());
 		
-		Document odgovorDocument = this.odgovorService.load(brojZalbe);
+		Document odgovorDocument = this.odgovorService.find(brojZalbe);
 		if (odgovorDocument != null) {
 			Element odgovor = (Element) odgovorDocument.getElementsByTagNameNS(Namespaces.ODGOVOR, "Odgovor").item(0);
 			Element datumOdbrane = (Element) document.getElementsByTagNameNS(Namespaces.RESENJE, "datumOdbrane").item(0);

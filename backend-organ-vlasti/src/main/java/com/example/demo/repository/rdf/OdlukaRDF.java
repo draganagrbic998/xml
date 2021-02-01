@@ -39,8 +39,8 @@ public class OdlukaRDF implements RDFInterface {
 	}
 
 	@Override
-	public ResultSet retrieve(String documentId) {
-		return this.fusekiManager.retrieve(ODLUKA_GRAPH, Namespaces.ODLUKA + "/" + documentId);
+	public ResultSet findAll(String documentId) {
+		return this.fusekiManager.findAll(ODLUKA_GRAPH, Namespaces.ODLUKA + "/" + documentId);
 	}
 
 	@Override

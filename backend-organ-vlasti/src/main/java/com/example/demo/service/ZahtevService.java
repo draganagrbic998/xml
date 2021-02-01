@@ -28,7 +28,7 @@ import com.example.demo.service.email.NotificationManager;
 @Service
 public class ZahtevService implements ServiceInterface {
 	
-	public static final long CUTANJE_MILISECONDS_LIMIT = 10000;
+	public static final long CUTANJE_MILISECONDS = 10000;
 
 	@Autowired
 	private ZahtevExist zahtevExist;
@@ -71,7 +71,7 @@ public class ZahtevService implements ServiceInterface {
 	}
 
 	@Override
-	public String retrieve() {
+	public String findAll() {
 		Korisnik korisnik = this.korisnikService.currentUser();
 		String xpathExp;
 		if (korisnik.getUloga().equals(Constants.SLUZBENIK)) {
@@ -80,12 +80,12 @@ public class ZahtevService implements ServiceInterface {
 		else {
 			xpathExp = String.format("/zahtev:Zahtev[@href='%s']", Namespaces.KORISNIK + "/" + korisnik.getMejl());
 		}
-		return this.zahtevMapper.map(this.zahtevExist.retrieve(xpathExp));
+		return this.zahtevMapper.map(this.zahtevExist.findAll(xpathExp));
 	}
 
 	@Override
-	public Document load(String documentId) {
-		return this.zahtevExist.load(documentId);
+	public Document find(String documentId) {
+		return this.zahtevExist.find(documentId);
 	}
 	
 	@Override
@@ -105,7 +105,7 @@ public class ZahtevService implements ServiceInterface {
 		}
 		Pretraga pretraga = (Pretraga) this.jaxbParser.unmarshalFromXml(xml, Pretraga.class);
 		String xpathExp = String.format("%s%s", prefix, SearchUtil.pretragaToXpath(pretraga));
-		ResourceSet resources = this.zahtevExist.retrieve(xpathExp);
+		ResourceSet resources = this.zahtevExist.findAll(xpathExp);
 		return this.zahtevMapper.map(resources);
 	}
 
@@ -120,7 +120,7 @@ public class ZahtevService implements ServiceInterface {
 			prefix = String.format("/zahtev:Zahtev[@href='%s']", Namespaces.KORISNIK + "/" + korisnik.getMejl());
 		}
 		String xpathExp = String.format("%s%s", prefix, this.zahtevRDF.search(xml));
-		ResourceSet resources = this.zahtevExist.retrieve(xpathExp);
+		ResourceSet resources = this.zahtevExist.findAll(xpathExp);
 		return this.zahtevMapper.map(resources);
 	}
 
@@ -138,8 +138,8 @@ public class ZahtevService implements ServiceInterface {
 
 	//@Scheduled(fixedDelay = CUTANJE_MILISECONDS_LIMIT, initialDelay = CUTANJE_MILISECONDS_LIMIT)
 	public void cutanjeUprave() throws XMLDBException {
-		String xpathExp = String.format("/zahtev:Zahtev[(%d - zahtev:vreme) >= %d][zahtev:status = 'cekanje']", new Date().getTime(), CUTANJE_MILISECONDS_LIMIT);
-		ResourceSet resources = this.zahtevExist.retrieve(xpathExp);
+		String xpathExp = String.format("/zahtev:Zahtev[(%d - zahtev:vreme) >= %d][zahtev:status = 'cekanje']", new Date().getTime(), CUTANJE_MILISECONDS);
+		ResourceSet resources = this.zahtevExist.findAll(xpathExp);
 		ResourceIterator it = resources.getIterator();
 		while (it.hasMoreResources()) {
 			XMLResource resource = (XMLResource) it.nextResource();

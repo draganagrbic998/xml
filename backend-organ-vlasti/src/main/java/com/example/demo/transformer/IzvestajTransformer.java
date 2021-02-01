@@ -30,27 +30,27 @@ public class IzvestajTransformer implements TransformerInterface {
 	
 	@Override
 	public String html(String documentId) {
-		return this.xslTransformer.html(this.izvestajExist.load(documentId), XSL_PATH);
+		return this.xslTransformer.html(this.izvestajExist.find(documentId), XSL_PATH);
 	}
 		
 	@Override
 	public Resource pdf(String documentId) {
-		return this.xslTransformer.pdf(this.izvestajExist.load(documentId), XSL_FO_PATH, GEN_PATH);
+		return this.xslTransformer.pdf(this.izvestajExist.find(documentId), XSL_FO_PATH, GEN_PATH);
 	}
 	
 	@Override
 	public byte[] byteHtml(String documentId) {
-		return this.xslTransformer.byteHtml(this.izvestajExist.load(documentId), XSL_PATH);
+		return this.xslTransformer.byteHtml(this.izvestajExist.find(documentId), XSL_PATH);
 	}
 	
 	@Override
 	public byte[] bytePdf(String documentId) {
-		return this.xslTransformer.bytePdf(this.izvestajExist.load(documentId), XSL_FO_PATH);
+		return this.xslTransformer.bytePdf(this.izvestajExist.find(documentId), XSL_FO_PATH);
 	}
 
 	@Override
 	public String metadata(String documentId, MetadataType type) {
-		return this.xslTransformer.metadata(this.izvestajRDF.retrieve(documentId), type);
+		return this.xslTransformer.metadata(this.izvestajRDF.findAll(documentId), type);
 	}
 		
 }

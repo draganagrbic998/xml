@@ -28,6 +28,8 @@ import { IzvestajListComponent } from './components/izvestaj/izvestaj-list/izves
 import { SpacerContainerComponent } from './components/layout/spacer-container/spacer-container.component';
 import { ReferenceListComponent } from './components/main/reference-list/reference-list.component';
 import { ObicnaPretragaComponent } from './components/pretraga/obicna-pretraga/obicna-pretraga.component';
+import { PretragaComponent } from './components/pretraga/pretraga.component';
+import { NaprednaPretragaComponent } from './components/pretraga/napredna-pretraga/napredna-pretraga.component';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
@@ -47,8 +49,6 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTabsModule } from '@angular/material/tabs';
-import { PretragaComponent } from './components/pretraga/pretraga.component';
-import { NaprednaPretragaComponent } from './components/pretraga/napredna-pretraga/napredna-pretraga.component';
 
 @NgModule({
   declarations: [

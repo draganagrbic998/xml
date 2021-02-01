@@ -39,8 +39,8 @@ public class ZahtevRDF implements RDFInterface {
 	}
 	
 	@Override
-	public ResultSet retrieve(String documentId) {
-		return this.fusekiManager.retrieve(ZAHTEV_GRAPH, Namespaces.ZAHTEV + "/" + documentId);
+	public ResultSet findAll(String documentId) {
+		return this.fusekiManager.findAll(ZAHTEV_GRAPH, Namespaces.ZAHTEV + "/" + documentId);
 	}
 	
 	@Override

@@ -59,7 +59,7 @@ public class ResenjeService implements ServiceInterface {
 		Document document = this.resenjeMapper.map(xml);
 		String brojZalbe = ((Element) document.getElementsByTagNameNS(Namespaces.RESENJE, "datumZalbe").item(0))
 				.getAttribute("href").replace(Namespaces.ZALBA + "/", "");
-		Document zalbaDocument = this.zalbaService.load(brojZalbe);
+		Document zalbaDocument = this.zalbaService.find(brojZalbe);
 
 		if (!ZalbaMapper.getStatusZalbe(zalbaDocument).equals(StatusZalbe.prosledjeno) 
 				&& !ZalbaMapper.getStatusZalbe(zalbaDocument).equals(StatusZalbe.odgovoreno)
@@ -102,7 +102,7 @@ public class ResenjeService implements ServiceInterface {
 	}
 	
 	@Override
-	public String retrieve() {
+	public String findAll() {
 		Korisnik korisnik = this.korisnikService.currentUser();
 		String xpathExp = null;
 		if (korisnik.getUloga().equals(Constants.POVERENIK)) {
@@ -111,12 +111,12 @@ public class ResenjeService implements ServiceInterface {
 		else {
 			xpathExp = String.format("/resenje:Resenje[@href='%s']", Namespaces.KORISNIK + "/" + korisnik.getMejl());
 		}		
-		return this.resenjeMapper.map(this.resenjeExist.retrieve(xpathExp));		
+		return this.resenjeMapper.map(this.resenjeExist.findAll(xpathExp));		
 	}
 	
 	@Override
-	public Document load(String documentId) {
-		return this.resenjeExist.load(documentId);
+	public Document find(String documentId) {
+		return this.resenjeExist.find(documentId);
 	}
 	
 	@Override
@@ -136,7 +136,7 @@ public class ResenjeService implements ServiceInterface {
 		}
 		Pretraga pretraga = (Pretraga) this.jaxbParser.unmarshalFromXml(xml, Pretraga.class);
 		String xpathExp = String.format("%s%s", prefix, SearchUtil.pretragaToXpath(pretraga));
-		ResourceSet resources = this.resenjeExist.retrieve(xpathExp);
+		ResourceSet resources = this.resenjeExist.findAll(xpathExp);
 		return this.resenjeMapper.map(resources);
 	}
 
@@ -151,7 +151,7 @@ public class ResenjeService implements ServiceInterface {
 			prefix = String.format("/resenje:Resenje[@href='%s']", Namespaces.KORISNIK + "/" + korisnik.getMejl());
 		}
 		String xpathExp = String.format("%s%s", prefix, this.resenjeRDF.search(xml));
-		ResourceSet resources = this.resenjeExist.retrieve(xpathExp);
+		ResourceSet resources = this.resenjeExist.findAll(xpathExp);
 		return this.resenjeMapper.map(resources);
 	}
 	

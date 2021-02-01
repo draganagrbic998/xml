@@ -43,7 +43,7 @@ public class FusekiManager {
 	private DOMParser domParser;
 	
 	public static final String RETRIEVE_QUERY = Constants.SPARQL_FOLDER + "retrieve.rq";
-	public static final String REFERENCE_QUERY = Constants.SPARQL_FOLDER + "reference.rq";	
+	public static final String REFERENCE_QUERY = Constants.SPARQL_FOLDER + "references.rq";	
 	public static final String SEARCH_QUERY = Constants.SPARQL_FOLDER + "search.rq";	
 
 	public void add(String graphUri, Document document, String shapePath) {
@@ -78,7 +78,7 @@ public class FusekiManager {
 		processor.execute();
 	}
 	
-	public ResultSet retrieve(String graphUri, String subject) {
+	public ResultSet findAll(String graphUri, String subject) {
 		String sparql = String.format(Utils.readFile(RETRIEVE_QUERY), this.authUtilities.getData() + graphUri, subject);
 		QueryExecution query = QueryExecutionFactory.sparqlService(this.authUtilities.getQuery(), sparql);
 		return query.execSelect();
@@ -99,10 +99,9 @@ public class FusekiManager {
 	
 	public List<String> search(String graphName, String xml) {
 		Node pretraga = this.domParser.buildDocument(xml).getFirstChild();
-		//ako je pretraga prazna, ne radi
 		return this.executeSparql(String.format(Utils.readFile(SEARCH_QUERY), 
 				this.authUtilities.getData() + graphName, 
-				SearchUtil.predikatPart(pretraga),
+				SearchUtil.predicatePart(pretraga),
 				SearchUtil.filterPart(pretraga)));
 	}
 	

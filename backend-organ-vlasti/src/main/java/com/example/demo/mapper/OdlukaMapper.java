@@ -41,7 +41,7 @@ public class OdlukaMapper implements MapperInterface {
 		Document document = this.domParser.buildDocumentFromFile(STUB_FILE);
 		Element odluka = (Element) document.getElementsByTagNameNS(Namespaces.ODLUKA, "Odluka").item(0);
 		String brojZahteva = dto.getElementsByTagNameNS(Namespaces.ODLUKA, "brojZahteva").item(0).getTextContent();
-		Element zahtev = (Element) this.zahtevService.load(brojZahteva).getElementsByTagNameNS(Namespaces.ZAHTEV, "Zahtev").item(0);
+		Element zahtev = (Element) this.zahtevService.find(brojZahteva).getElementsByTagNameNS(Namespaces.ZAHTEV, "Zahtev").item(0);
 		DocumentFragment documentFragment = document.createDocumentFragment();
 
 		if (dto.getElementsByTagNameNS(Namespaces.ODLUKA, "Uvid").getLength() > 0) {

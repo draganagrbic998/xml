@@ -36,9 +36,9 @@ public class IzvestajController {
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
-	@GetMapping(produces = MediaType.TEXT_XML_VALUE)
+	@GetMapping(produces = "text/xml; charset=utf-8")
 	public ResponseEntity<String> findAll() {
-		return new ResponseEntity<>(this.izvestajService.retrieve(), HttpStatus.OK);
+		return new ResponseEntity<>(this.izvestajService.findAll(), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/{broj}")
@@ -48,19 +48,15 @@ public class IzvestajController {
 					.header(HttpHeaders.CONTENT_TYPE, "text/html; charset=utf-8")
 					.body(this.izvestajTransformer.html(broj));
 		}
-		else if (format.equals("application/pdf")) {
-			Resource resource = this.izvestajTransformer.pdf(broj);
-			return ResponseEntity.ok()
-					.header(HttpHeaders.CONTENT_TYPE, "application/pdf")
-					.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-					.body(resource);
-		}
-		return ResponseEntity.notFound().build();
+		Resource resource = this.izvestajTransformer.pdf(broj);
+		return ResponseEntity.ok()
+				.header(HttpHeaders.CONTENT_TYPE, "application/pdf")
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+				.body(resource);
 	}
 	
 	@GetMapping(value = "/{broj}/metadata")
 	public ResponseEntity<String> metadata(@PathVariable String broj, @RequestHeader("Accept") String format) {
-		//ove raditi i za latinicu
 		return ResponseEntity.ok()
 				.header(HttpHeaders.CONTENT_TYPE, format + "; charset=utf-8")
 				.body(this.izvestajTransformer.metadata(broj,

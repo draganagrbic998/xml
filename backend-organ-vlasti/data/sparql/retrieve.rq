@@ -1,4 +1,3 @@
-SELECT * from <%s>
-WHERE {
+SELECT * from <%s> WHERE {
   <%s> ?predicate ?object
 }

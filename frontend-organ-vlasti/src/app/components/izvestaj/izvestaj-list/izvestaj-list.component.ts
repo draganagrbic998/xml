@@ -65,6 +65,19 @@ export class IzvestajListComponent implements AfterViewInit {
     );
   }
 
+  refreshData(): void {
+    this.izvestaji.paginator = this.paginator;
+    this.izvestajService.findAll().subscribe(
+      (izvestaji: IzvestajDTO[]) => {
+        this.izvestaji = new MatTableDataSource<IzvestajDTO>(izvestaji);
+        this.fetchPending = false;
+      },
+      () => {
+        this.fetchPending = false;
+      }
+    );
+  }
+
   obicnaPretraga(pretraga: string): void{
     this.fetchPending = true;
     this.izvestajService.obicnaPretraga(pretraga).subscribe(
@@ -81,19 +94,6 @@ export class IzvestajListComponent implements AfterViewInit {
   naprednaPretraga(pretraga: string): void{
     this.fetchPending = true;
     this.izvestajService.naprednaPretraga(pretraga).subscribe(
-      (izvestaji: IzvestajDTO[]) => {
-        this.izvestaji = new MatTableDataSource<IzvestajDTO>(izvestaji);
-        this.fetchPending = false;
-      },
-      () => {
-        this.fetchPending = false;
-      }
-    );
-  }
-
-  refreshData(): void {
-    this.izvestaji.paginator = this.paginator;
-    this.izvestajService.findAll().subscribe(
       (izvestaji: IzvestajDTO[]) => {
         this.izvestaji = new MatTableDataSource<IzvestajDTO>(izvestaji);
         this.fetchPending = false;

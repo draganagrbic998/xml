@@ -30,27 +30,27 @@ public class OdgovorTransformer implements TransformerInterface {
 	
 	@Override
 	public String html(String documentId) {
-		return this.xslTransformer.html(this.odgovorExist.load(documentId), XSL_PATH);
+		return this.xslTransformer.html(this.odgovorExist.find(documentId), XSL_PATH);
 	}
 		
 	@Override
 	public Resource pdf(String documentId) {
-		return this.xslTransformer.pdf(this.odgovorExist.load(documentId), XSL_FO_PATH, GEN_PATH);
+		return this.xslTransformer.pdf(this.odgovorExist.find(documentId), XSL_FO_PATH, GEN_PATH);
 	}
 	
 	@Override
 	public byte[] byteHtml(String documentId) {
-		return this.xslTransformer.byteHtml(this.odgovorExist.load(documentId), XSL_PATH);
+		return this.xslTransformer.byteHtml(this.odgovorExist.find(documentId), XSL_PATH);
 	}
 	
 	@Override
 	public byte[] bytePdf(String documentId) {
-		return this.xslTransformer.bytePdf(this.odgovorExist.load(documentId), XSL_FO_PATH);
+		return this.xslTransformer.bytePdf(this.odgovorExist.find(documentId), XSL_FO_PATH);
 	}
 
 	@Override
 	public String metadata(String documentId, MetadataType type) {
-		return this.xslTransformer.metadata(this.odgovorRDF.retrieve(documentId), type);
+		return this.xslTransformer.metadata(this.odgovorRDF.findAll(documentId), type);
 	}
 		
 }

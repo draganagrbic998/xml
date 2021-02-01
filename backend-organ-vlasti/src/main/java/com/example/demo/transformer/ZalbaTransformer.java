@@ -35,7 +35,7 @@ public class ZalbaTransformer implements TransformerInterface {
 	
 	@Override
 	public String html(String documentId) {
-		Document document = this.zalbaExist.load(documentId);
+		Document document = this.zalbaExist.find(documentId);
 		if (ZalbaMapper.getTipZalbe(document).equals(TipZalbe.odluka)) {
 			return this.xslTransformer.html(document, XSL_PATH_ODLUKA);
 		}
@@ -44,7 +44,7 @@ public class ZalbaTransformer implements TransformerInterface {
 		
 	@Override
 	public Resource pdf(String documentId) {
-		Document document = this.zalbaExist.load(documentId);
+		Document document = this.zalbaExist.find(documentId);
 		if (ZalbaMapper.getTipZalbe(document).equals(TipZalbe.odluka)) {
 			return this.xslTransformer.pdf(document, XSL_FO_PATH_ODLUKA, GEN_PATH);
 		}
@@ -53,7 +53,7 @@ public class ZalbaTransformer implements TransformerInterface {
 	
 	@Override
 	public byte[] byteHtml(String documentId) {
-		Document document = this.zalbaExist.load(documentId);
+		Document document = this.zalbaExist.find(documentId);
 		if (ZalbaMapper.getTipZalbe(document).equals(TipZalbe.odluka)) {
 			return this.xslTransformer.byteHtml(document, XSL_PATH_ODLUKA);
 		}
@@ -62,7 +62,7 @@ public class ZalbaTransformer implements TransformerInterface {
 	
 	@Override
 	public byte[] bytePdf(String documentId) {
-		Document document = this.zalbaExist.load(documentId);
+		Document document = this.zalbaExist.find(documentId);
 		if (ZalbaMapper.getTipZalbe(document).equals(TipZalbe.odluka)) {
 			return this.xslTransformer.bytePdf(document, XSL_FO_PATH_ODLUKA);
 		}
@@ -71,7 +71,7 @@ public class ZalbaTransformer implements TransformerInterface {
 	
 	@Override
 	public String metadata(String documentId, MetadataType type) {
-		return this.xslTransformer.metadata(this.zalbaRDF.retrieve(documentId), type);
+		return this.xslTransformer.metadata(this.zalbaRDF.findAll(documentId), type);
 	}
 
 }

@@ -37,14 +37,13 @@ public class IzvestajRDF implements RDFInterface {
 	}
 
 	@Override
-	public ResultSet retrieve(String documentId) {
-		return this.fusekiManager.retrieve(IZVESTAJ_GRAPH, Namespaces.IZVESTAJ + "/" + documentId);
+	public ResultSet findAll(String documentId) {
+		return this.fusekiManager.findAll(IZVESTAJ_GRAPH, Namespaces.IZVESTAJ + "/" + documentId);
 	}
 	
 	@Override
 	public String search(String xml) {
 		return Utils.getReferences(this.fusekiManager.search(IZVESTAJ_GRAPH, xml));
 	}
-
 
 }

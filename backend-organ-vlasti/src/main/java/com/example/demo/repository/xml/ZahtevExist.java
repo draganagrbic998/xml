@@ -33,13 +33,13 @@ public class ZahtevExist implements ExistInterface {
 	}
 		
 	@Override
-	public ResourceSet retrieve(String xpathExp) {
-		return this.existManager.retrieve(ZAHTEV_COLLECTION, xpathExp);
+	public ResourceSet findAll(String xpathExp) {
+		return this.existManager.findAll(ZAHTEV_COLLECTION, xpathExp);
 	}
 	
 	@Override
-	public Document load(String documentId) {
-		return this.existManager.load(ZAHTEV_COLLECTION, documentId);
+	public Document find(String documentId) {
+		return this.existManager.find(ZAHTEV_COLLECTION, documentId);
 	}
 
 	@Override

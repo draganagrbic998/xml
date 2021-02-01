@@ -44,12 +44,12 @@ public class ZahtevPortImpl implements Zahtev {
 		try {
 			Document request = this.domParser.buildDocument(getZahtevRequest);
 			String documentId = request.getElementsByTagName("broj").item(0).getTextContent();
-			Document document = this.zahtevService.load(documentId);
+			Document document = this.zahtevService.find(documentId);
 			if (request.getElementsByTagName("cutanje").getLength() > 0 && !ZahtevMapper.getStatusZahteva(document).equals(StatusZahteva.odbijeno)) {
 				throw new ResourceTakenException();
 			}
 			Element zahtev = (Element) document.getElementsByTagNameNS(Namespaces.ZAHTEV, "Zahtev").item(0);
-			Document korisnik = this.korisnikExist.load(zahtev.getAttribute("href").replace(Namespaces.KORISNIK + "", ""));
+			Document korisnik = this.korisnikExist.find(zahtev.getAttribute("href").replace(Namespaces.KORISNIK + "", ""));
 			String lozinka = this.domParser.buildDocument(getZahtevRequest).getElementsByTagName("lozinka").item(0)
 					.getTextContent();
 			if (!this.passwordEncoder.matches(lozinka, korisnik.getElementsByTagNameNS(Namespaces.OSNOVA, "lozinka").item(0).getTextContent())) {

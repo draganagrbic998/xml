@@ -31,7 +31,7 @@ export class ZalbaService {
       for (let j = 0; j < reference.length; ++j){
         referenceDTO.push({
           tip: reference.item(j).getAttribute('tip'),
-          broj: reference.item(j).textContent
+          broj: +reference.item(j).textContent
         });
       }
 

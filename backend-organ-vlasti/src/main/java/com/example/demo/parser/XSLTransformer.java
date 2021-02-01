@@ -93,6 +93,14 @@ public class XSLTransformer {
 		}
 	}
 	
+	public byte[] byteHtml(Document document, String xslPath) {
+		return this.plainHtml(document, xslPath).toByteArray();
+	}
+
+	public byte[] bytePdf(Document document, String xslFoPath) {
+		return this.plainPdf(document, xslFoPath).toByteArray();
+	}
+
 	public String metadata(ResultSet results, MetadataType type) {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		if (type.equals(MetadataType.xml)) {
@@ -104,14 +112,6 @@ public class XSLTransformer {
 		return out.toString();
 	}
 	
-	public byte[] byteHtml(Document document, String xslPath) {
-		return this.plainHtml(document, xslPath).toByteArray();
-	}
-
-	public byte[] bytePdf(Document document, String xslFoPath) {
-		return this.plainPdf(document, xslFoPath).toByteArray();
-	}
-
 	public Model model(Document document) {
 		try {
 			StreamSource in = new StreamSource(new StringReader(this.domParser.buildXml(document)));

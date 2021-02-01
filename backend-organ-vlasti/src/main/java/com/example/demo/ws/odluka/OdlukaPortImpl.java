@@ -43,9 +43,9 @@ public class OdlukaPortImpl implements Odluka {
 		try {
 			String documentId = this.domParser.buildDocument(getOdlukaRequest).getElementsByTagName("broj").item(0)
 					.getTextContent();
-			Document document = this.odlukaService.load(documentId);
+			Document document = this.odlukaService.find(documentId);
 			Element odluka = (Element) document.getElementsByTagNameNS(Namespaces.ODLUKA, "Odluka").item(0);
-			Document korisnik = this.korisnikExist.load(odluka.getAttribute("href").replace(Namespaces.KORISNIK + "/", ""));
+			Document korisnik = this.korisnikExist.find(odluka.getAttribute("href").replace(Namespaces.KORISNIK + "/", ""));
 			String lozinka = this.domParser.buildDocument(getOdlukaRequest).getElementsByTagName("lozinka").item(0)
 					.getTextContent();
 			if (!this.passwordEncoder.matches(lozinka, korisnik.getElementsByTagNameNS(Namespaces.OSNOVA, "lozinka").item(0).getTextContent())) {

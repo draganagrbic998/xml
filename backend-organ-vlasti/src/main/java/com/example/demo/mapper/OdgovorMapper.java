@@ -40,7 +40,7 @@ public class OdgovorMapper implements MapperInterface {
 		String brojZalbe = dto.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent();
 		Document document = this.domParser.buildDocumentFromFile(STUB_FILE);
 		Element odgovor = (Element) document.getElementsByTagNameNS(Namespaces.ODGOVOR, "Odgovor").item(0);
-		Element zalba = (Element) this.zalbaService.load(brojZalbe).getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").item(0);
+		Element zalba = (Element) this.zalbaService.find(brojZalbe).getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").item(0);
 		DocumentFragment documentFragment = document.createDocumentFragment();
 
 		odgovor.setAttribute("about", Namespaces.ODGOVOR + "/" + brojZalbe);

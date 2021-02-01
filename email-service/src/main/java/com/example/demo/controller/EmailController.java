@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,7 +17,7 @@ public class EmailController {
 	@Autowired
 	private EmailService emailService;
 	
-	@PostMapping(consumes = MediaType.TEXT_XML_VALUE)
+	@PostMapping(consumes = "text/xml; charset=utf-8")
 	public ResponseEntity<Void> sendEmail(@RequestBody String xml) {
 		this.emailService.sendEmail(xml);
 		return new ResponseEntity<>(HttpStatus.OK);

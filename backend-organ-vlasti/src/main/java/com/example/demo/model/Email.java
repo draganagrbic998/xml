@@ -1,4 +1,4 @@
-package com.example.demo.service.email;
+package com.example.demo.model;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

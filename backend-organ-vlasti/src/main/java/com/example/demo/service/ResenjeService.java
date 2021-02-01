@@ -38,7 +38,7 @@ public class ResenjeService implements ServiceInterface {
 		Document document = this.resenjeMapper.map(xml);
 		String brojZalbe = ((Element) document.getElementsByTagNameNS(Namespaces.RESENJE, "datumZalbe").item(0))
 				.getAttribute("href").replace(Namespaces.ZALBA + "/", "");
-		Document zalbaDocument = this.zalbaService.load(brojZalbe);
+		Document zalbaDocument = this.zalbaService.find(brojZalbe);
 
 		this.resenjeExist.update(Utils.getBroj(document), document);
 		this.resenjeRDF.add(document);
@@ -59,13 +59,13 @@ public class ResenjeService implements ServiceInterface {
 	}
 
 	@Override
-	public String retrieve() {
-		return this.resenjeMapper.map(this.resenjeExist.retrieve("/resenje:Resenje"));		
+	public String findAll() {
+		return this.resenjeMapper.map(this.resenjeExist.findAll("/resenje:Resenje"));		
 	}
 
 	@Override
-	public Document load(String documentId) {
-		return this.resenjeExist.load(documentId);
+	public Document find(String documentId) {
+		return this.resenjeExist.find(documentId);
 	}
 	
 	@Override
@@ -77,14 +77,14 @@ public class ResenjeService implements ServiceInterface {
 	public String regularSearch(String xml) {
 		Pretraga pretraga = (Pretraga) this.jaxbParser.unmarshalFromXml(xml, Pretraga.class);
 		String xpathExp = String.format("/resenje:Resenje%s", SearchUtil.pretragaToXpath(pretraga));
-		ResourceSet resources = this.resenjeExist.retrieve(xpathExp);
+		ResourceSet resources = this.resenjeExist.findAll(xpathExp);
 		return this.resenjeMapper.map(resources);
 	}
 
 	@Override
 	public String advancedSearch(String xml) {
 		String xpathExp = String.format("/resenje:Resenje%s", this.resenjeRDF.search(xml));
-		ResourceSet resources = this.resenjeExist.retrieve(xpathExp);
+		ResourceSet resources = this.resenjeExist.findAll(xpathExp);
 		return this.resenjeMapper.map(resources);
 	}
 

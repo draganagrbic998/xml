@@ -35,7 +35,7 @@ public class OdlukaTransformer implements TransformerInterface {
 	
 	@Override
 	public String html(String documentId) {
-		Document document = this.odlukaExist.load(documentId);
+		Document document = this.odlukaExist.find(documentId);
 		if (OdlukaMapper.getTipOdluke(document).equals(TipOdluke.obavestenje)) {
 			return this.xslTransformer.html(document, XSL_PATH_OBAVESTENJE);
 		}
@@ -44,7 +44,7 @@ public class OdlukaTransformer implements TransformerInterface {
 		
 	@Override
 	public Resource pdf(String documentId) {
-		Document document = this.odlukaExist.load(documentId);
+		Document document = this.odlukaExist.find(documentId);
 		if (OdlukaMapper.getTipOdluke(document).equals(TipOdluke.obavestenje)) {
 			return this.xslTransformer.pdf(document, XSL_FO_PATH_OBAVESTENJE, GEN_PATH);
 		}
@@ -53,7 +53,7 @@ public class OdlukaTransformer implements TransformerInterface {
 	
 	@Override
 	public byte[] byteHtml(String documentId) {
-		Document document = this.odlukaExist.load(documentId);
+		Document document = this.odlukaExist.find(documentId);
 		if (OdlukaMapper.getTipOdluke(document).equals(TipOdluke.obavestenje)) {
 			return this.xslTransformer.byteHtml(document, XSL_PATH_OBAVESTENJE);
 		}
@@ -62,7 +62,7 @@ public class OdlukaTransformer implements TransformerInterface {
 	
 	@Override
 	public byte[] bytePdf(String documentId) {
-		Document document = this.odlukaExist.load(documentId);
+		Document document = this.odlukaExist.find(documentId);
 		if (OdlukaMapper.getTipOdluke(document).equals(TipOdluke.obavestenje)) {
 			return this.xslTransformer.bytePdf(document, XSL_FO_PATH_OBAVESTENJE);
 		}
@@ -71,7 +71,7 @@ public class OdlukaTransformer implements TransformerInterface {
 	
 	@Override
 	public String metadata(String documentId, MetadataType type) {
-		return this.xslTransformer.metadata(this.odlukaRDF.retrieve(documentId), type);
+		return this.xslTransformer.metadata(this.odlukaRDF.findAll(documentId), type);
 	}
 	
 }

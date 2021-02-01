@@ -69,13 +69,13 @@ public class ZalbaService implements ServiceInterface {
 	}
 
 	@Override
-	public String retrieve() {
-		return this.zalbaMapper.map(this.zalbaExist.retrieve("/zalba:Zalba"));
+	public String findAll() {
+		return this.zalbaMapper.map(this.zalbaExist.findAll("/zalba:Zalba"));
 	}
 	
 	@Override
-	public Document load(String documentId) {
-		return this.zalbaExist.load(documentId);
+	public Document find(String documentId) {
+		return this.zalbaExist.find(documentId);
 	}
 	
 	@Override
@@ -87,14 +87,14 @@ public class ZalbaService implements ServiceInterface {
 	public String regularSearch(String xml) {
 		Pretraga pretraga = (Pretraga) this.jaxbParser.unmarshalFromXml(xml, Pretraga.class);
 		String xpathExp = String.format("/zalba:Zalba%s", SearchUtil.pretragaToXpath(pretraga));
-		ResourceSet resources = this.zalbaExist.retrieve(xpathExp);
+		ResourceSet resources = this.zalbaExist.findAll(xpathExp);
 		return this.zalbaMapper.map(resources);
 	}
 
 	@Override
 	public String advancedSearch(String xml) {
 		String xpathExp = String.format("/zalba:Zalba%s", this.zalbaRDF.search(xml));
-		ResourceSet resources = this.zalbaExist.retrieve(xpathExp);
+		ResourceSet resources = this.zalbaExist.findAll(xpathExp);
 		return this.zalbaMapper.map(resources);
 	}
 	
@@ -107,7 +107,7 @@ public class ZalbaService implements ServiceInterface {
 	}
 	
 	public void odustani(String broj) {
-		Document document = this.zalbaExist.load(broj);
+		Document document = this.zalbaExist.find(broj);
 		document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.odustato + "");
 		this.zalbaExist.update(broj, document);
 		this.zalbaRDF.update(broj, document);
@@ -116,7 +116,7 @@ public class ZalbaService implements ServiceInterface {
 	public void otkazi(String brojZahteva) {
 		try {
 			String xpathExp = String.format("/zalba:Zalba[zalba:PodaciZahteva/@href='%s']", Namespaces.ZAHTEV + "/" + brojZahteva);
-			ResourceSet resources = this.zalbaExist.retrieve(xpathExp);
+			ResourceSet resources = this.zalbaExist.findAll(xpathExp);
 			ResourceIterator it = resources.getIterator();
 			while (it.hasMoreResources()) {
 				XMLResource resource = (XMLResource) it.nextResource();

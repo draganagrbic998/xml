@@ -12,6 +12,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
 import com.example.demo.exception.MyException;
+import com.example.demo.model.Email;
 import com.example.demo.parser.DOMParser;
 import com.example.demo.parser.JAXBParser;
 

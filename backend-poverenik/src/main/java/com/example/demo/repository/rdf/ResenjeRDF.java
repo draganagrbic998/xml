@@ -37,8 +37,8 @@ public class ResenjeRDF implements RDFInterface {
 	}
 
 	@Override
-	public ResultSet retrieve(String documentId) {
-		return this.fusekiManager.retrieve(RESENJE_GRAPH, Namespaces.RESENJE + "/" + documentId);
+	public ResultSet findAll(String documentId) {
+		return this.fusekiManager.findAll(RESENJE_GRAPH, Namespaces.RESENJE + "/" + documentId);
 	}
 	
 	@Override	

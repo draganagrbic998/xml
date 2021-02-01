@@ -33,13 +33,13 @@ public class OdgovorExist implements ExistInterface {
 	}
 		
 	@Override
-	public ResourceSet retrieve(String xpathExp) {
-		return this.existManager.retrieve(ODGOVOR_COLLECTION, xpathExp);
+	public ResourceSet findAll(String xpathExp) {
+		return this.existManager.findAll(ODGOVOR_COLLECTION, xpathExp);
 	}
 	
 	@Override
-	public Document load(String documentId) {
-		return this.existManager.load(ODGOVOR_COLLECTION, documentId);
+	public Document find(String documentId) {
+		return this.existManager.find(ODGOVOR_COLLECTION, documentId);
 	}
 
 	@Override

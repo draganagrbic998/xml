@@ -78,7 +78,7 @@ public class ZalbaService implements ServiceInterface {
 	}
 
 	@Override
-	public String retrieve() {
+	public String findAll() {
 		Korisnik korisnik = this.korisnikService.currentUser();
 		String xpathExp;
 		if (korisnik.getUloga().equals(Constants.POVERENIK)) {
@@ -87,12 +87,12 @@ public class ZalbaService implements ServiceInterface {
 		else {
 			xpathExp = String.format("/zalba:Zalba[@href='%s']", Namespaces.KORISNIK + "/" + korisnik.getMejl());
 		}
-		return this.zalbaMapper.map(this.zalbaExist.retrieve(xpathExp));
+		return this.zalbaMapper.map(this.zalbaExist.findAll(xpathExp));
 	}
 
 	@Override
-	public Document load(String documentId) {
-		return this.zalbaExist.load(documentId);
+	public Document find(String documentId) {
+		return this.zalbaExist.find(documentId);
 	}
 
 	@Override
@@ -112,7 +112,7 @@ public class ZalbaService implements ServiceInterface {
 		}
 		Pretraga pretraga = (Pretraga) this.jaxbParser.unmarshalFromXml(xml, Pretraga.class);
 		String xpathExp = String.format("%s%s", prefix, SearchUtil.pretragaToXpath(pretraga));
-		ResourceSet resources = this.zalbaExist.retrieve(xpathExp);
+		ResourceSet resources = this.zalbaExist.findAll(xpathExp);
 		return this.zalbaMapper.map(resources);
 	}
 
@@ -127,7 +127,7 @@ public class ZalbaService implements ServiceInterface {
 			prefix = String.format("/zalba:Zalba[@href='%s']", Namespaces.KORISNIK + "/" + korisnik.getMejl());
 		}
 		String xpathExp = String.format("%s%s", prefix, this.zalbaRDF.search(xml));
-		ResourceSet resources = this.zalbaExist.retrieve(xpathExp);
+		ResourceSet resources = this.zalbaExist.findAll(xpathExp);
 		return this.zalbaMapper.map(resources);
 	}
 	
@@ -139,40 +139,8 @@ public class ZalbaService implements ServiceInterface {
 		return this.zalbaRDF.resenja(documentId);
 	}
 	
-	public void obustavi(String broj) {
-		Document document = this.zalbaExist.load(broj);
-		StatusZalbe status = ZalbaMapper.getStatusZalbe(document);
-		if (!status.equals(StatusZalbe.odustato) && !status.equals(StatusZalbe.obavesteno)) {
-			throw new ResourceTakenException();
-		}
-		
-		Document dto = this.domParser.buildDocumentFromFile(PONISTAVANJE_STUB);
-		dto.getElementsByTagNameNS(Namespaces.RESENJE, "status").item(0)
-			.setTextContent(ZalbaMapper.getStatusZalbe(document) + "");
-		dto.getElementsByTagNameNS(Namespaces.RESENJE, "brojZalbe").item(0)
-			.setTextContent(broj);
-		this.resenjeService.add(this.domParser.buildXml(dto));
-	}
-
-	public void prosledi(String broj) {
-		Document document = this.zalbaExist.load(broj);
-		StatusZalbe status = ZalbaMapper.getStatusZalbe(document);
-		if (!status.equals(StatusZalbe.cekanje)) {
-			throw new ResourceTakenException();
-		}
-
-		document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.prosledjeno + "");
-		Node datumProsledjivanja = document.createElementNS(Namespaces.ZALBA, "zalba:datumProsledjivanja");
-		datumProsledjivanja.setTextContent(Constants.sdf.format(new Date()));
-		Element zalba = (Element) document.getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").item(0);
-		zalba.insertBefore(datumProsledjivanja, document.getElementsByTagNameNS(Namespaces.ZALBA, "PodaciZahteva").item(0));
-		this.soapService.sendSOAPMessage(document, SOAPActions.create_zalba);
-		this.zalbaExist.update(broj, document);
-		this.zalbaRDF.update(broj, document);
-	}
-	
 	public void odustani(String broj) {
-		Document document = this.zalbaExist.load(broj);
+		Document document = this.zalbaExist.find(broj);
 		StatusZalbe status = ZalbaMapper.getStatusZalbe(document);
 		if (!status.equals(StatusZalbe.cekanje) && !status.equals(StatusZalbe.prosledjeno) && !status.equals(StatusZalbe.odgovoreno)) {
 			throw new ResourceTakenException();
@@ -190,11 +158,43 @@ public class ZalbaService implements ServiceInterface {
 		this.zalbaExist.update(broj, document);
 		this.zalbaRDF.update(broj, document);
 	}
+	
+	public void obustavi(String broj) {
+		Document document = this.zalbaExist.find(broj);
+		StatusZalbe status = ZalbaMapper.getStatusZalbe(document);
+		if (!status.equals(StatusZalbe.odustato) && !status.equals(StatusZalbe.obavesteno)) {
+			throw new ResourceTakenException();
+		}
+		
+		Document dto = this.domParser.buildDocumentFromFile(PONISTAVANJE_STUB);
+		dto.getElementsByTagNameNS(Namespaces.RESENJE, "status").item(0)
+			.setTextContent(ZalbaMapper.getStatusZalbe(document) + "");
+		dto.getElementsByTagNameNS(Namespaces.RESENJE, "brojZalbe").item(0)
+			.setTextContent(broj);
+		this.resenjeService.add(this.domParser.buildXml(dto));
+	}
+
+	public void prosledi(String broj) {
+		Document document = this.zalbaExist.find(broj);
+		StatusZalbe status = ZalbaMapper.getStatusZalbe(document);
+		if (!status.equals(StatusZalbe.cekanje)) {
+			throw new ResourceTakenException();
+		}
+
+		document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.prosledjeno + "");
+		Node datumProsledjivanja = document.createElementNS(Namespaces.ZALBA, "zalba:datumProsledjivanja");
+		datumProsledjivanja.setTextContent(Constants.sdf.format(new Date()));
+		Element zalba = (Element) document.getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").item(0);
+		zalba.insertBefore(datumProsledjivanja, document.getElementsByTagNameNS(Namespaces.ZALBA, "PodaciZahteva").item(0));
+		this.soapService.sendSOAPMessage(document, SOAPActions.create_zalba);
+		this.zalbaExist.update(broj, document);
+		this.zalbaRDF.update(broj, document);
+	}
 
 	public void otkazi(String brojZahteva) {
 		try {
 			String xpathExp = String.format("/zalba:Zalba[zalba:PodaciZahteva/@href='%s']", Namespaces.ZAHTEV + "/" + brojZahteva);
-			ResourceSet resources = this.zalbaExist.retrieve(xpathExp);
+			ResourceSet resources = this.zalbaExist.findAll(xpathExp);
 			ResourceIterator it = resources.getIterator();
 			while (it.hasMoreResources()) {
 				XMLResource resource = (XMLResource) it.nextResource();

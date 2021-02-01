@@ -8,7 +8,7 @@ public interface RDFInterface {
 	public void add(Document document);
 	public void update(String documentId, Document document);
 	public void delete(String documentId);
-	public ResultSet retrieve(String documentId);
+	public ResultSet findAll(String documentId);
 	public String search(String xml);
 
 }

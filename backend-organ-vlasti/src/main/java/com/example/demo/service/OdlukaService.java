@@ -69,7 +69,7 @@ public class OdlukaService implements ServiceInterface {
 		Document document = this.odlukaMapper.map(xml);
 		String brojZahteva = ((Element) document.getElementsByTagNameNS(Namespaces.ODLUKA, "datumZahteva").item(0))
 				.getAttribute("href").replace(Namespaces.ZAHTEV + "/", "");
-		Document zahtevDocument = this.zahtevService.load(brojZahteva);
+		Document zahtevDocument = this.zahtevService.find(brojZahteva);
 		
 		if (OdlukaMapper.getTipOdluke(document).equals(TipOdluke.obavestenje)) {
 			if (ZahtevMapper.getStatusZahteva(zahtevDocument).equals(StatusZahteva.odobreno)) {
@@ -107,7 +107,7 @@ public class OdlukaService implements ServiceInterface {
 	}
 	
 	@Override
-	public String retrieve() {
+	public String findAll() {
 		Korisnik korisnik = this.korisnikService.currentUser();
 		String xpathExp;
 		if (korisnik.getUloga().equals(Constants.SLUZBENIK)) {
@@ -116,12 +116,12 @@ public class OdlukaService implements ServiceInterface {
 		else {
 			xpathExp = String.format("/odluka:Odluka[@href='%s']", Namespaces.KORISNIK + "/" + korisnik.getMejl());
 		}
-		return this.odlukaMapper.map(this.odlukaExist.retrieve(xpathExp));
+		return this.odlukaMapper.map(this.odlukaExist.findAll(xpathExp));
 	}
 	
 	@Override
-	public Document load(String documentId) {
-		return this.odlukaExist.load(documentId);
+	public Document find(String documentId) {
+		return this.odlukaExist.find(documentId);
 	}
 
 	@Override
@@ -141,7 +141,7 @@ public class OdlukaService implements ServiceInterface {
 		}
 		Pretraga pretraga = (Pretraga) this.jaxbParser.unmarshalFromXml(xml, Pretraga.class);
 		String xpathExp = String.format("%s%s", prefix, SearchUtil.pretragaToXpath(pretraga));
-		ResourceSet resources = this.odlukaExist.retrieve(xpathExp);
+		ResourceSet resources = this.odlukaExist.findAll(xpathExp);
 		return this.odlukaMapper.map(resources);
 	}
 
@@ -156,7 +156,7 @@ public class OdlukaService implements ServiceInterface {
 			prefix = String.format("/odluka:Odluka[@href='%s']", Namespaces.KORISNIK + "/" + korisnik.getMejl());
 		}
 		String xpathExp = String.format("%s%s", prefix, this.odlukaRDF.search(xml));
-		ResourceSet resources = this.odlukaExist.retrieve(xpathExp);
+		ResourceSet resources = this.odlukaExist.findAll(xpathExp);
 		return this.odlukaMapper.map(resources);
 	}
 

@@ -35,7 +35,7 @@ export class ZalbaService {
       for (let j = 0; j < reference.length; ++j){
         referenceDTO.push({
           tip: reference.item(j).getAttribute('tip'),
-          broj: reference.item(j).textContent
+          broj: +reference.item(j).textContent
         });
       }
 
@@ -136,12 +136,12 @@ export class ZalbaService {
     );
   }
 
-  odustani(broj: number): Observable<null>{
-    return this.http.put<null>(`${this.API_ZALBE}/odustani/${broj}`, null);
-  }
-
   prosledi(broj: number): Observable<null>{
     return this.http.put<null>(`${this.API_ZALBE}/prosledi/${broj}`, null);
+  }
+
+  odustani(broj: number): Observable<null>{
+    return this.http.put<null>(`${this.API_ZALBE}/odustani/${broj}`, null);
   }
 
   obustavi(broj: number): Observable<null>{

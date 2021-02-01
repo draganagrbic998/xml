@@ -55,7 +55,7 @@ public class KorisnikService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) {
 		try {
-			return (Korisnik) this.jaxbParser.unmarshalFromDoc(this.korisnikExist.load(username), Korisnik.class);
+			return (Korisnik) this.jaxbParser.unmarshalFromDoc(this.korisnikExist.find(username), Korisnik.class);
 		}
 		catch(Exception e) {
 			return null;
@@ -105,7 +105,7 @@ public class KorisnikService implements UserDetailsService {
 	public void activate(String potpis) {
 		try {
 			String xpathExp = String.format("/Korisnik[Osoba/potpis='%s']", potpis);
-			XMLResource resource = (XMLResource) this.korisnikExist.retrieve(xpathExp).getIterator().nextResource();
+			XMLResource resource = (XMLResource) this.korisnikExist.findAll(xpathExp).getIterator().nextResource();
 			Korisnik korisnik = (Korisnik) this.jaxbParser.unmarshalFromXml(resource.getContent().toString(), Korisnik.class);
 			korisnik.setAktivan(true);
 			this.korisnikExist.update(korisnik.getMejl(), this.jaxbParser.marshalToDoc(korisnik));
@@ -116,7 +116,7 @@ public class KorisnikService implements UserDetailsService {
 	}
 	
 	public Document loadUser(String username) {
-		return this.korisnikExist.load(username);
+		return this.korisnikExist.find(username);
 	}
 
 	private String generatePotpis() {

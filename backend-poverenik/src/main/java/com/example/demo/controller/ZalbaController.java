@@ -31,16 +31,16 @@ public class ZalbaController {
 	@Autowired
 	private ZalbaTransformer zalbaTransformer;
 				
-	@PostMapping(consumes = MediaType.TEXT_XML_VALUE)
+	@PostMapping(consumes = "text/xml; charset=utf-8")
 	@PreAuthorize("hasAuthority('gradjanin')")
 	public ResponseEntity<Void> add(@RequestBody String xml) {		
 		this.zalbaService.add(xml);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
-	@GetMapping(produces = MediaType.TEXT_XML_VALUE)
+	@GetMapping(produces = "text/xml; charset=utf-8")
 	public ResponseEntity<String> findAll() {
-		return new ResponseEntity<>(this.zalbaService.retrieve(), HttpStatus.OK);
+		return new ResponseEntity<>(this.zalbaService.findAll(), HttpStatus.OK);
 	}
 		
 	@GetMapping(value = "/{broj}")
@@ -50,14 +50,11 @@ public class ZalbaController {
 					.header(HttpHeaders.CONTENT_TYPE, "text/html; charset=utf-8")
 					.body(this.zalbaTransformer.html(broj));
 		}
-		else if (format.equals("application/pdf")) {
-			Resource resource = this.zalbaTransformer.pdf(broj);
-			return ResponseEntity.ok()
-					.header(HttpHeaders.CONTENT_TYPE, "application/pdf")
-					.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-					.body(resource);
-		}
-		return ResponseEntity.notFound().build();
+		Resource resource = this.zalbaTransformer.pdf(broj);
+		return ResponseEntity.ok()
+				.header(HttpHeaders.CONTENT_TYPE, "application/pdf")
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+				.body(resource);
 	}
 	
 	@GetMapping(value = "/{broj}/metadata")

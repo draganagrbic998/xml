@@ -93,7 +93,7 @@ public class ExistManager {
 		}
 	}
 		
-	public ResourceSet retrieve(String collectionId, String xpathExp) {
+	public ResourceSet findAll(String collectionId, String xpathExp) {
 		Collection collection = null;
 		try {
 			this.createConnection();
@@ -122,7 +122,7 @@ public class ExistManager {
 		}
 	}
 	
-	public Document load(String collectionId, String documentId) {
+	public Document find(String collectionId, String documentId) {
 		Collection collection = null;
 		try {
 			this.createConnection();

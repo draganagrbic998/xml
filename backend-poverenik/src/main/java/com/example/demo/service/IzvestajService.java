@@ -48,13 +48,13 @@ public class IzvestajService implements ServiceInterface {
 	}
 
 	@Override
-	public String retrieve() {
-		return this.izvestajMapper.map(this.izvestajExist.retrieve("/izvestaj:Izvestaj"));
+	public String findAll() {
+		return this.izvestajMapper.map(this.izvestajExist.findAll("/izvestaj:Izvestaj"));
 	}
 	
 	@Override
-	public Document load(String documentId) {
-		return this.izvestajExist.load(documentId);
+	public Document find(String documentId) {
+		return this.izvestajExist.find(documentId);
 	}
 
 	@Override
@@ -66,14 +66,14 @@ public class IzvestajService implements ServiceInterface {
 	public String regularSearch(String xml) {
 		Pretraga pretraga = (Pretraga) this.jaxbParser.unmarshalFromXml(xml, Pretraga.class);
 		String xpathExp = String.format("/izvestaj:Izvestaj%s", SearchUtil.pretragaToXpath(pretraga));
-		ResourceSet resources = this.izvestajExist.retrieve(xpathExp);
+		ResourceSet resources = this.izvestajExist.findAll(xpathExp);
 		return this.izvestajMapper.map(resources);
 	}
 
 	@Override
 	public String advancedSearch(String xml) {
 		String xpathExp = String.format("/izvestaj:Izvestaj%s", this.izvestajRDF.search(xml));
-		ResourceSet resources = this.izvestajExist.retrieve(xpathExp);
+		ResourceSet resources = this.izvestajExist.findAll(xpathExp);
 		return this.izvestajMapper.map(resources);
 	}
 
