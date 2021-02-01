@@ -15,41 +15,31 @@ export class XonomyService {
       caption: 'Dodaj <datum> tag',
       action: Xonomy.newElementChild,
       actionParameter: '<datum></datum>',
-      hideIf: (jsElement) => {
-        return this.hideMetapodatak(jsElement, 'datum');
-      },
+      hideIf: (jsElement) => this.hideMetapodatak(jsElement, 'datum'),
     },
     {
       caption: 'Dodaj <organVlasti> tag',
       action: Xonomy.newElementChild,
       actionParameter: '<organVlasti></organVlasti>',
-      hideIf: (jsElement) => {
-        return this.hideMetapodatak(jsElement, 'organVlasti');
-      },
+      hideIf: (jsElement) => this.hideMetapodatak(jsElement, 'organVlasti'),
     },
     {
       caption: 'Dodaj <izdatoU> tag',
       action: Xonomy.newElementChild,
       actionParameter: '<izdatoU></izdatoU>',
-      hideIf: (jsElement) => {
-        return this.hideMetapodatak(jsElement, 'izdatoU');
-      },
+      hideIf: (jsElement) => this.hideMetapodatak(jsElement, 'izdatoU'),
     },
     {
       caption: 'Dodaj <and> tag',
       action: Xonomy.newElementChild,
       actionParameter: '<and></and>',
-      hideIf: (jsElement) => {
-        return this.hideLogOp(jsElement);
-      },
+      hideIf: (jsElement) => this.hideLogOp(jsElement),
     },
     {
       caption: 'Dodaj <or> tag',
       action: Xonomy.newElementChild,
       actionParameter: '<or></or>',
-      hideIf: (jsElement) => {
-        return this.hideLogOp(jsElement);
-      },
+      hideIf: (jsElement) => this.hideLogOp(jsElement),
     }
   ];
 
@@ -58,53 +48,57 @@ export class XonomyService {
       caption: 'Dodaj <mesto> tag',
       action: Xonomy.newElementChild,
       actionParameter: '<mesto></mesto>',
-      hideIf: (jsElement) => {
-        return this.hideMetapodatak(jsElement, 'mesto');
-      },
+      hideIf: (jsElement) => this.hideMetapodatak(jsElement, 'mesto'),
     }
   ]];
 
+  private baseChild = {
+    hasText: true,
+    menu: [{
+      caption: 'Add @not attribute',
+      action: Xonomy.newAttribute,
+      actionParameter: { name: 'not', value: 'true' },
+      hideIf: (jsElement) => jsElement.hasAttribute('not')
+    }],
+    attributes: {
+      not: {
+        menu: [{
+          caption: 'Delete @not attribute',
+          action: Xonomy.deleteAttribute
+        }]
+      }
+    }
+  };
+
   zalbaPretraga = {
     elements: {
-      datum: {
-        hasText: true
-      },
-      organVlasti: {
-        hasText: true
-      },
-      izdatoU: {
-        hasText: true
-      },
-      mesto: {
-        hasText: true
-      },
-      tip: {
+      datum: this.baseChild,
+      organVlasti: this.baseChild,
+      izdatoU: this.baseChild,
+      mesto: this.baseChild,
+      tip: {...this.baseChild, ...{
         hasText: true,
         asker: Xonomy.askPicklist,
         askerParameter: ['cutanje', 'odbijanje', 'delimicnost']
-      },
-      stanje: {
+      }},
+      stanje: {...this.baseChild, ...{
         hasText: true,
         asker: Xonomy.askPicklist,
         askerParameter: ['cekanje', 'prosledjeno', 'odgovoreno', 'odustato', 'obavesteno', 'odobreno', 'odbijeno']
-      },
+      }},
       Pretraga: {
         menu: [...this.extendedMenu, ...[
           {
             caption: 'Dodaj <tip> tag',
             action: Xonomy.newElementChild,
             actionParameter: '<tip></tip>',
-            hideIf: (jsElement) => {
-              return this.hideMetapodatak(jsElement, 'tip');
-            },
+            hideIf: (jsElement) => this.hideMetapodatak(jsElement, 'tip'),
           },
           {
             caption: 'Dodaj <stanje> tag',
             action: Xonomy.newElementChild,
             actionParameter: '<stanje></stanje>',
-            hideIf: (jsElement) => {
-              return this.hideMetapodatak(jsElement, 'stanje');
-            },
+            hideIf: (jsElement) => this.hideMetapodatak(jsElement, 'stanje'),
           }
         ]]
       }
@@ -113,15 +107,9 @@ export class XonomyService {
 
   odgovorPretraga = {
     elements: {
-      datum: {
-        hasText: true
-      },
-      organVlasti: {
-        hasText: true
-      },
-      izdatoU: {
-        hasText: true
-      },
+      datum: this.baseChild,
+      organVlasti: this.baseChild,
+      izdatoU: this.baseChild,
       Pretraga: {
         menu: this.baseMenu
       }
@@ -130,42 +118,32 @@ export class XonomyService {
 
   resenjePretraga = {
     elements: {
-      datum: {
-        hasText: true
-      },
-      organVlasti: {
-        hasText: true
-      },
-      izdatoU: {
-        hasText: true
-      },
-      status: {
+      datum: this.baseChild,
+      organVlasti: this.baseChild,
+      izdatoU: this.baseChild,
+      status: {...this.baseChild, ...{
         hasText: true,
         asker: Xonomy.askPicklist,
         askerParameter: ['odustato', 'obavesteno', 'odobreno', 'odbijeno']
-      },
-      tipZalbe: {
+      }},
+      tipZalbe: {...this.baseChild, ...{
         hasText: true,
         asker: Xonomy.askPicklist,
         askerParameter: ['cutanje', 'odbijanje', 'delimicnost']
-      },
+      }},
       Pretraga: {
         menu: [...this.baseMenu, ...[
           {
             caption: 'Dodaj <status> tag',
             action: Xonomy.newElementChild,
             actionParameter: '<status></status>',
-            hideIf: (jsElement) => {
-              return this.hideMetapodatak(jsElement, 'status');
-            },
+            hideIf: (jsElement) => this.hideMetapodatak(jsElement, 'status'),
           },
           {
             caption: 'Dodaj <tipZalbe> tag',
             action: Xonomy.newElementChild,
             actionParameter: '<tipZalbe></tipZalbe>',
-            hideIf: (jsElement) => {
-              return this.hideMetapodatak(jsElement, 'tipZalbe');
-            },
+            hideIf: (jsElement) => this.hideMetapodatak(jsElement, 'tipZalbe'),
           }
         ]]
       }
@@ -174,27 +152,17 @@ export class XonomyService {
 
   izvestajPretraga = {
     elements: {
-      datum: {
-        hasText: true
-      },
-      organVlasti: {
-        hasText: true
-      },
-      izdatoU: {
-        hasText: true
-      },
-      godina: {
-        hasText: true
-      },
+      datum: this.baseChild,
+      organVlasti: this.baseChild,
+      izdatoU: this.baseChild,
+      godina: this.baseChild,
       Pretraga: {
         menu: [...this.baseMenu, ...[
           {
             caption: 'Dodaj <godina> tag',
             action: Xonomy.newElementChild,
             actionParameter: '<godina></godina>',
-            hideIf: (jsElement) => {
-              return this.hideMetapodatak(jsElement, 'godina');
-            },
+            hideIf: (jsElement) => this.hideMetapodatak(jsElement, 'godina'),
           }
         ]]
       }

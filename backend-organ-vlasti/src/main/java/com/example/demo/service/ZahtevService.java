@@ -8,13 +8,13 @@ import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.xmldb.api.base.ResourceIterator;
 import org.xmldb.api.base.ResourceSet;
+import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
 
 import com.example.demo.common.Constants;
 import com.example.demo.common.Namespaces;
 import com.example.demo.common.Utils;
 import com.example.demo.enums.StatusZahteva;
-import com.example.demo.exception.MyException;
 import com.example.demo.exist.SearchUtil;
 import com.example.demo.mapper.ZahtevMapper;
 import com.example.demo.model.Korisnik;
@@ -137,23 +137,18 @@ public class ZahtevService implements ServiceInterface {
 	}
 
 	//@Scheduled(fixedDelay = CUTANJE_MILISECONDS_LIMIT, initialDelay = CUTANJE_MILISECONDS_LIMIT)
-	public void cutanjeUprave() {
-		try {
-			String xpathExp = String.format("/zahtev:Zahtev[(%d - zahtev:vreme) >= %d][zahtev:status = 'cekanje']", new Date().getTime(), CUTANJE_MILISECONDS_LIMIT);
-			ResourceSet resources = this.zahtevExist.retrieve(xpathExp);
-			ResourceIterator it = resources.getIterator();
-			while (it.hasMoreResources()) {
-				XMLResource resource = (XMLResource) it.nextResource();
-				Document document = this.domParser.buildDocument(resource.getContent().toString());
-				document.getElementsByTagNameNS(Namespaces.ZAHTEV, "status").item(0).setTextContent(StatusZahteva.odbijeno + "");
-				this.zahtevExist.update(Utils.getBroj(document), document);
-				
-				this.notificationManager.notifyCutanjeUprave(document);
-				System.out.println("ULOVLJEN ZAHTEV BROJ " + Utils.getBroj(document));
-			}
-		}
-		catch(Exception e) {
-			throw new MyException(e);
+	public void cutanjeUprave() throws XMLDBException {
+		String xpathExp = String.format("/zahtev:Zahtev[(%d - zahtev:vreme) >= %d][zahtev:status = 'cekanje']", new Date().getTime(), CUTANJE_MILISECONDS_LIMIT);
+		ResourceSet resources = this.zahtevExist.retrieve(xpathExp);
+		ResourceIterator it = resources.getIterator();
+		while (it.hasMoreResources()) {
+			XMLResource resource = (XMLResource) it.nextResource();
+			Document document = this.domParser.buildDocument(resource.getContent().toString());
+			document.getElementsByTagNameNS(Namespaces.ZAHTEV, "status").item(0).setTextContent(StatusZahteva.odbijeno + "");
+			this.zahtevExist.update(Utils.getBroj(document), document);
+			
+			this.notificationManager.notifyCutanjeUprave(document);
+			System.out.println("ULOVLJEN ZAHTEV BROJ " + Utils.getBroj(document));
 		}
 	}
 	

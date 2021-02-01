@@ -129,10 +129,10 @@ public class ResenjeService implements ServiceInterface {
 		Korisnik korisnik = this.korisnikService.currentUser();
 		String prefix;
 		if (korisnik.getUloga().equals(Constants.POVERENIK)) {
-			prefix = "/odgovor:Odgovor";
+			prefix = "/resenje:Resenje";
 		} 
 		else {
-			prefix = String.format("/odgovor:Odgovor[@href='%s']", Namespaces.KORISNIK + "/" + korisnik.getMejl());
+			prefix = String.format("/resenje:Resenje[@href='%s']", Namespaces.KORISNIK + "/" + korisnik.getMejl());
 		}
 		Pretraga pretraga = (Pretraga) this.jaxbParser.unmarshalFromXml(xml, Pretraga.class);
 		String xpathExp = String.format("%s%s", prefix, SearchUtil.pretragaToXpath(pretraga));
@@ -145,10 +145,10 @@ public class ResenjeService implements ServiceInterface {
 		Korisnik korisnik = this.korisnikService.currentUser();
 		String prefix;
 		if (korisnik.getUloga().equals(Constants.POVERENIK)) {
-			prefix = "/odgovor:Odgovor";
+			prefix = "/resenje:Resenje";
 		} 
 		else {
-			prefix = String.format("/odgovor:Odgovor[@href='%s']", Namespaces.KORISNIK + "/" + korisnik.getMejl());
+			prefix = String.format("/resenje:Resenje[@href='%s']", Namespaces.KORISNIK + "/" + korisnik.getMejl());
 		}
 		String xpathExp = String.format("%s%s", prefix, this.resenjeRDF.search(xml));
 		ResourceSet resources = this.resenjeExist.retrieve(xpathExp);

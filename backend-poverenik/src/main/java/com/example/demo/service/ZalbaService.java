@@ -105,10 +105,10 @@ public class ZalbaService implements ServiceInterface {
 		Korisnik korisnik = this.korisnikService.currentUser();
 		String prefix;
 		if (korisnik.getUloga().equals(Constants.POVERENIK)) {
-			prefix = "/odgovor:Odgovor";
+			prefix = "/zalba:Zalba";
 		} 
 		else {
-			prefix = String.format("/odgovor:Odgovor[@href='%s']", Namespaces.KORISNIK + "/" + korisnik.getMejl());
+			prefix = String.format("/zalba:Zalba[@href='%s']", Namespaces.KORISNIK + "/" + korisnik.getMejl());
 		}
 		Pretraga pretraga = (Pretraga) this.jaxbParser.unmarshalFromXml(xml, Pretraga.class);
 		String xpathExp = String.format("%s%s", prefix, SearchUtil.pretragaToXpath(pretraga));
@@ -121,10 +121,10 @@ public class ZalbaService implements ServiceInterface {
 		Korisnik korisnik = this.korisnikService.currentUser();
 		String prefix;
 		if (korisnik.getUloga().equals(Constants.POVERENIK)) {
-			prefix = "/odgovor:Odgovor";
+			prefix = "/zalba:Zalba";
 		} 
 		else {
-			prefix = String.format("/odgovor:Odgovor[@href='%s']", Namespaces.KORISNIK + "/" + korisnik.getMejl());
+			prefix = String.format("/zalba:Zalba[@href='%s']", Namespaces.KORISNIK + "/" + korisnik.getMejl());
 		}
 		String xpathExp = String.format("%s%s", prefix, this.zalbaRDF.search(xml));
 		ResourceSet resources = this.zalbaExist.retrieve(xpathExp);

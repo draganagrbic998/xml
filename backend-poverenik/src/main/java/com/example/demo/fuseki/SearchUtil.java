@@ -11,8 +11,12 @@ public class SearchUtil {
 		return String.format("?doc <%s> ?%s .%n", Namespaces.PREDIKAT + metapodatak, metapodatak);
 	}
 	
-	private static String filter(String metapodatak, String param) {
-		return String.format("CONTAINS(UCASE(str(?%s)), UCASE(\"%s\"))%n", metapodatak, param);
+	private static String filter(String metapodatak, String param, boolean not) {
+		String temp = String.format("CONTAINS(UCASE(str(?%s)), UCASE(\"%s\"))%n", metapodatak, param);
+		if (not) {
+			return String.format("!(%s)", temp);
+		}
+		return temp;
 	}
 	
 	private static String logOp(String op) {
@@ -44,7 +48,7 @@ public class SearchUtil {
 			Node child = children.item(i);
 			String metapodatak = child.getLocalName();
 			if (logOp(metapodatak) == null) {
-				suma += filter(metapodatak, child.getTextContent());
+				suma += filter(metapodatak, child.getTextContent(), child.getAttributes().getNamedItem("not") != null);
 			}
 			else {
 				suma += logOp(metapodatak);
