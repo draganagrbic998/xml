@@ -21,7 +21,7 @@ r:ResenjeShape
 		sh:minCount 1 ;
 		sh:maxCount 1 ;
 		sh:datatype xsd:string ;
-		sh:pattern "(odobreno|odbijeno|ponisteno)" ;
+		sh:pattern "(odustato|obavesteno|odobreno|odbijeno)" ;
 	] ;
 	sh:property [
 		sh:path prop:tipZalbe ;

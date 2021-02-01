@@ -54,7 +54,7 @@ export class XonomyService {
   private baseChild = {
     hasText: true,
     menu: [{
-      caption: 'Add @not attribute',
+      caption: 'Dodaj @not atribut',
       action: Xonomy.newAttribute,
       actionParameter: { name: 'not', value: 'true' },
       hideIf: (jsElement) => jsElement.hasAttribute('not')
@@ -62,7 +62,7 @@ export class XonomyService {
     attributes: {
       not: {
         menu: [{
-          caption: 'Delete @not attribute',
+          caption: 'Obriši @not atribut',
           action: Xonomy.deleteAttribute
         }]
       }
@@ -131,7 +131,7 @@ export class XonomyService {
       stanje: {...this.baseChild, ...{
         hasText: true,
         asker: Xonomy.askPicklist,
-        askerParameter: ['cekanje', 'prosledjeno', 'odgovoreno', 'odustato', 'obavesteno', 'odobreno', 'odbijeno']
+        askerParameter: ['cekanje', 'prosledjeno', 'odgovoreno', 'odustato', 'obavesteno', 'odobreno', 'odbijeno', 'ponisteno']
       }},
       Pretraga: {
         menu: [...this.extendedMenu, ...[

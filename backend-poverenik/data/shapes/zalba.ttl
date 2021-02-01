@@ -35,7 +35,7 @@ z:ZalbaShape
 		sh:minCount 1 ;
 		sh:maxCount 1 ;
 		sh:datatype xsd:string ;
-		sh:pattern "(cekanje|prosledjeno|odgovoreno|odustato|obavesteno|odobreno|odbijeno)" ;
+		sh:pattern "(cekanje|prosledjeno|odgovoreno|odustato|obavesteno|odobreno|odbijeno|ponisteno)" ;
 	] ;
 	sh:property [
 		sh:path prop:zahtev ;
