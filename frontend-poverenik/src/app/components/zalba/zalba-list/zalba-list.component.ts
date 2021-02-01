@@ -112,22 +112,9 @@ export class ZalbaListComponent implements AfterViewInit {
     );
   }
 
-  obicnaPretraga(pretraga: string): void{
+  pretraga(xml: string, tip: string): void{
     this.fetchPending = true;
-    this.zalbaService.obicnaPretraga(pretraga).subscribe(
-      (zalbe: ZalbaDTO[]) => {
-        this.zalbe = new MatTableDataSource<ZalbaDTO>(zalbe);
-        this.fetchPending = false;
-      },
-      () => {
-        this.fetchPending = false;
-      }
-    );
-  }
-
-  naprednaPretraga(pretraga: string): void{
-    this.fetchPending = true;
-    this.zalbaService.naprednaPretraga(pretraga).subscribe(
+    this.zalbaService.pretraga(xml, tip).subscribe(
       (zalbe: ZalbaDTO[]) => {
         this.zalbe = new MatTableDataSource<ZalbaDTO>(zalbe);
         this.fetchPending = false;

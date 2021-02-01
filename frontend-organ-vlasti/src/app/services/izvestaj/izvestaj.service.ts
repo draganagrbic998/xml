@@ -56,17 +56,10 @@ export class IzvestajService {
     return this.http.get<string>(`${this.API_IZVESTAJI}/${broj}/metadata`, {responseType: 'text' as 'json', headers});
   }
 
-  obicnaPretraga(pretraga: string): Observable<IzvestajDTO[]>{
-    const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml'), responseType: 'text' as 'json' };
-    return this.http.post<string>(`${this.API_IZVESTAJI}/obicna_pretraga`, pretraga, options).pipe(
-      map((xml: string) => this.xmlToIzvestaji(xml)));
-  }
-
-  naprednaPretraga(pretraga: string): Observable<IzvestajDTO[]>{
-    const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml'), responseType: 'text' as 'json' };
-    return this.http.post<string>(`${this.API_IZVESTAJI}/napredna_pretraga`, pretraga, options).pipe(
-      map((xml: string) => this.xmlToIzvestaji(xml))
-    );
+  pretraga(xml: string, tip: string): Observable<IzvestajDTO[]>{
+    const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml').set('search-type', tip), responseType: 'text' as 'json' };
+    return this.http.post<string>(`${this.API_IZVESTAJI}/pretraga`, xml, options).pipe(
+      map((result: string) => this.xmlToIzvestaji(result)));
   }
 
 }

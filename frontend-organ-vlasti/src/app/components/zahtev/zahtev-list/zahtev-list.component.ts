@@ -37,22 +37,9 @@ export class ZahtevListComponent implements AfterViewInit {
     );
   }
 
-  obicnaPretraga(pretraga: string): void{
+  pretraga(xml: string, tip: string): void{
     this.fetchPending = true;
-    this.zahtevService.obicnaPretraga(pretraga).subscribe(
-      (zahtevi: ZahtevDTO[]) => {
-        this.zahtevi = new MatTableDataSource<ZahtevDTO>(zahtevi);
-        this.fetchPending = false;
-      },
-      () => {
-        this.fetchPending = false;
-      }
-    );
-  }
-
-  naprednaPretraga(pretraga: string): void{
-    this.fetchPending = true;
-    this.zahtevService.naprednaPretraga(pretraga).subscribe(
+    this.zahtevService.pretraga(xml, tip).subscribe(
       (zahtevi: ZahtevDTO[]) => {
         this.zahtevi = new MatTableDataSource<ZahtevDTO>(zahtevi);
         this.fetchPending = false;

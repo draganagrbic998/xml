@@ -51,17 +51,10 @@ export class ResenjeService {
     return this.http.get<string>(`${this.API_RESENJA}/${broj}/metadata`, {responseType: 'text' as 'json', headers});
   }
 
-  obicnaPretraga(pretraga: string): Observable<ResenjeDTO[]>{
-    const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml'), responseType: 'text' as 'json' };
-    return this.http.post<string>(`${this.API_RESENJA}/obicna_pretraga`, pretraga, options).pipe(
-      map((xml: string) => this.xmlToResenja(xml)));
-  }
-
-  naprednaPretraga(pretraga: string): Observable<ResenjeDTO[]>{
-    const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml'), responseType: 'text' as 'json' };
-    return this.http.post<string>(`${this.API_RESENJA}/napredna_pretraga`, pretraga, options).pipe(
-      map((xml: string) => this.xmlToResenja(xml))
-    );
+  pretraga(xml: string, tip: string): Observable<ResenjeDTO[]>{
+    const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml').set('search-type', tip), responseType: 'text' as 'json' };
+    return this.http.post<string>(`${this.API_RESENJA}/pretraga`, xml, options).pipe(
+      map((result: string) => this.xmlToResenja(result)));
   }
 
 }

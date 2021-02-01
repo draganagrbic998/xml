@@ -86,17 +86,10 @@ export class OdgovorService {
     return this.http.get<string>(`${this.API_ODGOVORI}/${broj}/metadata`, {responseType: 'text' as 'json', headers});
   }
 
-  obicnaPretraga(pretraga: string): Observable<OdgovorDTO[]>{
-    const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml'), responseType: 'text' as 'json' };
-    return this.http.post<string>(`${this.API_ODGOVORI}/obicna_pretraga`, pretraga, options).pipe(
-      map((xml: string) => this.xmlToOdgovori(xml)));
-  }
-
-  naprednaPretraga(pretraga: string): Observable<OdgovorDTO[]>{
-    const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml'), responseType: 'text' as 'json' };
-    return this.http.post<string>(`${this.API_ODGOVORI}/napredna_pretraga`, pretraga, options).pipe(
-      map((xml: string) => this.xmlToOdgovori(xml))
-    );
+  pretraga(xml: string, tip: string): Observable<OdgovorDTO[]>{
+    const options = { headers: new HttpHeaders().set('Content-Type', 'text/xml').set('search-type', tip), responseType: 'text' as 'json' };
+    return this.http.post<string>(`${this.API_ODGOVORI}/pretraga`, xml, options).pipe(
+      map((result: string) => this.xmlToOdgovori(result)));
   }
 
 }

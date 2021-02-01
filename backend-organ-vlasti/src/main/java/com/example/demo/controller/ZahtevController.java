@@ -3,7 +3,6 @@ package com.example.demo.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -62,13 +61,11 @@ public class ZahtevController {
 						format.equals("text/xml") ? MetadataType.xml : MetadataType.json));
 	}
 
-	@PostMapping(value = "obicna_pretraga", consumes = MediaType.TEXT_XML_VALUE, produces = MediaType.TEXT_XML_VALUE)
-	public ResponseEntity<String> regularSearch(@RequestBody String xml) {
-		return new ResponseEntity<>(this.zahtevService.regularSearch(xml), HttpStatus.OK);
-	}
-
-	@PostMapping(value = "napredna_pretraga", consumes = MediaType.TEXT_XML_VALUE, produces = MediaType.TEXT_XML_VALUE)
-	public ResponseEntity<String> advancedSearch(@RequestBody String xml) {
+	@PostMapping(value = "pretraga", consumes = "text/xml; charset=utf-8", produces = "text/xml; charset=utf-8")
+	public ResponseEntity<String> regularSearch(@RequestBody String xml, @RequestHeader("search-type") String tipPretrage) {
+		if (tipPretrage.equals("obicna")) {
+			return new ResponseEntity<>(this.zahtevService.regularSearch(xml), HttpStatus.OK);			
+		}
 		return new ResponseEntity<>(this.zahtevService.advancedSearch(xml), HttpStatus.OK);
 	}
 

@@ -33,22 +33,9 @@ export class OdlukaListComponent implements AfterViewInit {
     );
   }
 
-  obicnaPretraga(pretraga: string): void{
+  pretraga(xml: string, tip: string): void{
     this.fetchPending = true;
-    this.odlukaService.obicnaPretraga(pretraga).subscribe(
-      (odluke: OdlukaDTO[]) => {
-        this.odluke = new MatTableDataSource<OdlukaDTO>(odluke);
-        this.fetchPending = false;
-      },
-      () => {
-        this.fetchPending = false;
-      }
-    );
-  }
-
-  naprednaPretraga(pretraga: string): void{
-    this.fetchPending = true;
-    this.odlukaService.naprednaPretraga(pretraga).subscribe(
+    this.odlukaService.pretraga(xml, tip).subscribe(
       (odluke: OdlukaDTO[]) => {
         this.odluke = new MatTableDataSource<OdlukaDTO>(odluke);
         this.fetchPending = false;

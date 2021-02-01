@@ -3,8 +3,8 @@
     <app-pretraga
     [tip]="'izvestaj'"
     [fetchPending]="fetchPending"
-    (obicnaPretragaTriggered)="obicnaPretraga($event)"
-    (naprednaPretragaTriggered)="naprednaPretraga($event)"></app-pretraga>
+    (obicnaPretragaTriggered)="pretraga($event, 'obicna')"
+    (naprednaPretragaTriggered)="pretraga($event, 'napredna')"></app-pretraga>
   </mat-drawer>
 
   <app-preloader *ngIf="fetchPending"></app-preloader>

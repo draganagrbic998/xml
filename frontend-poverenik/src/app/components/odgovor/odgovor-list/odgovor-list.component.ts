@@ -33,22 +33,9 @@ export class OdgovorListComponent implements AfterViewInit {
     );
   }
 
-  obicnaPretraga(pretraga: string): void{
+  pretraga(xml: string, tip: string): void{
     this.fetchPending = true;
-    this.odgovorService.obicnaPretraga(pretraga).subscribe(
-      (odgovori: OdgovorDTO[]) => {
-        this.odgovori = new MatTableDataSource<OdgovorDTO>(odgovori);
-        this.fetchPending = false;
-      },
-      () => {
-        this.fetchPending = false;
-      }
-    );
-  }
-
-  naprednaPretraga(pretraga: string): void{
-    this.fetchPending = true;
-    this.odgovorService.naprednaPretraga(pretraga).subscribe(
+    this.odgovorService.pretraga(xml, tip).subscribe(
       (odgovori: OdgovorDTO[]) => {
         this.odgovori = new MatTableDataSource<OdgovorDTO>(odgovori);
         this.fetchPending = false;

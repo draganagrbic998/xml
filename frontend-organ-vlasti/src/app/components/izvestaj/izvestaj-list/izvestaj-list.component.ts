@@ -78,22 +78,9 @@ export class IzvestajListComponent implements AfterViewInit {
     );
   }
 
-  obicnaPretraga(pretraga: string): void{
+  pretraga(xml: string, tip: string): void{
     this.fetchPending = true;
-    this.izvestajService.obicnaPretraga(pretraga).subscribe(
-      (izvestaji: IzvestajDTO[]) => {
-        this.izvestaji = new MatTableDataSource<IzvestajDTO>(izvestaji);
-        this.fetchPending = false;
-      },
-      () => {
-        this.fetchPending = false;
-      }
-    );
-  }
-
-  naprednaPretraga(pretraga: string): void{
-    this.fetchPending = true;
-    this.izvestajService.naprednaPretraga(pretraga).subscribe(
+    this.izvestajService.pretraga(xml, tip).subscribe(
       (izvestaji: IzvestajDTO[]) => {
         this.izvestaji = new MatTableDataSource<IzvestajDTO>(izvestaji);
         this.fetchPending = false;

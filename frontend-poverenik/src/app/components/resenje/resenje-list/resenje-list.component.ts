@@ -36,22 +36,9 @@ export class ResenjeListComponent implements AfterViewInit {
     );
   }
 
-  obicnaPretraga(pretraga: string): void{
+  pretraga(xml: string, tip: string): void{
     this.fetchPending = true;
-    this.resenjeService.obicnaPretraga(pretraga).subscribe(
-      (resenja: ResenjeDTO[]) => {
-        this.resenja = new MatTableDataSource<ResenjeDTO>(resenja);
-        this.fetchPending = false;
-      },
-      () => {
-        this.fetchPending = false;
-      }
-    );
-  }
-
-  naprednaPretraga(pretraga: string): void{
-    this.fetchPending = true;
-    this.resenjeService.naprednaPretraga(pretraga).subscribe(
+    this.resenjeService.pretraga(xml, tip).subscribe(
       (resenja: ResenjeDTO[]) => {
         this.resenja = new MatTableDataSource<ResenjeDTO>(resenja);
         this.fetchPending = false;
