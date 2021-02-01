@@ -52,7 +52,7 @@ public class FusekiManager {
 		shapeModel.read(shapePath);
 		Resource reportResource = ValidationUtil.validateModel(model, shapeModel, true);
 		boolean conforms = reportResource.getProperty(SH.conforms).getBoolean();
-		
+
 		if (conforms) {
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 			model.write(out, SparqlUtil.NTRIPLES);

@@ -23,13 +23,13 @@ import com.example.demo.transformer.IzvestajTransformer;
 @RequestMapping(value = "/api/izvestaji")
 @PreAuthorize("hasAuthority('sluzbenik')")
 public class IzvestajController {
-	
+
 	@Autowired
 	private IzvestajService izvestajService;
-	
+
 	@Autowired
 	private IzvestajTransformer izvestajTransformer;
-	
+
 	@PostMapping(value = "/{godina}")
 	public ResponseEntity<Void> add(@PathVariable String godina) {
 		this.izvestajService.add(godina);
@@ -40,36 +40,33 @@ public class IzvestajController {
 	public ResponseEntity<String> findAll() {
 		return new ResponseEntity<>(this.izvestajService.findAll(), HttpStatus.OK);
 	}
-	
+
 	@GetMapping(value = "/{broj}")
 	public ResponseEntity<Object> find(@PathVariable String broj, @RequestHeader("Accept") String format) {
 		if (format.equals("text/html")) {
-			return ResponseEntity.ok()
-					.header(HttpHeaders.CONTENT_TYPE, "text/html; charset=utf-8")
+			return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "text/html; charset=utf-8")
 					.body(this.izvestajTransformer.html(broj));
 		}
 		Resource resource = this.izvestajTransformer.pdf(broj);
-		return ResponseEntity.ok()
-				.header(HttpHeaders.CONTENT_TYPE, "application/pdf")
+		return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "application/pdf")
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
 				.body(resource);
 	}
-	
+
 	@GetMapping(value = "/{broj}/metadata")
 	public ResponseEntity<String> metadata(@PathVariable String broj, @RequestHeader("Accept") String format) {
-		return ResponseEntity.ok()
-				.header(HttpHeaders.CONTENT_TYPE, format + "; charset=utf-8")
+		return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, format + "; charset=utf-8")
 				.body(this.izvestajTransformer.metadata(broj,
 						format.equals("text/xml") ? MetadataType.xml : MetadataType.json));
 	}
-	
-	@PostMapping(value="obicna_pretraga", consumes = MediaType.TEXT_XML_VALUE, produces = MediaType.TEXT_XML_VALUE)
-	public ResponseEntity<String> regularSearch(@RequestBody String xml) {		
+
+	@PostMapping(value = "obicna_pretraga", consumes = MediaType.TEXT_XML_VALUE, produces = MediaType.TEXT_XML_VALUE)
+	public ResponseEntity<String> regularSearch(@RequestBody String xml) {
 		return new ResponseEntity<>(this.izvestajService.regularSearch(xml), HttpStatus.OK);
 	}
-	
-	@PostMapping(value="napredna_pretraga", consumes = MediaType.TEXT_XML_VALUE, produces = MediaType.TEXT_XML_VALUE)
-	public ResponseEntity<String> advancedSearch(@RequestBody String xml) {		
+
+	@PostMapping(value = "napredna_pretraga", consumes = MediaType.TEXT_XML_VALUE, produces = MediaType.TEXT_XML_VALUE)
+	public ResponseEntity<String> advancedSearch(@RequestBody String xml) {
 		return new ResponseEntity<>(this.izvestajService.advancedSearch(xml), HttpStatus.OK);
 	}
 

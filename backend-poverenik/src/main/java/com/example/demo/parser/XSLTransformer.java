@@ -18,10 +18,12 @@ import org.apache.fop.apps.FOUserAgent;
 import org.apache.fop.apps.Fop;
 import org.apache.fop.apps.FopFactory;
 import org.apache.fop.apps.MimeConstants;
+import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
 import org.apache.jena.query.ResultSetFormatter;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.RDFNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -31,6 +33,7 @@ import org.w3c.dom.Document;
 import com.example.demo.common.Constants;
 import com.example.demo.common.Namespaces;
 import com.example.demo.common.Utils;
+import com.example.demo.enums.DocumentType;
 import com.example.demo.enums.MetadataType;
 import com.example.demo.exception.MyException;
 import com.example.demo.mapper.ZalbaMapper;
@@ -100,12 +103,40 @@ public class XSLTransformer {
 		return this.plainPdf(document, xslFoPath).toByteArray();
 	}
 
-	public String metadata(ResultSet results, MetadataType type) {
+	public String metadata(ResultSet results, MetadataType type, DocumentType documentType, String documentId) {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		if (type.equals(MetadataType.xml)) {
-			ResultSetFormatter.outputAsXML(out, results);
-		} 
-		else {
+			Model model = ModelFactory.createDefaultModel();
+			model.setNsPrefix("pred", Namespaces.PREDIKAT);
+			model.setNsPrefix("base", Namespaces.BASE);
+			String subject = null;
+
+			if (documentType == DocumentType.zahtev)
+				subject = Namespaces.ZAHTEV + "/" + documentId;
+			else if (documentType == DocumentType.zalba)
+				subject = Namespaces.ZALBA + "/" + documentId;
+			else if (documentType == DocumentType.odluka)
+				subject = Namespaces.ODLUKA + "/" + documentId;
+			else if (documentType == DocumentType.odgovor)
+				subject = Namespaces.ODGOVOR + "/" + documentId;
+			else if (documentType == DocumentType.resenje)
+				subject = Namespaces.RESENJE + "/" + documentId;
+			else
+				subject = Namespaces.IZVESTAJ + "/" + documentId;
+
+			while (results.hasNext()) {
+				QuerySolution qs = results.next();
+				RDFNode object = qs.get("object");
+
+				if (object.isResource())
+					model.add(model.createResource(subject), model.createProperty(qs.get("predicate").asResource().getURI()),
+							model.createResource(object.asResource().getURI()));
+				else
+					model.add(model.createResource(subject), model.createProperty(qs.get("predicate").asResource().getURI()),
+							model.createLiteral(object.asLiteral().getString()));
+			}
+			model.write(out, "RDF/XML");
+		} else {
 			ResultSetFormatter.outputAsJSON(out, results);
 		}
 		return out.toString();

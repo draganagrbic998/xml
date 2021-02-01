@@ -7,6 +7,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
 import com.example.demo.common.Constants;
+import com.example.demo.enums.DocumentType;
 import com.example.demo.enums.MetadataType;
 import com.example.demo.parser.XSLTransformer;
 import com.example.demo.repository.rdf.ResenjeRDF;
@@ -50,7 +51,7 @@ public class ResenjeTransformer implements TransformerInterface {
 
 	@Override
 	public String metadata(String documentId, MetadataType type) {
-		return this.xslTransformer.metadata(this.resenjeRDF.findAll(documentId), type);
+		return this.xslTransformer.metadata(this.resenjeRDF.findAll(documentId), type, DocumentType.resenje, documentId);
 	}
 	
 }
