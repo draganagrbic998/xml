@@ -43,6 +43,7 @@ export class NaprednaPretragaComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void{
+    document.querySelectorAll('.xonomy').forEach(el => el.innerHTML = null);
     let specifikacija;
     if (this.tip === 'zalba'){
       specifikacija = this.xonomyService.zalbaPretraga;

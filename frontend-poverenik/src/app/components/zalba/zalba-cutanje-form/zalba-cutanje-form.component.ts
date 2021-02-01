@@ -65,6 +65,7 @@ export class ZalbaCutanjeFormComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void{
+    document.querySelectorAll('.xonomy').forEach(el => el.innerHTML = null);
     const detaljiXml = '<Detalji></Detalji>';
     const zalbaCutanjeEditor = document.getElementById('zalbaCutanjeEditor');
     const detaljiSpecifikacija = this.xonomyService.detaljiSpecifikacija;

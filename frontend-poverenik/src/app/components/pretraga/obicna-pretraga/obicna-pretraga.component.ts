@@ -28,6 +28,7 @@ export class ObicnaPretragaComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void{
+    document.querySelectorAll('.xonomy').forEach(el => el.innerHTML = null);
     const pretragaXml = '<Pretraga><Fraze></Fraze><kljucne_reci></kljucne_reci></Pretraga>';
     const pretragaEditor = document.getElementById(this.page + 'obicnaPretraga');
     Xonomy.render(pretragaXml, pretragaEditor, this.xonomyService.obicnaPretraga);

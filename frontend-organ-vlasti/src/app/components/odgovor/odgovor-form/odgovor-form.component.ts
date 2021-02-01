@@ -54,6 +54,7 @@ export class OdgovorFormComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void{
+    document.querySelectorAll('.xonomy').forEach(el => el.innerHTML = null);
     const detaljiXml = '<Detalji></Detalji>';
     const odgovorEditor = document.getElementById('odgovorEditor');
     const detaljiSpecifikacija = this.xonomyService.detaljiSpecifikacija;

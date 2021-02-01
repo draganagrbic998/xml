@@ -67,6 +67,7 @@ export class ObavestenjeFormComponent implements AfterViewInit {
 
 
   ngAfterViewInit(): void{
+    document.querySelectorAll('.xonomy').forEach(el => el.innerHTML = null);
     const detaljiXml = '<Detalji></Detalji>';
     const obavestenjeEditor = document.getElementById('obavestenjeEditor');
     const detaljiSpecifikacija = this.xonomyService.detaljiSpecifikacija;

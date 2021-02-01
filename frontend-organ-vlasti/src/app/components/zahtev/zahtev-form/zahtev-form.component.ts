@@ -70,6 +70,7 @@ export class ZahtevFormComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void{
+    document.querySelectorAll('.xonomy').forEach(el => el.innerHTML = null);
     const detaljiXml = '<Detalji></Detalji>';
     const zahtevEditor = document.getElementById('zahtevEditor');
     const detaljiSpecifikacija = this.xonomyService.detaljiSpecifikacija;

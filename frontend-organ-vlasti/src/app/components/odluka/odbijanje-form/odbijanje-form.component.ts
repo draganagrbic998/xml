@@ -54,6 +54,7 @@ export class OdbijanjeFormComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void{
+    document.querySelectorAll('.xonomy').forEach(el => el.innerHTML = null);
     const detaljiXml = '<Detalji></Detalji>';
     const odbijanjeEditor = document.getElementById('odbijanjeEditor');
     const detaljiSpecifikacija = this.xonomyService.detaljiSpecifikacija;
