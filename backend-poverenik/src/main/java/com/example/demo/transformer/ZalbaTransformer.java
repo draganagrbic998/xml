@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
 
 import com.example.demo.common.Constants;
-import com.example.demo.enums.DocumentType;
+import com.example.demo.common.Namespaces;
 import com.example.demo.enums.MetadataType;
 import com.example.demo.enums.TipZalbe;
 import com.example.demo.mapper.ZalbaMapper;
@@ -72,7 +72,7 @@ public class ZalbaTransformer implements TransformerInterface {
 	
 	@Override
 	public String metadata(String documentId, MetadataType type) {
-		return this.xslTransformer.metadata(this.zalbaRDF.findAll(documentId), type, DocumentType.zalba, documentId);
+		return this.xslTransformer.metadata(Namespaces.ZALBA + "/" + documentId, this.zalbaRDF.findAll(documentId), type);
 	}
 
 }

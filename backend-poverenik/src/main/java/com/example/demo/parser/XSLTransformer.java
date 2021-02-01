@@ -33,9 +33,9 @@ import org.w3c.dom.Document;
 import com.example.demo.common.Constants;
 import com.example.demo.common.Namespaces;
 import com.example.demo.common.Utils;
-import com.example.demo.enums.DocumentType;
 import com.example.demo.enums.MetadataType;
 import com.example.demo.exception.MyException;
+import com.example.demo.fuseki.SparqlUtil;
 import com.example.demo.mapper.ZalbaMapper;
 
 @Component
@@ -103,40 +103,29 @@ public class XSLTransformer {
 		return this.plainPdf(document, xslFoPath).toByteArray();
 	}
 
-	public String metadata(ResultSet results, MetadataType type, DocumentType documentType, String documentId) {
+	public String metadata(String subject, ResultSet results, MetadataType type) {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		if (type.equals(MetadataType.xml)) {
 			Model model = ModelFactory.createDefaultModel();
-			model.setNsPrefix("pred", Namespaces.PREDIKAT);
 			model.setNsPrefix("base", Namespaces.BASE);
-			String subject = null;
-
-			if (documentType == DocumentType.zahtev)
-				subject = Namespaces.ZAHTEV + "/" + documentId;
-			else if (documentType == DocumentType.zalba)
-				subject = Namespaces.ZALBA + "/" + documentId;
-			else if (documentType == DocumentType.odluka)
-				subject = Namespaces.ODLUKA + "/" + documentId;
-			else if (documentType == DocumentType.odgovor)
-				subject = Namespaces.ODGOVOR + "/" + documentId;
-			else if (documentType == DocumentType.resenje)
-				subject = Namespaces.RESENJE + "/" + documentId;
-			else
-				subject = Namespaces.IZVESTAJ + "/" + documentId;
+			model.setNsPrefix("pred", Namespaces.PREDIKAT);
 
 			while (results.hasNext()) {
 				QuerySolution qs = results.next();
 				RDFNode object = qs.get("object");
 
-				if (object.isResource())
+				if (object.isResource()) {
 					model.add(model.createResource(subject), model.createProperty(qs.get("predicate").asResource().getURI()),
 							model.createResource(object.asResource().getURI()));
-				else
+				}
+				else {
 					model.add(model.createResource(subject), model.createProperty(qs.get("predicate").asResource().getURI()),
 							model.createLiteral(object.asLiteral().getString()));
+				}
 			}
-			model.write(out, "RDF/XML");
-		} else {
+			model.write(out, SparqlUtil.RDF_XML);
+		} 
+		else {
 			ResultSetFormatter.outputAsJSON(out, results);
 		}
 		return out.toString();

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
 
 import com.example.demo.common.Constants;
-import com.example.demo.enums.DocumentType;
+import com.example.demo.common.Namespaces;
 import com.example.demo.enums.MetadataType;
 import com.example.demo.enums.TipOdluke;
 import com.example.demo.mapper.OdlukaMapper;
@@ -72,7 +72,7 @@ public class OdlukaTransformer implements TransformerInterface {
 	
 	@Override
 	public String metadata(String documentId, MetadataType type) {
-		return this.xslTransformer.metadata(this.odlukaRDF.findAll(documentId), type, DocumentType.odluka, documentId);
+		return this.xslTransformer.metadata(Namespaces.ODLUKA + "/" + documentId, this.odlukaRDF.findAll(documentId), type);
 	}
 	
 }

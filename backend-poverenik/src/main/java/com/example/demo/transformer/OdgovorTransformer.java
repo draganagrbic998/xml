@@ -7,7 +7,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
 import com.example.demo.common.Constants;
-import com.example.demo.enums.DocumentType;
+import com.example.demo.common.Namespaces;
 import com.example.demo.enums.MetadataType;
 import com.example.demo.parser.XSLTransformer;
 import com.example.demo.repository.rdf.OdgovorRDF;
@@ -51,7 +51,7 @@ public class OdgovorTransformer implements TransformerInterface {
 
 	@Override
 	public String metadata(String documentId, MetadataType type) {
-		return this.xslTransformer.metadata(this.odgovorRDF.findAll(documentId), type, DocumentType.odgovor, documentId);
+		return this.xslTransformer.metadata(Namespaces.ODGOVOR + "/" + documentId, this.odgovorRDF.findAll(documentId), type);
 	}
 		
 }
