@@ -29,7 +29,7 @@ Uputstva:
 6. Pokrenuti tomcat server i sacekati da se deploy-uju sve cetiri baze
 7. Otici na URL lokacije XML/RDF baza (tacke broj 6, 7, 8 i 9 u sekciji "Napomene" sadrze koje su to putanje) i proveriti da li su baze inicijalizovane. Kod obe RDF baze (i fuseki1 i fuseki2) napraviti dataset pod nazivom "PersonDataset" (najbolje izabrati in-memory opciju)
 8. Ukoliko se desi da vam fuseki baze ne rade, procitajte deo "Mucenje sa fuseki bazama" koji se nalazi ispod
-9. Importovati "backend-organ-vlasti", "backend-poverenik" i "email-service" spring projekte u Eclipse/IntelliJ/sta vec volite radno okruzenje
+9. Importovati "backend-organ-vlasti", "backend-poverenik" i "email-service" spring projekte u Eclipse/IntelliJ/sta vec volite
 10. Pokrenuti sva tri projekta
 11. Projekti "backend-organ-vlasti" i "backend-poverenik" pri pokretanju pokusavaju da uspostave vezu sa svojom XML/RDF bazom. Ukoliko pokretanje bude neuspesno, znaci da baze niste dobro podesili
 12. Pozicionirajte se u "frontend-organ-vlasti" projekat i pokrenite komande "npm install" i "ng serve" (default port ce biti 4200)
