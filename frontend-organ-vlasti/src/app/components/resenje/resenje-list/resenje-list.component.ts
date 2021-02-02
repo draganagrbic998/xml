@@ -50,10 +50,10 @@ export class ResenjeListComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.resenja.paginator = this.paginator;
     this.resenjeService.findAll().subscribe(
       (resenja: ResenjeDTO[]) => {
         this.resenja = new MatTableDataSource<ResenjeDTO>(resenja);
+        this.resenja.paginator = this.paginator;
         this.fetchPending = false;
       },
       () => {

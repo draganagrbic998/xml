@@ -47,10 +47,10 @@ export class OdlukaListComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.odluke.paginator = this.paginator;
     this.odlukaService.findAll().subscribe(
       (odluke: OdlukaDTO[]) => {
         this.odluke = new MatTableDataSource<OdlukaDTO>(odluke);
+        this.odluke.paginator = this.paginator;
         this.fetchPending = false;
       },
       () => {

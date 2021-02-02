@@ -51,10 +51,10 @@ export class ZalbaListComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.zalbe.paginator = this.paginator;
     this.zalbaService.findAll().subscribe(
       (zalbe: ZalbaDTO[]) => {
         this.zalbe = new MatTableDataSource<ZalbaDTO>(zalbe);
+        this.zalbe.paginator = this.paginator;
         this.fetchPending = false;
       },
       () => {

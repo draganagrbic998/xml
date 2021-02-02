@@ -51,10 +51,10 @@ export class ZahtevListComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.zahtevi.paginator = this.paginator;
     this.zahtevService.findAll().subscribe(
       (zahtevi: ZahtevDTO[]) => {
         this.zahtevi = new MatTableDataSource<ZahtevDTO>(zahtevi);
+        this.zahtevi.paginator = this.paginator;
         this.fetchPending = false;
       },
       () => {

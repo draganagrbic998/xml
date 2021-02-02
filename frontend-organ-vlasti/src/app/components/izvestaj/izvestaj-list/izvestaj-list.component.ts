@@ -66,10 +66,10 @@ export class IzvestajListComponent implements AfterViewInit {
   }
 
   refreshData(): void {
-    this.izvestaji.paginator = this.paginator;
     this.izvestajService.findAll().subscribe(
       (izvestaji: IzvestajDTO[]) => {
         this.izvestaji = new MatTableDataSource<IzvestajDTO>(izvestaji);
+        this.izvestaji.paginator = this.paginator;
         this.fetchPending = false;
       },
       () => {
