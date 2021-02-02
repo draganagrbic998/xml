@@ -11,7 +11,7 @@ Napomene:
 2. URL backenda poverenika - http://localhost:8082
 3. URL email servica - http://localhost:8083
 4. URL frontenda organa vlasti - http://localhost:4200
-5. URL frontenda poverenika - http://localhost:4201 (pokrece se komandom ng serve --port 4201)
+5. URL frontenda poverenika - http://localhost:4201 (pokrece se komandom "ng serve --port 4201")
 6. URL xml baze organa vlasti - http://localhost:8080/exist1
 7. URL xml baze poverenika - http://localost:8080/exist2
 8. URL rdf baze organa vlasti - http://localhost:8080/fuseki1
