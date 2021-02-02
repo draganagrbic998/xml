@@ -79,9 +79,9 @@ export class XonomyService {
       tip: {...this.baseChild, ...{
         hasText: true,
         asker: Xonomy.askPicklist,
-        askerParameter: ['cutanje', 'odbijanje', 'delimicnost']
+        askerParameter: ['cutanje', 'odluka', 'delimicnost']
       }},
-      stanje: {...this.baseChild, ...{
+      status: {...this.baseChild, ...{
         hasText: true,
         asker: Xonomy.askPicklist,
         askerParameter: ['cekanje', 'prosledjeno', 'odgovoreno', 'odustato', 'obavesteno', 'odobreno', 'odbijeno', 'ponisteno']
@@ -95,10 +95,10 @@ export class XonomyService {
             hideIf: (jsElement) => this.hideMetapodatak(jsElement, 'tip'),
           },
           {
-            caption: 'Dodaj <stanje> tag',
+            caption: 'Dodaj <status> tag',
             action: Xonomy.newElementChild,
-            actionParameter: '<stanje></stanje>',
-            hideIf: (jsElement) => this.hideMetapodatak(jsElement, 'stanje'),
+            actionParameter: '<status></status>',
+            hideIf: (jsElement) => this.hideMetapodatak(jsElement, 'status'),
           }
         ]]
       }

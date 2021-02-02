@@ -122,7 +122,7 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
 					</fo:block>
 					
 					<fo:block>
-						<xsl:value-of select="osnova:Detalji"></xsl:value-of>
+			            <xsl:apply-templates select="osnova:Detalji"></xsl:apply-templates>
 					</fo:block>					
 					<fo:block-container position="absolute" top="12.2cm">
               			<fo:block border-bottom="1px dotted black">
@@ -261,4 +261,13 @@ xmlns:zalba="https://github.com/draganagrbic998/xml/zalba">
             </fo:page-sequence>
         </fo:root>
     </xsl:template>
+    
+    <xsl:template match="osnova:bold">
+        <fo:inline font-weight="bold"><xsl:apply-templates select="@*|node()"></xsl:apply-templates></fo:inline>
+    </xsl:template>
+    
+    <xsl:template match="osnova:italic">
+        <fo:inline font-style="italic"><xsl:apply-templates select="@*|node()"></xsl:apply-templates></fo:inline>
+    </xsl:template>
+    
 </xsl:stylesheet>

@@ -1,7 +1,7 @@
 <mat-drawer-container>
   <mat-drawer mode="side" #drawer class="mat-elevation-z24">
     <app-pretraga
-    [tip]="'izvestaj'"
+    [tip]="'zalba'"
     [fetchPending]="fetchPending"
     (obicnaPretragaTriggered)="pretraga($event, 'obicna')"
     (naprednaPretragaTriggered)="pretraga($event, 'napredna')"></app-pretraga>
