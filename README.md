@@ -36,7 +36,7 @@ Uputstva:
 13. Pozicionirajte se u "frontend-poverenik" projekat i pokrenite komande "npm install" i "ng serve --port 4201" (obavezno navesti port jer "backend-poverenik" komunicira samo sa front aplikacijom koja trci na tom portu)
 14. Otvorite vas omiljeni browser i ukucajte URL frontenda organa vlasti/poverenika (URL putanje napisane su u sekciji "Napomene"). Ulogujte se kao gradjanin/sluzbenik/poverenik sa kredencijalima koji su napisani u sekciji "Napomene". Uzivajte u nasem projekticu :D :)
 
-Mucenje sa fuseki bazama:
+Mucenje sa fuseki bazama:<br/>
 Ako primetite da vam fuseki baze ne rade kako treba (a to se nama svoma cetvoroma desavalo na pocetku), probajte neku od sledecih stvari:
 1. Idite na C/D disk i pronadjite folder "etc". Fuseki u njima cuva podatke o bazama koje ste kreirali i on nekad pravi problem. Obrisite ga i pokrenite ponovo tomcat server. 
 2. Ako fuseki baze i dalje ne rade, uradite ono sto pise u tacki 1 i jos obrisite iz webapps foldera tomcat servera oba fuseki war fajla i oba fuseki foldera/aplikacije, dodajte nove war fajlove i pokrenite ponovo tomcat server
