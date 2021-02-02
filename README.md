@@ -32,8 +32,8 @@ Uputstva:
 9. Importovati "backend-organ-vlasti", "backend-poverenik" i "email-service" spring projekte u Eclipse/IntelliJ/sta vec volite radno okruzenje
 10. Pokrenuti sva tri projekta
 11. Projekti "backend-organ-vlasti" i "backend-poverenik" pri pokretanju pokusavaju da uspostave vezu sa svojom XML/RDF bazom. Ukoliko pokretanje bude neuspesno, znaci da baze niste dobro podesili
-12. Pozicionirajte se u "frontend-organ-vlasti" projekat i pokrenite komandu "ng serve" (default port ce biti 4200)
-13. Pozicionirajte se u "frontend-poverenik" projekat i pokrenite komandu "ng serve --port 4201" (obavezno navesti port jer "backend-poverenik" komunicira samo sa front aplikacijom koja trci na tom portu)
+12. Pozicionirajte se u "frontend-organ-vlasti" projekat i pokrenite komande "npm install" i "ng serve" (default port ce biti 4200)
+13. Pozicionirajte se u "frontend-poverenik" projekat i pokrenite komande "npm install" i "ng serve --port 4201" (obavezno navesti port jer "backend-poverenik" komunicira samo sa front aplikacijom koja trci na tom portu)
 14. Otvorite vas omiljeni browser i ukucajte URL frontenda organa vlasti/poverenika (URL putanje napisane su u sekciji "Napomene"). Ulogujte se kao gradjanin/sluzbenik/poverenik sa kredencijalima koji su napisani u sekciji "Napomene". Uzivajte u nasem projekticu :D :)
 
 Mucenje sa fuseki bazama:
