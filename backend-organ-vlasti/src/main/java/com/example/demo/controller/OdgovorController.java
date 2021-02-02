@@ -41,6 +41,7 @@ public class OdgovorController {
 	}
 
 	@GetMapping(value = "/{broj}")
+	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<Object> find(@PathVariable String broj, @RequestHeader("Accept") String format) {
 		if (format.equals("text/html")) {
 			return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, "text/html; charset=utf-8")

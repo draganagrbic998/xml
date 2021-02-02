@@ -137,7 +137,7 @@ public class ZahtevService implements ServiceInterface {
 		return this.zahtevRDF.resenja(documentId);
 	}
 
-	@Scheduled(fixedDelay = CUTANJE_MILISECONDS, initialDelay = CUTANJE_MILISECONDS)
+	//@Scheduled(fixedDelay = CUTANJE_MILISECONDS, initialDelay = CUTANJE_MILISECONDS)
 	public void cutanjeUprave() throws XMLDBException {
 		String xpathExp = String.format("/zahtev:Zahtev[(%d - zahtev:vreme) >= %d][zahtev:status = 'cekanje']", new Date().getTime(), CUTANJE_MILISECONDS);
 		ResourceSet resources = this.zahtevExist.findAll(xpathExp);
