@@ -71,6 +71,11 @@ export class XonomyService {
 
   zahtevPretraga = {
     elements: {
+      status: {...this.baseChild, ...{
+        hasText: true,
+        asker: Xonomy.askPicklist,
+        askerParameter: ['cekanje', 'odgovoreno', 'odbijeno']
+      }},
       datum: this.baseChild,
       organVlasti: this.baseChild,
       izdatoU: this.baseChild,
@@ -87,6 +92,12 @@ export class XonomyService {
             action: Xonomy.newElementChild,
             actionParameter: '<tip></tip>',
             hideIf: (jsElement) => this.hideMetapodatak(jsElement, 'tip'),
+          },
+          {
+            caption: 'Dodaj <status> tag',
+            action: Xonomy.newElementChild,
+            actionParameter: '<status></status>',
+            hideIf: (jsElement) => this.hideMetapodatak(jsElement, 'status'),
           }
         ]]
       }
