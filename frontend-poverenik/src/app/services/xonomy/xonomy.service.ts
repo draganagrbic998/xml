@@ -129,7 +129,7 @@ export class XonomyService {
       tipZalbe: {...this.baseChild, ...{
         hasText: true,
         asker: Xonomy.askPicklist,
-        askerParameter: ['cutanje', 'odbijanje', 'delimicnost']
+        askerParameter: ['cutanje', 'odluka', 'delimicnost']
       }},
       Pretraga: {
         menu: [...this.baseMenu, ...[
