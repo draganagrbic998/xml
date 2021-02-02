@@ -1,15 +1,18 @@
 package com.example.demo.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.xmldb.api.base.ResourceIterator;
 import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.modules.XMLResource;
 
+import com.example.demo.common.Constants;
 import com.example.demo.common.Namespaces;
 import com.example.demo.common.Utils;
 import com.example.demo.enums.StatusZalbe;
@@ -53,7 +56,7 @@ public class ZalbaService implements ServiceInterface {
 			;
 		}
 		this.zalbaExist.update(Utils.getBroj(document), document);
-		this.zalbaRDF.add(document);		
+		this.zalbaRDF.update(Utils.getBroj(document), document);	
 	}
 
 	@Override
@@ -105,13 +108,6 @@ public class ZalbaService implements ServiceInterface {
 	public List<String> resenja(String documentId) {
 		return this.zalbaRDF.resenja(documentId);
 	}
-	
-	public void odustani(String broj) {
-		Document document = this.zalbaExist.find(broj);
-		document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.odustato + "");
-		this.zalbaExist.update(broj, document);
-		this.zalbaRDF.update(broj, document);
-	}
 
 	public void otkazi(String brojZahteva) {
 		try {
@@ -121,7 +117,17 @@ public class ZalbaService implements ServiceInterface {
 			while (it.hasMoreResources()) {
 				XMLResource resource = (XMLResource) it.nextResource();
 				Document document = this.domParser.buildDocument(resource.getContent().toString());
-				document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.obavesteno + "");
+				Element zalba = (Element) document.getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").item(0);
+				zalba.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.obavesteno + "");
+				if (document.getElementsByTagNameNS(Namespaces.ZALBA, "datumOtkazivanja").getLength() > 0) {
+					document.getElementsByTagNameNS(Namespaces.ZALBA, "datumOtkazivanja")
+					.item(0).setTextContent(Constants.sdf.format(new Date()));
+				}
+				else {
+					Node datumOtkazivanja = document.createElementNS(Namespaces.ZALBA, "zalba:datumOtkazivanja");
+					datumOtkazivanja.setTextContent(Constants.sdf.format(new Date()));
+					zalba.insertBefore(datumOtkazivanja, zalba.getElementsByTagNameNS(Namespaces.ZALBA, "PodaciZahteva").item(0));					
+				}
 				this.zalbaExist.update(Utils.getBroj(document), document);
 				this.zalbaRDF.update(Utils.getBroj(document), document);
 			}

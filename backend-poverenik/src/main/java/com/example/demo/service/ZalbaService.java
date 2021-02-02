@@ -139,22 +139,40 @@ public class ZalbaService implements ServiceInterface {
 		return this.zalbaRDF.resenja(documentId);
 	}
 	
+	public void prosledi(String broj) {
+		Document document = this.zalbaExist.find(broj);
+		StatusZalbe status = ZalbaMapper.getStatusZalbe(document);
+		if (!status.equals(StatusZalbe.cekanje)) {
+			throw new ResourceTakenException();
+		}
+
+		document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.prosledjeno + "");
+		Node datumProsledjivanja = document.createElementNS(Namespaces.ZALBA, "zalba:datumProsledjivanja");
+		datumProsledjivanja.setTextContent(Constants.sdf.format(new Date()));
+		Element zalba = (Element) document.getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").item(0);
+		zalba.insertBefore(datumProsledjivanja, document.getElementsByTagNameNS(Namespaces.ZALBA, "PodaciZahteva").item(0));
+		this.soapService.sendSOAPMessage(document, SOAPActions.create_zalba);
+		this.zalbaExist.update(broj, document);
+		this.zalbaRDF.update(broj, document);
+	}
+
 	public void odustani(String broj) {
 		Document document = this.zalbaExist.find(broj);
 		StatusZalbe status = ZalbaMapper.getStatusZalbe(document);
 		if (!status.equals(StatusZalbe.cekanje) && !status.equals(StatusZalbe.prosledjeno) && !status.equals(StatusZalbe.odgovoreno)) {
 			throw new ResourceTakenException();
 		}
-		
-		if (document.getElementsByTagNameNS(Namespaces.ZALBA, "datumProsledjivanja").getLength() > 0) {
-			this.soapService.sendSOAPMessage(this.domParser.buildDocument("<broj>" + broj + "</broj>"), SOAPActions.zalba_odustani);
-		}
-				
+
 		Element zalba = (Element) document.getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").item(0);
 		zalba.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.odustato + "");
 		Node datumOtkazivanja = document.createElementNS(Namespaces.ZALBA, "zalba:datumOtkazivanja");
 		datumOtkazivanja.setTextContent(Constants.sdf.format(new Date()));
 		zalba.insertBefore(datumOtkazivanja, zalba.getElementsByTagNameNS(Namespaces.ZALBA, "PodaciZahteva").item(0));
+
+		if (document.getElementsByTagNameNS(Namespaces.ZALBA, "datumProsledjivanja").getLength() > 0) {
+			this.soapService.sendSOAPMessage(document, SOAPActions.create_zalba);
+		}
+				
 		this.zalbaExist.update(broj, document);
 		this.zalbaRDF.update(broj, document);
 	}
@@ -174,23 +192,6 @@ public class ZalbaService implements ServiceInterface {
 		this.resenjeService.add(this.domParser.buildXml(dto));
 	}
 
-	public void prosledi(String broj) {
-		Document document = this.zalbaExist.find(broj);
-		StatusZalbe status = ZalbaMapper.getStatusZalbe(document);
-		if (!status.equals(StatusZalbe.cekanje)) {
-			throw new ResourceTakenException();
-		}
-
-		document.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.prosledjeno + "");
-		Node datumProsledjivanja = document.createElementNS(Namespaces.ZALBA, "zalba:datumProsledjivanja");
-		datumProsledjivanja.setTextContent(Constants.sdf.format(new Date()));
-		Element zalba = (Element) document.getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").item(0);
-		zalba.insertBefore(datumProsledjivanja, document.getElementsByTagNameNS(Namespaces.ZALBA, "PodaciZahteva").item(0));
-		this.soapService.sendSOAPMessage(document, SOAPActions.create_zalba);
-		this.zalbaExist.update(broj, document);
-		this.zalbaRDF.update(broj, document);
-	}
-
 	public void otkazi(String brojZahteva) {
 		try {
 			String xpathExp = String.format("/zalba:Zalba[zalba:PodaciZahteva/@href='%s']", Namespaces.ZAHTEV + "/" + brojZahteva);
@@ -201,9 +202,15 @@ public class ZalbaService implements ServiceInterface {
 				Document document = this.domParser.buildDocument(resource.getContent().toString());
 				Element zalba = (Element) document.getElementsByTagNameNS(Namespaces.ZALBA, "Zalba").item(0);
 				zalba.getElementsByTagNameNS(Namespaces.ZALBA, "status").item(0).setTextContent(StatusZalbe.obavesteno + "");
-				Node datumOtkazivanja = document.createElementNS(Namespaces.ZALBA, "zalba:datumOtkazivanja");
-				datumOtkazivanja.setTextContent(Constants.sdf.format(new Date()));
-				zalba.insertBefore(datumOtkazivanja, zalba.getElementsByTagNameNS(Namespaces.ZALBA, "PodaciZahteva").item(0));
+				if (document.getElementsByTagNameNS(Namespaces.ZALBA, "datumOtkazivanja").getLength() > 0) {
+					document.getElementsByTagNameNS(Namespaces.ZALBA, "datumOtkazivanja")
+					.item(0).setTextContent(Constants.sdf.format(new Date()));
+				}
+				else {
+					Node datumOtkazivanja = document.createElementNS(Namespaces.ZALBA, "zalba:datumOtkazivanja");
+					datumOtkazivanja.setTextContent(Constants.sdf.format(new Date()));
+					zalba.insertBefore(datumOtkazivanja, zalba.getElementsByTagNameNS(Namespaces.ZALBA, "PodaciZahteva").item(0));					
+				}
 				this.zalbaExist.update(Utils.getBroj(document), document);
 				this.zalbaRDF.update(Utils.getBroj(document), document);
 			}
