@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <Korisnik xmlns="https://github.com/draganagrbic998/xml/osnova">
     <mejl>draganaasd@gmail.com</mejl>
     <lozinka>$2a$10$gfuYh.hxu0AlVb1yVXRcie38viaXdpwa2aZHWWhdPVQiq741vD8F.</lozinka>
@@ -9,7 +8,7 @@
         <potpis>757272859077776977757767</potpis>
     </Osoba>
     <Adresa>
-    	<mesto property="pred:mesto" datatype="xs:string">Novi Sad</mesto>
+    	<mesto datatype="xs:string" property="pred:mesto">Novi Sad</mesto>
     	<ulica>Lasla Gala</ulica>
     	<broj>23</broj>
     </Adresa>
