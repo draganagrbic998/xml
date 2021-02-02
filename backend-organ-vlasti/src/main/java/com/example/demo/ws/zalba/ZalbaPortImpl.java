@@ -5,7 +5,6 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.example.demo.parser.DOMParser;
 import com.example.demo.service.ZalbaService;
 
 @javax.jws.WebService(serviceName = "ZalbaService", portName = "ZalbaPort", targetNamespace = "http://demo.example.com/ws/zalba", wsdlLocation = "classpath:wsdl/Zalba.wsdl", endpointInterface = "com.example.demo.ws.zalba.Zalba")
@@ -13,9 +12,6 @@ import com.example.demo.service.ZalbaService;
 public class ZalbaPortImpl implements Zalba {
 
 	private static final Logger LOG = Logger.getLogger(ZalbaPortImpl.class.getName());
-
-	@Autowired
-	private DOMParser domParser;
 
 	@Autowired
 	private ZalbaService zalbaService;
@@ -30,16 +26,5 @@ public class ZalbaPortImpl implements Zalba {
 			throw new RuntimeException(ex);
 		}
 	}
-	
-    public void odustaniZalba(java.lang.String odustaniZalba) {
-        LOG.info("Executing operation odustaniZalba");
-        try {
-        	this.zalbaService.odustani(this.domParser.buildDocument(odustaniZalba).getElementsByTagName("broj").item(0).getTextContent());
-        } 
-        catch (java.lang.Exception ex) {
-            ex.printStackTrace();
-            throw new RuntimeException(ex);
-        }
-    }
 
 }

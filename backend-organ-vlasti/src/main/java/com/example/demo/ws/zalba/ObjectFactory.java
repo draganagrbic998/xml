@@ -9,20 +9,14 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _CreateZalba_QNAME = new QName("http://demo.example.com/ws/zalba", "createZalba");
-    private final static QName _OdustaniZalba_QNAME = new QName("http://demo.example.com/ws/zalba", "odustaniZalba");
+	private final static QName _CreateZalba_QNAME = new QName("http://demo.example.com/ws/zalba", "createZalba");
 
-    public ObjectFactory() {
-    }
+	public ObjectFactory() {
+	}
 
-    @XmlElementDecl(namespace = "http://demo.example.com/ws/zalba", name = "createZalba")
-    public JAXBElement<String> createCreateZalba(String value) {
-        return new JAXBElement<String>(_CreateZalba_QNAME, String.class, null, value);
-    }
-
-    @XmlElementDecl(namespace = "http://demo.example.com/ws/zalba", name = "odustaniZalba")
-    public JAXBElement<String> createOdustaniZalba(String value) {
-        return new JAXBElement<String>(_OdustaniZalba_QNAME, String.class, null, value);
-    }
+	@XmlElementDecl(namespace = "http://demo.example.com/ws/zalba", name = "createZalba")
+	public JAXBElement<String> createCreateZalba(String value) {
+		return new JAXBElement<String>(_CreateZalba_QNAME, String.class, null, value);
+	}
 
 }
