@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.xmldb.api.base.ResourceIterator;
@@ -136,7 +137,7 @@ public class ZahtevService implements ServiceInterface {
 		return this.zahtevRDF.resenja(documentId);
 	}
 
-	//@Scheduled(fixedDelay = CUTANJE_MILISECONDS_LIMIT, initialDelay = CUTANJE_MILISECONDS_LIMIT)
+	@Scheduled(fixedDelay = CUTANJE_MILISECONDS, initialDelay = CUTANJE_MILISECONDS)
 	public void cutanjeUprave() throws XMLDBException {
 		String xpathExp = String.format("/zahtev:Zahtev[(%d - zahtev:vreme) >= %d][zahtev:status = 'cekanje']", new Date().getTime(), CUTANJE_MILISECONDS);
 		ResourceSet resources = this.zahtevExist.findAll(xpathExp);
@@ -146,6 +147,7 @@ public class ZahtevService implements ServiceInterface {
 			Document document = this.domParser.buildDocument(resource.getContent().toString());
 			document.getElementsByTagNameNS(Namespaces.ZAHTEV, "status").item(0).setTextContent(StatusZahteva.odbijeno + "");
 			this.zahtevExist.update(Utils.getBroj(document), document);
+			this.zahtevRDF.update(Utils.getBroj(document), document);
 			
 			this.notificationManager.notifyCutanjeUprave(document);
 			System.out.println("ULOVLJEN ZAHTEV BROJ " + Utils.getBroj(document));
