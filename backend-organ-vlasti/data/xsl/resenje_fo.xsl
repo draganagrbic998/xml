@@ -53,7 +53,7 @@ xmlns:resenje="https://github.com/draganagrbic998/xml/resenje">
 
 					<xsl:variable name="zahtev_broj" select="substring-after(resenje:PodaciZahteva/@href, 'https://github.com/draganagrbic998/xml/zahtev/')"></xsl:variable>
 					<xsl:variable name="odluka_broj" select="substring-after(resenje:PodaciOdluke/@href, 'https://github.com/draganagrbic998/xml/odluka/')"></xsl:variable>
-					<xsl:variable name="zalba_broj" select="substring-after(resenje:PodaciZalbe/datumZalbe/@href, 'https://github.com/draganagrbic998/xml/zalba/')"></xsl:variable>
+					<xsl:variable name="zalba_broj" select="substring-after(resenje:PodaciZalbe/resenje:datumZalbe/@href, 'https://github.com/draganagrbic998/xml/zalba/')"></xsl:variable>
 	
 					<fo:block>
 						<fo:inline-container>
