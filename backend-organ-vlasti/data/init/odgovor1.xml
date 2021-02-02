@@ -1,5 +1,5 @@
 <odgovor:Odgovor xmlns="https://github.com/draganagrbic998/xml/osnova" xmlns:odgovor="https://github.com/draganagrbic998/xml/odgovor" xmlns:pred="https://github.com/draganagrbic998/xml/predikat/" xmlns:xs="http://www.w3.org/2001/XMLSchema#" about="https://github.com/draganagrbic998/xml/odgovor/1" href="https://github.com/draganagrbic998/xml/korisnik/draganaasd@gmail.com" rel="pred:vlasnik">
-	<datum datatype="xs:string" property="pred:datum">2021-02-02</datum>
+	<datum datatype="xs:string" property="pred:datum">2020-02-02</datum>
 	<Osoba>
         <ime>Dragana</ime>
         <prezime>Grbic</prezime>
@@ -16,5 +16,5 @@
     <Detalji>
         <bold>asd</bold> asd <italic>asd</italic>
     </Detalji>
-    <odgovor:datumZalbe href="https://github.com/draganagrbic998/xml/zalba/1" rel="pred:zalba">2021-02-02</odgovor:datumZalbe>
+    <odgovor:datumZalbe href="https://github.com/draganagrbic998/xml/zalba/1" rel="pred:zalba">2020-02-02</odgovor:datumZalbe>
 </odgovor:Odgovor>

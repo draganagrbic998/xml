@@ -77,7 +77,7 @@ public class DataInitializator {
 		this.fusekiManager.add(ResenjeRDF.RESENJE_GRAPH, this.domParser.buildDocumentFromFile(RESENJE1), ResenjeRDF.RESENJE_SHAPE);
 		this.fusekiManager.add(ResenjeRDF.RESENJE_GRAPH, this.domParser.buildDocumentFromFile(RESENJE2), ResenjeRDF.RESENJE_SHAPE);
 		this.fusekiManager.add(ResenjeRDF.RESENJE_GRAPH, this.domParser.buildDocumentFromFile(RESENJE3), ResenjeRDF.RESENJE_SHAPE);
-
+		
 	}
 
 }

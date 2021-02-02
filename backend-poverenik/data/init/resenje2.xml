@@ -1,8 +1,8 @@
 <resenje:Resenje xmlns="https://github.com/draganagrbic998/xml/osnova" xmlns:pred="https://github.com/draganagrbic998/xml/predikat/" xmlns:resenje="https://github.com/draganagrbic998/xml/resenje" xmlns:xs="http://www.w3.org/2001/XMLSchema#" about="https://github.com/draganagrbic998/xml/resenje/2" href="https://github.com/draganagrbic998/xml/korisnik/draganaasd@gmail.com" rel="pred:vlasnik">
-	<datum datatype="xs:string" property="pred:datum">2021-02-02</datum>
+	<datum datatype="xs:string" property="pred:datum">2020-02-02</datum>
 	<resenje:status datatype="xs:string" property="pred:status">odobreno</resenje:status>
 	<resenje:Odbrana>
-		<resenje:datumOdbrane href="https://github.com/draganagrbic998/xml/odgovor/2" rel="pred:odgovor">2021-02-02</resenje:datumOdbrane>
+		<resenje:datumOdbrane href="https://github.com/draganagrbic998/xml/odgovor/2" rel="pred:odgovor">2020-02-02</resenje:datumOdbrane>
 		<Detalji>
 			<bold>asd</bold> asd <italic>asd</italic>
 		</Detalji>
@@ -39,18 +39,18 @@
 	    </Adresa>
 	</OrganVlasti>
 	<resenje:PodaciZahteva href="https://github.com/draganagrbic998/xml/zahtev/1" rel="pred:zahtev">
-		<datum>2021-02-02</datum>
+		<datum>2020-02-02</datum>
 		<Detalji>
 	        <bold>asd</bold> asd <italic>asd</italic>
 	    </Detalji>
     </resenje:PodaciZahteva>
 	<resenje:PodaciZalbe>
 		<resenje:tipZalbe datatype="xs:string" property="pred:tipZalbe">delimicnost</resenje:tipZalbe>
-		<resenje:datumZalbe href="https://github.com/draganagrbic998/xml/zalba/2" rel="pred:zalba">2021-02-02</resenje:datumZalbe>
-		<resenje:datumProsledjivanja>2021-02-02</resenje:datumProsledjivanja>
+		<resenje:datumZalbe href="https://github.com/draganagrbic998/xml/zalba/2" rel="pred:zalba">2020-02-02</resenje:datumZalbe>
+		<resenje:datumProsledjivanja>2020-02-02</resenje:datumProsledjivanja>
 	</resenje:PodaciZalbe>
 	<resenje:PodaciOdluke href="https://github.com/draganagrbic998/xml/odluka/1" rel="pred:odluka">
-		<datum>2021-02-02</datum>
+		<datum>2020-02-02</datum>
 		<Detalji>
 	        <bold>asd</bold> asd <italic>asd</italic>
 	    </Detalji>

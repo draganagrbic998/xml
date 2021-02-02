@@ -1,5 +1,5 @@
 <odluka:Odluka xmlns="https://github.com/draganagrbic998/xml/osnova" xmlns:pred="https://github.com/draganagrbic998/xml/predikat/" xmlns:odluka="https://github.com/draganagrbic998/xml/odluka" xmlns:xs="http://www.w3.org/2001/XMLSchema#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" about="https://github.com/draganagrbic998/xml/odluka/1" href="https://github.com/draganagrbic998/xml/korisnik/draganaasd@gmail.com" rel="pred:vlasnik" xsi:type="odluka:TObavestenje">
-	<datum datatype="xs:string" property="pred:datum">2021-02-02</datum>
+	<datum datatype="xs:string" property="pred:datum">2020-02-02</datum>
 	<Gradjanin>
         <Osoba>
 	        <ime>Dragana</ime>
@@ -23,7 +23,7 @@
     <Detalji>
         <bold>asd</bold> asd <italic>asd</italic>
     </Detalji>
-    <odluka:datumZahteva href="https://github.com/draganagrbic998/xml/zahtev/1" rel="pred:zahtev">2021-02-02</odluka:datumZahteva>
+    <odluka:datumZahteva href="https://github.com/draganagrbic998/xml/zahtev/1" rel="pred:zahtev">2020-02-02</odluka:datumZahteva>
 	<odluka:Uvid>
 	    <odluka:datumUvida>2020-02-02</odluka:datumUvida>
 	    <odluka:pocetak>12:12</odluka:pocetak>

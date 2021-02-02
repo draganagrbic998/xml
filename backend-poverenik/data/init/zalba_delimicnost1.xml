@@ -1,5 +1,5 @@
 <zalba:Zalba xmlns:zalba="https://github.com/draganagrbic998/xml/zalba" xmlns="https://github.com/draganagrbic998/xml/osnova" xmlns:pred="https://github.com/draganagrbic998/xml/predikat/" xmlns:xs="http://www.w3.org/2001/XMLSchema#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" about="https://github.com/draganagrbic998/xml/zalba/2" href="https://github.com/draganagrbic998/xml/korisnik/draganaasd@gmail.com" rel="pred:vlasnik" xsi:type="zalba:TZalbaCutanje">
-	<datum datatype="xs:string" property="pred:datum">2021-02-02</datum>
+	<datum datatype="xs:string" property="pred:datum">2020-02-02</datum>
 	<Gradjanin>
         <Osoba>
 	        <ime>Dragana</ime>
@@ -24,12 +24,12 @@
         <bold>asd</bold> asd <italic>asd</italic>
     </Detalji>
     <zalba:status datatype="xs:string" property="pred:status">odobreno</zalba:status>
-	<zalba:datumProsledjivanja>2021-02-02</zalba:datumProsledjivanja>
+	<zalba:datumProsledjivanja>2020-02-02</zalba:datumProsledjivanja>
 	<zalba:PodaciZahteva href="https://github.com/draganagrbic998/xml/zahtev/1" rel="pred:zahtev">
-		<datum>2021-02-02</datum>
+		<datum>2020-02-02</datum>
     </zalba:PodaciZahteva>
 	<zalba:tipCutanja>nije postupio u celosti</zalba:tipCutanja>
 	<zalba:PodaciOdluke href="https://github.com/draganagrbic998/xml/odluka/1" rel="pred:odluka">
-		<datum>2021-02-02</datum>
+		<datum>2020-02-02</datum>
     </zalba:PodaciOdluke>
 </zalba:Zalba>

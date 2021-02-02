@@ -1,5 +1,5 @@
 <zahtev:Zahtev xmlns="https://github.com/draganagrbic998/xml/osnova" xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev" xmlns:pred="https://github.com/draganagrbic998/xml/predikat/" xmlns:xs="http://www.w3.org/2001/XMLSchema#" about="https://github.com/draganagrbic998/xml/zahtev/3" href="https://github.com/draganagrbic998/xml/korisnik/draganaasd@gmail.com" rel="pred:vlasnik">
-	<datum datatype="xs:string" property="pred:datum">2021-02-02</datum>
+	<datum datatype="xs:string" property="pred:datum">2020-02-02</datum>
 	<Gradjanin>
         <Osoba>
 	        <ime>Dragana</ime>
