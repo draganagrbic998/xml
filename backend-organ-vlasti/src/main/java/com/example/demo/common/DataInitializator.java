@@ -33,6 +33,11 @@ public class DataInitializator {
 	private static final String ZAHTEV_UVID1 = Constants.INIT_FOLDER + "zahtev_uvid1.xml";
 	private static final String ZAHTEV_KOPIJA1 = Constants.INIT_FOLDER + "zahtev_kopija1.xml";
 
+	private static final String ZAHTEV_POSTA1 = Constants.INIT_FOLDER + "zahtev_posta1.xml";
+	private static final String ZAHTEV_EMAIL1 = Constants.INIT_FOLDER + "zahtev_email1.xml";
+	private static final String ZAHTEV_FAKS1 = Constants.INIT_FOLDER + "zahtev_faks1.xml";
+	private static final String ZAHTEV_OSTALO1 = Constants.INIT_FOLDER + "zahtev_ostalo1.xml";
+
 	private static final String OBAVESTENJE1 = Constants.INIT_FOLDER + "obavestenje1.xml";
 	private static final String ODBIJANJE1 = Constants.INIT_FOLDER + "odbijanje1.xml";
 
@@ -76,6 +81,11 @@ public class DataInitializator {
 		this.existManager.save(ZahtevExist.ZAHTEV_COLLECTION, "1", this.domParser.buildDocumentFromFile(ZAHTEV_OBAVESTENJE1), ZahtevExist.ZAHTEV_SCHEMA);
 		this.existManager.save(ZahtevExist.ZAHTEV_COLLECTION, "2", this.domParser.buildDocumentFromFile(ZAHTEV_UVID1), ZahtevExist.ZAHTEV_SCHEMA);
 		this.existManager.save(ZahtevExist.ZAHTEV_COLLECTION, "3", this.domParser.buildDocumentFromFile(ZAHTEV_KOPIJA1), ZahtevExist.ZAHTEV_SCHEMA);
+
+		this.existManager.save(ZahtevExist.ZAHTEV_COLLECTION, "4", this.domParser.buildDocumentFromFile(ZAHTEV_POSTA1), ZahtevExist.ZAHTEV_SCHEMA);
+		this.existManager.save(ZahtevExist.ZAHTEV_COLLECTION, "5", this.domParser.buildDocumentFromFile(ZAHTEV_EMAIL1), ZahtevExist.ZAHTEV_SCHEMA);
+		this.existManager.save(ZahtevExist.ZAHTEV_COLLECTION, "6", this.domParser.buildDocumentFromFile(ZAHTEV_FAKS1), ZahtevExist.ZAHTEV_SCHEMA);
+		this.existManager.save(ZahtevExist.ZAHTEV_COLLECTION, "7", this.domParser.buildDocumentFromFile(ZAHTEV_OSTALO1), ZahtevExist.ZAHTEV_SCHEMA);
 
 		this.existManager.save(OdlukaExist.ODLUKA_COLLECTION, "1", this.domParser.buildDocumentFromFile(OBAVESTENJE1), OdlukaExist.ODLUKA_SCHEMA);
 		this.existManager.save(OdlukaExist.ODLUKA_COLLECTION, "2", this.domParser.buildDocumentFromFile(ODBIJANJE1), OdlukaExist.ODLUKA_SCHEMA);

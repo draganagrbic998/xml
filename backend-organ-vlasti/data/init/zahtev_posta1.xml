@@ -1,0 +1,28 @@
+<zahtev:Zahtev xmlns="https://github.com/draganagrbic998/xml/osnova" xmlns:zahtev="https://github.com/draganagrbic998/xml/zahtev" xmlns:pred="https://github.com/draganagrbic998/xml/predikat/" xmlns:xs="http://www.w3.org/2001/XMLSchema#" about="https://github.com/draganagrbic998/xml/zahtev/4" href="https://github.com/draganagrbic998/xml/korisnik/draganaasd@gmail.com" rel="pred:vlasnik">
+	<datum datatype="xs:string" property="pred:datum">2020-02-02</datum>
+	<Gradjanin>
+        <Osoba>
+        <ime>Dragana</ime>
+        <prezime>Grbic</prezime>
+        <potpis>757272859077776977757767</potpis>
+    </Osoba>
+        <Adresa>
+	    	<mesto datatype="xs:string" property="pred:mesto">Novi Sad</mesto>
+	    	<ulica>Lasla Gala</ulica>
+	    	<broj>23</broj>
+	    </Adresa>
+    </Gradjanin>
+    <OrganVlasti>
+	    <naziv datatype="xs:string" property="pred:organVlasti">Naziv organa vlasti</naziv>
+	    <Adresa>
+	        <mesto datatype="xs:string" property="pred:izdatoU">Novi Sad</mesto>
+	        <ulica>Lasla Gala</ulica>
+	        <broj>23</broj>
+	    </Adresa>
+	</OrganVlasti>
+    <Detalji>asd</Detalji>
+    <zahtev:status datatype="xs:string" property="pred:status">cekanje</zahtev:status>
+	<zahtev:tipZahteva datatype="xs:string" property="pred:tip">dostava</zahtev:tipZahteva>
+    <zahtev:tipDostave>posta</zahtev:tipDostave>
+    <zahtev:vreme>1612274035649</zahtev:vreme>
+</zahtev:Zahtev>
