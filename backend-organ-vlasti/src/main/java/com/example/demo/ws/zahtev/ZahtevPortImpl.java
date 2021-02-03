@@ -58,7 +58,6 @@ public class ZahtevPortImpl implements Zahtev {
 			java.lang.String _return = this.domParser.buildXml(document);
 			return _return;
 		} catch (java.lang.Exception ex) {
-			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		}
 	}
@@ -71,7 +70,6 @@ public class ZahtevPortImpl implements Zahtev {
 					.getTextContent();
 			return this.zahtevTransformer.html(documentId);
 		} catch (java.lang.Exception ex) {
-			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		}
 	}
@@ -84,7 +82,6 @@ public class ZahtevPortImpl implements Zahtev {
 					.getTextContent();
 			return this.zahtevTransformer.bytePdf(documentId);
 		} catch (java.lang.Exception ex) {
-			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		}
 

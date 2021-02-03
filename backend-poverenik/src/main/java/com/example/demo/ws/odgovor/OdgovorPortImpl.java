@@ -22,7 +22,6 @@ public class OdgovorPortImpl implements Odgovor {
             this.odgovorService.add(createOdgovor);
         } 
         catch (java.lang.Exception ex) {
-            ex.printStackTrace();
             throw new RuntimeException(ex);
         }
     }

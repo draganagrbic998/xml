@@ -22,7 +22,6 @@ public class ZalbaPortImpl implements Zalba {
 			this.zalbaService.add(createZalba);
 		} 
 		catch (java.lang.Exception ex) {
-			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		}
 	}

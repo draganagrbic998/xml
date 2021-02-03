@@ -64,7 +64,6 @@ public class OdlukaPortImpl implements Odluka {
 			java.lang.String _return = this.domParser.buildXml(document);
 			return _return;
 		} catch (java.lang.Exception ex) {
-			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		}
 	}
@@ -76,7 +75,6 @@ public class OdlukaPortImpl implements Odluka {
 					.getTextContent();
 			return this.odlukaTransformer.html(documentId);
 		} catch (java.lang.Exception ex) {
-			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		}
 	}
@@ -88,7 +86,6 @@ public class OdlukaPortImpl implements Odluka {
 					.getTextContent();
 			return this.odlukaTransformer.bytePdf(documentId);
 		} catch (java.lang.Exception ex) {
-			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		}
 	}

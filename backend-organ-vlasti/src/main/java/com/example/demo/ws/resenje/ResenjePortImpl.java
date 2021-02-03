@@ -22,7 +22,6 @@ public class ResenjePortImpl implements Resenje {
 			this.resenjeService.add(createResenje);
 		} 
 		catch (java.lang.Exception ex) {
-			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		}
 	}

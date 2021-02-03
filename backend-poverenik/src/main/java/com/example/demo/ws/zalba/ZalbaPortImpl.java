@@ -26,7 +26,6 @@ public class ZalbaPortImpl implements Zalba {
 			this.zalbaService.otkazi(this.domParser.buildDocument(otkaziZalbu).getElementsByTagName("broj").item(0).getTextContent());
 		} 
 		catch (java.lang.Exception ex) {
-			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		}
 	}

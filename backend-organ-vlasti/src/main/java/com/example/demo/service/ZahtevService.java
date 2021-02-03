@@ -29,7 +29,7 @@ import com.example.demo.service.email.NotificationManager;
 @Service
 public class ZahtevService implements ServiceInterface {
 	
-	public static final long CUTANJE_MILISECONDS = 10000;
+	public static final long CUTANJE_MILISECONDS = 30000;
 
 	@Autowired
 	private ZahtevExist zahtevExist;
@@ -137,7 +137,7 @@ public class ZahtevService implements ServiceInterface {
 		return this.zahtevRDF.resenja(documentId);
 	}
 
-	//@Scheduled(fixedDelay = CUTANJE_MILISECONDS, initialDelay = CUTANJE_MILISECONDS)
+	@Scheduled(fixedDelay = CUTANJE_MILISECONDS, initialDelay = CUTANJE_MILISECONDS)
 	public void cutanjeUprave() throws XMLDBException {
 		String xpathExp = String.format("/zahtev:Zahtev[(%d - zahtev:vreme) >= %d][zahtev:status = 'cekanje']", new Date().getTime(), CUTANJE_MILISECONDS);
 		ResourceSet resources = this.zahtevExist.findAll(xpathExp);

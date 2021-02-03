@@ -22,7 +22,6 @@ public class IzvestajPortImpl implements Izvestaj {
 			this.izvestajService.add(createIzvestaj);
 		} 
 		catch (java.lang.Exception ex) {
-			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		}
 	}
