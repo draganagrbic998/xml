@@ -274,19 +274,7 @@ xmlns:resenje="https://github.com/draganagrbic998/xml/resenje">
 							<xsl:variable name="danProsledjivanja" select="substring-after(substring-after($podaciZalbe/resenje:datumProsledjivanja, '-'), '-')"></xsl:variable>
 							<xsl:variable name="mesecProsledjivanja" select="substring-before(substring-after($podaciZalbe/resenje:datumProsledjivanja, '-'), '-')"></xsl:variable>
 							<xsl:variable name="godinaProsledjivanja" select="substring-before($podaciZalbe/resenje:datumProsledjivanja, '-')"></xsl:variable>
-							Поступајући по
-							
-							<fo:basic-link>
-	               				<xsl:attribute name="external-destination">
-	               					<xsl:value-of select="concat('http://localhost:4201/pdf/zalbe/', $zalba_broj)"></xsl:value-of>
-	               				</xsl:attribute>
-	               				<xsl:attribute name="color">
-									blue
-	               				</xsl:attribute>
-								жалби
-	               			</fo:basic-link>							
-													
-							, Повереник је дана 					
+							Поступајући по жалби, Повереник је дана 					
 							<xsl:value-of select="concat($danProsledjivanja, concat('.', concat($mesecProsledjivanja, concat('.', concat($godinaProsledjivanja, '.')))))"></xsl:value-of>					
 							године упутио исту на изјашњење органу
 							<xsl:value-of select="$organVlasti"></xsl:value-of>,
@@ -329,7 +317,17 @@ xmlns:resenje="https://github.com/draganagrbic998/xml/resenje">
 					</xsl:if>
 				
 					<fo:block text-indent="40px">
-						По разматрању жалбе и осталих списа овог предмета, донета је 
+						По разматрању
+						<fo:basic-link>
+               				<xsl:attribute name="external-destination">
+               					<xsl:value-of select="concat('http://localhost:4201/pdf/zalbe/', $zalba_broj)"></xsl:value-of>
+               				</xsl:attribute>
+               				<xsl:attribute name="color">
+								blue
+               				</xsl:attribute>
+							жалбe
+               			</fo:basic-link>							
+						и осталих списа овог предмета, донета је 
 						одлука као у диспозитиву решења из следећих разлога:
 					</fo:block>
 				

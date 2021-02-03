@@ -238,7 +238,7 @@ xmlns:resenje="https://github.com/draganagrbic998/xml/resenje">
 							<xsl:variable name="danProsledjivanja" select="substring-after(substring-after($podaciZalbe/resenje:datumProsledjivanja, '-'), '-')"></xsl:variable>
 							<xsl:variable name="mesecProsledjivanja" select="substring-before(substring-after($podaciZalbe/resenje:datumProsledjivanja, '-'), '-')"></xsl:variable>
 							<xsl:variable name="godinaProsledjivanja" select="substring-before($podaciZalbe/resenje:datumProsledjivanja, '-')"></xsl:variable>
-							Поступајући по <a href="{$zalba_link}">жалби</a>, Повереник је дана 					
+							Поступајући по жалби, Повереник је дана 					
 							<xsl:value-of select="concat($danProsledjivanja, concat('.', concat($mesecProsledjivanja, concat('.', concat($godinaProsledjivanja, '.')))))"></xsl:value-of>					
 							године упутио исту на изјашњење органу
 							<xsl:value-of select="$organVlasti"></xsl:value-of>,
@@ -269,7 +269,7 @@ xmlns:resenje="https://github.com/draganagrbic998/xml/resenje">
 					</xsl:if>
 										
 					<p class="indent">
-						По разматрању жалбе и осталих списа овог предмета, донета је 
+						По разматрању <a href="{$zalba_link}">жалбe</a> и осталих списа овог предмета, донета је 
 						одлука као у диспозитиву решења из следећих разлога:
 					</p>
 					
