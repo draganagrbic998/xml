@@ -8,6 +8,7 @@ import { EMPTY_DETALJI, SNACKBAR_CLOSE, SNACKBAR_ERROR, SNACKBAR_ERROR_OPTIONS,
 import { Obavestenje } from 'src/app/models/obavestenje';
 import { OdlukaService } from 'src/app/services/odluka/odluka.service';
 import { XonomyService } from 'src/app/services/xonomy/xonomy.service';
+import { ObavestenjeValidatorService } from './obavestenje-validator.service';
 
 declare const Xonomy: any;
 
@@ -20,6 +21,7 @@ export class ObavestenjeFormComponent implements AfterViewInit {
 
   constructor(
     private odlukaService: OdlukaService,
+    private obavestenjeValidator: ObavestenjeValidatorService,
     private xonomyService: XonomyService,
     private snackBar: MatSnackBar,
     private route: ActivatedRoute,
@@ -28,7 +30,7 @@ export class ObavestenjeFormComponent implements AfterViewInit {
 
   savePending = false;
   obavestenjeForm: FormGroup = new FormGroup({
-    datumUvida: new FormControl('', [Validators.required]),
+    datumUvida: new FormControl('', [Validators.required, this.obavestenjeValidator.datumUvida()]),
     pocetak: new FormControl('', [Validators.required, Validators.pattern(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/)]),
     kraj: new FormControl('', [Validators.required, Validators.pattern(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/)]),
     kancelarija: new FormControl('', [Validators.required, Validators.pattern(new RegExp('\\S'))]),
