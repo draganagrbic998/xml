@@ -56,6 +56,7 @@ export class ZalbaCutanjeFormComponent implements AfterViewInit {
         this.savePending = false;
         this.snackBar.open('Zalba poslata!', SNACKBAR_CLOSE, SNACKBAR_SUCCESS_OPTIONS);
         this.zalbaForm.reset();
+        this.zalbaForm.get('naziv').setValue('Naziv organa vlasti');
       },
       () => {
         this.savePending = false;

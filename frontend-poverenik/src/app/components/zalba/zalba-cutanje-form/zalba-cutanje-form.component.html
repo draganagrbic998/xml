@@ -30,21 +30,21 @@
             <br>
             <mat-form-field>
                 <mat-label>
-                    {{zalbaDelimicnost ? 'Broj odluke' : 'Broj zahteva'}}
+                    {{zalbaDelimicnost ? 'Broj obaveštenja' : 'Broj zahteva'}}
                 </mat-label>
                 <input 
                 matInput 
                 autocomplete="off"
                 formControlName="brojDokumenta"
-                [placeholder]="zalbaDelimicnost ? 'Unesite broj odluke' : 'Unesite broj zahteva'">
+                [placeholder]="zalbaDelimicnost ? 'Unesite broj obaveštenja' : 'Unesite broj zahteva'">
                 <mat-error>
                     {{
-                        zalbaDelimicnost ? 'Broj odluke je obavezan!' : 'Broj zahteva je obavezan!'
+                        zalbaDelimicnost ? 'Broj obaveštenja je obavezan!' : 'Broj zahteva je obavezan!'
                     }}
                 </mat-error>    
             </mat-form-field>
             <mat-form-field>
-                <mat-label>Lozinka</mat-label>
+                <mat-label>Lozinka za autentifikaciju na portalu organa vlasti</mat-label>
                 <input 
                 type="password" 
                 matInput 
