@@ -38,6 +38,7 @@ export class OdlukaListComponent implements AfterViewInit {
     this.odlukaService.pretraga(xml, tip).subscribe(
       (odluke: OdlukaDTO[]) => {
         this.odluke = new MatTableDataSource<OdlukaDTO>(odluke);
+        this.odluke.paginator = this.paginator;
         this.fetchPending = false;
       },
       () => {

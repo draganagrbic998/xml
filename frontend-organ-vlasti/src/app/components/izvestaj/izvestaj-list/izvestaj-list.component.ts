@@ -83,6 +83,7 @@ export class IzvestajListComponent implements AfterViewInit {
     this.izvestajService.pretraga(xml, tip).subscribe(
       (izvestaji: IzvestajDTO[]) => {
         this.izvestaji = new MatTableDataSource<IzvestajDTO>(izvestaji);
+        this.izvestaji.paginator = this.paginator;
         this.fetchPending = false;
       },
       () => {

@@ -42,6 +42,7 @@ export class ZahtevListComponent implements AfterViewInit {
     this.zahtevService.pretraga(xml, tip).subscribe(
       (zahtevi: ZahtevDTO[]) => {
         this.zahtevi = new MatTableDataSource<ZahtevDTO>(zahtevi);
+        this.zahtevi.paginator = this.paginator;
         this.fetchPending = false;
       },
       () => {

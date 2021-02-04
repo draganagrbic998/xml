@@ -93,11 +93,6 @@ public class KorisnikService implements UserDetailsService {
 		korisnik.setAktivan(false);
 		korisnik.setLozinka(this.passwordEncoder.encode(korisnik.getLozinka()));
 		Document document = this.jaxbParser.marshalToDoc(korisnik);
-		Node mesto = document.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(0);
-		Node updatedMesto = document.importNode(this.domParser.buildDocument("<mesto property=\"pred:mesto\" datatype=\"xs:string\">" + mesto.getTextContent() + "</mesto>")
-				.getElementsByTagName("mesto").item(0), true);
-		document.getElementsByTagNameNS(Namespaces.OSNOVA, "Adresa").item(0).replaceChild(updatedMesto, mesto);
-		document.renameNode(updatedMesto, Namespaces.OSNOVA, "mesto");
 		this.korisnikExist.update(korisnik.getMejl(), document);			
 		this.notificationManager.sendActivationEmail(korisnik.getMejl(), korisnik.getOsoba().getPotpis());
 	}
@@ -108,7 +103,13 @@ public class KorisnikService implements UserDetailsService {
 			XMLResource resource = (XMLResource) this.korisnikExist.findAll(xpathExp).getIterator().nextResource();
 			Korisnik korisnik = (Korisnik) this.jaxbParser.unmarshalFromXml(resource.getContent().toString(), Korisnik.class);
 			korisnik.setAktivan(true);
-			this.korisnikExist.update(korisnik.getMejl(), this.jaxbParser.marshalToDoc(korisnik));
+			Document document = this.jaxbParser.marshalToDoc(korisnik);
+			Node mesto = document.getElementsByTagNameNS(Namespaces.OSNOVA, "mesto").item(0);
+			Node updatedMesto = document.importNode(this.domParser.buildDocument("<mesto property=\"pred:mesto\" datatype=\"xs:string\">" + mesto.getTextContent() + "</mesto>")
+					.getElementsByTagName("mesto").item(0), true);
+			document.getElementsByTagNameNS(Namespaces.OSNOVA, "Adresa").item(0).replaceChild(updatedMesto, mesto);
+			document.renameNode(updatedMesto, Namespaces.OSNOVA, "mesto");
+			this.korisnikExist.update(korisnik.getMejl(), document);
 		}
 		catch(Exception e) {
 			throw new MyException(e);

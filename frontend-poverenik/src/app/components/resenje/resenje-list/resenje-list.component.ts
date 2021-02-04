@@ -41,6 +41,7 @@ export class ResenjeListComponent implements AfterViewInit {
     this.resenjeService.pretraga(xml, tip).subscribe(
       (resenja: ResenjeDTO[]) => {
         this.resenja = new MatTableDataSource<ResenjeDTO>(resenja);
+        this.resenja.paginator = this.paginator;
         this.fetchPending = false;
       },
       () => {

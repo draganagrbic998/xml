@@ -117,6 +117,7 @@ export class ZalbaListComponent implements AfterViewInit {
     this.zalbaService.pretraga(xml, tip).subscribe(
       (zalbe: ZalbaDTO[]) => {
         this.zalbe = new MatTableDataSource<ZalbaDTO>(zalbe);
+        this.zalbe.paginator = this.paginator;
         this.fetchPending = false;
       },
       () => {
