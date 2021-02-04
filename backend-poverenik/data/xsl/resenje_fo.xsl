@@ -140,7 +140,7 @@ xmlns:resenje="https://github.com/draganagrbic998/xml/resenje">
 							Поништава се жалба коју је поднео АА дана
 							<xsl:value-of select="concat($danZahteva, concat('.', concat($mesecZahteva, concat('.', concat($godinaZahteva, '.')))))"></xsl:value-of>					
 							против органа власти <xsl:value-of select="$organVlasti"></xsl:value-of>,
-							<xsl:value-of select="$sediste"></xsl:value-of>
+							<xsl:value-of select="$sediste"></xsl:value-of>.
 						</fo:block>
 					</xsl:if>
 					

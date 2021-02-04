@@ -194,7 +194,7 @@ public class ZalbaService implements ServiceInterface {
 
 	public void otkazi(String brojZahteva) {
 		try {
-			String xpathExp = String.format("/zalba:Zalba[zalba:PodaciZahteva/@href='%s']", Namespaces.ZAHTEV + "/" + brojZahteva);
+			String xpathExp = String.format("/zalba:Zalba[zalba:PodaciZahteva/@href='%s'][not(zalba:status='ponisteno' or zalba:status='odobreno' or zalba:status='odbijeno')]", Namespaces.ZAHTEV + "/" + brojZahteva);
 			ResourceSet resources = this.zalbaExist.findAll(xpathExp);
 			ResourceIterator it = resources.getIterator();
 			while (it.hasMoreResources()) {
