@@ -22,6 +22,11 @@
 		<rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
 	</rdfs:Property>
 	
+	<rdfs:Property rdf:about="https://github.com/draganagrbic998/xml/predikat/status">
+		<rdfs:domain rdf:resource="#zahtev"/>
+		<rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+	</rdfs:Property>
+	
 	<rdfs:Property rdf:about="https://github.com/draganagrbic998/xml/predikat/vlasnik">
 		<rdfs:domain rdf:resource="#zahtev"/>
 		<rdfs:range rdf:resource="#korisnik"/>
