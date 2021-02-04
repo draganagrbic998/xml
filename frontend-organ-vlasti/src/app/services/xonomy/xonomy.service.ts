@@ -74,7 +74,7 @@ export class XonomyService {
       status: {...this.baseChild, ...{
         hasText: true,
         asker: Xonomy.askPicklist,
-        askerParameter: ['cekanje', 'odgovoreno', 'odbijeno']
+        askerParameter: ['cekanje', 'odobreno', 'odbijeno']
       }},
       datum: this.baseChild,
       organVlasti: this.baseChild,
