@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDrawer } from '@angular/material/sidenav';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { OdgovorDTO } from 'src/app/models/odgovorDTO';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -21,6 +22,7 @@ export class OdgovorListComponent implements AfterViewInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatDrawer) drawer: MatDrawer;
+  @ViewChild(MatSort) sort: MatSort;
   columns: string[] = ['broj', 'datum', 'datumZalbe', 'dokumenti', 'metapodaci'];
 
   odgovori: MatTableDataSource<OdgovorDTO> = new MatTableDataSource<OdgovorDTO>([]);
@@ -39,6 +41,7 @@ export class OdgovorListComponent implements AfterViewInit {
       (odgovori: OdgovorDTO[]) => {
         this.odgovori = new MatTableDataSource<OdgovorDTO>(odgovori);
         this.odgovori.paginator = this.paginator;
+        this.odgovori.sort = this.sort;
         this.fetchPending = false;
       },
       () => {
@@ -52,6 +55,7 @@ export class OdgovorListComponent implements AfterViewInit {
       (odgovori: OdgovorDTO[]) => {
         this.odgovori = new MatTableDataSource<OdgovorDTO>(odgovori);
         this.odgovori.paginator = this.paginator;
+        this.odgovori.sort = this.sort;
         this.fetchPending = false;
       },
       () => {

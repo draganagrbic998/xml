@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDrawer } from '@angular/material/sidenav';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { OdlukaDTO } from 'src/app/models/odlukaDTO';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -21,6 +22,7 @@ export class OdlukaListComponent implements AfterViewInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatDrawer) drawer: MatDrawer;
+  @ViewChild(MatSort) sort: MatSort;
   columns: string[] = ['tipOdluke', 'datum', 'datumZahteva', 'dokumenti', 'metapodaci'];
 
   odluke: MatTableDataSource<OdlukaDTO> = new MatTableDataSource<OdlukaDTO>([]);
@@ -39,6 +41,7 @@ export class OdlukaListComponent implements AfterViewInit {
       (odluke: OdlukaDTO[]) => {
         this.odluke = new MatTableDataSource<OdlukaDTO>(odluke);
         this.odluke.paginator = this.paginator;
+        this.odluke.sort = this.sort;
         this.fetchPending = false;
       },
       () => {
@@ -52,6 +55,7 @@ export class OdlukaListComponent implements AfterViewInit {
       (odluke: OdlukaDTO[]) => {
         this.odluke = new MatTableDataSource<OdlukaDTO>(odluke);
         this.odluke.paginator = this.paginator;
+        this.odluke.sort = this.sort;
         this.fetchPending = false;
       },
       () => {

@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-import java.nio.ByteBuffer;
 import java.util.Base64;
 import java.util.UUID;
 
@@ -121,12 +120,7 @@ public class KorisnikService implements UserDetailsService {
 	}
 
 	private String generatePotpis() {
-        UUID uuid = UUID.randomUUID();
-        byte[] bytes = ByteBuffer.wrap(new byte[256])
-                .putLong(uuid.getMostSignificantBits())
-                .putLong(uuid.getLeastSignificantBits())
-                .array();
-        return Base64.getUrlEncoder().encodeToString(bytes);
+        return Base64.getEncoder().encodeToString(UUID.randomUUID().toString().getBytes());
 	}
 			
 }

@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDrawer } from '@angular/material/sidenav';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ZalbaDTO } from 'src/app/models/zalbaDTO';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -21,6 +22,7 @@ export class ZalbaListComponent implements AfterViewInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatDrawer) drawer: MatDrawer;
+  @ViewChild(MatSort) sort: MatSort;
   columns: string[] = ['tipZalbe', 'datum', 'status', 'dokumenti', 'metapodaci', 'akcije'];
 
   zalbe: MatTableDataSource<ZalbaDTO> = new MatTableDataSource<ZalbaDTO>([]);
@@ -43,6 +45,7 @@ export class ZalbaListComponent implements AfterViewInit {
       (zalbe: ZalbaDTO[]) => {
         this.zalbe = new MatTableDataSource<ZalbaDTO>(zalbe);
         this.zalbe.paginator = this.paginator;
+        this.zalbe.sort = this.sort;
         this.fetchPending = false;
       },
       () => {
@@ -56,6 +59,7 @@ export class ZalbaListComponent implements AfterViewInit {
       (zalbe: ZalbaDTO[]) => {
         this.zalbe = new MatTableDataSource<ZalbaDTO>(zalbe);
         this.zalbe.paginator = this.paginator;
+        this.zalbe.sort = this.sort;
         this.fetchPending = false;
       },
       () => {

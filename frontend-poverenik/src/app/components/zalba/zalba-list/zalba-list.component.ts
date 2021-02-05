@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDrawer } from '@angular/material/sidenav';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { SNACKBAR_CLOSE, SNACKBAR_ERROR, SNACKBAR_ERROR_OPTIONS, SNACKBAR_SUCCESS_OPTIONS } from 'src/app/constants/snackbar';
 import { ZalbaDTO } from 'src/app/models/zalbaDTO';
@@ -24,6 +25,7 @@ export class ZalbaListComponent implements AfterViewInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatDrawer) drawer: MatDrawer;
+  @ViewChild(MatSort) sort: MatSort;
   columns: string[] = ['tipZalbe', 'datum', 'status', 'dokumenti', 'metapodaci', 'akcije'];
 
   zalbe: MatTableDataSource<ZalbaDTO> = new MatTableDataSource<ZalbaDTO>([]);
@@ -55,10 +57,9 @@ export class ZalbaListComponent implements AfterViewInit {
     }
 
     /*
-    if (zalba.status !== 'prosledjeno' && ((new Date()).getTime() - zalba.datumProsledjivanja) / 86400000 > 15) {
+    if (zalba.status === 'prosledjeno' && ((new Date()).getTime() - zalba.datumProsledjivanja) / 86400000 > 15) {
       return true;
-    }
-    */
+    }*/
 
     if (zalba.status === 'prosledjeno'){
       return true;
@@ -118,6 +119,7 @@ export class ZalbaListComponent implements AfterViewInit {
       (zalbe: ZalbaDTO[]) => {
         this.zalbe = new MatTableDataSource<ZalbaDTO>(zalbe);
         this.zalbe.paginator = this.paginator;
+        this.zalbe.sort = this.sort;
         this.fetchPending = false;
       },
       () => {
@@ -131,6 +133,7 @@ export class ZalbaListComponent implements AfterViewInit {
       (zalbe: ZalbaDTO[]) => {
         this.zalbe = new MatTableDataSource<ZalbaDTO>(zalbe);
         this.zalbe.paginator = this.paginator;
+        this.zalbe.sort = this.sort;
         this.fetchPending = false;
       },
       () => {

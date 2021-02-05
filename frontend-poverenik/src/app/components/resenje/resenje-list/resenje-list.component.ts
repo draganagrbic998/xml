@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDrawer } from '@angular/material/sidenav';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ResenjeDTO } from 'src/app/models/resenjeDTO';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -21,6 +22,7 @@ export class ResenjeListComponent implements AfterViewInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatDrawer) drawer: MatDrawer;
+  @ViewChild(MatSort) sort: MatSort;
   columns: string[] = ['datum', 'status', 'dokumenti', 'metapodaci'];
 
   resenja: MatTableDataSource<ResenjeDTO> = new MatTableDataSource<ResenjeDTO>([]);
@@ -42,6 +44,7 @@ export class ResenjeListComponent implements AfterViewInit {
       (resenja: ResenjeDTO[]) => {
         this.resenja = new MatTableDataSource<ResenjeDTO>(resenja);
         this.resenja.paginator = this.paginator;
+        this.resenja.sort = this.sort;
         this.fetchPending = false;
       },
       () => {
@@ -55,6 +58,7 @@ export class ResenjeListComponent implements AfterViewInit {
       (resenja: ResenjeDTO[]) => {
         this.resenja = new MatTableDataSource<ResenjeDTO>(resenja);
         this.resenja.paginator = this.paginator;
+        this.resenja.sort = this.sort;
         this.fetchPending = false;
       },
       () => {

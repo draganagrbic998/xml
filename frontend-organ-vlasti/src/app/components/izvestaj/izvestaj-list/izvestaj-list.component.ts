@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDrawer } from '@angular/material/sidenav';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { SNACKBAR_CLOSE, SNACKBAR_ERROR, SNACKBAR_ERROR_OPTIONS, SNACKBAR_SUCCESS_OPTIONS } from 'src/app/constants/snackbar';
 import { IzvestajDTO } from 'src/app/models/izvestajDTO';
@@ -26,6 +27,7 @@ export class IzvestajListComponent implements AfterViewInit {
   ) { }
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatDrawer) drawer: MatDrawer;
   columns: string[] = ['godina', 'datum', 'dokumenti', 'metapodaci'];
 
@@ -70,6 +72,7 @@ export class IzvestajListComponent implements AfterViewInit {
       (izvestaji: IzvestajDTO[]) => {
         this.izvestaji = new MatTableDataSource<IzvestajDTO>(izvestaji);
         this.izvestaji.paginator = this.paginator;
+        this.izvestaji.sort = this.sort;
         this.fetchPending = false;
       },
       () => {
@@ -84,6 +87,7 @@ export class IzvestajListComponent implements AfterViewInit {
       (izvestaji: IzvestajDTO[]) => {
         this.izvestaji = new MatTableDataSource<IzvestajDTO>(izvestaji);
         this.izvestaji.paginator = this.paginator;
+        this.izvestaji.sort = this.sort;
         this.fetchPending = false;
       },
       () => {

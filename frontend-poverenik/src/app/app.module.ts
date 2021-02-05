@@ -46,6 +46,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -100,6 +101,7 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatTooltipModule,
     MatTableModule,
     MatPaginatorModule,
+    MatSortModule,
     NgxExtendedPdfViewerModule,
     MatSidenavModule,
     MatTabsModule

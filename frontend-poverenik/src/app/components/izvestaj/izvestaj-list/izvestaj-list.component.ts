@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDrawer } from '@angular/material/sidenav';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { IzvestajDTO } from 'src/app/models/izvestajDTO';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -21,6 +22,7 @@ export class IzvestajListComponent implements AfterViewInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatDrawer) drawer: MatDrawer;
+  @ViewChild(MatSort) sort: MatSort;
   columns: string[] = ['godina', 'datum', 'dokumenti', 'metapodaci'];
 
   izvestaji: MatTableDataSource<IzvestajDTO> = new MatTableDataSource<IzvestajDTO>([]);
@@ -42,6 +44,7 @@ export class IzvestajListComponent implements AfterViewInit {
       (izvestaji: IzvestajDTO[]) => {
         this.izvestaji = new MatTableDataSource<IzvestajDTO>(izvestaji);
         this.izvestaji.paginator = this.paginator;
+        this.izvestaji.sort = this.sort;
         this.fetchPending = false;
       },
       () => {
@@ -55,6 +58,7 @@ export class IzvestajListComponent implements AfterViewInit {
       (izvestaji: IzvestajDTO[]) => {
         this.izvestaji = new MatTableDataSource<IzvestajDTO>(izvestaji);
         this.izvestaji.paginator = this.paginator;
+        this.izvestaji.sort = this.sort;
         this.fetchPending = false;
       },
       () => {

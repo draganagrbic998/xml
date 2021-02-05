@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDrawer } from '@angular/material/sidenav';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ZahtevDTO } from 'src/app/models/zahtevDTO';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -21,6 +22,7 @@ export class ZahtevListComponent implements AfterViewInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatDrawer) drawer: MatDrawer;
+  @ViewChild(MatSort) sort: MatSort;
   columns: string[] = ['tip', 'datum', 'status', 'dokumenti', 'metapodaci', 'akcije'];
 
   zahtevi: MatTableDataSource<ZahtevDTO> = new MatTableDataSource<ZahtevDTO>([]);
@@ -43,6 +45,7 @@ export class ZahtevListComponent implements AfterViewInit {
       (zahtevi: ZahtevDTO[]) => {
         this.zahtevi = new MatTableDataSource<ZahtevDTO>(zahtevi);
         this.zahtevi.paginator = this.paginator;
+        this.zahtevi.sort = this.sort;
         this.fetchPending = false;
       },
       () => {
@@ -56,6 +59,7 @@ export class ZahtevListComponent implements AfterViewInit {
       (zahtevi: ZahtevDTO[]) => {
         this.zahtevi = new MatTableDataSource<ZahtevDTO>(zahtevi);
         this.zahtevi.paginator = this.paginator;
+        this.zahtevi.sort = this.sort;
         this.fetchPending = false;
       },
       () => {

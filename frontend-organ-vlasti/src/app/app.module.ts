@@ -48,6 +48,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -105,6 +106,7 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
     MatMenuModule,
     MatTableModule,
     MatPaginatorModule,
+    MatSortModule,
     MatSidenavModule,
     MatTooltipModule,
     MatTabsModule,
