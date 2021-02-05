@@ -85,8 +85,7 @@ public class XSLTransformer {
 		
 	public Resource pdf(Document document, String xslFoPath, String genPath) {
 		try {
-			Path file = Paths.get(genPath
-					+ document.getElementsByTagNameNS(Namespaces.OSNOVA, "broj").item(0).getTextContent() + ".pdf");
+			Path file = Paths.get(genPath + Utils.getBroj(document) + ".pdf");
 			Files.write(file, this.plainPdf(document, xslFoPath).toByteArray());
 			return new UrlResource(file.toUri());
 		}
